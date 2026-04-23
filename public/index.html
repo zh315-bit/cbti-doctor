@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CBTI Doctor Chat</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="app-header">
+      <h1>CBTI Doctor</h1>
+      <div class="status">
+        <span id="backend-status" class="badge">后端连接中...</span>
+        <span id="session-id" class="sid"></span>
+      </div>
+    </header>
+
+    <main id="messages" class="messages" aria-live="polite" aria-label="对话消息">
+      <div class="msg msg-assistant">你好，我是你的 CBT-I 治疗助手。请简单介绍你的睡眠情况，我们先从信息收集开始。</div>
+    </main>
+
+    <footer class="input-bar">
+      <input id="user-input" type="text" placeholder="请输入消息，按 Enter 发送" />
+      <button id="send-btn">发送</button>
+      <button id="reset-btn" class="ghost">重置会话</button>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

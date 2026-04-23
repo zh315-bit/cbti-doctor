@@ -1,0 +1,7 @@
+{
+  "dependencies": ["./"],
+  "graphs": {
+    "chatbot": "./main.py:cognitive_therapy_agent"
+  },
+  "env": ".env"
+}

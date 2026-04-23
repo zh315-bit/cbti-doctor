@@ -1,0 +1,28 @@
+main-graph:
+  class_name: CognitiveTherapyAgent
+  prompt_file: configs/prompts/main_prompt_cognitive_therapy.txt
+
+subgraph:
+  information_gathering:
+    class_name: InformationGatheringAgent
+    prompt_file: configs/prompts/sub_prompt_information_gathering.txt
+    next_trigger: "进入总结反馈阶段"
+    next_stage: summary_feedback
+
+  summary_feedback:
+    class_name: SummaryFeedbackAgent
+    prompt_file: configs/prompts/sub_prompt_summary_feedback.txt
+    next_trigger: "进入认知重构阶段"
+    next_stage: cognitive_restructuring
+
+  cognitive_restructuring:
+    class_name: CognitiveRestructuringAgent
+    prompt_file: configs/prompts/sub_prompt_cognitive_restructuring.txt
+    next_trigger: "进行综合干预阶段"
+    next_stage: comprehensive_intervention
+
+  comprehensive_intervention:
+    class_name: ComprehensiveInterventionAgent
+    prompt_file: configs/prompts/sub_prompt_comprehensive_intervention.txt
+    next_trigger: "晚安"
+    next_stage: end_process
