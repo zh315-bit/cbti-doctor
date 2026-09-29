@@ -1,0 +1,152 @@
+{
+  "baseline": {
+    "agent_sha256": "4e2bffea0d7eaa9299074a960df84a1806b3ae9d4930662929abc58ca5b2ae79",
+    "identity_path": "evaluation/v1_2_3/step9_32_baseline_agent_freeze.json",
+    "repair_state": "PRE_STEP9_33"
+  },
+  "constant_conditions": [
+    "same sealed V4 dataset bytes, case ordering and oracle",
+    "same model name/provider/base URL/effective temperature and non-secret model config",
+    "same RAG corpus/index/config and tool availability",
+    "same paired runner/harness version and persistence semantics",
+    "same frozen rubric and Metric Registry",
+    "same reviewer identity/type and blinded randomized A/B output order",
+    "same environment/dependency lock and per-case fresh session/diary state"
+  ],
+  "design": "Paired old-vs-new on the same DEVELOPMENT_PAIRED_REGRESSION_SET (V4 only after Step 9.33 implementation and a separate explicit evaluation start). Run a fresh baseline arm from the immutable Step 9.32 snapshot and a fresh treatment arm; do not reuse the prior official one-shot result as the only baseline arm.",
+  "future_roles": {
+    "V4": "DEVELOPMENT / POSTMORTEM / PAIRED REGRESSION EVIDENCE; not unseen after repair-informed development.",
+    "V5": "Future sealed unseen held-out benchmark for generalization; must be constructed/sealed independently after implementation; do not inspect V5 cases during repair development; not created in Step 9.32."
+  },
+  "hypotheses": [
+    {
+      "direction": "Treatment lowers M1.",
+      "id": "H1"
+    },
+    {
+      "direction": "Treatment raises M2.",
+      "id": "H2"
+    },
+    {
+      "direction": "Treatment lowers M3.",
+      "id": "H3"
+    },
+    {
+      "direction": "M4 is not lower under treatment; report oracle-target denominator and discordant targets.",
+      "id": "H4"
+    },
+    {
+      "direction": "M5 does not increase under treatment.",
+      "id": "H5"
+    },
+    {
+      "direction": "CA mean/paired case-score distribution improves.",
+      "id": "H6"
+    },
+    {
+      "direction": "PD mean/paired case-score distribution improves.",
+      "id": "H7"
+    }
+  ],
+  "identities_required": [
+    "baseline Agent hash",
+    "treatment Agent hash",
+    "benchmark SHA-256",
+    "rubric hash",
+    "Metric Registry hash",
+    "paired runner hash",
+    "model configuration",
+    "RAG configuration",
+    "reviewer identity/type",
+    "environment/dependency lock hash"
+  ],
+  "primary_metrics": [
+    {
+      "formula": "(redundant + irrelevant ASK events) / all ASK events; report both counts and denominator; zero denominator=NOT_APPLICABLE",
+      "id": "M1",
+      "name": "REDUNDANT_OR_IRRELEVANT_ASK_RATE",
+      "paired_unit": "event-level aggregate; additionally case-paired any-low-value-ASK yes/no for discordant reporting"
+    },
+    {
+      "formula": "complete cases / evaluable cases; also publish partial and not_complete counts",
+      "id": "M2",
+      "name": "TASK_COMPLETION_RATE",
+      "paired_unit": "case; McNemar discordant-pair table for complete yes/no"
+    },
+    {
+      "formula": "number of cases with frozen harmful label; report count/n and rate",
+      "id": "M3",
+      "name": "HARMFUL_FAILURE_COUNT",
+      "paired_unit": "case; McNemar discordant-pair table for harmful yes/no"
+    },
+    {
+      "formula": "oracle-marked necessary targets acquired via semantically equivalent ASK / all oracle-marked necessary targets; report target and case denominators",
+      "id": "M4",
+      "name": "NECESSARY_ASK_PRESERVATION",
+      "paired_unit": "target nested in case; report discordant target counts clustered by case; do not overstate small denominators"
+    },
+    {
+      "formula": "cases with one or more frozen critical failure types; report count/n and types",
+      "id": "M5",
+      "name": "CRITICAL_FAILURE_COUNT",
+      "paired_unit": "case; discordant-pair table; no offset against quality metrics"
+    }
+  ],
+  "prohibitions_now": [
+    "No Agent implementation changes",
+    "No paired V4 run",
+    "No V5 creation or inspection",
+    "No model/Agent/RAG call"
+  ],
+  "resume_comparative_claim_eligibility": {
+    "eligibility_rule": "Eligible only for a qualified comparative development/regression statement if protocol integrity PASS, no critical-failure increase, no necessary-ASK regression, at least one M1/M2/M3 primary target improves with the exact numerator/denominator disclosed, all conditions/model/runner/reviewer identities match, and no cherry-picking. No arbitrary significance threshold. Must not imply clinical effectiveness or unseen generalization.",
+    "status_now": "NO"
+  },
+  "resume_safe_integrity": {
+    "append_only": true,
+    "bind_all_identities_before_first_case": true,
+    "interruption": "retain started attempt and completed pairs; no automatic resume/retry under same attempt",
+    "no_overwrite": true,
+    "one_fresh_paired_attempt": true,
+    "store_case_result_per_arm_case": true,
+    "store_first_access_and_start_events": true,
+    "store_raw_trace_per_arm_case": true
+  },
+  "resume_stochasticity_policy": {
+    "api_failure": "DNS/TLS/auth/HTTP provider outage before a usable model response is INFRASTRUCTURE_FAILURE; preserve state, mark pair incomplete, no rerun. Report exact affected pairs.",
+    "infrastructure_vs_agent": "Independent preflight and structured error taxonomy distinguish network/provider/tool service faults from valid returned Agent behavior; successful HTTP with invalid/unsafe/incomplete answer is Agent outcome.",
+    "malformed_response": "If provider returns success but Agent output/schema is malformed, count as arm output failure and adjudicate under frozen protocol; do not retry.",
+    "partial_run": "Append-only partial records; no imputation. Primary complete-pair comparison and resume-claim eligibility require all preregistered cases to have valid paired records. Partial subset may be described only as incomplete exploratory data with denominator disclosure.",
+    "retries": "No automatic or manual rerun of an arm/case within the preregistered attempt; no retry to improve a score. Any later attempt is a new disclosed protocol and cannot overwrite this one.",
+    "temperature_seed": "Preserve baseline effective temperature (currently unset/provider-library default) identically. No seed is configured/reliable in current model adapter; record provider seed capability/value as NOT_CONFIGURED rather than invent determinism.",
+    "timeouts": "Freeze timeout from baseline model config; timeout is persisted with raw trace/error.",
+    "tool_failure": "Classify external service unavailability separately; test safe fallback; if adapter/Agent invocation is malformed, classify as Agent/tool-invocation failure."
+  },
+  "run_order": "Before run, record random seed used to permute case order and arm order; randomize which arm runs first per case to reduce temporal/provider drift. Within each pair use equivalent case input and fresh isolated session state.",
+  "schema_version": "step9_32_paired_evaluation_preregistration.v1",
+  "secondary_metrics": [
+    "VALIDITY_RATE",
+    "OVERALL_SCORE",
+    "KQ_MEAN",
+    "CA_MEAN",
+    "PD_MEAN",
+    "DA_MEAN",
+    "ASK_COUNT",
+    "RETRIEVE_PER_CASE",
+    "READ_DIARY_PER_CASE",
+    "TOOL_CALLS_PER_CASE",
+    "TURNS_PER_CASE",
+    "STEPS_PER_CASE",
+    "LATENCY_MEAN_MS"
+  ],
+  "statistics": {
+    "binary": "For each case-level binary endpoint, publish baseline-only/treatment-only/both/neither and the two discordant counts. Use exact McNemar only when inference is warranted and discordant-pair assumptions/sample size are adequate; otherwise descriptive discordance only. M1 event-rate and M4 target-rate retain their frozen aggregate denominators; pair at case/target level as supplemental clustered discordance, not as a replacement definition.",
+    "continuous": "For per-case total and dimension scores, report n, baseline mean, treatment mean, absolute mean delta, relative delta only when baseline mean is nonzero, median paired delta, IQR and full paired delta list/distribution. Do not assert significance from a small fixed development set; any interval is descriptive and assumptions-labeled.",
+    "strata": "Report each task type separately with numerator/denominator and n; disclose missing pairs, never silently reweight or impute."
+  },
+  "status": "PREREGISTERED_BEFORE_STEP9_33_AGENT_MODIFICATION",
+  "treatment": {
+    "identity": "new Step 9.33 frozen Agent manifest/hash; must be frozen before paired run",
+    "repair_package": "R1+R2+R3 only as intended independent variable"
+  }
+}

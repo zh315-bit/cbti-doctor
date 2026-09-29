@@ -1,0 +1,42 @@
+{
+  "run_name": "v1_2_1_development_regression_evaluation_on_benchmark_v2",
+  "timestamp_utc": "2026-09-21T14:59:15.481495+00:00",
+  "agent_version": "adaptive-agent-v1.2.1",
+  "git_commit": "not_available_no_HEAD_commit",
+  "benchmark": {
+    "path": "evaluation/benchmarks/benchmark_v2_cases.yaml",
+    "version": "2.0-evaluation-set",
+    "status": "benchmark_v2_frozen",
+    "sha256": "dfa9b9e5a12b0017fa68d344d01b313ebc29e583b933fbe1e93c125f55ecafd2",
+    "interpretation": "development_regression_set_not_held_out"
+  },
+  "evaluation_configuration": {
+    "rubric": "evaluation/benchmark_v1_1_scoring.md",
+    "rubric_sha256": "a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899",
+    "max_turns": 6,
+    "entrypoint": "Flask /api/chat via test_client",
+    "follow_up_release": "only answers the actual ASK target; never directly mutates State",
+    "diary_fixture_visibility": "only via SessionDiaryTool and READ_DIARY"
+  },
+  "model_configuration": {
+    "factory": "model_config.create_chat_model",
+    "model": "default_from_model_config",
+    "base_url_configured": false,
+    "api_key": "redacted_not_recorded"
+  },
+  "source_sha256": {
+    "adaptive_agent/state.py": "fac5a4dbfd66be67a73e65f1eb9604d3131cc9ee811c9d9bc76507f7816fd9e9",
+    "adaptive_agent/requirements.py": "56533b3098a60c642176aa3edc909c94cc895bc6f58e1f9120270df3e6da3711",
+    "adaptive_agent/sufficiency.py": "e76b221c94c5018f6b3653027b1d3d89d1f931311572d838c619c575a87d729d",
+    "adaptive_agent/information_value.py": "82526b66ec8a748ead77fbd8566f0088f85d6ce363bd3192f8de1a0150b44557",
+    "adaptive_agent/preconditions.py": "c798dd9aa08fe89dfcace2d0c677bbe28dcbd7a02fda26a555c3361a650602f4",
+    "adaptive_agent/candidates.py": "9fd6312c3281d6e606cb54f6efd29c9cc292c748838852221bb666cd66857704",
+    "adaptive_agent/policy.py": "a86fe826cb5309e3c8ddd2152b75679dac1da3adaf105dd1cc5d63e4f14a3c34",
+    "adaptive_agent/runner.py": "ce4489461304c222fdabf646174571d775e9b08d19c54653df157c864c2d8adb",
+    "adaptive_agent/state_update.py": "069db71268d34bdd40b202d30ca0f517f03bf2b733980a3fd0c664eb24972e48",
+    "adaptive_agent/tools.py": "e9a4dc669d44d27e53f863889702550660aadf2ed1003b8d1784ee39a07744d0",
+    "adaptive_agent/answer_generation.py": "f7f46eb7438b9c77cdb29fb738e70a924c9300f45e7a84c7ea78ef15922caec4",
+    "adaptive_agent/input_understanding.py": "47cad895b795d799521cec29dd7bca8e497349dfab655d314ef039e4602e5129",
+    "model_config.py": "566a6b5c3d69636c270434f3daf6e8d05dd403f8de67e92107a2efcc6d7cc34a"
+  }
+}

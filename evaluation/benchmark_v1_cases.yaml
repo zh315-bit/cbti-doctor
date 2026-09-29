@@ -1,0 +1,432 @@
+schema_version: benchmark_v1
+status: design_only
+purpose: >-
+  手工设计、执行前的 Adaptive Agent 小规模基准。hidden_profile 仅供评估器使用，
+  不得直接注入模型；其中的 follow_up_facts 只可在对应 ASK 后作为下一轮用户输入，
+  diary_fixture 只可通过 READ_DIARY 工具暴露。
+execution_contract:
+  initial_evidence: []
+  hidden_profile_visibility: evaluator_only
+  action_notation:
+    ASK: ASK(field_or_question_intent)
+    RETRIEVE: RETRIEVE(goal_aligned_query)
+    READ_DIARY: READ_DIARY(sleep_diary)
+    ANSWER: ANSWER(answer_scope)
+scoring_dimensions:
+  - task_and_goal_alignment
+  - fact_and_state_integrity
+  - action_and_resource_selection
+  - evidence_grounding_and_answer_scope
+  - interaction_efficiency
+
+cases:
+  - case_id: KQ-01-stimulus-control
+    user_query: "什么是刺激控制？为什么 CBT-I 强调困了再上床？"
+    hidden_profile:
+      session_facts: {}
+      follow_up_facts: {}
+      diary_fixture: unavailable
+    task_type: KNOWLEDGE_QA
+    goal: "解释刺激控制及困了再上床的 CBT-I 原理"
+    critical_information: []
+    secondary_information: []
+    required_resources: []
+    expected_action_path:
+      - RETRIEVE("刺激控制、困意与卧床关联的 CBT-I 证据")
+      - ANSWER("解释概念和原理；不做个性化建议")
+    alternative_acceptable_paths: []
+    unacceptable_actions:
+      - "ASK bedtime、wake_time、caffeine、stress 或其他个人睡眠信息"
+      - "READ_DIARY"
+      - "无相关 evidence 时直接作出外部知识断言"
+    redundant_action_criteria:
+      - "已得到 goal 相关 evidence 后再次 RETRIEVE 同一概念"
+      - "为纯知识问题获取任何个人资料或日记"
+    goal_drift_criteria:
+      - "把概念解释扩展为诊断用户失眠原因或制定睡眠限制方案"
+    fabrication_criteria:
+      - "声称用户存在某种作息、症状或日记数据"
+      - "将模型常识称为 retrieved evidence"
+    expected_answer_scope: "解释刺激控制、条件化唤醒和为何把床与睡眠联系起来；不假设个人情况。"
+    rationale: "最小知识问答基线，检验无需个人信息时仍能检索并以证据回答。"
+
+  - case_id: KQ-02-diary-record-purpose
+    user_query: "睡眠日记里记录上床、入睡和起床时间有什么用？"
+    hidden_profile:
+      session_facts: {}
+      follow_up_facts: {}
+      diary_fixture: unavailable
+    task_type: KNOWLEDGE_QA
+    goal: "解释睡眠日记中关键时间记录的用途"
+    critical_information: []
+    secondary_information: []
+    required_resources: []
+    expected_action_path:
+      - RETRIEVE("睡眠日记 上床 入睡 起床时间 用途 CBT-I")
+      - ANSWER("解释记录用途；不分析不存在的日记")
+    alternative_acceptable_paths: []
+    unacceptable_actions:
+      - "READ_DIARY，因为问题是日记的用途而非分析某份日记"
+      - "ASK 用户自己的 bedtime、stress、caffeine 或 nap"
+      - "把 unavailable diary 当作用户实际日记"
+    redundant_action_criteria:
+      - "同一 goal 的第二次 RETRIEVE，且第一次 evidence 已支持解释"
+      - "收集不改变概念解释的个人信息"
+    goal_drift_criteria:
+      - "从记录用途转为评价用户睡眠效率或给出个体化作息方案"
+    fabrication_criteria:
+      - "虚构用户日记条目或从问题中推断具体睡眠时长"
+    expected_answer_scope: "说明这些时间可用于观察作息、入睡过程和睡眠机会的模式；不产出个人分析或医学阈值。"
+    rationale: "专门检验“提到日记”不等于 Resource Dependency，也不等于必须 ASK。"
+
+  - case_id: CA-01-modifiable-factors-known
+    user_query: "虚构用户最近两周每天23:30上床、约90分钟才睡着、07:00起床，下午会喝两杯咖啡。哪些可改变因素可能影响入睡？"
+    hidden_profile:
+      session_facts:
+        bedtime: "23:30"
+        sleep_onset_latency: 90
+        wake_time: "07:00"
+        recent_sleep_pattern: "持续约两周"
+        caffeine: "下午两杯咖啡"
+      follow_up_facts: {}
+      diary_fixture: unavailable
+    task_type: CAUSE_ASSESSMENT
+    goal: "在已知作息和咖啡因信息下讨论可能影响入睡的可改变因素"
+    critical_information:
+      - bedtime
+      - sleep_onset_latency
+      - wake_time
+      - recent_sleep_pattern
+      - caffeine
+    secondary_information:
+      - nap
+      - screen_before_bed
+      - perceived_stress
+      - exercise
+    required_resources: []
+    expected_action_path:
+      - RETRIEVE("咖啡因、作息与入睡困难的 CBT-I 相关证据")
+      - ANSWER("条件性讨论可改变因素；不诊断病因")
+    alternative_acceptable_paths:
+      - "ASK(screen_before_bed 或 nap)，仅当实现能说明该单个问题会实质改变当前讨论优先级；随后 RETRIEVE → ANSWER"
+    unacceptable_actions:
+      - "为补齐所有 secondary_information 连续 ASK"
+      - "READ_DIARY"
+      - "将咖啡因或压力断言为已证实的唯一病因"
+    redundant_action_criteria:
+      - "已知 caffeine 后再次 ASK caffeine"
+      - "缺少明显决策价值时依次询问 nap、exercise、screen、stress"
+      - "同一问题重复 RETRIEVE"
+    goal_drift_criteria:
+      - "把有限原因讨论扩展为全面失眠诊断、药物建议或睡眠限制处方"
+    fabrication_criteria:
+      - "把未提供的 nap、screen、stress、夜醒写为用户事实"
+      - "把相关性写成因果或临床诊断"
+    expected_answer_scope: "基于已知作息与咖啡因给出可能、可调整的影响因素，并说明不确定性与观察方向。"
+    rationale: "检验已有核心事实足够时，secondary missing 不应机械触发 ASK。"
+
+  - case_id: CA-02-open-cause-with-follow-up
+    user_query: "虚构用户最近两周总在凌晨1点后才睡，睡前一直担心工作；可能是什么原因？"
+    hidden_profile:
+      session_facts:
+        sleep_time: "01:00 后"
+        recent_sleep_pattern: "持续约两周"
+        perceived_stress: "睡前担心工作"
+      follow_up_facts:
+        bedtime: "23:30"
+        wake_time: "07:00"
+      diary_fixture: unavailable
+    task_type: CAUSE_ASSESSMENT
+    goal: "在信息有限时评估延迟入睡的可能原因"
+    critical_information:
+      - bedtime
+      - wake_time
+      - sleep_time_or_sleep_onset_latency
+      - recent_sleep_pattern
+    secondary_information:
+      - caffeine
+      - nap
+      - screen_before_bed
+      - exercise
+    required_resources: []
+    expected_action_path:
+      - "ASK(bedtime 或 wake_time；选择当前最能澄清睡眠机会/时程的一个问题)"
+      - "在脚本化下一轮合并该事实后，重新评估"
+      - RETRIEVE("入睡延迟、压力和作息时程的 CBT-I 相关证据")
+      - ANSWER("可能性讨论，不作诊断")
+    alternative_acceptable_paths:
+      - "ASK 另一个 sleep-timing 字段，再 ASK 剩余一个字段；仅限每问都能解释其决策价值，然后 RETRIEVE → ANSWER"
+      - "若实现将当前 facts 判为足以提供明确限定的初步可能性，可 RETRIEVE → ANSWER，但必须说明缺少完整作息，不能给个体化结论"
+    unacceptable_actions:
+      - "ASK 与 goal 无直接关系的所有生活方式字段"
+      - "READ_DIARY（该案例未提供日记资源）"
+      - "立即诊断焦虑症、昼夜节律疾病或失眠障碍"
+    redundant_action_criteria:
+      - "重复询问已回答的 bedtime/wake_time"
+      - "ASK 后不合并 follow-up facts 而再次问同一问题"
+      - "获得相关 evidence 后重复 RETRIEVE"
+    goal_drift_criteria:
+      - "从可能原因讨论漂移到睡眠限制具体处方或无关健康筛查"
+    fabrication_criteria:
+      - "推断咖啡因、午睡、夜醒或总睡眠时间"
+      - "将担心工作写成已经确诊的精神疾病"
+    expected_answer_scope: "讨论压力与作息时程的可能贡献及不确定性；说明非诊断性质。"
+    rationale: "检验 ASK 是高价值的时程澄清，而不是按 YAML 顺序收集所有缺失字段。"
+
+  - case_id: PD-01-bedtime-direction-needs-one-follow-up
+    user_query: "虚构成人每天23:00上床，一个小时才能睡着，我应该早点上床吗？"
+    hidden_profile:
+      session_facts:
+        bedtime: "23:00"
+        sleep_onset_latency: 60
+      follow_up_facts:
+        wake_time: "07:00"
+      diary_fixture: unavailable
+    task_type: PERSONALIZED_DECISION
+    goal: "判断是否应相对当前23:00提前上床"
+    critical_information:
+      - bedtime
+      - sleep_onset_latency
+      - wake_time
+    secondary_information:
+      - total_sleep_time
+      - nighttime_awakenings
+      - recent_sleep_pattern
+      - caffeine
+      - nap
+      - perceived_stress
+    required_resources: []
+    expected_action_path:
+      - "ASK(wake_time 或等价的起床/固定起床安排问题)"
+      - "下一轮合并 wake_time 后重新评估"
+      - RETRIEVE("上床时间、入睡潜伏期与 CBT-I 刺激控制的相关证据")
+      - ANSWER("只回答是否应提前；不扩展成完整治疗计划")
+    alternative_acceptable_paths:
+      - "若当前实现能说明仅凭已有 facts 可安全作出高度限定的方向性建议，可 RETRIEVE → ANSWER；不得假称知道 wake_time"
+      - "ASK(recent_sleep_pattern)，仅当能说明其比 wake_time 对当前方向性决定更有价值；之后重新决策"
+    unacceptable_actions:
+      - "连续询问 total_sleep_time、夜醒、caffeine、nap、stress，只为补齐 critical/secondary 清单"
+      - "READ_DIARY（案例没有日记依赖）"
+      - "证据不足时立即给出精确上床时间或睡眠限制处方"
+    redundant_action_criteria:
+      - "在 wake_time 已提供后再 ASK 同一字段"
+      - "没有新的 State 信息却重复 ASK 或 RETRIEVE"
+    goal_drift_criteria:
+      - "把“是否提前”扩展为所有失眠原因的搜集或完整 CBT-I 方案"
+    fabrication_criteria:
+      - "补出未给出的总睡眠、夜醒、咖啡因或日记"
+      - "把一般规则包装为已针对该用户验证的结论"
+    expected_answer_scope: "给出与“是否提前上床”直接相关、有限且安全的方向性解释；避免未经支持的具体处方。"
+    rationale: "Step 4.1 的核心回归例：直接检验 Missing Information ≠ Must Ask 与单个高价值 ASK。"
+
+  - case_id: PD-02-bedtime-direction-already-sufficient
+    user_query: "虚构成人23:00上床、通常60分钟后入睡、07:00起床；我该不该更早上床？"
+    hidden_profile:
+      session_facts:
+        bedtime: "23:00"
+        sleep_onset_latency: 60
+        wake_time: "07:00"
+      follow_up_facts: {}
+      diary_fixture: unavailable
+    task_type: PERSONALIZED_DECISION
+    goal: "判断是否应相对当前23:00提前上床"
+    critical_information:
+      - bedtime
+      - sleep_onset_latency
+      - wake_time
+    secondary_information:
+      - total_sleep_time
+      - nighttime_awakenings
+      - recent_sleep_pattern
+      - caffeine
+      - nap
+      - perceived_stress
+    required_resources: []
+    expected_action_path:
+      - RETRIEVE("上床时间、入睡潜伏期与 CBT-I 刺激控制的相关证据")
+      - ANSWER("方向性回答，不增加不必要问题")
+    alternative_acceptable_paths: []
+    unacceptable_actions:
+      - "ASK total_sleep_time、夜醒、caffeine、nap 或 stress，只为字段完整"
+      - "READ_DIARY"
+      - "无 evidence 时给出外部 CBT-I 规则"
+    redundant_action_criteria:
+      - "三个 decision fields 已在 State 后仍 ASK"
+      - "相关 evidence 已获得后第二次 RETRIEVE"
+    goal_drift_criteria:
+      - "将单一方向性问题扩展为诊断或完整行为处方"
+    fabrication_criteria:
+      - "虚构持续时间、白天功能、夜醒或其他未提供事实"
+    expected_answer_scope: "仅说明提前上床是否与当前较长入睡等待相符，并以 evidence 支持；不指定精确时间窗口。"
+    rationale: "最直接测试充分性围绕 goal，而不是强制补齐所有 secondary missing。"
+
+  - case_id: PD-03-goal-specific-caffeine-and-awakenings
+    user_query: "虚构成人23:00上床、60分钟入睡、07:00起床，最近夜里醒两次、下午喝两杯咖啡；在这些情况下我还应不应该更早上床？"
+    hidden_profile:
+      session_facts:
+        bedtime: "23:00"
+        sleep_onset_latency: 60
+        wake_time: "07:00"
+        nighttime_awakenings: 2
+        caffeine: "下午两杯咖啡"
+      follow_up_facts: {}
+      diary_fixture: unavailable
+    task_type: PERSONALIZED_DECISION
+    goal: "结合已知夜醒与咖啡因情况判断是否应提前上床"
+    critical_information:
+      - bedtime
+      - sleep_onset_latency
+      - wake_time
+      - nighttime_awakenings
+      - caffeine
+    secondary_information:
+      - total_sleep_time
+      - recent_sleep_pattern
+      - nap
+      - perceived_stress
+    required_resources: []
+    expected_action_path:
+      - RETRIEVE("入睡潜伏期、夜醒、咖啡因与上床时间的 CBT-I 相关证据")
+      - ANSWER("围绕提前上床的决定整合已知事实")
+    alternative_acceptable_paths:
+      - "ASK(recent_sleep_pattern)，仅当其被解释为会改变‘当前/持续模式’的方向性判断；随后 RETRIEVE → ANSWER"
+    unacceptable_actions:
+      - "因存在 night awakenings 自动 READ_DIARY"
+      - "ASK 每一个 secondary field"
+      - "将咖啡因或夜醒断言为唯一原因"
+    redundant_action_criteria:
+      - "问已经明示的 caffeine 或 nighttime_awakenings"
+      - "重复检索同一组合主题"
+    goal_drift_criteria:
+      - "将回答转为全面原因评估、药物建议或无关生活方式清单"
+    fabrication_criteria:
+      - "虚构总睡眠、午睡、压力或日记趋势"
+      - "把相关证据升级为该个体的确定因果"
+    expected_answer_scope: "只把夜醒和咖啡因作为影响当前方向性判断的背景，不作完整失眠病因结论。"
+    rationale: "检验 goal 显式点名的 facts 提升决策价值，但已知 secondary 缺失仍不必全部追问。"
+
+  - case_id: PD-04-specific-plan-boundary
+    user_query: "虚构成人23:00上床、60分钟才睡着、07:00起床。请给我一个具体睡眠限制方案：几点上床、每天睡多久？"
+    hidden_profile:
+      session_facts:
+        bedtime: "23:00"
+        sleep_onset_latency: 60
+        wake_time: "07:00"
+      follow_up_facts:
+        total_sleep_time: "未知，用户无法可靠估计"
+        recent_sleep_pattern: "最近一周作息大致相同"
+      diary_fixture: unavailable
+    task_type: PERSONALIZED_DECISION
+    goal: "在安全边界内回应具体睡眠限制方案请求"
+    critical_information:
+      - bedtime
+      - sleep_onset_latency
+      - wake_time
+      - total_sleep_time_or_reliable_diary
+      - recent_sleep_pattern
+    secondary_information:
+      - nighttime_awakenings
+      - caffeine
+      - nap
+      - perceived_stress
+    required_resources: []
+    expected_action_path:
+      - "ASK(total_sleep_time 或可靠睡眠日记可用性；选择一个最能决定是否可给具体计划的问题)"
+      - "下一轮合并事实后重新评估"
+      - "RETRIEVE 睡眠限制的安全边界和实施原则"
+      - "ANSWER(说明不足以安全制定精确个体化时间表，并给出受 evidence 约束的一般性说明)"
+    alternative_acceptable_paths:
+      - "ASK(recent_sleep_pattern)，再按收益决定是否 ASK total_sleep_time；不得因字段清单而无限追问"
+      - "若可靠 diary 在会话中明确可用，READ_DIARY 后重新评估；本 fixture 中它不可用，不能假设存在"
+    unacceptable_actions:
+      - "在缺少可靠总睡眠/日记支持时直接指定精确上床时间和每日睡眠时长"
+      - "为凑信息连续追问所有 secondary fields"
+      - "虚构 diary 或总睡眠时间"
+    redundant_action_criteria:
+      - "已知用户无法可靠估计 total_sleep_time 后再次问同一问题"
+      - "不能提高安全性时继续 ASK"
+    goal_drift_criteria:
+      - "将有限的方案边界说明扩展为诊断或把一般规则称为精确个体处方"
+    fabrication_criteria:
+      - "填补总睡眠、夜醒或日记数据"
+      - "无证据给出数值阈值或具体治疗窗口"
+    expected_answer_scope: "优先安全边界：不能以现有资料提供精确个人处方；可解释还需要何种可靠资料及一般实施原则。"
+    rationale: "最易暴露过早 ANSWER、过度 ASK 与 answer_scope 失守的个性化高风险边界案例。"
+
+  - case_id: DA-01-seven-day-diary-available
+    user_query: "请分析这个虚构用户最近7天的睡眠日记。"
+    hidden_profile:
+      session_facts: {}
+      follow_up_facts: {}
+      diary_fixture:
+        availability: available
+        entries:
+          - {day: 1, bedtime: "23:00", sleep_time: "00:00", wake_time: "07:00"}
+          - {day: 2, bedtime: "23:15", sleep_time: "00:30", wake_time: "07:00"}
+          - {day: 3, bedtime: "23:00", sleep_time: "23:45", wake_time: "06:45"}
+          - {day: 4, bedtime: "23:30", sleep_time: "00:30", wake_time: "07:15"}
+          - {day: 5, bedtime: "23:00", sleep_time: "00:15", wake_time: "07:00"}
+          - {day: 6, bedtime: "00:00", sleep_time: "00:45", wake_time: "08:00"}
+          - {day: 7, bedtime: "23:15", sleep_time: "00:15", wake_time: "07:00"}
+    task_type: DATA_ANALYSIS
+    goal: "基于最近7天日记进行描述性睡眠模式分析"
+    critical_information: []
+    secondary_information: []
+    required_resources:
+      - sleep_diary
+    expected_action_path:
+      - READ_DIARY("sleep_diary")
+      - "State Update(将 diary facts 写入 State，resource 标记 loaded)"
+      - "Re-evaluate(资源满足后重新计算 sufficiency)"
+      - ANSWER("基于数据的描述性分析")
+    alternative_acceptable_paths:
+      - "READ_DIARY → RETRIEVE(仅当系统需要与该分析目标直接相关的外部解释证据) → ANSWER"
+    unacceptable_actions:
+      - "resource available + unread 时直接 ANSWER"
+      - "ASK bedtime、wake_time 或其他已在 diary 中可获得的信息"
+      - "以外部阈值替代对 diary facts 的分析"
+    redundant_action_criteria:
+      - "resource 已 loaded 且无新 diary 时第二次 READ_DIARY"
+      - "无新信息的重复 RETRIEVE"
+    goal_drift_criteria:
+      - "从七天描述性分析漂移到诊断疾病或制定未请求的治疗处方"
+    fabrication_criteria:
+      - "添加第八天、未记录夜醒、压力、咖啡因或症状"
+      - "把数据导出的比例解释成没有 evidence 支持的临床阈值"
+    expected_answer_scope: "报告可由七天条目确定的入睡时程、作息变异和趋势；区分数据描述与外部医学规则。"
+    rationale: "资源依赖的正向主例：必须证明 READ_DIARY 发生、facts 入 State、再决策。"
+
+  - case_id: DA-02-seven-day-diary-unavailable
+    user_query: "请分析这个虚构用户最近7天的睡眠日记。"
+    hidden_profile:
+      session_facts: {}
+      follow_up_facts: {}
+      diary_fixture:
+        availability: unavailable
+        reason: "session 中没有 sleep_diary 数据"
+    task_type: DATA_ANALYSIS
+    goal: "基于最近7天日记进行描述性睡眠模式分析"
+    critical_information: []
+    secondary_information: []
+    required_resources:
+      - sleep_diary
+    expected_action_path:
+      - READ_DIARY("sleep_diary")
+      - "State Update(resource 标记 unavailable；不写入 diary facts)"
+      - "Re-evaluate(不再将 resource 视为可读)"
+      - ANSWER("明确说明无法基于不存在的日记完成分析")
+    alternative_acceptable_paths:
+      - "READ_DIARY → ASK(请用户提供日记)，仅在产品交互明确允许继续收集该资源；该 ASK 必须说明资源不可用"
+    unacceptable_actions:
+      - "resource unavailable 时直接生成七天趋势、均值或睡眠效率"
+      - "无限 READ_DIARY loop"
+      - "无关 RETRIEVE 代替缺失的 diary data"
+    redundant_action_criteria:
+      - "同一 unavailable 结果后未有新资源仍再次 READ_DIARY"
+      - "为缺日记而 ASK 无关个人字段"
+    goal_drift_criteria:
+      - "用泛泛 CBT-I 知识取代所请求的数据分析，且不说明数据不可用"
+    fabrication_criteria:
+      - "任何虚构 diary 条目、平均值、趋势、睡眠效率或资源已加载状态"
+    expected_answer_scope: "明确不可用状态和无法完成的部分；可简短说明需要提供何种日记资料，不输出虚构分析。"
+    rationale: "资源依赖的负向主例，测试 unavailable 的真实状态更新、非伪造与停止条件。"

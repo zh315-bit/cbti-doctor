@@ -1,0 +1,23 @@
+{
+  "run_name": "v1_2_development_evaluation_on_benchmark_v2",
+  "benchmark_status": "development_regression_set",
+  "benchmark_sha256": "dfa9b9e5a12b0017fa68d344d01b313ebc29e583b933fbe1e93c125f55ecafd2",
+  "evaluation_rubric": "evaluation/benchmark_v1_1_scoring.md",
+  "evaluation_rubric_sha256": "a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899",
+  "git_commit": "not_available_no_HEAD_commit",
+  "information_value_configuration": {
+    "implementation": "adaptive_agent/information_value.py",
+    "levels": ["HIGH", "MEDIUM", "LOW", "NONE"],
+    "diminishing_return_thresholds": {"prior_asks_0": "LOW", "prior_asks_1": "MEDIUM", "prior_asks_2_or_more": "HIGH"},
+    "resource_alternative": "authorized unread sleep_diary rejects equivalent ASK"
+  },
+  "source_sha256": {
+    "adaptive_agent/state.py": "f7853cd6264af8486aa8a0338c325f89c60293b1a2a702afe84e671d2d31a08e",
+    "adaptive_agent/requirements.py": "56533b3098a60c642176aa3edc909c94cc895bc6f58e1f9120270df3e6da3711",
+    "adaptive_agent/sufficiency.py": "75bc7edab88a2d0a4c2e9c308b5679975c0ee2d5232530610d49d9032b5885fd",
+    "adaptive_agent/information_value.py": "82526b66ec8a748ead77fbd8566f0088f85d6ce363bd3192f8de1a0150b44557",
+    "adaptive_agent/candidates.py": "13f1f1d1371a0a2b1838cbb55ff6ab3ff3a9ab0dd504525ea55b5f51533cd676",
+    "adaptive_agent/policy.py": "a86fe826cb5309e3c8ddd2152b75679dac1da3adaf105dd1cc5d63e4f14a3c34",
+    "adaptive_agent/runner.py": "d4072b4406e9305db276c2072e4ff63dbcf18898391deed9697b7f3b9c76b80c"
+  }
+}

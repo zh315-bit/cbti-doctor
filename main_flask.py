@@ -12,6 +12,13 @@ from langchain_core.tools import tool
 from langgraph.prebuilt import ToolNode, tools_condition
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage, BaseMessage, ToolMessage
 from langchain_openai import ChatOpenAI
+from model_config import create_chat_model
+from adaptive_agent.answer_generation import LLMAnswerGenerator
+from adaptive_agent.input_understanding import LLMInputUnderstander
+from adaptive_agent.runner import AdaptiveAgentLoop
+from adaptive_agent.service import AdaptiveChatService
+from adaptive_agent.tools import RagRetrievalTool, SessionDiaryTool
+from adaptive_agent.flask_app import create_app, _create_adaptive_chat_service
 
 # Flask 集成
 import uuid
@@ -21,7 +28,10 @@ from flask_cors import CORS
 
 # ================== 工具定义 ==================
 # 网络搜索工具
-search_tool = TavilySearch(max_results=5, search_depth="advanced", topic="general")
+search_tool = (
+    TavilySearch(max_results=5, search_depth="advanced", topic="general")
+    if os.getenv("ENABLE_WEB_SEARCH", "false").lower() == "true" else None
+)
 
 def negative_thinking_record_tool(model: ChatOpenAI):
     @tool
@@ -528,17 +538,12 @@ class CognitiveTherapyAgent:
         main_config = self.stage_configs["main-graph"]
 
         # 模型配置
-        api_key = os.getenv("KIMI_API_KEY")
-        if not api_key:
-            raise ValueError("请配置 .env 或传入 api_key")
-        self.model = ChatOpenAI(
-            model="moonshot-v1-32k",
-            api_key=api_key,
-            base_url="https://api.moonshot.cn/v1"
-        )
+        self.model = create_chat_model()
 
         # 配置通用工具
-        self.main_tools = [retrieval_augmentation_generation, search_tool]
+        self.main_tools = [retrieval_augmentation_generation]
+        if search_tool is not None:
+            self.main_tools.append(search_tool)
 
         # 实例化子图
         self.sub_agents = {}
@@ -641,103 +646,6 @@ class CognitiveTherapyAgent:
             return {"messages": kept_messages, "enter_stage": state.get("enter_stage"), "is_summarize_dialogue": False}
 
 
-# Flask 应用工厂，提供 /api/chat 等接口供前端调用
-
-def create_app():
-    app = Flask(__name__)
-    CORS(app, supports_credentials=True)
-
-    server_agent = CognitiveTherapyAgent()
-
-    sessions: dict[str, list[BaseMessage]] = {}
-
-    # 读取阶段提示词，供阶段切换时注入系统消息
-    try:
-        with open(server_agent.stage_configs["subgraph"]["information_gathering"]["prompt_file"], "r", encoding="utf-8") as f:
-            information_gathering_prompt = f.read().strip() or ""
-    except Exception as e:
-        print(f"信息收集阶段提示词文件读取失败（{e}），使用默认提示词")
-        information_gathering_prompt = ""
-    try:
-        with open(server_agent.stage_configs["subgraph"]["summary_feedback"]["prompt_file"], "r", encoding="utf-8") as f:
-            summary_feedback_prompt = f.read().strip() or ""
-    except Exception as e:
-        print(f"总结反馈阶段提示词文件读取失败（{e}），使用默认提示词")
-        summary_feedback_prompt = ""
-    try:
-        with open(server_agent.stage_configs["subgraph"]["cognitive_restructuring"]["prompt_file"], "r", encoding="utf-8") as f:
-            cognitive_restructuring_prompt = f.read().strip() or ""
-    except Exception as e:
-        print(f"认知重构阶段提示词文件读取失败（{e}），使用默认提示词")
-        cognitive_restructuring_prompt = ""
-    try:
-        with open(server_agent.stage_configs["subgraph"]["comprehensive_intervention"]["prompt_file"], "r", encoding="utf-8") as f:
-            comprehensive_intervention_prompt = f.read().strip() or ""
-    except Exception as e:
-        print(f"综合干预阶段提示词文件读取失败（{e}），使用默认提示词")
-        comprehensive_intervention_prompt = ""
-
-    @app.route("/api/health", methods=["GET"])
-    def health():
-        return jsonify({"status": "ok"}), 200
-
-    @app.route("/api/chat", methods=["POST"])
-    def chat():
-        data = request.get_json(force=True) or {}
-        message = (data.get("message") or "").strip()
-        session_id = data.get("session_id")
-        if not message:
-            return jsonify({"error": "message is required"}), 400
-
-        if not session_id:
-            session_id = str(uuid.uuid4())
-        history = sessions.get(session_id)
-        if history is None:
-            history = list(server_agent.message_history)
-
-        history.append(HumanMessage(content=message))
-        prior_len = len(history)
-        result = server_agent.main_graph.invoke({"messages": history})
-        # 收集本轮调用的工具名称
-        tools_used: list[str] = []
-        try:
-            for msg in result["messages"][prior_len:]:
-                if isinstance(msg, ToolMessage):
-                    name = getattr(msg, "name", None)
-                    if name:
-                        tools_used.append(name)
-        except Exception:
-            pass
-        # 去重保持顺序
-        seen = set()
-        tools_used = [t for t in tools_used if not (t in seen or seen.add(t))]
-
-        ai_text = result["messages"][-1].content
-        history.append(AIMessage(content=ai_text))
-
-        if "进入总结反馈阶段" in ai_text and summary_feedback_prompt:
-            history.append(SystemMessage(content=summary_feedback_prompt))
-        if "进入认知重构阶段" in ai_text and cognitive_restructuring_prompt:
-            history.append(SystemMessage(content=cognitive_restructuring_prompt))
-        if "进行综合干预阶段" in ai_text and comprehensive_intervention_prompt:
-            history.append(SystemMessage(content=comprehensive_intervention_prompt))
-
-        sessions[session_id] = history
-
-        return jsonify({"session_id": session_id, "assistant": ai_text, "tools_used": tools_used}), 200
-
-    @app.route("/api/reset", methods=["POST"])
-    def reset():
-        data = request.get_json(force=True) or {}
-        session_id = data.get("session_id")
-        if not session_id:
-            return jsonify({"error": "session_id is required"}), 400
-        sessions.pop(session_id, None)
-        return jsonify({"ok": True}), 200
-
-    return app
-
-
 cognitive_therapy_agent = CognitiveTherapyAgent().main_graph
 
 
@@ -765,8 +673,9 @@ if __name__ == "__main__":
     mode = os.getenv("RUN_MODE", "flask")
     if mode == "flask":
         app = create_app()
-        # 对外提供 5000 端口，便于本地前端（http://localhost:8000）跨域调用
-        app.run(host="0.0.0.0", port=5000)
+        # 默认避开 macOS Control Center 常占用的 5000 端口。
+        port = int(os.getenv("PORT", "5001"))
+        app.run(host="127.0.0.1", port=port)
     else:
         # 保留原有命令行交互模式
         agent = CognitiveTherapyAgent()

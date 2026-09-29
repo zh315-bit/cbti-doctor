@@ -1,0 +1,123 @@
+schema_version: step9_25_controlled_mechanism_v1
+case_set_type: synthetic_mechanism_validation_not_benchmark
+cases:
+  - case_id: A-01
+    group: low_value_optional_missing
+    goal: "概括我已经提供的睡眠安排"
+    task_type: PERSONALIZED_DECISION
+    requirements: {critical: [], secondary: [caffeine], decision_fields: [caffeine]}
+    missing_target: caffeine
+    expected_action: ANSWER
+    expected_value: LOW
+    expected_gate: REJECT
+    pair_id: CF-CAFFEINE
+    rationale: "目标只要求概括已提供信息，咖啡信息不会改变方向或范围。"
+  - case_id: A-02
+    group: low_value_optional_missing
+    goal: "用一句话总结我的作息，不分析影响因素"
+    task_type: PERSONALIZED_DECISION
+    requirements: {critical: [], secondary: [caffeine], decision_fields: [caffeine]}
+    missing_target: caffeine
+    expected_action: ANSWER
+    expected_value: LOW
+    expected_gate: REJECT
+    rationale: "缺少因素只会增加细节，不会改变目标答案。"
+  - case_id: A-03
+    group: low_value_optional_missing
+    goal: "解释刺激控制的基本含义"
+    task_type: KNOWLEDGE_QA
+    requirements: {critical: [], secondary: [caffeine], evidence_required: true}
+    missing_target: caffeine
+    expected_action: RETRIEVE
+    expected_value: null
+    expected_gate: null
+    rationale: "咖啡事实无关；知识 goal 的 evidence precondition 保留 RETRIEVE。"
+  - case_id: A-04
+    group: low_value_optional_missing
+    goal: "描述我最近的睡眠情况"
+    task_type: PERSONALIZED_DECISION
+    requirements: {critical: [], secondary: [caffeine], decision_fields: [caffeine]}
+    facts: {caffeine: "下午偶尔喝茶"}
+    missing_target: caffeine
+    expected_action: ANSWER
+    expected_value: null
+    expected_gate: null
+    rationale: "State 已含等价目标事实，不应重复 ASK。"
+  - case_id: B-01
+    group: decision_relevant_missing
+    goal: "咖啡摄入会改变我应该怎样调整睡前安排吗？"
+    task_type: PERSONALIZED_DECISION
+    requirements: {critical: [], secondary: [caffeine], decision_fields: [caffeine]}
+    missing_target: caffeine
+    expected_action: ASK
+    expected_value: HIGH
+    expected_gate: ACCEPT
+    pair_id: CF-CAFFEINE
+    rationale: "相对 CF-CAFFEINE 的 A 组，只改变 goal 所要求的决策影响；合理取值可改变建议方向。"
+  - case_id: B-02
+    group: decision_relevant_missing
+    goal: "比较咖啡摄入与睡眠安排的关系"
+    task_type: PERSONALIZED_DECISION
+    requirements: {critical: [], secondary: [], decision_fields: [caffeine]}
+    missing_target: caffeine
+    expected_action: ASK
+    expected_value: MEDIUM
+    expected_gate: ACCEPT
+    rationale: "目标要求比较相关维度；事实影响比较范围，但不单独决定治疗方向。"
+  - case_id: C-01
+    group: hard_preconditions
+    goal: "我应该早点上床吗？"
+    task_type: PERSONALIZED_DECISION
+    requirements: {critical: [bedtime, sleep_onset_latency, wake_time], secondary: [], decision_fields: [bedtime, sleep_onset_latency, wake_time]}
+    missing_target: wake_time
+    expected_action: ASK
+    expected_origin: HARD_PRECONDITION
+    rationale: "缺少起床时间使上床方向判断无法有效成立，属于 validity-state hard precondition。"
+  - case_id: C-02
+    group: hard_preconditions
+    goal: "为什么保持稳定的起床时刻有助于睡眠？"
+    task_type: PERSONALIZED_DECISION
+    requirements: {critical: [], secondary: [], evidence_required: false}
+    expected_action: RETRIEVE
+    expected_origin: HARD_PRECONDITION
+    rationale: "goal 的一般 CBT-I 知识解释依赖外部 evidence，即使 task signal 错误或不要求 evidence。"
+  - case_id: C-03
+    group: hard_preconditions
+    goal: "请总结我的睡眠日记中这段时间的变化"
+    task_type: KNOWLEDGE_QA
+    requirements: {critical: [], secondary: [], resources: [sleep_diary]}
+    diary: {available: true, authorized: true, status: unread}
+    expected_action: READ_DIARY
+    expected_origin: HARD_PRECONDITION
+    rationale: "明确 diary goal + 授权且可用未读资源形成 RESOURCE 前置依赖。"
+  - case_id: C-04
+    group: hard_preconditions
+    goal: "分析我的睡眠日记记录"
+    task_type: DATA_ANALYSIS
+    requirements: {critical: [], secondary: [], resources: [sleep_diary]}
+    diary: {available: false, authorized: true, status: unavailable}
+    action_history: [{action: READ_DIARY, target: sleep_diary}]
+    expected_action: ANSWER
+    expected_origin: HARD_PRECONDITION
+    rationale: "资源不可用时应说明限制，不 READ_DIARY、不伪造，也不重试。"
+  - case_id: D-01
+    group: mixed_missing
+    goal: "我应该早点上床吗？"
+    task_type: PERSONALIZED_DECISION
+    requirements: {critical: [bedtime, sleep_onset_latency, wake_time], secondary: [caffeine, nap], decision_fields: [bedtime, sleep_onset_latency, wake_time, caffeine, nap]}
+    facts: {bedtime: "23:00", sleep_onset_latency: 50, caffeine: "下午偶尔喝茶"}
+    missing_target: wake_time
+    expected_action: ASK
+    expected_origin: HARD_PRECONDITION
+    rationale: "State 同时有已知 optional fact、次要缺失与真正 validity-critical wake_time；只选必要问题。"
+  - case_id: D-02
+    group: mixed_missing
+    goal: "咖啡摄入会改变我应该怎样调整睡前安排吗？"
+    task_type: PERSONALIZED_DECISION
+    requirements: {critical: [], secondary: [nap, screen_before_bed], decision_fields: [caffeine, nap, screen_before_bed]}
+    facts: {screen_before_bed: "睡前不用手机"}
+    missing_target: caffeine
+    expected_action: ASK
+    expected_value: HIGH
+    expected_gate: ACCEPT
+    rationale: "混合状态下保留与当前决策直接相关的 caffeine acquisition，不追问已知 screen、不因次要 nap 缺失追加问题。"

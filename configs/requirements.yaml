@@ -1,0 +1,37 @@
+task_types:
+  KNOWLEDGE_QA:
+    critical: []
+    secondary: []
+    evidence_required: true
+  CAUSE_ASSESSMENT:
+    critical:
+      - bedtime
+      - sleep_time_or_sleep_onset_latency
+      - wake_time
+      - recent_sleep_pattern
+    secondary:
+      - caffeine
+      - nap
+      - exercise
+      - screen_before_bed
+      - perceived_stress
+    evidence_required: true
+  PERSONALIZED_DECISION:
+    critical:
+      - bedtime
+      - sleep_onset_latency
+      - wake_time
+      - total_sleep_time
+      - nighttime_awakenings
+      - recent_sleep_pattern
+    secondary:
+      - perceived_stress
+      - nap
+      - caffeine
+    evidence_required: true
+  DATA_ANALYSIS:
+    critical: []
+    secondary: []
+    evidence_required: false
+    diary_preferred: true
+    resources: [sleep_diary]

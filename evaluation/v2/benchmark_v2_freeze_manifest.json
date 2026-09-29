@@ -1,0 +1,9 @@
+{
+  "benchmark_version": "2.0-evaluation-set",
+  "status": "benchmark_v2_frozen",
+  "dataset_path": "evaluation/benchmarks/benchmark_v2_cases.yaml",
+  "sha256": "dfa9b9e5a12b0017fa68d344d01b313ebc29e583b933fbe1e93c125f55ecafd2",
+  "case_count": 40,
+  "frozen_on": "2026-09-19",
+  "freeze_rule": "The case definitions and scoring specification must not be changed after this independent baseline run begins."
+}

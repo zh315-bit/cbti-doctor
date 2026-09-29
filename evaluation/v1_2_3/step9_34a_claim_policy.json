@@ -1,0 +1,61 @@
+{
+  "step": "9.34a",
+  "policy_type": "POST_HOC_MATCHED_FROZEN_BASELINE_CLAIM_POLICY",
+  "status": "FROZEN_BEFORE_TREATMENT_EXECUTION",
+  "created_at_utc": "2026-09-28T02:02:35Z",
+  "allowed_claims": [
+    "absolute baseline metric",
+    "absolute treatment metric",
+    "absolute delta (treatment minus baseline)",
+    "relative delta only when the baseline denominator/value is meaningful and nonzero",
+    "per-case matched transition counts",
+    "task-category descriptive deltas",
+    "regression/improvement/unchanged case counts",
+    "descriptive matched comparison",
+    "frozen-baseline comparison",
+    "case-matched evaluation",
+    "40-case comparison, with explicit statement that V4 is development/postmortem evidence for this treatment"
+  ],
+  "prohibited_claims": [
+    "randomized controlled comparison",
+    "randomized paired trial",
+    "preregistered randomized experiment",
+    "causal effect",
+    "statistically significant improvement",
+    "clinical effectiveness",
+    "unseen-benchmark generalization",
+    "universal Agent superiority"
+  ],
+  "statistics": {
+    "outputs": ["DESCRIPTIVE", "PAIRED_CASE_DELTA", "RATE_DELTA", "COUNT_DELTA"],
+    "new_significance_test": "NONE",
+    "no_claim_of_statistical_significance": true,
+    "relative_delta": "(treatment - baseline) / baseline only when baseline is nonzero and denominator semantics permit; otherwise NOT_APPLICABLE"
+  },
+  "order_limitations": {
+    "baseline_case_order_randomized_under_new_protocol": false,
+    "future_treatment_case_order": "match the exact existing baseline order",
+    "order_effect_control": "MATCHED_ORDER_NOT_RANDOMIZED",
+    "claim_must_disclose_order_limitation": true
+  },
+  "reviewer": {
+    "required_type": "SINGLE_AI_REVIEWER",
+    "required_procedure": "same frozen rubric and adjudication procedure",
+    "baseline_identity": "Codex AI reviewer (not human)",
+    "baseline_backend_version_recorded": false,
+    "future_backend_configuration": "pin and disclose before treatment adjudication; do not claim same backend version if it cannot be established",
+    "inter_rater_reliability": "NOT_MEASURED"
+  },
+  "lineage": "provenance metadata only; no extra score. Preserve the five INCOMPLETE_FORMAL cases under existing adjudicatable Step 9.30a.2/9.30b semantics; do not change baseline labels.",
+  "resume_claim_eligibility": {
+    "before_treatment_execution": "NO",
+    "descriptive_matched_comparative_claim_after_treatment_adjudication_aggregation_and_identity_pass": "YES",
+    "randomized_paired_claim": "PERMANENTLY_NO_FOR_THIS_BASELINE/TREATMENT_COMPARISON"
+  },
+  "source_preregistration": {
+    "path": "evaluation/v1_2_3/step9_32_paired_evaluation_preregistration.json",
+    "sha256": "eae334625468d9a844273a3771767a2a733e240ba2eecc9abe19df30f6100e99",
+    "original_randomized_protocol_status": "NOT_EXECUTABLE_WITH_EXISTING_FROZEN_BASELINE",
+    "amended_or_modified": false
+  }
+}

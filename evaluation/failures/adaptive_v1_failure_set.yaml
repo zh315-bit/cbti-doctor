@@ -1,0 +1,141 @@
+failure_set_version: "1.0"
+baseline: adaptive-agent-v1-baseline
+scope: >-
+  Historical Adaptive failures observed in Step 5.1 through Step 5.5. This is append-only
+  evidence: a stochastic failure remains even when a later run does not reproduce it.
+sources:
+  - evaluation/runs/step5_1-pilot-2026-09-19/pilot-traces.jsonl
+  - evaluation/runs/step5_3-controlled-final-2026-09-19/adaptive-traces.jsonl
+  - evaluation/runs/step5_5-controlled-valid-2026-09-19/adaptive_matched_traces.jsonl
+failures:
+  - failure_id: AF-IU-001
+    title: Explicit stress and sleep-time facts omitted from State
+    source_case: CA-02-open-cause-with-follow-up
+    input: "虚构用户最近两周总在凌晨1点后才睡，睡前一直担心工作；可能是什么原因？"
+    expected_state:
+      facts:
+        sleep_time: "01:00 后"
+        recent_sleep_pattern: "最近两周"
+        perceived_stress: "睡前担心工作"
+    actual_state:
+      facts:
+        recent_sleep_pattern: "最近两周"
+      omitted_fields: [sleep_time, perceived_stress]
+    expected_behavior: "Do not ASK facts explicit in the current input; choose a remaining high-value timing question or bounded retrieval/answer."
+    actual_behavior: "ASK(perceived_stress), then ASK(sleep_time_or_sleep_onset_latency), before later timing questions."
+    primary_cause: INPUT_UNDERSTANDING
+    downstream_effects: [STATE_INTEGRITY, ACTION_SELECTION, EFFICIENCY]
+    supporting_trace:
+      - run: step5_1-pilot-2026-09-19
+        path: /CA-02/state_after_turn/facts
+      - run: step5_5-controlled-valid-2026-09-19
+        path: /CA-02-open-cause-with-follow-up/turn_log/1/state_snapshot/facts
+    severity: medium
+    reproducibility: deterministic_failure
+    reproducibility_evidence: "Same omissions and two redundant asks occurred in the Step 5.1, 5.3 and 5.5 traces."
+
+  - failure_id: AF-IU-002
+    title: Explicit sleep-onset latency omitted, producing repeated ASK
+    source_case: PD-01-bedtime-direction-needs-one-follow-up
+    input: "虚构成人每天23:00上床，一个小时才能睡着，我应该早点上床吗？"
+    expected_state:
+      facts:
+        bedtime: "23:00"
+        sleep_onset_latency: 60
+    actual_state:
+      facts:
+        bedtime: "23:00"
+      omitted_fields: [sleep_onset_latency]
+    expected_behavior: "ASK a remaining high-value field such as wake_time, or provide a bounded evidence-supported answer."
+    actual_behavior: "ASK(sleep_time_or_sleep_onset_latency) before ASK(wake_time)."
+    primary_cause: INPUT_UNDERSTANDING
+    downstream_effects: [STATE_INTEGRITY, ACTION_SELECTION, EFFICIENCY]
+    supporting_trace:
+      - run: step5_1-pilot-2026-09-19
+        path: /PD-01/action_path
+      - run: step5_5-controlled-valid-2026-09-19
+        path: /PD-01-bedtime-direction-needs-one-follow-up/action_path
+    severity: medium
+    reproducibility: deterministic_failure
+    reproducibility_evidence: "Observed as an omitted field and redundant latency ASK in the Step 5.1, 5.3 and 5.5 runs."
+
+  - failure_id: AF-IU-003
+    title: Explicit latency omitted in an otherwise sufficient bedtime-direction query
+    source_case: PD-02-bedtime-direction-already-sufficient
+    input: "虚构成人23:00上床、通常60分钟后入睡、07:00起床；我该不该更早上床？"
+    expected_state:
+      facts:
+        bedtime: "23:00"
+        sleep_onset_latency: 60
+        wake_time: "07:00"
+    actual_state:
+      facts:
+        bedtime: "23:00"
+        wake_time: "07:00"
+      omitted_fields: [sleep_onset_latency]
+    expected_behavior: "RETRIEVE → ANSWER without ASK, because the query provides all decision fields."
+    actual_behavior: "ASK(sleep_time_or_sleep_onset_latency) → limited ANSWER."
+    primary_cause: INPUT_UNDERSTANDING
+    downstream_effects: [STATE_INTEGRITY, ACTION_SELECTION, EFFICIENCY]
+    supporting_trace:
+      - run: step5_1-pilot-2026-09-19
+        path: /PD-02/action_path
+      - run: step5_5-controlled-valid-2026-09-19
+        path: /PD-02-bedtime-direction-already-sufficient/action_path
+    severity: medium
+    reproducibility: deterministic_failure
+    reproducibility_evidence: "The same missing latency and redundant ASK recur across the recorded pilot, Step 5.3 and Step 5.5 runs."
+
+  - failure_id: AF-SI-004
+    title: Compound night-awakening/caffeine text loses field-level provenance
+    source_case: PD-03-goal-specific-caffeine-and-awakenings
+    input: "虚构成人23:00上床、60分钟入睡、07:00起床，最近夜里醒两次、下午喝两杯咖啡；在这些情况下我还应不应该更早上床？"
+    expected_state:
+      facts:
+        bedtime: "23:00"
+        sleep_onset_latency: 60
+        wake_time: "07:00"
+        nighttime_awakenings: 2
+        caffeine: "下午两杯咖啡"
+    actual_state:
+      facts:
+        bedtime: "23:00"
+        sleep_onset_latency: 60
+        wake_time: "07:00"
+        caffeine: "最近夜里醒两次、下午喝两杯咖啡"
+      omitted_fields: [nighttime_awakenings]
+    expected_behavior: "Retain independent, source-traceable nighttime_awakenings and caffeine facts."
+    actual_behavior: "Stores a compound caffeine string and no nighttime_awakenings field."
+    primary_cause: INPUT_UNDERSTANDING
+    downstream_effects: [STATE_INTEGRITY]
+    supporting_trace:
+      - run: step5_1-pilot-2026-09-19
+        path: /PD-03/facts_state
+      - run: step5_5-controlled-valid-2026-09-19
+        path: /PD-03-goal-specific-caffeine-and-awakenings/state_snapshot/facts
+    severity: high
+    reproducibility: deterministic_failure
+    reproducibility_evidence: "The same field-level omission and compound caffeine value appear in Step 5.1, 5.3 and 5.5."
+
+  - failure_id: AF-AG-005
+    title: Final answer uses night-awakening claim absent from current State
+    source_case: PD-03-goal-specific-caffeine-and-awakenings
+    input: "虚构成人23:00上床、60分钟入睡、07:00起床，最近夜里醒两次、下午喝两杯咖啡；在这些情况下我还应不应该更早上床？"
+    expected_state:
+      nighttime_awakenings: "absent; therefore unavailable to answer generation"
+    actual_state:
+      nighttime_awakenings: "absent"
+    expected_behavior: "Do not use a user-specific night-awakening claim unless it is present in current State with provenance."
+    actual_behavior: "Final answer stated that the user's two awakenings may relate to the current sleep situation."
+    primary_cause: ANSWER_GROUNDING
+    downstream_effects: []
+    supporting_trace:
+      - run: step5_1-pilot-2026-09-19
+        path: /PD-03/final_answer
+      - run: step5_3-controlled-final-2026-09-19
+        path: /PD-03-goal-specific-caffeine-and-awakenings/final_answer
+    severity: critical
+    reproducibility: stochastic_failure
+    reproducibility_evidence: >-
+      Reproduced in Step 5.1 and Step 5.3; not reproduced in the Step 5.5 final answer,
+      even though AF-SI-004 remained. The later non-occurrence does not delete this history.

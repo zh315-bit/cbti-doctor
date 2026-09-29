@@ -1,0 +1,30 @@
+{
+  "step": "9.43",
+  "artifact_type": "TREATMENT_V2_AUTHORIZATION_TEMPLATE_NOT_AUTHORIZATION",
+  "status": "DISABLED_NOT_ISSUED_RUNNER_COMPATIBILITY_BLOCKED",
+  "evaluation_id": "heldout-v4-step9_43-treatment-v2-20260928-01",
+  "authorization_id": null,
+  "attempt_id": null,
+  "issued_at_utc": null,
+  "authorized_by": null,
+  "treatment_agent_freeze_path": "evaluation/v1_2_3/step9_42_treatment_v2_freeze.json",
+  "treatment_agent_sha256": "b9e891e7cd077dd5b3c6fa72b71faad978a24226c2b5e89e0b06aabde93b51d6",
+  "runner_freeze_path": "PENDING_NEW_V2_RUNNER_FREEZE",
+  "bound_infrastructure": {
+    "benchmark_sha256": "8b8c72092fcd7544e69d5d2ecd13610c7bb4c14210fca330698b3e5ab3f01d7f",
+    "benchmark_manifest_sha256": "b5feb7832b6267d8cff9d25fb2d8cf0043829feb5fd04ec1bea77dba932a13db",
+    "harness_sha256": "8bc271bebc1c5da5351d517e2bb4a0d1a99fda3de1b713a6197b12f81fad70c7",
+    "scoring_sha256": "f742a8f8af7c8747818dadad81621c15d12d74f50538019913dfe18ab53bf59b",
+    "scoring_rubric_sha256": "a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899",
+    "metric_registry_sha256": "de9f348cb1dff66410c03095abdaffcc256f53679718482870e4aa4d80c75056",
+    "one_shot_rules_sha256": "1c7ed4ef47865b117bc943f3e0ad9a859f4f74cfb4e8001f723ac5532af140d0",
+    "matched_protocol_sha256": "a71ba06090370b576fbba66bc4b005e519ddbabff3021a40c6546fc855f90265",
+    "claim_policy_sha256": "4c64896c141dc8feb3789939e1450bcb7bdeb878ed15b27558404c47421aea67"
+  },
+  "one_shot_semantics": "Exactly one formally authorized attempt; unique evaluation/authorization/attempt IDs; exclusive fresh output namespace and append-only ledger; durable first-access marker before benchmark read; durable per-case STARTED before Agent call; raw trace and case result persistence; interruption preserves attempt and forbids rerun.",
+  "issued": false,
+  "attempt_created": false,
+  "command_generated": false,
+  "formal_execution_performed": false,
+  "note": "Non-executable placeholder only. Do not populate IDs or use until a v2-specific runner compatibility freeze exists and a separate Step 9.44 authorization audit passes."
+}

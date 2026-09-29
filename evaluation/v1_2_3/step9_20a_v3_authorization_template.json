@@ -1,0 +1,20 @@
+{
+  "status": "TEMPLATE_NOT_ISSUED",
+  "evaluation_id": "heldout-v3-step9_20-20260923-01",
+  "authorization_id": null,
+  "attempt_id": null,
+  "authorized_by": null,
+  "authorized_at_utc": null,
+  "final_candidate_manifest_sha256": "21e325516f955986497b69e18eebca1d0a0658a24c4293fe75853dd464c901f5",
+  "agent_sha256": "0dfdbac361d68dfeb577433107395b50f4c2fa8ca59f3e1d226fbd9271a839a7",
+  "harness_sha256": "8bc271bebc1c5da5351d517e2bb4a0d1a99fda3de1b713a6197b12f81fad70c7",
+  "runner_sha256": "242adea8e254229d643353654b3438dd20cbdd4e2db4391a81d3a3a9f0185aa3",
+  "scoring_sha256": "f742a8f8af7c8747818dadad81621c15d12d74f50538019913dfe18ab53bf59b",
+  "metric_registry_sha256": "a44f8959b1683775b3f8f956f7f990572faa5c204ae5da3fa1201245c56755ab",
+  "one_shot_rules_sha256": "8333e4f7a42258a740d938e0315df00ea38ce15a9b6726ac43d5d9cecf925d6f",
+  "benchmark_path": null,
+  "benchmark_sha256": null,
+  "preflight_artifact": null,
+  "preflight_artifact_sha256": null,
+  "note": "This template is not authorization. V3 path and optional source hash are supplied only at a later human authorization; this step did not inspect V3."
+}

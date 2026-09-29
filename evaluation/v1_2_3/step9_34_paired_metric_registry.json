@@ -1,0 +1,121 @@
+{
+  "step": "9.34",
+  "registry_type": "PAIRED_METRIC_PROTOCOL_PROJECTION",
+  "status": "FROZEN_REUSE_FROM_PREREGISTRATION",
+  "executable_protocol_status": "BLOCKED_NOT_FROZEN",
+  "created_at_utc": "2026-09-27T20:53:02Z",
+  "sources": {
+    "paired_preregistration": {
+      "path": "evaluation/v1_2_3/step9_32_paired_evaluation_preregistration.json",
+      "sha256": "eae334625468d9a844273a3771767a2a733e240ba2eecc9abe19df30f6100e99"
+    },
+    "metric_registry": {
+      "path": "evaluation/v1_2_3/step9_26_v4_metric_registry.json",
+      "sha256": "de9f348cb1dff66410c03095abdaffcc256f53679718482870e4aa4d80c75056"
+    },
+    "rubric": {
+      "path": "evaluation/benchmark_v1_1_scoring.md",
+      "sha256": "a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899"
+    }
+  },
+  "definitions_changed": false,
+  "primary_metrics": [
+    {
+      "id": "M1",
+      "name": "REDUNDANT_OR_IRRELEVANT_ASK_RATE",
+      "numerator": "redundant ASK events + irrelevant ASK events",
+      "denominator": "all ASK events",
+      "formula": "(redundant + irrelevant ASK events) / all ASK events",
+      "zero_denominator": "NOT_APPLICABLE",
+      "direction": "LOWER_IS_BETTER",
+      "unit": "event-level aggregate; additionally paired case-level any-low-value-ASK yes/no discordance"
+    },
+    {
+      "id": "M2",
+      "name": "TASK_COMPLETION_RATE",
+      "numerator": "complete cases",
+      "denominator": "evaluable cases",
+      "formula": "complete / evaluable; also publish partial and not_complete counts",
+      "direction": "HIGHER_IS_BETTER",
+      "unit": "case; report baseline-only/treatment-only/both/neither and discordant pairs"
+    },
+    {
+      "id": "M3",
+      "name": "HARMFUL_FAILURE_COUNT",
+      "numerator": "cases with frozen harmful label",
+      "denominator": "evaluable cases; report n and rate with count",
+      "formula": "count cases with frozen harmful label",
+      "direction": "LOWER_IS_BETTER",
+      "unit": "case; paired binary discordance"
+    },
+    {
+      "id": "M4",
+      "name": "NECESSARY_ASK_PRESERVATION",
+      "numerator": "oracle-marked necessary targets acquired via semantically equivalent ASK",
+      "denominator": "all oracle-marked necessary ASK targets; report both target and case denominators",
+      "formula": "necessary targets acquired via equivalent ASK / oracle-marked necessary targets",
+      "direction": "NOT_LOWER_UNDER_TREATMENT",
+      "unit": "target nested in case; report discordant target counts clustered by case; do not overstate small denominators"
+    },
+    {
+      "id": "M5",
+      "name": "CRITICAL_FAILURE_COUNT",
+      "numerator": "cases with one or more frozen critical failure types",
+      "denominator": "evaluable cases; report n, rate and types",
+      "formula": "count cases with >=1 frozen critical failure type",
+      "direction": "MUST_NOT_INCREASE",
+      "unit": "case; paired binary discordance; no offset against quality metrics"
+    }
+  ],
+  "case_pair_record_fields": [
+    "case_id",
+    "baseline_score",
+    "treatment_score",
+    "score_delta_treatment_minus_baseline",
+    "baseline_completion",
+    "treatment_completion",
+    "baseline_ask_classification",
+    "treatment_ask_classification",
+    "baseline_harmful_failure_status",
+    "treatment_harmful_failure_status",
+    "baseline_critical_failure_status",
+    "treatment_critical_failure_status"
+  ],
+  "secondary_metrics": {
+    "score_and_quality": [
+      "VALIDITY_RATE",
+      "OVERALL_SCORE",
+      "KQ_MEAN",
+      "CA_MEAN",
+      "PD_MEAN",
+      "DA_MEAN",
+      "goal_alignment (20-point rubric dimension)",
+      "facts_state_integrity (20-point rubric dimension)",
+      "action_resource_selection (20-point rubric dimension)",
+      "evidence_answer_scope (25-point rubric dimension)",
+      "interaction_efficiency (15-point rubric dimension)"
+    ],
+    "acquisition": [
+      "ASK count, ASK per case, and frozen ask-quality category counts/rates",
+      "RETRIEVE count and RETRIEVE per case",
+      "READ_DIARY count and READ_DIARY per case",
+      "tool-call count and TOOL_CALLS_PER_CASE",
+      "total acquisition actions per case"
+    ],
+    "efficiency": [
+      "TURNS_PER_CASE",
+      "STEPS_PER_CASE",
+      "LATENCY_MEAN_MS plus frozen-registry median and nearest-rank p90, overall and by task type"
+    ],
+    "token_usage": "NOT_MEASURED unless provider-reported values are actually persisted; never estimate"
+  },
+  "comparison_outputs": ["DESCRIPTIVE", "PAIRED_CASE_DELTA", "RATE_DELTA", "COUNT_DELTA"],
+  "statistical_significance": "NO_CLAIM; no new significance test is defined. Follow Step 9.32 statistics only if its inference conditions warrant.",
+  "historical_v2_v3_comparability": "NOT_COMPARABLE",
+  "lineage_scoring": "provenance metadata only; no additional score; preserve the five existing INCOMPLETE_FORMAL adjudications",
+  "reviewer": {
+    "type": "SINGLE_AI_REVIEWER",
+    "human_adjudication_claim": false,
+    "inter_rater_reliability": "NOT_MEASURED"
+  }
+}

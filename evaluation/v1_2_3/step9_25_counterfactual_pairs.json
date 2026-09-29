@@ -1,0 +1,323 @@
+[
+  {
+    "pair_id": "CF-CAFFEINE",
+    "cases": [
+      {
+        "case_id": "A-01",
+        "group": "low_value_optional_missing",
+        "pair_id": "CF-CAFFEINE",
+        "expected_action": "ANSWER",
+        "observed_action": "ANSWER",
+        "expected_value": "LOW",
+        "observed_value": "LOW",
+        "expected_gate": "REJECT",
+        "observed_gate": "REJECT",
+        "selected_target": null,
+        "selected_origin": "BOUNDED_STOP",
+        "action_path": [
+          "ANSWER"
+        ],
+        "dependencies": [
+          {
+            "dependency_id": "dep_synthetic_a_01_r0_user_facts_user_facts",
+            "dependency_type": "USER_FACTS",
+            "target": "user_facts",
+            "status": "DEFERRED",
+            "reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+            "source": [
+              "goal_semantics",
+              "requirements"
+            ],
+            "required_for_goal": "概括我已经提供的睡眠安排",
+            "satisfiable_by": [
+              "ASK",
+              "READ_DIARY"
+            ],
+            "fallback": "bounded answer using only supplied facts",
+            "provenance": {
+              "missing_fields": [
+                "caffeine"
+              ]
+            },
+            "semantic_ids": [
+              "sem_synthetic_a_01_r0_4"
+            ],
+            "supersedes_dependency_id": null,
+            "dependency_class": "USER_FACTS",
+            "requiredness": "optional",
+            "dependency_source": [
+              "goal_semantics",
+              "requirements"
+            ],
+            "dependency_reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+            "satisfied_by": []
+          }
+        ],
+        "preconditions": [],
+        "acquisition_decisions": [
+          {
+            "candidate_id": "cand_synthetic_a_01_r0_1",
+            "action": "ASK",
+            "target": "caffeine",
+            "expected_information_gain": "LOW",
+            "goal_relevance": "MEDIUM",
+            "decision_impact": "LOW",
+            "missing_criticality": "DECISION_RELEVANT",
+            "redundancy": "LOW",
+            "resource_dependency": {
+              "dependency_id": "dep_synthetic_a_01_r0_user_facts_user_facts",
+              "dependency_type": "USER_FACTS",
+              "target": "user_facts",
+              "status": "DEFERRED",
+              "reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+              "source": [
+                "goal_semantics",
+                "requirements"
+              ],
+              "required_for_goal": "概括我已经提供的睡眠安排",
+              "satisfiable_by": [
+                "ASK",
+                "READ_DIARY"
+              ],
+              "fallback": "bounded answer using only supplied facts",
+              "provenance": {
+                "missing_fields": [
+                  "caffeine"
+                ]
+              },
+              "semantic_ids": [
+                "sem_synthetic_a_01_r0_4"
+              ],
+              "supersedes_dependency_id": null,
+              "dependency_class": "USER_FACTS",
+              "requiredness": "optional",
+              "dependency_source": [
+                "goal_semantics",
+                "requirements"
+              ],
+              "dependency_reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+              "satisfied_by": []
+            },
+            "estimated_cost": "LOW",
+            "acquisition_value": "NONE",
+            "gate_decision": "REJECT",
+            "accepted": false,
+            "reason": "counterfactual_values_do_not_change_action_direction_or_answer_scope",
+            "dependency_id": "dep_synthetic_a_01_r0_user_facts_user_facts",
+            "lineage_complete": true,
+            "decision_relevant": true,
+            "counterfactual_outcomes": [
+              "unknown: current bounded answer and next action remain unchanged",
+              "plausible values: no supported change to action, direction, or answer scope"
+            ],
+            "impact_dimensions": [
+              "answer_detail"
+            ],
+            "counterfactual_candidate": {
+              "if_unknown": "unknown: current bounded answer and next action remain unchanged",
+              "if_resolved": "plausible values: no supported change to action, direction, or answer scope"
+            },
+            "heuristic_not_calibrated_probability": true
+          }
+        ],
+        "rejected_information": [
+          {
+            "candidate_id": "cand_synthetic_a_01_r0_1",
+            "action": "ASK",
+            "target": "caffeine",
+            "expected_information_gain": "LOW",
+            "goal_relevance": "MEDIUM",
+            "decision_impact": "LOW",
+            "missing_criticality": "DECISION_RELEVANT",
+            "redundancy": "LOW",
+            "resource_dependency": {
+              "dependency_id": "dep_synthetic_a_01_r0_user_facts_user_facts",
+              "dependency_type": "USER_FACTS",
+              "target": "user_facts",
+              "status": "DEFERRED",
+              "reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+              "source": [
+                "goal_semantics",
+                "requirements"
+              ],
+              "required_for_goal": "概括我已经提供的睡眠安排",
+              "satisfiable_by": [
+                "ASK",
+                "READ_DIARY"
+              ],
+              "fallback": "bounded answer using only supplied facts",
+              "provenance": {
+                "missing_fields": [
+                  "caffeine"
+                ]
+              },
+              "semantic_ids": [
+                "sem_synthetic_a_01_r0_4"
+              ],
+              "supersedes_dependency_id": null,
+              "dependency_class": "USER_FACTS",
+              "requiredness": "optional",
+              "dependency_source": [
+                "goal_semantics",
+                "requirements"
+              ],
+              "dependency_reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+              "satisfied_by": []
+            },
+            "estimated_cost": "LOW",
+            "acquisition_value": "NONE",
+            "gate_decision": "REJECT",
+            "accepted": false,
+            "reason": "counterfactual_values_do_not_change_action_direction_or_answer_scope",
+            "dependency_id": "dep_synthetic_a_01_r0_user_facts_user_facts",
+            "lineage_complete": true,
+            "decision_relevant": true,
+            "counterfactual_outcomes": [
+              "unknown: current bounded answer and next action remain unchanged",
+              "plausible values: no supported change to action, direction, or answer scope"
+            ],
+            "impact_dimensions": [
+              "answer_detail"
+            ],
+            "counterfactual_candidate": {
+              "if_unknown": "unknown: current bounded answer and next action remain unchanged",
+              "if_resolved": "plausible values: no supported change to action, direction, or answer scope"
+            },
+            "heuristic_not_calibrated_probability": true,
+            "rejection_reason": "counterfactual_values_do_not_change_action_direction_or_answer_scope"
+          }
+        ],
+        "stop_reason": "no_worthwhile_information_after_acquisition_gate",
+        "match": true,
+        "rationale": "目标只要求概括已提供信息，咖啡信息不会改变方向或范围。"
+      },
+      {
+        "case_id": "B-01",
+        "group": "decision_relevant_missing",
+        "pair_id": "CF-CAFFEINE",
+        "expected_action": "ASK",
+        "observed_action": "ASK",
+        "expected_value": "HIGH",
+        "observed_value": "HIGH",
+        "expected_gate": "ACCEPT",
+        "observed_gate": "ACCEPT",
+        "selected_target": "caffeine",
+        "selected_origin": "OPTIONAL_ACQUISITION",
+        "action_path": [
+          "ASK"
+        ],
+        "dependencies": [
+          {
+            "dependency_id": "dep_synthetic_b_01_r0_user_facts_user_facts",
+            "dependency_type": "USER_FACTS",
+            "target": "user_facts",
+            "status": "DEFERRED",
+            "reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+            "source": [
+              "goal_semantics",
+              "requirements"
+            ],
+            "required_for_goal": "咖啡摄入会改变我应该怎样调整睡前安排吗？",
+            "satisfiable_by": [
+              "ASK",
+              "READ_DIARY"
+            ],
+            "fallback": "bounded answer using only supplied facts",
+            "provenance": {
+              "missing_fields": [
+                "caffeine"
+              ]
+            },
+            "semantic_ids": [
+              "sem_synthetic_b_01_r0_4"
+            ],
+            "supersedes_dependency_id": null,
+            "dependency_class": "USER_FACTS",
+            "requiredness": "optional",
+            "dependency_source": [
+              "goal_semantics",
+              "requirements"
+            ],
+            "dependency_reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+            "satisfied_by": []
+          }
+        ],
+        "preconditions": [],
+        "acquisition_decisions": [
+          {
+            "candidate_id": "cand_synthetic_b_01_r0_1",
+            "action": "ASK",
+            "target": "caffeine",
+            "expected_information_gain": "HIGH",
+            "goal_relevance": "HIGH",
+            "decision_impact": "HIGH",
+            "missing_criticality": "DECISION_RELEVANT",
+            "redundancy": "LOW",
+            "resource_dependency": {
+              "dependency_id": "dep_synthetic_b_01_r0_user_facts_user_facts",
+              "dependency_type": "USER_FACTS",
+              "target": "user_facts",
+              "status": "DEFERRED",
+              "reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+              "source": [
+                "goal_semantics",
+                "requirements"
+              ],
+              "required_for_goal": "咖啡摄入会改变我应该怎样调整睡前安排吗？",
+              "satisfiable_by": [
+                "ASK",
+                "READ_DIARY"
+              ],
+              "fallback": "bounded answer using only supplied facts",
+              "provenance": {
+                "missing_fields": [
+                  "caffeine"
+                ]
+              },
+              "semantic_ids": [
+                "sem_synthetic_b_01_r0_4"
+              ],
+              "supersedes_dependency_id": null,
+              "dependency_class": "USER_FACTS",
+              "requiredness": "optional",
+              "dependency_source": [
+                "goal_semantics",
+                "requirements"
+              ],
+              "dependency_reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+              "satisfied_by": []
+            },
+            "estimated_cost": "LOW",
+            "acquisition_value": "HIGH",
+            "gate_decision": "ACCEPT",
+            "accepted": true,
+            "reason": "the goal explicitly links this missing fact to a choice or adjustment; plausible values can change the direction",
+            "dependency_id": "dep_synthetic_b_01_r0_user_facts_user_facts",
+            "lineage_complete": true,
+            "decision_relevant": true,
+            "counterfactual_outcomes": [
+              "unknown: keep the current decision bounded",
+              "plausible values: recommendation/action direction may differ"
+            ],
+            "impact_dimensions": [
+              "next_action",
+              "recommendation_direction",
+              "answer_scope"
+            ],
+            "counterfactual_candidate": {
+              "if_unknown": "unknown: keep the current decision bounded",
+              "if_resolved": "plausible values: recommendation/action direction may differ"
+            },
+            "heuristic_not_calibrated_probability": true
+          }
+        ],
+        "rejected_information": [],
+        "stop_reason": "",
+        "match": true,
+        "rationale": "相对 CF-CAFFEINE 的 A 组，只改变 goal 所要求的决策影响；合理取值可改变建议方向。"
+      }
+    ],
+    "action_differs": true,
+    "interpretation": "同一 caffeine target 在描述 goal 与决策 goal 下的价值/行动差异"
+  }
+]

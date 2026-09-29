@@ -1,4 +1,5 @@
-const API_BASE = `${location.protocol}//${location.hostname}:5000/api`;
+const API_PORT = window.CBTI_API_PORT || '5001';
+const API_BASE = `${location.protocol}//${location.hostname}:${API_PORT}/api`;
 const SESSION_KEY = 'cbti_session_id';
 
 const els = {

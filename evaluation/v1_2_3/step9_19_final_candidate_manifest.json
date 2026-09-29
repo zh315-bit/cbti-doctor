@@ -1,0 +1,38 @@
+{
+  "manifest_id": "step9_19-final-candidate-20260923-01",
+  "created_at": "2026-09-23T19:07:00Z",
+  "immutable": true,
+  "manifest_role": "FINAL_CANDIDATE_PRE_REGISTERED_HELDOUT_PROTOCOL",
+  "candidate_freeze_source": "evaluation/v1_2_3/step9_18_candidate_freeze.json",
+  "candidate_freeze_source_sha256": "7d1ddf51088900458b8a819c1cc73f657fb74010db7c382f42b8be33b1cb4a16",
+  "agent_candidate_id": "post-step9_18-candidate-20260923-01",
+  "agent_aggregate_sha256": "0dfdbac361d68dfeb577433107395b50f4c2fa8ca59f3e1d226fbd9271a839a7",
+  "agent_inventory_count": 26,
+  "authorized_change_chain": [
+    {"step": "9.11", "role": "historical_clean_freeze", "manifest": "evaluation/v1_2_3/step9_11_clean_freeze_manifest.json", "manifest_sha256": "ab1720e0f481c301a2436786d8e2390df2ebfd885ff2b60b5df8f64c17c1aa5c", "agent_aggregate_sha256": "ee914db7b8b5538c5607fdff34cff9083f6d069d50cf342964ae91c8a6446927"},
+    {"step": "9.16", "role": "authorized_dependency_formation_repair", "report": "evaluation/v1_2_3/step9_16_dependency_repair_report.md"},
+    {"step": "9.17", "role": "authorized_tool_state_projection_repair", "report": "evaluation/v1_2_3/step9_17_projection_repair_report.md"},
+    {"step": "9.17a", "role": "identity_transition_audit", "candidate_manifest": "evaluation/v1_2_3/step9_17a_post_step9_17_candidate_freeze.json"},
+    {"step": "9.18", "role": "authorized_information_value_gate", "report": "evaluation/v1_2_3/step9_18_repair_report.md", "candidate_manifest": "evaluation/v1_2_3/step9_18_candidate_freeze.json"}
+  ],
+  "component_hashes": {
+    "requirements_dependency_logic": {"sha256": "69f1b1a6389bb3961b9cb7063b22e7449223c7409ac5e09eae13330b8554caa3", "files": ["adaptive_agent/dependency_resolver.py", "adaptive_agent/requirements.py", "configs/requirements.yaml"]},
+    "input_understanding": {"sha256": "e0b03417ab21b74f143e30372a356c605d0aab35ef3f20332232a9940809b027", "files": ["adaptive_agent/input_understanding.py", "adaptive_agent/facts.py"]},
+    "state_management_and_agent_loop": {"sha256": "6fabaefc2fd93663f623671434e974e635fe2deff313d6bc1f0145decfff81e0", "files": ["adaptive_agent/state.py", "adaptive_agent/state_update.py", "adaptive_agent/runner.py", "adaptive_agent/service.py", "adaptive_agent/flask_app.py"]},
+    "sufficiency_estimation": {"sha256": "8f3b3b1d56127ce35344dd8c4b0d42679a76dc3fc5d447bf5685fb1f1c977c6a", "files": ["adaptive_agent/sufficiency.py"]},
+    "candidate_information_value_and_policy": {"sha256": "40370a481cde19ce97ae5732829f3939e43db6afd4de0c358de338732214d712", "files": ["adaptive_agent/candidates.py", "adaptive_agent/acquisition_gate.py", "adaptive_agent/information_value.py", "adaptive_agent/preconditions.py", "adaptive_agent/policy.py"]},
+    "tool_adapters_and_rag": {"sha256": "47d2f4542f836d0a3069a63782304c6ad5960a63e04bee84892a5a778299784d", "files": ["adaptive_agent/tools.py", "rag_client.py", "local_embeddings.py", "rag_lib/.rag_db/bge-small-zh-v1.5-ch400-v1/index.faiss", "rag_lib/.rag_db/bge-small-zh-v1.5-ch400-v1/index.pkl", "rag_lib/pdfs/"]},
+    "tool_state_projection": {"sha256": "7cdfafd800afc6e2690608676514903c609a5df9b13cc93bb9981df23ac74ca4", "files": ["adaptive_agent/state_update.py", "adaptive_agent/tools.py"]},
+    "answer_grounding": {"sha256": "7b04b411965d4657d7b06b2ace0b88be6ddcc6b3f29a44060374acd0aab8076e", "files": ["adaptive_agent/answer_generation.py"]},
+    "model_and_runtime_configuration": {"sha256": "173449475dadf9a9cb3a2dab0d8880225d248adff9a58b11c7781feb29a91797", "files": ["model_config.py", "runtime:deepseek_nonsecret_configuration", ".python-version", "requirements-lock.txt", ".env.example"], "secret_values_included": false},
+    "evaluation_harness": {"sha256": "8bc271bebc1c5da5351d517e2bb4a0d1a99fda3de1b713a6197b12f81fad70c7", "freeze": "evaluation/v1_2_3/step9_13a_harness_freeze.json", "freeze_sha256": "eced6e71f78ea6be8b137e076cdb3673c868e2a30f00fb13d47212623b7c5200", "files": ["scripts/frozen_run_guard.py", "scripts/preflight_step9_12_local.py", "scripts/run_step8_9_v1_2_1.py", "scripts/run_step9_12_frozen_evaluation.py", "scripts/run_step9_8_frozen_evaluation.py"]},
+    "scoring_specification": {"sha256": "f742a8f8af7c8747818dadad81621c15d12d74f50538019913dfe18ab53bf59b", "source_freeze": "evaluation/v1_2_3/step9_11_clean_freeze_manifest.json", "rubric_sha256": "a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899", "files": ["evaluation/benchmark_v1_1_scoring.md", "scripts/score_step6_1_v2.py"], "application_note": "Use the frozen rubric and definitions only; the V2 hard-coded case review table is not a V3 scoring mechanism."}
+  },
+  "historical_development_set": {"name": "Benchmark V2", "sha256": "dfa9b9e5a12b0017fa68d344d01b313ebc29e583b933fbe1e93c125f55ecafd2", "role": "development_regression_only", "rerun_in_step9_19": false},
+  "heldout_set": {"name": "Benchmark V3", "status": "SEALED_NOT_ACCESSED", "content_read": false, "hash_recorded": false},
+  "candidate_logic_audit": {"case_specific_logic_present": false, "scope": ["adaptive_agent/", "configs/requirements.yaml"], "searched_patterns": ["V2 case IDs", "known KQ/CA/PD/DA case IDs", "benchmark_v2_cases", "expected_action_path"], "result": "NO_MATCH"},
+  "historical_freezes_overwritten": false,
+  "benchmark_v2_rerun": false,
+  "benchmark_v3_accessed": false,
+  "real_model_called": false
+}

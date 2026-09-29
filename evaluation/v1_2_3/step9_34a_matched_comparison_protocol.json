@@ -1,0 +1,137 @@
+{
+  "step": "9.34a",
+  "protocol_id": "step9_34a-posthoc-frozen-baseline-matched-v4-v1",
+  "comparison_class": "POST_HOC_MATCHED_FROZEN_BASELINE",
+  "protocol_status": "FROZEN_BEFORE_TREATMENT_EXECUTION",
+  "created_at_utc": "2026-09-28T02:02:35Z",
+  "fresh_baseline_requirement_unsatisfied": true,
+  "randomized_arm_order_unsatisfied": true,
+  "randomized_reviewer_order_unsatisfied": true,
+  "original_protocols_preserved": {
+    "step9_32_paired_preregistration_sha256": "eae334625468d9a844273a3771767a2a733e240ba2eecc9abe19df30f6100e99",
+    "step9_32_artifact_modified": false,
+    "original_preregistered_paired_protocol_status": "NOT_EXECUTABLE",
+    "step9_34_precheck_sha256": "a912c89df560a8d3110ac5c1361640fe2c48112826f94ac08c34f697b58b6684",
+    "step9_34_blocked_protocol_sha256": "c209bb7375a02733f3cc5e6d908b68b72b6772f2198e31bc9c26572ac37e45d2",
+    "original_step9_34_status": "FAIL_CLOSED_PROTOCOL_INCOMPATIBILITY",
+    "original_step9_32_design_status": "NOT_EXECUTABLE_WITH_EXISTING_FROZEN_BASELINE"
+  },
+  "design_classification": {
+    "randomized_paired_trial": false,
+    "preregistered_randomized_comparison": false,
+    "fresh_baseline_execution": false,
+    "case_matched_comparison": true,
+    "frozen_baseline_comparison": true,
+    "treatment_protocol_frozen_before_execution": true,
+    "case_count": 40,
+    "case_set_and_order_fingerprint_sha256": "d930455e417935337a6e3459defbdc3ee3829b71786fbd8438ef092b62429e68",
+    "baseline_case_order_randomized_under_new_protocol": false,
+    "future_treatment_order": "exactly match the frozen baseline case order",
+    "order_effect_control": "MATCHED_ORDER_NOT_RANDOMIZED"
+  },
+  "identities": {
+    "baseline_evaluation_id": "heldout-v4-step9_28-20260925-01",
+    "baseline_attempt_id": "heldout-v4-step9_28-20260925-01-attempt-step9_29b-5370d36a64d84a3da4f2585e9b57055a",
+    "baseline_authorization_id": "heldout-v4-step9_28-20260925-01-auth-step9_29b-7c9d4ba6c7b649e69a64f9b9e68175db",
+    "baseline_agent_sha256": "4e2bffea0d7eaa9299074a960df84a1806b3ae9d4930662929abc58ca5b2ae79",
+    "treatment_agent_sha256": "e5e4841b51ecc6bced0f342a261a356756d07b39764670d774b910b86b8625a7",
+    "benchmark_v4_path": "evaluation/benchmarks/benchmark_v4_cases.yaml",
+    "benchmark_v4_sha256": "8b8c72092fcd7544e69d5d2ecd13610c7bb4c14210fca330698b3e5ab3f01d7f",
+    "benchmark_manifest_sha256": "b5feb7832b6267d8cff9d25fb2d8cf0043829feb5fd04ec1bea77dba932a13db",
+    "harness_sha256": "8bc271bebc1c5da5351d517e2bb4a0d1a99fda3de1b713a6197b12f81fad70c7",
+    "scoring_aggregate_sha256": "f742a8f8af7c8747818dadad81621c15d12d74f50538019913dfe18ab53bf59b",
+    "scoring_rubric_sha256": "a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899",
+    "one_shot_rules_sha256": "1c7ed4ef47865b117bc943f3e0ad9a859f4f74cfb4e8001f723ac5532af140d0",
+    "paired_metric_registry_sha256": "de9f348cb1dff66410c03095abdaffcc256f53679718482870e4aa4d80c75056",
+    "paired_preregistration_sha256": "eae334625468d9a844273a3771767a2a733e240ba2eecc9abe19df30f6100e99"
+  },
+  "execution_identity_constraints": {
+    "required_treatment_case_count": 40,
+    "required_treatment_case_order_fingerprint_sha256": "d930455e417935337a6e3459defbdc3ee3829b71786fbd8438ef092b62429e68",
+    "max_attempts": 1,
+    "retry_or_automatic_rerun": false,
+    "treatment_evaluation_id_reserved_for_authorization_stage_only": "heldout-v4-step9_34a-treatment-20260928-01",
+    "authorization_id": null,
+    "attempt_id": null,
+    "no_authorization_issued_in_step9_34a": true,
+    "existing_v4_runner_treatment_compatibility": "MUST_BE_REVALIDATED_AND_FAIL_CLOSED_AT_STEP9_35; no authorization unless runner accepts exact treatment identity and preserves all pinned invariants"
+  },
+  "baseline_metric_lock": "evaluation/v1_2_3/step9_34a_baseline_metric_lock.json",
+  "claim_policy": "evaluation/v1_2_3/step9_34a_claim_policy.json",
+  "primary_metrics": "M1-M5 formulas and baseline numerators/denominators are locked in step9_34a_baseline_metric_lock.json; definitions are copied unchanged from Step 9.32 / Step 9.26 Metric Registry",
+  "transition_definitions": {
+    "case_pair_key": "exact identical case_id; no fuzzy matching",
+    "completion": {
+      "PASS": "completion_judgment == complete",
+      "FAIL": "completion_judgment in {partial, not_complete}",
+      "improved": "baseline FAIL -> treatment PASS",
+      "regressed": "baseline PASS -> treatment FAIL",
+      "unchanged": "binary completion status unchanged; preserve three-way judgments in secondary table"
+    },
+    "harmful_failure": {
+      "improved": "baseline YES -> treatment NO",
+      "regressed": "baseline NO -> treatment YES",
+      "unchanged": "same binary label"
+    },
+    "critical_failure": {
+      "improved": "baseline YES -> treatment NO",
+      "regressed": "baseline NO -> treatment YES",
+      "unchanged": "same binary label"
+    },
+    "ask": {
+      "low_value_ask": "ASK event class is redundant or irrelevant under frozen reviewer/rubric rules",
+      "low_value_ask_removed": "baseline case has >=1 low-value ASK event and treatment case has 0",
+      "new_low_value_ask_introduced": "baseline case has 0 low-value ASK events and treatment case has >=1",
+      "necessary_ask_preserved": "oracle-required target is acquired by semantically equivalent ASK in both arms",
+      "necessary_ask_lost": "oracle-required target is acquired by semantically equivalent ASK in baseline but not treatment",
+      "additional_transition": "target acquired only in treatment is reported as gained, never merged into preserved"
+    }
+  },
+  "deltas": {
+    "all_absolute_deltas": "treatment metric - frozen baseline metric",
+    "rate_delta": "treatment rate - baseline rate, reported in percentage points and as fractions",
+    "relative_delta": "(treatment - baseline) / baseline only when baseline != 0 and denominator semantics are meaningful; otherwise NOT_APPLICABLE",
+    "count_delta": "treatment count - baseline count",
+    "case_score_delta": "treatment per-case score - baseline per-case score"
+  },
+  "still_controllable_invariants": {
+    "benchmark_v4_sha256_match": true,
+    "case_set_match": true,
+    "case_order_match_required": true,
+    "harness_match": true,
+    "scoring_match": true,
+    "metric_registry_match": true,
+    "one_shot_rules_match": true,
+    "model_identity_match": true,
+    "model_configuration_match": true,
+    "tool_configuration_match": true,
+    "rag_configuration_match": true,
+    "execution_limit_match": true,
+    "scoring_semantics_match": true,
+    "only_intended_agent_independent_variable": true,
+    "mandatory_revalidation_at_authorization": true,
+    "model_calls_in_this_step": false
+  },
+  "reviewer": {
+    "baseline_type": "SINGLE_AI_REVIEWER",
+    "future_type": "SINGLE_AI_REVIEWER",
+    "rubric_and_adjudication_procedure_match_required": true,
+    "baseline_identity": "Codex AI reviewer (not human)",
+    "exact_baseline_backend_version_recorded": false,
+    "future_reviewer_configuration": "pin and disclose before treatment adjudication; do not assert unverified backend-version identity",
+    "reviewer_order_randomization": false,
+    "inter_rater_reliability": "NOT_MEASURED"
+  },
+  "lineage_policy": "provenance metadata only; no additional score; preserve baseline labels and the five INCOMPLETE_FORMAL-but-adjudicatable cases under Step 9.30a.2/9.30b semantics",
+  "claims": "evaluation/v1_2_3/step9_34a_claim_policy.json",
+  "authorization_template": "evaluation/v1_2_3/step9_34a_treatment_authorization_template.json",
+  "authorization_issued": false,
+  "formal_attempt_created": false,
+  "treatment_v4_executed": false,
+  "baseline_v4_rerun": false,
+  "v5_created": false,
+  "v5_accessed": false,
+  "comparative_results_generated": false,
+  "resume_comparative_claim_eligible_now": false,
+  "resume_randomized_paired_claim_eligible_for_this_comparison": false
+}

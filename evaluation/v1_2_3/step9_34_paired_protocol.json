@@ -1,0 +1,50 @@
+{
+  "step": "9.34",
+  "protocol_type": "PAIRED_BASELINE_TREATMENT_V4_PRECHECK",
+  "freeze_status": "BLOCKED_NOT_FROZEN",
+  "executable": false,
+  "created_at_utc": "2026-09-27T20:53:02Z",
+  "source_preregistration": {
+    "path": "evaluation/v1_2_3/step9_32_paired_evaluation_preregistration.json",
+    "sha256": "eae334625468d9a844273a3771767a2a733e240ba2eecc9abe19df30f6100e99",
+    "modified": false
+  },
+  "requested_baseline_policy": "Reuse existing completed official V4 one-shot baseline; do not rerun it.",
+  "preregistered_baseline_policy": "Run a fresh baseline arm from the immutable Step 9.32 snapshot; do not reuse the prior official one-shot result as the only baseline arm.",
+  "blocking_conflicts": [
+    "Requested reuse-only baseline conflicts with frozen Step 9.32 fresh-baseline requirement.",
+    "Preregistered randomized case/arm order cannot be applied retroactively to the completed fixed-order baseline.",
+    "The frozen Step 9.29a runner rejects the treatment Agent identity; no common paired runner was used for both arms.",
+    "The already adjudicated baseline cannot be retroactively blinded/randomized with a future treatment arm under the preregistered reviewer procedure."
+  ],
+  "no_posthoc_amendment": true,
+  "metrics": {
+    "primary_source": "evaluation/v1_2_3/step9_32_paired_evaluation_preregistration.json",
+    "metric_registry_source": "evaluation/v1_2_3/step9_26_v4_metric_registry.json",
+    "metric_registry_projection": "evaluation/v1_2_3/step9_34_paired_metric_registry.json",
+    "definitions_changed": false
+  },
+  "comparison_policy_preserved_from_preregistration": {
+    "same_case_ids_required": true,
+    "case_level_score_delta": "treatment - baseline",
+    "completion_pairing": "baseline/treatment complete yes-no paired table; report partial and not_complete counts",
+    "ask_pairing": "retain per-arm event categories and paired case any-low-value-ASK discordance; M1 denominator remains all ASK events",
+    "harmful_pairing": "case-level baseline/treatment binary status and discordance",
+    "critical_pairing": "case-level baseline/treatment binary status and discordance",
+    "lineage": "provenance metadata only; no added score; existing five INCOMPLETE_FORMAL cases retain frozen adjudication semantics",
+    "reviewer_type": "SINGLE_AI_REVIEWER; not human; inter-rater reliability NOT_MEASURED",
+    "statistics": "DESCRIPTIVE, PAIRED_CASE_DELTA, RATE_DELTA, COUNT_DELTA only; no new significance test",
+    "historical_v2_v3": "NOT_COMPARABLE"
+  },
+  "authorization": {
+    "prepared_template": "evaluation/v1_2_3/step9_34_treatment_authorization_template.json",
+    "issued": false,
+    "attempt_id_created": false,
+    "command_generated": false
+  },
+  "treatment_v4_executed": false,
+  "baseline_v4_rerun": false,
+  "v5_created": false,
+  "v5_accessed": false,
+  "ready_for_step9_35_treatment_authorization": false
+}

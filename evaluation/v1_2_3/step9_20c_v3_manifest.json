@@ -1,0 +1,29 @@
+{
+  "manifest_id": "step9_20c-benchmark-v3-seal-20260924-01",
+  "created_at_utc": "2026-09-24T14:44:55Z",
+  "sealed_at_utc": "2026-09-24T14:47:16Z",
+  "benchmark_path": "evaluation/benchmarks/benchmark_v3_cases.yaml",
+  "benchmark_sha256": "44ca089a6efa6d734815b17fc73753e8411fcfc31c4f5792342644ed54b2821f",
+  "benchmark_version": "3.0-heldout",
+  "schema_version": "v2-compatible-1",
+  "status": "SEALED_NOT_ACCESSED",
+  "status_meaning": "Constructed and statically audited; not accessed by Agent or formal evaluation. Construction-time access is separately acknowledged.",
+  "case_count": 32,
+  "task_type_distribution": {
+    "KNOWLEDGE_QA": 8,
+    "CAUSE_ASSESSMENT": 8,
+    "PERSONALIZED_DECISION": 8,
+    "DATA_ANALYSIS": 8
+  },
+  "difficulty_distribution": {"easy": 8, "medium": 13, "hard": 11},
+  "language_distribution": {"zh_brief": 6, "zh_colloquial": 7, "zh_distributed": 7, "mixed_zh_en": 4, "en": 8},
+  "diary_fixture_distribution": {"available_entry_shaped": 6, "unavailable": 26},
+  "benchmark_v2_duplicate_queries": 0,
+  "agent_executed_on_v3": false,
+  "model_called": false,
+  "formal_authorization_issued": false,
+  "parent_protocol_manifest": "evaluation/v1_2_3/step9_19_final_candidate_manifest.json",
+  "parent_protocol_manifest_sha256": "21e325516f955986497b69e18eebca1d0a0658a24c4293fe75853dd464c901f5",
+  "historical_manifests_modified": false,
+  "seal_rule": "Any future dataset byte change invalidates this manifest and held-out identity; do not revise cases after Agent output."
+}

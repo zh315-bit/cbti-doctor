@@ -31,6 +31,20 @@ env/
 # LangGraph and RAG Database
 .langgraph_api/
 rag_lib/.rag_db/
+models/
+evaluation/runs/
+evaluation/v3_runs/
+evaluation/v4_runs/
+evaluation/v1_2_3/step9_32_baseline_agent_snapshot.tar.gz
+evaluation/**/recorder/
+evaluation/**/*raw_traces.jsonl
+evaluation/**/*case_results.jsonl
+evaluation/**/*attempts.jsonl
+
+# Local logs and temporary artifacts
+*.log
+*.tmp
+*.bak
 
 # IDEs
 .idea/
@@ -40,4 +54,5 @@ rag_lib/.rag_db/
 
 # OS files
 .DS_Store
+._*
 Thumbs.db

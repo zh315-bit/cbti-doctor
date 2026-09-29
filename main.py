@@ -11,6 +11,7 @@ from langchain_core.tools import tool
 from langgraph.prebuilt import ToolNode, tools_condition
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage, BaseMessage, ToolMessage
 from langchain_openai import ChatOpenAI
+from model_config import create_chat_model
 
 
 # ================== 工具定义 ==================
@@ -519,17 +520,10 @@ class CognitiveTherapyAgent:
         main_config = self.stage_configs["main-graph"]
 
         # 模型配置
-        api_key = os.getenv("KIMI_API_KEY")
-        if not api_key:
-            raise ValueError("请配置 .env 或传入 api_key")
-        self.model = ChatOpenAI(
-            model="moonshot-v1-32k",
-            api_key=api_key,
-            base_url="https://api.moonshot.cn/v1"
-        )
+        self.model = create_chat_model()
 
         # 配置通用工具
-        self.main_tools = retrieval_augmentation_generation
+        self.main_tools = [retrieval_augmentation_generation]
 
         # 实例化子图
         self.sub_agents = {}

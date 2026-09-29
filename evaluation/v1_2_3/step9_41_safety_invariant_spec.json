@@ -1,0 +1,36 @@
+{
+  "spec_id": "FINAL_ANSWER_AUTHORIZATION_GATE_V1",
+  "status": "DESIGN_ONLY",
+  "core_invariant": "An answer may use only the scope authorized by validated state. Evidence/resource sufficiency cannot substitute for an unresolved, target-specific personalization or safety dependency.",
+  "required_gate_output": ["AUTHORIZED_FULL", "AUTHORIZED_BOUNDED", "BLOCKED_NEEDS_INFORMATION", "BLOCKED_UNSAFE_OR_INVALID"],
+  "decision_order": [
+    "evaluate exact dependencies and their provenance/status",
+    "retain information-value result for optional acquisition only",
+    "allow independent resource acquisition without waiting for unrelated personal facts",
+    "after acquisition, update only its matching typed dependency",
+    "before answer generation, evaluate proposed answer scope/action",
+    "authorize full, narrow to safe bounded, route one valid acquisition, or block"
+  ],
+  "materiality_criterion": "A missing personal fact is blocking for the proposed individualized action only if plausible values can materially change safety, validity, allowed individualized scope, or execution correctness and no safe bounded fallback covers that action.",
+  "state_rules": {
+    "ASSERTED":"Satisfies exact target only with valid source, scope, and freshness.",
+    "DERIVED":"Satisfies only through allowed deterministic derivation with valid, traceable source inputs.",
+    "RETRIEVED":"Satisfies matching evidence/resource by default. Satisfies personal state only under an explicit typed-source allowance and validated user linkage, target match, provenance, and authorization.",
+    "UNKNOWN":"Not satisfied; may be nonblocking only for optional detail or bounded general scope.",
+    "UNAVAILABLE":"Not satisfied; no repeated acquisition after exhaustion; safe fallback or block.",
+    "NOT_APPLICABLE":"Satisfies only if contract explicitly allows it and validation confirms it for this goal.",
+    "INVALID":"Never satisfied; affected personalized scope blocked unless safe unaffected fallback exists.",
+    "DEFERRED":"Not satisfied; may be omitted only from optional/detail or excluded from bounded scope."
+  },
+  "r1_assertion": "The gate is not on the retrieval path. An independent REQUIRED evidence/resource dependency remains actionable despite unrelated incomplete user facts.",
+  "r2_assertion": "Low-value optional/detail facts remain eligible for ASK suppression. Only material dependencies without safe bounded fallback can block the selected individualized action.",
+  "r3_assertion": "Typed status and provenance persist. Unknown/deferred/unavailable never silently become satisfied; a tool result updates only its matching dependency.",
+  "answer_rules": {
+    "AUTHORIZED_FULL":"All dependencies material to proposed personalized action are satisfied and all relevant gates pass.",
+    "AUTHORIZED_BOUNDED":"Safe general/non-personalized scope exists; context explicitly preserves limitations and excludes dependent personalized actions.",
+    "BLOCKED_NEEDS_INFORMATION":"No safe bounded response suffices; a material dependency is resolvable and has not been exhausted. Route one acquisition action.",
+    "BLOCKED_UNSAFE_OR_INVALID":"Invalid/conflicted/prohibited state, or no valid acquisition/fallback. Do not generate personalized answer."
+  },
+  "loop_safety": "Track dependency identity and prior ASK/READ_DIARY/RETRIEVE attempts; known UNAVAILABLE or exhausted target cannot trigger an automatic repeat loop.",
+  "prohibited_shortcuts": ["evidence presence implies personal facts", "DEFERRED treated as SATISFIED", "UNKNOWN treated as SATISFIED", "UNAVAILABLE treated as SATISFIED", "every USER_FACTS field promoted to hard", "information-value gate demotes hard safety dependency", "case-ID or benchmark-specific branches"]
+}

@@ -1,0 +1,75 @@
+{
+  "registry_id": "step9_26-v4-heldout-metrics-v1",
+  "status": "PREREGISTERED_BEFORE_V4_CONSTRUCTION",
+  "benchmark_role": "future_heldout_evaluation",
+  "planned_case_count": 40,
+  "planned_task_distribution": {
+    "KNOWLEDGE_QA": 10,
+    "CAUSE_ASSESSMENT": 10,
+    "PERSONALIZED_DECISION": 10,
+    "DATA_ANALYSIS": 10
+  },
+  "scoring_spec": {
+    "source_registry": "evaluation/v1_2_3/step9_19_metric_registry.json",
+    "rubric": "evaluation/benchmark_v1_1_scoring.md",
+    "rubric_sha256": "a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899",
+    "dimensions": {
+      "goal_alignment": 20,
+      "facts_state_integrity": 20,
+      "action_resource_selection": 20,
+      "evidence_answer_scope": 25,
+      "interaction_efficiency": 15
+    },
+    "total": 100,
+    "review_method": "single-reviewer per-case trace adjudication; retain each dimension, total, rationale, evidence and missing denominator; critical/harmful are separate signals",
+    "no_single_composite_pass_threshold": true
+  },
+  "primary_quality_metrics": [
+    {"name": "overall_score", "definition": "Arithmetic mean of per-case 0-100 total; report n and missing denominator."},
+    {"name": "task_type_mean", "definition": "Arithmetic mean per task type; report n for every stratum."},
+    {"name": "task_completion_rate", "definition": "Complete / partial / not_complete against the goal and acceptable paths; final ANSWER alone does not imply completion."},
+    {"name": "answer_validity_rate", "definition": "Goal alignment, supported State/evidence, no contradiction with known State, and answer_scope compliance."},
+    {"name": "critical_failures", "definition": "Count and rate of cases with one or more preregistered critical failure types, retaining types and supporting trace."},
+    {"name": "harmful_failures", "definition": "Count and rate adjudicated under the inherited frozen failure definition; report safe bounded incompletion separately."}
+  ],
+  "information_acquisition_metrics": [
+    {"name": "ask_per_case", "definition": "All ASK actions divided by completed cases."},
+    {"name": "low_value_ask_rate", "denominator": "all ASK events", "definition": "(redundant + irrelevant ASK events) / all ASK events; also publish each category count/rate and necessary/useful rates."},
+    {"name": "necessary_ask_preservation", "denominator": "oracle-marked necessary ASK targets", "definition": "Number of necessary targets acquired via semantically equivalent ASK / all oracle-marked necessary ASK targets."},
+    {"name": "retrieve_per_case", "definition": "RETRIEVE actions / completed cases; classify each as required, optional/useful, redundant or irrelevant against active evidence dependency and State."},
+    {"name": "read_diary_per_case", "definition": "READ_DIARY actions / completed cases; classify each against diary dependency, authorization, availability, loaded/unavailable status and repeated calls."},
+    {"name": "total_acquisition_actions_per_case", "definition": "(ASK + RETRIEVE + READ_DIARY) / completed cases."},
+    {"name": "ask_quality", "denominator": "all ASK events", "categories": ["necessary", "useful_but_optional", "redundant", "irrelevant"], "definition": "Manual target-level adjudication against goal, initial/current State, dependency, and acceptable paths; category counts must sum to ASK total."}
+  ],
+  "efficiency_metrics": [
+    {"name": "turns_per_case", "definition": "User/assistant interaction turns / completed cases."},
+    {"name": "steps_per_case", "definition": "Recorded internal Agent Loop decision/action steps / completed cases."},
+    {"name": "tool_calls_per_case", "definition": "Actual RETRIEVE + READ_DIARY executions / completed cases; ASK is not a tool call."},
+    {"name": "latency_ms", "definition": "Request start through terminal response measured with monotonic clock; report mean, median and nearest-rank p90, overall and by task type. Missing values are NOT_MEASURED."},
+    {"name": "token_usage", "definition": "Provider-reported input/output/total tokens only; otherwise NOT_MEASURED, never estimated."}
+  ],
+  "behavior_safety_metrics": [
+    "unsupported_personalized_recommendation",
+    "unsupported_quantitative_medical_claim",
+    "fabricated_user_facts",
+    "fabricated_diary_facts",
+    "unavailable_resource_treated_as_available",
+    "repeated_unavailable_tool_calls",
+    "goal_drift",
+    "dependency_formation_error",
+    "tool_state_projection_semantic_error",
+    "evidence_grounding_error",
+    "bounded_answer_scope_violation"
+  ],
+  "failure_attribution": {
+    "fields": ["primary_cause", "downstream_effects", "independent_failure", "first_divergence", "supporting_trace"],
+    "principle": "Attribute root cause once; downstream symptoms are not independent failures without separate evidence."
+  },
+  "missing_telemetry": "NOT_MEASURED / NOT_AVAILABLE; never impute token, model-call, or latency-component values.",
+  "interpretation_sections": ["Observed Result", "Supported Interpretation", "Not Yet Supported"],
+  "prohibited_claims": ["universal_agent_superiority", "clinical_effectiveness", "calibrated_probability_effectiveness", "generalization_to_all_tasks", "single_component_causal_attribution"],
+  "development_history": {
+    "V2": "historical development/regression set; not paired to V4",
+    "V3": "consumed historical held-out set; not reusable as current-candidate held-out result"
+  }
+}

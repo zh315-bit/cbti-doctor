@@ -1,0 +1,17 @@
+# Step 9.23a — Identity Failure Audit
+
+## Historical assertions vs current candidate
+
+All three earlier failures were reproduced by the 232-test non-Benchmark suite before identity semantics were updated. The Step 9.18 candidate aggregate was `0dfdbac361d68dfeb577433107395b50f4c2fa8ca59f3e1d226fbd9271a839a7`; the current authorized Step 9.23 candidate aggregate is `d9d657e3c74587291fbb0eea99d762fcf5a4db53e280198de5f3251f5d1ed14e`.
+
+| Failure | Assertion and hashes | First authorized divergence / affected files | Behavior failure | Classification |
+|---|---|---|---|---|
+| `test_step9_13a_authorization_infrastructure.AuthorizationInfrastructureTests.test_historical_and_step9_17_freezes_remain_intact_current_matches_step9_18_candidate` | Expected Agent aggregate `0dfdbac361d68dfeb577433107395b50f4c2fa8ca59f3e1d226fbd9271a839a7`; actual `d9d657e3c74587291fbb0eea99d762fcf5a4db53e280198de5f3251f5d1ed14e`. Assertion was that current files still matched Step 9.18. | Step 9.23. `answer_generation.py`, `state.py`, `state_update.py`, `runner.py`. Each expected/current file SHA is in `step9_23a_candidate_freeze.json`. | No; P1 behavior tests pass, and only the identity assertion failed. | `HISTORICAL_IDENTITY_ASSERTION` |
+| `test_step9_20a_v3_runner.V3RunnerPreparationTests.test_locked_inputs_and_new_runner_match` | Expected old Step 9.19/V3 Agent hash `0dfdbac361d68dfeb577433107395b50f4c2fa8ca59f3e1d226fbd9271a839a7`; actual current Agent hash `d9d657e3c74587291fbb0eea99d762fcf5a4db53e280198de5f3251f5d1ed14e`. Runner reports Agent mismatch while Harness and Scoring still match. | Step 9.23, same four files. The old V3 identity remains fixed because its evaluation is consumed. | No; rejection is the intended fail-closed behavior for a new candidate. | `HISTORICAL_IDENTITY_ASSERTION` |
+| `test_step9_20a_v3_runner.V3RunnerPreparationTests.test_unissued_template_cannot_start_an_attempt` | This did not fail on a hash equality assertion directly. Its expected error was `authorization is not issued`; actual was `frozen identity mismatch`. The attempted authorization was bound to old Agent hash `0dfdbac361d68dfeb577433107395b50f4c2fa8ca59f3e1d226fbd9271a839a7`, while current is `d9d657e3c74587291fbb0eea99d762fcf5a4db53e280198de5f3251f5d1ed14e`. | Step 9.23, same four files; the test coupled two separate guard outcomes. | No; after separating assertions, both old-identity rejection and unissued-authorization rejection pass. | `HISTORICAL_IDENTITY_ASSERTION` |
+
+## Authorized change check
+
+The Step 9.18 frozen inventory was compared with current hashes. The only differing tracked Agent inventory entries are the four files above. Their changes implement the authorized Step 9.23 State→Answer scope and trace it. All other inherited inventory entries retain their frozen values (the RAG corpus directory and runtime configuration use the parent freeze's specialized verification rather than a plain file hash). No production changes to Input Understanding, Requirements, DependencyResolver, Sufficiency, Information Value, Candidate Generation, Policy, tools, diary contract, RAG ranking, Scoring, or Harness were found in the authorized-change inventory comparison.
+
+Step 9.11 and Step 9.18 artifacts were not edited. The Step 9.19 manifest SHA remains `21e325516f955986497b69e18eebca1d0a0658a24c4293fe75853dd464c901f5`; the historical V3 runner still fails closed on the changed Agent hash. No V2/V3 run, model call, V3 result rewrite, or P2 change occurred.

@@ -1,0 +1,77 @@
+{
+  "categories": [
+    {
+      "expected": "RETRIEVE; no low-value ASK prerequisite; answer uses retrieved source, no personalized prescription.",
+      "id": "A",
+      "name": "required resource + unrelated personal fact missing",
+      "synthetic_setup": "Generic evidence-backed sleep education query with no personal schedule supplied; evidence dependency is explicitly required."
+    },
+    {
+      "expected": "Necessary ASK preserved before personalized choice; bounded general explanation may proceed.",
+      "id": "B",
+      "name": "missing fact materially changes decision",
+      "synthetic_setup": "A generic choice between two timing options where a user-specific constraint flips the safe choice."
+    },
+    {
+      "expected": "Suppress ASK; provide general answer with scope boundary.",
+      "id": "C",
+      "name": "missing fact does not change safe answer",
+      "synthetic_setup": "General explanation request whose answer remains identical across plausible values of an absent personal detail."
+    },
+    {
+      "expected": "Fail closed on risky recommendation; ask/withhold until safety context known.",
+      "id": "D",
+      "name": "safety-critical precondition missing",
+      "synthetic_setup": "Immediate activity recommendation where current alertness/operating context determines material physical risk."
+    },
+    {
+      "expected": "Fact remains ASSERTED with source and scope; no repeat ASK.",
+      "id": "E",
+      "name": "previously asserted fact",
+      "synthetic_setup": "User states a specific caffeine cutoff time, then asks a follow-up that uses that same target."
+    },
+    {
+      "expected": "Persist UNAVAILABLE; do not repeat or paraphrase the same target; bounded answer or independent resource action.",
+      "id": "F",
+      "name": "target known unavailable",
+      "synthetic_setup": "User explicitly says they cannot estimate a historical sleep value after one targeted question."
+    },
+    {
+      "expected": "Mark resource UNAVAILABLE, no fabricated data/no retry loop, safe limitation answer.",
+      "id": "G",
+      "name": "required resource unavailable",
+      "synthetic_setup": "Diary analysis requested but diary adapter returns explicit unavailable status."
+    },
+    {
+      "expected": "Evidence result/dependency IDs appear in answer context and supported claim provenance.",
+      "id": "H",
+      "name": "evidence obtained and projected",
+      "synthetic_setup": "Synthetic retrieval tool returns a source-tagged finding for a general question."
+    },
+    {
+      "expected": "No RETRIEVE; compute from asserted facts and cite inputs in trace.",
+      "id": "I",
+      "name": "evidence not required",
+      "synthetic_setup": "Simple arithmetic over facts already present in the current user message."
+    },
+    {
+      "expected": "Retain both source records; mark INVALID conflict; ask only if material, never silent last-write-wins.",
+      "id": "J",
+      "name": "conflicting facts",
+      "synthetic_setup": "Two utterances provide incompatible values for the same target and overlapping time scope."
+    }
+  ],
+  "regression_guards": [
+    "necessary ASK not suppressed",
+    "safety/execution critical dependencies fail closed",
+    "personal facts and retrieved evidence remain source-distinct",
+    "unavailable does not revert to unknown",
+    "one resource attempt per dependency unless explicit policy authorizes retry",
+    "no unsupported personalized/quantitative claims"
+  ],
+  "schema_version": "step9_32_synthetic_test_plan.v1",
+  "status": "PLANNED_NOT_RUN",
+  "test_case_count": 10,
+  "test_method": "Deterministic unit tests with stubbed understander, policy and tools, followed by synthetic production-path integration tests. No V4 fixture, case ID, near-paraphrase or expected-action lookup. Assert state transitions, candidate sets, selected actions, result provenance and answer-context audit.",
+  "v4_case_text_used": false
+}

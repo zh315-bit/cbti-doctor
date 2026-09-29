@@ -1,0 +1,66 @@
+{
+  "manifest_id": "step9_27-benchmark-v4-seal-20260925-01",
+  "created_timestamp_utc": "2026-09-25T02:01:09Z",
+  "sealed_timestamp_utc": "2026-09-25T02:01:09Z",
+  "benchmark_path": "evaluation/benchmarks/benchmark_v4_cases.yaml",
+  "benchmark_sha256": "8b8c72092fcd7544e69d5d2ecd13610c7bb4c14210fca330698b3e5ab3f01d7f",
+  "benchmark_version": "4.0-heldout",
+  "schema_version": "v2-compatible-1",
+  "status": "SEALED_NOT_EVALUATED",
+  "immutable": true,
+  "case_count": 40,
+  "task_type_distribution": {
+    "KNOWLEDGE_QA": 10,
+    "CAUSE_ASSESSMENT": 10,
+    "PERSONALIZED_DECISION": 10,
+    "DATA_ANALYSIS": 10
+  },
+  "difficulty_distribution": {"easy": 3, "medium": 19, "hard": 18},
+  "language_distribution": {
+    "en": 14,
+    "zh_colloquial": 11,
+    "zh_distributed": 7,
+    "zh_brief": 5,
+    "mixed_zh_en": 3
+  },
+  "diary_fixture_distribution": {"available": 9, "unavailable": 31},
+  "initial_session_seeded_case_count": 1,
+  "static_audit": {
+    "schema_valid": true,
+    "unique_case_ids": true,
+    "malformed_fixtures": 0,
+    "coverage_matrix_references_valid": true,
+    "v2_exact_duplicate_queries": 0,
+    "v3_exact_duplicate_queries": 0,
+    "v2_v3_case_id_reuse": 0,
+    "near_query_pairs_at_or_above_sequence_ratio_0_52": 0,
+    "case_specific_agent_logic_found": false,
+    "expected_action_lookup_found": false,
+    "agent_executed_on_v4": false,
+    "model_called_for_v4_evaluation": false,
+    "evaluation_started": false
+  },
+  "frozen_identity_check": {
+    "final_candidate_manifest": "evaluation/v1_2_3/step9_26_final_candidate_freeze.json",
+    "final_candidate_manifest_sha256": "2de40b76bf0ad6d6c3be68294fb8b390d8c6e675c328ac59e22ec78ec010282e",
+    "agent_aggregate_sha256": "4e2bffea0d7eaa9299074a960df84a1806b3ae9d4930662929abc58ca5b2ae79",
+    "harness_aggregate_sha256": "8bc271bebc1c5da5351d517e2bb4a0d1a99fda3de1b713a6197b12f81fad70c7",
+    "scoring_aggregate_sha256": "f742a8f8af7c8747818dadad81621c15d12d74f50538019913dfe18ab53bf59b",
+    "metric_registry_sha256": "de9f348cb1dff66410c03095abdaffcc256f53679718482870e4aa4d80c75056",
+    "one_shot_rules_sha256": "1c7ed4ef47865b117bc943f3e0ad9a859f4f74cfb4e8001f723ac5532af140d0",
+    "all_match": true
+  },
+  "construction_constraints": {
+    "agent_modified": false,
+    "harness_modified": false,
+    "scoring_modified": false,
+    "metric_registry_modified": false,
+    "one_shot_rules_modified": false,
+    "benchmark_v2_modified": false,
+    "benchmark_v3_modified": false,
+    "agent_executed_on_v4": false,
+    "model_called_for_v4_evaluation": false,
+    "formal_authorization_issued": false
+  },
+  "seal_rule": "Any byte change invalidates this dataset identity; do not edit in place. Any defect requires a new benchmark identity and human review."
+}

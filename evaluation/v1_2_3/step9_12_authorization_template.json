@@ -1,0 +1,11 @@
+{
+  "evaluation_id": "clean-evaluation-v1_2_3-20260922-01",
+  "authorization_id": "<NEW_CLEAN_EVALUATION_AUTHORIZATION_ID>",
+  "authorized_by": "<human_authorizer>",
+  "authorized_at": "<UTC_timestamp>",
+  "benchmark_hash": "dfa9b9e5a12b0017fa68d344d01b313ebc29e583b933fbe1e93c125f55ecafd2",
+  "scoring_hash": "a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899",
+  "agent_hash": "ee914db7b8b5538c5607fdff34cff9083f6d069d50cf342964ae91c8a6446927",
+  "harness_hash": "43a4ccda69272e9eb0d6a02eb7f3812d386d47fd7ca4aa48c0d0ece925cca455",
+  "execution_constraints": ["exactly one authorization","one append-only attempt ledger","40 cases from case 1","no automatic rerun","record environment/model/runner/Agent failures as observed"]
+}

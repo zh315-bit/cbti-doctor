@@ -1,0 +1,28 @@
+{
+  "step": "9.41",
+  "status": "PLANNED_NOT_RUN",
+  "fixture_policy": "Synthetic/general task shapes only; no V4 text, identifiers, or near-paraphrases.",
+  "tests": [
+    {"id":"T1","fixture":"General explanation requires external evidence; an unrelated optional user preference is unknown.","expected_path":["RETRIEVE","ANSWER"],"expected_authorization":"AUTHORIZED_FULL or AUTHORIZED_BOUNDED per answer scope","assertions":["RETRIEVE allowed before ASK","no unnecessary ASK","evidence satisfies only evidence dependency"]},
+    {"id":"T2","fixture":"Personalized choice requires a user-specific fact whose plausible values change safety; evidence has already been obtained, fact remains UNKNOWN.","expected_authorization":"BLOCKED_NEEDS_INFORMATION if safe bounded response does not fulfill decision; otherwise AUTHORIZED_BOUNDED with no individualized action","assertions":["never AUTHORIZED_FULL","evidence does not satisfy personal dependency","necessary ASK preserved when resolvable"]},
+    {"id":"T3","fixture":"A user-specific formatting/detail preference is unknown but affects no safety, validity, scope, or execution decision.","expected_authorization":"AUTHORIZED_BOUNDED or AUTHORIZED_FULL","assertions":["no forced ASK","safe answer scope permitted","R2 suppression retained"]},
+    {"id":"T4","fixture":"A material personalization fact is ASSERTED with valid target-matched provenance and freshness.","expected_authorization":"AUTHORIZED_FULL if all other dependencies/gates pass","assertions":["asserted exact dependency satisfied","unrelated dependencies remain independent"]},
+    {"id":"T5","fixture":"A material personalization fact is DEFERRED or UNKNOWN; a safe generic explanation is available.","expected_authorization":"AUTHORIZED_BOUNDED","assertions":["not SATISFIED","generic content may pass","personalized action excluded"]},
+    {"id":"T6","fixture":"A material fact is known UNAVAILABLE after one valid acquisition attempt; no safe full recommendation is possible but generic fallback exists.","expected_authorization":"AUTHORIZED_BOUNDED","assertions":["UNAVAILABLE not SATISFIED","safe fallback used","no repeated ASK/READ loop"]}
+  ],
+  "preservation_assertions": [
+    {"id":"R1","assertion":"Required independent resource acquisition succeeds while unrelated personal facts are incomplete; no blanket ask-before-retrieve behavior."},
+    {"id":"R2","assertion":"Low-value optional/detail ASK remains suppressed; materiality requires concrete effect on safety, validity, individualized scope, or execution."},
+    {"id":"R3","assertion":"ASSERTED/DERIVED/RETRIEVED/UNKNOWN/UNAVAILABLE/NOT_APPLICABLE/INVALID/DEFERRED retain distinct status and provenance; only valid exact dependency match satisfies."}
+  ],
+  "suite_level_assertions": [
+    "all Step 9.33/9.33a tests pass",
+    "necessary ASK preservation passes",
+    "low-value ASK suppression remains valid",
+    "independent resource/evidence acquisition remains valid",
+    "no fabricated personalization",
+    "no infinite ASK/retrieve loops",
+    "all Step 9.41 T1-T6 pass"
+  ],
+  "execution_boundary": {"model_calls_in_step9_41":false,"agent_calls_in_step9_41":false,"v4_executed":false,"v5_created_or_accessed":false}
+}

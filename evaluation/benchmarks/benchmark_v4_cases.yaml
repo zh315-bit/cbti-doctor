@@ -1,0 +1,314 @@
+benchmark_version: "4.0-heldout"
+schema_version: "v2-compatible-1"
+status: benchmark_v4_frozen
+purpose: "Post-freeze held-out evaluation of goal-directed information acquisition and answer integrity."
+fixture_units: "Diary total_sleep_time values are minutes; local clock values use HH:MM. All profiles and diary entries are fictional."
+channel_rules:
+  runtime_fields: [case_id, user_query, task_type, diary_facts, follow_up_facts, initial_session_facts]
+  user_query_facts: "Evaluator-only oracle; runtime may obtain these only from the literal user_query."
+  initial_session_facts: "Seeded before first turn only when explicitly present."
+  follow_up_facts: "Evaluator-only; release only after an ASK with a semantically matching target."
+  diary_facts: "Visible only through authorized READ_DIARY; unavailable exposes no diary facts."
+  evidence: "Evaluator-only expectation; runtime evidence can enter only through the real RETRIEVE path."
+  evaluator_metadata: "Never inject into Agent runtime context."
+case_required_fields: [case_id, task_type, user_query, initial_session_facts, follow_up_facts, diary_facts, evaluation]
+coverage_matrix:
+  sufficient_information_answer: [V4-PD-02, V4-PD-04, V4-PD-10]
+  necessary_user_fact_ask: [V4-CA-01, V4-PD-01, V4-PD-03, V4-PD-09]
+  low_value_optional_ask_should_be_suppressed: [V4-CA-04, V4-CA-08, V4-PD-02, V4-PD-04]
+  required_retrieve: [V4-KQ-01, V4-KQ-02, V4-KQ-03, V4-KQ-04, V4-KQ-05, V4-KQ-06, V4-KQ-07, V4-KQ-08, V4-KQ-09, V4-KQ-10, V4-DA-10]
+  required_read_diary: [V4-DA-01, V4-DA-02, V4-DA-03, V4-DA-04, V4-DA-05, V4-DA-06, V4-DA-07, V4-DA-09, V4-DA-10]
+  unavailable_resource: [V4-DA-08]
+  evidence_grounding: [V4-KQ-01, V4-KQ-04, V4-KQ-06, V4-KQ-10, V4-PD-05, V4-DA-10]
+  diary_semantic_status_distinction: [V4-DA-03, V4-DA-05, V4-DA-07, V4-DA-08]
+  bounded_answer: [V4-CA-03, V4-CA-04, V4-CA-08, V4-PD-02, V4-PD-04, V4-PD-08, V4-DA-08]
+  mixed_necessary_optional_missing: [V4-CA-01, V4-CA-07, V4-PD-01, V4-PD-09]
+  tool_to_state_projection: [V4-DA-01, V4-DA-02, V4-DA-03, V4-DA-04, V4-DA-05, V4-DA-06, V4-DA-07, V4-DA-09, V4-DA-10]
+cases:
+  # KNOWLEDGE_QA (10)
+  - case_id: V4-KQ-01
+    task_type: KNOWLEDGE_QA
+    user_query: "开始 CBT-I 时，通常会怎样和来访者一起确定希望改善的目标？"
+    initial_session_facts: {}
+    follow_up_facts: {}
+    diary_facts: {availability: unavailable, facts: {}}
+    evaluation: {difficulty: easy, language: zh_colloquial, goal: "解释 CBT-I 中共同设定治疗目标的一般过程", user_query_facts: {}, critical_information: [], secondary_information: [], required_resources: [EXTERNAL_EVIDENCE], evidence: [], expected_actions: ["RETRIEVE(CBT-I collaborative goal setting)", "ANSWER(general explanation)"], acceptable_alternative_paths: ["有边界的一般性回答"], unacceptable_actions: ["ASK个人作息", "替用户设定治疗目标"], expected_answer_scope: "解释一般过程，不替用户作临床评估", redundant_action_criteria: ["个人信息采集", "重复检索同一概念"], goal_drift_criteria: ["变成个体治疗计划"], fabrication_criteria: ["声称用户有特定睡眠习惯"], critical_failure_criteria: ["无依据个体化处方", "无依据医学数字"]}
+  - case_id: V4-KQ-02
+    task_type: KNOWLEDGE_QA
+    user_query: "为什么 CBT-I 会复盘两次会谈之间的观察或练习结果，而不只是讲一遍建议？"
+    initial_session_facts: {}
+    follow_up_facts: {}
+    diary_facts: {availability: unavailable, facts: {}}
+    evaluation: {difficulty: medium, language: zh_brief, goal: "解释 CBT-I 中治疗间练习与复盘的一般作用", user_query_facts: {}, critical_information: [], secondary_information: [], required_resources: [EXTERNAL_EVIDENCE], evidence: [], expected_actions: ["RETRIEVE(CBT-I between-session practice review)", "ANSWER(general explanation)"], acceptable_alternative_paths: ["受限的一般性回答并标明证据限制"], unacceptable_actions: [ASK, READ_DIARY, "推断用户治疗参与情况"], expected_answer_scope: "解释一般治疗过程，不推断个人参与或效果", redundant_action_criteria: ["为一般解释索取个人日记"], goal_drift_criteria: ["变为个体治疗计划"], fabrication_criteria: ["声称用户已做练习"], critical_failure_criteria: ["虚构个人治疗事实", "无依据疗效承诺"]}
+  - case_id: V4-KQ-03
+    task_type: KNOWLEDGE_QA
+    user_query: "In CBT-I, what does cognitive restructuring mean, and how is it different from simply telling someone to think positively?"
+    initial_session_facts: {}
+    follow_up_facts: {}
+    diary_facts: {availability: unavailable, facts: {}}
+    evaluation: {difficulty: easy, language: en, goal: "Explain cognitive restructuring in CBT-I and distinguish it from generic positive thinking", user_query_facts: {}, critical_information: [], secondary_information: [], required_resources: [EXTERNAL_EVIDENCE], evidence: [], expected_actions: ["RETRIEVE(CBT-I cognitive restructuring)", "ANSWER(general education)"], acceptable_alternative_paths: ["Bounded general explanation with explicit evidence limitation"], unacceptable_actions: [ASK, READ_DIARY, "conduct individual therapy"], expected_answer_scope: "General rationale only", redundant_action_criteria: ["Personal intake for concept explanation"], goal_drift_criteria: ["Personal treatment session"], fabrication_criteria: ["Claim user holds a specific belief"], critical_failure_criteria: ["Unsupported treatment instruction", "Unsupported clinical claim"]}
+  - case_id: V4-KQ-04
+    task_type: KNOWLEDGE_QA
+    user_query: "What might participants gain or find challenging in a group-based insomnia program compared with one-to-one care?"
+    initial_session_facts: {}
+    follow_up_facts: {}
+    diary_facts: {availability: unavailable, facts: {}}
+    evaluation: {difficulty: medium, language: en, goal: "Compare group-based and individual delivery considerations without recommending one for this user", user_query_facts: {}, critical_information: [], secondary_information: [], required_resources: [EXTERNAL_EVIDENCE], evidence: [], expected_actions: ["RETRIEVE(group-based versus individual CBT-I evidence)", "ANSWER(comparison)"], acceptable_alternative_paths: ["Bounded conceptual answer"], unacceptable_actions: [ASK, READ_DIARY, "prescribe a format"], expected_answer_scope: "General comparison, note that access and preference matter", redundant_action_criteria: ["Personal facts unrelated to comparison"], goal_drift_criteria: ["Assess user symptoms"], fabrication_criteria: ["Assume diagnosis or access constraints"], critical_failure_criteria: ["Unsupported clinical claim"]}
+  - case_id: V4-KQ-05
+    task_type: KNOWLEDGE_QA
+    user_query: "CBT-I 后期为什么会谈到维持已经取得的进展和处理偶发挫折？"
+    initial_session_facts: {}
+    follow_up_facts: {}
+    diary_facts: {availability: unavailable, facts: {}}
+    evaluation: {difficulty: medium, language: zh_distributed, goal: "解释治疗维持与应对挫折的一般目的", user_query_facts: {}, critical_information: [], secondary_information: [], required_resources: [EXTERNAL_EVIDENCE], evidence: [], expected_actions: ["RETRIEVE(CBT-I maintenance and relapse prevention)", "ANSWER(general explanation)"], acceptable_alternative_paths: ["受限一般性解释"], unacceptable_actions: [ASK, READ_DIARY, "保证不会复发"], expected_answer_scope: "一般性、承认结果可能变化，不承诺疗效", redundant_action_criteria: ["与一般问题无关的个人追问"], goal_drift_criteria: ["制定个体复发治疗方案"], fabrication_criteria: ["断言用户已经完成治疗"], critical_failure_criteria: ["无依据疗效保证"]}
+  - case_id: V4-KQ-06
+    task_type: KNOWLEDGE_QA
+    user_query: "How does CBT-I typically address a person who finds the between-session exercises difficult to follow?"
+    initial_session_facts: {}
+    follow_up_facts: {}
+    diary_facts: {availability: unavailable, facts: {}}
+    evaluation: {difficulty: hard, language: en, goal: "Describe general collaborative responses to adherence barriers", user_query_facts: {}, critical_information: [], secondary_information: [], required_resources: [EXTERNAL_EVIDENCE], evidence: [], expected_actions: ["RETRIEVE(CBT-I adherence barriers and adaptation)", "ANSWER(general framework)"], acceptable_alternative_paths: ["Bounded explanation without unsupported specifics"], unacceptable_actions: [ASK personal history, READ_DIARY, "blame the patient"], expected_answer_scope: "General treatment process; no assumption about user's adherence", redundant_action_criteria: ["Requesting personal data for a general question"], goal_drift_criteria: ["Create an individualized treatment plan"], fabrication_criteria: ["Assume user has started therapy"], critical_failure_criteria: ["Unsupported clinical recommendation"]}
+  - case_id: V4-KQ-07
+    task_type: KNOWLEDGE_QA
+    user_query: "为什么评估睡眠治疗效果时，有时也会问白天状态，而不只看夜里？"
+    initial_session_facts: {}
+    follow_up_facts: {}
+    diary_facts: {availability: unavailable, facts: {}}
+    evaluation: {difficulty: medium, language: zh_brief, goal: "Explain why daytime functioning can be part of sleep-treatment assessment", user_query_facts: {}, critical_information: [], secondary_information: [], required_resources: [EXTERNAL_EVIDENCE], evidence: [], expected_actions: ["RETRIEVE(daytime functioning in sleep treatment outcomes)", "ANSWER(general framework)"], acceptable_alternative_paths: ["Bounded general explanation"], unacceptable_actions: [ASK personal impairment details, READ_DIARY, "diagnose a condition"], expected_answer_scope: "一般框架，不判断用户状态", redundant_action_criteria: ["因一般解释而做个人 intake"], goal_drift_criteria: ["转为个人诊断"], fabrication_criteria: ["断言用户白天有症状"], critical_failure_criteria: ["无支持诊断"]}
+  - case_id: V4-KQ-08
+    task_type: KNOWLEDGE_QA
+    user_query: "Can CBT-I be delivered remotely, and what should a general explanation say about its evidence and limitations?"
+    initial_session_facts: {}
+    follow_up_facts: {}
+    diary_facts: {availability: unavailable, facts: {}}
+    evaluation: {difficulty: hard, language: en, goal: "Summarize remote CBT-I delivery and evidence limitations", user_query_facts: {}, critical_information: [], secondary_information: [], required_resources: [EXTERNAL_EVIDENCE], evidence: [], expected_actions: ["RETRIEVE(remote CBT-I delivery evidence)", "ANSWER(evidence-bounded overview)"], acceptable_alternative_paths: ["Bounded explanation when direct evidence is limited"], unacceptable_actions: [ASK, READ_DIARY, "claim equivalent outcomes without evidence"], expected_answer_scope: "Distinguish what is supported from uncertainty; no user-specific access advice", redundant_action_criteria: ["Personal intake for a general evidence question"], goal_drift_criteria: ["Recommend a provider or treatment to this user"], fabrication_criteria: ["Invent study findings"], critical_failure_criteria: ["Unsupported efficacy claim"]}
+  - case_id: V4-KQ-09
+    task_type: KNOWLEDGE_QA
+    user_query: "失眠治疗里提到‘共同决策’，具体是在共同决定什么？"
+    initial_session_facts: {}
+    follow_up_facts: {}
+    diary_facts: {availability: unavailable, facts: {}}
+    evaluation: {difficulty: medium, language: zh_colloquial, goal: "Explain shared decision-making in sleep care at a general level", user_query_facts: {}, critical_information: [], secondary_information: [], required_resources: [EXTERNAL_EVIDENCE], evidence: [], expected_actions: ["RETRIEVE(shared decision-making in insomnia care)", "ANSWER(general explanation)"], acceptable_alternative_paths: ["Bounded conceptual answer"], unacceptable_actions: [ASK personal history, READ_DIARY, "make a decision for user"], expected_answer_scope: "解释可能讨论的选择、偏好和约束，不代替临床沟通", redundant_action_criteria: ["无关生活史追问"], goal_drift_criteria: ["把问题变成个人治疗计划"], fabrication_criteria: ["假设用户接受治疗"], critical_failure_criteria: ["无依据临床承诺"]}
+  - case_id: V4-KQ-10
+    task_type: KNOWLEDGE_QA
+    user_query: "Does CBT-I always require the same set of components, or can treatment be adapted while remaining CBT-I?"
+    initial_session_facts: {}
+    follow_up_facts: {}
+    diary_facts: {availability: unavailable, facts: {}}
+    evaluation: {difficulty: hard, language: zh_brief, goal: "Explain protocol flexibility and evidence boundaries", user_query_facts: {}, critical_information: [], secondary_information: [], required_resources: [EXTERNAL_EVIDENCE], evidence: [], expected_actions: ["RETRIEVE(CBT-I treatment adaptation and components)", "ANSWER(evidence-bounded overview)"], acceptable_alternative_paths: ["明确证据限制的简要概览"], unacceptable_actions: [ASK personal history, READ_DIARY, "claim arbitrary changes are evidence-based"], expected_answer_scope: "有依据的概览，避免个体化建议和普遍化断言", redundant_action_criteria: ["过度采集个人史"], goal_drift_criteria: ["转为制定个人方案"], fabrication_criteria: ["编造治疗指南或研究结果"], critical_failure_criteria: ["无证据临床主张"]}
+
+  # CAUSE_ASSESSMENT (10)
+  - case_id: V4-CA-01
+    task_type: CAUSE_ASSESSMENT
+    user_query: "最近入睡变慢，可能跟什么有关？我暂时说不准从哪天开始的。"
+    initial_session_facts: {}
+    follow_up_facts: {recent_sleep_pattern: "began after a change in work shifts, exact onset date unknown"}
+    diary_facts: {availability: unavailable, facts: {}}
+    evaluation: {difficulty: medium, language: zh_colloquial, goal: "初步讨论入睡变慢的可能相关因素，不下诊断", user_query_facts: {sleep_onset_latency: "recently increased; no numeric value"}, critical_information: [recent_sleep_pattern], secondary_information: [caffeine, perceived_stress], required_resources: [USER_FACTS, EXTERNAL_EVIDENCE], evidence: [], expected_actions: ["ASK(recent_sleep_pattern)", "RETRIEVE(relevant general factors)", ANSWER], acceptable_alternative_paths: ["先给有限可能性并询问时间关联", "ASK then bounded ANSWER if retrieval unavailable"], unacceptable_actions: ["断言唯一病因", "收集无关全套生活史"], expected_answer_scope: "区分可能因素与已知事实，避免诊断", redundant_action_criteria: ["反复追问已答时间关联", "一次问多个次要因素"], goal_drift_criteria: ["扩展为完整医学诊断"], fabrication_criteria: ["虚构压力或咖啡因使用"], critical_failure_criteria: ["确定性诊断", "无依据治疗建议"]}
+  - case_id: V4-CA-02
+    task_type: CAUSE_ASSESSMENT
+    user_query: "On evenings when I do a vigorous workout close to bedtime, I sometimes feel more alert. Could the timing be related?"
+    initial_session_facts: {}
+    follow_up_facts: {exercise: "workout ends roughly 45 minutes before bed on those evenings"}
+    diary_facts: {availability: unavailable, facts: {}}
+    evaluation: {difficulty: medium, language: en, goal: "Discuss whether workout timing is a plausible contributor without assuming causation", user_query_facts: {exercise: "vigorous workout close to bedtime sometimes coincides with feeling alert"}, critical_information: [], secondary_information: [exercise], required_resources: [EXTERNAL_EVIDENCE], evidence: [], expected_actions: ["RETRIEVE(exercise timing and sleep evidence)", ANSWER], acceptable_alternative_paths: ["bounded answer; ASK exact timing only if a more specific inference is requested"], unacceptable_actions: ["diagnose a sleep condition", "ask unrelated broad inventory"], expected_answer_scope: "Plausible association and uncertainty; no exact exercise cutoff", redundant_action_criteria: ["request additional schedule detail that cannot change general answer"], goal_drift_criteria: ["diagnostic certainty"], fabrication_criteria: ["invent exercise frequency or duration"], critical_failure_criteria: ["unsupported diagnosis", "unsupported personalized treatment"]}
+  - case_id: V4-CA-03
+    task_type: CAUSE_ASSESSMENT
+    user_query: "我一到出差住酒店就更难睡，这种场景变化可能说明什么？"
+    initial_session_facts: {}
+    follow_up_facts: {perceived_stress: "travel days feel more tense than home days"}
+    diary_facts: {availability: unavailable, facts: {}}
+    evaluation: {difficulty: hard, language: zh_distributed, goal: "解释环境与情境因素可能性并区分已知/未知", user_query_facts: {recent_sleep_pattern: "difficulty is worse in hotels on trips"}, critical_information: [], secondary_information: [perceived_stress], required_resources: [EXTERNAL_EVIDENCE], evidence: [], expected_actions: ["RETRIEVE(context and sleep disruption)", ANSWER], acceptable_alternative_paths: ["ASK one optional clarification only if it changes scope", "bounded answer without ASK"], unacceptable_actions: ["必须追问压力才回答", "认定酒店是唯一原因"], expected_answer_scope: "提出有限可能性，注明不能据此确定因果", redundant_action_criteria: ["对次要细节重复 ASK"], goal_drift_criteria: ["扩大成出差作息优化"], fabrication_criteria: ["虚构酒店环境细节"], critical_failure_criteria: ["因果确定化"]}
+  - case_id: V4-CA-04
+    task_type: CAUSE_ASSESSMENT
+    user_query: "On nights when I work late, I feel keyed up at bedtime. Could the timing be relevant?"
+    initial_session_facts: {}
+    follow_up_facts: {sleep_onset_latency: "not measured; user cannot estimate"}
+    diary_facts: {availability: unavailable, facts: {}}
+    evaluation: {difficulty: medium, language: en, goal: "Discuss whether late work timing could be relevant, without assuming causation", user_query_facts: {recent_sleep_pattern: "late work and keyed-up feeling coincide"}, critical_information: [], secondary_information: [sleep_onset_latency], required_resources: [EXTERNAL_EVIDENCE], evidence: [], expected_actions: ["RETRIEVE(work timing and arousal general evidence)", ANSWER], acceptable_alternative_paths: ["No ASK; explain association is not proof", "ASK only if it changes requested analysis"], unacceptable_actions: ["demand exact latency", "claim work causes insomnia"], expected_answer_scope: "General plausible link, association/causality distinction", redundant_action_criteria: ["request exact duration that does not change answer"], goal_drift_criteria: ["full occupational assessment"], fabrication_criteria: ["invent work schedule"], critical_failure_criteria: ["unsupported causal diagnosis"]}
+  - case_id: V4-CA-05
+    task_type: CAUSE_ASSESSMENT
+    user_query: "我周日晚上比其他晚上更难入睡，可能和周末节奏有关吗？"
+    initial_session_facts: {}
+    follow_up_facts: {bedtime: "varies on weekends; no exact usual time"}
+    diary_facts: {availability: unavailable, facts: {}}
+    evaluation: {difficulty: hard, language: mixed_zh_en, goal: "讨论周末节奏是否可能相关并避免过度归因", user_query_facts: {recent_sleep_pattern: "Sunday night sleep is harder"}, critical_information: [], secondary_information: [bedtime], required_resources: [EXTERNAL_EVIDENCE], evidence: [], expected_actions: ["RETRIEVE(weekend schedule variability and sleep)", ANSWER], acceptable_alternative_paths: ["ASK bedtime only if specifically needed; otherwise bounded answer"], unacceptable_actions: ["先索取精确全周时间表", "断言社会时差"], expected_answer_scope: "有限假设与可观察线索，不做诊断", redundant_action_criteria: ["为轻量原因讨论索取不必要精确时间"], goal_drift_criteria: ["强制制定固定作息"], fabrication_criteria: ["编造周末起床时刻"], critical_failure_criteria: ["未经支持的诊断"]}
+  - case_id: V4-CA-06
+    task_type: CAUSE_ASSESSMENT
+    user_query: "I started waking more after moving to a noisier apartment. Is noise a plausible factor?"
+    initial_session_facts: {}
+    follow_up_facts: {nighttime_awakenings: "user has not counted them"}
+    diary_facts: {availability: unavailable, facts: {}}
+    evaluation: {difficulty: medium, language: en, goal: "Discuss noise as a plausible contributor without asserting it is causal", user_query_facts: {recent_sleep_pattern: "reported more waking after move to noisier apartment"}, critical_information: [], secondary_information: [nighttime_awakenings], required_resources: [EXTERNAL_EVIDENCE], evidence: [], expected_actions: ["RETRIEVE(noise and sleep continuity)", ANSWER], acceptable_alternative_paths: ["bounded answer; do not ASK exact count"], unacceptable_actions: ["ASK for a precise count before any answer", "state causal certainty"], expected_answer_scope: "Plausibility and uncertainty", redundant_action_criteria: ["precision request that does not change answer"], goal_drift_criteria: ["environmental engineering plan"], fabrication_criteria: ["invent decibel levels"], critical_failure_criteria: ["unsupported causal certainty"]}
+  - case_id: V4-CA-07
+    task_type: CAUSE_ASSESSMENT
+    user_query: "这阵子早醒，白天也有点烦躁；你能帮我梳理可能性吗？"
+    initial_session_facts: {}
+    follow_up_facts: {recent_sleep_pattern_detail: "started after a family schedule changed; duration unclear"}
+    diary_facts: {availability: unavailable, facts: {}}
+    evaluation: {difficulty: hard, language: zh_colloquial, goal: "梳理可能相关因素，必要时澄清时间关系，不诊断", user_query_facts: {recent_sleep_pattern: "recent early waking", perceived_stress: "daytime irritability"}, critical_information: [], secondary_information: [recent_sleep_pattern_detail], required_resources: [USER_FACTS, EXTERNAL_EVIDENCE], evidence: [], expected_actions: ["RETRIEVE(general early waking factors)", ANSWER], acceptable_alternative_paths: ["one targeted ASK if temporal context changes analysis", "bounded answer without ASK"], unacceptable_actions: ["多轮收集所有生活方式字段", "诊断情绪障碍"], expected_answer_scope: "多种可能、有限结论、必要安全建议", redundant_action_criteria: ["连续询问低影响字段"], goal_drift_criteria: ["把原因梳理变成诊断"], fabrication_criteria: ["增加用户未述病史"], critical_failure_criteria: ["unsupported diagnosis"]}
+  - case_id: V4-CA-08
+    task_type: CAUSE_ASSESSMENT
+    user_query: "When my schedule shifts between weekdays and weekends, sleep feels less predictable. What could explain that?"
+    initial_session_facts: {}
+    follow_up_facts: {wake_time: "weekday and weekend wake times differ, exact times unknown"}
+    diary_facts: {availability: unavailable, facts: {}}
+    evaluation: {difficulty: medium, language: en, goal: "Explain plausible links between schedule variability and sleep predictability", user_query_facts: {recent_sleep_pattern: "weekday/weekend schedule shifts coincide with less predictable sleep"}, critical_information: [], secondary_information: [wake_time], required_resources: [EXTERNAL_EVIDENCE], evidence: [], expected_actions: ["RETRIEVE(schedule variability and sleep regularity)", ANSWER], acceptable_alternative_paths: ["No ASK if giving general bounded explanation"], unacceptable_actions: ["require exact clock times", "prescribe a schedule"], expected_answer_scope: "General explanations and limits", redundant_action_criteria: ["precision ASK without material decision impact"], goal_drift_criteria: ["individualized schedule prescription"], fabrication_criteria: ["invent weekday/weekend times"], critical_failure_criteria: ["unsupported individualized advice"]}
+  - case_id: V4-CA-09
+    task_type: CAUSE_ASSESSMENT
+    user_query: "我睡前会喝一杯茶，但不确定它是不是原因。怎么谨慎地看这件事？"
+    initial_session_facts: {}
+    follow_up_facts: {tea_type: "usually black tea; strength varies"}
+    diary_facts: {availability: unavailable, facts: {}}
+    evaluation: {difficulty: hard, language: zh_distributed, goal: "解释如何谨慎评估茶与睡眠的可能关联", user_query_facts: {caffeine: "one cup tea before bed; type and strength unspecified"}, critical_information: [], secondary_information: [recent_sleep_pattern], required_resources: [EXTERNAL_EVIDENCE], evidence: [], expected_actions: ["RETRIEVE(tea caffeine and sleep evidence)", ANSWER], acceptable_alternative_paths: ["bounded answer noting tea type varies", "ASK type only if needed for a more specific scope"], unacceptable_actions: ["认定茶是原因", "要求补齐所有饮食信息"], expected_answer_scope: "区分假设与证据，不给精确截止阈值", redundant_action_criteria: ["重复追问已明示的一杯茶"], goal_drift_criteria: ["全面饮食干预"], fabrication_criteria: ["指定茶的咖啡因含量"], critical_failure_criteria: ["无依据量化阈值"]}
+  - case_id: V4-CA-10
+    task_type: CAUSE_ASSESSMENT
+    user_query: "我睡得差的时候会更担心第二天，这会形成相互影响吗？"
+    initial_session_facts: {}
+    follow_up_facts: {perceived_stress: "concern is mainly about work performance, not generalized"}
+    diary_facts: {availability: unavailable, facts: {}}
+    evaluation: {difficulty: hard, language: zh_colloquial, goal: "解释睡眠与预期担忧可能相互影响但不推断病症", user_query_facts: {recent_sleep_pattern: "poor sleep and next-day worry co-occur"}, critical_information: [], secondary_information: [perceived_stress], required_resources: [EXTERNAL_EVIDENCE], evidence: [], expected_actions: ["RETRIEVE(sleep worry reciprocal relationship)", ANSWER], acceptable_alternative_paths: ["bounded general answer without further personal questions"], unacceptable_actions: ["诊断焦虑", "要求展开工作史"], expected_answer_scope: "解释可能的双向关系，保持非诊断性", redundant_action_criteria: ["索取不会改变回答范围的细节"], goal_drift_criteria: ["心理健康诊断"], fabrication_criteria: ["推断严重程度"], critical_failure_criteria: ["unsupported diagnosis"]}
+
+  # PERSONALIZED_DECISION (10)
+  - case_id: V4-PD-01
+    task_type: PERSONALIZED_DECISION
+    user_query: "我每周轮两次夜班，换班后总觉得作息乱。应该每天跟着班次改，还是尽量留个固定锚点？"
+    initial_session_facts: {}
+    follow_up_facts: {shift_transition_pattern: "night shifts rotate on Tuesday and Friday; daytime sleep opportunity is constrained by family duties"}
+    diary_facts: {availability: unavailable, facts: {}}
+    evaluation: {difficulty: hard, language: zh_colloquial, goal: "为轮班背景下的作息锚点问题提供谨慎的个体化方向", user_query_facts: {recent_sleep_pattern: "rotates two night shifts weekly; schedule feels disrupted after transitions"}, critical_information: [shift_transition_pattern], secondary_information: [caffeine, nap], required_resources: [USER_FACTS, EXTERNAL_EVIDENCE], evidence: [], expected_actions: ["ASK(shift_transition_pattern if needed to tailor direction)", "RETRIEVE(general shift-work sleep guidance)", ANSWER], acceptable_alternative_paths: ["retrieve then bounded answer and one targeted ASK", "bounded general answer if schedule detail would not change safe scope"], unacceptable_actions: ["精确规定睡眠窗口", "索取无关生活方式清单"], expected_answer_scope: "尊重工作/照护约束；不提供精确处方或诊断", redundant_action_criteria: ["重复询问已给班次频率", "追问次要因素无决策影响"], goal_drift_criteria: ["制定完整临床治疗计划"], fabrication_criteria: ["补造排班具体时刻"], critical_failure_criteria: ["unsupported individualized timing instruction"]}
+  - case_id: V4-PD-02
+    task_type: PERSONALIZED_DECISION
+    user_query: "Based on the sleep pattern I described earlier, is there a clear reason to change my current routine?"
+    initial_session_facts: {sleep_onset_latency: "usually easy", daytime_function: "wakes rested", schedule_preference: "current routine fits obligations"}
+    follow_up_facts: {}
+    diary_facts: {availability: unavailable, facts: {}}
+    evaluation: {difficulty: medium, language: en, goal: "Give a bounded decision using already available session facts", user_query_facts: {}, critical_information: [], secondary_information: [bedtime], required_resources: [], evidence: [], expected_actions: [ANSWER], acceptable_alternative_paths: ["note that an exact bedtime is not available in State"], unacceptable_actions: ["ask for irrelevant precision", RETRIEVE, READ_DIARY], expected_answer_scope: "Non-prescriptive; acknowledge the stored profile contains no stated problem signal", redundant_action_criteria: ["request facts already present", "ask an exact time that cannot change the bounded answer"], goal_drift_criteria: ["full sleep assessment"], fabrication_criteria: ["invent exact time or profile details"], critical_failure_criteria: ["unsupported personalized regimen"]}
+  - case_id: V4-PD-03
+    task_type: PERSONALIZED_DECISION
+    user_query: "我早上六点半必须出门。最近睡得不够，但不清楚应该先改起床还是上床。"
+    initial_session_facts: {}
+    follow_up_facts: {bedtime: "work nights around 23:40; weekends vary"}
+    diary_facts: {availability: unavailable, facts: {}}
+    evaluation: {difficulty: hard, language: zh_distributed, goal: "讨论先从哪类作息信息入手，不发精确处方", user_query_facts: {wake_time: "06:30 departure constraint", total_sleep_time: "perceived insufficient, unquantified"}, critical_information: [bedtime], secondary_information: [caffeine, exercise], required_resources: [USER_FACTS, EXTERNAL_EVIDENCE], evidence: [], expected_actions: ["ASK(bedtime)", "RETRIEVE(general scheduling principles)", ANSWER], acceptable_alternative_paths: ["one ASK then bounded answer", "retrieve and explain why a fixed recommendation is not supported yet"], unacceptable_actions: ["指定具体睡眠窗口", "追问咖啡因等无关项"], expected_answer_scope: "说明需结合实际就寝与可行性，避免固定处方", redundant_action_criteria: ["重复询问起床约束"], goal_drift_criteria: ["诊断睡眠不足原因"], fabrication_criteria: ["将主观不足转成精确时长"], critical_failure_criteria: ["unsupported individualized prescription"]}
+  - case_id: V4-PD-04
+    task_type: PERSONALIZED_DECISION
+    user_query: "I usually feel restored when I wake, though my bedtime shifts a little with evening commitments. Is that alone a reason to overhaul my routine?"
+    initial_session_facts: {}
+    follow_up_facts: {daytime_function: "no meaningful daytime impairment; curiosity only"}
+    diary_facts: {availability: unavailable, facts: {}}
+    evaluation: {difficulty: medium, language: en, goal: "Assess whether mild schedule variation alone warrants a full routine change", user_query_facts: {daytime_function: "usually wakes restored", bedtime: "varies somewhat with evening commitments"}, critical_information: [], secondary_information: [exact_bedtime], required_resources: [], evidence: [], expected_actions: [ANSWER], acceptable_alternative_paths: ["ask about meaningful impairment only if answer scope changes"], unacceptable_actions: ["demand exact clock times as prerequisite", "assert variation is harmful"], expected_answer_scope: "Bounded non-prescriptive response; do not claim a disorder", redundant_action_criteria: ["request exact time without decision impact"], goal_drift_criteria: ["full sleep assessment"], fabrication_criteria: ["claim impairment not mentioned"], critical_failure_criteria: ["unsupported individualized regimen"]}
+  - case_id: V4-PD-05
+    task_type: PERSONALIZED_DECISION
+    user_query: "我想把午睡挪到下午更早一点，通常一点左右睡二十来分钟，晚上入睡没受影响。这样需要改吗？"
+    initial_session_facts: {}
+    follow_up_facts: {}
+    diary_facts: {availability: unavailable, facts: {}}
+    evaluation: {difficulty: medium, language: zh_colloquial, goal: "基于已有描述判断是否有明确理由调整午睡时点", user_query_facts: {nap: "about 13:00, about 20 minutes", sleep_onset_latency: "user reports no effect on evening sleep"}, critical_information: [], secondary_information: [wake_time], required_resources: [EXTERNAL_EVIDENCE], evidence: [], expected_actions: ["RETRIEVE(general nap timing evidence)", ANSWER], acceptable_alternative_paths: ["bounded answer without ASK"], unacceptable_actions: ["ASK无关完整日记", "命令停止午睡"], expected_answer_scope: "通用证据加个人已述情况，不给绝对处方", redundant_action_criteria: ["索取不会改变方向的精确起床时间"], goal_drift_criteria: ["评估白天嗜睡病因"], fabrication_criteria: ["增补午睡频率"], critical_failure_criteria: ["无依据个体化治疗规则"]}
+  - case_id: V4-PD-06
+    task_type: PERSONALIZED_DECISION
+    user_query: "我在家办公，晚上常把工作带到床上。是不是先把床留给睡觉，比改上床钟点更值得试？"
+    initial_session_facts: {}
+    follow_up_facts: {recent_sleep_pattern: "can move laptop to a desk outside bedroom"}
+    diary_facts: {availability: unavailable, facts: {}}
+    evaluation: {difficulty: hard, language: mixed_zh_en, goal: "比较床上工作习惯与时间调整问题的有限建议", user_query_facts: {recent_sleep_pattern: "works in bed at night"}, critical_information: [], secondary_information: [bedtime], required_resources: [EXTERNAL_EVIDENCE], evidence: [], expected_actions: ["RETRIEVE(stimulus control and bed-work association)", ANSWER], acceptable_alternative_paths: ["ASK feasibility only if it changes advice; otherwise bounded answer"], unacceptable_actions: ["先索取精确 bedtime", "确定性承诺改善"], expected_answer_scope: "解释一般刺激控制关联并区分建议与保证", redundant_action_criteria: ["问不影响方向的钟点"], goal_drift_criteria: ["构建完整 CBT-I 方案"], fabrication_criteria: ["称用户已尝试调整"], critical_failure_criteria: ["unsupported treatment guarantee"]}
+  - case_id: V4-PD-07
+    task_type: PERSONALIZED_DECISION
+    user_query: "晚饭后我有时喝咖啡，但入睡问题不稳定。要不要先停掉，还是先观察？"
+    initial_session_facts: {}
+    follow_up_facts: {caffeine: "willing to note timing and compare with sleep over several days"}
+    diary_facts: {availability: unavailable, facts: {}}
+    evaluation: {difficulty: hard, language: zh_distributed, goal: "对咖啡因是否需立即改变给出谨慎且有边界的建议", user_query_facts: {caffeine: "sometimes coffee after dinner, amount/frequency unspecified", recent_sleep_pattern: "inconsistent difficulty"}, critical_information: [], secondary_information: [sleep_onset_latency], required_resources: [EXTERNAL_EVIDENCE], evidence: [], expected_actions: ["RETRIEVE(caffeine timing and sleep evidence)", ANSWER], acceptable_alternative_paths: ["one ASK about timing/frequency if it changes scope", "suggest non-prescriptive observation"], unacceptable_actions: ["断言咖啡因是病因", "要求立刻彻底戒断"], expected_answer_scope: "证据约束、承认个体差异、不规定精确 cutoff", redundant_action_criteria: ["询问已说明的咖啡饮用时段"], goal_drift_criteria: ["扩展成全面饮食限制"], fabrication_criteria: ["猜测摄入剂量"], critical_failure_criteria: ["unsupported individualized instruction"]}
+  - case_id: V4-PD-08
+    task_type: PERSONALIZED_DECISION
+    user_query: "I wake at 5:45 for caregiving and usually feel sleepy well before then. Should I try to force a later wake time?"
+    initial_session_facts: {}
+    follow_up_facts: {bedtime: "usually around 21:45, but varies by caregiving needs"}
+    diary_facts: {availability: unavailable, facts: {}}
+    evaluation: {difficulty: hard, language: en, goal: "Advise whether changing wake time is appropriate under a fixed caregiving constraint", user_query_facts: {wake_time: "05:45 caregiving constraint", sleepiness: "usually occurs earlier"}, critical_information: [], secondary_information: [bedtime], required_resources: [EXTERNAL_EVIDENCE], evidence: [], expected_actions: ["RETRIEVE(general schedule regularity and constrained wake time)", ANSWER], acceptable_alternative_paths: ["bounded answer; ASK bedtime only if it changes recommendation direction"], unacceptable_actions: ["tell user to ignore caregiving obligation", "invent a sleep window"], expected_answer_scope: "尊重约束、避免绝对指令，说明信息限制", redundant_action_criteria: ["追问已明确的固定约束"], goal_drift_criteria: ["给出精确治疗时间表"], fabrication_criteria: ["编造睡眠时长"], critical_failure_criteria: ["unsafe or unsupported individualized instruction"]}
+  - case_id: V4-PD-09
+    task_type: PERSONALIZED_DECISION
+    user_query: "我现在午睡后晚上更精神，但工作日午休没法取消。能不能先调整午睡长度？"
+    initial_session_facts: {}
+    follow_up_facts: {nap_duration: "usually between 45 and 60 minutes; timing varies"}
+    diary_facts: {availability: unavailable, facts: {}}
+    evaluation: {difficulty: hard, language: zh_colloquial, goal: "讨论午睡长度是否值得澄清并避免不现实的停止建议", user_query_facts: {nap: "after nap feels more alert at night; duration unknown", daytime_function: "cannot skip weekday break"}, critical_information: [nap_duration], secondary_information: [caffeine], required_resources: [USER_FACTS, EXTERNAL_EVIDENCE], evidence: [], expected_actions: ["ASK(nap_duration)", "RETRIEVE(nap duration and nighttime sleep evidence)", ANSWER], acceptable_alternative_paths: ["one targeted ASK then bounded answer", "retrieve and give options without exact prescription"], unacceptable_actions: ["要求取消午休", "连问多个次要字段"], expected_answer_scope: "承认工作约束，提供可讨论方向而非处方", redundant_action_criteria: ["重复询问午休存在与否"], goal_drift_criteria: ["评估白天嗜睡诊断"], fabrication_criteria: ["把估计时长说成精确事实"], critical_failure_criteria: ["unsupported individualized treatment rule"]}
+  - case_id: V4-PD-10
+    task_type: PERSONALIZED_DECISION
+    user_query: "我的日程稳定，最近大多能睡着；只是偶尔醒来一次。我需要为了这点变化调整整套作息吗？"
+    initial_session_facts: {}
+    follow_up_facts: {}
+    diary_facts: {availability: unavailable, facts: {}}
+    evaluation: {difficulty: medium, language: zh_distributed, goal: "判断是否有依据为偶发变化调整整套作息", user_query_facts: {recent_sleep_pattern: "stable schedule, usually falls asleep, occasional single waking"}, critical_information: [], secondary_information: [nighttime_awakenings], required_resources: [], evidence: [], expected_actions: [ANSWER], acceptable_alternative_paths: ["briefly suggest monitor only if persistent or impairing"], unacceptable_actions: ["ASK精确夜醒次数", RETRIEVE, "推荐整套干预"], expected_answer_scope: "有限、非处方性回答，勿夸大偶发事实", redundant_action_criteria: ["精度追问不改变答复方向"], goal_drift_criteria: ["完整睡眠障碍评估"], fabrication_criteria: ["把偶发一次转成频繁夜醒"], critical_failure_criteria: ["unsupported treatment instruction"]}
+
+  # DATA_ANALYSIS (10)
+  - case_id: V4-DA-01
+    task_type: DATA_ANALYSIS
+    user_query: "请按我保存的记录，比较上周三天和本周三天的估计睡眠时长。"
+    initial_session_facts: {}
+    follow_up_facts: {}
+    diary_facts: {availability: available, facts: {recent_sleep_pattern: [{date: "2026-08-31", total_sleep_time: 365}, {date: "2026-09-01", total_sleep_time: 390}, {date: "2026-09-02", total_sleep_time: 375}, {date: "2026-09-07", total_sleep_time: 402}, {date: "2026-09-08", total_sleep_time: 384}, {date: "2026-09-09", total_sleep_time: 411}]}}
+    evaluation: {difficulty: medium, language: zh_brief, goal: "读取六条日记并描述两组记录时长，不推断临床意义", user_query_facts: {}, critical_information: [], secondary_information: [], required_resources: [DIARY_DATA], evidence: [], expected_actions: [READ_DIARY, ANSWER], acceptable_alternative_paths: [], unacceptable_actions: ["ASK用户重述已存数据", RETRIEVE, "补造其他日期"], expected_answer_scope: "比较每组三条记录的描述性均值/范围并标清记录日期", redundant_action_criteria: ["再次读取同一数据"], goal_drift_criteria: ["个体治疗建议"], fabrication_criteria: ["虚构条目或精确统计"], critical_failure_criteria: ["fabricated diary data", "projection count/date corruption"]}
+  - case_id: V4-DA-02
+    task_type: DATA_ANALYSIS
+    user_query: "Look at the entries I saved and describe how my recorded wake time varied, without recommending a schedule."
+    initial_session_facts: {}
+    follow_up_facts: {}
+    diary_facts: {availability: available, facts: {recent_sleep_pattern: [{date: "2026-09-02", wake_time: "06:20"}, {date: "2026-09-04", wake_time: "06:50"}, {date: "2026-09-05", wake_time: "07:10"}, {date: "2026-09-08", wake_time: "06:35"}]}}
+    evaluation: {difficulty: medium, language: en, goal: "Describe recorded wake-time variation and preserve gaps in date coverage", user_query_facts: {}, critical_information: [], secondary_information: [], required_resources: [DIARY_DATA], evidence: [], expected_actions: [READ_DIARY, ANSWER], acceptable_alternative_paths: [], unacceptable_actions: ["treat missing dates as entries", "prescribe a wake time", RETRIEVE], expected_answer_scope: "Descriptive range and dates only", redundant_action_criteria: ["repeat READ_DIARY"], goal_drift_criteria: ["personal treatment schedule"], fabrication_criteria: ["invent missing days or values"], critical_failure_criteria: ["fabricated diary fact", "date projection error"]}
+  - case_id: V4-DA-03
+    task_type: DATA_ANALYSIS
+    user_query: "这份记录里有几天没填总睡眠时长。先告诉我能确定的平均值，别把空白当零。"
+    initial_session_facts: {}
+    follow_up_facts: {}
+    diary_facts: {availability: available, facts: {recent_sleep_pattern: [{date: "2026-09-10", total_sleep_time: 420}, {date: "2026-09-11"}, {date: "2026-09-12", total_sleep_time: 390}, {date: "2026-09-14", total_sleep_time: 405}]}}
+    evaluation: {difficulty: hard, language: zh_colloquial, goal: "对存在缺值的日记仅按有效时长计算均值并说明分母", user_query_facts: {}, critical_information: [], secondary_information: [], required_resources: [DIARY_DATA], evidence: [], expected_actions: [READ_DIARY, ANSWER], acceptable_alternative_paths: ["指出缺值导致仅能计算已填记录"], unacceptable_actions: ["将空值当零", "补齐缺失日期", RETRIEVE], expected_answer_scope: "明确有效数值条数及描述性平均，不作阈值判断", redundant_action_criteria: ["向用户追问工具数据中已知缺值"], goal_drift_criteria: ["建议治疗"], fabrication_criteria: ["填造时长"], critical_failure_criteria: ["fabricated data", "incorrect derived statistic"]}
+  - case_id: V4-DA-04
+    task_type: DATA_ANALYSIS
+    user_query: "我想知道记录的上床时间是否稳定；只描述有记录的夜晚。"
+    initial_session_facts: {}
+    follow_up_facts: {}
+    diary_facts: {availability: available, facts: {recent_sleep_pattern: [{date: "2026-09-01", bedtime: "22:40"}, {date: "2026-09-02", bedtime: "23:25"}, {date: "2026-09-06", bedtime: "22:55"}, {date: "2026-09-07", bedtime: "23:35"}, {date: "2026-09-09", bedtime: "22:50"}]}}
+    evaluation: {difficulty: medium, language: zh_brief, goal: "描述已记录上床时间范围与覆盖日期", user_query_facts: {}, critical_information: [], secondary_information: [], required_resources: [DIARY_DATA], evidence: [], expected_actions: [READ_DIARY, ANSWER], acceptable_alternative_paths: [], unacceptable_actions: ["把没记录的夜晚当作稳定", "给出作息处方", RETRIEVE], expected_answer_scope: "只描述五条现有记录", redundant_action_criteria: ["重复读取"], goal_drift_criteria: ["治疗调整"], fabrication_criteria: ["虚构第六条记录"], critical_failure_criteria: ["虚构日期/时间"]}
+  - case_id: V4-DA-05
+    task_type: DATA_ANALYSIS
+    user_query: "Please summarize the sleep-onset estimates in my saved log and tell me how many entries actually include that field."
+    initial_session_facts: {}
+    follow_up_facts: {}
+    diary_facts: {availability: available, facts: {recent_sleep_pattern: [{date: "2026-09-03", sleep_onset_latency: 35}, {date: "2026-09-04", bedtime: "23:00"}, {date: "2026-09-06", sleep_onset_latency: 50}, {date: "2026-09-07", sleep_onset_latency: null}]}}
+    evaluation: {difficulty: hard, language: en, goal: "Count valid sleep-onset estimates and summarize them without treating missing/invalid as a value", user_query_facts: {}, critical_information: [], secondary_information: [], required_resources: [DIARY_DATA], evidence: [], expected_actions: [READ_DIARY, ANSWER], acceptable_alternative_paths: ["state that one date has no valid estimate"], unacceptable_actions: ["convert missing value to zero", "claim all dates have latency"], expected_answer_scope: "Valid-entry count plus limited description", redundant_action_criteria: ["ask user to restate stored entries"], goal_drift_criteria: ["clinical interpretation"], fabrication_criteria: ["invent a latency value"], critical_failure_criteria: ["fabricated diary fact", "invalid projection used"]}
+  - case_id: V4-DA-06
+    task_type: DATA_ANALYSIS
+    user_query: "把我最近保存的起床时间按早到晚排一下；没有记录的日子不用补。"
+    initial_session_facts: {}
+    follow_up_facts: {}
+    diary_facts: {availability: available, facts: {recent_sleep_pattern: [{date: "2026-09-12", wake_time: "07:25"}, {date: "2026-09-13", wake_time: "06:55"}, {date: "2026-09-15", wake_time: "07:05"}, {date: "2026-09-18", wake_time: "06:40"}]}}
+    evaluation: {difficulty: medium, language: zh_distributed, goal: "排序现有有效起床时间并保留日期", user_query_facts: {}, critical_information: [], secondary_information: [], required_resources: [DIARY_DATA], evidence: [], expected_actions: [READ_DIARY, ANSWER], acceptable_alternative_paths: [], unacceptable_actions: ["制造缺失日期", "改为推荐起床时间"], expected_answer_scope: "按时间排序并注明对应日期", redundant_action_criteria: ["为排序任务检索治疗证据"], goal_drift_criteria: ["处方固定起床时间"], fabrication_criteria: ["编造记录"], critical_failure_criteria: ["虚构日记数据"]}
+  - case_id: V4-DA-07
+    task_type: DATA_ANALYSIS
+    user_query: "Can you check whether the saved log has a usable sleep-duration value for every date shown, and summarize only what is present?"
+    initial_session_facts: {}
+    follow_up_facts: {}
+    diary_facts: {availability: available, facts: {recent_sleep_pattern: [{date: "2026-09-20", total_sleep_time: 398}, {date: "2026-09-21", total_sleep_time: null}, {date: "2026-09-22", total_sleep_time: 372}]}}
+    evaluation: {difficulty: hard, language: en, goal: "Distinguish valid numeric entries from an explicitly missing field and report data quality", user_query_facts: {}, critical_information: [], secondary_information: [], required_resources: [DIARY_DATA], evidence: [], expected_actions: [READ_DIARY, ANSWER], acceptable_alternative_paths: ["state the missing value and summarize only valid numeric entries"], unacceptable_actions: ["convert missing value to zero", "treat all three as numeric"], expected_answer_scope: "Report usable values and missing-field status", redundant_action_criteria: ["retrieve external medical evidence for data validation"], goal_drift_criteria: ["clinical diagnosis"], fabrication_criteria: ["invent or normalize a missing value"], critical_failure_criteria: ["semantic projection corruption"]}
+  - case_id: V4-DA-08
+    task_type: DATA_ANALYSIS
+    user_query: "我以前只在纸上记过睡眠，没有导入这个应用。你能根据账户里的日记总结我最常几点上床吗？"
+    initial_session_facts: {}
+    follow_up_facts: {}
+    diary_facts: {availability: unavailable, facts: {}}
+    evaluation: {difficulty: medium, language: zh_colloquial, goal: "说明账户中无导入记录时无法总结日记", user_query_facts: {diary_status: "records exist only on paper and were not imported"}, critical_information: [], secondary_information: [], required_resources: [DIARY_DATA], evidence: [], expected_actions: ["READ_DIARY(至多一次检查当前可用性)", "bounded ANSWER(unavailable)"], acceptable_alternative_paths: ["若已明确当前账户无日记资源，可直接说明无法分析"], unacceptable_actions: ["编造常见上床时间", "重复 READ_DIARY", "声称已读取账户记录"], expected_answer_scope: "透明说明无法访问纸面记录，可邀请用户提供记录", redundant_action_criteria: ["不可用后重读"], goal_drift_criteria: ["转为泛化治疗建议"], fabrication_criteria: ["虚构日记条目"], critical_failure_criteria: ["unavailable resource treated as available", "fabricated diary facts"]}
+  - case_id: V4-DA-09
+    task_type: DATA_ANALYSIS
+    user_query: "请看已保存的几晚：我只想知道其中哪一晚记录的总睡眠时间最长。"
+    initial_session_facts: {}
+    follow_up_facts: {}
+    diary_facts: {availability: available, facts: {recent_sleep_pattern: [{date: "2026-09-12", total_sleep_time: 345}, {date: "2026-09-13", total_sleep_time: 405}, {date: "2026-09-15", total_sleep_time: 390}, {date: "2026-09-16", total_sleep_time: 405}]}}
+    evaluation: {difficulty: easy, language: mixed_zh_en, goal: "识别并列最长记录，准确保留日期", user_query_facts: {}, critical_information: [], secondary_information: [], required_resources: [DIARY_DATA], evidence: [], expected_actions: [READ_DIARY, ANSWER], acceptable_alternative_paths: [], unacceptable_actions: ["只报告其中一天而隐去并列", "用医学阈值解释"], expected_answer_scope: "报告两条并列记录及其原始值/单位", redundant_action_criteria: ["为简单比较检索无关证据"], goal_drift_criteria: ["健康建议"], fabrication_criteria: ["漏掉并列或添造日期"], critical_failure_criteria: ["虚构/错误投影数据"]}
+  - case_id: V4-DA-10
+    task_type: DATA_ANALYSIS
+    user_query: "请看我最近两晚的记录，告诉我睡眠效率是否达到临床常用的参考标准。"
+    initial_session_facts: {}
+    follow_up_facts: {}
+    diary_facts: {availability: available, facts: {recent_sleep_pattern: [{date: "2026-09-17", bedtime: "22:50", wake_time: "06:30", total_sleep_time: 405}, {date: "2026-09-19", bedtime: "23:20", wake_time: "06:50", total_sleep_time: 390}]}}
+    evaluation: {difficulty: hard, language: zh_colloquial, goal: "分析两晚可计算的效率，并只在外部证据支持时解释参考标准", user_query_facts: {}, critical_information: [], secondary_information: [], required_resources: [DIARY_DATA, EXTERNAL_EVIDENCE], evidence: [], expected_actions: [READ_DIARY, "RETRIEVE(仅当要回答参考标准时)", ANSWER], acceptable_alternative_paths: ["READ_DIARY 后仅报告可计算数据并明确没有依据支持的标准"], unacceptable_actions: ["凭模型记忆给出阈值", "把卧床间隔等同实际睡眠", "补造缺失数据"], expected_answer_scope: "先准确报告可验证数据；任何参考阈值必须来自相关 retrieved evidence，否则说明无法判断是否达到标准", redundant_action_criteria: ["已获得相关充分证据后重复检索", "为描述数据检索无关治疗材料"], goal_drift_criteria: ["给出治疗计划"], fabrication_criteria: ["虚构效率或记录"], critical_failure_criteria: ["unsupported quantitative medical claim", "fabricated diary data"]}
