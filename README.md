@@ -1,28 +1,26 @@
 # CBTI Doctor
 
-一个基于 `LangGraph + LangChain + Flask` 构建的 CBT-I（失眠认知行为疗法）对话助手项目。  
-系统通过多阶段智能体流程，引导用户完成睡眠信息收集、问题总结、认知重构与综合干预，并结合本地 PDF 知识库进行 RAG 检索问答。
+CBTI Doctor is a conversational CBT-I (cognitive behavioral therapy for insomnia) assistant built with `LangGraph + LangChain + Flask`. It guides users through sleep information gathering, problem summaries, cognitive restructuring, and integrated interventions. It also uses RAG to answer questions from a local PDF knowledge base.
 
-## 项目简介
+## Overview
 
-本项目面向失眠相关场景，尝试将 CBT-I 的核心咨询流程结构化为可交互的智能体对话系统。  
-后端使用 Flask 提供聊天接口，前端为一个轻量网页聊天页面；智能体主流程由 LangGraph 管理，不同治疗阶段由不同子图负责执行。
+This project turns core CBT-I counseling steps into an interactive agent workflow for insomnia-related scenarios. Flask provides the chat API, and a lightweight web page provides the frontend. LangGraph manages the main agent flow, with separate subgraphs for different treatment stages.
 
-## 功能特性
+## Features
 
-- **信息收集阶段**：逐步询问用户的睡眠时间、夜间觉醒、睡前行为、日间习惯、压力事件与失眠相关想法
-- **总结反馈阶段**：根据前面对话内容进行归因分析与认知标记
-- **认知重构阶段**：识别负性思维，辅助完成替代性思维重建
-- **综合干预阶段**：根据用户情况推荐刺激控制、睡眠限制、睡眠教育等 CBT-I 模块
-- **RAG 检索**：从 `rag_lib/pdfs/` 中加载 CBT-I 相关 PDF，构建本地向量库并回答专业问题
-- **网页交互**：前端通过 `/api/chat` 与后端通信，支持基础会话管理
-- **CLI 模式**：可切换为命令行对话模式，便于调试
+- **Information gathering:** Asks about sleep timing, nighttime awakenings, bedtime behavior, daytime habits, stressors, and thoughts related to insomnia.
+- **Summary and feedback:** Analyzes possible contributing factors and identifies cognitive patterns from the conversation.
+- **Cognitive restructuring:** Identifies negative thoughts and helps develop alternative thoughts.
+- **Integrated intervention:** Recommends CBT-I modules such as stimulus control, sleep restriction, and sleep education based on the user's situation.
+- **RAG retrieval:** Loads CBT-I PDFs from `rag_lib/pdfs/`, builds a local vector database, and answers domain questions.
+- **Web chat:** The frontend communicates with the backend through `/api/chat` and supports basic session management.
+- **CLI mode:** Runs the conversation in a terminal for debugging.
 
-## 运行方式
+## Getting started
 
-### 0. 安装依赖与配置密钥
+### 0. Install dependencies and configure API keys
 
-使用 Python 3.12，在项目根目录执行：
+Use Python 3.12. From the project root, run:
 
 ```bash
 python3.12 -m venv .venv
@@ -30,73 +28,73 @@ source .venv/bin/activate
 python -m pip install -r requirements-bge-lock.txt
 ```
 
-当前配置为 DeepSeek V4.1 Flash + 本地 BGE，安装时使用包含本地推理依赖的 `requirements-bge-lock.txt`。`requirements.txt` 记录基础依赖范围，`requirements-lock.txt` 保留基础环境版本。项目使用 LangChain 0.3 系列接口，不要单独升级到 1.x。
+The current configuration uses DeepSeek V4.1 Flash and a local BGE model. `requirements-bge-lock.txt` includes the dependencies for local inference. `requirements.txt` lists the base dependency ranges, while `requirements-lock.txt` preserves versions for the base environment. The project uses the LangChain 0.3 APIs; do not upgrade LangChain to 1.x independently.
 
-若 `.env` 不存在，从 `.env.example` 复制一份，然后在本地编辑以下字段：
+If `.env` does not exist, copy `.env.example` to `.env` and edit these values locally:
 
-| 环境变量 | 用途 |
+| Environment variable | Purpose |
 | --- | --- |
-| `DEEPSEEK_API_KEY` | 主对话及 RAG 回答，唯一必需的 API 密钥 |
-| `DEEPSEEK_MODEL` | 默认 `deepseek-flash`，对应 DeepSeek V4.1 Flash |
-| `DEEPSEEK_BASE_URL` | 默认 `https://api.deepseek.com` |
-| `BGE_MODEL_PATH` | 默认 `models/bge-small-zh-v1.5`，相对项目根目录 |
-| `ENABLE_WEB_SEARCH` | 默认 `false`，无需 Tavily 密钥 |
-| `TAVILY_API_KEY` | 仅显式启用网页搜索时需要 |
+| `DEEPSEEK_API_KEY` | The only required API key; used for the main conversation and RAG answers. |
+| `DEEPSEEK_MODEL` | Defaults to `deepseek-flash`, corresponding to DeepSeek V4.1 Flash. |
+| `DEEPSEEK_BASE_URL` | Defaults to `https://api.deepseek.com`. |
+| `BGE_MODEL_PATH` | Defaults to `models/bge-small-zh-v1.5`, relative to the project root. |
+| `ENABLE_WEB_SEARCH` | Defaults to `false`; no Tavily key is needed. |
+| `TAVILY_API_KEY` | Required only when web search is explicitly enabled. |
 
-`.env` 已被 Git 忽略。不要将密钥写进代码或提交到仓库。虚拟环境不包含任何服务账号或额度，真实对话仍需有效密钥。
+Git ignores `.env`. Do not put API keys in source code or commit them to the repository. A virtual environment does not include a service account or API credits, so real conversations still require a valid key.
 
-### 1. 启动后端 Flask 服务
+### 1. Start the Flask backend
 
-在项目根目录执行：
+From the project root, run:
 
 ```bash
 .venv/bin/python main_flask.py
 ```
 
-默认会启动在：`http://localhost:5001`。如需使用其他未占用端口，可在 `.env` 设置 `PORT=5002`，并同步修改 `public/index.html` 中的 `CBTI_API_PORT`。
+The backend starts at `http://localhost:5001` by default. To use another available port, set `PORT=5002` in `.env` and update `CBTI_API_PORT` in `public/index.html` to match.
 
-### 2. 启动前端页面
+### 2. Start the frontend
 
-前端文件位于 `public/` 目录，推荐使用一个简单静态服务器启动：
+The frontend files are in `public/`. You can serve them with a simple static server:
 
 ```bash
 .venv/bin/python -m http.server 8000 --bind 127.0.0.1 --directory public
 ```
 
-然后访问：`http://localhost:8000`
+Then open `http://localhost:8000`.
 
-### 3. 启动命令行模式
+### 3. Use CLI mode
 
-如果希望使用终端交互模式，可设置环境变量后运行：
+For terminal-based interaction, run:
 
 ```bash
 RUN_MODE=cli .venv/bin/python main_flask.py
 ```
 
-## 注意事项
+## Notes
 
-- 本项目主要用于学习、研究和原型验证，不应替代专业医生或心理治疗师的诊断与治疗建议。
-- 首次运行时，会自动处理 `rag_lib/pdfs/` 中的 PDF 并生成向量数据库，可能会需要一些时间。
-- 网页会话会保留当前阶段、完整消息和工具结果；会话结束后可点击“重置会话”重新开始。当前仍使用进程内存保存会话，重启服务会清空，不支持多进程共享。
+- This project is intended for learning, research, and prototype validation. It should not replace diagnosis or treatment advice from a physician or mental health professional.
+- On the first run, the application processes the PDFs in `rag_lib/pdfs/` and builds a vector database. This may take some time.
+- Web sessions retain the current stage, full message history, and tool results. You can reset a session after it ends. Sessions are currently stored in process memory: restarting the server clears them, and they cannot be shared across multiple processes.
 
-## 离线回归测试
+## Offline regression tests
 
 ```bash
 .venv/bin/python -m unittest discover -s tests -v
 ```
 
-会话测试使用真实的应用工厂函数和模拟的 Flask、消息及图对象，覆盖阶段恢复、工具结果保留、会话隔离、重置、调用失败和会话结束处理。模型配置测试还验证 DeepSeek 配置、BGE 查询前缀及索引文件检查；全部测试不调用外部 API。它们不替代真实 Flask/LangGraph 集成测试。
+The session tests use the real application factory with mocked Flask, message, and graph objects. They cover stage recovery, preservation of tool results, session isolation, reset behavior, invocation failures, and session completion. Model configuration tests also check the DeepSeek settings, BGE query prefix, and index file validation. These tests do not call external APIs and do not replace real Flask/LangGraph integration tests.
 
-## 已下载的本地 BGE 模型
+## Downloaded local BGE model
 
-`BAAI/bge-small-zh-v1.5` 存放在 `models/bge-small-zh-v1.5/`，该目录不提交到 Git。模型来源版本和权重校验值见目录中的 `download_source.json`。它生成 512 维中文向量，可在 CPU 上离线运行，无需 API 密钥。
+`BAAI/bge-small-zh-v1.5` is stored in `models/bge-small-zh-v1.5/`, which is not committed to Git. See `download_source.json` in that directory for the source revision and weight checksum. The model produces 512-dimensional Chinese embeddings and can run offline on a CPU without an API key.
 
-本地推理额外依赖见 `requirements-bge.txt`，含 BGE 的完整环境版本见 `requirements-bge-lock.txt`（可用 `pip install -r requirements-bge-lock.txt` 复现）。验证命令：
+Additional local inference dependencies are listed in `requirements-bge.txt`. The complete environment versions are in `requirements-bge-lock.txt`; you can reproduce them with `pip install -r requirements-bge-lock.txt`. To validate the local model, run:
 
 ```bash
 .venv/bin/python scripts/check_bge.py
 ```
 
-`rag_client.py` 已接入本地 BGE，文档与查询向量都在 CPU 本地生成。首次检索会自动构建专用索引 `rag_lib/.rag_db/bge-small-zh-v1.5-ch400-v1/`，不会复用旧 OpenAI 向量索引。回答生成仍调用 DeepSeek，相关检索片段会作为上下文发送给该服务。
+`rag_client.py` uses the local BGE model to generate document and query embeddings on the CPU. The first retrieval automatically builds a dedicated index at `rag_lib/.rag_db/bge-small-zh-v1.5-ch400-v1/`; it does not reuse an older OpenAI embedding index. Answer generation still calls DeepSeek and sends the relevant retrieved passages as context.
 
-主对话、总结工具和 RAG 回答共用 `model_config.py`。默认关闭思考模式，以兼容现有工具消息链；模型配置修改后需重启服务。
+The main conversation, summary tools, and RAG answers share `model_config.py`. Thinking mode is disabled by default for compatibility with the existing tool-message chain. Restart the service after changing the model configuration.
