@@ -1,0 +1,63 @@
+name: Offline tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      # A non-secret sentinel satisfies frozen configuration checks; tests mock all model calls.
+      DEEPSEEK_API_KEY: "ci-placeholder-no-network"
+      OPENAI_API_KEY: ""
+      ANTHROPIC_API_KEY: ""
+      TAVILY_API_KEY: ""
+      ENABLE_WEB_SEARCH: "false"
+      LANGCHAIN_TRACING_V2: "false"
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-lock.txt
+      - name: Install core dependencies
+        run: python -m pip install -r requirements-lock.txt
+      - name: Run repository-contained offline regression tests
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import sys
+          import unittest
+
+          # These historical-contract modules require local generated run outputs
+          # that are intentionally excluded from Git. All other test modules run.
+          artifact_bound = {
+              "test_step9_10a_harness_fix",
+              "test_step9_13a_authorization_infrastructure",
+              "test_step9_20a_v3_runner",
+              "test_step9_28_v4_runner",
+              "test_step9_30a2_lineage_sidecar",
+              "test_step9_30a_v4_adjudication",
+              "test_step9_30c_v4_aggregation",
+              "test_step9_43a_treatment_identity",
+          }
+          test_files = sorted(Path("tests").glob("test_*.py"))
+          assert artifact_bound <= {path.stem for path in test_files}
+          sys.path.insert(0, str(Path("tests").resolve()))
+          loader = unittest.TestLoader()
+          suite = unittest.TestSuite()
+          for path in test_files:
+              if path.stem not in artifact_bound:
+                  suite.addTests(loader.loadTestsFromName(path.stem))
+          print("Local-artifact test modules excluded:", ", ".join(sorted(artifact_bound)), flush=True)
+          result = unittest.TextTestRunner(verbosity=2).run(suite)
+          raise SystemExit(not result.wasSuccessful())
+          PY
