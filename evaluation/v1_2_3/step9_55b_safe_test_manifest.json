@@ -1,0 +1,27 @@
+{
+  "artifact_type": "STEP9_55B_EXPLICIT_SAFE_TEST_MANIFEST",
+  "step": "9.55b",
+  "status": "EXECUTED_PASS",
+  "created_at_utc": "2026-09-30T20:42:12Z",
+  "runner": "standard-library unittest; explicit module list only",
+  "command": "./.venv/bin/python -m unittest -q tests.test_step9_55a_namespace_lifecycle tests.test_step9_53_v3_identity_adapter tests.test_step9_35a_treatment_runner tests.test_step9_42_answer_authorization tests.test_step9_50_bounded_answer_contract tests.test_step9_50_traceability_contract",
+  "selected_modules": [
+    {"module": "tests.test_step9_55a_namespace_lifecycle", "path": "tests/test_step9_55a_namespace_lifecycle.py", "sha256": "526b3a1f3e75a582b7cb3bdb3ff3904d157d6afe5653d08f5186021142fd038b", "test_cases": 12, "purpose": "Synthetic namespace lifecycle, stale identity, zero-case boundary, and callback phase order."},
+    {"module": "tests.test_step9_53_v3_identity_adapter", "path": "tests/test_step9_53_v3_identity_adapter.py", "sha256": "34643474b00e1e5c30b6c27c217b6547a72cb74be69551bf534f9a5e7c8c40c6", "test_cases": 8, "purpose": "V3 adapter identity pairing and delegation boundary."},
+    {"module": "tests.test_step9_35a_treatment_runner", "path": "tests/test_step9_35a_treatment_runner.py", "sha256": "af5c37d7c9b5d32b26318bd1748fd8fe580a7ca01ebd0b86afa6615d546beea4", "test_cases": 21, "purpose": "Synthetic authorization, exactly-once, namespace collision, and case-order validators."},
+    {"module": "tests.test_step9_42_answer_authorization", "path": "tests/test_step9_42_answer_authorization.py", "sha256": "16d7e7dab98f66c895b39d8d4d2a3b92a4c8dac943f7b5403daa90a38e18f7a7", "test_cases": 16, "purpose": "Synthetic Agent safety/answer authorization invariants with fake local adapters."},
+    {"module": "tests.test_step9_50_bounded_answer_contract", "path": "tests/test_step9_50_bounded_answer_contract.py", "sha256": "7b47b060a209f41b8e17cd5d851b0a949efc299cb4557810a5f14905138a04f7", "test_cases": 30, "purpose": "Synthetic V3 bounded answer safety contract."},
+    {"module": "tests.test_step9_50_traceability_contract", "path": "tests/test_step9_50_traceability_contract.py", "sha256": "89598b9a6b65a2f2e9a69e654d4ccf24e29d50f2e0ac1bc3a5a36e186a3ff52f", "test_cases": 10, "purpose": "Synthetic V3 authorization trace and source lineage contract."}
+  ],
+  "results": {"total": 97, "passed": 97, "failures": 0, "errors": 0, "skipped": 0},
+  "excluded_activity": {
+    "formal_v4_execution": true,
+    "historical_aggregation": true,
+    "adjudication": true,
+    "comparison": true,
+    "v5": true,
+    "formal_attempt_creation": true,
+    "model_or_rag_case_evaluation": true
+  },
+  "test_scope_note": "Agent loop calls in safety tests use synthetic inputs and fake adapters only; no benchmark case, model endpoint, RAG backend, formal output namespace, or evaluation runner was invoked."
+}

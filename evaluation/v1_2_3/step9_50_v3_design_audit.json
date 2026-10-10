@@ -1,0 +1,35 @@
+{
+  "agent_modified": false,
+  "audit_status": "PASS_DESIGN_INPUT_AND_OUTPUT_INTEGRITY",
+  "authorization_mode_counts_for_answer_regressions": {
+    "AUTHORIZED_BOUNDED": 6,
+    "AUTHORIZED_FULL": 5
+  },
+  "authorization_state_history_reconciliation": "PASS; DECISION/ANSWER snapshots persist exact enum/reason",
+  "created_at_utc": "2026-09-30T16:12:13.886501+00:00",
+  "dynamic_answer_case_count": 11,
+  "freeze_sha256": "31ffec0addcf5da72ec098aa90e53dbc3d0d899c8ee5e0e67e8649f0214f88d8",
+  "input_hash_count": 49,
+  "model_agent_rag_execution": false,
+  "other_case_count": 2,
+  "output_hashes": {
+    "bounded": "131ea84a5001bebe76023e41665d941ecfbd7df8f349edd316532716bcd70355",
+    "design": "2069baa63ed9607532beb5f217937163f414243d7f336a59089b7a0e4e6e7ea8",
+    "implementation": "7f7f78cc7e2f688a5e58bde00614b9ae35ead0dfd11e5361197c177ab8166037",
+    "report": "a67ce965d196a7c8430ea9af8825e33226e0598e7857336a14e468a415fd848f",
+    "tests": "6143775a12a10be3f11dd5721395733e3d8c4960175e77f670e227451ddad0c7",
+    "trace": "72fe4bda64f2ee23582b997d27d142631f5305b45225bd6d7f75e9e835d89e50"
+  },
+  "step": "9.50",
+  "step9_46_adjudication_match": true,
+  "step9_47_aggregate_match": true,
+  "step9_48_identity_match": true,
+  "step9_49_freeze_inputs_match": true,
+  "step9_49_outputs_match": true,
+  "tests_executed": false,
+  "v1_v2_frozen_trace_results_match": true,
+  "v2_modified": false,
+  "v3_implemented": false,
+  "v4_rerun": false,
+  "v5_accessed": false
+}

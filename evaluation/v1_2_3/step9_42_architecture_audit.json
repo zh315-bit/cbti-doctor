@@ -1,0 +1,95 @@
+{
+  "step": "9.42",
+  "status": "PASS",
+  "audit_scope": "Read-only integrity audit after Agent implementation and before treatment-v2 freeze.",
+  "treatment_v1": {
+    "freeze_path": "evaluation/v1_2_3/step9_33a_treatment_freeze.json",
+    "freeze_artifact_sha256": "b281cc43db617a2580a86e4593e432798195e637382e5f74244fd08ac45a45b7",
+    "agent_aggregate_sha256": "e5e4841b51ecc6bced0f342a261a356756d07b39764670d774b910b86b8625a7",
+    "status": "UNCHANGED_HISTORICAL_FREEZE"
+  },
+  "frozen_component_checks": {
+    "benchmark_v4": {
+      "path": "evaluation/benchmarks/benchmark_v4_cases.yaml",
+      "expected_sha256": "8b8c72092fcd7544e69d5d2ecd13610c7bb4c14210fca330698b3e5ab3f01d7f",
+      "match": true
+    },
+    "benchmark_v4_manifest": {
+      "path": "evaluation/benchmarks/benchmark_v4_manifest.json",
+      "expected_sha256": "b5feb7832b6267d8cff9d25fb2d8cf0043829feb5fd04ec1bea77dba932a13db",
+      "match": true
+    },
+    "harness": {
+      "aggregate_sha256": "8bc271bebc1c5da5351d517e2bb4a0d1a99fda3de1b713a6197b12f81fad70c7",
+      "member_hashes_recomputed": true,
+      "match": true
+    },
+    "scoring": {
+      "aggregate_sha256": "f742a8f8af7c8747818dadad81621c15d12d74f50538019913dfe18ab53bf59b",
+      "rubric_sha256": "a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899",
+      "member_hashes_recomputed": true,
+      "match": true
+    },
+    "metric_registry": {
+      "path": "evaluation/v1_2_3/step9_26_v4_metric_registry.json",
+      "sha256": "de9f348cb1dff66410c03095abdaffcc256f53679718482870e4aa4d80c75056",
+      "match": true
+    },
+    "one_shot_rules": {
+      "pinned_sha256": "1c7ed4ef47865b117bc943f3e0ad9a859f4f74cfb4e8001f723ac5532af140d0",
+      "cross_manifest_pin_consistency": "PASS",
+      "match": true
+    },
+    "step9_34a_matched_protocol": {
+      "path": "evaluation/v1_2_3/step9_34a_matched_comparison_protocol.json",
+      "sha256": "a71ba06090370b576fbba66bc4b005e519ddbabff3021a40c6546fc855f90265",
+      "match": true
+    },
+    "claim_policy": {
+      "path": "evaluation/v1_2_3/step9_34a_claim_policy.json",
+      "sha256": "4c64896c141dc8feb3789939e1450bcb7bdeb878ed15b27558404c47421aea67",
+      "match": true
+    }
+  },
+  "historical_artifact_audit": {
+    "step9_39_claim_audit_source_hashes_recomputed": 22,
+    "mismatches": 0,
+    "baseline_freeze_sha256": "5fd2894fe35dc452fff5d6c58127a3731760d15b19acf8b5a0b4e47ce649ef2f",
+    "baseline_snapshot_sha256": "f00eb91a8020dbff5e87c4dc5d7c58c02ebeaf713acb8451057de4a60a7dd88a",
+    "treatment_v1_freeze_sha256": "b281cc43db617a2580a86e4593e432798195e637382e5f74244fd08ac45a45b7",
+    "step9_37_adjudication_freeze_sha256": "fe84e4ca0853de680d199807252daa6a2555b1951aa37505924cb15fcc087df5",
+    "step9_39_claim_audit_sha256": "887f7fc24be6d828c4740258a46f0f2fbf2ca5712e5a2244cc3ac5b5f96f7ebd",
+    "step9_39_comparison_report_sha256": "e6b15e93e6e98b39bdee4288bc65e897892695859289390fc49555edd7dd06ec",
+    "step9_39_transition_matrix_sha256": "d958487e1922fec8577322122892a5b35a79d59fc735adf162be6a7796069f29",
+    "step9_39_metrics_sha256": "fd1e16d36862d3a27f8268d80099609162c663328480d3e0a9e50aed95162286"
+  },
+  "change_boundary": {
+    "benchmark_modified": false,
+    "harness_modified": false,
+    "scoring_modified": false,
+    "metric_registry_modified": false,
+    "one_shot_rules_modified": false,
+    "matched_protocol_modified": false,
+    "claim_policy_modified": false,
+    "baseline_artifacts_modified": false,
+    "treatment_v1_artifacts_modified": false,
+    "step9_37_adjudication_modified": false,
+    "step9_39_comparison_modified": false
+  },
+  "case_specific_logic_search": {
+    "searched_modified_agent_files": [
+      "adaptive_agent/answer_generation.py",
+      "adaptive_agent/runner.py"
+    ],
+    "benchmark_case_id_matches": 0,
+    "expected_action_lookup_matches": 0,
+    "case_specific_logic_found": false
+  },
+  "v4_or_v5_activity": {
+    "v4_case_executed": 0,
+    "v4_rerun": false,
+    "v5_created": false,
+    "v5_accessed": false,
+    "evaluation_authorization_issued": false
+  }
+}

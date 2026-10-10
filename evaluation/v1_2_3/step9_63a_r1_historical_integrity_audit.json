@@ -1,0 +1,15 @@
+{
+  "artifact_type": "STEP9_63A_R1_HISTORICAL_INTEGRITY_AUDIT",
+  "timestamp_utc": "2026-10-05T21:24:33Z",
+  "source_inventory": "evaluation/v1_2_3/step9_60a_v3_historical_integrity_audit.json plus preflight_step9_62b_mac_local.py supplemental pins",
+  "historical_pin_count": 55,
+  "historical_pin_mismatch_count": 0,
+  "before_pin_map_sha256": "ce2d3aacd734212d244ea0d56f483a883c1465328824b6661ce527b424eb21c5",
+  "after_pin_map_sha256": "ce2d3aacd734212d244ea0d56f483a883c1465328824b6661ce527b424eb21c5",
+  "before_authorization_hash_map_sha256": "44cd318cc7fb2124e84a4465b09850417c99490cbd8f9a93aeeabc2556921b86",
+  "after_authorization_hash_map_sha256": "44cd318cc7fb2124e84a4465b09850417c99490cbd8f9a93aeeabc2556921b86",
+  "r6_runner_freeze_sha256": "4e6c0bf9ed718546ea1efa12ae48324fd5438129ad3cd3860f93bd33037f1593",
+  "step9_58_provenance_gap": "PRESENT_AND_DOCUMENTED",
+  "historical_artifacts_rewritten": false,
+  "historical_artifacts_deleted": false
+}

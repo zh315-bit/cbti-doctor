@@ -1,0 +1,68 @@
+{
+  "step": "9.10b",
+  "benchmark_hash_match": true,
+  "scoring_hash_match": true,
+  "agent_behavior_equivalent": false,
+  "agent_behavior_equivalence_reason": "The Step 9.8 frozen manifest matches all 13 listed Agent/model source files, but it does not fingerprint every active production-path file (including flask_app, service, dependency_resolver, facts, and evaluation/recorder). The repository has no usable Git baseline for those unlisted files, so full equivalence cannot be established.",
+  "production_path_preserved": true,
+  "harness_semantics_equivalent": true,
+  "recovery_identity_isolated": true,
+  "step9_8_history_intact": true,
+  "benchmark_leakage_risk": false,
+  "case_specific_logic_added": false,
+  "real_model_called": false,
+  "benchmark_v2_executed": false,
+  "benchmark_v3_accessed": false,
+  "ready_for_step9_10c": false,
+  "frozen_inputs": {
+    "benchmark_v2_sha256": "dfa9b9e5a12b0017fa68d344d01b313ebc29e583b933fbe1e93c125f55ecafd2",
+    "scoring_rubric_sha256": "a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899"
+  },
+  "changed_files_since_step9_8": [
+    {
+      "path": "scripts/run_step9_8_frozen_evaluation.py",
+      "classification": "A_EVALUATION_HARNESS_ONLY",
+      "reason": "Frozen-run guard integration, independent trace path, and the Step 9.10a captured-state-view recursion repair."
+    },
+    {
+      "path": "scripts/run_step8_9_v1_2_1.py",
+      "classification": "A_EVALUATION_HARNESS_ONLY",
+      "reason": "Optional observer callbacks and optional output trace path; default base-runner behavior remains unchanged."
+    },
+    {
+      "path": "scripts/frozen_run_guard.py",
+      "classification": "A_EVALUATION_HARNESS_ONLY",
+      "reason": "Append-only frozen-run execution-state recording."
+    },
+    {
+      "path": "tests/test_step9_8f_frozen_run_guard.py",
+      "classification": "A_EVALUATION_HARNESS_ONLY",
+      "reason": "Guard-focused tests."
+    },
+    {
+      "path": "tests/test_step9_10a_harness_fix.py",
+      "classification": "A_EVALUATION_HARNESS_ONLY",
+      "reason": "Harness recursion, semantic-equivalence, and callback tests."
+    },
+    {
+      "path": "evaluation/v1_2_2/* and record.md",
+      "classification": "B_INFRASTRUCTURE_ONLY",
+      "reason": "Ledger, audits, and documentation; no runtime Agent semantic change."
+    },
+    {
+      "path": "adaptive_agent/state.py, requirements.py, sufficiency.py, information_value.py, preconditions.py, candidates.py, policy.py, runner.py, state_update.py, tools.py, answer_generation.py, input_understanding.py, model_config.py",
+      "classification": "A_OR_B_VERIFIED_BY_FROZEN_HASH",
+      "reason": "All current SHA-256 values match the Step 9.8 frozen manifest."
+    },
+    {
+      "path": "active production-path files omitted from the Step 9.8 source manifest",
+      "classification": "F_UNKNOWN",
+      "reason": "No historical hash or usable Git baseline exists for full source-diff verification."
+    }
+  ],
+  "known_limitations": [
+    "Complete Agent equivalence is not provable with the original incomplete source manifest.",
+    "Benchmark V2 remains a development/regression benchmark, not a held-out evaluation set.",
+    "No external-model or full Benchmark execution evidence is produced by this dry validation."
+  ]
+}

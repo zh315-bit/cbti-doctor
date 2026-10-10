@@ -1,0 +1,292 @@
+{
+ "step": "9.63c-r5c10af",
+ "harness": "evaluation/v1_2_3/step9_63c_r5c10af_test_harness/run_all.sh (guard v3 CANDIDATE, not approved; catalogue pre-step outside the guard)",
+ "baseline_r5c10ae": {
+  "collected": 776,
+  "passed": 741,
+  "failed": 4,
+  "errors": 31,
+  "skipped": 0,
+  "import_blocked_modules": 4,
+  "guard_events": 6,
+  "guard_blocked": 0
+ },
+ "after_run_a": {
+  "collected": 805,
+  "passed": 774,
+  "failed": 2,
+  "errors": 29,
+  "skipped": 0,
+  "import_blocked_modules": 4,
+  "module_processes": 73,
+  "guard_events": 6,
+  "guard_blocked": 0
+ },
+ "after_run_b": {
+  "collected": 805,
+  "passed": 774,
+  "failed": 2,
+  "errors": 29,
+  "skipped": 0,
+  "import_blocked_modules": 4,
+  "module_processes": 73,
+  "guard_events": 6,
+  "guard_blocked": 0
+ },
+ "two_runs_identical_per_item": true,
+ "items_compared": 809,
+ "control_run_with_v2_guard": {
+  "totals": {
+   "collected": 805,
+   "passed": 762,
+   "failed": 14,
+   "errors": 29,
+   "skipped": 0,
+   "import_blocked_modules": 4,
+   "module_processes": 73,
+   "guard_events": 6,
+   "guard_blocked": 0
+  },
+  "identical_to_v3_except": "only the guard-negative test module (its harness has no catalogue pre-step, so 12 of its 16 tests fail there by design)",
+  "all_other_items_identical": true
+ },
+ "reconciliation": {
+  "collected": "776 + 2 (consumer gate: count-54 and inventory-pin tests) + 1 (AR-11 restoration test) + 16 (guard negative) + 11 (r5c10ae manifest) + 1 (r5c10ad manifest: bytes-preserved test) - 2 (r5 tests retired) = 805",
+  "passed": "741 + 2 + 1 + 16 + 11 + 3 (r5c10ad manifest: 5 passing -> 8) = 774",
+  "failed": "4 - 2 (the two r5c10ad manifest tests that were failing on inventory drift) = 2",
+  "errors": "31 - 2 (the two retired r5 tests, which could only fail with AttributeError/identity) = 29",
+  "import_blocked_modules": "4 (unchanged)"
+ },
+ "rc1": {
+  "previous_ae": 33,
+  "current": 33,
+  "identical_set": true
+ },
+ "acceptance": {
+  "non_identity_failures_only_rc5_rc6": true,
+  "rc1_count_unchanged": true,
+  "unknown": 0,
+  "production_regressions": 0
+ },
+ "remaining_by_root_cause": {
+  "RC5_ACCEPTED_KNOWN": 1,
+  "RC6_ACCEPTED_KNOWN": 1,
+  "RC1_R11_IDENTITY_ABSENT": 33
+ },
+ "guard_negative_catalogue_live": {
+  "PASS": 118,
+  "LIMIT_BYPASSED": 1
+ },
+ "remaining_items": [
+  {
+   "id": "test_step9_43a_treatment_identity.TreatmentIdentityContractTests.test_01a_frozen_v2_identity_preflight_passes_without_case_execution",
+   "result": "ERROR",
+   "root_cause": "RC5_ACCEPTED_KNOWN",
+   "last_line": "RuntimeError: parent Step 9.35a runner identity mismatch"
+  },
+  {
+   "id": "test_step9_51a_validation_boundary.ValidationBoundaryTests.test_current_manifest_passes_pinned_allowlist",
+   "result": "FAIL",
+   "root_cause": "RC6_ACCEPTED_KNOWN",
+   "last_line": "AssertionError: ['manifest module inventory does not exactly match tests/test_*.py'] is not false"
+  },
+  {
+   "id": "test_step9_53_v3_identity_adapter",
+   "result": "IMPORT",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_55a_namespace_lifecycle",
+   "result": "IMPORT",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_58a_r1_namespace_allocator.NamespaceAllocatorTests.test_reserved_fresh_namespace_requires_transaction_for_post_first_case_guard",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_59a_auth_identity_binding",
+   "result": "IMPORT",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63a_r1_production_integration.ProductionWiringTests.test_adapter_actual_dispatch_orders_commit_reserve_parent",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63a_r1_production_integration.ProductionWiringTests.test_adapter_commits_before_namespace_and_parent",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63a_r1_production_integration.ProductionWiringTests.test_old_r6_authorization_rejected_at_r7_namespace_gate",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63a_r1_production_integration.ProductionWiringTests.test_real_parent_rejects_prepared_before_agent_boundary",
+   "result": "FAIL",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "last_line": "AssertionError: \"requires committed\" does not match \"current runner identity pointer is missing or unsafe\""
+  },
+  {
+   "id": "test_step9_63a_r2_retirement_eligibility.SupersededRetirementTests.test_active_authorization_count_becomes_zero",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63a_r2_retirement_eligibility.SupersededRetirementTests.test_current_r7_identity_rejects_old_r6_authorization",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63a_r2_retirement_eligibility.SupersededRetirementTests.test_frozen_evaluation_identity_mismatch_fails_closed",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63a_r2_retirement_eligibility.SupersededRetirementTests.test_retired_auth_cannot_enter_prepared_committing_or_committed",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63a_r2_retirement_eligibility.SupersededRetirementTests.test_v3_agent_and_evaluation_hash_mismatches_fail_closed",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63a_r3_authorization_issuance",
+   "result": "IMPORT",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63b_mac_local_preflight.MacLocalPreflightTests.test_attestation_exclusive_create",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63b_mac_local_preflight.MacLocalPreflightTests.test_dns_parser_accepts_only_public_ip_addresses",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63b_mac_local_preflight.MacLocalPreflightTests.test_existing_attestation_fails_before_network",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63b_mac_local_preflight.MacLocalPreflightTests.test_failed_dns_never_opens_transport",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63b_mac_local_preflight.MacLocalPreflightTests.test_failure_prints_no_exception_or_secret",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63b_mac_local_preflight.MacLocalPreflightTests.test_preflight_rechecks_execution_state_after_transport",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63b_mac_local_preflight.MacLocalPreflightTests.test_real_script_has_no_formal_execution_entrypoint",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63b_mac_local_preflight.MacLocalPreflightTests.test_state_change_fails_closed",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63c_r3_parent_namespace_repair.NamespaceBoundaryTests.test_t12_no_default_global_root_on_formal_path",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63c_r5_mac_local_preflight.R8MacLocalPreflightTests.test_existing_artifact_blocks_network",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63c_r5_mac_local_preflight.R8MacLocalPreflightTests.test_missing_api_key",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63c_r5_mac_local_preflight.R8MacLocalPreflightTests.test_pre_post_state_change_fails_closed",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63c_r5_mac_local_preflight.R8MacLocalPreflightTests.test_success_fixture_exclusively_writes_only_evidence",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63c_r5_mac_local_preflight.R8MacLocalPreflightTests.test_wrong_deepseek_host",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63c_r5_mac_local_preflight.R8MacLocalPreflightTests.test_wrong_model",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63c_r5c7b_diagnostics.Step963cR5c7bDiagnosticsTests.test_certificate_validation_stage",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63c_r5c7b_diagnostics.Step963cR5c7bDiagnosticsTests.test_dns_exception_reports_system_dns_stage",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63c_r5c7b_diagnostics.Step963cR5c7bDiagnosticsTests.test_tcp_exception_reports_tcp_stage",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63c_r5c7b_diagnostics.Step963cR5c7bDiagnosticsTests.test_tls_exception_reports_tls_stage",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  }
+ ]
+}

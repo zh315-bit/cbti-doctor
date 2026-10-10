@@ -1,0 +1,29 @@
+{
+  "artifact_type": "STEP9_63C_R5C10B_TRANSACTION_SCANNER_SYNTHETIC_TEST_PLAN_ONLY",
+  "step": "9.63c-r5c10b",
+  "status": "DESIGNED_NOT_EXECUTED",
+  "test_environment": "Temporary synthetic transaction roots only; no production transaction root mutation, V4 data, network, model or Agent",
+  "test_target": "Future revised _find_identity classifier plus existing read_events validation under the transaction lock",
+  "tests": [
+    {"id": "T01", "scenario": "One valid canonical UTF-8 JSONL PREPARED journal", "expected": "Read and validate; matching identity collision returns true, unrelated request returns false", "fail_closed_if": "Events invalid, filename/authorization binding mismatched, or file not regular"},
+    {"id": "T02", "scenario": "Valid AppleDouble ._<authorization_id>.jsonl with 00051607 magic beside valid canonical journal", "expected": "Verify companion, skip only metadata; read canonical journal; no decode error", "fail_closed_if": "Magic, companion identity, type or symlink checks fail"},
+    {"id": "T03", "scenario": "Unrelated .bin binary and .DS_Store in root", "expected": "Do not include in event-journal scan", "fail_closed_if": "Unrelated entry masquerades as canonical .jsonl"},
+    {"id": "T04", "scenario": "Canonical <authorization_id>.jsonl containing invalid UTF-8", "expected": "Reject the scan; never silently skip or commit", "fail_closed_if": "Always; encoding corruption is authoritative-journal corruption"},
+    {"id": "T05", "scenario": "Canonical journal containing invalid JSON, torn line, or invalid event sequence", "expected": "Reject before PREPARED for the new request", "fail_closed_if": "Always; read_events/_validate_events rejects content"},
+    {"id": "T06", "scenario": "Existing canonical journal binds same attempt_id or namespace_id under different authorization", "expected": "Detect duplicate identity and reject new transaction", "fail_closed_if": "Any duplicate authorization, attempt or namespace identity"},
+    {"id": "T07", "scenario": "Historical valid PREPARED→COMMITTING→COMMITTED journal", "expected": "Read and retain committed state; unrelated fresh identity can be checked without mutating historical journal", "fail_closed_if": "Commit markers or event identities invalid"},
+    {"id": "T08", "scenario": "Historical burned authorization with committed journal and namespace marker", "expected": "Existing lifecycle reducer remains terminal/non-reusable; scanner never permits reuse of that identity", "fail_closed_if": "Reducer shows executable, or duplicate identity passes"},
+    {"id": "T09", "scenario": "Multiple canonical journals plus a valid AppleDouble companion in varied creation orders", "expected": "Deterministic sorted scan outcome; any collision or corruption rejects regardless of order", "fail_closed_if": "Result depends on filesystem enumeration order"},
+    {"id": "T10", "scenario": "Orphan ._*.jsonl, wrong magic, unreadable metadata, metadata directory or metadata symlink", "expected": "Fail closed; do not use as ledger or silently ignore", "fail_closed_if": "Always for an unverified journal-looking sidecar"},
+    {"id": "T11", "scenario": "Canonical *.jsonl is a directory or symbolic link", "expected": "Fail closed before reading or following target", "fail_closed_if": "Always"},
+    {"id": "T12", "scenario": "Transaction root is symlink or non-directory", "expected": "Fail closed; do not scan redirected root", "fail_closed_if": "Always"},
+    {"id": "T13", "scenario": "Filename stem violates SAFE_ID or first event authorization_id differs from stem", "expected": "Fail closed; no identity substitution or corrupt-name bypass", "fail_closed_if": "Always for journal-looking file"},
+    {"id": "T14", "scenario": "Canonical-looking *.jsonl contains unrelated binary or is empty", "expected": "Fail closed as ambiguous/corrupt journal rather than ignoring it", "fail_closed_if": "Always"},
+    {"id": "T15", "scenario": "macOS companion files, hidden Finder metadata, and case-distinct names on a case-insensitive temporary filesystem where available", "expected": "Only verified AppleDouble sidecars skip; canonical collision checks remain exact; unavailable filesystem capability is explicitly reported as untested", "fail_closed_if": "Ambiguous alias/collision cannot be resolved"},
+    {"id": "T16", "scenario": "Offline crash matrix: no journal, PREPARED, COMMITTING, COMMITTED, ATTEMPT_CLAIMED, CASE_STARTED", "expected": "Existing reconciliation and exactly-once outcomes unchanged; no automatic resume or new commit-point semantics", "fail_closed_if": "Any transition or irreversible-burn classification changes"},
+    {"id": "T17", "scenario": "Parity check against non-frozen Mac preflight producer's sidecar validation fixtures", "expected": "A verified AppleDouble companion is accepted by both scanners; malformed/symlink/orphan cases fail closed in both", "fail_closed_if": "Producer and transaction scanner disagree on an authoritative journal candidate"}
+  ],
+  "execution_status": "NOT_RUN_DESIGN_ONLY",
+  "formal_v4_executed": false,
+  "production_journal_touched": false
+}

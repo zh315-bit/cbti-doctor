@@ -1,0 +1,99 @@
+{
+  "adjudication_eligibility_contract": "COMPLETE lineage is FULL with all five dimensions SCORABLE. For incomplete lineage, the frozen trace-evidence classifier determines FULL/PARTIAL; no final answer in either trace or result yields NONE. Eligibility is not a score.",
+  "adjudication_eligibility_counts": {
+    "FULL": 40,
+    "NONE": 0,
+    "PARTIAL": 0
+  },
+  "attempt_id": "attempt-step9_44r1-cb362342ae31449aaffba8092c346864",
+  "attempt_status": "COMPLETED",
+  "authorization_id": "auth-step9_44r1-ecce3f6d87e64ace822fc46c97c18f55",
+  "case_id_order_preserved": true,
+  "case_order_fingerprint_sha256": "d930455e417935337a6e3459defbdc3ee3829b71786fbd8438ef092b62429e68",
+  "case_result_count": 40,
+  "case_results_sha256_at_start": "4648b8e320f535001922f13a969d1482433bfa15f88233cf9a7e70b06cafed6c",
+  "case_results_sha256_end": "4648b8e320f535001922f13a969d1482433bfa15f88233cf9a7e70b06cafed6c",
+  "comparison_class": "POST_HOC_MATCHED_FROZEN_BASELINE",
+  "evaluation_id": "heldout-v4-step9_43-treatment-v2-20260928-01",
+  "forensic_type": "READ_ONLY_TREATMENT_V2_LINEAGE_FORENSICS",
+  "formal_artifacts_modified": false,
+  "formal_case_count": 40,
+  "formal_lineage_false_count": 13,
+  "formal_lineage_ready_count": 27,
+  "generated_at_utc": "2026-09-29T19:27:23.342606+00:00",
+  "no_adjudication": true,
+  "no_aggregate": true,
+  "no_baseline_comparison": true,
+  "no_missing_semantic_root_synthesized": true,
+  "no_model_agent_rag_execution": true,
+  "no_overall": true,
+  "no_rerun": true,
+  "no_scoring": true,
+  "no_v5_access": true,
+  "raw_trace_count": 40,
+  "raw_traces_sha256_at_start": "d7ddf2a9a47ba62a85a7d1b85f069cc9593fd8f46cc4a01c1f3c8a055698cec2",
+  "raw_traces_sha256_end": "d7ddf2a9a47ba62a85a7d1b85f069cc9593fd8f46cc4a01c1f3c8a055698cec2",
+  "recomputed_lineage_counts": {
+    "COMPLETE": 35,
+    "INCOMPLETE": 5,
+    "INDETERMINATE": 0
+  },
+  "root_cause_counts": {
+    "INDETERMINATE": 0,
+    "NO_FAILURE": 27,
+    "RUNNER_DERIVATION_BUG": 8,
+    "TRUE_LINEAGE_FAILURE": 5
+  },
+  "shared_frozen_pins": [
+    {
+      "actual_sha256": "8b8c72092fcd7544e69d5d2ecd13610c7bb4c14210fca330698b3e5ab3f01d7f",
+      "expected_sha256": "8b8c72092fcd7544e69d5d2ecd13610c7bb4c14210fca330698b3e5ab3f01d7f",
+      "match": true,
+      "path": "evaluation/benchmarks/benchmark_v4_cases.yaml"
+    },
+    {
+      "actual_sha256": "8bc271bebc1c5da5351d517e2bb4a0d1a99fda3de1b713a6197b12f81fad70c7",
+      "expected_sha256": "8bc271bebc1c5da5351d517e2bb4a0d1a99fda3de1b713a6197b12f81fad70c7",
+      "match": true,
+      "path": "evaluation/v1_2_3/step9_13a_harness_freeze.json#new_harness_files"
+    },
+    {
+      "actual_sha256": "f742a8f8af7c8747818dadad81621c15d12d74f50538019913dfe18ab53bf59b",
+      "expected_sha256": "f742a8f8af7c8747818dadad81621c15d12d74f50538019913dfe18ab53bf59b",
+      "match": true,
+      "path": "evaluation/v1_2_3/step9_11_clean_freeze_manifest.json#scoring_files"
+    },
+    {
+      "actual_sha256": "a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899",
+      "expected_sha256": "a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899",
+      "match": true,
+      "path": "evaluation/benchmark_v1_1_scoring.md"
+    },
+    {
+      "actual_sha256": "de9f348cb1dff66410c03095abdaffcc256f53679718482870e4aa4d80c75056",
+      "expected_sha256": "de9f348cb1dff66410c03095abdaffcc256f53679718482870e4aa4d80c75056",
+      "match": true,
+      "path": "evaluation/v1_2_3/step9_26_v4_metric_registry.json"
+    },
+    {
+      "actual_sha256": "1c7ed4ef47865b117bc943f3e0ad9a859f4f74cfb4e8001f723ac5532af140d0",
+      "expected_sha256": "1c7ed4ef47865b117bc943f3e0ad9a859f4f74cfb4e8001f723ac5532af140d0",
+      "match": true,
+      "path": "evaluation/v1_2_3/step9_26_v4_one_shot_rules.md"
+    },
+    {
+      "actual_sha256": "a71ba06090370b576fbba66bc4b005e519ddbabff3021a40c6546fc855f90265",
+      "expected_sha256": "a71ba06090370b576fbba66bc4b005e519ddbabff3021a40c6546fc855f90265",
+      "match": true,
+      "path": "evaluation/v1_2_3/step9_34a_matched_comparison_protocol.json"
+    }
+  ],
+  "step": "9.45a",
+  "task_distribution": {
+    "CAUSE_ASSESSMENT": 10,
+    "DATA_ANALYSIS": 10,
+    "KNOWLEDGE_QA": 10,
+    "PERSONALIZED_DECISION": 10
+  },
+  "trace_contract": "Every action links to a persisted DECISION candidate; source dependencies resolve; HARD_PRECONDITION actions carry a source precondition; RETRIEVE/READ_DIARY actions link to lineage events with tool and state IDs plus RAG/session_diary provenance; goal, semantic, and dependency roots are present. No identifiers are synthesized."
+}

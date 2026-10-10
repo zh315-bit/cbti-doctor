@@ -1,0 +1,84 @@
+{
+  "contract_id": "step9_50_authorization_trace_v1",
+  "historical_trace_reconciliation": {
+    "answer_and_final_state_mirror": "The authorization object is absent from both the ANSWER snapshot and serialized final_state; future trace schema should mirror the same decision object to both.",
+    "derived_modes_for_11": {
+      "AUTHORIZED_BOUNDED": 6,
+      "AUTHORIZED_FULL": 5
+    },
+    "historical_artifacts": "Step 9.49 remains unchanged; Step 9.50 records this extraction-level reconciliation append-only.",
+    "raw_trace_observation": "V2 formal raw traces persist answer_authorization in the final DECISION state_history snapshot. The corresponding ANSWER snapshot and serialized final_state do not mirror it.",
+    "step9_49_caveat": "Step 9.49 extractor reported final authorization enum absent; that is only partly accurate."
+  },
+  "non_semantic_requirement": "Trace persistence is observational only and must not change decision or generation behavior.",
+  "persistence_rules": [
+    "Persist in formal trace/final_state, not logs only.",
+    "Mirror the exact decision object; do not independently recompute summary aliases.",
+    "Use empty arrays rather than omitted/null fields when none apply.",
+    "Persist before response generation and preserve unchanged through terminal snapshot.",
+    "Persist generation outcome and contract validation separately so authorized-but-weak content is distinguishable from authorization denial."
+  ],
+  "placement": [
+    "DECISION state_history snapshot",
+    "ANSWER/BLOCKED terminal snapshot",
+    "final_state.answer_authorization",
+    "formal raw trace turn state_history"
+  ],
+  "recommended_additional_fields": [
+    "authorization_scope",
+    "authorization_decision_id",
+    "selected_acquisition_id",
+    "answer_generation_outcome",
+    "generated_content_basis_ids",
+    "bounded_contract_validation",
+    "terminal_response_kind"
+  ],
+  "required_fields": {
+    "answer_authorization_mode": {
+      "enum": [
+        "AUTHORIZED_FULL",
+        "AUTHORIZED_BOUNDED",
+        "BLOCKED_NEEDS_INFORMATION",
+        "BLOCKED_UNSAFE_OR_INVALID"
+      ],
+      "required": true
+    },
+    "answer_authorization_reason_codes": {
+      "required": true,
+      "type": "array[string]"
+    },
+    "authorization_decision_source": {
+      "required": true,
+      "type": "string"
+    },
+    "authorization_decision_version": {
+      "required": true,
+      "type": "string"
+    },
+    "blocked_dependency_ids": {
+      "required": true,
+      "type": "array[dependency_id]"
+    },
+    "blocked_precondition_ids": {
+      "required": true,
+      "type": "array[precondition_id]"
+    },
+    "bounded_excluded_actions": {
+      "required": true,
+      "type": "array[semantic_action_or_scope_id]"
+    },
+    "bounded_supported_content_basis": {
+      "required": true,
+      "type": "array[provenance-bound fact/evidence/claim refs]"
+    }
+  },
+  "status": "DESIGN_ONLY_NOT_IMPLEMENTED",
+  "trace_failure_conditions": [
+    "mode absent/unknown",
+    "decision snapshot conflicts with final_state",
+    "required IDs omitted",
+    "bounded mode with no basis/exclusions",
+    "blocked mode with answer body for blocked action",
+    "version/source absent"
+  ]
+}

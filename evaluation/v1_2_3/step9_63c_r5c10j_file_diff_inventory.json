@@ -1,0 +1,18 @@
+{
+  "step": "9.63c-r5c10j",
+  "status": "WORKTREE_IMPLEMENTATION_NOT_FROZEN",
+  "r10_to_r11_member_accounting": {"unchanged": 14, "changed_existing_path": 3, "replaced_path": 3, "total": 20},
+  "this_step_modified_existing_member_paths": [
+    {"path": "scripts/v3_runner_identity.py", "r10_sha256": "f454a049b5e9b037cc7d5f0b5a5524dc815b428f63beb7bc98e595b8dd779fad", "current_sha256": "a0f5670d3834d5f91391b41a33fbac669d6162587bc620e9bd3acf202aa3c6a5", "change": "strict r11 pointer path/revision and 20-member hash verification; no r10 fallback"},
+    {"path": "scripts/run_step9_63_v3_formal_execution.py", "r10_sha256": "ce8363555b734e39802236eaa2ee31233359ee367acf1094630836f924256cf2", "current_sha256": "cd0d0706f76329a23cc26aad18e3c51997a2e2cfd1467aff7c1baf0c55a5ead6", "change": "r11-only producer, registry and artifact provenance validation before adapter.run"}
+  ],
+  "preexisting_approved_changed_member": {"path": "scripts/v3_execution_transaction.py", "r10_sha256": "f1a253730953abf51307f4e9404bf59d7856c15d2367b7a62d6809dbb64b2797", "current_sha256": "f0e74a49d152053b5455951c507edb8f7849a9e4708835711e5975a82e690e91", "change_origin": "Step 9.63c-r5c10c; not edited in this step"},
+  "this_step_new_replacement_member_candidates": [
+    {"path": "scripts/build_step9_63c_r11_runner_freeze.py", "sha256": "c2924475e3b4a71d0cd39427310fd97562a985cfb5a1c7ea274a8a51a4e73482", "replaces": "scripts/build_step9_63c_r5c4_runner_freeze.py"},
+    {"path": "scripts/preflight_step9_63c_r11_mac_local.py", "sha256": "460ede115b319baf35f434915cce1c4a89e4d7ba912e02e1bc3919ef2fbcc05f", "replaces": "scripts/preflight_step9_63c_r5_mac_local.py"}
+  ],
+  "this_step_new_test": {"path": "tests/test_step9_63c_r5c10j_r11_infrastructure.py", "sha256": "fd7fe66486249684c87e7ec5c6173f48aaf031ddec1ff5de95a0e352b73f6c02"},
+  "r11_pointer": "NOT_CREATED_IN_PRODUCTION; temporary synthetic pointer only",
+  "r11_freeze": "NOT_CREATED_IN_PRODUCTION; temporary synthetic freeze only",
+  "history_modified": false
+}

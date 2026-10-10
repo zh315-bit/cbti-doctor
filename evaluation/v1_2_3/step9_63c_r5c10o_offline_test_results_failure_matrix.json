@@ -1,0 +1,62 @@
+{
+  "step": "9.63c-r5c10o",
+  "runtime": ".venv/bin/python -B with PYTHONDONTWRITEBYTECODE=1",
+  "groups_executed_this_step": [
+    {
+      "name": "target_v1_2_original_and_negative_guard",
+      "module": "test_v1_2_mechanism_validation.py",
+      "collected": 2,
+      "passed": 2,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "import_errors": 0
+    },
+    {
+      "name": "target_v1_2_1_original_and_negative_guard",
+      "module": "test_v1_2_1_mechanism_validation.py",
+      "collected": 2,
+      "passed": 2,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "import_errors": 0
+    },
+    {
+      "name": "r11_infrastructure_transaction_registry_scoped_offline",
+      "modules": ["tests.test_step9_63c_r5c10j_r11_infrastructure", "tests.test_step9_63c_r5c10c_transaction_scanner", "tests.test_v3_execution_transaction", "tests.test_step9_63c_r5c8f_invocation_registry"],
+      "collected": 78,
+      "passed": 78,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "import_errors": 0
+    },
+    {
+      "name": "historical_preflight_contract_and_lifecycle_scoped_offline",
+      "modules": ["tests.test_step9_63c_r5c8b_preflight_contract", "tests.test_step9_63c_r5c5b_lifecycle_reducer"],
+      "collected": 46,
+      "passed": 46,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "import_errors": 0
+    }
+  ],
+  "distinct_methods_run_total": 128,
+  "distinct_methods_passed_total": 128,
+  "full_regression_this_step": {
+    "status": "NOT_RUN_SAFETY_BOUNDARY",
+    "collected": "NOT_RUN",
+    "passed": "NOT_RUN",
+    "failed": "NOT_RUN",
+    "errors": "NOT_RUN",
+    "skipped": "NOT_RUN",
+    "import_errors": "NOT_RUN",
+    "reason": "Other historical write paths not fully audited; 12 prior import-blocked modules remain outside this two-file repair scope. Previous 603/577/20/18 results are not reused as current results."
+  },
+  "failures_observed_in_executed_groups": [],
+  "known_prior_unresolved_clusters": 6,
+  "known_prior_uncollected_modules": 12,
+  "acceptance": "LIMITED_REPAIR_PASSES_SCOPED_OFFLINE_TESTS_NOT_FULL_REGRESSION"
+}

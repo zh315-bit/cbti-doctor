@@ -1,0 +1,12 @@
+# Step 9.63c-r5c10m — historical write-path root cause
+
+This is static analysis only. Neither historical test was invoked in this step.
+
+| Test | Path selection and write chain | Trigger in the full suite |
+|---|---|---|
+| `tests/test_v1_2_mechanism_validation.py::V12MechanismValidationTests.test_controlled_information_value_scenarios` | `ROOT = Path(__file__).resolve().parents[1]` and module constant `TRACE_PATH` at line 18; method constructs 18 rows with `evaluate()` and calls `TRACE_PATH.parent.mkdir(...)` then `TRACE_PATH.write_text(...)` at lines 133–134. | `unittest` discovery imports the module and executes its `test_` method. There is no temporary-directory fixture, environment selector, or CLI path parameter. |
+| `tests/test_v1_2_1_mechanism_validation.py::PreconditionsMechanismTests.test_controlled_scenarios` | Same repository-root derivation and module constant `TRACE` at line 16; method constructs rows with `decide()` and diary projections, then calls `TRACE.parent.mkdir(...)` and `TRACE.write_text(...)` at line 54. | Same discovery/execution behavior; path is not selected by runtime configuration. |
+
+Both `Path.write_text()` calls replace file content without exclusive-create or pre-write integrity checks. Their current mtimes match the diagnostic repeat interval; without pre-run bytes, whether their contents changed is **not proven**. The freeze manifests for V1.2/V1.2.1 cite source hashes but no independent hash of either trace. The files are untracked, with no Git object for these paths. Their AppleDouble companions are metadata and cannot be treated as verified original copies. Current SHA-256 values are *current-state evidence only* in the [integrity audit](step9_63c_r5c10m_historical_trace_integrity_audit.json).
+
+Candidate isolation, not implementation approval: after separate approval, make each test write its computed rows to a per-test temporary path while preserving the same assertions and serialization; alternatively construct a safe historical suite that excludes the known writers but explicitly reports the reduced method count. The former is preferable for full regression, subject to proving no other fixed-path writer remains. This changes test fixture routing, not production Agent behavior. It must not rewrite or claim to restore the two historical trace files. A future runner should inventory output writes and compare immutable historical hashes before/after, stopping if any protected path changes.

@@ -1,0 +1,16 @@
+{
+  "artifact_type": "STEP9_63A_OFFLINE_TEST_MANIFEST",
+  "step": "9.63a",
+  "command": ".venv/bin/python -m unittest tests.test_v3_execution_transaction tests.test_step9_61a_authorization_retirement tests.test_step9_62b_mac_local_preflight tests.test_step9_63_v3_formal_execution -v",
+  "transaction_test_file": "tests/test_v3_execution_transaction.py",
+  "transaction_test_file_sha256": "478528ceee6b3888ccc66534f3e2c45819c5d135124d7b58e51e7dc779cd73de",
+  "transaction_prototype_sha256": "cac450075ced33ce7490577079a6604c1a749541eaa2c4302be065d408569251",
+  "total_test_count": 76,
+  "failures": 0,
+  "errors": 0,
+  "synthetic_transaction_cases": 32,
+  "real_authorization_mutation_tests": 0,
+  "formal_runner_invoked": false,
+  "model_agent_rag_called": false,
+  "network_connectivity_tested": false
+}

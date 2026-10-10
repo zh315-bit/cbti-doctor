@@ -1,0 +1,26 @@
+{
+  "artifact_type": "STEP9_63A_R2_HISTORICAL_INTEGRITY_AUDIT",
+  "timestamp_utc": "2026-10-05T21:36:47Z",
+  "historical_pin_count": 55,
+  "historical_pin_mismatch_count": 0,
+  "pre_retirement_historical_pin_map_sha256": "ce2d3aacd734212d244ea0d56f483a883c1465328824b6661ce527b424eb21c5",
+  "post_retirement_immutable_or_prefix_pin_map_sha256": "ce2d3aacd734212d244ea0d56f483a883c1465328824b6661ce527b424eb21c5",
+  "append_only_ledger_exception": {
+    "path": "evaluation/v1_2_3/authorization_lifecycle_events.jsonl",
+    "frozen_historical_prefix_length_bytes": 1161,
+    "frozen_historical_prefix_sha256": "ca168f6939c4697a7a7bccc0b365b414d9a0e632f40de4242eb0a47e2d985285",
+    "post_append_prefix_sha256": "ca168f6939c4697a7a7bccc0b365b414d9a0e632f40de4242eb0a47e2d985285",
+    "post_append_full_file_sha256": "f573185bc39c26e14306ff1ac7c1a3e3a64e9940cb1e6f089a08942b96cb044d",
+    "full_file_sha_changed_as_required_by_authorized_append": true,
+    "old_events_rewritten": false,
+    "new_terminal_event_count": 1
+  },
+  "step9_63a_r1_artifact_count": 11,
+  "step9_63a_r1_artifact_map_sha256_before": "fc1c85dd581748d0efca6b65c33936c0cd08fd77a9d9556535fcfd1c74b62dea",
+  "step9_63a_r1_artifact_map_sha256_after": "fc1c85dd581748d0efca6b65c33936c0cd08fd77a9d9556535fcfd1c74b62dea",
+  "step9_62_authorization_manifest_sha256_before": "7f97f9e42b8711a6ae745e4626d81fa8787a162bbfa8fdad6fe53c9fd4b975c8",
+  "step9_62_authorization_manifest_sha256_after": "7f97f9e42b8711a6ae745e4626d81fa8787a162bbfa8fdad6fe53c9fd4b975c8",
+  "step9_58_provenance_gap": "PRESENT_AND_DOCUMENTED",
+  "prior_historical_artifacts_rewritten": false,
+  "prior_historical_artifacts_deleted": false
+}

@@ -1,0 +1,22 @@
+{
+  "benchmark_v2_executed": false,
+  "benchmark_v3_accessed": false,
+  "credential_present": true,
+  "dns_ready": true,
+  "evaluation_id": "clean-evaluation-v1_2_3-20260922-01",
+  "frozen_hashes": {
+    "agent_aggregate": "ee914db7b8b5538c5607fdff34cff9083f6d069d50cf342964ae91c8a6446927",
+    "benchmark_sha256": "dfa9b9e5a12b0017fa68d344d01b313ebc29e583b933fbe1e93c125f55ecafd2",
+    "harness_aggregate": "8bc271bebc1c5da5351d517e2bb4a0d1a99fda3de1b713a6197b12f81fad70c7",
+    "scoring_aggregate": "f742a8f8af7c8747818dadad81621c15d12d74f50538019913dfe18ab53bf59b",
+    "scoring_sha256": "a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899"
+  },
+  "frozen_identity_match": true,
+  "https_ready": true,
+  "model_endpoint_reachable": true,
+  "preflight_type": "LOCAL_REAL_PREFLIGHT",
+  "ready_for_authorized_run": true,
+  "synthetic_production_smoke": "PASS",
+  "timestamp": "2026-09-22T18:59:40.153763+00:00",
+  "trace_lineage_ready": true
+}

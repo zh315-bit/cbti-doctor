@@ -1,0 +1,79 @@
+{
+  "step": "9.63c-r5c5",
+  "status": "FAIL_CLOSED_ACTIVE_AUTHORIZATION_EXISTS",
+  "authorization_issued": false,
+  "precondition_failure": {
+    "required_active_executable_authorization_count_before": 0,
+    "observed_active_executable_authorization_count_before": 1,
+    "active_authorization_id": "auth-step9_63a_r3-d53bbaa35b1e4522bc4a5f57d42c8ef7",
+    "active_authorization_manifest_path": "evaluation/v1_2_3/step9_63a_r3_v3_authorization_manifest.json",
+    "active_authorization_manifest_sha256": "1514438d0afe23a39de2a696e9ea5bd97faac4dd546a88cdbd7b91f450046345",
+    "authorization_status": "ISSUED_NOT_CONSUMED",
+    "manifest_status": "ISSUED_NOT_EXECUTED",
+    "consumed": false,
+    "consumption_count": 0,
+    "attempt_id_status": "PREBOUND_IDENTITY_ONLY_NOT_CREATED",
+    "retirement_event_found": false,
+    "consumption_event_found": false,
+    "disposition": "FAIL_CLOSED_NO_NEW_AUTHORIZATION_OR_IDENTITY_ALLOCATED"
+  },
+  "r9_freeze_validation": {
+    "revision": "r9",
+    "member_count": 19,
+    "freeze_file_sha256": "4af44711fe984b69c81fc4730f0ca3f69058d1f69123b3b2bd7a570356166f97",
+    "member_aggregate_sha256": "bd3414b95b88c6ed932f9458a73323ea0f79806ba5ae064ca4a796ec7750ed5c",
+    "current_runner_matches": true,
+    "all_member_hashes_match": true
+  },
+  "identity_validation": {
+    "current_agent_matches_v3_freeze": true,
+    "frozen_evaluation_identities_match": true,
+    "benchmark_sha256": "8b8c72092fcd7544e69d5d2ecd13610c7bb4c14210fca330698b3e5ab3f01d7f",
+    "benchmark_case_count": 40,
+    "benchmark_case_set_match": true,
+    "benchmark_case_order_match": true,
+    "task_distribution": {
+      "KNOWLEDGE_QA": 10,
+      "CAUSE_ASSESSMENT": 10,
+      "PERSONALIZED_DECISION": 10,
+      "DATA_ANALYSIS": 10
+    }
+  },
+  "historical_integrity": {
+    "pin_model": "PREFIX_LENGTH_PLUS_PREFIX_SHA256",
+    "pin_count": 55,
+    "mismatch_count": 0,
+    "step9_58_provenance_gap": "PRESENT_AND_DOCUMENTED"
+  },
+  "r8_authorization": {
+    "authorization_id": "auth-step9_63c_r4-4b2749ce10014634ac6de155d37ec6a9",
+    "status": "RETIRED_UNCONSUMED_NON_REUSABLE",
+    "executable": false,
+    "reusable": false
+  },
+  "new_authorization_id": null,
+  "new_attempt_id": null,
+  "new_namespace_id": null,
+  "authorization_id_collision": "NOT_CHECKED_NO_ID_ALLOCATED",
+  "attempt_id_collision": "NOT_CHECKED_NO_ID_ALLOCATED",
+  "namespace_id_collision": "NOT_CHECKED_NO_ID_ALLOCATED",
+  "new_authorization_status": "NOT_ISSUED",
+  "new_authorization_consumed": false,
+  "new_authorization_consumption_count": 0,
+  "authorization_manifest_sha256": null,
+  "issuance_lifecycle_event_appended": false,
+  "attempt_created": false,
+  "namespace_created": false,
+  "namespace_reserved": false,
+  "formal_v4_case_executed": 0,
+  "model_inference_executed": false,
+  "agent_evaluation_executed": false,
+  "rag_evaluation_executed": false,
+  "http_request_sent": false,
+  "mac_local_preflight_run": false,
+  "v3_agent_modified": false,
+  "v4_modified": false,
+  "evaluation_semantics_changed": false,
+  "ready_for_r9_mac_local_final_preclearance": false,
+  "ready_for_formal_v4_execution": false
+}

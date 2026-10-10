@@ -1,0 +1,549 @@
+{
+ "step": "9.63c-r5c10af",
+ "decision": "AR-2 (RC9)",
+ "coverage_rule": "A property counts as covered only if a currently passing test exercises it against an r11 inventory member (current producer, r11 producer, formal consumer, resolver, transaction, lifecycle or parent runner). Tests of the r10-era r5c7 producer (not an r11 member) do not count.",
+ "historical_items": 36,
+ "counts": {
+  "RETIRED_COVERED": 17,
+  "REWRITTEN": 19,
+  "UNCOVERED": 0
+ },
+ "archives": {
+  "tests/retired/test_step9_63c_r5_mac_local_preflight.py.retired": "6becc369b9eb92347bfd9de064bf35277da15743d9b331efb453b3548e2b78d3",
+  "tests/retired/test_step9_63c_r5b_preflight_lifecycle.py.retired": "2d95a200d286e20ac35fa04f3665abff626ea5846270ca7a36164e0bb371f6c5"
+ },
+ "mutation_probe": "in-memory removal of r11 connectivity check, resolver aggregate/member checks, consumer freshness, write_artifact exclusivity and reducer retirement lookup: all 6 mutants killed by the rewritten tests",
+ "uncovered_requires_human_decision": [],
+ "verification_problems": [],
+ "items": [
+  {
+   "historical_test": "test_step9_63c_r5_mac_local_preflight.R8MacLocalPreflightTests.test_dns_failure",
+   "historical_assertion": "validate_transport rejects DEFAULT_DIG FAIL with DNS_NOT_READY",
+   "equivalent_property": "r11 producer refuses a pass payload when any DNS gate fails",
+   "decision": "REWRITTEN",
+   "covering_or_rewritten_tests": [
+    "test_step9_63c_r5c10ad_r5_producer_equivalence.R11ProducerConnectivityEquivalence.test_dns_failure"
+   ],
+   "covering_tests_currently_pass": true,
+   "r11_inventory_member_exercised": "scripts/preflight_step9_63c_r11_mac_local.py",
+   "note": "now covers all five DNS gates; consumer side also covered by r5c8b test_22"
+  },
+  {
+   "historical_test": "test_step9_63c_r5_mac_local_preflight.R8MacLocalPreflightTests.test_tcp_failure",
+   "historical_assertion": "TCP FAIL -> TCP_CONNECTION_FAILED",
+   "equivalent_property": "r11 producer refuses on TCP failure",
+   "decision": "REWRITTEN",
+   "covering_or_rewritten_tests": [
+    "test_step9_63c_r5c10ad_r5_producer_equivalence.R11ProducerConnectivityEquivalence.test_tcp_failure"
+   ],
+   "covering_tests_currently_pass": true,
+   "r11_inventory_member_exercised": "scripts/preflight_step9_63c_r11_mac_local.py",
+   "note": ""
+  },
+  {
+   "historical_test": "test_step9_63c_r5_mac_local_preflight.R8MacLocalPreflightTests.test_tls_failure",
+   "historical_assertion": "TLS FAIL -> TLS_CONNECTION_FAILED",
+   "equivalent_property": "r11 producer refuses on TLS failure",
+   "decision": "REWRITTEN",
+   "covering_or_rewritten_tests": [
+    "test_step9_63c_r5c10ad_r5_producer_equivalence.R11ProducerConnectivityEquivalence.test_tls_failure"
+   ],
+   "covering_tests_currently_pass": true,
+   "r11_inventory_member_exercised": "scripts/preflight_step9_63c_r11_mac_local.py",
+   "note": ""
+  },
+  {
+   "historical_test": "test_step9_63c_r5_mac_local_preflight.R8MacLocalPreflightTests.test_certificate_missing",
+   "historical_assertion": "certificate absent -> TLS_CERTIFICATE_MISSING",
+   "equivalent_property": "r11 producer refuses without TLS certificate",
+   "decision": "REWRITTEN",
+   "covering_or_rewritten_tests": [
+    "test_step9_63c_r5c10ad_r5_producer_equivalence.R11ProducerConnectivityEquivalence.test_certificate_missing"
+   ],
+   "covering_tests_currently_pass": true,
+   "r11_inventory_member_exercised": "scripts/preflight_step9_63c_r11_mac_local.py",
+   "note": "consumer side also r5c8b test_23"
+  },
+  {
+   "historical_test": "test_step9_63c_r5_mac_local_preflight.R8MacLocalPreflightTests.test_certificate_unverified",
+   "historical_assertion": "certificate unverified -> TLS_CERTIFICATE_NOT_VERIFIED",
+   "equivalent_property": "r11 producer refuses unverified certificate",
+   "decision": "REWRITTEN",
+   "covering_or_rewritten_tests": [
+    "test_step9_63c_r5c10ad_r5_producer_equivalence.R11ProducerConnectivityEquivalence.test_certificate_unverified"
+   ],
+   "covering_tests_currently_pass": true,
+   "r11_inventory_member_exercised": "scripts/preflight_step9_63c_r11_mac_local.py",
+   "note": ""
+  },
+  {
+   "historical_test": "test_step9_63c_r5_mac_local_preflight.R8MacLocalPreflightTests.test_r8_aggregate_hash_mismatch",
+   "historical_assertion": "R8 freeze aggregate pin mismatch -> R8_RUNNER_AGGREGATE_HASH_MISMATCH",
+   "equivalent_property": "r11 resolver rejects freeze whose member aggregate differs",
+   "decision": "REWRITTEN",
+   "covering_or_rewritten_tests": [
+    "test_step9_63c_r5c10ad_r5_producer_equivalence.R11ResolverFreezeEquivalence.test_aggregate_hash_mismatch"
+   ],
+   "covering_tests_currently_pass": true,
+   "r11_inventory_member_exercised": "scripts/v3_runner_identity.py",
+   "note": "temporary-root synthetic r11 identity only"
+  },
+  {
+   "historical_test": "test_step9_63c_r5_mac_local_preflight.R8MacLocalPreflightTests.test_r8_member_hash_mismatch",
+   "historical_assertion": "transaction member hash drift -> R8_FREEZE_MEMBER_HASH_MISMATCH",
+   "equivalent_property": "r11 resolver rejects any member byte drift",
+   "decision": "REWRITTEN",
+   "covering_or_rewritten_tests": [
+    "test_step9_63c_r5c10ad_r5_producer_equivalence.R11ResolverFreezeEquivalence.test_member_hash_mismatch"
+   ],
+   "covering_tests_currently_pass": true,
+   "r11_inventory_member_exercised": "scripts/v3_runner_identity.py",
+   "note": "builder-side drift also r5c10j test_member_drift_and_corrupt_freeze_fail_closed"
+  },
+  {
+   "historical_test": "test_step9_63c_r5_mac_local_preflight.R8MacLocalPreflightTests.test_v3_agent_mismatch",
+   "historical_assertion": "frozen identity reports wrong agent -> FROZEN_IDENTITY_MISMATCH",
+   "equivalent_property": "agent/frozen identity mismatch blocks execution",
+   "decision": "RETIRED_COVERED",
+   "covering_or_rewritten_tests": [
+    "test_step9_35a_treatment_runner.MatchedTreatmentAuthorizationTests.test_02_wrong_treatment_agent_sha_rejected",
+    "test_step9_35a_treatment_runner.MatchedTreatmentAuthorizationTests.test_invalid_frozen_identity_rejected_before_authorization"
+   ],
+   "covering_tests_currently_pass": true,
+   "r11_inventory_member_exercised": "scripts/run_step9_35a_matched_treatment.py",
+   "note": "enforced by parent validate_authorization on the adapter.run path; producer-level adapter check executes only once formal r11 exists"
+  },
+  {
+   "historical_test": "test_step9_63c_r5_mac_local_preflight.R8MacLocalPreflightTests.test_authorization_manifest_hash_mismatch",
+   "historical_assertion": "authorization manifest SHA pin mismatch",
+   "equivalent_property": "consumer rejects evidence bound to a different authorization manifest SHA",
+   "decision": "RETIRED_COVERED",
+   "covering_or_rewritten_tests": [
+    "test_step9_63c_r5c8b_preflight_contract.Step963cR5c8bPreflightContractTests.test_21_wrong_authorization_manifest_sha_is_rejected"
+   ],
+   "covering_tests_currently_pass": true,
+   "r11_inventory_member_exercised": "scripts/run_step9_63_v3_formal_execution.py",
+   "note": ""
+  },
+  {
+   "historical_test": "test_step9_63c_r5_mac_local_preflight.R8MacLocalPreflightTests.test_authorization_already_consumed",
+   "historical_assertion": "consumed authorization -> AUTHORIZATION_BINDING_MISMATCH",
+   "equivalent_property": "consumed authorization is never executable",
+   "decision": "RETIRED_COVERED",
+   "covering_or_rewritten_tests": [
+    "test_step9_63c_r5c5b_lifecycle_reducer.LifecycleReducerTests.test_09_consumed_is_not_executable",
+    "test_step9_35a_treatment_runner.MatchedTreatmentAuthorizationTests.test_consumed_authorization_rejected"
+   ],
+   "covering_tests_currently_pass": true,
+   "r11_inventory_member_exercised": "scripts/authorization_lifecycle.py; scripts/run_step9_35a_matched_treatment.py",
+   "note": ""
+  },
+  {
+   "historical_test": "test_step9_63c_r5_mac_local_preflight.R8MacLocalPreflightTests.test_multiple_active_authorizations",
+   "historical_assertion": "two active authorizations -> ACTIVE_AUTHORIZATION_MISMATCH before historical checks",
+   "equivalent_property": "exactly one active authorization is required; the consumer recounts it itself instead of trusting the producer",
+   "decision": "RETIRED_COVERED",
+   "covering_or_rewritten_tests": [
+    "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_second_active_authorization_rejected",
+    "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_00_consistent_fixture_passes_every_r11_precommit_check"
+   ],
+   "covering_tests_currently_pass": true,
+   "r11_inventory_member_exercised": "scripts/run_step9_63_v3_formal_execution.py (+ scripts/authorization_lifecycle.py read-only)",
+   "note": "Differs on purpose: the retired test also asserted that historical checks were NOT consulted once two authorizations were active (evaluation order). The r5c10ae gate evaluates every check independently and reports all failures, so ordering is not a property of the replacement. Mutation proof: removing the exactly-one check, the bound-id check, or replacing the independent recount with the producer's view each fails the mapped test.",
+   "retired_in_step": "9.63c-r5c10af"
+  },
+  {
+   "historical_test": "test_step9_63c_r5_mac_local_preflight.R8MacLocalPreflightTests.test_attempt_collision",
+   "historical_assertion": "existing attempt output -> ATTEMPT_OUTPUT_COLLISION",
+   "equivalent_property": "attempt identity reuse is rejected before execution",
+   "decision": "RETIRED_COVERED",
+   "covering_or_rewritten_tests": [
+    "test_step9_35a_treatment_runner.MatchedTreatmentAuthorizationTests.test_14_duplicate_attempt_rejected",
+    "test_step9_63c_r3_parent_namespace_repair.NamespaceBoundaryTests.test_t2_same_attempt_reuse_fails_closed"
+   ],
+   "covering_tests_currently_pass": true,
+   "r11_inventory_member_exercised": "scripts/run_step9_35a_matched_treatment.py; scripts/v3_execution_transaction.py",
+   "note": ""
+  },
+  {
+   "historical_test": "test_step9_63c_r5_mac_local_preflight.R8MacLocalPreflightTests.test_namespace_collision",
+   "historical_assertion": "existing namespace -> NAMESPACE_EXISTS",
+   "equivalent_property": "namespace reuse is rejected",
+   "decision": "RETIRED_COVERED",
+   "covering_or_rewritten_tests": [
+    "test_step9_35a_treatment_runner.MatchedTreatmentAuthorizationTests.test_15_output_collision_rejected",
+    "test_step9_63c_r3_parent_namespace_repair.NamespaceBoundaryTests.test_t3_same_namespace_reuse_fails_closed"
+   ],
+   "covering_tests_currently_pass": true,
+   "r11_inventory_member_exercised": "scripts/run_step9_35a_matched_treatment.py; scripts/v3_execution_transaction.py",
+   "note": ""
+  },
+  {
+   "historical_test": "test_step9_63c_r5_mac_local_preflight.R8MacLocalPreflightTests.test_transaction_identity_collision_and_appledouble_sidecar",
+   "historical_assertion": "other journal reusing attempt -> TRANSACTION_IDENTITY_COLLISION; AppleDouble sidecar not parsed",
+   "equivalent_property": "duplicate transaction identity fails closed; verified AppleDouble companions excluded",
+   "decision": "RETIRED_COVERED",
+   "covering_or_rewritten_tests": [
+    "test_step9_63c_r5c10c_transaction_scanner.TransactionScannerRepairTests.test_t06_duplicate_authorization_attempt_namespace_and_transaction",
+    "test_step9_63c_r5c10c_transaction_scanner.TransactionScannerRepairTests.test_t02_verified_appledouble_companion_is_excluded"
+   ],
+   "covering_tests_currently_pass": true,
+   "r11_inventory_member_exercised": "scripts/v3_execution_transaction.py",
+   "note": ""
+  },
+  {
+   "historical_test": "test_step9_63c_r5_mac_local_preflight.R8MacLocalPreflightTests.test_historical_pin_mismatch",
+   "historical_assertion": "54 of 55 historical pins -> HISTORICAL_PIN_MISMATCH",
+   "equivalent_property": "all 55 historical pins (34 inventory + 20 supplemental + ledger prefix) must verify before execution",
+   "decision": "RETIRED_COVERED",
+   "covering_or_rewritten_tests": [
+    "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_historical_pin_count_54_rejected",
+    "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_historical_pin_mismatch_rejected",
+    "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_inventory_pin_mismatch_rejected",
+    "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_ledger_prefix_tamper_rejected",
+    "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_real_repository_historical_pins_verify_55"
+   ],
+   "covering_tests_currently_pass": true,
+   "r11_inventory_member_exercised": "scripts/run_step9_63_v3_formal_execution.py (+ scripts/authorization_lifecycle.py read-only)",
+   "note": "test_historical_pin_count_54_rejected is the exact analogue of the retired 54-of-55 case; hash mismatches (inventory side and supplemental side) and the ledger prefix are covered separately. Mutation proof: removing the gate check, the inventory hash check, the supplemental hash check, the ledger prefix check or the count check each fails a mapped test.",
+   "retired_in_step": "9.63c-r5c10af"
+  },
+  {
+   "historical_test": "test_step9_63c_r5_mac_local_preflight.R8MacLocalPreflightTests.test_historical_global_root_not_current_collision",
+   "historical_assertion": "historical global evaluation root is not a current collision",
+   "equivalent_property": "historical global root does not count as a namespace collision",
+   "decision": "RETIRED_COVERED",
+   "covering_or_rewritten_tests": [
+    "test_step9_63c_r3_parent_namespace_repair.NamespaceBoundaryTests.test_t1_historical_global_root_is_not_false_collision"
+   ],
+   "covering_tests_currently_pass": true,
+   "r11_inventory_member_exercised": "scripts/v3_execution_transaction.py",
+   "note": ""
+  },
+  {
+   "historical_test": "test_step9_63c_r5_mac_local_preflight.R8MacLocalPreflightTests.test_failed_payload_cannot_write_evidence",
+   "historical_assertion": "non-PASS payload cannot be persisted; directory stays empty",
+   "equivalent_property": "failed preflight cannot persist evidence",
+   "decision": "RETIRED_COVERED",
+   "covering_or_rewritten_tests": [
+    "test_step9_63c_r5c4_bootstrap_repair.BootstrapRepairTests.test_15_failed_preflight_cannot_persist"
+   ],
+   "covering_tests_currently_pass": true,
+   "r11_inventory_member_exercised": "scripts/preflight_step9_63c_current_mac_local.py",
+   "note": "r11 producer raises before write (R11ProducerConnectivityEquivalence)"
+  },
+  {
+   "historical_test": "test_step9_63c_r5_mac_local_preflight.R8MacLocalPreflightTests.test_fail_closed_output_hides_exception",
+   "historical_assertion": "main() prints FAIL_CLOSED without exception text",
+   "equivalent_property": "r11 producer main fails closed without leaking exception text and without claiming",
+   "decision": "REWRITTEN",
+   "covering_or_rewritten_tests": [
+    "test_step9_63c_r5c10ad_r5_producer_equivalence.R11ProducerFailClosedOutput.test_fail_closed_output_hides_exception"
+   ],
+   "covering_tests_currently_pass": true,
+   "r11_inventory_member_exercised": "scripts/preflight_step9_63c_r11_mac_local.py",
+   "note": ""
+  },
+  {
+   "historical_test": "test_step9_63c_r5_mac_local_preflight.R8MacLocalPreflightTests.test_real_identity_state_now_requires_new_runner_freeze",
+   "historical_assertion": "real r8 execution_state raises",
+   "equivalent_property": "superseded-revision authorization cannot pass the consumer",
+   "decision": "RETIRED_COVERED",
+   "covering_or_rewritten_tests": [
+    "test_step9_63c_r5c10j_r11_infrastructure.R11InfrastructureTests.test_missing_claim_artifact_sha_and_r10_authorization_rejected"
+   ],
+   "covering_tests_currently_pass": true,
+   "r11_inventory_member_exercised": "scripts/run_step9_63_v3_formal_execution.py",
+   "note": ""
+  },
+  {
+   "historical_test": "test_step9_63c_r5b_preflight_lifecycle.PreflightLifecycleTests.test_T1_preparation_does_not_create_real_target",
+   "historical_assertion": "artifact_path computation creates nothing",
+   "equivalent_property": "path preparation is side-effect free",
+   "decision": "RETIRED_COVERED",
+   "covering_or_rewritten_tests": [
+    "test_step9_63c_r5c4_bootstrap_repair.BootstrapRepairTests.test_16_import_and_preparation_do_not_create_artifacts",
+    "test_step9_63c_r5c4_bootstrap_repair.BootstrapRepairTests.test_14_preflight_path_is_authorization_scoped"
+   ],
+   "covering_tests_currently_pass": true,
+   "r11_inventory_member_exercised": "scripts/preflight_step9_63c_current_mac_local.py",
+   "note": "r11 producer: T4 rewrite also asserts the computed path does not exist"
+  },
+  {
+   "historical_test": "test_step9_63c_r5b_preflight_lifecycle.PreflightLifecycleTests.test_T2_import_does_not_create_real_target",
+   "historical_assertion": "subprocess import leaves legacy artifact unchanged",
+   "equivalent_property": "importing producers creates no repository artifact or registry",
+   "decision": "REWRITTEN",
+   "covering_or_rewritten_tests": [
+    "test_step9_63c_r5c10ad_r5_producer_equivalence.R11ProducerArtifactLifecycle.test_T2_import_does_not_create_repository_artifacts"
+   ],
+   "covering_tests_currently_pass": true,
+   "r11_inventory_member_exercised": "scripts/preflight_step9_63c_r11_mac_local.py; scripts/preflight_step9_63c_current_mac_local.py",
+   "note": "stronger: full evidence-directory listing compared"
+  },
+  {
+   "historical_test": "test_step9_63c_r5b_preflight_lifecycle.PreflightLifecycleTests.test_T3_offline_fixture_only_writes_temp",
+   "historical_assertion": "fixture write lands only in temp",
+   "equivalent_property": "offline fixture writes only temporary paths",
+   "decision": "REWRITTEN",
+   "covering_or_rewritten_tests": [
+    "test_step9_63c_r5c10ad_r5_producer_equivalence.R11ProducerArtifactLifecycle.test_T3_offline_fixture_only_writes_temp"
+   ],
+   "covering_tests_currently_pass": true,
+   "r11_inventory_member_exercised": "scripts/preflight_step9_63c_r11_mac_local.py",
+   "note": ""
+  },
+  {
+   "historical_test": "test_step9_63c_r5b_preflight_lifecycle.PreflightLifecycleTests.test_T4_first_id_path_is_unique",
+   "historical_assertion": "patched uuid yields expected ID; path absent",
+   "equivalent_property": "r11 ID grammar is exact and path is authorization-scoped",
+   "decision": "REWRITTEN",
+   "covering_or_rewritten_tests": [
+    "test_step9_63c_r5c10ad_r5_producer_equivalence.R11ProducerArtifactLifecycle.test_T4_identity_grammar_and_authorization_scoped_path"
+   ],
+   "covering_tests_currently_pass": true,
+   "r11_inventory_member_exercised": "scripts/preflight_step9_63c_r11_mac_local.py",
+   "note": "r11 IDs are minted by claim_invocation (covered by r5c10j registry tests)"
+  },
+  {
+   "historical_test": "test_step9_63c_r5b_preflight_lifecycle.PreflightLifecycleTests.test_T5_second_nonconsuming_id_differs",
+   "historical_assertion": "distinct IDs map to distinct paths",
+   "equivalent_property": "distinct IDs map to distinct r11 paths",
+   "decision": "REWRITTEN",
+   "covering_or_rewritten_tests": [
+    "test_step9_63c_r5c10ad_r5_producer_equivalence.R11ProducerArtifactLifecycle.test_T5_second_id_has_distinct_path"
+   ],
+   "covering_tests_currently_pass": true,
+   "r11_inventory_member_exercised": "scripts/preflight_step9_63c_r11_mac_local.py",
+   "note": ""
+  },
+  {
+   "historical_test": "test_step9_63c_r5b_preflight_lifecycle.PreflightLifecycleTests.test_T6_unknown_old_artifact_untouched",
+   "historical_assertion": "legacy artifact unchanged by new attestation",
+   "equivalent_property": "old artifacts stay unchanged and unaccepted",
+   "decision": "RETIRED_COVERED",
+   "covering_or_rewritten_tests": [
+    "test_step9_63c_r5c8b_preflight_contract.Step963cR5c8bPreflightContractTests.test_24_old_r5c7e_artifact_remains_rejected_and_unchanged"
+   ],
+   "covering_tests_currently_pass": true,
+   "r11_inventory_member_exercised": "scripts/run_step9_63_v3_formal_execution.py",
+   "note": ""
+  },
+  {
+   "historical_test": "test_step9_63c_r5b_preflight_lifecycle.PreflightLifecycleTests.test_T7_successful_new_artifact_binds_authorization",
+   "historical_assertion": "consumer accepts a valid instance-scoped artifact",
+   "equivalent_property": "consumer accepts correctly bound evidence",
+   "decision": "RETIRED_COVERED",
+   "covering_or_rewritten_tests": [
+    "test_step9_63c_r5c8b_preflight_contract.Step963cR5c8bPreflightContractTests.test_01_producer_generated_fixture_passes_frozen_validator",
+    "test_step9_63c_r5c10j_r11_infrastructure.R11InfrastructureTests.test_registry_claim_persist_and_consumer_acceptance"
+   ],
+   "covering_tests_currently_pass": true,
+   "r11_inventory_member_exercised": "scripts/run_step9_63_v3_formal_execution.py",
+   "note": ""
+  },
+  {
+   "historical_test": "test_step9_63c_r5b_preflight_lifecycle.PreflightLifecycleTests.test_T8_mismatched_authorization_rejected",
+   "historical_assertion": "AUTHORIZATION_ID mismatch rejected",
+   "equivalent_property": "consumer rejects mismatched authorization",
+   "decision": "RETIRED_COVERED",
+   "covering_or_rewritten_tests": [
+    "test_step9_63c_r5c8b_preflight_contract.Step963cR5c8bPreflightContractTests.test_16_wrong_authorization_id_is_rejected"
+   ],
+   "covering_tests_currently_pass": true,
+   "r11_inventory_member_exercised": "scripts/run_step9_63_v3_formal_execution.py",
+   "note": ""
+  },
+  {
+   "historical_test": "test_step9_63c_r5b_preflight_lifecycle.PreflightLifecycleTests.test_T9_mismatched_runner_rejected",
+   "historical_assertion": "R8 runner aggregate mismatch rejected",
+   "equivalent_property": "consumer rejects mismatched runner binding",
+   "decision": "RETIRED_COVERED",
+   "covering_or_rewritten_tests": [
+    "test_step9_63c_r5c8b_preflight_contract.Step963cR5c8bPreflightContractTests.test_19_wrong_runner_binding_is_rejected"
+   ],
+   "covering_tests_currently_pass": true,
+   "r11_inventory_member_exercised": "scripts/run_step9_63_v3_formal_execution.py",
+   "note": "the r8-only R8_RUNNER_AGGREGATE key branch is irrelevant for r11 authorizations"
+  },
+  {
+   "historical_test": "test_step9_63c_r5b_preflight_lifecycle.PreflightLifecycleTests.test_T10_mismatched_attempt_or_namespace_rejected",
+   "historical_assertion": "ATTEMPT_ID / NAMESPACE_ID mismatch rejected",
+   "equivalent_property": "consumer rejects mismatched attempt or namespace",
+   "decision": "RETIRED_COVERED",
+   "covering_or_rewritten_tests": [
+    "test_step9_63c_r5c8b_preflight_contract.Step963cR5c8bPreflightContractTests.test_17_wrong_attempt_id_is_rejected",
+    "test_step9_63c_r5c8b_preflight_contract.Step963cR5c8bPreflightContractTests.test_18_wrong_namespace_id_is_rejected"
+   ],
+   "covering_tests_currently_pass": true,
+   "r11_inventory_member_exercised": "scripts/run_step9_63_v3_formal_execution.py",
+   "note": ""
+  },
+  {
+   "historical_test": "test_step9_63c_r5b_preflight_lifecycle.PreflightLifecycleTests.test_T11_duplicate_preflight_id_exclusive_create_fails",
+   "historical_assertion": "second write of same ID raises FileExistsError",
+   "equivalent_property": "r11 artifact persistence is exclusive and never overwrites",
+   "decision": "REWRITTEN",
+   "covering_or_rewritten_tests": [
+    "test_step9_63c_r5c10ad_r5_producer_equivalence.R11ProducerArtifactLifecycle.test_T11_duplicate_preflight_id_exclusive_create_fails"
+   ],
+   "covering_tests_currently_pass": true,
+   "r11_inventory_member_exercised": "scripts/preflight_step9_63c_r11_mac_local.py",
+   "note": ""
+  },
+  {
+   "historical_test": "test_step9_63c_r5b_preflight_lifecycle.PreflightLifecycleTests.test_T12_different_ids_do_not_collide",
+   "historical_assertion": "two IDs both persist",
+   "equivalent_property": "distinct r11 IDs persist independently",
+   "decision": "REWRITTEN",
+   "covering_or_rewritten_tests": [
+    "test_step9_63c_r5c10ad_r5_producer_equivalence.R11ProducerArtifactLifecycle.test_T12_different_ids_do_not_collide"
+   ],
+   "covering_tests_currently_pass": true,
+   "r11_inventory_member_exercised": "scripts/preflight_step9_63c_r11_mac_local.py",
+   "note": ""
+  },
+  {
+   "historical_test": "test_step9_63c_r5b_preflight_lifecycle.PreflightLifecycleTests.test_T13_no_http_model_agent_rag_execution",
+   "historical_assertion": "producer source has no HTTP/model/adapter.run/commit calls",
+   "equivalent_property": "same for r11 and current producers",
+   "decision": "REWRITTEN",
+   "covering_or_rewritten_tests": [
+    "test_step9_63c_r5c10ad_r5_producer_equivalence.R11ProducerArtifactLifecycle.test_T13_no_http_model_agent_rag_execution"
+   ],
+   "covering_tests_currently_pass": true,
+   "r11_inventory_member_exercised": "scripts/preflight_step9_63c_r11_mac_local.py; scripts/preflight_step9_63c_current_mac_local.py",
+   "note": ""
+  },
+  {
+   "historical_test": "test_step9_63c_r5b_preflight_lifecycle.PreflightLifecycleTests.test_T14_authorization_consumption_stays_zero",
+   "historical_assertion": "preflight run leaves authorization unchanged and count 0",
+   "equivalent_property": "r11 payload declares zero consumption and leaves the authorization file unchanged",
+   "decision": "REWRITTEN",
+   "covering_or_rewritten_tests": [
+    "test_step9_63c_r5c10ad_r5_producer_equivalence.R11ProducerArtifactLifecycle.test_T14_authorization_consumption_stays_zero"
+   ],
+   "covering_tests_currently_pass": true,
+   "r11_inventory_member_exercised": "scripts/preflight_step9_63c_r11_mac_local.py",
+   "note": "transport no longer needed: payload builder is pure"
+  },
+  {
+   "historical_test": "test_step9_63c_r5b_preflight_lifecycle.PreflightLifecycleTests.test_old_fixed_path_cannot_be_substituted",
+   "historical_assertion": "legacy fixed path rejected with 'path or SHA-256'",
+   "equivalent_property": "consumer rejects a non-instance-scoped path",
+   "decision": "REWRITTEN",
+   "covering_or_rewritten_tests": [
+    "test_step9_63c_r5c10ad_r5_producer_equivalence.FormalConsumerBindingEquivalence.test_old_fixed_path_cannot_be_substituted"
+   ],
+   "covering_tests_currently_pass": true,
+   "r11_inventory_member_exercised": "scripts/run_step9_63_v3_formal_execution.py",
+   "note": "synthetic IDs replace removed shim constants"
+  },
+  {
+   "historical_test": "test_step9_63c_r5b_preflight_lifecycle.PreflightLifecycleTests.test_wrong_explicit_sha_rejected",
+   "historical_assertion": "wrong pinned SHA rejected",
+   "equivalent_property": "consumer rejects wrong explicit preflight SHA",
+   "decision": "REWRITTEN",
+   "covering_or_rewritten_tests": [
+    "test_step9_63c_r5c10ad_r5_producer_equivalence.FormalConsumerBindingEquivalence.test_wrong_explicit_sha_rejected"
+   ],
+   "covering_tests_currently_pass": true,
+   "r11_inventory_member_exercised": "scripts/run_step9_63_v3_formal_execution.py",
+   "note": ""
+  },
+  {
+   "historical_test": "test_step9_63c_r5b_preflight_lifecycle.PreflightLifecycleTests.test_preissue_timestamp_rejected",
+   "historical_assertion": "preflight before issuance rejected (freshness)",
+   "equivalent_property": "consumer rejects preflight older than the authorization",
+   "decision": "REWRITTEN",
+   "covering_or_rewritten_tests": [
+    "test_step9_63c_r5c10ad_r5_producer_equivalence.FormalConsumerBindingEquivalence.test_preissue_timestamp_rejected"
+   ],
+   "covering_tests_currently_pass": true,
+   "r11_inventory_member_exercised": "scripts/run_step9_63_v3_formal_execution.py",
+   "note": ""
+  }
+ ],
+ "supersedes": "evaluation/v1_2_3/step9_63c_r5c10ad_r5_coverage_mapping.json (preserved unchanged)",
+ "mutation_proof_for_retired_in_r5c10af": {
+  "killed": 9,
+  "total": 9,
+  "mutants": [
+   {
+    "mutant": "multi_active:exactly_one_check_removed",
+    "function": "collect_r11_precommit_state",
+    "tests": [
+     "test_second_active_authorization_rejected"
+    ],
+    "result": "KILLED"
+   },
+   {
+    "mutant": "multi_active:bound_id_check_removed",
+    "function": "collect_r11_precommit_state",
+    "tests": [
+     "test_second_active_authorization_rejected"
+    ],
+    "result": "KILLED"
+   },
+   {
+    "mutant": "multi_active:independent_recount_replaced_by_producer_view",
+    "function": "collect_r11_precommit_state",
+    "tests": [
+     "test_second_active_authorization_rejected"
+    ],
+    "result": "KILLED"
+   },
+   {
+    "mutant": "pins:gate_check_removed",
+    "function": "collect_r11_precommit_state",
+    "tests": [
+     "test_historical_pin_mismatch_rejected",
+     "test_inventory_pin_mismatch_rejected",
+     "test_ledger_prefix_tamper_rejected",
+     "test_historical_pin_count_54_rejected"
+    ],
+    "result": "KILLED"
+   },
+   {
+    "mutant": "pins:inventory_hash_check_removed",
+    "function": "verify_historical_pins",
+    "tests": [
+     "test_inventory_pin_mismatch_rejected"
+    ],
+    "result": "KILLED"
+   },
+   {
+    "mutant": "pins:supplemental_hash_check_removed",
+    "function": "verify_historical_pins",
+    "tests": [
+     "test_historical_pin_mismatch_rejected"
+    ],
+    "result": "KILLED"
+   },
+   {
+    "mutant": "pins:ledger_prefix_check_removed",
+    "function": "verify_historical_pins",
+    "tests": [
+     "test_ledger_prefix_tamper_rejected"
+    ],
+    "result": "KILLED"
+   },
+   {
+    "mutant": "pins:count_check_removed",
+    "function": "verify_historical_pins",
+    "tests": [
+     "test_historical_pin_count_54_rejected"
+    ],
+    "result": "KILLED"
+   },
+   {
+    "mutant": "pins:gate_result_ignored_by_execute_formal",
+    "function": "execute_formal",
+    "tests": [
+     "test_prepare_formal_gates_reports_real_precommit_failures"
+    ],
+    "result": "KILLED"
+   }
+  ]
+ }
+}

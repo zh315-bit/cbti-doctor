@@ -1,0 +1,93 @@
+--- a/tests/test_step9_63c_r5c10ae_consumer_precommit_gate.py
++++ b/tests/test_step9_63c_r5c10ae_consumer_precommit_gate.py
+@@ -152,6 +152,27 @@
+         pin.write_bytes(pin.read_bytes() + b" ")
+         self.assert_rejected({"historical_integrity_match"})
+ 
++    def test_inventory_pin_mismatch_rejected(self):
++        # The 34 inventory pins and the 20 supplemental pins are checked by separate code.
++        inventory = json.loads((self.fx.root / formal.HISTORICAL_INVENTORY_PATH).read_text(encoding="utf-8"))
++        supplemental = set(SUPPLEMENTAL_HISTORICAL_PINS)
++        relpath = next(pin["path"] for pin in inventory["historical_pins"].values()
++                       if pin["path"] not in supplemental)
++        target = self.fx.root / relpath
++        target.write_bytes(target.read_bytes() + b" ")
++        self.assert_rejected({"historical_integrity_match"})
++        self.assertIn(relpath, self.fx.collect()["check_errors"]["historical_integrity_match"])
++
++    def test_historical_pin_count_54_rejected(self):
++        # Exact analogue of the retired r5 test that fed 54 pins to the gate: dropping one
++        # inventory pin leaves every remaining hash valid but the count at 54, not 55.
++        path = self.fx.root / formal.HISTORICAL_INVENTORY_PATH
++        inventory = json.loads(path.read_text(encoding="utf-8"))
++        inventory["historical_pins"].pop(next(iter(inventory["historical_pins"])))
++        path.write_text(json.dumps(inventory), encoding="utf-8")
++        self.assert_rejected({"historical_integrity_match"})
++        self.assertIn("54 != 55", self.fx.collect()["check_errors"]["historical_integrity_match"])
++
+     def test_ledger_prefix_tamper_rejected(self):
+         ledger = self.fx.root / formal.LIFECYCLE_LEDGER_PATH
+         data = bytearray(ledger.read_bytes()); data[10] ^= 1
+--- a/tests/test_step9_63c_r5_mac_local_preflight.py
++++ b/tests/test_step9_63c_r5_mac_local_preflight.py
+@@ -4,8 +4,10 @@
+ shim-only r5 producer were retired (archived verbatim in
+ tests/retired/test_step9_63c_r5_mac_local_preflight.py.retired) or rewritten in
+ tests/test_step9_63c_r5c10ad_r5_producer_equivalence.py. Remaining methods are either
+-identity-dependent (RC1, kept fail-closed) or UNCOVERED pending human decision; see
+-evaluation/v1_2_3/step9_63c_r5c10ad_r5_coverage_mapping.json.
++identity-dependent (RC1, kept fail-closed). The last two UNCOVERED methods
++(test_multiple_active_authorizations, test_historical_pin_mismatch) were retired in Step
++9.63c-r5c10af (archived verbatim in the .retired file) and are covered by the r5c10ae
++consumer gate tests; see evaluation/v1_2_3/step9_63c_r5c10af_r5_coverage_mapping.json.
+ """
+ from __future__ import annotations
+ 
+@@ -58,25 +60,6 @@
+         self._config_failure({"DEEPSEEK_API_KEY": "synthetic", "DEEPSEEK_MODEL": "other-model"},
+                              "MODEL_PROFILE_MISMATCH")
+ 
+-    def test_multiple_active_authorizations(self):
+-        with patch.object(preflight, "validate_freeze", return_value=preflight.read_json(preflight.FREEZE_PATH)), \
+-             patch.object(preflight, "validate_authorization", return_value=preflight.read_json(preflight.AUTH_PATH)), \
+-             patch.object(preflight, "validate_identity_absence"), \
+-             patch.object(preflight, "active_executable_ids", return_value=[preflight.AUTH_ID, "other"]), \
+-             patch.object(preflight.historical, "historical_pins_match") as history:
+-            with self.assertRaisesRegex(RuntimeError, "ACTIVE_AUTHORIZATION_MISMATCH"):
+-                preflight.execution_state()
+-            history.assert_not_called()
+-
+-    def test_historical_pin_mismatch(self):
+-        with patch.object(preflight, "validate_freeze", return_value=preflight.read_json(preflight.FREEZE_PATH)), \
+-             patch.object(preflight, "validate_authorization", return_value=preflight.read_json(preflight.AUTH_PATH)), \
+-             patch.object(preflight, "validate_identity_absence"), \
+-             patch.object(preflight, "active_executable_ids", return_value=[preflight.AUTH_ID]), \
+-             patch.object(preflight.historical, "historical_pins_match", return_value=54):
+-            with self.assertRaisesRegex(RuntimeError, "HISTORICAL_PIN_MISMATCH"):
+-                preflight.execution_state()
+-
+     def test_pre_post_state_change_fails_closed(self):
+         from scripts import preflight_step9_63b_mac_local as transport
+         with tempfile.TemporaryDirectory() as directory, \
+--- a/tests/retired/RETIRED_INDEX.json
++++ b/tests/retired/RETIRED_INDEX.json
+@@ -82,6 +82,19 @@
+     "test_10": "not covered (r5c10j corrupts freeze bytes, not the pointer/freeze identity binding)",
+     "test_18": "not covered (r5c10j rejects an r10 pointer, not a pointer naming the r8 freeze)"
+    }
++  },
++  {
++   "step": "9.63c-r5c10af AR-2 (follow-up)",
++   "archive": "tests/retired/test_step9_63c_r5_mac_local_preflight.py.retired",
++   "original_path": "tests/test_step9_63c_r5_mac_local_preflight.py",
++   "archive_sha256": "6becc369b9eb92347bfd9de064bf35277da15743d9b331efb453b3548e2b78d3",
++   "disposition": "PARTIAL (additional): two former UNCOVERED methods removed from the active file; the archive above already holds them verbatim",
++   "retired_covered_methods": [
++    "test_multiple_active_authorizations",
++    "test_historical_pin_mismatch"
++   ],
++   "rewritten_methods": [],
++   "coverage_mapping": "evaluation/v1_2_3/step9_63c_r5c10af_r5_coverage_mapping.json"
+   }
+  ]
+ }

@@ -1,0 +1,35 @@
+{
+  "step": "9.63c-r5c10v",
+  "test_methods_executed": 0,
+  "test_methods_passed": 0,
+  "test_methods_failed": 0,
+  "test_methods_not_executed": 13,
+  "decision": "Conservative interpretation of the user's prohibition on automatically running methods involving real transaction commit or parent.run. T1-T11 call the real begin_and_commit implementation with synthetic identities and method-local TemporaryDirectory roots; despite their isolated paths, no method was executed in this step.",
+  "method_groups": [
+    {
+      "methods": "T1-T11",
+      "count": 11,
+      "reason_not_run": "Each calls tx.begin_and_commit directly or through commit(); writes durable PREPARED/COMMITTING/COMMITTED events under temporary roots and may reserve synthetic namespaces. Not silently counted as safe under the current approval."
+    },
+    {
+      "methods": "T12",
+      "count": 1,
+      "reason_not_run": "Imports frozen adapter at runtime, requiring absent formal r11 pointer; also calls parent.run negative path."
+    },
+    {
+      "methods": "test_original_failure_parent_validator_reaches_pre_case_sentinel",
+      "count": 1,
+      "reason_not_run": "Invokes parent.run and reaches a synthetic CASE_STARTED event before its sentinel. Not authorized for automatic execution."
+    }
+  ],
+  "read_only_negative_diagnostics": [
+    {"subject": "v3_runner_identity.load_identity_config(ROOT)", "expected": "reject absent formal r11 pointer", "result": "PASS_FAIL_CLOSED"},
+    {"subject": "v3_runner_identity.resolve_current_freeze(ROOT)", "expected": "reject absent formal r11 pointer", "result": "PASS_FAIL_CLOSED"},
+    {"subject": "frozen adapter import", "expected": "reject absent formal r11 pointer", "result": "PASS_FAIL_CLOSED"}
+  ],
+  "negative_diagnostics_counted_as_test_method_passes": false,
+  "parent_run_executed": false,
+  "transaction_commit_executed": false,
+  "formal_v4_case_executed": 0,
+  "identity_guard_bypassed": false
+}

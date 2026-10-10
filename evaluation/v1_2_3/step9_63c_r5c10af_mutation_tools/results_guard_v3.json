@@ -1,0 +1,619 @@
+[
+ {
+  "mutant": "hardlink_rule_removed",
+  "result": "KILLED",
+  "expected_scenarios_flagged": [
+   "a3",
+   "a4",
+   "a5",
+   "a6",
+   "a7",
+   "a8"
+  ],
+  "all_expected_flagged": true,
+  "flagged": [
+   [
+    "a3_write_via_existing_hardlink",
+    "BYPASS"
+   ],
+   [
+    "a4_append_via_existing_hardlink",
+    "BYPASS"
+   ],
+   [
+    "a5_truncate_via_existing_hardlink",
+    "BYPASS"
+   ],
+   [
+    "a6_chmod_via_existing_hardlink",
+    "BYPASS"
+   ],
+   [
+    "a7_utime_via_existing_hardlink",
+    "BYPASS"
+   ],
+   [
+    "a8_pathlib_write_via_existing_hardlink",
+    "BYPASS"
+   ]
+  ],
+  "flagged_count": 6
+ },
+ {
+  "mutant": "hardlink_creation_from_repo_allowed",
+  "result": "KILLED",
+  "expected_scenarios_flagged": [
+   "a1"
+  ],
+  "all_expected_flagged": true,
+  "flagged": [
+   [
+    "a1_link_from_repo_file",
+    "BYPASS"
+   ]
+  ],
+  "flagged_count": 1
+ },
+ {
+  "mutant": "hardlink_creation_into_repo_allowed",
+  "result": "KILLED",
+  "expected_scenarios_flagged": [
+   "a2"
+  ],
+  "all_expected_flagged": true,
+  "flagged": [
+   [
+    "a2_link_into_repo",
+    "BYPASS"
+   ]
+  ],
+  "flagged_count": 1
+ },
+ {
+  "mutant": "rename_source_unchecked",
+  "result": "KILLED",
+  "expected_scenarios_flagged": [
+   "b1",
+   "b10",
+   "b3",
+   "b5",
+   "b9"
+  ],
+  "all_expected_flagged": true,
+  "flagged": [
+   [
+    "b10_rename_source_dir_fd_in_repo",
+    "BYPASS"
+   ],
+   [
+    "b1_rename_source_in_repo",
+    "BYPASS"
+   ],
+   [
+    "b3_replace_source_in_repo",
+    "BYPASS"
+   ],
+   [
+    "b5_pathlib_rename_source_in_repo",
+    "BYPASS"
+   ],
+   [
+    "b9_rename_directory_in_repo",
+    "BYPASS"
+   ],
+   [
+    "d58_rename_ancestor_of_repo",
+    "BYPASS"
+   ],
+   [
+    "d61_rmdir_ancestor_alias_case",
+    "BYPASS"
+   ]
+  ],
+  "flagged_count": 7
+ },
+ {
+  "mutant": "rename_target_unchecked",
+  "result": "KILLED",
+  "expected_scenarios_flagged": [
+   "b11",
+   "b12",
+   "b2",
+   "b4",
+   "b6"
+  ],
+  "all_expected_flagged": true,
+  "flagged": [
+   [
+    "b11_rename_target_dir_fd_in_repo",
+    "BYPASS"
+   ],
+   [
+    "b12_rename_into_repo_via_symlinked_dir",
+    "BYPASS"
+   ],
+   [
+    "b2_rename_target_in_repo",
+    "BYPASS"
+   ],
+   [
+    "b4_replace_target_in_repo",
+    "BYPASS"
+   ],
+   [
+    "b6_pathlib_replace_target_in_repo",
+    "BYPASS"
+   ]
+  ],
+  "flagged_count": 5
+ },
+ {
+  "mutant": "shutil_move_source_unchecked",
+  "result": "KILLED",
+  "expected_scenarios_flagged": [
+   "b7"
+  ],
+  "all_expected_flagged": true,
+  "flagged": [
+   [
+    "b7_shutil_move_source_in_repo",
+    "BYPASS"
+   ]
+  ],
+  "flagged_count": 1
+ },
+ {
+  "mutant": "shutil_move_target_unchecked",
+  "result": "SURVIVED",
+  "expected_scenarios_flagged": [
+   "b8"
+  ],
+  "all_expected_flagged": false,
+  "flagged": [],
+  "flagged_count": 0
+ },
+ {
+  "mutant": "abspath_in_final_resolution",
+  "result": "KILLED",
+  "expected_scenarios_flagged": [
+   "c11"
+  ],
+  "all_expected_flagged": true,
+  "flagged": [
+   [
+    "c11_dotdot_after_symlink_write",
+    "BYPASS"
+   ]
+  ],
+  "flagged_count": 1
+ },
+ {
+  "mutant": "abspath_in_entry_parent",
+  "result": "KILLED",
+  "expected_scenarios_flagged": [
+   "c12"
+  ],
+  "all_expected_flagged": true,
+  "flagged": [
+   [
+    "c12_dotdot_after_symlink_remove",
+    "BYPASS"
+   ]
+  ],
+  "flagged_count": 1
+ },
+ {
+  "mutant": "symlink_resolution_dropped",
+  "result": "KILLED",
+  "expected_scenarios_flagged": [
+   "c16",
+   "c20",
+   "c4",
+   "c5",
+   "c6",
+   "c7",
+   "c8",
+   "c9"
+  ],
+  "all_expected_flagged": true,
+  "flagged": [
+   [
+    "c11_dotdot_after_symlink_write",
+    "BYPASS"
+   ],
+   [
+    "c13_trailing_slash_rmdir_through_symlink",
+    "BYPASS"
+   ],
+   [
+    "c16_relative_symlink_write",
+    "BYPASS"
+   ],
+   [
+    "c20_chmod_through_symlink",
+    "BYPASS"
+   ],
+   [
+    "c4_write_through_symlink",
+    "BYPASS"
+   ],
+   [
+    "c5_os_open_through_symlink",
+    "BYPASS"
+   ],
+   [
+    "c6_write_text_through_symlink",
+    "BYPASS"
+   ],
+   [
+    "c7_copy_onto_symlink",
+    "BYPASS"
+   ],
+   [
+    "c8_new_file_through_symlinked_dir",
+    "BYPASS"
+   ],
+   [
+    "c9_overwrite_through_symlinked_dir",
+    "BYPASS"
+   ]
+  ],
+  "flagged_count": 10
+ },
+ {
+  "mutant": "entry_parent_symlink_not_resolved",
+  "result": "KILLED",
+  "expected_scenarios_flagged": [
+   "b12",
+   "c10"
+  ],
+  "all_expected_flagged": true,
+  "flagged": [
+   [
+    "b12_rename_into_repo_via_symlinked_dir",
+    "BYPASS"
+   ],
+   [
+    "c10_delete_through_symlinked_dir",
+    "BYPASS"
+   ],
+   [
+    "c12_dotdot_after_symlink_remove",
+    "BYPASS"
+   ]
+  ],
+  "flagged_count": 3
+ },
+ {
+  "mutant": "fd_operands_ignored",
+  "result": "KILLED",
+  "expected_scenarios_flagged": [
+   "d31",
+   "d32",
+   "d34"
+  ],
+  "all_expected_flagged": true,
+  "flagged": [
+   [
+    "d31_os_chmod_fd",
+    "BYPASS"
+   ],
+   [
+    "d32_os_fchmod_fd",
+    "BYPASS"
+   ],
+   [
+    "d34_os_utime_fd",
+    "BYPASS"
+   ]
+  ],
+  "flagged_count": 3
+ },
+ {
+  "mutant": "dir_fd_open_wrapper_removed",
+  "result": "KILLED",
+  "expected_scenarios_flagged": [
+   "d45",
+   "d46"
+  ],
+  "all_expected_flagged": true,
+  "flagged": [
+   [
+    "d45_dir_fd_open_create",
+    "BYPASS"
+   ],
+   [
+    "d46_dir_fd_open_overwrite",
+    "BYPASS"
+   ]
+  ],
+  "flagged_count": 2
+ },
+ {
+  "mutant": "mkfifo_wrapper_removed",
+  "result": "KILLED",
+  "expected_scenarios_flagged": [
+   "d42",
+   "d43",
+   "d49"
+  ],
+  "all_expected_flagged": true,
+  "flagged": [
+   [
+    "d42_os_mkfifo",
+    "BYPASS"
+   ],
+   [
+    "d43_os_mknod_fifo",
+    "BYPASS"
+   ],
+   [
+    "d49_dir_fd_mkfifo",
+    "BYPASS"
+   ]
+  ],
+  "flagged_count": 3
+ },
+ {
+  "mutant": "sqlite_unchecked",
+  "result": "KILLED",
+  "expected_scenarios_flagged": [
+   "d44"
+  ],
+  "all_expected_flagged": true,
+  "flagged": [
+   [
+    "d44_sqlite3_connect_write",
+    "BYPASS"
+   ]
+  ],
+  "flagged_count": 1
+ },
+ {
+  "mutant": "case_alias_inode_walk_removed",
+  "result": "KILLED",
+  "expected_scenarios_flagged": [
+   "d52"
+  ],
+  "all_expected_flagged": true,
+  "flagged": [
+   [
+    "d52_case_variant_of_root",
+    "BYPASS"
+   ]
+  ],
+  "flagged_count": 1
+ },
+ {
+  "mutant": "ancestor_rule_removed",
+  "result": "KILLED",
+  "expected_scenarios_flagged": [
+   "d58",
+   "d60"
+  ],
+  "all_expected_flagged": true,
+  "flagged": [
+   [
+    "d58_rename_ancestor_of_repo",
+    "BYPASS"
+   ],
+   [
+    "d60_chmod_ancestor_of_repo",
+    "BYPASS"
+   ],
+   [
+    "d61_rmdir_ancestor_alias_case",
+    "BYPASS"
+   ]
+  ],
+  "flagged_count": 3
+ },
+ {
+  "mutant": "ancestor_case_alias_inode_walk_removed",
+  "result": "KILLED",
+  "expected_scenarios_flagged": [
+   "d61"
+  ],
+  "all_expected_flagged": true,
+  "flagged": [
+   [
+    "d61_rmdir_ancestor_alias_case",
+    "BYPASS"
+   ]
+  ],
+  "flagged_count": 1
+ },
+ {
+  "mutant": "python_flag_check_removed",
+  "result": "KILLED",
+  "expected_scenarios_flagged": [
+   "e10",
+   "e2",
+   "e3",
+   "e4",
+   "e5",
+   "e9"
+  ],
+  "all_expected_flagged": true,
+  "flagged": [
+   [
+    "e10_posix_spawn_isolated_python",
+    "BYPASS"
+   ],
+   [
+    "e2_child_isolated_flag",
+    "BYPASS"
+   ],
+   [
+    "e3_child_no_site_flag",
+    "BYPASS"
+   ],
+   [
+    "e4_child_ignore_env_flag",
+    "BYPASS"
+   ],
+   [
+    "e5_child_clustered_flags",
+    "BYPASS"
+   ],
+   [
+    "e9_exec_isolated_python",
+    "BYPASS"
+   ]
+  ],
+  "flagged_count": 6
+ },
+ {
+  "mutant": "child_env_checks_both_removed",
+  "result": "KILLED",
+  "expected_scenarios_flagged": [
+   "e6",
+   "e7",
+   "e8"
+  ],
+  "all_expected_flagged": true,
+  "flagged": [
+   [
+    "e6_child_scrubbed_environment",
+    "BYPASS"
+   ],
+   [
+    "e7_child_environment_without_guard_path",
+    "BYPASS"
+   ],
+   [
+    "e8_parent_environ_mutated_then_inherit",
+    "BYPASS"
+   ]
+  ],
+  "flagged_count": 3
+ },
+ {
+  "mutant": "nonpython_subprocess_allowed",
+  "result": "KILLED",
+  "expected_scenarios_flagged": [
+   "e11",
+   "e12"
+  ],
+  "all_expected_flagged": true,
+  "flagged": [
+   [
+    "e11_shell_subprocess",
+    "BYPASS"
+   ],
+   [
+    "e12_non_python_binary",
+    "BYPASS"
+   ]
+  ],
+  "flagged_count": 2
+ },
+ {
+  "mutant": "false_positive_symlink_entry_followed",
+  "result": "KILLED",
+  "expected_scenarios_flagged": [
+   "b14",
+   "c1",
+   "c2",
+   "c3"
+  ],
+  "all_expected_flagged": true,
+  "flagged": [
+   [
+    "b14_rename_the_symlink_itself",
+    "FALSE_POSITIVE"
+   ],
+   [
+    "c1_remove_symlink_itself",
+    "FALSE_POSITIVE"
+   ],
+   [
+    "c2_unlink_symlink_itself",
+    "FALSE_POSITIVE"
+   ],
+   [
+    "c3_pathlib_unlink_symlink_itself",
+    "FALSE_POSITIVE"
+   ]
+  ],
+  "flagged_count": 4
+ },
+ {
+  "mutant": "write_open_unchecked",
+  "result": "KILLED",
+  "expected_scenarios_flagged": [
+   "d1",
+   "d10",
+   "d11",
+   "d12",
+   "d2",
+   "d3",
+   "d4",
+   "d5",
+   "d6",
+   "d7",
+   "d8",
+   "d9"
+  ],
+  "all_expected_flagged": true,
+  "flagged": [
+   [
+    "a3_write_via_existing_hardlink",
+    "BYPASS"
+   ],
+   [
+    "a4_append_via_existing_hardlink",
+    "BYPASS"
+   ],
+   [
+    "a8_pathlib_write_via_existing_hardlink",
+    "BYPASS"
+   ],
+   [
+    "c11_dotdot_after_symlink_write",
+    "BYPASS"
+   ],
+   [
+    "c16_relative_symlink_write",
+    "BYPASS"
+   ],
+   [
+    "c4_write_through_symlink",
+    "BYPASS"
+   ],
+   [
+    "c5_os_open_through_symlink",
+    "BYPASS"
+   ],
+   [
+    "c6_write_text_through_symlink",
+    "BYPASS"
+   ],
+   [
+    "c8_new_file_through_symlinked_dir",
+    "BYPASS"
+   ],
+   [
+    "c9_overwrite_through_symlinked_dir",
+    "BYPASS"
+   ],
+   [
+    "d10_os_open_trunc",
+    "BYPASS"
+   ],
+   [
+    "d11_os_open_append",
+    "BYPASS"
+   ],
+   [
+    "d12_os_open_excl",
+    "BYPASS"
+   ],
+   [
+    "d17_shutil_copyfileobj",
+    "BYPASS"
+   ]
+  ],
+  "flagged_count": 33
+ }
+]

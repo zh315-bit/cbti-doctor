@@ -1,0 +1,84 @@
+{
+  "artifact_type": "STEP9_51A_VALIDATION_BOUNDARY_AUDIT_REVISION",
+  "step": "9.51a-r1",
+  "status": "PASS_SAFE_NON_BENCHMARK_VALIDATION",
+  "created_at_utc": "2026-09-30T17:08:48.535927+00:00",
+  "supersedes": [
+    "evaluation/v1_2_3/step9_51a_validation_boundary_audit.json",
+    "evaluation/v1_2_3/step9_51_v3_test_report.json",
+    "evaluation/v1_2_3/step9_51_v3_implementation_report.json",
+    "evaluation/v1_2_3/step9_51_v3_implementation_report.md",
+    "evaluation/v1_2_3/step9_51_v3_development_freeze.json"
+  ],
+  "supersession_reason": "Final identity review added a V3 development inventory test alongside the independent frozen-V2 artifact self-consistency test; the full explicit allowlist was rerun and now includes 324 cases.",
+  "original_step9_51_failure_cause": "UNSAFE_TEST_DISCOVERY_BOUNDARY: unittest discovery returned test_... module names, but the exclusion set used tests.test_... names, so Step 9.30a/9.30c filters did not match.",
+  "prior_failure_effect": {
+    "step9_30a_module_executed": true,
+    "step9_30a_operation": "synthetic completed-copy aggregation in the adjudication-template contract test",
+    "step9_30c_module_executed": true,
+    "step9_30c_operation": "historical frozen V4 aggregate recomputed in memory",
+    "historical_artifact_written_or_overwritten": false,
+    "formal_v4_case_executed": 0,
+    "v2_live_identity_error_expected_under_v3": true
+  },
+  "manifest": {
+    "path": "evaluation/v1_2_3/step9_51a_safe_test_manifest.json",
+    "sha256": "a639ab7e674227f5c676071da6a6186572138fc88d0c899a9cf3fbaa6a59169d",
+    "guard_path": "scripts/validate_step9_51a_test_boundary.py",
+    "guard_sha256": "312f3ca29670c7b092851a37f161aa3cb2e0af17d275c38ca924a3987d7fc9fe",
+    "guard_test_sha256": "127751fe917bca0c6992a2c722d6f7a70c32c34603e444292e5a8a097685573e",
+    "discovered_modules": 41,
+    "allowed_modules": 31,
+    "excluded_modules": 10,
+    "safe_case_count": 324,
+    "selection_dry_run": "PASS",
+    "step9_30a_selected": false,
+    "step9_30c_selected": false,
+    "formal_v4_selected": false,
+    "aggregation_selected": false,
+    "adjudication_selected": false,
+    "v5_selected": false
+  },
+  "final_safe_rerun": {
+    "command": ".venv/bin/python scripts/validate_step9_51a_test_boundary.py --run",
+    "status": "PASS",
+    "total": 324,
+    "passed": 324,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "step9_50_synthetic": "40/40 PASS",
+    "step9_41_42_safety": "16/16 PASS",
+    "model_called": false,
+    "rag_called": false
+  },
+  "v2_and_v3_identity": {
+    "frozen_v2_freeze_sha256": "06d0835af73c01c89e4aa8d2a7f03d3da023c14a7195ab8a1213817f7b353bc0",
+    "frozen_v2_inventory_self_consistent": true,
+    "frozen_v2_inventory_entry_count": 26,
+    "current_tree_matches_v2": false,
+    "current_tree_expected_to_match_v2": false,
+    "v3_development_agent_sha256": "085d338ed95bbef7370c41cf97ca0d6653ffdfd2f1c924eef4b7123dfdea4607",
+    "v3_current_identity_test": "PASS"
+  },
+  "historical_integrity": {
+    "pre_rerun_hashes_checked": 183,
+    "pre_rerun_mismatches": 0,
+    "post_rerun_hashes_checked": 40,
+    "post_rerun_mismatches": 0,
+    "historical_artifact_write": false,
+    "historical_artifact_overwrite": false,
+    "formal_result_modified": false,
+    "formal_trace_modified": false,
+    "historical_aggregate_modified": false
+  },
+  "remediation_boundary": {
+    "production_implementation_changed": false,
+    "formal_v4_case_executed": 0,
+    "formal_aggregate_executed_during_step9_51a": false,
+    "formal_adjudication_executed": false,
+    "v5_accessed": false,
+    "authorization_issued": false,
+    "formal_attempt_created": false
+  }
+}

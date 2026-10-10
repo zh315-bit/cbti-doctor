@@ -1,0 +1,109 @@
+{
+  "total_considered_information_candidates": 465,
+  "value_counts": {
+    "HIGH": 158,
+    "MEDIUM": 187,
+    "NONE": 120
+  },
+  "candidates_rejected": 214,
+  "rejection_reasons": {
+    "unknown_or_redundant_or_not_decision_relevant": 120,
+    "value_below_threshold_high": 94
+  },
+  "candidate_rejection_rate": 0.4602,
+  "low_value_acquisition_avoidance_rate": "not_measurable (trace records rejections but does not label a unique low-value acquisition denominator)",
+  "resource_alternatives_selected": 0,
+  "bounded_answer_stop_count": 18,
+  "bounded_answer_guardrail_reviews": [
+    {
+      "case_id": "V2-KQ-02",
+      "stop_reason": "no remaining information value justified acquisition cost",
+      "guardrail_review": "harmful_rejection"
+    },
+    {
+      "case_id": "V2-KQ-05",
+      "stop_reason": "no remaining information value justified acquisition cost",
+      "guardrail_review": "harmful_rejection"
+    },
+    {
+      "case_id": "V2-CA-01",
+      "stop_reason": "no remaining information value justified acquisition cost",
+      "guardrail_review": "correct_rejection"
+    },
+    {
+      "case_id": "V2-CA-02",
+      "stop_reason": "no remaining information value justified acquisition cost",
+      "guardrail_review": "correct_rejection"
+    },
+    {
+      "case_id": "V2-CA-03",
+      "stop_reason": "no remaining information value justified acquisition cost",
+      "guardrail_review": "correct_rejection"
+    },
+    {
+      "case_id": "V2-CA-04",
+      "stop_reason": "no remaining information value justified acquisition cost",
+      "guardrail_review": "correct_rejection"
+    },
+    {
+      "case_id": "V2-CA-10",
+      "stop_reason": "no remaining information value justified acquisition cost",
+      "guardrail_review": "correct_rejection"
+    },
+    {
+      "case_id": "V2-PD-01",
+      "stop_reason": "no remaining information value justified acquisition cost",
+      "guardrail_review": "correct_rejection"
+    },
+    {
+      "case_id": "V2-PD-02",
+      "stop_reason": "no remaining information value justified acquisition cost",
+      "guardrail_review": "correct_rejection"
+    },
+    {
+      "case_id": "V2-PD-05",
+      "stop_reason": "no remaining information value justified acquisition cost",
+      "guardrail_review": "correct_rejection"
+    },
+    {
+      "case_id": "V2-PD-06",
+      "stop_reason": "no remaining information value justified acquisition cost",
+      "guardrail_review": "correct_rejection"
+    },
+    {
+      "case_id": "V2-PD-07",
+      "stop_reason": "no remaining information value justified acquisition cost",
+      "guardrail_review": "correct_rejection"
+    },
+    {
+      "case_id": "V2-PD-08",
+      "stop_reason": "no remaining information value justified acquisition cost",
+      "guardrail_review": "correct_rejection"
+    },
+    {
+      "case_id": "V2-PD-09",
+      "stop_reason": "no remaining information value justified acquisition cost",
+      "guardrail_review": "correct_rejection"
+    },
+    {
+      "case_id": "V2-PD-10",
+      "stop_reason": "no remaining information value justified acquisition cost",
+      "guardrail_review": "correct_rejection"
+    },
+    {
+      "case_id": "V2-PD-11",
+      "stop_reason": "no remaining information value justified acquisition cost",
+      "guardrail_review": "correct_rejection"
+    },
+    {
+      "case_id": "V2-PD-12",
+      "stop_reason": "no remaining information value justified acquisition cost",
+      "guardrail_review": "correct_rejection"
+    },
+    {
+      "case_id": "V2-DA-07",
+      "stop_reason": "no remaining information value justified acquisition cost",
+      "guardrail_review": "harmful_rejection"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+# Step 9.63c-r4 — Fresh r8 Authorization Audit & Issue
+
+Status: `PASS_AUTHORIZATION_ISSUED_NOT_CONSUMED`. One new r8-bound authorization was issued: `auth-step9_63c_r4-4b2749ce10014634ac6de155d37ec6a9`. Its prebound attempt is `attempt-step9_63c_r4-190bb797874c468d9d16938e580b712a`, and its derived namespace is `heldout-v4-treatment-v3-run-12010f8e581951edf749`. These are identities only; no attempt, namespace reservation, transaction journal, case result or trace was created.
+
+The r8 freeze (`86be96061d8c1cfbf769e21aac388cf2a308f53f6380f67c401d4c64b0bf4e6b`) passed independent SHA-256 checks for all 12 file members. The V3 Agent and all frozen evaluation identities matched. The sealed V4 case set has 40 unique cases, the frozen order fingerprint, and the 10/10/10/10 task distribution. All 55 historical pins matched, including the immutable lifecycle-ledger prefix; the Step 9.58 provenance gap remains `PRESENT_AND_DOCUMENTED`.
+
+Prior V3 authorizations are non-executable based on authoritative evidence: the Step 9.54 and 9.56 IDs have `AUTHORIZATION_CONSUMED` attempt-ledger events; Step 9.59b and 9.62 have terminal retirement events; Step 9.63a-r3 has a durably `COMMITTED` transaction that irreversibly burns its ID despite its historical manifest still saying unconsumed. Their manifests and historical state were not rewritten. The old executable count is zero; the new r8 authorization is the sole executable V3 authorization after issuance.
+
+The manifest is frozen at `step9_63c_r4_r8_authorization_manifest.json`, SHA-256 `f02cec713ce0a8aebc109ff898450f0365cf4f8b91b5330e08fae556cc83cc2a`. It binds the r8 freeze, V3 Agent, evaluation/model/tool/RAG identities, 40-case identity, exact authorization/attempt/namespace IDs, and transaction-resolved namespace authority. The current adapter and parent accepted it in read-only pre-attempt validation. The exact prebound physical namespace remains absent. Authorization consumption count is zero.
+
+No connectivity probe was run. Prior r7 connectivity evidence is not an r8 execution preflight; a fresh Mac-local non-consuming preflight is mandatory before any consumption. The older Step 9.62 helper scans only `*_v3_authorization_manifest.json` filenames, so it does not enumerate this r8-named manifest. This audit used the complete `step*authorization_manifest.json` set plus attempt ledgers, retirement events and transaction journals; the future r8 preflight must retain that complete scope.
+
+`READY_FOR_R8_MAC_LOCAL_FINAL_PRECLEARANCE = YES` authorizes only preparation of that separate non-consuming preflight. No formal V4 case, model inference, Agent evaluation or RAG evaluation occurred here.

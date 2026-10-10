@@ -1,0 +1,36 @@
+{
+  "artifact_type": "STEP9_51_V3_SAFE_NON_BENCHMARK_TEST_REPORT_REVISION",
+  "step": "9.51-r1",
+  "status": "PASS",
+  "created_at_utc": "2026-09-30T17:08:48.535927+00:00",
+  "command": ".venv/bin/python scripts/validate_step9_51a_test_boundary.py --run",
+  "environment": ".venv/bin/python",
+  "manifest_sha256": "a639ab7e674227f5c676071da6a6186572138fc88d0c899a9cf3fbaa6a59169d",
+  "guard_sha256": "312f3ca29670c7b092851a37f161aa3cb2e0af17d275c38ca924a3987d7fc9fe",
+  "boundary_test_sha256": "127751fe917bca0c6992a2c722d6f7a70c32c34603e444292e5a8a097685573e",
+  "selection": {
+    "safe_module_count": 31,
+    "excluded_module_count": 10,
+    "ast_case_count": 324,
+    "step9_30a_selected": false,
+    "step9_30c_selected": false,
+    "formal_v4_selected": false,
+    "aggregation_selected": false,
+    "adjudication_selected": false,
+    "v5_selected": false
+  },
+  "results": {
+    "total": 324,
+    "passed": 324,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "step9_50_synthetic_tests": "40/40 PASS",
+    "step9_41_42_safety_tests": "16/16 PASS",
+    "v2_frozen_artifact_integrity_test": "PASS",
+    "v3_development_identity_test": "PASS"
+  },
+  "external_calls": {"model": false, "rag": false, "formal_agent": false},
+  "prohibited_activity": {"v4_case_executed": 0, "formal_aggregate_executed": false,
+                           "formal_adjudication_executed": false, "v5_accessed": false}
+}

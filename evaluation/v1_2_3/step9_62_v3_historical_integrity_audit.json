@@ -1,0 +1,30 @@
+{
+  "artifact_type": "STEP9_62_V3_HISTORICAL_INTEGRITY_AUDIT",
+  "status": "PASS_ALL_CURRENT_AUTHORITATIVE_PINS_MATCH",
+  "historical_artifact_integrity": "PASS",
+  "historical_pin_count": 55,
+  "historical_pin_mismatch_count": 0,
+  "inherited_step9_60a_pin_count": 34,
+  "step9_60a_inventory_path": "evaluation/v1_2_3/step9_60a_v3_historical_integrity_audit.json",
+  "step9_60a_inventory_sha256": "786f1956f512cd97eb1af7f45d25d0ba760d9458bab191ba821ac89bd3e7b94e",
+  "additional_step9_55b_and_step9_56_artifact_count": 9,
+  "step9_61_and_step9_61a_artifact_count": 11,
+  "step9_61a_lifecycle_ledger_path": "evaluation/v1_2_3/authorization_lifecycle_events.jsonl",
+  "step9_61a_lifecycle_ledger_sha256": "ca168f6939c4697a7a7bccc0b365b414d9a0e632f40de4242eb0a47e2d985285",
+  "step9_58_provenance_gap": "PRESENT_AND_DOCUMENTED",
+  "step9_58_original_artifact_set": "MISSING_AS_DOCUMENTED; NOT_RECREATED",
+  "historical_events_preserved": [
+    "Step 9.55b runner freeze and preclearance",
+    "Step 9.56 authorization and its consumed failed attempt history",
+    "Step 9.57 DNS failure and Steps 9.57a/9.57b/9.57c",
+    "Step 9.58 missing-original provenance and post-hoc attestation",
+    "Step 9.58a/r1 identity and namespace repair",
+    "Step 9.59 and Step 9.59a/r5 authorization history",
+    "Step 9.59b authorization preserved as issued and unconsumed in its immutable manifest, with separate terminal retirement event",
+    "Step 9.60 failure and Steps 9.60a/9.60b",
+    "Step 9.61 fail-closed audit",
+    "Step 9.61a lifecycle repair, r6 freeze, and append-only retirement event"
+  ],
+  "historical_artifacts_modified": false,
+  "step9_58_gap_upgraded_to_complete": false
+}

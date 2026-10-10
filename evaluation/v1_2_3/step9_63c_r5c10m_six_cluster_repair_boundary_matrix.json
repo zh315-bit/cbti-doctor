@@ -1,0 +1,87 @@
+{
+  "step": "9.63c-r5c10m",
+  "source_failure_matrix": "evaluation/v1_2_3/step9_63c_r5c10l_failure_cluster_matrix.json",
+  "observed_failure_or_error_items": 38,
+  "clusters": [
+    {
+      "id": "C1_SYNTHETIC_R9_AUTH_BLOCKED_BY_CURRENT_LIFECYCLE",
+      "count": 18,
+      "affected_tests": "All 18 named cases in the C1 entry of the source failure matrix; tests/test_step9_35a_treatment_runner.py",
+      "minimum_candidate_repair": "Create an isolated synthetic executable lifecycle fixture for positive/targeted-negative cases while retaining explicit absent/consumed lifecycle-negative coverage.",
+      "candidate_files": ["tests/test_step9_35a_treatment_runner.py"],
+      "candidate_files_in_r10_freeze": false,
+      "r11_identity_semantics_change": "NO_IF_TEST_ONLY_AND_ISOLATED_NOT_YET_VERIFIED",
+      "consumer_provenance_guard_affected": false,
+      "new_freeze_or_authorization_approval": "NOT_FOR_TEST_ONLY_FIXTURE; REQUIRED_IF_PRODUCTION_LIFECYCLE_IS_CHANGED",
+      "test_only_isolation_possible": "PLAUSIBLE_NOT_PROVEN",
+      "confidence": "HIGH_FOR_SHARED_FAILURE_CAUSE_MEDIUM_FOR_REPAIR"
+    },
+    {
+      "id": "C2_FROZEN_ADAPTER_IMPORT_TIME_POINTER_READ",
+      "count": 12,
+      "affected_tests": "The 12 module names in the source failure matrix; no methods in those modules collected",
+      "minimum_candidate_repair": "First try per-test synthetic identity bootstrap before import, limited to temporary roots and explicit version; otherwise request separate approval for lazy identity resolution in the frozen adapter.",
+      "candidate_files": ["tests/test_step9_53_v3_identity_adapter.py", "tests/test_step9_55a_namespace_lifecycle.py", "tests/test_step9_58a_r1_namespace_allocator.py", "tests/test_step9_59a_auth_identity_binding.py", "tests/test_step9_63a_r1_production_integration.py", "tests/test_step9_63a_r2_retirement_eligibility.py", "tests/test_step9_63a_r3_authorization_issuance.py", "tests/test_step9_63b_mac_local_preflight.py", "tests/test_step9_63c_r3_parent_namespace_repair.py", "tests/test_step9_63c_r5_mac_local_preflight.py", "tests/test_step9_63c_r5b_preflight_lifecycle.py", "tests/test_step9_63c_r5c7b_diagnostics.py", "scripts/run_step9_53_v3_identity_adapter.py"],
+      "candidate_frozen_member": "scripts/run_step9_53_v3_identity_adapter.py is a r10 member; tests are not",
+      "r11_identity_semantics_change": "POSSIBLE_IF_ADAPTER_CHANGED; MUST_PROVE_MISSING_POINTER_STILL_FAILS_CLOSED_AT_USE",
+      "consumer_provenance_guard_affected": "POTENTIAL_INDIRECT_IF_ADAPTER_CHANGED; NO_CONFIRMED_GUARD_FAILURE",
+      "new_freeze_or_authorization_approval": "REQUIRED_BEFORE_ANY_FROZEN_ADAPTER_OR_FORMAL_IDENTITY_CHANGE; FUTURE_NEW_AUTHORIZATION_REQUIRED_FOR_CHANGED_RUNNER",
+      "test_only_isolation_possible": "UNPROVEN_FOR_ALL_12",
+      "confidence": "HIGH_FOR_IMPORT_CAUSE_LOW_FOR_REPAIR_CHOICE"
+    },
+    {
+      "id": "C3_R9_BOOTSTRAP_TEST_USES_R11_ONLY_RESOLVER",
+      "count": 3,
+      "affected_tests": ["tests/test_step9_63c_r5c4_bootstrap_repair.py::test_09_pointer_resolves_only_exact_freeze", "tests/test_step9_63c_r5c4_bootstrap_repair.py::test_10_pointer_freeze_hash_mismatch_fails", "tests/test_step9_63c_r5c4_bootstrap_repair.py::test_18_old_r8_authorization_is_not_a_current_freeze_binding"],
+      "minimum_candidate_repair": "Version-scope archived r9 fixture/assertion without making current r11 resolver accept r9 or silently fallback.",
+      "candidate_files": ["tests/test_step9_63c_r5c4_bootstrap_repair.py"],
+      "candidate_files_in_r10_freeze": false,
+      "r11_identity_semantics_change": "NO_IF_TEST_ONLY_NOT_YET_VERIFIED",
+      "consumer_provenance_guard_affected": false,
+      "new_freeze_or_authorization_approval": "REQUIRED_IF_CURRENT_RESOLVER_CHANGED; TEST_ONLY_CHANGE_NEEDS_SEPARATE_SCOPED_APPROVAL",
+      "test_only_isolation_possible": "PLAUSIBLE_NOT_PROVEN",
+      "confidence": "HIGH_FOR_CAUSE_MEDIUM_FOR_REPAIR"
+    },
+    {
+      "id": "C4_R10_SNAPSHOT_TEST_EXPECTS_LIVE_R10_EXECUTABILITY",
+      "count": 3,
+      "affected_tests": ["tests/test_step9_63c_r5c7d_import_context.py::test_direct_script_import_context_bootstraps_root_and_enters_r10_validation", "tests/test_step9_63c_r5c7d_import_context.py::test_module_context_and_direct_bootstrap_resolve_same_identity", "tests/test_step9_63c_r5c7e_preparation.py::test_read_only_snapshot_confirms_eligible_unconsumed_authorization"],
+      "minimum_candidate_repair": "Separate archival r10 bootstrap/identity assertions from live current executability; preserve the original historical success claim as archival evidence and test current missing-r11-pointer rejection.",
+      "candidate_files": ["tests/test_step9_63c_r5c7d_import_context.py", "tests/test_step9_63c_r5c7e_preparation.py"],
+      "candidate_files_in_r10_freeze": false,
+      "r11_identity_semantics_change": "NO_IF_TEST_ONLY; ARCHIVAL_FIXTURE_FIDELITY_NOT_PROVEN",
+      "consumer_provenance_guard_affected": "NO_DIRECT_EFFECT",
+      "new_freeze_or_authorization_approval": "REQUIRED_IF_PREFLIGHT_PRODUCER_OR_ADAPTER_BEHAVIOR_CHANGED; NOT_AUTOMATICALLY_FOR_TEST_ONLY",
+      "test_only_isolation_possible": "NOT_DETERMINED",
+      "confidence": "HIGH_FOR_FAILURE_STAGE_LOW_FOR_REPAIR_FIDELITY"
+    },
+    {
+      "id": "C5_ARCHIVAL_V2_PARENT_RUNNER_SHA_DRIFT",
+      "count": 1,
+      "affected_tests": ["tests/test_step9_43a_treatment_identity.py::test_01a_frozen_v2_identity_preflight_passes_without_case_execution"],
+      "minimum_candidate_repair": "Use an independently verified archived V2 parent-byte fixture for the historical positive assertion, not the current changed parent file; retain a current-byte drift rejection test.",
+      "candidate_files": ["tests/test_step9_43a_treatment_identity.py"],
+      "candidate_files_in_r10_freeze": false,
+      "r11_identity_semantics_change": "NO_IF_TEST_ONLY_NOT_YET_VERIFIED",
+      "consumer_provenance_guard_affected": false,
+      "new_freeze_or_authorization_approval": "NOT_FOR_TEST_ONLY_ARCHIVAL_FIXTURE; REQUIRED_IF_FROZEN_PARENT_OR_IDENTITY_CONTRACT_CHANGED",
+      "test_only_isolation_possible": "PLAUSIBLE_IF_TRUSTED_ARCHIVED_PARENT_BYTES_EXIST",
+      "confidence": "HIGH_FOR_CAUSE_MEDIUM_FOR_REPAIR"
+    },
+    {
+      "id": "C6_STEP9_51A_PINNED_TEST_INVENTORY_DRIFT",
+      "count": 1,
+      "affected_tests": ["tests/test_step9_51a_validation_boundary.py::test_current_manifest_passes_pinned_allowlist"],
+      "minimum_candidate_repair": "Audit historical inventory at its frozen time boundary and introduce a separately versioned current inventory contract; never append current r11 tests to old manifest in place.",
+      "candidate_files": ["tests/test_step9_51a_validation_boundary.py", "scripts/validate_step9_51a_test_boundary.py", "evaluation/v1_2_3/step9_51a_safe_test_manifest.json"],
+      "candidate_files_in_r10_freeze": false,
+      "r11_identity_semantics_change": "NO_DIRECT_EFFECT; HISTORICAL_TEST_BOUNDARY_SEMANTICS_REQUIRE_APPROVAL",
+      "consumer_provenance_guard_affected": false,
+      "new_freeze_or_authorization_approval": "SEPARATE_HISTORICAL_CONTRACT_APPROVAL_IF_SELECTOR_OR_MANIFEST_CHANGED",
+      "test_only_isolation_possible": "NOT_PROVEN_WITHOUT_PRESERVING_HISTORICAL_SELECTOR_GUARD",
+      "confidence": "HIGH_FOR_CAUSE_LOW_FOR_REPAIR_BOUNDARY"
+    }
+  ],
+  "repair_implemented": false,
+  "frozen_member_change_required": "NOT_DETERMINED"
+}

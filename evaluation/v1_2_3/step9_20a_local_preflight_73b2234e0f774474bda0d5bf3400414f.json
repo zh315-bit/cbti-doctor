@@ -1,0 +1,33 @@
+{
+  "benchmark_v3_accessed": false,
+  "credential_present": true,
+  "dns_ready": true,
+  "evaluation_id": "heldout-v3-step9_20-20260923-01",
+  "frozen_hashes": {
+    "agent_hash": "0dfdbac361d68dfeb577433107395b50f4c2fa8ca59f3e1d226fbd9271a839a7",
+    "agent_match": true,
+    "evaluation_id": "heldout-v3-step9_20-20260923-01",
+    "final_candidate_manifest_sha256": "21e325516f955986497b69e18eebca1d0a0658a24c4293fe75853dd464c901f5",
+    "freeze_match": true,
+    "harness_hash": "8bc271bebc1c5da5351d517e2bb4a0d1a99fda3de1b713a6197b12f81fad70c7",
+    "harness_match": true,
+    "metric_registry_sha256": "a44f8959b1683775b3f8f956f7f990572faa5c204ae5da3fa1201245c56755ab",
+    "one_shot_rules_sha256": "8333e4f7a42258a740d938e0315df00ea38ce15a9b6726ac43d5d9cecf925d6f",
+    "runner_sha256": "242adea8e254229d643353654b3438dd20cbdd4e2db4391a81d3a3a9f0185aa3",
+    "scoring_hash": "f742a8f8af7c8747818dadad81621c15d12d74f50538019913dfe18ab53bf59b",
+    "scoring_match": true
+  },
+  "https_ready": true,
+  "missing_imports": [],
+  "model_configuration_match": true,
+  "model_endpoint_reachable": true,
+  "model_name": "deepseek-flash",
+  "model_probe_error_type": null,
+  "preflight_type": "LOCAL_REAL_PREFLIGHT",
+  "probe_latency_ms": 1181.21,
+  "ready_for_authorization": true,
+  "required_imports_ready": true,
+  "synthetic_production_smoke": "PASS",
+  "timestamp_utc": "2026-09-24T13:23:37.980079+00:00",
+  "trace_lineage_ready": true
+}

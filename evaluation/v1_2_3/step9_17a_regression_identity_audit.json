@@ -1,0 +1,62 @@
+{
+  "step": "9.17a",
+  "failure_class": "STALE_FREEZE_ASSERTION",
+  "historical_freeze": {
+    "path": "evaluation/v1_2_3/step9_11_clean_freeze_manifest.json",
+    "sha256": "ab1720e0f481c301a2436786d8e2390df2ebfd885ff2b60b5df8f64c17c1aa5c",
+    "agent_aggregate_hash": "ee914db7b8b5538c5607fdff34cff9083f6d069d50cf342964ae91c8a6446927",
+    "stored_aggregate_recomputes": true,
+    "file_mutated": false
+  },
+  "current_candidate_freeze": {
+    "path": "evaluation/v1_2_3/step9_17a_post_step9_17_candidate_freeze.json",
+    "freeze_id": "post-step9_17-candidate-20260923-01",
+    "agent_aggregate_hash": "5e0ef0441dfb8cd4a5ec882f89af32ddbab38b51c66a0526960baa530f9db94c",
+    "inventory_match": true
+  },
+  "failing_tests_audited": [
+    {
+      "test_name": "test_step9_13a_authorization_infrastructure.AuthorizationInfrastructureTests.test_current_harness_and_other_frozen_domains_match",
+      "previous_assertion": "runner.verify_frozen_identity()[agent_freeze_match] == true",
+      "asserted_historical_freeze": "Step 9.11 agent_behavior_aggregate_hash ee914db7b8b5538c5607fdff34cff9083f6d069d50cf342964ae91c8a6446927",
+      "current_candidate_freeze": "post-step9_17-candidate-20260923-01 / 5e0ef0441dfb8cd4a5ec882f89af32ddbab38b51c66a0526960baa530f9db94c",
+      "first_legal_divergence": "Step 9.16: adaptive_agent/dependency_resolver.py and adaptive_agent/candidates.py changed under the accepted Dependency Formation repair; Step 9.17 adds four authorized projection/State files.",
+      "authorization_evidence": ["accepted Step 9.16 status in record.md and step9_16_dependency_repair_report.md", "accepted Step 9.17 task authorization and step9_17_projection_repair_report.md"],
+      "repaired_assertion": "historical manifest/aggregate remains intact; current working tree matches post-Step-9.17 candidate; original Step 9.11-bound one-shot runner remains fail-closed for this candidate.",
+      "behavior_regression": false
+    },
+    {
+      "test_name": "test_step9_13a_authorization_infrastructure.AuthorizationInfrastructureTests.test_attempt_guard_blocks_started_and_reused_authorization",
+      "previous_assertion": "preflight execution_eligible == true for a synthetic FAILED_BEFORE_FIRST_CASE ledger after attempt-state setup",
+      "asserted_historical_freeze": "Implicitly required current Agent to equal Step 9.11 before the test could reach the attempt-ledger guard.",
+      "current_candidate_freeze": "post-step9_17-candidate-20260923-01 / 5e0ef0441dfb8cd4a5ec882f89af32ddbab38b51c66a0526960baa530f9db94c",
+      "first_legal_divergence": "Step 9.16 changed the current Agent identity; the test failed at frozen-identity gating before exercising its intended attempt-ledger behavior.",
+      "authorization_evidence": ["accepted Step 9.16 status in record.md and step9_16_dependency_repair_report.md", "accepted Step 9.17 task authorization and step9_17_projection_repair_report.md"],
+      "repaired_assertion": "mock only the identity verifier inside this isolated ledger-guard unit test; independent identity test verifies the historical mismatch and candidate match. Production verification behavior is not bypassed or weakened.",
+      "behavior_regression": false
+    }
+  ],
+  "authorized_change_chain": {
+    "step9_16_paths": ["adaptive_agent/dependency_resolver.py", "adaptive_agent/candidates.py"],
+    "step9_17_paths": ["adaptive_agent/answer_generation.py", "adaptive_agent/state.py", "adaptive_agent/state_update.py", "adaptive_agent/tools.py"],
+    "actual_changed_historical_inventory_paths": ["adaptive_agent/answer_generation.py", "adaptive_agent/candidates.py", "adaptive_agent/dependency_resolver.py", "adaptive_agent/state.py", "adaptive_agent/state_update.py", "adaptive_agent/tools.py"],
+    "unexplained_changed_paths": [],
+    "unchanged_inherited_inventory_count": 19,
+    "excluded_package_export": {"path": "adaptive_agent/__init__.py", "historical_inventory_reason": "package exports only; no executed Agent semantics", "modified_in_step9_16_or_9_17": false},
+    "verified": true
+  },
+  "tests": {
+    "original_two_failing_tests": "PASS",
+    "freeze_authorization_lineage_focused": "53 passed",
+    "step9_16_dependency": "8 passed",
+    "step9_17_projection": "20 passed",
+    "full_non_benchmark_unittest": {"run": 200, "passed": 200, "failed": 0, "skipped": 0}
+  },
+  "benchmark_v2_rerun": false,
+  "benchmark_v3_accessed": false,
+  "real_model_called": false,
+  "agent_behavior_modified_in_step9_17a": false,
+  "benchmark_modified": false,
+  "scoring_modified": false,
+  "step9_18_readiness": true
+}

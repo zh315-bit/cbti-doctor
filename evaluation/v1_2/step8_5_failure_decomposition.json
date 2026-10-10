@@ -1,0 +1,14 @@
+{
+  "scope": "read-only analysis of frozen Step 8.4 traces",
+  "critical_failure_count": 4,
+  "cases": [
+    {"case_id":"V2-KQ-02","critical_failure":false,"failure_type":["premature_stop","evidence_requirement_failure"],"primary_cause":"state_integrity_failure","supporting_trace":"task path populated personalized-decision timing requirements; evidence stayed LOW; no RETRIEVE candidate appeared; bounded stop answered after three ASK","downstream_consequence":"knowledge answer omitted required retrieval"},
+    {"case_id":"V2-KQ-05","critical_failure":false,"failure_type":["premature_stop","evidence_requirement_failure"],"primary_cause":"state_integrity_failure","supporting_trace":"same pattern: user/evidence LOW, personalized fields considered, no RETRIEVE candidate, then stop","downstream_consequence":"general nap question was not answered from evidence"},
+    {"case_id":"V2-DA-07","critical_failure":false,"failure_type":["resource_dependency_failure","premature_stop","candidate_generation_failure"],"primary_cause":"state_integrity_failure","supporting_trace":"authorized diary fixture existed, but State resource_status remained empty, available_diary false, no READ_DIARY candidate appeared, and stop followed four ASK","downstream_consequence":"required diary was skipped"},
+    {"case_id":"V2-DA-03","critical_failure":true,"failure_type":["tool_state_projection_failure","answer_grounding_failure"],"primary_cause":"tool_state_projection_failure","supporting_trace":"fixture says 14 entries; READ_DIARY→State projected one list item; answer says one day","downstream_consequence":"answer contradicts diary fixture"},
+    {"case_id":"V2-DA-04","critical_failure":true,"failure_type":["tool_state_projection_failure","answer_grounding_failure"],"primary_cause":"tool_state_projection_failure","supporting_trace":"weekday/weekend grouped fixture projected as two days; answer asserts two-day comparison","downstream_consequence":"answer contradicts fixture granularity"},
+    {"case_id":"V2-DA-05","critical_failure":true,"failure_type":["tool_state_projection_failure","answer_grounding_failure"],"primary_cause":"tool_state_projection_failure","supporting_trace":"fixture represents 14 entries; answer says one day","downstream_consequence":"answer contradicts diary fixture"},
+    {"case_id":"V2-DA-08","critical_failure":true,"failure_type":["tool_state_projection_failure","answer_grounding_failure"],"primary_cause":"tool_state_projection_failure","supporting_trace":"fixture represents 11 available entries; answer says one day","downstream_consequence":"answer contradicts diary fixture"}
+  ],
+  "reconciliation":"KQ-02, KQ-05 and DA-07 are harmful observed failures but not Critical Failures under the frozen rubric. Only DA-03/04/05/08 meet the recorded critical type answer_contradicts_diary_fixture."
+}

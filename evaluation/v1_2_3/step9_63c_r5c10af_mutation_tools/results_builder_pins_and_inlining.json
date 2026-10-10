@@ -1,0 +1,48 @@
+[
+ {
+  "mutant": "ar10_accept_any_change_differing_from_r10",
+  "function": "assemble_candidate",
+  "tests": [
+   "test_step9_63c_r5c10ae_builder_pins.BuilderPinTests.test_unreviewed_change_to_any_changed_member_is_rejected"
+  ],
+  "result": "KILLED",
+  "evidence": "TEST_FAILED"
+ },
+ {
+  "mutant": "ar10_pin_table_completeness_removed",
+  "function": "assemble_candidate",
+  "tests": [
+   "test_step9_63c_r5c10ae_builder_pins.BuilderPinTests.test_pin_table_must_cover_every_changed_member"
+  ],
+  "result": "KILLED",
+  "evidence": "TEST_FAILED"
+ },
+ {
+  "mutant": "ar11_agent_check_removed",
+  "function": "verify_frozen_inputs",
+  "tests": [
+   "test_step9_63c_r5c10ae_builder_pins.InlinedFrozenInputEquivalenceTests.test_differential_behaviour_matches_original"
+  ],
+  "result": "KILLED",
+  "evidence": "TEST_FAILED"
+ },
+ {
+  "mutant": "ar11_rag_check_removed",
+  "function": "verify_frozen_inputs",
+  "tests": [
+   "test_step9_63c_r5c10ae_builder_pins.InlinedFrozenInputEquivalenceTests.test_differential_behaviour_matches_original"
+  ],
+  "result": "KILLED",
+  "evidence": "TEST_FAILED"
+ },
+ {
+  "mutant": "ar11_model_config_check_removed",
+  "function": "verify_frozen_inputs",
+  "tests": [
+   "test_step9_63c_r5c10ae_builder_pins.InlinedFrozenInputEquivalenceTests.test_differential_behaviour_matches_original"
+  ],
+  "result": "KILLED",
+  "evidence": "TEST_FAILED"
+ }
+]
+KILLED 5 of 5

@@ -1,0 +1,40 @@
+{
+  "step": "9.63c-r5c10k",
+  "status": "FULL_REGRESSION_FAILED_FAIL_CLOSED",
+  "runtime": ".venv/bin/python -B",
+  "groups": [
+    {
+      "name": "original_two_historical_modules",
+      "command": ".venv/bin/python -B -m unittest tests.test_step9_63c_r5c8b_preflight_contract tests.test_step9_63c_r5c5b_lifecycle_reducer -q",
+      "collected": 46, "passed": 46, "failed": 0, "errors": 0, "skipped": 0
+    },
+    {
+      "name": "r5c10j_focused_offline",
+      "command": ".venv/bin/python -B -m unittest tests.test_step9_63c_r5c10j_r11_infrastructure tests.test_step9_63c_r5c10c_transaction_scanner tests.test_v3_execution_transaction tests.test_step9_63c_r5c8f_invocation_registry -q",
+      "collected": 78, "passed": 78, "failed": 0, "errors": 0, "skipped": 0
+    },
+    {
+      "name": "combined_target_and_focused_after_full_run",
+      "command": ".venv/bin/python -B -m unittest tests.test_step9_63c_r5c8b_preflight_contract tests.test_step9_63c_r5c5b_lifecycle_reducer tests.test_step9_63c_r5c10j_r11_infrastructure tests.test_step9_63c_r5c10c_transaction_scanner tests.test_v3_execution_transaction tests.test_step9_63c_r5c8f_invocation_registry -q",
+      "collected": 124, "passed": 124, "failed": 0, "errors": 0, "skipped": 0
+    },
+    {
+      "name": "full_historical_unittest_discovery",
+      "command": ".venv/bin/python -B -m unittest discover -s tests -p 'test_*.py' -q",
+      "loader_items_run": 615,
+      "actual_collected_test_methods": 603,
+      "failed_module_import_placeholders": 12,
+      "passed": 577, "failed": 20, "errors": 18, "skipped": 0,
+      "error_breakdown": {"module_import_errors": 12, "runtime_test_errors": 6},
+      "note": "The 12 failed module imports are not counted as collected test methods or passed tests."
+    }
+  ],
+  "full_regression_failure_families": [
+    "12 historical modules still transitively import the unchanged frozen adapter, whose import-time current-pointer read rejects absent formal r11 identity",
+    "historical matched-treatment tests expect an older executable authorization, while the preserved lifecycle now classifies it INCONSISTENT_FAIL_CLOSED",
+    "historical V2 identity test observes an old parent runner SHA mismatch",
+    "pinned historical validation-module inventory rejects the newly added r11 test module",
+    "older r10 bootstrap and direct-import tests expect r10 pointer or r10 production snapshot under an intentionally unfrozen r11 working copy"
+  ],
+  "acceptance": "NOT_MET_DO_NOT_FREEZE_OR_AUTHORIZE"
+}

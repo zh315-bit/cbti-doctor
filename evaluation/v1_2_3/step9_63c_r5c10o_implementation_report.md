@@ -1,0 +1,13 @@
+# Step 9.63c-r5c10o — limited test isolation implementation
+
+Status: `PASS_LIMITED_TEST_ISOLATION_SCOPED_OFFLINE_VERIFIED_FULL_REGRESSION_NOT_RUN`.
+
+Only the two approved, non-frozen `unittest` modules were changed. Each test now writes its original JSONL serialization to a method-local `tempfile.TemporaryDirectory()` target. A path guard resolves the candidate and rejects any path within the repository **before** `write_text()`. The fixed historical trace constants and their `mkdir`/write sites were removed. Original 18/19 scenario assertions remain; each module gained one no-write negative test for the former historical directory. No skip, xfail, test removal, production code change or identity bypass was introduced.
+
+The two files each collected and passed 2 tests (4/4 total: 2 original methods and 2 negative guards). A separately selected offline regression passed 78/78 r11 infrastructure/transaction/Registry tests and 46/46 historical fixture/lifecycle tests in this step. These are **not** a full regression result: full discovery was not run because its other write paths have not been audited and 12 historical modules remained import-blocked in the previous run. Previous 577/20/18 results are not counted as this step's outcomes.
+
+Before and after target and scoped regression tests, both protected `evaluation/v1_2/` and `evaluation/v1_2_1/` contained 110 regular files and no symlinks; the sorted path-plus-SHA aggregate remained `5dcaa341ef35160f3840e244f0943b1620f4b4bfcf0b6241247a7a5274f83751`. Both trace SHA-256 values were unchanged; see the [before/after audit](step9_63c_r5c10o_historical_trace_before_after_integrity_check.json). This proves preservation **during this step only**, not original pre-r5c10l content integrity, which remains `CONTENT_INTEGRITY_UNPROVEN`.
+
+All 20 r10 member bytes had the same pre/post aggregate `f6f20d9dad339ffef49a4e23179705c7857fe0ce0b882cb9a013d59c9e1b1197`. The `scripts/` and `adaptive_agent/` Python source aggregate stayed `bb5e9616afaaf3dc98f4b7514f66a2f67b683e91a0b4d269394159c945a6a2ad`. The r10 freeze manifest remains `d24244235e51e7bf6c8567880c654fe3fd73b87fa1bfe1ab0f10dfdc94db2693`. These are before/after change controls, not a claim that every current member still matches the historical r10 freeze, as earlier approved infrastructure changes are present in the working tree.
+
+No formal r11 freeze, authorization issuance/consumption, real preflight, model/Agent/RAG inference, transaction, or formal V4 case was run. Continue only with a separately approved review of the six existing failure clusters and 12 import blockers; see [remaining blockers](step9_63c_r5c10o_remaining_blockers_and_recommendation.md).

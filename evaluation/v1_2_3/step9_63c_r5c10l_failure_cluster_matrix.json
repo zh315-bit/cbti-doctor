@@ -1,0 +1,102 @@
+{
+  "step": "9.63c-r5c10l",
+  "source": "Step 9.63c-r5c10k unittest run and read-only repeat; no pytest output exists",
+  "notation": "case file plus first failing test/import line identifies the earliest repository call; actual/identity path inherit from the cluster unless overridden",
+  "clusters": [
+    {
+      "id": "C1_SYNTHETIC_R9_AUTH_BLOCKED_BY_CURRENT_LIFECYCLE",
+      "file": "tests/test_step9_35a_treatment_runner.py",
+      "actual": "scripts/run_step9_35a_matched_treatment.py:292 calls authorization_lifecycle.assert_executable_authorization before the targeted assertions; synthetic test-auth-unique has no matching executable lifecycle record and returns INCONSISTENT_FAIL_CLOSED",
+      "identity_path": "synthetic r9-era authorization ID -> current global lifecycle reducer; no r11 pointer lookup in this cluster",
+      "shared_root": "fixture assumes its in-memory/temporary manifest alone suffices for an executable authorization under the later lifecycle contract",
+      "independent_r11_behavior_regression_proven": false,
+      "cases": [
+        {"result":"ERROR","test":"test_01_correct_matched_treatment_contract_accepted","line":89,"exception":"RuntimeError","expected":"synthetic valid contract accepted"},
+        {"result":"FAIL","test":"test_02_wrong_treatment_agent_sha_rejected","line":95,"exception":"AssertionError (underlying RuntimeError)","expected":"treatment_agent_sha256 rejection"},
+        {"result":"FAIL","test":"test_03_baseline_agent_supplied_as_treatment_rejected","line":100,"exception":"AssertionError (underlying RuntimeError)","expected":"treatment_agent_sha256 rejection"},
+        {"result":"FAIL","test":"test_04_wrong_benchmark_sha_rejected","line":105,"exception":"AssertionError (underlying RuntimeError)","expected":"benchmark_sha256 rejection"},
+        {"result":"FAIL","test":"test_05_wrong_harness_sha_rejected","line":110,"exception":"AssertionError (underlying RuntimeError)","expected":"harness_sha256 rejection"},
+        {"result":"FAIL","test":"test_06_wrong_scoring_sha_rejected","line":115,"exception":"AssertionError (underlying RuntimeError)","expected":"scoring_sha256 rejection"},
+        {"result":"FAIL","test":"test_07_wrong_metric_registry_sha_rejected","line":120,"exception":"AssertionError (underlying RuntimeError)","expected":"metric_registry_sha256 rejection"},
+        {"result":"FAIL","test":"test_08_wrong_one_shot_rules_sha_rejected","line":125,"exception":"AssertionError (underlying RuntimeError)","expected":"one_shot_rules_sha256 rejection"},
+        {"result":"FAIL","test":"test_09_wrong_matched_protocol_sha_rejected","line":130,"exception":"AssertionError (underlying RuntimeError)","expected":"matched_protocol_sha256 rejection"},
+        {"result":"FAIL","test":"test_10_wrong_comparison_class_rejected","line":136,"exception":"AssertionError (underlying RuntimeError)","expected":"comparison_class rejection"},
+        {"result":"FAIL","test":"test_13_duplicate_authorization_rejected","line":164,"exception":"AssertionError (underlying RuntimeError)","expected":"duplicate authorization rejection"},
+        {"result":"FAIL","test":"test_14_duplicate_attempt_rejected","line":173,"exception":"AssertionError (underlying RuntimeError)","expected":"duplicate authorization/attempt rejection"},
+        {"result":"FAIL","test":"test_15_output_collision_rejected","line":178,"exception":"AssertionError (underlying RuntimeError)","expected":"namespace collision rejection"},
+        {"result":"FAIL","test":"test_16_missing_authorization_rejected","line":183,"exception":"AssertionError (underlying RuntimeError)","expected":"missing authorization file rejection"},
+        {"result":"FAIL","test":"test_17_unissued_authorization_rejected","line":191,"exception":"AssertionError (underlying RuntimeError)","expected":"authorization status mismatch rejection"},
+        {"result":"ERROR","test":"test_18_randomized_preregistration_is_not_required","line":195,"exception":"RuntimeError","expected":"valid synthetic post-hoc comparison accepted"},
+        {"result":"FAIL","test":"test_consumed_authorization_rejected","line":202,"exception":"AssertionError (underlying RuntimeError)","expected":"consumed authorization rejection"},
+        {"result":"FAIL","test":"test_invalid_frozen_identity_rejected_before_authorization","line":207,"exception":"AssertionError (underlying RuntimeError)","expected":"frozen artifact mismatch rejection"}
+      ]
+    },
+    {
+      "id": "C2_FROZEN_ADAPTER_IMPORT_TIME_POINTER_READ",
+      "actual": "all modules fail during import because scripts/run_step9_53_v3_identity_adapter.py:25 calls v3_runner_identity.load_identity_config(ROOT), which rejects the intentionally absent formal r11 pointer at line 30",
+      "identity_path": "test import -> adapter directly or via historical issuer/transport -> exact r11 pointer path; no r10 fallback",
+      "shared_root": "import-time identity resolution in an unchanged r10 frozen member, exposed by the unfrozen r11 worktree",
+      "independent_r11_behavior_regression_proven": false,
+      "cases": [
+        {"result":"ERROR_IMPORT","file":"tests/test_step9_53_v3_identity_adapter.py","test":"test_step9_53_v3_identity_adapter","line":7,"exception":"RuntimeError","expected":"module import and tests collected"},
+        {"result":"ERROR_IMPORT","file":"tests/test_step9_55a_namespace_lifecycle.py","test":"test_step9_55a_namespace_lifecycle","line":8,"exception":"RuntimeError","expected":"module import and tests collected"},
+        {"result":"ERROR_IMPORT","file":"tests/test_step9_58a_r1_namespace_allocator.py","test":"test_step9_58a_r1_namespace_allocator","line":8,"exception":"RuntimeError","expected":"module import and tests collected"},
+        {"result":"ERROR_IMPORT","file":"tests/test_step9_59a_auth_identity_binding.py","test":"test_step9_59a_auth_identity_binding","line":9,"exception":"RuntimeError","expected":"module import and tests collected"},
+        {"result":"ERROR_IMPORT","file":"tests/test_step9_63a_r1_production_integration.py","test":"test_step9_63a_r1_production_integration","line":15,"exception":"RuntimeError","expected":"module import and tests collected"},
+        {"result":"ERROR_IMPORT","file":"tests/test_step9_63a_r2_retirement_eligibility.py","test":"test_step9_63a_r2_retirement_eligibility","line":13,"exception":"RuntimeError","expected":"module import and tests collected"},
+        {"result":"ERROR_IMPORT","file":"tests/test_step9_63a_r3_authorization_issuance.py","test":"test_step9_63a_r3_authorization_issuance","line":10,"exception":"RuntimeError","expected":"module import and tests collected"},
+        {"result":"ERROR_IMPORT","file":"tests/test_step9_63b_mac_local_preflight.py","test":"test_step9_63b_mac_local_preflight","line":12,"exception":"RuntimeError","expected":"module import and tests collected"},
+        {"result":"ERROR_IMPORT","file":"tests/test_step9_63c_r3_parent_namespace_repair.py","test":"test_step9_63c_r3_parent_namespace_repair","line":19,"exception":"RuntimeError","expected":"module import and tests collected"},
+        {"result":"ERROR_IMPORT","file":"tests/test_step9_63c_r5_mac_local_preflight.py","test":"test_step9_63c_r5_mac_local_preflight","line":12,"exception":"RuntimeError","expected":"module import and tests collected"},
+        {"result":"ERROR_IMPORT","file":"tests/test_step9_63c_r5b_preflight_lifecycle.py","test":"test_step9_63c_r5b_preflight_lifecycle","line":15,"exception":"RuntimeError","expected":"module import and tests collected"},
+        {"result":"ERROR_IMPORT","file":"tests/test_step9_63c_r5c7b_diagnostics.py","test":"test_step9_63c_r5c7b_diagnostics","line":11,"exception":"RuntimeError","expected":"module import and tests collected"}
+      ]
+    },
+    {
+      "id": "C3_R9_BOOTSTRAP_TEST_USES_R11_ONLY_RESOLVER",
+      "file": "tests/test_step9_63c_r5c4_bootstrap_repair.py",
+      "actual": "strict r11 resolver rejects r9 fixture or absent real r11 pointer before the historical test's asserted condition",
+      "identity_path": "historical r9 synthetic pointer / real unfrozen root -> r11-only v3_runner_identity.load_identity_config",
+      "shared_root": "historical bootstrap assertions are not version-scoped to the archived r9 resolver contract",
+      "independent_r11_behavior_regression_proven": false,
+      "cases": [
+        {"result":"ERROR","test":"test_09_pointer_resolves_only_exact_freeze","line":73,"exception":"RuntimeError","expected":"r9 fixture accepted by historical resolver"},
+        {"result":"FAIL","test":"test_10_pointer_freeze_hash_mismatch_fails","line":84,"exception":"AssertionError (underlying RuntimeError)","expected":"freeze identity mismatch diagnostic after r9 pointer accepted"},
+        {"result":"ERROR","test":"test_18_old_r8_authorization_is_not_a_current_freeze_binding","line":120,"exception":"RuntimeError","expected":"current identity read permits historical r8 comparison"}
+      ]
+    },
+    {
+      "id": "C4_R10_SNAPSHOT_TEST_EXPECTS_LIVE_R10_EXECUTABILITY",
+      "actual": "historical r10 _snapshot() enters frozen adapter/identity validation and stops at absent current r11 pointer, so subprocess returns 1 or direct test raises RuntimeError",
+      "identity_path": "historical r10 producer _snapshot -> unchanged adapter import/current resolver -> absent r11 pointer",
+      "shared_root": "archival r10 preflight snapshot test asserts live r10 executable state in an unfrozen r11 worktree",
+      "independent_r11_behavior_regression_proven": false,
+      "cases": [
+        {"result":"FAIL","file":"tests/test_step9_63c_r5c7d_import_context.py","test":"test_direct_script_import_context_bootstraps_root_and_enters_r10_validation","line":44,"exception":"AssertionError","expected":"read-only r10 snapshot subprocess exits 0"},
+        {"result":"FAIL","file":"tests/test_step9_63c_r5c7d_import_context.py","test":"test_module_context_and_direct_bootstrap_resolve_same_identity","line":64,"exception":"AssertionError","expected":"both r10 snapshot contexts exit 0 with equal state"},
+        {"result":"ERROR","file":"tests/test_step9_63c_r5c7e_preparation.py","test":"test_read_only_snapshot_confirms_eligible_unconsumed_authorization","line":20,"exception":"RuntimeError","expected":"historical r10 snapshot eligible and unconsumed"}
+      ]
+    },
+    {
+      "id": "C5_ARCHIVAL_V2_PARENT_RUNNER_SHA_DRIFT",
+      "actual": "scripts/run_step9_43a_treatment_v2.py:190 rejects current parent Step 9.35a runner bytes against the frozen V2 parent SHA",
+      "identity_path": "archived V2 identity contract -> archived V2 freeze -> current parent runner path hash; unrelated to r11 pointer",
+      "shared_root": "archival test assumes a past V2 parent still equals later worktree bytes",
+      "independent_r11_behavior_regression_proven": false,
+      "cases": [
+        {"result":"ERROR","file":"tests/test_step9_43a_treatment_identity.py","test":"test_01a_frozen_v2_identity_preflight_passes_without_case_execution","line":86,"exception":"RuntimeError","expected":"archived V2 identity preflight accepted"}
+      ]
+    },
+    {
+      "id": "C6_STEP9_51A_PINNED_TEST_INVENTORY_DRIFT",
+      "actual": "scripts/validate_step9_51a_test_boundary.py:audit_manifest detects tests/test_*.py differs from the historical pinned manifest after r11 test module was added",
+      "identity_path": "historical test-selector manifest vs current test directory; unrelated to r11 runner pointer",
+      "shared_root": "time-bound historical allowlist is asserted against an expanded later repository test tree",
+      "independent_r11_behavior_regression_proven": false,
+      "cases": [
+        {"result":"FAIL","file":"tests/test_step9_51a_validation_boundary.py","test":"test_current_manifest_passes_pinned_allowlist","line":16,"exception":"AssertionError","expected":"historical manifest exactly matches current test module inventory"}
+      ]
+    }
+  ],
+  "totals": {"clusters":6,"failures":20,"errors":18,"import_error_placeholders":12,"actual_methods_with_errors":6,"failure_or_error_items":38}
+}

@@ -1,0 +1,11 @@
+{
+  "version":"v1.2.2_design_only",
+  "pipeline":["goal_semantics","dependency_resolver","hard_preconditions","optional_candidate_generation","information_value","acquisition_cost","diminishing_return","bounded_answer","policy"],
+  "dependency_types":["EVIDENCE","RESOURCE","VALIDITY_STATE"],
+  "lifecycle":["REQUIRED","AVAILABLE","SATISFIED","UNAVAILABLE","INVALID","DEFERRED"],
+  "mandatory_actions":{"EVIDENCE":"RETRIEVE","RESOURCE(sleep_diary)":"READ_DIARY","VALIDITY_STATE":"resource satisfier first, otherwise ASK"},
+  "optional_actions":["ASK","optional RETRIEVE","optional READ_DIARY","ANSWER"],
+  "diary_contract_kinds":["ENTRY_SHAPED","SUMMARY_SHAPED","UNAVAILABLE","INVALID"],
+  "observability":["dependencies_considered","dependencies_required","dependencies_satisfied","dependencies_unavailable","dependency_source","dependency_reason","dependency_satisfiers","selected_satisfier","rejected_satisfiers"],
+  "implementation_status":"not_implemented"
+}

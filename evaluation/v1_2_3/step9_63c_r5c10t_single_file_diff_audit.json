@@ -1,0 +1,25 @@
+{
+  "step": "9.63c-r5c10t",
+  "approved_target": "tests/test_step9_63c_r5c7b_diagnostics.py",
+  "target_is_r10_frozen_member": false,
+  "git_tracking_before_and_after": "UNTRACKED_BEFORE_AND_AFTER",
+  "git_diff_note": "git diff -- <target> is empty because this pre-existing test file is untracked. The exact patch operations and before/after SHA-256 below define this step's change; no earlier content was overwritten.",
+  "target_sha256_before": "68657dc4d9d1cc6220811c227361fa4067f2226390002de5f1e77e426c05e345",
+  "target_sha256_after": "655a45c09b3751d24ea9f006649ecb5a9620b1f2acc744f4a2965fbb195f615c",
+  "exact_patch": [
+    "Removed module-scope: from scripts import preflight_step9_63b_mac_local as transport",
+    "Added the identical import inside test_dns_exception_reports_system_dns_stage",
+    "Added the identical import inside _mock_dns_success and returned the imported transport module",
+    "Bound the _mock_dns_success return to local transport in the TCP, TLS and certificate methods; all original assertions and expected outcomes remain unchanged"
+  ],
+  "why_transport_not_direct_adapter": "This test's import blocker is transitive: non-frozen transport imports frozen issuer/adapter, which reads the absent formal r11 identity pointer at import time. The test itself did not directly import adapter.",
+  "patched_test_file_count": 1,
+  "other_test_file_changes_in_this_step": 0,
+  "production_or_frozen_file_changes_in_this_step": 0,
+  "assertions_removed_or_changed": 0,
+  "skips_or_xfails_added": 0,
+  "dependency_sha256_before_and_after": {
+    "scripts/preflight_step9_63b_mac_local.py": "bea6ab3de9816f38e508807862d5b4ff1fa75dffff21c01b6c54ed3b5e427c71",
+    "scripts/preflight_step9_63c_r5c7_mac_local.py": "49bffbf03b47a4455ba18f20544159115e72e1df71b5ea5545f0193ff8a9a920"
+  }
+}

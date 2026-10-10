@@ -1,0 +1,186 @@
+--- a/tests/test_step9_63c_r5c7d_import_context.py
++++ b/tests/test_step9_63c_r5c7d_import_context.py
+@@ -1,5 +1,15 @@
++"""Import-context tests for the r10-era Mac-local preflight producer.
++
++Step 9.63c-r5c10ad AR-5: the original tests asserted that the r10 snapshot was live
++and executable (``ISSUED_EXECUTABLE``). Under the r11-only resolver that can never
++hold again, by design. The import-context properties are kept (direct-script
++bootstrap reaches the repository root; direct and module contexts reach the same
++identity outcome), while "live r10 executable" is replaced by "r10 archival content
++hashes equal their recorded values" and "the live r10 snapshot fails closed".
++"""
+ from __future__ import annotations
+ 
++import hashlib
+ import json
+ import subprocess
+ import sys
+@@ -8,11 +18,37 @@
+ 
+ 
+ ROOT = Path(__file__).resolve().parents[1]
++# Recorded values: r10 freeze manifest and r10 authorization manifest (record.md,
++# Steps 9.63c-r5c5b / r5c6), r10 pointer (identity_config_sha256 inside the r10 manifest).
++R10_ARCHIVE = {
++    "evaluation/v1_2_3/step9_63c_r5c5b_runner_freeze_r10.json":
++        "d24244235e51e7bf6c8567880c654fe3fd73b87fa1bfe1ab0f10dfdc94db2693",
++    "evaluation/v1_2_3/step9_63c_r5c6_r10_v3_authorization_manifest.json":
++        "beac52d1ed3bc11efa02b1a924a8abc7b210171bf5cc1b7910011a6ef9741241",
++    "evaluation/v1_2_3/step9_63c_r5c4_current_runner_identity.json":
++        "0f908fb566ad69f52246bf3c762d46d476c1bad40b0be300c152a576a64df412",
++}
++# The only acceptable outcomes of a live r10 snapshot: formal r11 identity absent, or
++# present and therefore not r10.
++FAIL_CLOSED = ("current runner identity pointer is missing or unsafe", "R10_FREEZE_MISMATCH")
+ 
+ 
++def archive_hashes() -> dict[str, str]:
++    return {path: hashlib.sha256((ROOT / path).read_bytes()).hexdigest() for path in R10_ARCHIVE}
++
++
++def run(code: str) -> dict:
++    result = subprocess.run([sys.executable, "-c", code], cwd=ROOT,
++                            capture_output=True, text=True, check=False)
++    if result.returncode != 0:
++        raise AssertionError(result.stderr)
++    return json.loads(result.stdout)
++
++
+ class Step963cR5c7dImportContextTests(unittest.TestCase):
+-    def test_direct_script_import_context_bootstraps_root_and_enters_r10_validation(self):
+-        code = r'''
++    def test_direct_script_import_context_bootstraps_root_and_r10_is_archival_only(self):
++        self.assertEqual(archive_hashes(), R10_ARCHIVE)
++        outcome = run(r'''
+ import importlib, json, runpy, sys
+ from pathlib import Path
+ root = Path.cwd().resolve()
+@@ -27,42 +63,45 @@
+ else:
+     raise AssertionError("test did not reproduce missing repository root")
+ namespace = runpy.run_path(str(script), run_name="r5c7d_direct_import_test")
++importlib.import_module("scripts.authorization_lifecycle")  # root bootstrapped by the script
+ stages = []
+ tracker = namespace["StageTracker"]()
+-snapshot = namespace["_snapshot"](lambda value: (stages.append(value), tracker.set(value)))
+-assert stages[0] == "R10_FREEZE_VALIDATION"
+-assert snapshot["authorization_state"] == "ISSUED_EXECUTABLE"
+-assert snapshot["consumed"] is False
+-assert snapshot["attempt_exists"] is False
+-assert snapshot["namespace_exists"] is False
+-assert snapshot["transaction_started"] is False
+-print(json.dumps({"root_importable": True, "scripts_package_importable": True,
+-                  "r10_freeze_validation_entered": True, "snapshot_read_only": True}))
+-'''
+-        result = subprocess.run([sys.executable, "-c", code], cwd=ROOT,
+-                                capture_output=True, text=True, check=False)
+-        self.assertEqual(result.returncode, 0, result.stderr)
+-        self.assertEqual(json.loads(result.stdout)["r10_freeze_validation_entered"], True)
++try:
++    namespace["_snapshot"](lambda value: (stages.append(value), tracker.set(value)))
++except RuntimeError as exc:
++    error = str(exc)
++else:
++    error = None
++print(json.dumps({"root_bootstrapped": True, "first_stage": stages[0] if stages else None,
++                  "snapshot_error": error}))
++''')
++        self.assertTrue(outcome["root_bootstrapped"])
++        self.assertEqual(outcome["first_stage"], "R10_FREEZE_VALIDATION")
++        self.assertIn(outcome["snapshot_error"], FAIL_CLOSED)
++        self.assertEqual(archive_hashes(), R10_ARCHIVE)
+ 
+-    def test_module_context_and_direct_bootstrap_resolve_same_identity(self):
+-        code = r'''
++    def test_module_context_and_direct_bootstrap_reach_same_identity_outcome(self):
++        outcome = run(r'''
+ import json, runpy, sys
+ from pathlib import Path
+ root = Path.cwd().resolve()
+ script = root / "scripts/preflight_step9_63c_r5c7_mac_local.py"
+ sys.path = [str(script.parent)] + [p for p in sys.path if p and Path(p).resolve() != root]
+-direct = runpy.run_path(str(script), run_name="direct_context")
+-direct_state = direct["_snapshot"]()
++def attempt(namespace):
++    try:
++        namespace["_snapshot"]()
++    except RuntimeError as exc:
++        return [type(exc).__name__, str(exc)]
++    return ["NO_ERROR", ""]
++direct = attempt(runpy.run_path(str(script), run_name="direct_context"))
+ sys.path.insert(0, str(root))
+-module = runpy.run_module("scripts.preflight_step9_63c_r5c7_mac_local", run_name="module_context")
+-module_state = module["_snapshot"]()
+-assert direct_state == module_state
+-print(json.dumps({"direct_module_identity_equal": True, "module_context_read_only": True}))
+-'''
+-        result = subprocess.run([sys.executable, "-c", code], cwd=ROOT,
+-                                capture_output=True, text=True, check=False)
+-        self.assertEqual(result.returncode, 0, result.stderr)
+-        self.assertTrue(json.loads(result.stdout)["direct_module_identity_equal"])
++module = attempt(runpy.run_module("scripts.preflight_step9_63c_r5c7_mac_local", run_name="module_context"))
++print(json.dumps({"direct": direct, "module": module}))
++''')
++        self.assertEqual(outcome["direct"], outcome["module"])
++        self.assertEqual(outcome["direct"][0], "RuntimeError")
++        self.assertIn(outcome["direct"][1], FAIL_CLOSED)
++        self.assertEqual(archive_hashes(), R10_ARCHIVE)
+ 
+ 
+ if __name__ == "__main__":
+--- a/tests/test_step9_63c_r5c7e_preparation.py
++++ b/tests/test_step9_63c_r5c7e_preparation.py
+@@ -1,6 +1,7 @@
+ from __future__ import annotations
+ 
+ import hashlib
++import json
+ import unittest
+ from pathlib import Path
+ 
+@@ -16,18 +17,32 @@
+         self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(),
+                          "f07d8380e0d445938e0a4bd7b212380459a983ccfe8f04bc49ab2996b43cf4b7")
+ 
+-    def test_read_only_snapshot_confirms_eligible_unconsumed_authorization(self):
+-        snapshot = preflight._snapshot()
+-        self.assertEqual(snapshot["authorization_state"], "ISSUED_EXECUTABLE")
+-        self.assertFalse(snapshot["consumed"])
+-        self.assertEqual(snapshot["consumption_count"], 0)
+-        self.assertFalse(snapshot["attempt_exists"])
+-        self.assertFalse(snapshot["namespace_exists"])
+-        self.assertFalse(snapshot["namespace_reserved"])
+-        self.assertFalse(snapshot["transaction_started"])
+-        self.assertEqual(snapshot["case_count"], 40)
+-        self.assertEqual(snapshot["historical_pin_count"], 55)
+-        self.assertEqual(snapshot["step9_58_provenance_gap"], "PRESENT_AND_DOCUMENTED")
++    def test_r10_authorization_archive_matches_record_and_is_not_live(self):
++        # Step 9.63c-r5c10ad AR-5: previously asserted the live r10 snapshot was
++        # ISSUED_EXECUTABLE. Under the r11-only resolver r10 is archival evidence only:
++        # assert its recorded bytes and recorded unconsumed content, and that the live
++        # snapshot fails closed without touching those bytes.
++        archive = {
++            "evaluation/v1_2_3/step9_63c_r5c5b_runner_freeze_r10.json":
++                "d24244235e51e7bf6c8567880c654fe3fd73b87fa1bfe1ab0f10dfdc94db2693",
++            "evaluation/v1_2_3/step9_63c_r5c6_r10_v3_authorization_manifest.json":
++                "beac52d1ed3bc11efa02b1a924a8abc7b210171bf5cc1b7910011a6ef9741241",
++        }
++        digests = lambda: {p: hashlib.sha256((ROOT / p).read_bytes()).hexdigest() for p in archive}
++        self.assertEqual(digests(), archive)
++        self.assertEqual((preflight.AUTH_SHA256, preflight.EXPECTED_RUNNER_SHA256),
++                         tuple(archive.values())[::-1])
++        auth = json.loads((ROOT / "evaluation/v1_2_3/step9_63c_r5c6_r10_v3_authorization_manifest.json")
++                          .read_text(encoding="utf-8"))
++        self.assertEqual((auth["runner_freeze_revision"], auth["runner_freeze_sha256"]),
++                         ("r10", archive["evaluation/v1_2_3/step9_63c_r5c5b_runner_freeze_r10.json"]))
++        self.assertEqual((auth["authorization_status"], auth["consumed"],
++                          auth["authorization_consumption_count"]), ("ISSUED_NOT_CONSUMED", False, 0))
++        with self.assertRaises(RuntimeError) as raised:
++            preflight._snapshot()
++        self.assertIn(str(raised.exception),
++                      ("current runner identity pointer is missing or unsafe", "R10_FREEZE_MISMATCH"))
++        self.assertEqual(digests(), archive)
+ 
+ 
+ if __name__ == "__main__":

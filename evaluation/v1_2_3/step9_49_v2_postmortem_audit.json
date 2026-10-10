@@ -1,0 +1,28 @@
+{
+  "agent_modified": false,
+  "all_inputs_hashed": true,
+  "audit_status": "PASS_READ_ONLY_INTEGRITY",
+  "authorization_enum_missing_from_v2_traces": true,
+  "created_at_utc": "2026-09-30T15:49:56.300350+00:00",
+  "dynamic_regression_set_count_match": true,
+  "formal_trace_and_adjudication_hashes_match_freezes": true,
+  "freeze_sha256": "308184e99061554d9111f6c8d3b35d2e4ac15055ee9a913d35454857c6e4fee4",
+  "model_agent_rag_execution": false,
+  "no_primary_overconservative_class_without_positive_evidence": true,
+  "output_hashes": {
+    "cases": "06a5359451c92f40bba8aba1e48757f703dce2091738904de7dc9ba4d7c1cf68",
+    "forensics": "4d73263a60f32c83e183e09f450645d9daa784bcb56fbb5b87cb76eb4f0538e7",
+    "repair_surface": "259e001e606b14c72423da7caaf014ee2a96a405007260acf07d11e70ad19eb6",
+    "report": "0840fe2c82f23805c7d8c6e24cf934c6cfa0325ac7541c9a83d1818b48013c2c"
+  },
+  "step": "9.49",
+  "step9_46_adjudication_freeze_match": true,
+  "step9_47_aggregate_freeze_match": true,
+  "step9_48_freeze_match": true,
+  "step9_48_identity_match": true,
+  "v1_v2_case_join_match": true,
+  "v2_modified": false,
+  "v3_created": false,
+  "v4_rerun": false,
+  "v5_accessed": false
+}

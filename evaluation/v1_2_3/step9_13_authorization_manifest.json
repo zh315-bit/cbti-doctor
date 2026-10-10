@@ -1,0 +1,35 @@
+{
+  "step": "9.13",
+  "evaluation_id": "clean-evaluation-v1_2_3-20260922-01",
+  "authorization_id": null,
+  "authorization_status": "NOT_ISSUED",
+  "reason": [
+    "The latest workspace preflight artifact records ready_for_authorized_run=false.",
+    "The one-shot runner verifies the legacy Step 9.11 Harness manifest and therefore rejects the Step 9.12b observability-only Harness revision.",
+    "The runner has no explicit --evaluation-id CLI binding."
+  ],
+  "user_reported_local_preflight": {
+    "status": "NOT_ARTIFACT_VERIFIED_IN_THIS_WORKSPACE",
+    "reported_ready_for_authorized_run": true
+  },
+  "workspace_preflight_artifact": "evaluation/v1_2_3/step9_12_local_preflight.json",
+  "workspace_preflight_status": {
+    "precheck_status": "FAIL",
+    "credential_present": false,
+    "synthetic_production_smoke": "NOT_RUN",
+    "trace_lineage_ready": false,
+    "ready_for_authorized_run": false
+  },
+  "frozen_hashes": {
+    "agent_behavior_aggregate": "ee914db7b8b5538c5607fdff34cff9083f6d069d50cf342964ae91c8a6446927",
+    "benchmark_v2": "dfa9b9e5a12b0017fa68d344d01b313ebc29e583b933fbe1e93c125f55ecafd2",
+    "scoring_aggregate": "f742a8f8af7c8747818dadad81621c15d12d74f50538019913dfe18ab53bf59b",
+    "step9_11_harness_aggregate": "43a4ccda69272e9eb0d6a02eb7f3812d386d47fd7ca4aa48c0d0ece925cca455",
+    "step9_12b_harness_aggregate": "56df7699114ff8f09ad7ace091fd4fc3224ff69880b3b84bf37591c5f2ad20cf"
+  },
+  "benchmark_v2_executed": false,
+  "benchmark_v3_accessed": false,
+  "agent_modified": false,
+  "benchmark_modified": false,
+  "scoring_modified": false
+}

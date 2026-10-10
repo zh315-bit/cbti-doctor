@@ -1,0 +1,679 @@
+--- a/scripts/run_step9_63_v3_formal_execution.py
++++ b/scripts/run_step9_63_v3_formal_execution.py
+@@ -30,6 +30,46 @@
+     "PERSONALIZED_DECISION": 10,
+     "DATA_ANALYSIS": 10,
+ }
++EXPECTED_PROJECT_ROOT = Path("/Volumes/Elements/cbti-doctor-main")
++EXPECTED_PYTHON = EXPECTED_PROJECT_ROOT / ".venv/bin/python"
++HISTORICAL_INVENTORY_PATH = "evaluation/v1_2_3/step9_60a_v3_historical_integrity_audit.json"
++LIFECYCLE_LEDGER_PATH = "evaluation/v1_2_3/authorization_lifecycle_events.jsonl"
++# The ledger is append-only: only its frozen 1161-byte prefix is a historical pin.
++LEDGER_PREFIX_LENGTH = 1161
++LEDGER_PREFIX_SHA256 = "ca168f6939c4697a7a7bccc0b365b414d9a0e632f40de4242eb0a47e2d985285"
++HISTORICAL_PIN_COUNT = 55
++ATOMIC_COMMIT_BINDING_FIELDS = (
++    "transaction_id", "authorization_id", "attempt_id", "namespace_id", "runner_sha256",
++    "agent_sha256", "evaluation_identity_sha256", "case_set_sha256",
++)
++CRASH_RECONCILIATION_STATES = (
++    "before_prepared", "after_prepared", "committing", "committed_pre_claim",
++    "claimed_pre_case", "after_case_start", "ambiguous_or_corrupt",
++)
++LEGACY_PRECOMMIT_KEYS = (
++    "project_root_match", "python_runtime_match", "r6_freeze_match", "runner_sha_match",
++    "agent_match", "frozen_identities_match", "lifecycle_contract_match",
++    "authorization_id_match", "authorization_status_issued_unconsumed",
++    "authorization_consumption_count_zero", "exactly_one_active_authorization",
++    "active_authorization_is_bound_id", "old_authorization_retired",
++    "old_authorization_non_executable", "attempt_id_match", "attempt_absent",
++    "namespace_id_match", "namespace_absent", "case_set_match", "case_order_match",
++    "task_distribution_match", "historical_integrity_match", "provenance_gap_preserved",
++    "fresh_connectivity_pass",
++)
++# Current-freeze (r11) gate: every key is produced by collect_r11_precommit_state().
++R11_PRECOMMIT_KEYS = (
++    "project_root_match", "python_runtime_match", "runner_freeze_match",
++    "agent_match", "frozen_identities_match", "evaluation_identity_match",
++    "lifecycle_contract_match", "authorization_id_match",
++    "authorization_status_issued_unconsumed", "authorization_consumption_count_zero",
++    "authorization_lifecycle_executable", "exactly_one_active_authorization",
++    "active_authorization_is_bound_id", "old_authorization_retired",
++    "old_authorization_non_executable", "attempt_id_match", "attempt_absent",
++    "namespace_id_match", "namespace_absent", "case_set_match", "case_order_match",
++    "task_distribution_match", "historical_integrity_match", "provenance_gap_preserved",
++    "fresh_connectivity_pass",
++)
+ 
+ 
+ def sha256(path: Path) -> str:
+@@ -168,21 +208,16 @@
+     )
+ 
+ 
+-def validate_precommit(state: dict[str, Any]) -> list[str]:
+-    """Pure eligibility check; never changes authorization or execution state."""
++def validate_precommit(state: dict[str, Any],
++                       required: tuple[str, ...] = LEGACY_PRECOMMIT_KEYS) -> list[str]:
++    """Pure eligibility check; never changes authorization or execution state.
++
++    A key that is absent, not exactly True, or whose check did not execute fails.
++    """
+     failures = []
+-    truthy = (
+-        "project_root_match", "python_runtime_match", "r6_freeze_match", "runner_sha_match",
+-        "agent_match", "frozen_identities_match", "lifecycle_contract_match",
+-        "authorization_id_match", "authorization_status_issued_unconsumed",
+-        "authorization_consumption_count_zero", "exactly_one_active_authorization",
+-        "active_authorization_is_bound_id", "old_authorization_retired",
+-        "old_authorization_non_executable", "attempt_id_match", "attempt_absent",
+-        "namespace_id_match", "namespace_absent", "case_set_match", "case_order_match",
+-        "task_distribution_match", "historical_integrity_match", "provenance_gap_preserved",
+-        "fresh_connectivity_pass",
+-    )
+-    failures.extend(name for name in truthy if state.get(name) is not True)
++    failures.extend(name for name in required if state.get(name) is not True)
++    failures.extend(f"check_not_executed:{name}"
++                    for name in state.get("checks_not_executed", ()))
+     if state.get("authorization_consumption_count") != 0:
+         failures.append("authorization_consumption_count")
+     if state.get("active_authorization_count") != 1:
+@@ -217,9 +252,182 @@
+     return "NO_PARTIAL_TRACE_STATE"
+ 
+ 
+-def execute_formal(args: argparse.Namespace) -> None:
+-    """Only a current-freeze, freshly preflighted authorization reaches the adapter."""
+-    from scripts import run_step9_53_v3_identity_adapter as adapter
++def verify_historical_pins(root: Path) -> int:
++    """Read-only check of the 55 historical pins; raises on any mismatch.
++
++    34 inventory pins + 20 supplemental pins + the frozen prefix of the append-only
++    lifecycle ledger (its full-file hash legitimately changes as events are appended).
++    """
++    from scripts.append_only_ledger import prefix_matches
++    from scripts.preflight_step9_62b_mac_local import SUPPLEMENTAL_HISTORICAL_PINS
++
++    inventory = read_json(root / HISTORICAL_INVENTORY_PATH)
++    if inventory.get("step9_58_provenance_gap") != HISTORICAL_GAP:
++        raise RuntimeError("Step 9.58 provenance gap state mismatch")
++    pins: dict[str, str] = {}
++    for pin in inventory["historical_pins"].values():
++        if pin.get("match") is not True or sha256(root / pin["path"]) != pin["sha256"]:
++            raise RuntimeError(f"historical pin mismatch: {pin['path']}")
++        pins[pin["path"]] = pin["sha256"]
++    for relpath, expected in SUPPLEMENTAL_HISTORICAL_PINS.items():
++        if relpath == LIFECYCLE_LEDGER_PATH:
++            continue
++        if sha256(root / relpath) != expected:
++            raise RuntimeError(f"historical pin mismatch: {relpath}")
++        pins[relpath] = expected
++    if not prefix_matches((root / LIFECYCLE_LEDGER_PATH).read_bytes(),
++                          LEDGER_PREFIX_LENGTH, LEDGER_PREFIX_SHA256):
++        raise RuntimeError("historical lifecycle ledger prefix mismatch or truncation")
++    pins[LIFECYCLE_LEDGER_PATH] = LEDGER_PREFIX_SHA256
++    if len(pins) != HISTORICAL_PIN_COUNT:
++        raise RuntimeError(f"historical pin count {len(pins)} != {HISTORICAL_PIN_COUNT}")
++    return len(pins)
++
++
++def _superseded_v3_authorizations(root: Path, current_revision: str) -> list[dict[str, Any]]:
++    """Reducer view of every V3 authorization bound to a non-current runner revision."""
++    from scripts.authorization_lifecycle import reduce_authorization_lifecycle
++
++    rows = []
++    for path in sorted((root / "evaluation/v1_2_3").glob("step*authorization_manifest.json")):
++        if path.is_symlink():
++            raise RuntimeError("authorization manifest symlink")
++        manifest = read_json(path)
++        aid = manifest.get("authorization_id")
++        is_v3 = (manifest.get("treatment") == "TREATMENT_V3" or "_v3_authorization_manifest" in path.name
++                 or path.name == "step9_63c_r4_r8_authorization_manifest.json")
++        if not is_v3 or not isinstance(aid, str) or manifest.get("runner_freeze_revision") == current_revision:
++            continue
++        result = reduce_authorization_lifecycle(
++            authorization_id=aid, manifest=manifest, manifest_path=path,
++            ledger_path=root / LIFECYCLE_LEDGER_PATH, run_root=root / "evaluation/v4_runs",
++            transaction_root=root / "evaluation/v4_runs/.execution_transactions")
++        rows.append({"authorization_id": aid, "revision": manifest.get("runner_freeze_revision"),
++                     "derived_state": result["derived_state"], "executable": result["executable"]})
++    return rows
++
++
++def collect_r11_precommit_state(*, args: argparse.Namespace, authorization: dict[str, Any],
++                                preflight: dict[str, Any], freeze: dict[str, Any],
++                                freeze_path: Path, identity: dict[str, str],
++                                preflight_validated: bool, root: Path | None = None,
++                                adapter_module: Any = None) -> dict[str, Any]:
++    """Read-only r11 precommit facts. Each check runs independently; a check that
++    raises is recorded as not executed and evaluates to False (fail closed).
++
++    ``adapter_module`` exists only so offline tests can supply a stand-in; formal
++    execution always passes None and therefore imports the frozen identity adapter.
++    """
++    from scripts import authorization_lifecycle as lifecycle
++    from scripts.v3_namespace_allocator import derive_namespace_id
++
++    root = ROOT if root is None else root
++    state: dict[str, Any] = {"checks_not_executed": [], "check_errors": {}}
++
++    def check(name: str, function: Any) -> Any:
++        try:
++            value = function()
++        except Exception as error:  # fail closed: record and treat as not satisfied
++            state["checks_not_executed"].append(name)
++            state["check_errors"][name] = f"{type(error).__name__}: {error}"
++            value = False
++        state[name] = value
++        return value
++
++    def adapter() -> Any:
++        if adapter_module is not None:
++            return adapter_module
++        from scripts import run_step9_53_v3_identity_adapter as frozen_adapter
++        return frozen_adapter
++
++    bound = freeze.get("bound_identities", {})
++    authorization_id = authorization.get("authorization_id")
++    attempt_id = authorization.get("attempt_id")
++    run_root = root / "evaluation/v4_runs"
++    check("project_root_match", lambda: root.resolve() == EXPECTED_PROJECT_ROOT.resolve())
++    check("python_runtime_match", lambda: Path(sys.executable).resolve() == EXPECTED_PYTHON.resolve())
++    check("runner_freeze_match", lambda: (
++        freeze.get("runner_freeze_revision") == identity["runner_freeze_revision"]
++        and freeze.get("status") == "FROZEN_NOT_AUTHORIZED"
++        and freeze.get("formal_entry_runner_sha256") == sha256(Path(__file__))
++        and authorization.get("runner_freeze_revision") == identity["runner_freeze_revision"]
++        and authorization.get("runner_freeze_path") == identity["runner_freeze_path"]
++        and authorization.get("runner_freeze_sha256") == sha256(freeze_path)))
++    check("agent_match", lambda: (lambda result: result[1] is True
++          and result[0] == freeze.get("v3_agent_sha256") == authorization.get("treatment_agent_sha256"))(
++              adapter().current_v3_agent_identity()))
++    check("frozen_identities_match", lambda: adapter()._authoritative_authorization_bindings()
++          .get("all_frozen_hashes_match") is True)
++    check("evaluation_identity_match", lambda: (
++        authorization.get("frozen_evaluation_identity_sha256") == freeze.get("bound_identities_sha256")))
++    check("lifecycle_contract_match", lambda: (
++        sha256(root / freeze["authorization_lifecycle_contract_path"]) == freeze["authorization_lifecycle_contract_sha256"]
++        and sha256(root / freeze["authorization_lifecycle_module_path"]) == freeze["authorization_lifecycle_module_sha256"]))
++    # The commit and crash protocol live in the frozen atomic-commit (transaction) contract.
++    transaction_contract = check("transaction_contract", lambda: (
++        read_json(root / freeze["transaction_contract_path"])
++        if sha256(root / freeze["transaction_contract_path"]) == freeze["transaction_contract_sha256"]
++        else {}))
++    state.pop("transaction_contract", None)
++    check("atomic_commit_protocol_match", lambda: isinstance(transaction_contract, dict)
++          and str(transaction_contract.get("commit_point", "")).startswith("COMMITTED")
++          and transaction_contract.get("committed_binding_fields") == list(ATOMIC_COMMIT_BINDING_FIELDS))
++    check("crash_reconciliation_protocol_match", lambda: isinstance(transaction_contract, dict)
++          and set(transaction_contract.get("reconciliation", {})) == set(CRASH_RECONCILIATION_STATES)
++          and transaction_contract["reconciliation"]["ambiguous_or_corrupt"]
++          == "FAIL_CLOSED_MANUAL_RECONCILIATION_REQUIRED")
++    check("authorization_id_match", lambda: authorization_id == args.authorization_id)
++    check("authorization_status_issued_unconsumed", lambda: (
++        authorization.get("authorization_status") == "ISSUED_NOT_CONSUMED"
++        and authorization.get("status") == "ISSUED_NOT_EXECUTED"
++        and authorization.get("consumed") is False))
++    state["authorization_consumption_count"] = authorization.get("authorization_consumption_count")
++    check("authorization_consumption_count_zero", lambda: authorization.get("authorization_consumption_count") == 0)
++    check("authorization_lifecycle_executable", lambda: (lambda result: result["derived_state"]
++          == lifecycle.ISSUED_EXECUTABLE and result["executable"] is True)(
++              lifecycle.reduce_authorization_lifecycle(
++                  authorization_id=authorization_id, manifest=authorization,
++                  manifest_path=args.authorization_file, ledger_path=root / LIFECYCLE_LEDGER_PATH,
++                  run_root=run_root, transaction_root=run_root / ".execution_transactions")))
++    # Independent consumer-side recount; never relies on the producer's earlier view.
++    active = check("active_authorizations", lambda: lifecycle.active_authorizations(root))
++    state["active_authorization_count"] = len(active) if isinstance(active, list) else None
++    check("exactly_one_active_authorization", lambda: isinstance(active, list) and len(active) == 1)
++    check("active_authorization_is_bound_id", lambda: active == [authorization_id])
++    superseded = check("superseded_authorizations",
++                       lambda: _superseded_v3_authorizations(root, identity["runner_freeze_revision"]))
++    check("old_authorization_retired", lambda: isinstance(superseded, list) and all(
++        row["derived_state"] != lifecycle.ISSUED_EXECUTABLE for row in superseded))
++    check("old_authorization_non_executable", lambda: isinstance(superseded, list) and all(
++        row["executable"] is False for row in superseded))
++    check("attempt_id_match", lambda: attempt_id == args.attempt_id)
++    check("attempt_absent", lambda: not any(
++        json.loads(line).get("attempt_id") == attempt_id or json.loads(line).get("authorization_id") == authorization_id
++        for ledger in run_root.rglob("attempts.jsonl")
++        for line in ledger.read_text(encoding="utf-8").splitlines() if line.strip()))
++    namespace_id = check("namespace_id", lambda: derive_namespace_id(
++        authorization["evaluation_id"], authorization_id, attempt_id))
++    check("namespace_id_match", lambda: isinstance(namespace_id, str)
++          and authorization.get("execution_namespace", {}).get("namespace_id") == namespace_id)
++    check("namespace_absent", lambda: isinstance(namespace_id, str)
++          and not (run_root / namespace_id).exists() and not (run_root / namespace_id).is_symlink())
++    state["case_count"] = authorization.get("case_count") if authorization.get("case_count") == bound.get("case_count") else None
++    check("case_set_match", lambda: authorization["case_set_fingerprint_sha256"] == bound["case_order_fingerprint_sha256"])
++    check("case_order_match", lambda: authorization["case_order_fingerprint_sha256"] == bound["case_order_fingerprint_sha256"])
++    state["task_distribution"] = authorization.get("task_distribution")
++    check("task_distribution_match", lambda: (
++        authorization["task_distribution"] == bound["task_distribution"] == EXPECTED_DISTRIBUTION))
++    check("historical_integrity_match", lambda: verify_historical_pins(root) == HISTORICAL_PIN_COUNT)
++    state["step9_58_provenance_gap"] = check("provenance_gap_state", lambda: read_json(
++        root / HISTORICAL_INVENTORY_PATH).get("step9_58_provenance_gap"))
++    check("provenance_gap_preserved", lambda: state["step9_58_provenance_gap"] == HISTORICAL_GAP)
++    check("fresh_connectivity_pass", lambda: preflight_validated is True and all(
++        preflight.get(key) is True for key in ("dns_ready", "tcp_ready", "tls_ready")))
++    return state
++
++
++def prepare_formal_gates(args: argparse.Namespace) -> dict[str, Any]:
++    """All read-only gates of formal execution, in order; never creates state."""
+     from scripts.run_step9_35a_matched_treatment import supplied_hash_keys
+ 
+     freeze, freeze_path, identity = resolve_current_freeze(ROOT)
+@@ -257,10 +465,26 @@
+     supplied = {key: getattr(args, key) for key in supplied_hash_keys()}
+     if not all(isinstance(value, str) and value for value in supplied.values()):
+         raise RuntimeError("all frozen hash arguments are required")
++    state = collect_r11_precommit_state(
++        args=args, authorization=authorization, preflight=preflight, freeze=freeze,
++        freeze_path=freeze_path, identity=identity, preflight_validated=True)
++    return {"state": state, "precommit_failures": validate_precommit(state, R11_PRECOMMIT_KEYS),
++            "supplied": supplied}
++
++
++def execute_formal(args: argparse.Namespace) -> None:
++    """Only a current-freeze, freshly preflighted authorization that passes every
++    precommit check reaches the adapter, whose run() is the first side effect."""
++    gates = prepare_formal_gates(args)
++    if gates["precommit_failures"]:
++        raise RuntimeError("formal precommit gate failed closed: "
++                           + ", ".join(gates["precommit_failures"]))
++    from scripts import run_step9_53_v3_identity_adapter as adapter
++
+     adapter.run(
+         evaluation_id=args.evaluation_id, authorization_id=args.authorization_id,
+         attempt_id=args.attempt_id, authorization_file=args.authorization_file,
+-        supplied=supplied,
++        supplied=gates["supplied"],
+     )
+ 
+ 
+@@ -466,6 +690,14 @@
+         return 0
+     try:
+         state = audit_current_runner_non_consuming()
++        if all(value is not None for value in (args.authorization_file, args.preflight_file,
++                                               args.preflight_id, args.preflight_sha256)):
++            gates = prepare_formal_gates(args)  # read-only; never reaches the adapter
++            precommit = gates["state"]
++            failures = gates["precommit_failures"]
++        else:
++            precommit = None
++            failures = ["precommit_not_evaluated:authorization_and_preflight_required"]
+     except Exception as error:
+         print("STEP9_63_BUILD_STATUS = FAIL_CLOSED_AUDIT_ERROR")
+         print(f"FAILURE_TYPE = {type(error).__name__}")
+@@ -474,9 +706,10 @@
+         print("FORMAL_NAMESPACE_CREATED = NO")
+         print("FORMAL_V4_CASE_EXECUTED = 0")
+         return 1
+-    print(json.dumps({"state": state, "precommit_failures": [],
+-                      "atomic_commit_implemented": True,
+-                      "ready_for_controlled_execution": False}, sort_keys=True, indent=2))
++    print(json.dumps({"state": state, "precommit_state": precommit,
++                      "precommit_failures": failures,
++                      "ready_for_controlled_execution": not failures},
++                     sort_keys=True, indent=2, default=str))
+     return 0
+ 
+ 
+--- /dev/null
++++ b/tests/test_step9_63c_r5c10ae_consumer_precommit_gate.py
+@@ -0,0 +1,353 @@
++"""Step 9.63c-r5c10ae AR-17: r11 formal consumer precommit gate.
++
++Every precommit fact is computed by ``collect_r11_precommit_state`` from real,
++read-only checks and evaluated by ``validate_precommit(state, R11_PRECOMMIT_KEYS)``
++inside ``prepare_formal_gates`` before ``execute_formal`` imports the identity
++adapter or calls ``adapter.run()`` (the first side effect).
++
++Fixtures are temporary roots holding byte copies of the real historical pins,
++lifecycle contract/module, ledger and v4 attempt/marker/journal evidence, plus a
++synthetic r11 pointer/freeze/authorization. The repository pointer is never created.
++Only the identity adapter is replaced, and only through the explicit
++``adapter_module`` parameter that formal execution never passes.
++"""
++from __future__ import annotations
++
++import argparse
++import hashlib
++import json
++import shutil
++import tempfile
++import types
++import unittest
++from pathlib import Path
++from unittest.mock import patch
++
++from scripts import run_step9_63_v3_formal_execution as formal
++from scripts import v3_runner_identity as identity
++from scripts.preflight_step9_62b_mac_local import SUPPLEMENTAL_HISTORICAL_PINS
++from scripts.v3_namespace_allocator import derive_namespace_id
++
++REPO = Path(__file__).resolve().parents[1]
++AGENT = "0" * 63 + "a"
++AUTH_ID = "auth-step9_63c_r5c10ae-synthetic"
++ATTEMPT_ID = "attempt-step9_63c_r5c10ae-synthetic"
++EVALUATION_ID = "heldout-v4-step9_55a-treatment-v3-20260930-01"
++
++
++def sha256(path: Path) -> str:
++    return hashlib.sha256(path.read_bytes()).hexdigest()
++
++
++def listing(root: Path) -> dict[str, str]:
++    return {p.relative_to(root).as_posix(): sha256(p) for p in sorted(root.rglob("*")) if p.is_file()}
++
++
++class R11PrecommitFixture:
++    """Temporary root reproducing every input of collect_r11_precommit_state."""
++
++    def __init__(self, root: Path):
++        self.root = root
++        inventory = json.loads((REPO / formal.HISTORICAL_INVENTORY_PATH).read_text(encoding="utf-8"))
++        transaction_contract = "evaluation/v1_2_3/step9_63a_r1_atomic_commit_contract.json"
++        copies = {formal.HISTORICAL_INVENTORY_PATH, formal.LIFECYCLE_LEDGER_PATH, transaction_contract,
++                  "scripts/authorization_lifecycle.py", *SUPPLEMENTAL_HISTORICAL_PINS,
++                  *(pin["path"] for pin in inventory["historical_pins"].values())}
++        runs = REPO / "evaluation/v4_runs"
++        copies |= {p.relative_to(REPO).as_posix() for pattern in ("attempts.jsonl", ".namespace_allocation.json")
++                   for p in runs.rglob(pattern) if not p.name.startswith("._")}
++        copies |= {p.relative_to(REPO).as_posix() for p in (runs / ".execution_transactions").glob("*.jsonl")
++                   if not p.name.startswith("._")}
++        for rel in sorted(copies):
++            (root / rel).parent.mkdir(parents=True, exist_ok=True)
++            shutil.copyfile(REPO / rel, root / rel)
++        contract = "evaluation/v1_2_3/step9_61a_v3_authorization_lifecycle_contract.json"
++        pointer = root / identity.IDENTITY_CONFIG_PATH
++        pointer.write_text(json.dumps({
++            "artifact_type": "V3_CURRENT_RUNNER_IDENTITY_POINTER",
++            "status": "FROZEN_IDENTITY_POINTER_NOT_AUTHORIZATION",
++            "runner_freeze_revision": "r11", "runner_freeze_path": identity.EXPECTED_FREEZE_PATH}))
++        self.identity = {"runner_freeze_revision": "r11", "runner_freeze_path": identity.EXPECTED_FREEZE_PATH,
++                         "identity_config_sha256": sha256(pointer)}
++        bound = {"case_order_fingerprint_sha256": "d" * 64, "case_count": 40,
++                 "task_distribution": dict(formal.EXPECTED_DISTRIBUTION)}
++        self.freeze = {
++            "runner_freeze_revision": "r11", "status": "FROZEN_NOT_AUTHORIZED",
++            "formal_entry_runner_sha256": sha256(Path(formal.__file__)), "v3_agent_sha256": AGENT,
++            "bound_identities": bound, "bound_identities_sha256": "e" * 64,
++            "authorization_lifecycle_contract_path": contract,
++            "authorization_lifecycle_contract_sha256": sha256(root / contract),
++            "authorization_lifecycle_module_path": "scripts/authorization_lifecycle.py",
++            "authorization_lifecycle_module_sha256": sha256(root / "scripts/authorization_lifecycle.py"),
++            "transaction_contract_path": transaction_contract,
++            "transaction_contract_sha256": sha256(root / transaction_contract),
++        }
++        self.freeze_path = root / identity.EXPECTED_FREEZE_PATH
++        self.freeze_path.write_text(json.dumps(self.freeze))
++        self.authorization = {
++            "authorization_id": AUTH_ID, "attempt_id": ATTEMPT_ID, "evaluation_id": EVALUATION_ID,
++            "treatment": "TREATMENT_V3", "status": "ISSUED_NOT_EXECUTED",
++            "authorization_status": "ISSUED_NOT_CONSUMED", "consumed": False,
++            "authorization_consumption_count": 0, "runner_freeze_revision": "r11",
++            "runner_freeze_path": identity.EXPECTED_FREEZE_PATH, "runner_freeze_sha256": sha256(self.freeze_path),
++            "treatment_agent_sha256": AGENT, "frozen_evaluation_identity_sha256": "e" * 64,
++            "case_set_fingerprint_sha256": "d" * 64, "case_order_fingerprint_sha256": "d" * 64,
++            "case_count": 40, "task_distribution": dict(formal.EXPECTED_DISTRIBUTION),
++            "execution_namespace": {"namespace_id": derive_namespace_id(EVALUATION_ID, AUTH_ID, ATTEMPT_ID)},
++        }
++        self.auth_path = root / "evaluation/v1_2_3/step9_63c_r5c10ae_synthetic_v3_authorization_manifest.json"
++        self.write_authorization()
++        self.adapter = types.SimpleNamespace(
++            current_v3_agent_identity=lambda: (AGENT, True),
++            _authoritative_authorization_bindings=lambda: {"all_frozen_hashes_match": True})
++        self.preflight = {"dns_ready": True, "tcp_ready": True, "tls_ready": True}
++        self.preflight_validated = True
++
++    def write_authorization(self) -> None:
++        self.auth_path.write_text(json.dumps(self.authorization))
++
++    def collect(self, adapter="stub") -> dict:
++        args = argparse.Namespace(authorization_id=AUTH_ID, attempt_id=ATTEMPT_ID,
++                                  authorization_file=self.auth_path)
++        with patch.object(formal, "EXPECTED_PROJECT_ROOT", self.root), \
++             patch.object(formal, "EXPECTED_PYTHON", Path(formal.sys.executable)):
++            return formal.collect_r11_precommit_state(
++                args=args, authorization=self.authorization, preflight=self.preflight,
++                freeze=self.freeze, freeze_path=self.freeze_path, identity=self.identity,
++                preflight_validated=self.preflight_validated, root=self.root,
++                adapter_module=self.adapter if adapter == "stub" else adapter)
++
++    def failures(self, **kwargs) -> list[str]:
++        return formal.validate_precommit(self.collect(**kwargs), formal.R11_PRECOMMIT_KEYS)
++
++
++class ConsumerPrecommitGateTests(unittest.TestCase):
++    def setUp(self):
++        self.temp = tempfile.TemporaryDirectory()
++        self.addCleanup(self.temp.cleanup)
++        self.fx = R11PrecommitFixture(Path(self.temp.name).resolve())
++        self.repo_evidence = listing(REPO / "evaluation/v1_2_3")
++
++    def assert_rejected(self, expected: set[str], **kwargs) -> None:
++        before = listing(self.fx.root)
++        failures = self.fx.failures(**kwargs)
++        self.assertTrue(expected <= set(failures), failures)
++        self.assertEqual(listing(self.fx.root), before)          # the gate writes nothing
++        self.assertEqual(listing(REPO / "evaluation/v1_2_3"), self.repo_evidence)
++
++    # -- positive control: every check can pass on a consistent fixture ------------
++    def test_00_consistent_fixture_passes_every_r11_precommit_check(self):
++        state = self.fx.collect()
++        self.assertEqual(state["checks_not_executed"], [], state["check_errors"])
++        self.assertEqual(formal.validate_precommit(state, formal.R11_PRECOMMIT_KEYS), [])
++        self.assertEqual(state["active_authorizations"], [AUTH_ID])
++        self.assertTrue(all(row["executable"] is False for row in state["superseded_authorizations"]))
++
++    # -- gap G2: 55 historical pins ------------------------------------------------------
++    def test_real_repository_historical_pins_verify_55(self):
++        self.assertEqual(formal.verify_historical_pins(REPO), 55)
++
++    def test_historical_pin_mismatch_rejected(self):
++        pin = self.fx.root / "evaluation/v1_2_3/step9_61a_v3_runner_freeze_r6.json"
++        pin.write_bytes(pin.read_bytes() + b" ")
++        self.assert_rejected({"historical_integrity_match"})
++
++    def test_ledger_prefix_tamper_rejected(self):
++        ledger = self.fx.root / formal.LIFECYCLE_LEDGER_PATH
++        data = bytearray(ledger.read_bytes()); data[10] ^= 1
++        ledger.write_bytes(bytes(data))
++        self.assert_rejected({"historical_integrity_match"})
++
++    def test_missing_historical_inventory_is_not_executed_and_rejected(self):
++        (self.fx.root / formal.HISTORICAL_INVENTORY_PATH).unlink()
++        self.assert_rejected({"historical_integrity_match", "check_not_executed:historical_integrity_match"})
++
++    # -- gap G3: exactly one active authorization, recounted by the consumer -------------
++    def test_second_active_authorization_rejected(self):
++        second = dict(self.fx.authorization, authorization_id=AUTH_ID + "-2", attempt_id=ATTEMPT_ID + "-2")
++        (self.fx.root / "evaluation/v1_2_3/step9_63c_r5c10ae_second_v3_authorization_manifest.json"
++         ).write_text(json.dumps(second))
++        self.assert_rejected({"exactly_one_active_authorization", "active_authorization_is_bound_id"})
++
++    def test_retired_bound_authorization_rejected(self):
++        # The frozen lifecycle.active_authorizations() always reads the repository ledger
++        # (no ledger parameter), so a retirement written only to this temporary ledger is
++        # seen by the consumer's explicit-ledger reducer check, which must reject it.
++        ledger = self.fx.root / formal.LIFECYCLE_LEDGER_PATH
++        with ledger.open("a", encoding="utf-8") as stream:
++            stream.write(json.dumps({"authorization_id": AUTH_ID,
++                                     "event_type": "AUTHORIZATION_RETIRED_UNCONSUMED_NON_REUSABLE",
++                                     "final_status": "RETIRED_UNCONSUMED_NON_REUSABLE",
++                                     "authorization_consumed": False,
++                                     "authorization_consumption_count": 0}) + "\n")
++        self.assert_rejected({"authorization_lifecycle_executable"})
++
++    # -- G7: superseded authorizations must not be executable ---------------------------
++    def test_executable_superseded_authorization_rejected(self):
++        old = dict(self.fx.authorization, authorization_id="auth-superseded-r10", attempt_id="attempt-superseded",
++                   runner_freeze_revision="r10")
++        (self.fx.root / "evaluation/v1_2_3/step9_63c_r5c10ae_superseded_v3_authorization_manifest.json"
++         ).write_text(json.dumps(old))
++        self.assert_rejected({"old_authorization_retired", "old_authorization_non_executable"})
++
++    def test_real_r10_authorization_blocks_r11_until_retired(self):
++        name = "evaluation/v1_2_3/step9_63c_r5c6_r10_v3_authorization_manifest.json"
++        shutil.copyfile(REPO / name, self.fx.root / name)
++        self.assert_rejected({"old_authorization_retired", "old_authorization_non_executable"})
++
++    # -- identity-adapter facts ----------------------------------------------------------
++    def test_agent_mismatch_rejected(self):
++        self.fx.adapter.current_v3_agent_identity = lambda: ("f" * 64, True)
++        self.assert_rejected({"agent_match"})
++
++    def test_frozen_identity_mismatch_rejected(self):
++        self.fx.adapter._authoritative_authorization_bindings = lambda: {"all_frozen_hashes_match": False}
++        self.assert_rejected({"frozen_identities_match"})
++
++    def test_unavailable_identity_adapter_fails_closed(self):
++        # adapter_module=None imports the real frozen adapter, which refuses without a
++        # formal r11 pointer: those checks are recorded as not executed and fail.
++        self.assert_rejected({"agent_match", "frozen_identities_match",
++                              "check_not_executed:agent_match",
++                              "check_not_executed:frozen_identities_match"}, adapter=None)
++
++    # -- authorization and namespace facts -----------------------------------------------
++    def test_consumed_or_counted_authorization_rejected(self):
++        self.fx.authorization.update(consumed=True, authorization_consumption_count=1)
++        self.fx.write_authorization()
++        self.assert_rejected({"authorization_status_issued_unconsumed",
++                              "authorization_consumption_count_zero", "authorization_consumption_count"})
++
++    def test_existing_attempt_rejected(self):
++        ledger = self.fx.root / "evaluation/v4_runs/synthetic-prior/attempts.jsonl"
++        ledger.parent.mkdir(parents=True)
++        ledger.write_text(json.dumps({"attempt_id": ATTEMPT_ID, "authorization_id": "other"}) + "\n")
++        self.assert_rejected({"attempt_absent"})
++
++    def test_existing_namespace_rejected(self):
++        (self.fx.root / "evaluation/v4_runs" / self.fx.authorization["execution_namespace"]["namespace_id"]).mkdir()
++        self.assert_rejected({"namespace_absent"})
++
++    def test_namespace_binding_mismatch_rejected(self):
++        self.fx.authorization["execution_namespace"] = {"namespace_id": "heldout-v4-other"}
++        self.assert_rejected({"namespace_id_match"})
++
++    def test_case_and_evaluation_identity_mismatch_rejected(self):
++        self.fx.authorization.update(case_order_fingerprint_sha256="1" * 64, case_set_fingerprint_sha256="1" * 64,
++                                     frozen_evaluation_identity_sha256="1" * 64, task_distribution={"KNOWLEDGE_QA": 40})
++        self.assert_rejected({"case_order_match", "case_set_match", "evaluation_identity_match",
++                              "task_distribution_match", "task_distribution"})
++
++    # -- freeze, contract, environment, connectivity -------------------------------------
++    def test_formal_entry_or_freeze_binding_mismatch_rejected(self):
++        self.fx.freeze["formal_entry_runner_sha256"] = "0" * 64
++        self.assert_rejected({"runner_freeze_match"})
++
++    def test_lifecycle_contract_tamper_rejected(self):
++        contract = self.fx.root / self.fx.freeze["authorization_lifecycle_contract_path"]
++        contract.write_bytes(contract.read_bytes() + b" ")
++        self.assert_rejected({"lifecycle_contract_match"})
++
++    def test_atomic_commit_contract_tamper_rejected(self):
++        contract = self.fx.root / self.fx.freeze["transaction_contract_path"]
++        contract.write_bytes(contract.read_bytes() + b" ")
++        self.assert_rejected({"atomic_commit_protocol_match", "crash_reconciliation_protocol_match"})
++
++    def test_unvalidated_preflight_rejected(self):
++        self.fx.preflight_validated = False
++        self.assert_rejected({"fresh_connectivity_pass"})
++
++    def test_wrong_project_root_or_runtime_rejected(self):
++        args = argparse.Namespace(authorization_id=AUTH_ID, attempt_id=ATTEMPT_ID,
++                                  authorization_file=self.fx.auth_path)
++        state = formal.collect_r11_precommit_state(
++            args=args, authorization=self.fx.authorization, preflight=self.fx.preflight,
++            freeze=self.fx.freeze, freeze_path=self.fx.freeze_path, identity=self.fx.identity,
++            preflight_validated=True, root=self.fx.root, adapter_module=self.fx.adapter)
++        failures = formal.validate_precommit(state, formal.R11_PRECOMMIT_KEYS)
++        self.assertIn("project_root_match", failures)
++
++    # -- validate_precommit semantics ------------------------------------------------------
++    def test_missing_key_or_unexecuted_check_fails(self):
++        state = self.fx.collect()
++        for key in formal.R11_PRECOMMIT_KEYS:
++            with self.subTest(key=key):
++                broken = dict(state); broken.pop(key)
++                self.assertIn(key, formal.validate_precommit(broken, formal.R11_PRECOMMIT_KEYS))
++        self.assertIn("check_not_executed:x", formal.validate_precommit(
++            dict(state, checks_not_executed=["x"]), formal.R11_PRECOMMIT_KEYS))
++
++    def test_legacy_default_keys_unchanged(self):
++        self.assertEqual(len(formal.LEGACY_PRECOMMIT_KEYS), 24)
++        self.assertIn("r6_freeze_match", formal.validate_precommit({}))
++
++
++class ExecuteFormalOrderingTests(unittest.TestCase):
++    """execute_formal never reaches the adapter when any precommit check fails."""
++
++    def test_precommit_failure_raises_before_adapter(self):
++        gates = {"precommit_failures": ["historical_integrity_match"], "supplied": {}}
++        with patch.object(formal, "prepare_formal_gates", return_value=gates):
++            import sys
++            before = set(sys.modules)
++            with self.assertRaisesRegex(RuntimeError, "precommit gate failed closed: historical_integrity_match"):
++                formal.execute_formal(argparse.Namespace())
++            self.assertNotIn("scripts.run_step9_53_v3_identity_adapter", set(sys.modules) - before)
++
++    def test_prepare_formal_gates_reports_real_precommit_failures(self):
++        with tempfile.TemporaryDirectory() as directory:
++            fx = R11PrecommitFixture(Path(directory).resolve())
++            preflight_file = fx.root / "preflight.json"
++            preflight = {"authorization_id": AUTH_ID, "attempt_id": ATTEMPT_ID,
++                         "runner_freeze_sha256": sha256(fx.freeze_path),
++                         "status": "PASS_NON_CONSUMING_PREFLIGHT", "authorization_consumed": False,
++                         "attempt_created": False, "namespace_created": False,
++                         "dns_ready": True, "tcp_ready": True, "tls_ready": True}
++            preflight_file.write_text(json.dumps(preflight))
++            from scripts.run_step9_35a_matched_treatment import supplied_hash_keys
++            args = argparse.Namespace(authorization_id=AUTH_ID, attempt_id=ATTEMPT_ID,
++                                      evaluation_id=EVALUATION_ID, authorization_file=fx.auth_path,
++                                      preflight_file=preflight_file, preflight_id="p", preflight_sha256="0" * 64,
++                                      **{key: "a" * 64 for key in supplied_hash_keys()})
++            real_collect = formal.collect_r11_precommit_state
++
++            def collect(**kwargs):  # same real checks, rooted in the fixture
++                return real_collect(**kwargs, root=fx.root, adapter_module=fx.adapter)
++
++            # Only identity resolution and the separately tested preflight-evidence check
++            # are stood in; every precommit check runs for real against the fixture.
++            with patch.object(formal, "resolve_current_freeze", return_value=(fx.freeze, fx.freeze_path, fx.identity)), \
++                 patch.object(formal, "validate_preflight_evidence", return_value=None), \
++                 patch.object(formal, "collect_r11_precommit_state", side_effect=collect), \
++                 patch.object(formal, "EXPECTED_PROJECT_ROOT", fx.root), \
++                 patch.object(formal, "EXPECTED_PYTHON", Path(formal.sys.executable)):
++                self.assertEqual(formal.prepare_formal_gates(args)["precommit_failures"], [])
++                pin = fx.root / "evaluation/v1_2_3/step9_61a_v3_runner_freeze_r6.json"
++                pin.write_bytes(pin.read_bytes() + b" ")
++                self.assertIn("historical_integrity_match", formal.prepare_formal_gates(args)["precommit_failures"])
++                with self.assertRaisesRegex(RuntimeError, "precommit gate failed closed: historical_integrity_match"):
++                    formal.execute_formal(args)
++
++    def test_gate_runs_before_adapter_import_and_run(self):
++        import inspect
++        source = inspect.getsource(formal.execute_formal)
++        self.assertLess(source.index("prepare_formal_gates("), source.index("run_step9_53_v3_identity_adapter"))
++        self.assertLess(source.index("if gates[\"precommit_failures\"]"), source.index("adapter.run("))
++        gate_source = inspect.getsource(formal.prepare_formal_gates)
++        self.assertIn("validate_precommit(state, R11_PRECOMMIT_KEYS)", gate_source)
++        self.assertNotIn("adapter.run(", gate_source)
++
++    def test_main_audit_reports_real_precommit_result(self):
++        import contextlib, io
++        stream = io.StringIO()
++        with patch.object(formal, "audit_current_runner_non_consuming", return_value={"mode": "AUDIT"}), \
++             contextlib.redirect_stdout(stream):
++            self.assertEqual(formal.main(["--audit-only"]), 0)
++        out = json.loads(stream.getvalue())
++        self.assertEqual(out["precommit_failures"], ["precommit_not_evaluated:authorization_and_preflight_required"])
++        self.assertIs(out["ready_for_controlled_execution"], False)
++        self.assertNotIn("atomic_commit_implemented", out)
++
++
++if __name__ == "__main__":
++    unittest.main()

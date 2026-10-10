@@ -1,0 +1,42 @@
+{
+  "step": "9.10a",
+  "purpose": "Evaluation harness minimal recursion fix equivalence evidence",
+  "agent_behavior_changed": false,
+  "benchmark_changed": false,
+  "scoring_changed": false,
+  "state_view_original_semantics_preserved": true,
+  "permitted_trace_augmentation": [
+    "goal_id",
+    "state_revision",
+    "semantic_provenance",
+    "dependency lifecycle fields",
+    "effective_requirements",
+    "lineage_events"
+  ],
+  "case_specific_logic_added": false,
+  "external_model_called": false,
+  "benchmark_v2_executed": false,
+  "benchmark_v3_accessed": false,
+  "frozen_inputs": {
+    "benchmark_v2_sha256": "dfa9b9e5a12b0017fa68d344d01b313ebc29e583b933fbe1e93c125f55ecafd2",
+    "scoring_rubric_sha256": "a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899",
+    "match_frozen_manifest": true
+  },
+  "modified_files": [
+    "scripts/run_step9_8_frozen_evaluation.py",
+    "tests/test_step9_10a_harness_fix.py"
+  ],
+  "modified_functions": [
+    {
+      "name": "scripts.run_step9_8_frozen_evaluation.state_view",
+      "change": "Call captured original_state_view instead of mutable base.state_view.",
+      "reason": "Prevent wrapper self-recursion after base.state_view is monkey-patched for trace augmentation."
+    }
+  ],
+  "evidence": {
+    "focused_tests": "6 passed",
+    "semantic_equivalence": "All original serializer fields and values equal for the same synthetic AdaptiveAgentState.",
+    "repeat_call_check": "5 repeated wrapped calls are equal and non-recursive.",
+    "history_integrity": "Consumed Step 9.8 ledger terminal status was read and unchanged."
+  }
+}

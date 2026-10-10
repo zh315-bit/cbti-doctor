@@ -1,0 +1,131 @@
+{
+  "artifact_type": "TREATMENT_V3_V4_ONE_SHOT_AUTHORIZATION",
+  "step": "9.54-r1",
+  "authorization_status": "ISSUED_NOT_CONSUMED",
+  "status": "ISSUED_NOT_EXECUTED",
+  "authorization_type": "ONE_SHOT_MATCHED_TREATMENT",
+  "authorization_id": "auth-step9_54r1-b43c3282fd9344f6a7c3548e376ec6d1",
+  "attempt_id": "attempt-step9_54r1-d2e272e499e24f5f82096a01b2bf9fe9",
+  "attempt_id_lifecycle": "PREALLOCATED_ID_REQUIRED_BY_FROZEN_PARENT_RUNNER; NO_FORMAL_ATTEMPT_OR_LEDGER_CREATED",
+  "evaluation_id": "heldout-v4-step9_53-treatment-v3-20260930-01",
+  "treatment_identity": "TREATMENT_V3",
+  "authorized_by": "Explicit user request for Step 9.54 authorization-only audit",
+  "issued_at_utc": "2026-09-30T19:26:35Z",
+  "purpose": "REGRESSION_ONLY_CONFIRMATION",
+  "claim_scope": "FROZEN_MATCHED_DEVELOPMENT_REGRESSION_ONLY",
+  "comparison_class": "POST_HOC_MATCHED_FROZEN_BASELINE",
+  "treatment_agent_sha256": "085d338ed95bbef7370c41cf97ca0d6653ffdfd2f1c924eef4b7123dfdea4607",
+  "baseline_agent_sha256": "4e2bffea0d7eaa9299074a960df84a1806b3ae9d4930662929abc58ca5b2ae79",
+  "runner_freeze_path": "evaluation/v1_2_3/step9_53_v3_runner_freeze_r2.json",
+  "runner_freeze_revision": "r2",
+  "runner_freeze_sha256": "4c4749cde621ed989ec9c0dc77a194931079cdaee7f20dc6ba5668afee46eb43",
+  "runner_path": "scripts/run_step9_53_v3_identity_adapter.py",
+  "runner_sha256": "02e37b60469f0fb36979b883be45cf3231d3088fc4c48ce21dacdf6e3d0d9b6e",
+  "identity_adapter_path": "scripts/run_step9_53_v3_identity_adapter.py",
+  "identity_adapter_sha256": "02e37b60469f0fb36979b883be45cf3231d3088fc4c48ce21dacdf6e3d0d9b6e",
+  "treatment_runner_sha256": "02e37b60469f0fb36979b883be45cf3231d3088fc4c48ce21dacdf6e3d0d9b6e",
+  "identity_contract_path": "evaluation/v1_2_3/step9_53_v3_identity_contract.json",
+  "identity_contract_sha256": "fc73e402e5bb59866f5f83b61b8ac642e0aec601612a2d81423971072dbdadfa",
+  "benchmark_path": "evaluation/benchmarks/benchmark_v4_cases.yaml",
+  "benchmark_sha256": "8b8c72092fcd7544e69d5d2ecd13610c7bb4c14210fca330698b3e5ab3f01d7f",
+  "benchmark_manifest_path": "evaluation/benchmarks/benchmark_v4_manifest.json",
+  "benchmark_manifest_sha256": "b5feb7832b6267d8cff9d25fb2d8cf0043829feb5fd04ec1bea77dba932a13db",
+  "case_count": 40,
+  "case_set_identity": "FROZEN_V4_40_CASE_SET",
+  "case_order_fingerprint_sha256": "d930455e417935337a6e3459defbdc3ee3829b71786fbd8438ef092b62429e68",
+  "task_distribution": {
+    "KQ": 10,
+    "CA": 10,
+    "PD": 10,
+    "DA": 10,
+    "canonical": {
+      "KNOWLEDGE_QA": 10,
+      "CAUSE_ASSESSMENT": 10,
+      "PERSONALIZED_DECISION": 10,
+      "DATA_ANALYSIS": 10
+    }
+  },
+  "harness_sha256": "8bc271bebc1c5da5351d517e2bb4a0d1a99fda3de1b713a6197b12f81fad70c7",
+  "scoring_sha256": "f742a8f8af7c8747818dadad81621c15d12d74f50538019913dfe18ab53bf59b",
+  "scoring_rubric_sha256": "a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899",
+  "metric_registry_sha256": "de9f348cb1dff66410c03095abdaffcc256f53679718482870e4aa4d80c75056",
+  "one_shot_rules_sha256": "1c7ed4ef47865b117bc943f3e0ad9a859f4f74cfb4e8001f723ac5532af140d0",
+  "matched_protocol_sha256": "a71ba06090370b576fbba66bc4b005e519ddbabff3021a40c6546fc855f90265",
+  "baseline_metric_lock_sha256": "63e33f8dd66109742fdbb2282be437a1af771f5aa1d600306f35916ed5d37203",
+  "claim_policy_sha256": "4c64896c141dc8feb3789939e1450bcb7bdeb878ed15b27558404c47421aea67",
+  "model_configuration_identity": {
+    "fingerprint_sha256": "d0802478a59e6b2021b0476490149d7fec672fab5bda5cc45f55241268f1a7e0",
+    "runtime_configuration_match": true
+  },
+  "tool_configuration_identity": {
+    "adapter_path": "adaptive_agent/tools.py",
+    "sha256": "65223ad962417d68d16326c2431a205f1bdc953a0f64c5585ff38e4017a1c084"
+  },
+  "rag_configuration_identity": {
+    "fingerprint_sha256": "58467abc2abafce62e8d71713684802f64a35946accf35c08007e67b0edd60a5"
+  },
+  "dependency_lock_sha256": "4e7ec8e873364b418536494b049d09e37e957a824a1989072cdc5a62f8af72b0",
+  "production_case_path_runner_sha256": "fddaa09803dd1df27da81f3793929d15a3f6d5d29c1060842ecbf138a76b1d06",
+  "execution_limits": {
+    "max_runner_turns": 6,
+    "agent_loop_max_steps": 4,
+    "fresh_session_per_case": true
+  },
+  "trace_contract": {
+    "path": "evaluation/v1_2_3/step9_52_v3_trace_schema_audit.json",
+    "sha256": "dfb8a66ecceaeda0bfd14b3b3661013ddb5b300b02ab52c606d4dd1ff5a86047",
+    "version": "step9_50_authorization_trace_v1",
+    "change": "ADDITIVE_COMPATIBLE",
+    "authoritative_source": "persisted DECISION.answer_authorization",
+    "required_fields": [
+      "answer_authorization_mode",
+      "answer_authorization_reason_codes",
+      "blocked_dependency_ids",
+      "blocked_precondition_ids",
+      "bounded_excluded_actions",
+      "bounded_supported_content_basis",
+      "authorization_decision_source",
+      "authorization_decision_version"
+    ],
+    "mirrors_validated_by_frozen_v3_adapter": ["terminal state_history snapshot", "final_state.answer_authorization"],
+    "post_hoc_reconstruction_from_answer_text": false
+  },
+  "lineage_forensics_compatibility": {
+    "compatible": true,
+    "mode": "STRUCTURAL_ADDITIVE_FIELDS_ONLY",
+    "basis": "Frozen V2 lineage extractor consumes persisted turn/state_history/final_state identifiers and ignores additive authorization keys; no lineage run performed in Step 9.54."
+  },
+  "one_shot": {
+    "max_formal_attempts": 1,
+    "consumed": false,
+    "consumed_at_utc": null,
+    "automatic_retry": false,
+    "resume_after_interruption": false,
+    "reuse_authorization_or_attempt_id": false,
+    "future_event_order": [
+      "PREPARED",
+      "AUTHORIZATION_CONSUMED",
+      "FIRST_EVALUATION_ACCESS",
+      "CASE_SET_AND_ORDER_VERIFIED",
+      "40_CASE_EXECUTIONS",
+      "COMPLETED"
+    ],
+    "abort_or_partial_attempt_is_not_restartable": true,
+    "formal_ledger_created": false
+  },
+  "future_output_namespace": "evaluation/v4_runs/heldout-v4-step9_53-treatment-v3-20260930-01",
+  "authorization_parent_runner_binding": {
+    "authorization_type": "ONE_SHOT_MATCHED_TREATMENT",
+    "parent_runner_expected_status": "ISSUED_NOT_EXECUTED",
+    "treatment_runner_sha256": "02e37b60469f0fb36979b883be45cf3231d3088fc4c48ce21dacdf6e3d0d9b6e",
+    "max_formal_attempts": 1
+  },
+  "max_formal_attempts": 1,
+  "consumed": false,
+  "consumed_at_utc": null,
+  "case_execution": false,
+  "v4_case_executed": 0,
+  "v4_score_generated": false,
+  "v5_created": false,
+  "v5_accessed": false
+}

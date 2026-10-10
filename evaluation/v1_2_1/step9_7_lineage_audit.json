@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "gaps": [],
+  "checked_fields": [
+    "goal_id",
+    "semantic_id",
+    "dependency_id",
+    "precondition_id",
+    "candidate_id",
+    "action_id",
+    "tool_result_id",
+    "state_update_id"
+  ]
+}

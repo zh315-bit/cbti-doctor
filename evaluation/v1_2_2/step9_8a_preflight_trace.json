@@ -1,0 +1,1058 @@
+{
+  "kind": "synthetic_non_benchmark_preflight",
+  "route": "/api/chat",
+  "result": "PASS",
+  "assertions": [
+    "EVIDENCE required/retrieved/satisfied",
+    "no stale ASK"
+  ],
+  "action_path": [
+    "RETRIEVE",
+    "ANSWER"
+  ],
+  "trace": [
+    [
+      "POST",
+      "i1",
+      {
+        "assistant": "goal=解释刺激控制的一般原则; facts={}; evidence=['evidence for 解释刺激控制的一般原则']",
+        "session_id": "i1",
+        "status": "ANSWER",
+        "steps": 2,
+        "tools_used": [
+          "retrieval_augmentation_generation"
+        ]
+      },
+      [
+        {
+          "event": "INPUT_UNDERSTANDING",
+          "goal": "解释刺激控制的一般原则",
+          "goal_id": "goal_t1",
+          "state_revision": 1,
+          "task_type": "PERSONALIZED_DECISION",
+          "facts": {},
+          "fact_sources": {},
+          "claim_provenance": [],
+          "information_estimates": {},
+          "considered_information": [],
+          "rejected_information": [],
+          "stop_reason": "",
+          "preconditions_considered": [],
+          "dependencies_considered": [],
+          "dependencies_required": [],
+          "dependencies_satisfied": [],
+          "dependencies_unavailable": [],
+          "semantic_provenance": [],
+          "base_requirements": {},
+          "effective_requirements": {},
+          "lineage_events": [],
+          "diary_projection": {},
+          "critical_missing": [],
+          "required_missing": [],
+          "decision_relevant_missing": [],
+          "validity_critical_missing": [],
+          "secondary_missing": [],
+          "evidence": [],
+          "user_info_sufficiency": "LOW",
+          "evidence_sufficiency": "LOW",
+          "candidate_actions": [],
+          "available_diary": false,
+          "resource_status": {},
+          "required_resources": [],
+          "decision_missing": [],
+          "answer_scope": "",
+          "turn_index": 1
+        },
+        {
+          "event": "DECISION",
+          "goal": "解释刺激控制的一般原则",
+          "goal_id": "goal_t1",
+          "state_revision": 1,
+          "task_type": "PERSONALIZED_DECISION",
+          "facts": {},
+          "fact_sources": {},
+          "claim_provenance": [],
+          "information_estimates": {},
+          "considered_information": [
+            {
+              "target": "解释刺激控制的一般原则",
+              "value_level": "HIGH",
+              "candidate_action": "RETRIEVE",
+              "accepted": true,
+              "precondition": true,
+              "rationale": "满足证据硬前置条件。"
+            }
+          ],
+          "rejected_information": [],
+          "stop_reason": "",
+          "preconditions_considered": [
+            {
+              "precondition_id": "pre_goal_t1_r1_1",
+              "source_dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+              "semantic_ids": [
+                "sem_goal_t1_r1_1"
+              ],
+              "precondition_forced_action": true,
+              "counterfactual_candidate": null,
+              "counterfactual_action": "not_available",
+              "counterfactual_stop_reason": "not_available",
+              "type": "EVIDENCE",
+              "target": "external_evidence",
+              "required_for": "解释刺激控制的一般原则",
+              "status": "unsatisfied",
+              "satisfaction_source": null,
+              "required_action": "RETRIEVE",
+              "reason": "current answer scope includes external CBT-I knowledge",
+              "dependency_source": [
+                "goal_semantics",
+                "requirements",
+                "task_type_signal"
+              ],
+              "satisfiers_considered": [
+                "RETRIEVE"
+              ],
+              "selected_satisfier": "RETRIEVE"
+            }
+          ],
+          "dependencies_considered": [
+            {
+              "dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+              "dependency_type": "EVIDENCE",
+              "target": "external_evidence",
+              "status": "REQUIRED",
+              "reason": "current answer scope includes external CBT-I knowledge",
+              "source": [
+                "goal_semantics",
+                "requirements",
+                "task_type_signal"
+              ],
+              "required_for_goal": "解释刺激控制的一般原则",
+              "satisfiable_by": [
+                "RETRIEVE"
+              ],
+              "fallback": "state evidence limitation",
+              "provenance": {
+                "evidence_count": 0
+              },
+              "semantic_ids": [
+                "sem_goal_t1_r1_1"
+              ],
+              "supersedes_dependency_id": null
+            }
+          ],
+          "dependencies_required": [
+            {
+              "dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+              "dependency_type": "EVIDENCE",
+              "target": "external_evidence",
+              "status": "REQUIRED",
+              "reason": "current answer scope includes external CBT-I knowledge",
+              "source": [
+                "goal_semantics",
+                "requirements",
+                "task_type_signal"
+              ],
+              "required_for_goal": "解释刺激控制的一般原则",
+              "satisfiable_by": [
+                "RETRIEVE"
+              ],
+              "fallback": "state evidence limitation",
+              "provenance": {
+                "evidence_count": 0
+              },
+              "semantic_ids": [
+                "sem_goal_t1_r1_1"
+              ],
+              "supersedes_dependency_id": null
+            }
+          ],
+          "dependencies_satisfied": [],
+          "dependencies_unavailable": [],
+          "semantic_provenance": [
+            {
+              "semantic_id": "sem_goal_t1_r1_1",
+              "semantic_rule_id": "KNOWLEDGE_EVIDENCE_REQUIRED",
+              "matched_text": "解释",
+              "semantic_reason": "goal requests general external CBT-I knowledge",
+              "certainty": "HIGH",
+              "match_method": "deterministic_rule"
+            }
+          ],
+          "base_requirements": {
+            "critical": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ],
+            "secondary": [
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "evidence_required": true,
+            "diary_preferred": false,
+            "resources": [],
+            "decision_fields": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ],
+            "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+            "requirement_ids": {},
+            "classifications": {},
+            "semantic_adjustments": [],
+            "is_effective": false
+          },
+          "effective_requirements": {
+            "critical": [],
+            "secondary": [],
+            "evidence_required": true,
+            "diary_preferred": false,
+            "resources": [],
+            "decision_fields": [],
+            "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+            "requirement_ids": {
+              "bedtime": "req_goal_t1_bedtime",
+              "sleep_onset_latency": "req_goal_t1_sleep_onset_latency",
+              "wake_time": "req_goal_t1_wake_time",
+              "total_sleep_time": "req_goal_t1_total_sleep_time",
+              "nighttime_awakenings": "req_goal_t1_nighttime_awakenings",
+              "recent_sleep_pattern": "req_goal_t1_recent_sleep_pattern",
+              "perceived_stress": "req_goal_t1_perceived_stress",
+              "nap": "req_goal_t1_nap",
+              "caffeine": "req_goal_t1_caffeine"
+            },
+            "classifications": {
+              "bedtime": "irrelevant",
+              "sleep_onset_latency": "irrelevant",
+              "wake_time": "irrelevant",
+              "total_sleep_time": "irrelevant",
+              "nighttime_awakenings": "irrelevant",
+              "recent_sleep_pattern": "irrelevant",
+              "perceived_stress": "irrelevant",
+              "nap": "irrelevant",
+              "caffeine": "irrelevant"
+            },
+            "semantic_adjustments": [
+              {
+                "rule_id": "KNOWLEDGE_OPTIONAL_FIELDS_SUPPRESSED",
+                "reason": "goal requests external knowledge, not personal fact acquisition"
+              }
+            ],
+            "is_effective": true
+          },
+          "lineage_events": [],
+          "diary_projection": {},
+          "critical_missing": [],
+          "required_missing": [],
+          "decision_relevant_missing": [],
+          "validity_critical_missing": [],
+          "secondary_missing": [],
+          "evidence": [],
+          "user_info_sufficiency": "HIGH",
+          "evidence_sufficiency": "LOW",
+          "candidate_actions": [
+            {
+              "action": "RETRIEVE",
+              "target": null,
+              "question": null,
+              "query": "解释刺激控制的一般原则",
+              "expected_benefit": "HIGH",
+              "cost": "MEDIUM",
+              "rationale": "满足证据硬前置条件。",
+              "goal_relevance": "MEDIUM",
+              "decision_impact": "MEDIUM",
+              "redundancy": "LOW",
+              "information_value": "",
+              "acquisition_cost": "",
+              "candidate_id": "cand_goal_t1_r1_1",
+              "source_requirement_id": null,
+              "source_dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+              "source_precondition_id": "pre_goal_t1_r1_1",
+              "origin": "HARD_PRECONDITION"
+            }
+          ],
+          "available_diary": false,
+          "resource_status": {},
+          "required_resources": [],
+          "decision_missing": [],
+          "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+          "turn_index": 1,
+          "requirements": {
+            "critical": [],
+            "secondary": [],
+            "evidence_required": true,
+            "diary_preferred": false,
+            "resources": [],
+            "decision_fields": [],
+            "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+            "requirement_ids": {
+              "bedtime": "req_goal_t1_bedtime",
+              "sleep_onset_latency": "req_goal_t1_sleep_onset_latency",
+              "wake_time": "req_goal_t1_wake_time",
+              "total_sleep_time": "req_goal_t1_total_sleep_time",
+              "nighttime_awakenings": "req_goal_t1_nighttime_awakenings",
+              "recent_sleep_pattern": "req_goal_t1_recent_sleep_pattern",
+              "perceived_stress": "req_goal_t1_perceived_stress",
+              "nap": "req_goal_t1_nap",
+              "caffeine": "req_goal_t1_caffeine"
+            },
+            "classifications": {
+              "bedtime": "irrelevant",
+              "sleep_onset_latency": "irrelevant",
+              "wake_time": "irrelevant",
+              "total_sleep_time": "irrelevant",
+              "nighttime_awakenings": "irrelevant",
+              "recent_sleep_pattern": "irrelevant",
+              "perceived_stress": "irrelevant",
+              "nap": "irrelevant",
+              "caffeine": "irrelevant"
+            },
+            "semantic_adjustments": [
+              {
+                "rule_id": "KNOWLEDGE_OPTIONAL_FIELDS_SUPPRESSED",
+                "reason": "goal requests external knowledge, not personal fact acquisition"
+              }
+            ],
+            "is_effective": true
+          },
+          "chosen_action": {
+            "action": "RETRIEVE",
+            "target": null,
+            "question": null,
+            "query": "解释刺激控制的一般原则",
+            "expected_benefit": "HIGH",
+            "cost": "MEDIUM",
+            "rationale": "满足证据硬前置条件。",
+            "goal_relevance": "MEDIUM",
+            "decision_impact": "MEDIUM",
+            "redundancy": "LOW",
+            "information_value": "",
+            "acquisition_cost": "",
+            "candidate_id": "cand_goal_t1_r1_1",
+            "source_requirement_id": null,
+            "source_dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+            "source_precondition_id": "pre_goal_t1_r1_1",
+            "origin": "HARD_PRECONDITION"
+          },
+          "step": 1
+        },
+        {
+          "event": "RETRIEVE",
+          "goal": "解释刺激控制的一般原则",
+          "goal_id": "goal_t1",
+          "state_revision": 2,
+          "task_type": "PERSONALIZED_DECISION",
+          "facts": {},
+          "fact_sources": {},
+          "claim_provenance": [],
+          "information_estimates": {},
+          "considered_information": [],
+          "rejected_information": [],
+          "stop_reason": "",
+          "preconditions_considered": [],
+          "dependencies_considered": [
+            {
+              "dependency_id": "dep_goal_t1_r2_evidence_external_evidence",
+              "dependency_type": "EVIDENCE",
+              "target": "external_evidence",
+              "status": "SATISFIED",
+              "reason": "current answer scope includes external CBT-I knowledge",
+              "source": [
+                "goal_semantics",
+                "requirements",
+                "task_type_signal"
+              ],
+              "required_for_goal": "解释刺激控制的一般原则",
+              "satisfiable_by": [
+                "RETRIEVE"
+              ],
+              "fallback": null,
+              "provenance": {
+                "evidence_count": 1
+              },
+              "semantic_ids": [
+                "sem_goal_t1_r2_1"
+              ],
+              "supersedes_dependency_id": "dep_goal_t1_r1_evidence_external_evidence"
+            }
+          ],
+          "dependencies_required": [],
+          "dependencies_satisfied": [
+            {
+              "dependency_id": "dep_goal_t1_r2_evidence_external_evidence",
+              "dependency_type": "EVIDENCE",
+              "target": "external_evidence",
+              "status": "SATISFIED",
+              "reason": "current answer scope includes external CBT-I knowledge",
+              "source": [
+                "goal_semantics",
+                "requirements",
+                "task_type_signal"
+              ],
+              "required_for_goal": "解释刺激控制的一般原则",
+              "satisfiable_by": [
+                "RETRIEVE"
+              ],
+              "fallback": null,
+              "provenance": {
+                "evidence_count": 1
+              },
+              "semantic_ids": [
+                "sem_goal_t1_r2_1"
+              ],
+              "supersedes_dependency_id": "dep_goal_t1_r1_evidence_external_evidence"
+            }
+          ],
+          "dependencies_unavailable": [],
+          "semantic_provenance": [
+            {
+              "semantic_id": "sem_goal_t1_r2_1",
+              "semantic_rule_id": "KNOWLEDGE_EVIDENCE_REQUIRED",
+              "matched_text": "解释",
+              "semantic_reason": "goal requests general external CBT-I knowledge",
+              "certainty": "HIGH",
+              "match_method": "deterministic_rule"
+            }
+          ],
+          "base_requirements": {
+            "critical": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ],
+            "secondary": [
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "evidence_required": true,
+            "diary_preferred": false,
+            "resources": [],
+            "decision_fields": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ],
+            "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+            "requirement_ids": {},
+            "classifications": {},
+            "semantic_adjustments": [],
+            "is_effective": false
+          },
+          "effective_requirements": {
+            "critical": [],
+            "secondary": [],
+            "evidence_required": true,
+            "diary_preferred": false,
+            "resources": [],
+            "decision_fields": [],
+            "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+            "requirement_ids": {
+              "bedtime": "req_goal_t1_bedtime",
+              "sleep_onset_latency": "req_goal_t1_sleep_onset_latency",
+              "wake_time": "req_goal_t1_wake_time",
+              "total_sleep_time": "req_goal_t1_total_sleep_time",
+              "nighttime_awakenings": "req_goal_t1_nighttime_awakenings",
+              "recent_sleep_pattern": "req_goal_t1_recent_sleep_pattern",
+              "perceived_stress": "req_goal_t1_perceived_stress",
+              "nap": "req_goal_t1_nap",
+              "caffeine": "req_goal_t1_caffeine"
+            },
+            "classifications": {
+              "bedtime": "irrelevant",
+              "sleep_onset_latency": "irrelevant",
+              "wake_time": "irrelevant",
+              "total_sleep_time": "irrelevant",
+              "nighttime_awakenings": "irrelevant",
+              "recent_sleep_pattern": "irrelevant",
+              "perceived_stress": "irrelevant",
+              "nap": "irrelevant",
+              "caffeine": "irrelevant"
+            },
+            "semantic_adjustments": [
+              {
+                "rule_id": "KNOWLEDGE_OPTIONAL_FIELDS_SUPPRESSED",
+                "reason": "goal requests external knowledge, not personal fact acquisition"
+              }
+            ],
+            "is_effective": true
+          },
+          "lineage_events": [
+            {
+              "tool_result_id": "tool_goal_t1_r1_1",
+              "source_action_id": "act_goal_t1_r1_1",
+              "state_update_id": "upd_goal_t1_r2_1",
+              "source_tool_result_id": "tool_goal_t1_r1_1",
+              "tool": "RETRIEVE",
+              "available": true
+            }
+          ],
+          "diary_projection": {},
+          "critical_missing": [],
+          "required_missing": [],
+          "decision_relevant_missing": [],
+          "validity_critical_missing": [],
+          "secondary_missing": [],
+          "evidence": [
+            "evidence for 解释刺激控制的一般原则"
+          ],
+          "user_info_sufficiency": "HIGH",
+          "evidence_sufficiency": "HIGH",
+          "candidate_actions": [
+            {
+              "action": "ANSWER",
+              "target": null,
+              "question": null,
+              "query": null,
+              "expected_benefit": "HIGH",
+              "cost": "LOW",
+              "rationale": "当前目标所需的用户信息和证据均已充分。",
+              "goal_relevance": "MEDIUM",
+              "decision_impact": "MEDIUM",
+              "redundancy": "LOW",
+              "information_value": "",
+              "acquisition_cost": "",
+              "candidate_id": "cand_goal_t1_r2_1",
+              "source_requirement_id": null,
+              "source_dependency_id": null,
+              "source_precondition_id": null,
+              "origin": "OPTIONAL_ACQUISITION"
+            }
+          ],
+          "available_diary": false,
+          "resource_status": {},
+          "required_resources": [],
+          "decision_missing": [],
+          "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+          "turn_index": 1,
+          "tool_result": {
+            "evidence": [
+              "evidence for 解释刺激控制的一般原则"
+            ],
+            "available": true,
+            "detail": "synthetic retrieval"
+          },
+          "step": 1
+        },
+        {
+          "event": "DECISION",
+          "goal": "解释刺激控制的一般原则",
+          "goal_id": "goal_t1",
+          "state_revision": 2,
+          "task_type": "PERSONALIZED_DECISION",
+          "facts": {},
+          "fact_sources": {},
+          "claim_provenance": [],
+          "information_estimates": {},
+          "considered_information": [],
+          "rejected_information": [],
+          "stop_reason": "",
+          "preconditions_considered": [],
+          "dependencies_considered": [
+            {
+              "dependency_id": "dep_goal_t1_r2_evidence_external_evidence",
+              "dependency_type": "EVIDENCE",
+              "target": "external_evidence",
+              "status": "SATISFIED",
+              "reason": "current answer scope includes external CBT-I knowledge",
+              "source": [
+                "goal_semantics",
+                "requirements",
+                "task_type_signal"
+              ],
+              "required_for_goal": "解释刺激控制的一般原则",
+              "satisfiable_by": [
+                "RETRIEVE"
+              ],
+              "fallback": null,
+              "provenance": {
+                "evidence_count": 1
+              },
+              "semantic_ids": [
+                "sem_goal_t1_r2_1"
+              ],
+              "supersedes_dependency_id": "dep_goal_t1_r1_evidence_external_evidence"
+            }
+          ],
+          "dependencies_required": [],
+          "dependencies_satisfied": [
+            {
+              "dependency_id": "dep_goal_t1_r2_evidence_external_evidence",
+              "dependency_type": "EVIDENCE",
+              "target": "external_evidence",
+              "status": "SATISFIED",
+              "reason": "current answer scope includes external CBT-I knowledge",
+              "source": [
+                "goal_semantics",
+                "requirements",
+                "task_type_signal"
+              ],
+              "required_for_goal": "解释刺激控制的一般原则",
+              "satisfiable_by": [
+                "RETRIEVE"
+              ],
+              "fallback": null,
+              "provenance": {
+                "evidence_count": 1
+              },
+              "semantic_ids": [
+                "sem_goal_t1_r2_1"
+              ],
+              "supersedes_dependency_id": "dep_goal_t1_r1_evidence_external_evidence"
+            }
+          ],
+          "dependencies_unavailable": [],
+          "semantic_provenance": [
+            {
+              "semantic_id": "sem_goal_t1_r2_1",
+              "semantic_rule_id": "KNOWLEDGE_EVIDENCE_REQUIRED",
+              "matched_text": "解释",
+              "semantic_reason": "goal requests general external CBT-I knowledge",
+              "certainty": "HIGH",
+              "match_method": "deterministic_rule"
+            }
+          ],
+          "base_requirements": {
+            "critical": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ],
+            "secondary": [
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "evidence_required": true,
+            "diary_preferred": false,
+            "resources": [],
+            "decision_fields": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ],
+            "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+            "requirement_ids": {},
+            "classifications": {},
+            "semantic_adjustments": [],
+            "is_effective": false
+          },
+          "effective_requirements": {
+            "critical": [],
+            "secondary": [],
+            "evidence_required": true,
+            "diary_preferred": false,
+            "resources": [],
+            "decision_fields": [],
+            "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+            "requirement_ids": {
+              "bedtime": "req_goal_t1_bedtime",
+              "sleep_onset_latency": "req_goal_t1_sleep_onset_latency",
+              "wake_time": "req_goal_t1_wake_time",
+              "total_sleep_time": "req_goal_t1_total_sleep_time",
+              "nighttime_awakenings": "req_goal_t1_nighttime_awakenings",
+              "recent_sleep_pattern": "req_goal_t1_recent_sleep_pattern",
+              "perceived_stress": "req_goal_t1_perceived_stress",
+              "nap": "req_goal_t1_nap",
+              "caffeine": "req_goal_t1_caffeine"
+            },
+            "classifications": {
+              "bedtime": "irrelevant",
+              "sleep_onset_latency": "irrelevant",
+              "wake_time": "irrelevant",
+              "total_sleep_time": "irrelevant",
+              "nighttime_awakenings": "irrelevant",
+              "recent_sleep_pattern": "irrelevant",
+              "perceived_stress": "irrelevant",
+              "nap": "irrelevant",
+              "caffeine": "irrelevant"
+            },
+            "semantic_adjustments": [
+              {
+                "rule_id": "KNOWLEDGE_OPTIONAL_FIELDS_SUPPRESSED",
+                "reason": "goal requests external knowledge, not personal fact acquisition"
+              }
+            ],
+            "is_effective": true
+          },
+          "lineage_events": [
+            {
+              "tool_result_id": "tool_goal_t1_r1_1",
+              "source_action_id": "act_goal_t1_r1_1",
+              "state_update_id": "upd_goal_t1_r2_1",
+              "source_tool_result_id": "tool_goal_t1_r1_1",
+              "tool": "RETRIEVE",
+              "available": true
+            }
+          ],
+          "diary_projection": {},
+          "critical_missing": [],
+          "required_missing": [],
+          "decision_relevant_missing": [],
+          "validity_critical_missing": [],
+          "secondary_missing": [],
+          "evidence": [
+            "evidence for 解释刺激控制的一般原则"
+          ],
+          "user_info_sufficiency": "HIGH",
+          "evidence_sufficiency": "HIGH",
+          "candidate_actions": [
+            {
+              "action": "ANSWER",
+              "target": null,
+              "question": null,
+              "query": null,
+              "expected_benefit": "HIGH",
+              "cost": "LOW",
+              "rationale": "当前目标所需的用户信息和证据均已充分。",
+              "goal_relevance": "MEDIUM",
+              "decision_impact": "MEDIUM",
+              "redundancy": "LOW",
+              "information_value": "",
+              "acquisition_cost": "",
+              "candidate_id": "cand_goal_t1_r2_1",
+              "source_requirement_id": null,
+              "source_dependency_id": null,
+              "source_precondition_id": null,
+              "origin": "OPTIONAL_ACQUISITION"
+            }
+          ],
+          "available_diary": false,
+          "resource_status": {},
+          "required_resources": [],
+          "decision_missing": [],
+          "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+          "turn_index": 1,
+          "requirements": {
+            "critical": [],
+            "secondary": [],
+            "evidence_required": true,
+            "diary_preferred": false,
+            "resources": [],
+            "decision_fields": [],
+            "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+            "requirement_ids": {
+              "bedtime": "req_goal_t1_bedtime",
+              "sleep_onset_latency": "req_goal_t1_sleep_onset_latency",
+              "wake_time": "req_goal_t1_wake_time",
+              "total_sleep_time": "req_goal_t1_total_sleep_time",
+              "nighttime_awakenings": "req_goal_t1_nighttime_awakenings",
+              "recent_sleep_pattern": "req_goal_t1_recent_sleep_pattern",
+              "perceived_stress": "req_goal_t1_perceived_stress",
+              "nap": "req_goal_t1_nap",
+              "caffeine": "req_goal_t1_caffeine"
+            },
+            "classifications": {
+              "bedtime": "irrelevant",
+              "sleep_onset_latency": "irrelevant",
+              "wake_time": "irrelevant",
+              "total_sleep_time": "irrelevant",
+              "nighttime_awakenings": "irrelevant",
+              "recent_sleep_pattern": "irrelevant",
+              "perceived_stress": "irrelevant",
+              "nap": "irrelevant",
+              "caffeine": "irrelevant"
+            },
+            "semantic_adjustments": [
+              {
+                "rule_id": "KNOWLEDGE_OPTIONAL_FIELDS_SUPPRESSED",
+                "reason": "goal requests external knowledge, not personal fact acquisition"
+              }
+            ],
+            "is_effective": true
+          },
+          "chosen_action": {
+            "action": "ANSWER",
+            "target": null,
+            "question": null,
+            "query": null,
+            "expected_benefit": "HIGH",
+            "cost": "LOW",
+            "rationale": "当前目标所需的用户信息和证据均已充分。",
+            "goal_relevance": "MEDIUM",
+            "decision_impact": "MEDIUM",
+            "redundancy": "LOW",
+            "information_value": "",
+            "acquisition_cost": "",
+            "candidate_id": "cand_goal_t1_r2_1",
+            "source_requirement_id": null,
+            "source_dependency_id": null,
+            "source_precondition_id": null,
+            "origin": "OPTIONAL_ACQUISITION"
+          },
+          "step": 2
+        },
+        {
+          "event": "ANSWER",
+          "goal": "解释刺激控制的一般原则",
+          "goal_id": "goal_t1",
+          "state_revision": 2,
+          "task_type": "PERSONALIZED_DECISION",
+          "facts": {},
+          "fact_sources": {},
+          "claim_provenance": [],
+          "information_estimates": {},
+          "considered_information": [],
+          "rejected_information": [],
+          "stop_reason": "",
+          "preconditions_considered": [],
+          "dependencies_considered": [
+            {
+              "dependency_id": "dep_goal_t1_r2_evidence_external_evidence",
+              "dependency_type": "EVIDENCE",
+              "target": "external_evidence",
+              "status": "SATISFIED",
+              "reason": "current answer scope includes external CBT-I knowledge",
+              "source": [
+                "goal_semantics",
+                "requirements",
+                "task_type_signal"
+              ],
+              "required_for_goal": "解释刺激控制的一般原则",
+              "satisfiable_by": [
+                "RETRIEVE"
+              ],
+              "fallback": null,
+              "provenance": {
+                "evidence_count": 1
+              },
+              "semantic_ids": [
+                "sem_goal_t1_r2_1"
+              ],
+              "supersedes_dependency_id": "dep_goal_t1_r1_evidence_external_evidence"
+            }
+          ],
+          "dependencies_required": [],
+          "dependencies_satisfied": [
+            {
+              "dependency_id": "dep_goal_t1_r2_evidence_external_evidence",
+              "dependency_type": "EVIDENCE",
+              "target": "external_evidence",
+              "status": "SATISFIED",
+              "reason": "current answer scope includes external CBT-I knowledge",
+              "source": [
+                "goal_semantics",
+                "requirements",
+                "task_type_signal"
+              ],
+              "required_for_goal": "解释刺激控制的一般原则",
+              "satisfiable_by": [
+                "RETRIEVE"
+              ],
+              "fallback": null,
+              "provenance": {
+                "evidence_count": 1
+              },
+              "semantic_ids": [
+                "sem_goal_t1_r2_1"
+              ],
+              "supersedes_dependency_id": "dep_goal_t1_r1_evidence_external_evidence"
+            }
+          ],
+          "dependencies_unavailable": [],
+          "semantic_provenance": [
+            {
+              "semantic_id": "sem_goal_t1_r2_1",
+              "semantic_rule_id": "KNOWLEDGE_EVIDENCE_REQUIRED",
+              "matched_text": "解释",
+              "semantic_reason": "goal requests general external CBT-I knowledge",
+              "certainty": "HIGH",
+              "match_method": "deterministic_rule"
+            }
+          ],
+          "base_requirements": {
+            "critical": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ],
+            "secondary": [
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "evidence_required": true,
+            "diary_preferred": false,
+            "resources": [],
+            "decision_fields": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ],
+            "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+            "requirement_ids": {},
+            "classifications": {},
+            "semantic_adjustments": [],
+            "is_effective": false
+          },
+          "effective_requirements": {
+            "critical": [],
+            "secondary": [],
+            "evidence_required": true,
+            "diary_preferred": false,
+            "resources": [],
+            "decision_fields": [],
+            "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+            "requirement_ids": {
+              "bedtime": "req_goal_t1_bedtime",
+              "sleep_onset_latency": "req_goal_t1_sleep_onset_latency",
+              "wake_time": "req_goal_t1_wake_time",
+              "total_sleep_time": "req_goal_t1_total_sleep_time",
+              "nighttime_awakenings": "req_goal_t1_nighttime_awakenings",
+              "recent_sleep_pattern": "req_goal_t1_recent_sleep_pattern",
+              "perceived_stress": "req_goal_t1_perceived_stress",
+              "nap": "req_goal_t1_nap",
+              "caffeine": "req_goal_t1_caffeine"
+            },
+            "classifications": {
+              "bedtime": "irrelevant",
+              "sleep_onset_latency": "irrelevant",
+              "wake_time": "irrelevant",
+              "total_sleep_time": "irrelevant",
+              "nighttime_awakenings": "irrelevant",
+              "recent_sleep_pattern": "irrelevant",
+              "perceived_stress": "irrelevant",
+              "nap": "irrelevant",
+              "caffeine": "irrelevant"
+            },
+            "semantic_adjustments": [
+              {
+                "rule_id": "KNOWLEDGE_OPTIONAL_FIELDS_SUPPRESSED",
+                "reason": "goal requests external knowledge, not personal fact acquisition"
+              }
+            ],
+            "is_effective": true
+          },
+          "lineage_events": [
+            {
+              "tool_result_id": "tool_goal_t1_r1_1",
+              "source_action_id": "act_goal_t1_r1_1",
+              "state_update_id": "upd_goal_t1_r2_1",
+              "source_tool_result_id": "tool_goal_t1_r1_1",
+              "tool": "RETRIEVE",
+              "available": true
+            }
+          ],
+          "diary_projection": {},
+          "critical_missing": [],
+          "required_missing": [],
+          "decision_relevant_missing": [],
+          "validity_critical_missing": [],
+          "secondary_missing": [],
+          "evidence": [
+            "evidence for 解释刺激控制的一般原则"
+          ],
+          "user_info_sufficiency": "HIGH",
+          "evidence_sufficiency": "HIGH",
+          "candidate_actions": [
+            {
+              "action": "ANSWER",
+              "target": null,
+              "question": null,
+              "query": null,
+              "expected_benefit": "HIGH",
+              "cost": "LOW",
+              "rationale": "当前目标所需的用户信息和证据均已充分。",
+              "goal_relevance": "MEDIUM",
+              "decision_impact": "MEDIUM",
+              "redundancy": "LOW",
+              "information_value": "",
+              "acquisition_cost": "",
+              "candidate_id": "cand_goal_t1_r2_1",
+              "source_requirement_id": null,
+              "source_dependency_id": null,
+              "source_precondition_id": null,
+              "origin": "OPTIONAL_ACQUISITION"
+            }
+          ],
+          "available_diary": false,
+          "resource_status": {},
+          "required_resources": [],
+          "decision_missing": [],
+          "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+          "turn_index": 1
+        }
+      ]
+    ]
+  ],
+  "lineage": {
+    "goal_id": "goal_t1",
+    "semantic_provenance": [
+      {
+        "semantic_id": "sem_goal_t1_r2_1",
+        "semantic_rule_id": "KNOWLEDGE_EVIDENCE_REQUIRED",
+        "matched_text": "解释",
+        "semantic_reason": "goal requests general external CBT-I knowledge",
+        "certainty": "HIGH",
+        "match_method": "deterministic_rule"
+      }
+    ],
+    "dependencies": [
+      {
+        "dependency_id": "dep_goal_t1_r2_evidence_external_evidence",
+        "dependency_type": "EVIDENCE",
+        "target": "external_evidence",
+        "status": "SATISFIED",
+        "reason": "current answer scope includes external CBT-I knowledge",
+        "source": [
+          "goal_semantics",
+          "requirements",
+          "task_type_signal"
+        ],
+        "required_for_goal": "解释刺激控制的一般原则",
+        "satisfiable_by": [
+          "RETRIEVE"
+        ],
+        "fallback": null,
+        "provenance": {
+          "evidence_count": 1
+        },
+        "semantic_ids": [
+          "sem_goal_t1_r2_1"
+        ],
+        "supersedes_dependency_id": "dep_goal_t1_r1_evidence_external_evidence"
+      }
+    ],
+    "preconditions": [],
+    "lineage_events": [
+      {
+        "tool_result_id": "tool_goal_t1_r1_1",
+        "source_action_id": "act_goal_t1_r1_1",
+        "state_update_id": "upd_goal_t1_r2_1",
+        "source_tool_result_id": "tool_goal_t1_r1_1",
+        "tool": "RETRIEVE",
+        "available": true
+      }
+    ]
+  },
+  "tool_counts": {
+    "RETRIEVE": 1,
+    "READ_DIARY": 0
+  },
+  "benchmark_case_used": false
+}

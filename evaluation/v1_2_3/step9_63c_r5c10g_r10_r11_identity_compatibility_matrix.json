@@ -1,0 +1,19 @@
+{
+  "step": "9.63c-r5c10g",
+  "status": "DESIGN_MATRIX_NOT_EXECUTION_AUTHORITY",
+  "r10_historical_freeze_sha256": "d24244235e51e7bf6c8567880c654fe3fd73b87fa1bfe1ab0f10dfdc94db2693",
+  "r11_freeze_sha256": "NOT_CREATED",
+  "rows": [
+    {"interface": "freeze manifest", "r10": "Existing 20-member FROZEN_NOT_AUTHORIZED artifact; immutable raw SHA", "proposed_r11": "New exclusive-create 20-member artifact, parent path/raw SHA pinned to r10; independent raw SHA", "compatibility": "DISTINCT_IDENTITIES"},
+    {"interface": "identity pointer", "r10": "Existing r5c4 pointer names r10 and remains immutable", "proposed_r11": "New versioned pointer names only r11 path; pointer SHA is a member hash, no manifest SHA inside pointer", "compatibility": "NO_SILENT_FALLBACK"},
+    {"interface": "resolver", "r10": "Current module loads the r10 pointer", "proposed_r11": "After separate approval, module explicitly loads r11 pointer and verifies revision/path/pointer/member aggregate", "compatibility": "SAME_GUARDS_NEW_EXPLICIT_TARGET"},
+    {"interface": "builder", "r10": "Current builder only targets r10 from r9", "proposed_r11": "New versioned builder targets r11 from exact r10 and exclusively writes/fsyncs", "compatibility": "OLD_BUILDER_NOT_REUSED"},
+    {"interface": "authorization", "r10": "Old manifest is historically unconsumed but its formal command was invoked and must not be reused", "proposed_r11": "Future fresh manifest must pin r11 revision/path/raw SHA plus new authorization/attempt/namespace identities", "compatibility": "R10_AUTH_REJECTED_BY_R11_VALIDATORS; RETIREMENT_PENDING_SEPARATE_PROOF"},
+    {"interface": "preflight producer", "r10": "Actual registry-aware r5c7 producer binds old r10 authorization/freeze and old ID prefix", "proposed_r11": "New producer/registry design pending approval; generic frozen producer currently emits incompatible ID grammar", "compatibility": "NOT_YET_PROVEN"},
+    {"interface": "preflight consumer", "r10": "Frozen formal validator pins preflight ID, exact path, artifact SHA, authorization SHA and runner SHA", "proposed_r11": "Prefer unchanged validator and a new producer matching its grammar; synthetic end-to-end contract test required", "compatibility": "PENDING_OFFLINE_CONTRACT_TEST"},
+    {"interface": "Agent and evaluation identities", "r10": "Frozen V3 Agent/V4 benchmark/harness/scoring/rubric/metrics/one-shot bindings", "proposed_r11": "Copy exact identities and reverify every path/hash; no evaluation behavior change", "compatibility": "MUST_MATCH_EXACTLY"},
+    {"interface": "transaction scanner", "r10": "Historical broad-scan member SHA remains recorded", "proposed_r11": "r5c10c repaired scanner SHA must be included and corruption tests rerun", "compatibility": "INTENTIONAL_INFRASTRUCTURE_DELTA_ONLY"},
+    {"interface": "lifecycle/one-shot", "r10": "Frozen append-only reducer and exactly-once rules", "proposed_r11": "No semantics change; fresh identity and current-revision gating; old state preserved", "compatibility": "MUST_REMAIN_SEMANTICALLY_IDENTICAL"}
+  ],
+  "forbidden_crossings": ["r10 authorization + r11 runner", "r10 preflight + r11 authorization", "r10 attempt/namespace ID + r11 authorization", "unresolved/malformed r11 pointer -> r10 fallback", "r5c10d draft hash -> r11 raw manifest SHA"]
+}

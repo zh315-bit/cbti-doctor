@@ -1,0 +1,26 @@
+{
+  "artifact_type": "TREATMENT_V3_IDENTITY_CONTRACT_NOT_AUTHORIZATION",
+  "step": "9.58a-r1",
+  "status": "FROZEN_IDENTITY_CONTRACT_NOT_AUTHORIZATION",
+  "identity_kind": "TREATMENT_V3",
+  "evaluation_id": "heldout-v4-step9_55a-treatment-v3-20260930-01",
+  "authorization_id": null,
+  "attempt_id": null,
+  "inherited_identity_contract_path": "evaluation/v1_2_3/step9_55a_v3_identity_contract.json",
+  "inherited_identity_contract_sha256": "a8f6e54f78d0f7d3f2722390da4779d87f68838c76fe17ccc2f5930adb1d68c0",
+  "supersedes_for_future_identity_only": "evaluation/v1_2_3/step9_55a_v3_identity_contract.json",
+  "repair_scope": "OUTPUT_NAMESPACE_ALLOCATION_INFRASTRUCTURE_ONLY",
+  "namespace_allocation": {
+    "derivation": "heldout-v4-treatment-v3-run-<sha256(evaluation_id\\0authorization_id\\0attempt_id)[:20]>",
+    "physical_layout": "evaluation/v4_runs/<derived_namespace_id>/<frozen_evaluation_id>/attempts.jsonl",
+    "global_identity_scan": true,
+    "exclusive_reservation_marker": ".namespace_allocation.json",
+    "interrupted_reservation_reusable": false,
+    "legacy_occupied_namespace_reusable": false,
+    "failed_namespace_reusable": false
+  },
+  "evaluation_semantics_changed": false,
+  "agent_modified": false,
+  "benchmark_modified": false,
+  "harness_scoring_metrics_or_one_shot_rules_modified": false
+}

@@ -1,0 +1,21 @@
+{
+  "step": "9.6",
+  "kind": "synthetic_non_benchmark",
+  "total": 12,
+  "passed": 12,
+  "failed": 0,
+  "results": [
+    {"id": "S1", "status": "PASS", "assertion": "wrong personalized signal plus knowledge goal retrieves evidence, then answers without stale ASK"},
+    {"id": "S2", "status": "PASS", "assertion": "directional personalized goal retains wake_time validity-state ASK"},
+    {"id": "S3", "status": "PASS", "assertion": "provided optional facts stay in State without personal-fact ASK"},
+    {"id": "S4", "status": "PASS", "assertion": "new knowledge goal replaces prior effective requirement provenance"},
+    {"id": "S5", "status": "PASS", "assertion": "new personalized goal forms current decision requirements"},
+    {"id": "S6", "status": "PASS", "assertion": "retrieve action lineage links required evidence dependency to its satisfied successor"},
+    {"id": "S7", "status": "PASS", "assertion": "diary semantic goal forms resource dependency despite wrong task signal"},
+    {"id": "S8", "status": "PASS", "assertion": "secondary optional missing information does not become ASK"},
+    {"id": "S9", "status": "PASS", "assertion": "same field has goal-dependent validity criticality"},
+    {"id": "S10", "status": "PASS", "assertion": "mandatory evidence precondition survives five prior ASKs"},
+    {"id": "S11", "status": "PASS", "assertion": "optional ASK carries requirement lineage and no precondition lineage"},
+    {"id": "S12", "status": "PASS", "assertion": "invalid diary projection writes no facts and retains tool-to-state lineage"}
+  ]
+}

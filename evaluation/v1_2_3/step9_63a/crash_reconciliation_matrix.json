@@ -1,0 +1,20 @@
+{
+  "artifact_type": "STEP9_63A_CRASH_RECONCILIATION_MATRIX",
+  "step": "9.63a",
+  "matrix_status": "SYNTHETIC_PROTOCOL_ONLY_PRODUCTION_INTEGRATION_REQUIRED",
+  "automatic_resume_allowed": false,
+  "cases": [
+    {"boundary":"before PREPARED", "journal_state":"ABSENT", "outcome":"SAFE_TO_ABORT_UNCONSUMED"},
+    {"boundary":"after PREPARED", "journal_state":"PREPARED", "outcome":"SAFE_TO_ABORT_UNCONSUMED; terminalize as ABORTED_UNCONSUMED before any reuse decision"},
+    {"boundary":"before COMMITTING", "journal_state":"PREPARED", "outcome":"SAFE_TO_ABORT_UNCONSUMED"},
+    {"boundary":"immediately after COMMITTING durable", "journal_state":"COMMITTING", "outcome":"MUST_COMPLETE_COMMIT"},
+    {"boundary":"after authorization-side persistence before attempt persistence", "journal_state":"COMMITTING or COMMITTED", "outcome":"MUST_COMPLETE_COMMIT if COMMITTING; otherwise committed and non-reusable; production projection integration absent"},
+    {"boundary":"after attempt persistence before namespace persistence", "journal_state":"COMMITTING or COMMITTED", "outcome":"same journal classification; inconsistent projection requires manual reconciliation"},
+    {"boundary":"after namespace persistence before final COMMITTED", "journal_state":"COMMITTING", "outcome":"MUST_COMPLETE_COMMIT; never roll back evidence"},
+    {"boundary":"immediately after COMMITTED", "journal_state":"COMMITTED", "outcome":"COMMITTED_READY_FOR_EXECUTION; authorization burned"},
+    {"boundary":"immediately before first CASE_STARTED", "journal_state":"COMMITTED", "outcome":"COMMITTED_READY_FOR_EXECUTION; no auto-resume"},
+    {"boundary":"immediately after first CASE_STARTED", "journal_state":"COMMITTED plus CASE_STARTED", "outcome":"COMMITTED_EXECUTION_ALREADY_STARTED; preserve traces; no rerun/resume"},
+    {"boundary":"torn/corrupt journal write", "journal_state":"CORRUPT", "outcome":"FAIL_CLOSED_MANUAL_RECONCILIATION_REQUIRED"}
+  ],
+  "warning": "The matrix describes tested journal protocol behavior only. Cross-file crash recovery is not production-proven until the formal runner, lifecycle validators, attempt ledger, namespace allocator, and case-start hook all consume the same journal under the shared lock."
+}

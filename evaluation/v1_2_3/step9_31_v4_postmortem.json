@@ -1,0 +1,143 @@
+{
+  "architecture_failure_map_path": "evaluation/v1_2_3/step9_31_architecture_failure_map.json",
+  "ask_event_count": 9,
+  "ask_first_divergence_layer_counts": {
+    "DEPENDENCY_FORMATION": 5,
+    "INPUT_UNDERSTANDING_STATE": 4
+  },
+  "ask_root_cause_counts": {
+    "HARD_PRECONDITION_OVERRIDES_INFORMATION_VALUE": 5,
+    "INPUT_FACT_AND_UNANSWERABLE_TARGET_STATE_NOT_REPRESENTED": 3,
+    "INPUT_FACT_NOT_PROJECTED_TO_STATE": 1
+  },
+  "authoritative_aggregate_summary": {
+    "ask_events": 9,
+    "case_count": 40,
+    "completion_rate": 0.4,
+    "critical_failures": 0,
+    "harmful_failures": 16,
+    "historical_comparability": "NOT_COMPARABLE",
+    "inter_rater_reliability": "NOT_MEASURED",
+    "lineage": {
+      "derived_complete": 7,
+      "formal_ready": 28,
+      "incomplete_formal_adjudicatable": 5
+    },
+    "overall": 70.5,
+    "pass_threshold": "NOT_DEFINED",
+    "reviewer_type": "SINGLE_AI_REVIEWER",
+    "task_means": {
+      "CAUSE_ASSESSMENT": 59.1,
+      "DATA_ANALYSIS": 78.1,
+      "KNOWLEDGE_QA": 82.2,
+      "PERSONALIZED_DECISION": 62.6
+    },
+    "validity_rate": 0.925
+  },
+  "completion_validity_cross_tab": {
+    "completion_loss_primary_causes": {
+      "ACTION_SELECTION": 1,
+      "CONDITIONAL_EVIDENCE_NOT_RETRIEVED": 1,
+      "EVIDENCE_COVERAGE_LIMITATION": 2,
+      "REPEATED_IRRELEVANT_ACQUISITION": 1,
+      "REQUIRED_INFORMATION_ACQUISITION_OMISSION": 1,
+      "REQUIRED_INFORMATION_AND_RESOURCE_OMISSION": 1,
+      "REQUIRED_RESOURCE_OMISSION": 13,
+      "TASK_EXECUTION_OMISSION": 4
+    },
+    "completion_rate": 0.4,
+    "interpretation": "Validity primarily captures bounded/non-overclaiming behavior; completion requires performing the requested information acquisition, evidence retrieval, or analysis. The 21 valid-but-incomplete answers stayed within safety bounds but stopped short of the task; 3 incomplete DA cases were also invalid.",
+    "invalid_and_incomplete": 3,
+    "invalid_but_complete": 0,
+    "valid_and_complete": 16,
+    "valid_but_incomplete": 21,
+    "validity_rate": 0.925
+  },
+  "controlled_test_reconciliation": "labels and scores are single-AI-reviewer descriptive judgments, with no IIR; frozen low-value denominator is all 9 observed ASK events, while Step 9.25 optional-ASK controlled gate denominator was 3 candidates entering that gate. Step 9.25 local mechanism tests do not cover natural-language extraction/state projection, production mult-turn path, or end-to-end evidence selection. Thus 0/3 in the isolated gate and 9/9 in V4 are different populations, not contradictory replications.",
+  "created_at_utc": "2026-09-27T19:13:02.725999+00:00",
+  "harmful_failure_count": 16,
+  "harmful_primary_cause_counts": {
+    "REPEATED_IRRELEVANT_ACQUISITION": 1,
+    "REQUIRED_INFORMATION_ACQUISITION_OMISSION": 1,
+    "REQUIRED_INFORMATION_AND_RESOURCE_OMISSION": 1,
+    "REQUIRED_RESOURCE_OMISSION": 13
+  },
+  "input_manifest": {
+    "attempt_ledger": {
+      "bytes": 60989,
+      "path": "evaluation/v4_runs/heldout-v4-step9_28-20260925-01/attempts.jsonl",
+      "sha256": "5fe1b11cbe0c28ccdfd056e3141862748897dc3b419ff6f05eb3ad8cb847b59f"
+    },
+    "benchmark_v4_dataset": {
+      "bytes": 52012,
+      "path": "evaluation/benchmarks/benchmark_v4_cases.yaml",
+      "sha256": "8b8c72092fcd7544e69d5d2ecd13610c7bb4c14210fca330698b3e5ab3f01d7f"
+    },
+    "benchmark_v4_manifest": {
+      "bytes": 2754,
+      "path": "evaluation/benchmarks/benchmark_v4_manifest.json",
+      "sha256": "b5feb7832b6267d8cff9d25fb2d8cf0043829feb5fd04ec1bea77dba932a13db"
+    },
+    "formal_case_results": {
+      "bytes": 56134,
+      "path": "evaluation/v4_runs/heldout-v4-step9_28-20260925-01/heldout-v4-step9_28-20260925-01-attempt-step9_29b-5370d36a64d84a3da4f2585e9b57055a_case_results.jsonl",
+      "sha256": "77042ae9f5a5a75f7f7efd068e3c182e5725fa709e4f68ae63e58f0bbad0d2ea"
+    },
+    "formal_raw_traces": {
+      "bytes": 4430984,
+      "path": "evaluation/v4_runs/heldout-v4-step9_28-20260925-01/heldout-v4-step9_28-20260925-01-attempt-step9_29b-5370d36a64d84a3da4f2585e9b57055a_raw_traces.jsonl",
+      "sha256": "e1aac03f4dbedf567c625694e084fa23155c8bfc2db1d43c4dffbce158734189"
+    },
+    "frozen_metric_registry": {
+      "bytes": 5412,
+      "path": "evaluation/v1_2_3/step9_26_v4_metric_registry.json",
+      "sha256": "de9f348cb1dff66410c03095abdaffcc256f53679718482870e4aa4d80c75056"
+    },
+    "frozen_rubric": {
+      "bytes": 2220,
+      "path": "evaluation/benchmark_v1_1_scoring.md",
+      "sha256": "a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899"
+    },
+    "lineage_sidecar": {
+      "bytes": 89752,
+      "path": "evaluation/v1_2_3/step9_30a2_v4_lineage_sidecar.jsonl",
+      "sha256": "a7b39f70b8f2591982f19ae2ea6d66918b4bd4bba0e588300317ec14f0cfd447"
+    },
+    "step9_30b_adjudication": {
+      "bytes": 131348,
+      "path": "evaluation/v1_2_3/step9_30b_v4_human_adjudication.jsonl",
+      "sha256": "85d436955fe2b7ea2448bce94fcb4443d7004140c5b0c4090283f7a0907cd645"
+    },
+    "step9_30c_aggregate_metrics": {
+      "bytes": 32350,
+      "path": "evaluation/v1_2_3/step9_30c_v4_aggregate_metrics.json",
+      "sha256": "b8118fd180e434dbda0f8baf5ed5f45d06456a2346c39eec21365ef3f3c5f473"
+    }
+  },
+  "integrity": {
+    "ADJUDICATION_MODIFIED": "NO",
+    "AGENT_CALLED": "NO",
+    "AGENT_MODIFIED": "NO",
+    "BENCHMARK_V4_MODIFIED": "NO",
+    "METRIC_REGISTRY_MODIFIED": "NO",
+    "MODEL_CALLED": "NO",
+    "RAG_CALLED": "NO",
+    "SCORING_MODIFIED": "NO",
+    "V4_RERUN": "NO"
+  },
+  "post_analysis_input_hashes": {
+    "attempt_ledger": "5fe1b11cbe0c28ccdfd056e3141862748897dc3b419ff6f05eb3ad8cb847b59f",
+    "benchmark_v4_dataset": "8b8c72092fcd7544e69d5d2ecd13610c7bb4c14210fca330698b3e5ab3f01d7f",
+    "benchmark_v4_manifest": "b5feb7832b6267d8cff9d25fb2d8cf0043829feb5fd04ec1bea77dba932a13db",
+    "formal_case_results": "77042ae9f5a5a75f7f7efd068e3c182e5725fa709e4f68ae63e58f0bbad0d2ea",
+    "formal_raw_traces": "e1aac03f4dbedf567c625694e084fa23155c8bfc2db1d43c4dffbce158734189",
+    "frozen_metric_registry": "de9f348cb1dff66410c03095abdaffcc256f53679718482870e4aa4d80c75056",
+    "frozen_rubric": "a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899",
+    "lineage_sidecar": "a7b39f70b8f2591982f19ae2ea6d66918b4bd4bba0e588300317ec14f0cfd447",
+    "step9_30b_adjudication": "85d436955fe2b7ea2448bce94fcb4443d7004140c5b0c4090283f7a0907cd645",
+    "step9_30c_aggregate_metrics": "b8118fd180e434dbda0f8baf5ed5f45d06456a2346c39eec21365ef3f3c5f473"
+  },
+  "repair_hypotheses_path": "evaluation/v1_2_3/step9_31_repair_hypotheses.json",
+  "schema_version": "step9_31_v4_postmortem.v1",
+  "status": "READ_ONLY_POSTMORTEM"
+}

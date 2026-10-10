@@ -1,0 +1,33 @@
+{
+  "step": "9.63c-r5c10o",
+  "baseline_meaning": "CURRENT_PRESERVATION_PIN_NOT_TRUSTED_ORIGINAL_PRE_R5C10L_HASH",
+  "historical_trace_content_integrity": "CONTENT_INTEGRITY_UNPROVEN",
+  "protected_roots": ["evaluation/v1_2", "evaluation/v1_2_1"],
+  "regular_file_count_before": 110,
+  "regular_file_count_after": 110,
+  "symlink_count_before": 0,
+  "symlink_count_after": 0,
+  "sorted_path_and_file_sha256_aggregate_before": "5dcaa341ef35160f3840e244f0943b1620f4b4bfcf0b6241247a7a5274f83751",
+  "sorted_path_and_file_sha256_aggregate_after": "5dcaa341ef35160f3840e244f0943b1620f4b4bfcf0b6241247a7a5274f83751",
+  "trace_files": [
+    {
+      "path": "evaluation/v1_2/step8_3_mechanism_traces.jsonl",
+      "size_bytes_before": 64294,
+      "size_bytes_after": 64294,
+      "mtime_local_before": "2026-10-09T11:37:42-0400",
+      "sha256_before": "e09321c89b75a4330799e4a4c286652cee82ed0e0d4fa1b8478c970dd7f6d8e5",
+      "sha256_after": "e09321c89b75a4330799e4a4c286652cee82ed0e0d4fa1b8478c970dd7f6d8e5"
+    },
+    {
+      "path": "evaluation/v1_2_1/step8_7_mechanism_traces.jsonl",
+      "size_bytes_before": 33014,
+      "size_bytes_after": 33014,
+      "mtime_local_before": "2026-10-09T11:37:42-0400",
+      "sha256_before": "5518eb4b0b7e8880c5f84e59ba0264013bed99e25edb8da93dca558304d4f084",
+      "sha256_after": "5518eb4b0b7e8880c5f84e59ba0264013bed99e25edb8da93dca558304d4f084"
+    }
+  ],
+  "historical_trace_sha_unchanged_during_this_step": true,
+  "original_historical_content_proven": false,
+  "restoration_attempted": false
+}

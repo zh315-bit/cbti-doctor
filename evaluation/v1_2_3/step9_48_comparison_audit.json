@@ -1,0 +1,31 @@
+{
+  "aggregate_sources_not_recomputed": true,
+  "all_input_hashes_unchanged_before_write": true,
+  "audit_status": "PASS",
+  "baseline_artifacts_modified": false,
+  "case_count_each": 40,
+  "case_order_fingerprint_sha256": "d930455e417935337a6e3459defbdc3ee3829b71786fbd8438ef092b62429e68",
+  "causal_claim_eligible": false,
+  "comparison_consistency_audit": "PASS",
+  "created_at_utc": "2026-09-30T14:38:23.214562+00:00",
+  "freeze_sha256": "3d0040dd21a3129aab5c07630b59399b5e4b0c1725d300c10628b172d0eaabd8",
+  "frozen_shared_identity_pins_match": true,
+  "generalization_claim_eligible": false,
+  "output_hashes": {
+    "case_matrix": "1edfbbf5d154f4946577abcde3c0d9c9acd197369c7550a78907531b61f74c38",
+    "claim_audit": "11bb09788ed3d91bc53cfee969b2e479a6dfa1814185be36363303cf24b35dce",
+    "comparison": "0eb3768049d35ec52c23ea9b143c66ed5dd68718deb10139d35bcf241e5ff548",
+    "report": "351d58275403e8d9dcfc6ba6d746fef5404853eab9d4bb10da759c54737460dd"
+  },
+  "statistical_significance_claim_eligible": false,
+  "step": "9.48",
+  "step9_39_integrity_and_sources_match": true,
+  "task_distribution_match": true,
+  "three_way_case_id_identity_match": true,
+  "three_way_case_order_match": true,
+  "v1_artifacts_modified": false,
+  "v2_aggregate_pin_match": true,
+  "v2_artifacts_modified": false,
+  "v4_rerun": false,
+  "v5_accessed": false
+}

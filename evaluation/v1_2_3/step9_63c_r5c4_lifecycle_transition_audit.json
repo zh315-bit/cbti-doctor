@@ -1,0 +1,24 @@
+{
+  "step": "9.63c-r5c4",
+  "transition_order": [
+    {"phase": 1, "name": "resolve_current_runner_identity", "status": "PASS"},
+    {"phase": 2, "name": "create_r9_freeze_candidate", "status": "PASS", "persisted_exclusive_create": true},
+    {"phase": 3, "name": "validate_r9_freeze_and_historical_pins", "status": "PASS", "members": 19, "aggregate_sha256": "4af44711fe984b69c81fc4730f0ca3f69058d1f69123b3b2bd7a570356166f97"},
+    {"phase": 4, "name": "retire_old_r8_authorization_via_independent_lifecycle_authority", "status": "PASS", "consumption_count": 0},
+    {"phase": 5, "name": "revalidate_frozen_prefix_after_append", "status": "PASS", "prefix_length": 1161, "prefix_sha256": "ca168f6939c4697a7a7bccc0b365b414d9a0e632f40de4242eb0a47e2d985285"},
+    {"phase": 6, "name": "verify_no_active_executable_authorization", "status": "PASS", "active_count": 0}
+  ],
+  "retirement_determination_path": "evaluation/v1_2_3/step9_63c_r5c4_retirement_determination.json",
+  "retirement_determination_sha256": "0002edecb5c262bc8010b5b95582a6896cb1e97d3af2fc1ac23133cb8ec87ce9",
+  "lifecycle_event_id": "retire-c1184275045745ce86c084f0106b4632",
+  "lifecycle_event_type": "AUTHORIZATION_RETIRED_UNCONSUMED_NON_REUSABLE",
+  "authorization_consumed": false,
+  "authorization_consumption_count": 0,
+  "old_manifest_modified": false,
+  "historical_events_modified": false,
+  "duplicate_retirement_reused": false,
+  "active_executable_authorization_count": 0,
+  "new_authorization_issued": false,
+  "new_attempt_created": false,
+  "namespace_created": false
+}

@@ -1,0 +1,33 @@
+{
+  "step": "9.33",
+  "baseline_sha256": "4e2bffea0d7eaa9299074a960df84a1806b3ae9d4930662929abc58ca5b2ae79",
+  "treatment_candidate_sha256": "710860b0af6c313b5cf49939f41446144641d3076afdd47000c7d1e612817ebb",
+  "treatment_freeze_created": false,
+  "treatment_identity_status": "DIAGNOSTIC_ONLY_REGRESSION_BLOCKED",
+  "file_count": 11,
+  "production_modules_changed": [
+    "adaptive_agent/answer_generation.py",
+    "adaptive_agent/candidates.py",
+    "adaptive_agent/dependency_resolver.py",
+    "adaptive_agent/information_value.py",
+    "adaptive_agent/input_understanding.py",
+    "adaptive_agent/preconditions.py",
+    "adaptive_agent/requirements.py",
+    "adaptive_agent/runner.py",
+    "adaptive_agent/state.py",
+    "adaptive_agent/state_update.py"
+  ],
+  "test_modules_added": ["tests/test_step9_33_r1_r2_r3_repairs.py"],
+  "repair_summary": {
+    "R1": "External evidence dependency is independent from missing personal facts; diary resources remain separately resolved; failed retrieval is terminal for the current attempt and re-evaluated without fabricated evidence.",
+    "R2": "Only explicitly safety/execution-critical validity dependencies are hard; decision validity is recorded as soft and passed through information-value gating; material decision facts retain ASK eligibility and safe fallback remains available.",
+    "R3": "Fact/target statuses and conflicts are preserved through state snapshots and answer context; unavailable responses stop duplicate acquisition; explicit correction markers retain correction behavior; retrieved diary/evidence carry source lineage."
+  },
+  "regression_blockers": [
+    "The historical full-suite assertions expecting ASK before required independent RETRIEVE conflict with R1 ordering.",
+    "Historical assertions expecting generic validity dependencies to be HARD_PRECONDITION conflict with R2 soft gating.",
+    "Historical frozen candidate/V4 runner/lineage-sidecar checks detect the changed Agent identity and fail closed; their frozen inputs were not modified."
+  ],
+  "baseline_freeze_modified": false,
+  "benchmark_or_scoring_files_modified": false
+}

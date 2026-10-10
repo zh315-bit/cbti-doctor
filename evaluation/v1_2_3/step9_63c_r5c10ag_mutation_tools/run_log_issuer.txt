@@ -1,0 +1,150 @@
+KILLED I0_approval_not_verified test_step9_63c_r5c10ag_authorization_issuer.ConditionTests.test_i0_unsigned_or_drifted_approval (case='unsigned')
+SURVIVED I1a_pointer_sha_vs_approval_ignored 
+KILLED I1b_record_approval_binding_ignored test_step9_63c_r5c10ag_authorization_issuer.ConditionTests.test_i1_pointer_and_record
+SURVIVED I1c_record_pointer_binding_ignored 
+KILLED I3_freeze_vs_prediction_ignored test_step9_63c_r5c10ag_authorization_issuer.ConditionTests.test_i2_i3_i4_freeze_problems
+KILLED I4_persisted_freeze_not_reassembled test_step9_63c_r5c10ag_authorization_issuer.ConditionTests.test_i4_a_hand_edited_freeze_is_caught_even_when_the_approval_is_edited_to_match
+SURVIVED I5a_changed_member_pins_ignored 
+SURVIVED I5b_issuer_pin_ignored 
+KILLED I6_executable_superseded_ignored test_step9_63c_r5c10ag_authorization_issuer.ConditionTests.test_i6_an_executable_non_current_authorization_blocks
+KILLED I7_active_set_ignored test_step9_63c_r5c10ag_authorization_issuer.ConditionTests.test_i7_an_active_authorization_blocks
+KILLED I8_historical_pins_ignored test_step9_63c_r5c10ag_authorization_issuer.ConditionTests.test_i8_historical_pin_tampering_blocks
+KILLED I9a_identity_bytes_scan_removed test_step9_63c_r5c10ag_authorization_issuer.ConditionTests.test_i9_attempt_reuse_in_the_ledger_blocks
+SURVIVED I9b_namespace_collision_ignored 
+SURVIVED I9c_frozen_freshness_helper_removed 
+KILLED I9ab_scan_and_namespace_removed test_step9_63c_r5c10ag_authorization_issuer.ConditionTests.test_i9_attempt_reuse_in_the_ledger_blocks
+KILLED I9abc_all_uniqueness_checks_removed test_step9_63c_r5c10ag_authorization_issuer.ConditionTests.test_i9_attempt_reuse_in_the_ledger_blocks
+KILLED I10_existing_manifest_ignored test_step9_63c_r5c10ag_authorization_issuer.ConditionTests.test_i10_existing_manifest_or_symlink_blocks
+KILLED I12a_clock_not_compared test_step9_63c_r5c10ag_authorization_issuer.ConditionTests.test_i12_clock_between_freeze_and_last_ledger_event_is_refused
+KILLED I12b_freeze_time_not_compared test_step9_63c_r5c10ag_authorization_issuer.ConditionTests.test_i12_clock_earlier_than_the_freeze_is_refused_even_after_the_last_event
+KILLED I12c_last_event_not_compared test_step9_63c_r5c10ag_authorization_issuer.ConditionTests.test_i12_clock_between_freeze_and_last_ledger_event_is_refused
+KILLED I13a_prior_event_ignored test_step9_63c_r5c10ag_authorization_issuer.ConditionTests.test_i13_a_prior_issuance_event_or_registry_blocks
+KILLED I13b_registry_ignored test_step9_63c_r5c10ag_authorization_issuer.ConditionTests.test_i13_a_prior_issuance_event_or_registry_blocks
+KILLED IX1_environment_ignored test_step9_63c_r5c10ag_authorization_issuer.ConditionTests.test_ix1_synthetic_root_needs_the_environment_switch
+issue the r11 authorization
+manifest SHA-256 b504e91044aa8cee43b103667dd243f8c0a3d1042b7a75f953d30ab3e6eb4cea
+{
+  "agent_loop_max_steps": 4,
+  "baseline_agent_sha256": "4e2bffea0d7eaa9299074a960df84a1806b3ae9d4930662929abc58ca5b2ae79",
+  "baseline_metric_lock_sha256": "63e33f8dd66109742fdbb2282be437a1af771f5aa1d600306f35916ed5d37203",
+  "benchmark_manifest_sha256": "b5feb7832b6267d8cff9d25fb2d8cf0043829feb5fd04ec1bea77dba932a13db",
+  "benchmark_path": "evaluation/benchmarks/benchmark_v4_cases.yaml",
+  "benchmark_sha256": "8b8c72092fcd7544e69d5d2ecd13610c7bb4c14210fca330698b3e5ab3f01d7f",
+  "case_count": 40,
+  "case_order_fingerprint_sha256": "d930455e417935337a6e3459defbdc3ee3829b71786fbd8438ef092b62429e68",
+  "claim_policy_sha256": "4c64896c141dc8feb3789939e1450bcb7bdeb878ed15b27558404c47421aea67",
+  "comparison_class": "POST_HOC_MATCHED_FROZEN_BASELINE",
+  "dependency_lock_sha256": "4e7ec8e873364b418536494b049d09e37e957a824a1989072cdc5a62f8af72b0",
+  "fresh_session_per_case": true,
+  "harness_sha256": "8bc271bebc1c5da5351d517e2bb4a0d1a99fda3de1b713a6197b12f81fad70c7",
+  "matched_protocol_sha256": "a71ba06090370b576fbba66bc4b005e519ddbabff3021a40c6546fc855f90265",
+  "max_runner_turns": 6,
+  "metric_registry_sha256": "de9f348cb1dff66410c03095abdaffcc256f53679718482870e4aa4d80c75056",
+  "model_configuration_fingerprint_sha256": "d0802478a59e6b2021b0476490149d7fec672fab5bda5cc45f55241268f1a7e0",
+  "one_shot_rules_sha256": "1c7ed4ef47865b117bc943f3e0ad9a859f4f74cfb4e8001f723ac5532af140d0",
+  "production_case_path_runner_sha256": "fddaa09803dd1df27da81f3793929d15a3f6d5d29c1060842ecbf138a76b1d06",
+  "rag_configuration_fingerprint_sha256": "58467abc2abafce62e8d71713684802f64a35946accf35c08007e67b0edd60a5",
+  "scoring_rubric_sha256": "a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899",
+  "scoring_sha256": "f742a8f8af7c8747818dadad81621c15d12d74f50538019913dfe18ab53bf59b",
+  "task_distribution": {
+    "CAUSE_ASSESSMENT": 10,
+    "DATA_ANALYSIS": 10,
+    "KNOWLEDGE_QA": 10,
+    "PERSONALIZED_DECISION": 10
+  },
+  "tool_adapter_sha256": "65223ad962417d68d16326c2431a205f1bdc953a0f64c5585ff38e4017a1c084",
+  "treatment_agent_sha256": "085d338ed95bbef7370c41cf97ca0d6653ffdfd2f1c924eef4b7123dfdea4607",
+  "attempt_id_status": "PREBOUND_IDENTITY_ONLY_NOT_CREATED",
+  "authoritative_commit_point": "COMMITTED_FSYNCED_APPEND_ONLY_TRANSACTION_JOURNAL",
+  "authorization_boundary": {
+    "formal_attempt_created": false,
+    "authorization_consumed": false,
+    "formal_v4_case_executed": 0,
+    "cases_started": 0,
+    "model_agent_rag_case_execution": false,
+    "adjudication_aggregation_comparison": false,
+    "v5_created_or_accessed": false
+  },
+  "authorization_type": "ONE_SHOT_MATCHED_TREATMENT",
+  "claim_scope": "FROZEN_MATCHED_DEVELOPMENT_REGRESSION_ONLY",
+  "connectivity_evidence": {
+    "status": "NOT_TESTED_AT_ISSUANCE",
+    "fresh_non_consuming_preflight_required_before_execution": true
+  },
+  "consumption_limit": 1,
+  "execution_environment": "USER_MAC_LOCAL_PROJECT_VENV",
+  "execution_limits": {
+    "max_runner_turns": 6,
+    "agent_loop_max_steps": 4,
+    "fresh_session_per_case": true
+  },
+  "execution_namespace": {
+    "namespace_id": "heldout-v4-treatment-v3-run-7b53f733bf17b30bf4e9",
+    "derivation": "SHA256(evaluation_id\\0authorization_id\\0attempt_id) first 20 hex characters",
+    "physical_layout": "evaluation/v4_runs/<namespace_id>/<evaluation_id>/",
+    "fresh_derived_namespace_required": true,
+    "unique_and_absent_at_issuance": true,
+    "reservation_marker_created": false,
+    "attempt_namespace_created": false,
+    "case_results_created": false,
+    "raw_traces_created": false
+  },
+  "formal_execution_status": "FORMAL_EXECUTION_AUTHORIZED_BUT_NOT_STARTED",
+  "max_formal_attempts": 1,
+  "one_shot_semantics": {
+    "authorization_exactly_once": true,
+    "attempt_identity_exactly_once": true,
+    "consumable_only_by_prebound_attempt_id": true,
+    "authorization_reuse_forbidden": true,
+    "attempt_id_reuse_forbidden": true,
+    "automatic_retry_or_resume": false,
+    "interruption_preserves_attempt_and_forbids_rerun": true,
+    "retired_authorization_ids_are_permanently_non_executable": true
+  },
+  "project_root": "/Volumes/Elements/cbti-doctor-main",
+  "python_executable": "/Volumes/Elements/cbti-doctor-main/.venv/bin/python",
+  "treatment": "TREATMENT_V3",
+  "status": "ISSUED_NOT_EXECUTED",
+  "authorization_status": "ISSUED_NOT_CONSUMED",
+  "consumed": false,
+  "consumed_at_utc": null,
+  "authorization_consumption_count": 0,
+  "artifact_type": "TREATMENT_V3_FRESH_R11_ONE_SHOT_V4_AUTHORIZATION",
+  "step": "9.63c-r11",
+  "authorized_by": "User-signed Step 9.63c-r11 activation approval (SHA-256 9f71c2b86c6c2189bb6e01cd9d8b5dfe21f09e75e76f8c820da3e465ec829d43)",
+  "authorization_id": "auth-step9_63c_r11-7ad44c053ac34c6abfbc950df81ef5f2",
+  "attempt_id": "attempt-step9_63c_r11-ff5ac506d2514cc79f86875152f9cf73",
+  "evaluation_id": "heldout-v4-step9_55a-treatment-v3-20260930-01",
+  "issued_at_utc": "2026-10-10T03:42:04.099840+00:00",
+  "runner_freeze_revision": "r11",
+  "runner_freeze_path": "evaluation/v1_2_3/step9_63c_r11_runner_freeze.json",
+  "runner_freeze_sha256": "e7cf34a14769908ce8c2bba5b2ce0365074e5bd4333ffca891451af85fee11ed",
+  "runner_path": "scripts/run_step9_53_v3_identity_adapter.py",
+  "runner_sha256": "3a4ec3e526bde19e318e271a24569223087c8a6aadc77fd144b061825c0da282",
+  "treatment_runner_sha256": "3a4ec3e526bde19e318e271a24569223087c8a6aadc77fd144b061825c0da282",
+  "parent_runner_path": "scripts/run_step9_35a_matched_treatment.py",
+  "parent_runner_sha256": "b79bc78a8439021023ee1d190919f5b519de49d3f1931789f788cdaad7776508",
+  "namespace_allocator_path": "scripts/v3_namespace_allocator.py",
+  "namespace_allocator_sha256": "3ee484e52eb67003e0ae3b5548b821156e7ebc399c227df0b55dcd0fad385bc5",
+  "authorization_lifecycle_module_path": "scripts/authorization_lifecycle.py",
+  "authorization_lifecycle_module_sha256": "f0d8b7e04fa2710765b74f4f293436b051af005d11851bf9583da14ff6612744",
+  "authorization_lifecycle_contract_path": "evaluation/v1_2_3/step9_61a_v3_authorization_lifec
+Type exactly ISSUE-R11-AUTH-1e2f7f2d4f26 to proceed: KILLED G1_write_gate_removed test_step9_63c_r5c10ag_authorization_issuer.GateTests.test_in_process_without_a_terminal_is_refused
+KILLED G2_confirmation_removed test_step9_63c_r5c10ag_authorization_issuer.GateTests.test_wrong_token_is_refused (token='')
+KILLED G3_inlock_conditions_removed test_step9_63c_r5c10ag_authorization_issuer.IssuanceTests.test_concurrent_issuance_yields_exactly_one_authorization
+KILLED G4_manifest_readback_removed test_step9_63c_r5c10ag_authorization_issuer.IssuanceTests.test_a_manifest_that_reads_back_differently_stops_before_any_event
+KILLED G5_postcondition_removed test_step9_63c_r5c10ag_authorization_issuer.IssuanceTests.test_postcondition_failure_writes_no_event_and_keeps_the_manifest
+SURVIVED G6_prelock_plan_check_removed 
+KILLED G7_both_plan_checks_removed test_step9_63c_r5c10ag_authorization_issuer.IssuanceTests.test_concurrent_issuance_yields_exactly_one_authorization
+KILLED T1_token_constant test_step9_63c_r5c10ag_authorization_issuer.GateTests.test_wrong_token_is_refused (token='ISSUE-R11-AUTH-000000000000')
+SURVIVED T2_token_ignores_authorization_id 
+KILLED S1_duplicate_events_not_detected test_step9_63c_r5c10ag_authorization_issuer.ThreatTests.test_duplicate_event_is_an_anomaly
+KILLED S2_non_regular_manifest_not_detected test_step9_63c_r5c10ag_authorization_issuer.ConditionTests.test_i10_existing_manifest_or_symlink_blocks
+KILLED S3_event_mismatch_not_detected test_step9_63c_r5c10ag_authorization_issuer.ThreatTests.test_manifest_tampering_after_issuance_is_detected_by_verify_and_gate
+SURVIVED R1_complete_record_state_check_removed 
+SURVIVED R2_complete_record_identity_check_removed 
+KILLED R3_complete_record_gate_removed test_step9_63c_r5c10ag_authorization_issuer.IssuanceTests.test_complete_record_needs_a_terminal_even_with_the_right_token (mode='pipe')
+KILLED R4_complete_record_confirmation_removed test_step9_63c_r5c10ag_authorization_issuer.IssuanceTests.test_complete_record_needs_the_typed_token_in_a_terminal (token='')
+KILLED A1_approval_path_override_allowed test_step9_63c_r5c10ag_authorization_issuer.ConditionTests.test_non_canonical_approval_path_is_refused
+KILLED V1_verify_state_ignored test_step9_63c_r5c10ag_authorization_issuer.ThreatTests.test_manifest_tampering_after_issuance_is_detected_by_verify_and_gate
+KILLED 31 of 41

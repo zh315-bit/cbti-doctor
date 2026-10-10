@@ -1,0 +1,16 @@
+{
+  "artifact_type": "STEP9_63_HISTORICAL_INTEGRITY_AUDIT",
+  "step": "9.63",
+  "status": "PASS_READ_ONLY_HASHES_UNCHANGED",
+  "historical_pin_count": 55,
+  "historical_pin_snapshot_before_sha256": "ce2d3aacd734212d244ea0d56f483a883c1465328824b6661ce527b424eb21c5",
+  "historical_pin_snapshot_after_sha256": "ce2d3aacd734212d244ea0d56f483a883c1465328824b6661ce527b424eb21c5",
+  "historical_authorization_hashes_unchanged": true,
+  "step9_58_provenance_gap": "PRESENT_AND_DOCUMENTED",
+  "step9_62_authorization_consumed": false,
+  "step9_62_authorization_consumption_count": 0,
+  "step9_62_attempt_created": false,
+  "step9_62_namespace_created": false,
+  "results_created": false,
+  "traces_created": false
+}

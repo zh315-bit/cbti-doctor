@@ -1,0 +1,98 @@
+{
+  "artifact_type": "STEP9_58B_POST_HOC_HISTORICAL_ATTESTATION",
+  "artifact_origin": "POST_HOC",
+  "original_step": "9.58",
+  "reconstruction_step": "9.58b",
+  "created_at_utc": "2026-10-01T18:50:04Z",
+  "original_artifacts_missing": true,
+  "historical_record_rewritten": false,
+  "reconstruction_class": "POST_HOC_ATTESTATION_FROM_IMMUTABLE_EVIDENCE",
+  "facts": {
+    "step9_58_fail_closed": {
+      "status": "PROVEN",
+      "evidence_paths": ["conversation://current-thread/Step-9.58-preflight-tool-output", "evaluation/v1_2_3/step9_55b_v3_runner_freeze_r3.json", "scripts/run_step9_53_v3_identity_adapter.py", "evaluation/v4_runs/heldout-v4-step9_55a-treatment-v3-20260930-01/attempts.jsonl"],
+      "evidence_sha256": ["NOT_APPLICABLE_NONFILE_CONVERSATION_RECORD", "581edb8e0091c3dd060735435091be0c5d826b6244a562fa1bfb21a0b3d850fc", "ace3d58005a5c4ce01aeeb17ac54a437c64e4023f7c870e12964a1a5d72b0b7e", "10d3577bd59f886e5b5b79f23c8e911e117bfc52004eb234034f9314c2c5728e"],
+      "reason": "Same-thread Step 9.58 preflight output recorded the existing-namespace RuntimeError; persisted runner r3 freeze/source show that this guard is fail-closed."
+    },
+    "failure_class": {
+      "status": "PROVEN",
+      "value": "FAIL_CLOSED_OUTPUT_NAMESPACE_COLLISION",
+      "evidence_paths": ["conversation://current-thread/Step-9.58-preflight-tool-output", "scripts/run_step9_53_v3_identity_adapter.py"],
+      "evidence_sha256": ["NOT_APPLICABLE_NONFILE_CONVERSATION_RECORD", "ace3d58005a5c4ce01aeeb17ac54a437c64e4023f7c870e12964a1a5d72b0b7e"],
+      "reason": "The observed exception is the namespace collision guard's exact failure; no other error class was reported."
+    },
+    "output_namespace_collision": {
+      "status": "PROVEN",
+      "evidence_paths": ["conversation://current-thread/Step-9.58-preflight-tool-output", "evaluation/v4_runs/heldout-v4-step9_55a-treatment-v3-20260930-01/attempts.jsonl"],
+      "evidence_sha256": ["NOT_APPLICABLE_NONFILE_CONVERSATION_RECORD", "10d3577bd59f886e5b5b79f23c8e911e117bfc52004eb234034f9314c2c5728e"],
+      "reason": "The old namespace contains the exact Step 9.57 failed attempt; the prior Step 9.58 preflight observed it present and rejected reuse."
+    },
+    "old_namespace_existed_at_failure": {
+      "status": "PROVEN",
+      "evidence_paths": ["conversation://current-thread/Step-9.58-preflight-tool-output", "evaluation/v4_runs/heldout-v4-step9_55a-treatment-v3-20260930-01/attempts.jsonl"],
+      "evidence_sha256": ["NOT_APPLICABLE_NONFILE_CONVERSATION_RECORD", "10d3577bd59f886e5b5b79f23c8e911e117bfc52004eb234034f9314c2c5728e"],
+      "reason": "The preflight output explicitly reported BOUND_NAMESPACE_EXISTS=True; the namespace and its historical ledger remain present."
+    },
+    "authorization_not_issued": {
+      "status": "PROVEN",
+      "evidence_paths": ["conversation://current-thread/Step-9.58-preflight-tool-output", "evaluation/v1_2_3/step9_58_v3_authorization_manifest.json", "evaluation/v1_2_3/step9_56_v3_authorization_manifest.json"],
+      "evidence_sha256": ["NOT_APPLICABLE_NONFILE_CONVERSATION_RECORD", "ABSENT_AT_RECONSTRUCTION", "c4baa12b60a2166c03d8d7c98d6aefe1897873141f5b9b18e6c8a4fb795dd606"],
+      "reason": "Prior Step 9.58 report states NOT_ISSUED and no IDs were allocated; the Step 9.58 manifest is absent. The Step 9.56 authorization remains historical and was consumed by Step 9.57."
+    },
+    "attempt_not_created": {
+      "status": "PROVEN",
+      "evidence_paths": ["conversation://current-thread/Step-9.58-preflight-tool-output", "evaluation/v4_runs/heldout-v4-step9_55a-treatment-v3-20260930-01/attempts.jsonl", "evaluation/v4_runs"],
+      "evidence_sha256": ["NOT_APPLICABLE_NONFILE_CONVERSATION_RECORD", "10d3577bd59f886e5b5b79f23c8e911e117bfc52004eb234034f9314c2c5728e", "DIRECTORY_STATE_AT_RECONSTRUCTION"],
+      "reason": "No Step 9.58 IDs were allocated in the captured preflight interaction; the old ledger remains at its frozen hash and no additional V4 run namespace/ledger exists."
+    },
+    "formal_v4_case_executed_zero": {
+      "status": "PROVEN",
+      "evidence_paths": ["conversation://current-thread/Step-9.58-preflight-tool-output", "evaluation/v4_runs/heldout-v4-step9_55a-treatment-v3-20260930-01/attempts.jsonl"],
+      "evidence_sha256": ["NOT_APPLICABLE_NONFILE_CONVERSATION_RECORD", "10d3577bd59f886e5b5b79f23c8e911e117bfc52004eb234034f9314c2c5728e"],
+      "reason": "Step 9.58 stopped at the read-only pre-attempt validation gate; no Step 9.58 execution ledger or case-start event exists. The one STARTED case is Step 9.57 history, not Step 9.58."
+    },
+    "model_not_called": {
+      "status": "PROVEN",
+      "evidence_paths": ["conversation://current-thread/Step-9.58-preflight-tool-output", "scripts/run_step9_53_v3_identity_adapter.py"],
+      "evidence_sha256": ["NOT_APPLICABLE_NONFILE_CONVERSATION_RECORD", "ace3d58005a5c4ce01aeeb17ac54a437c64e4023f7c870e12964a1a5d72b0b7e"],
+      "reason": "The only recorded Step 9.58 operation was identity preflight; its code checks hashes/config and namespace lifecycle and does not invoke a model."
+    },
+    "agent_not_called": {
+      "status": "PROVEN",
+      "evidence_paths": ["conversation://current-thread/Step-9.58-preflight-tool-output", "scripts/run_step9_53_v3_identity_adapter.py"],
+      "evidence_sha256": ["NOT_APPLICABLE_NONFILE_CONVERSATION_RECORD", "ace3d58005a5c4ce01aeeb17ac54a437c64e4023f7c870e12964a1a5d72b0b7e"],
+      "reason": "No formal run entrypoint was invoked; the observed path terminated in preflight before Agent execution."
+    },
+    "rag_not_called": {
+      "status": "PROVEN",
+      "evidence_paths": ["conversation://current-thread/Step-9.58-preflight-tool-output", "scripts/run_step9_53_v3_identity_adapter.py"],
+      "evidence_sha256": ["NOT_APPLICABLE_NONFILE_CONVERSATION_RECORD", "ace3d58005a5c4ce01aeeb17ac54a437c64e4023f7c870e12964a1a5d72b0b7e"],
+      "reason": "The read-only preflight code does not run a case or invoke the Agent/RAG path."
+    },
+    "historical_identities_match": {
+      "status": "PROVEN",
+      "evidence_paths": ["conversation://current-thread/Step-9.58-preflight-tool-output", "evaluation/v1_2_3/step9_57c_v3_connectivity_recovery.json", "evaluation/v1_2_3/step9_55b_v3_runner_freeze_r3.json"],
+      "evidence_sha256": ["NOT_APPLICABLE_NONFILE_CONVERSATION_RECORD", "40dfee10d891d0ecfcd9a4cee6c40702877a6ff7f358b9c78266b7b6ff73cd14", "581edb8e0091c3dd060735435091be0c5d826b6244a562fa1bfb21a0b3d850fc"],
+      "reason": "The Step 9.58 preflight reached the namespace check after frozen-identity validation; Step 9.57c independently pins the current frozen identities."
+    }
+  },
+  "original_step9_58_artifact_set_complete": false,
+  "step9_58_historical_facts_attested": "YES",
+  "step9_58_provenance_gap": "PRESENT_AND_DOCUMENTED",
+  "remediation_blocked_by_provenance_gap": false,
+  "old_namespace_preserved": true,
+  "old_failed_attempt_preserved": true,
+  "old_authorization_reusable": false,
+  "old_attempt_reusable": false,
+  "v3_agent_modified": false,
+  "runner_modified": false,
+  "evaluation_semantics_changed": false,
+  "new_authorization_issued": false,
+  "new_attempt_created": false,
+  "formal_v4_case_executed": 0,
+  "model_called_for_case_execution": false,
+  "agent_called_for_case_execution": false,
+  "rag_called_for_case_execution": false,
+  "historical_record_rewritten": false,
+  "attestation_is_original_step9_58_artifact": false
+}

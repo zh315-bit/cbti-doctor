@@ -1,0 +1,214 @@
+"""Offline-only preflight evidence lifecycle and formal binding tests."""
+from __future__ import annotations
+
+import hashlib
+import json
+import os
+import subprocess
+import sys
+import tempfile
+import unittest
+from pathlib import Path
+from unittest.mock import patch
+
+from scripts import preflight_step9_63c_r5_mac_local as preflight
+from scripts import run_step9_63_v3_formal_execution as formal
+
+
+TEST_ID = "preflight-step9_63c_r5-r8-" + "1" * 32
+SECOND_ID = "preflight-step9_63c_r5-r8-" + "2" * 32
+FREEZE_SHA = "a" * 64
+NETWORK = {
+    "SYSTEM_DNS_STATUS": "PASS", "PYTHON_GETADDRINFO_STATUS": "PASS",
+    "DEFAULT_DIG_STATUS": "PASS", "GOOGLE_DNS_STATUS": "PASS",
+    "CLOUDFLARE_DNS_STATUS": "PASS", "TCP_CONNECTION": "PASS",
+    "TLS_CONNECTION": "PASS", "TLS_CERTIFICATE_PRESENT": True,
+    "TLS_CERTIFICATE_VERIFIED": True, "TLS_VERSION": "TLSv1.3",
+}
+
+
+class PreflightLifecycleTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        self.artifacts = self.root / "evaluation/v1_2_3"
+        self.artifacts.mkdir(parents=True)
+        self.auth_file = self.root / "authorization.json"
+        self.auth = {
+            "authorization_id": preflight.AUTH_ID,
+            "attempt_id": preflight.ATTEMPT_ID,
+            "runner_freeze_revision": "r8",
+            "treatment_agent_sha256": preflight.V3_AGENT_SHA256,
+            "execution_namespace": {"namespace_id": preflight.NAMESPACE_ID},
+            "issued_at_utc": "2026-10-06T14:56:37Z",
+        }
+        self.auth_file.write_text(json.dumps(self.auth), encoding="utf-8")
+
+    @staticmethod
+    def legacy_hash():
+        return hashlib.sha256(preflight.LEGACY_ARTIFACT.read_bytes()).hexdigest()
+
+    def evidence(self, preflight_id=TEST_ID):
+        return {
+            "PREFLIGHT_ID": preflight_id,
+            "STEP9_63C_R5_STATUS": "PASS_R8_MAC_LOCAL_FINAL_NON_CONSUMING_PRECLEARANCE",
+            "EXECUTION_ENVIRONMENT": "MAC_LOCAL",
+            "AUTHORIZATION_ID": self.auth["authorization_id"],
+            "AUTHORIZATION_MANIFEST_SHA256": formal.sha256(self.auth_file),
+            "RUNNER_FREEZE_REVISION": "r8", "RUNNER_AGGREGATE_SHA256": FREEZE_SHA,
+            "R8_RUNNER_AGGREGATE_SHA256": FREEZE_SHA,
+            "V3_AGENT_SHA256": self.auth["treatment_agent_sha256"],
+            "ATTEMPT_ID": self.auth["attempt_id"],
+            "NAMESPACE_ID": self.auth["execution_namespace"]["namespace_id"],
+            "AUTHORIZATION_CONSUMED": False, "AUTHORIZATION_CONSUMPTION_COUNT": 0,
+            "ATTEMPT_CREATED": False, "NAMESPACE_CREATED": False,
+            "NAMESPACE_RESERVED": False, "HTTP_REQUEST_SENT": False,
+            "MODEL_INFERENCE_EXECUTED": False, "AGENT_EVALUATION_EXECUTED": False,
+            "RAG_EVALUATION_EXECUTED": False, "FORMAL_V4_CASE_EXECUTED": 0,
+            "READY_FOR_SINGLE_ATOMIC_FORMAL_EXECUTION": True,
+            "timestamp_utc": "2026-10-06T15:12:51Z", **NETWORK,
+        }
+
+    def write_fixture(self, payload):
+        with patch.object(preflight, "ARTIFACT_DIR", self.artifacts):
+            path = preflight.artifact_path(payload["PREFLIGHT_ID"])
+        path.write_text(json.dumps(payload), encoding="utf-8")
+        return path, formal.sha256(path)
+
+    def validate(self, payload):
+        path, digest = self.write_fixture(payload)
+        with patch.object(formal, "ROOT", self.root):
+            formal.validate_preflight_evidence(
+                authorization=self.auth, authorization_file=self.auth_file,
+                preflight=payload, preflight_file=path,
+                preflight_id=payload["PREFLIGHT_ID"], preflight_sha256=digest,
+                freeze_sha256=FREEZE_SHA,
+            )
+
+    def test_T1_preparation_does_not_create_real_target(self):
+        before = self.legacy_hash()
+        with patch.object(preflight, "ARTIFACT_DIR", self.artifacts):
+            path = preflight.artifact_path(TEST_ID)
+            self.assertFalse(path.exists())
+        self.assertEqual(self.legacy_hash(), before)
+
+    def test_T2_import_does_not_create_real_target(self):
+        before = self.legacy_hash()
+        env = {**os.environ, "PYTHONDONTWRITEBYTECODE": "1"}
+        subprocess.run([sys.executable, "-c",
+                        "import scripts.preflight_step9_63c_r5_mac_local"],
+                       cwd=preflight.ROOT, env=env, check=True, capture_output=True)
+        self.assertEqual(self.legacy_hash(), before)
+
+    def test_T3_offline_fixture_only_writes_temp(self):
+        before = self.legacy_hash()
+        self.write_fixture(self.evidence())
+        self.assertEqual(self.legacy_hash(), before)
+        self.assertEqual(len(list(self.artifacts.glob("*.json"))), 1)
+
+    def test_T4_first_id_path_is_unique(self):
+        with patch.object(preflight.uuid, "uuid4") as uuid4:
+            uuid4.return_value.hex = "1" * 32
+            self.assertEqual(preflight.new_preflight_id(), TEST_ID)
+        with patch.object(preflight, "ARTIFACT_DIR", self.artifacts):
+            self.assertFalse(preflight.artifact_path(TEST_ID).exists())
+
+    def test_T5_second_nonconsuming_id_differs(self):
+        with patch.object(preflight, "ARTIFACT_DIR", self.artifacts):
+            self.assertNotEqual(preflight.artifact_path(TEST_ID),
+                                preflight.artifact_path(SECOND_ID))
+
+    def test_T6_unknown_old_artifact_untouched(self):
+        before = self.legacy_hash()
+        with patch.object(preflight, "ARTIFACT_DIR", self.artifacts):
+            preflight.write_attestation(self.evidence())
+        self.assertEqual(self.legacy_hash(), before)
+
+    def test_T7_successful_new_artifact_binds_authorization(self):
+        self.validate(self.evidence())
+
+    def test_T8_mismatched_authorization_rejected(self):
+        payload = self.evidence(); payload["AUTHORIZATION_ID"] = "other-auth"
+        with self.assertRaisesRegex(RuntimeError, "identity or safety invariant"):
+            self.validate(payload)
+
+    def test_T9_mismatched_runner_rejected(self):
+        payload = self.evidence(); payload["R8_RUNNER_AGGREGATE_SHA256"] = "0" * 64
+        with self.assertRaisesRegex(RuntimeError, "identity or safety invariant"):
+            self.validate(payload)
+
+    def test_T10_mismatched_attempt_or_namespace_rejected(self):
+        for key in ("ATTEMPT_ID", "NAMESPACE_ID"):
+            payload = self.evidence(); payload[key] = "other"
+            with self.subTest(key=key), self.assertRaisesRegex(RuntimeError, "identity or safety invariant"):
+                self.validate(payload)
+
+    def test_T11_duplicate_preflight_id_exclusive_create_fails(self):
+        with patch.object(preflight, "ARTIFACT_DIR", self.artifacts):
+            preflight.write_attestation(self.evidence())
+            with self.assertRaises(FileExistsError):
+                preflight.write_attestation(self.evidence())
+
+    def test_T12_different_ids_do_not_collide(self):
+        with patch.object(preflight, "ARTIFACT_DIR", self.artifacts):
+            first, _ = preflight.write_attestation(self.evidence(TEST_ID))
+            second, _ = preflight.write_attestation(self.evidence(SECOND_ID))
+        self.assertNotEqual(first, second)
+        self.assertTrue(first.exists() and second.exists())
+
+    def test_T13_no_http_model_agent_rag_execution(self):
+        source = Path(preflight.__file__).read_text(encoding="utf-8")
+        for forbidden in ("requests.get(", "requests.post(", "httpx.",
+                          "/chat/completions", "/api/chat", "adapter.run(",
+                          "begin_and_commit(", "reserve_namespace("):
+            self.assertNotIn(forbidden, source)
+
+    def test_T14_authorization_consumption_stays_zero(self):
+        from scripts import preflight_step9_63b_mac_local as transport
+        before = formal.sha256(self.auth_file)
+        with patch.object(preflight, "ARTIFACT_DIR", self.artifacts), \
+             patch.object(transport, "_runtime_and_config", return_value={}), \
+             patch.object(transport, "connectivity", return_value=NETWORK), \
+             patch.object(preflight, "execution_state", return_value={
+                 "AUTHORIZATION_CONSUMED": False, "AUTHORIZATION_CONSUMPTION_COUNT": 0,
+                 "ATTEMPT_CREATED": False, "NAMESPACE_CREATED": False,
+             }):
+            payload = preflight.run_preflight(TEST_ID)
+            preflight.write_attestation(payload)
+        self.assertEqual(formal.sha256(self.auth_file), before)
+        self.assertEqual(payload["AUTHORIZATION_CONSUMPTION_COUNT"], 0)
+
+    def test_old_fixed_path_cannot_be_substituted(self):
+        payload = self.evidence()
+        old_path = self.artifacts / "step9_63c_r5_mac_local_final_preclearance.json"
+        old_path.write_text(json.dumps(payload), encoding="utf-8")
+        with patch.object(formal, "ROOT", self.root):
+            with self.assertRaisesRegex(RuntimeError, "path or SHA-256"):
+                formal.validate_preflight_evidence(
+                    authorization=self.auth, authorization_file=self.auth_file,
+                    preflight=payload, preflight_file=old_path,
+                    preflight_id=TEST_ID, preflight_sha256=formal.sha256(old_path),
+                    freeze_sha256=FREEZE_SHA,
+                )
+
+    def test_wrong_explicit_sha_rejected(self):
+        payload = self.evidence()
+        path, _ = self.write_fixture(payload)
+        with patch.object(formal, "ROOT", self.root):
+            with self.assertRaisesRegex(RuntimeError, "path or SHA-256"):
+                formal.validate_preflight_evidence(
+                    authorization=self.auth, authorization_file=self.auth_file,
+                    preflight=payload, preflight_file=path,
+                    preflight_id=TEST_ID, preflight_sha256="0" * 64,
+                    freeze_sha256=FREEZE_SHA,
+                )
+
+    def test_preissue_timestamp_rejected(self):
+        payload = self.evidence(); payload["timestamp_utc"] = "2026-10-06T14:00:00Z"
+        with self.assertRaisesRegex(RuntimeError, "freshness"):
+            self.validate(payload)
+
+
+if __name__ == "__main__":
+    unittest.main()

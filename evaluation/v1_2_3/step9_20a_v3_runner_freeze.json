@@ -1,0 +1,13 @@
+{
+  "freeze_id": "step9_20a-v3-runner-20260923-01",
+  "freeze_kind": "PREPARED_EXECUTION_HARNESS_NOT_AUTHORIZATION",
+  "runner": "scripts/run_step9_20_v3_heldout.py",
+  "runner_sha256": "242adea8e254229d643353654b3438dd20cbdd4e2db4391a81d3a3a9f0185aa3",
+  "parent_harness_aggregate_sha256": "8bc271bebc1c5da5351d517e2bb4a0d1a99fda3de1b713a6197b12f81fad70c7",
+  "final_candidate_manifest_sha256": "21e325516f955986497b69e18eebca1d0a0658a24c4293fe75853dd464c901f5",
+  "agent_behavior_changed": false,
+  "scoring_changed": false,
+  "metrics_changed": false,
+  "benchmark_v3_accessed": false,
+  "authorization_issued": false
+}

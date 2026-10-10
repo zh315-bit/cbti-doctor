@@ -1,0 +1,17 @@
+{
+  "step": "9.63c-r5c10l",
+  "framework": "unittest, not pytest; no pytest output artifact was found for r5c10k",
+  "loader_items_run": 615,
+  "actual_collected_test_methods": 603,
+  "failed_module_import_placeholders": 12,
+  "actual_method_results": {"passed": 577, "failed": 20, "runtime_errors": 6, "skipped": 0},
+  "placeholder_results": {"module_import_errors": 12},
+  "reported_unittest_results": {"passed": 577, "failed": 20, "errors": 18, "skipped": 0},
+  "equations": [
+    "603 collected methods = 577 passed + 20 failed + 6 runtime errors",
+    "615 loader items = 603 collected methods + 12 failed-import placeholders",
+    "18 reported errors = 6 runtime method errors + 12 module import errors"
+  ],
+  "uncollected_methods_in_12_modules": "NOT_COUNTED_OR_ASSUMED_PASSED",
+  "failure_cluster_item_count": 38
+}

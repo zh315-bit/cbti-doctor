@@ -1,0 +1,49 @@
+{
+  "agent_called": false,
+  "aggregation_semantics_source": "scripts/aggregate_step9_30c_v4.py",
+  "aggregation_semantics_source_sha256": "01aea00ad6a644a44d63a6c31e4bf372f43b53b45f9bc1b9bd7d2649e8522395",
+  "attempt_id": "attempt-step9_44r1-cb362342ae31449aaffba8092c346864",
+  "authorization_id": "auth-step9_44r1-ecce3f6d87e64ace822fc46c97c18f55",
+  "baseline_v1_v2_comparison_generated": false,
+  "case_count": 40,
+  "consistency_audit": "PASS",
+  "created_at_utc": "2026-09-29T20:08:49.988262+00:00",
+  "evaluation_id": "heldout-v4-step9_43-treatment-v2-20260928-01",
+  "freeze_type": "TREATMENT_V2_FROZEN_AGGREGATION_ONLY",
+  "input_hashes": {
+    "adjudication": "38e178b68d498ca8280901e071e84787342ba460b47ec3c7e9f55f76086eb0f0",
+    "adjudication_audit": "5cffe15dd810d2303c1ae91b3f13281382575ee45701fd11a7c7210c45ad5018",
+    "adjudication_freeze": "74c50c34bd869109d52862202245b7d7e9463928dea24e897b74e3ed85587cee",
+    "attempt_ledger": "723fe40cd727db9f553049daccfa7e3cf5489ce6eabee09a7dbea66fd447626b",
+    "case_results": "4648b8e320f535001922f13a969d1482433bfa15f88233cf9a7e70b06cafed6c",
+    "frozen_aggregator": "01aea00ad6a644a44d63a6c31e4bf372f43b53b45f9bc1b9bd7d2649e8522395",
+    "lineage_audit": "f0a9c0f17674b9d236a2678c0a06fd40a6ef6a75eb397047ce12b24ce5353963",
+    "lineage_case_matrix": "753ac01ac8e772fdacaa7756900dfad621a88be137a0e946adcd3702349078ec",
+    "lineage_sidecar": "92f42eb5288f2b35d00d49212d4f012c0591d7493ff2db3b88c1083f1e0e51de",
+    "metric_registry": "de9f348cb1dff66410c03095abdaffcc256f53679718482870e4aa4d80c75056",
+    "raw_traces": "d7ddf2a9a47ba62a85a7d1b85f069cc9593fd8f46cc4a01c1f3c8a055698cec2",
+    "run_input_freeze": "e150091be6e879734ec4a97b0d9e0b7f9bfd782bc640935dd165734c15b9c4f5",
+    "scoring_rubric": "a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899"
+  },
+  "lineage_is_provenance_only": true,
+  "metric_registry_path": "evaluation/v1_2_3/step9_26_v4_metric_registry.json",
+  "metric_registry_sha256": "de9f348cb1dff66410c03095abdaffcc256f53679718482870e4aa4d80c75056",
+  "model_called_for_case_execution": false,
+  "output_hashes": {
+    "aggregate": "98df31b2082ce808acec2d6d409c9febc01b79278201a94b0fd1a3c2d30fc936",
+    "case_summary": "42d8d08d135a5cf97a8fc01748be93d97dcb7493e7ecdb8fd1e01e3ea6669133",
+    "report": "85e767bca2ca8672f37213c10d901976c13391db7e586c22ea7629d1197a25eb"
+  },
+  "rag_called": false,
+  "source_artifacts_modified": false,
+  "status": "PASS",
+  "step": "9.47",
+  "task_distribution": {
+    "CAUSE_ASSESSMENT": 10,
+    "DATA_ANALYSIS": 10,
+    "KNOWLEDGE_QA": 10,
+    "PERSONALIZED_DECISION": 10
+  },
+  "v2_rerun": false,
+  "v5_accessed": false
+}

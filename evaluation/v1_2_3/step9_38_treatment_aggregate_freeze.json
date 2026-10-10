@@ -1,0 +1,65 @@
+{
+  "adjudication_case_count": 40,
+  "agent_called": false,
+  "aggregation_registry": {
+    "path": "evaluation/v1_2_3/step9_26_v4_metric_registry.json",
+    "sha256": "de9f348cb1dff66410c03095abdaffcc256f53679718482870e4aa4d80c75056"
+  },
+  "ask_denominator": "all ASK events",
+  "attempt_id": "attempt-step9_35b-e469d82618d4c51d91d193bb439507e4",
+  "baseline_treatment_comparison_generated": false,
+  "consistency_audit": "PASS",
+  "created_at_utc": "2026-09-28T16:41:44.211679+00:00",
+  "evaluation_id": "heldout-v4-step9_34a-treatment-20260928-01",
+  "lineage_is_provenance_only": true,
+  "model_called_for_case_execution": false,
+  "needs_review_case_count": 0,
+  "outputs": {
+    "case_summary": {
+      "path": "evaluation/v1_2_3/step9_38_treatment_case_summary.jsonl",
+      "rows": 40,
+      "sha256": "e58fbe09dfc058acbcd57b0bd4d40b16af1480dc342abe56388f1048d642dd14"
+    },
+    "metrics": {
+      "path": "evaluation/v1_2_3/step9_38_treatment_aggregate_metrics.json",
+      "sha256": "59e774679e41158269f7fd203589f44a5a5898f6edfdb4b61f129d420d1ef45f"
+    },
+    "report": {
+      "path": "evaluation/v1_2_3/step9_38_treatment_aggregate_report.md",
+      "sha256": "29eda48b17dcbf3b4995f1559c39c4f8ee868961fc71e976bf1c1dfa79bb8477"
+    }
+  },
+  "prior_step9_38_failure_audit_preserved": true,
+  "rag_called": false,
+  "registry_reconciliation": {
+    "compatibility_class": "BACKWARD_COMPATIBLE_FOR_AGGREGATION",
+    "material_consumed_semantic_difference_count": 0,
+    "path": "evaluation/v1_2_3/step9_38a_metric_registry_reconciliation_r4.json",
+    "sha256": "06587be92e733543ad0ce8eb5074a365f8a161d2569b24f21fc140e0873d4b29"
+  },
+  "source_artifacts_modified": false,
+  "source_hashes": {
+    "adjudication": "60b5c2847ffdb51c43e00351519cb910428a82eb981849dfebefb76112658047",
+    "adjudication_freeze": "fe84e4ca0853de680d199807252daa6a2555b1951aa37505924cb15fcc087df5",
+    "attempt_ledger": "fc29a97cced81605dd0ec90b3ff8de80ca85e42b898ba5a5fb90f5db09d26d2a",
+    "case_results": "9c926a69f9a4dfd19c559be0cbe8a08abc0902d5728c6f0202ba048b9e67e561",
+    "frozen_aggregator": "01aea00ad6a644a44d63a6c31e4bf372f43b53b45f9bc1b9bd7d2649e8522395",
+    "lineage_sidecar": "62f3fc844bbabbf59df0e42122d1b570faa11fc16e74b41a0f682f15939f2c42",
+    "metric_registry": "de9f348cb1dff66410c03095abdaffcc256f53679718482870e4aa4d80c75056",
+    "prior_fail_closed_audit": "3c4f04c18d3c5d0bff07827703a38b971e60f7a19e2b8bdeb9114cdcf4d3694c",
+    "raw_traces": "0a8483e4125577e860eb0a7c72c399651800eb94d45eeb9481e6b21795302fdf",
+    "reconciliation": "06587be92e733543ad0ce8eb5074a365f8a161d2569b24f21fc140e0873d4b29",
+    "scoring_rubric": "a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899"
+  },
+  "status": "PASS_TREATMENT_AGGREGATION_ONLY",
+  "step": "9.38",
+  "task_distribution": {
+    "CAUSE_ASSESSMENT": 10,
+    "DATA_ANALYSIS": 10,
+    "KNOWLEDGE_QA": 10,
+    "PERSONALIZED_DECISION": 10
+  },
+  "treatment_rerun": false,
+  "v5_accessed": false,
+  "valid_case_count": 40
+}

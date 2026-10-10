@@ -1,0 +1,287 @@
+{
+  "R1": {
+    "allowed_actions": [
+      "RETRIEVE for required external evidence",
+      "READ_DIARY for required and available diary data",
+      "ASK only when an independent user-fact dependency passes R2 materiality/necessity checks",
+      "ANSWER with bounded limitation after dependency is satisfied, attempted once and unavailable, or safely non-actionable"
+    ],
+    "answer_requirement": "If required evidence was obtained, answer context must contain the relevant returned material/provenance and use it for supported claims; if relevant material is absent, say so and bound the answer. A satisfied generic evidence dependency never licenses unsupported personalization.",
+    "blocking_conditions": [
+      "required resource explicitly unavailable/invalid/unauthorized",
+      "same dependency has a completed successful acquisition",
+      "same resource has already failed once in this request/session and protocol disallows retry",
+      "safety/execution hard precondition prohibits the proposed personalized action"
+    ],
+    "invariant": "An independent REQUIRED/AVAILABLE EXTERNAL_EVIDENCE or DIARY_DATA dependency remains actionable regardless of unrelated USER_FACTS sufficiency. Missing personal facts constrain personalization, not evidence acquisition.",
+    "non_blocking_missing_facts": "Unrelated UNKNOWN/UNAVAILABLE personal facts; low/medium overall user_info_sufficiency; missing personalization details that do not invalidate generic evidence retrieval.",
+    "observed_scope": {
+      "required_resource_omission_harmful_cases": 13,
+      "required_resource_omission_valid_but_incomplete_cases": 13
+    },
+    "post_retrieval_state_update": "On success, attach source/tool-result IDs and provenance, mark only the matching evidence/resource dependency SATISFIED, update evidence_sufficiency from returned evidence; on error mark that dependency UNAVAILABLE and retain the error lineage. Do not mark USER_FACTS satisfied from retrieval.",
+    "repair_id": "EVIDENCE_PATH_INDEPENDENT_OF_PERSONAL_FACT_COMPLETENESS",
+    "required_state": [
+      "dependency_type/class,target,status,requiredness,source and stable identity",
+      "user-fact status/sufficiency separately from evidence_sufficiency",
+      "resource availability/authorization and attempted/result status"
+    ],
+    "safe_failure_behavior": "Persist dependency as UNAVAILABLE/FAILED with cause; do not invent retrieved evidence; answer what can be supported, distinguish general information from personal recommendation, state the boundary.",
+    "status": "DESIGNED_NOT_IMPLEMENTED",
+    "trigger": "DependencyResolver emits external evidence status REQUIRED or diary resource status AVAILABLE, with no successful prior result for that dependency in this session."
+  },
+  "R2": {
+    "answer_with_uncertainty_rule": "When a safe bounded response exists and missing context changes only personalization/detail, answer general portion with explicit uncertainty and do not make the personal choice. Do not represent a safe fallback as a completed personalized decision.",
+    "ask_threshold": "ASK only when target is genuinely unknown (not ASSERTED/DERIVED/known UNAVAILABLE/NOT_APPLICABLE), semantically not already asked, user answer can be obtained, and resolving it changes safety/execution or material decision/answer scope; safety/execution asks remain mandatory. No numeric score threshold is introduced in this design.",
+    "hard_precondition_definition": "Safety-critical and execution-critical are always hard. A decision-critical condition is hard only when plausible values materially alter an action/direction and no safe bounded fallback exists. A missing detail with a safe unchanged answer path is not hard.",
+    "information_value_override_rule": "Information value can suppress only SOFT/OPTIONAL acquisition. It cannot override a safety or execution hard gate. Before classifying a dependency as hard, compare plausible value ranges against safety, execution, action direction, next action, and answer scope; record why fallback is or is not acceptable.",
+    "necessary_ask_guard": "Before suppressing any ASK, assert the missing target is not safety-critical, execution-critical, or material with no fallback; preserve oracle-target acquisition tests and trace the counterfactual rationale.",
+    "observed_scope": {
+      "ask_events": 5,
+      "harmful_cases_estimated": 3
+    },
+    "precondition_classes": {
+      "DECISION_CRITICAL": "Plausible values materially alter direction/choice/scope, with no acceptable bounded fallback; ask before personalized choice.",
+      "EXECUTION_CRITICAL": "Required to execute a requested action correctly or avoid irreversible/wrong execution; fail closed or ask before execution.",
+      "OPTIONAL_DETAIL": "Only adds detail; default do not ask unless explicit user request makes it material.",
+      "SAFETY_CRITICAL": "Missing fact could create immediate material risk; never override with information-value score. Block risky advice/action and ask/withhold until resolved.",
+      "SOFT_CONTEXT": "Improves detail/confidence but does not change safe action/direction; may be omitted or answered generally."
+    },
+    "repair_id": "VALUE_GATED_PRECONDITION_AND_SAFE_FALLBACK",
+    "retrieve_instead_of_ask_rule": "If a required evidence dependency is independent and actionable, select RETRIEVE/READ_DIARY without waiting for unrelated optional user facts. This cannot substitute evidence for safety/execution-critical personal facts or imply a personalized recommendation.",
+    "safe_fallback_rule": "Withhold only the unsafe/unexecutable/personalized portion; deliver supported general information, identify missing dependency, and ask only the minimum material question when appropriate.",
+    "soft_precondition_definition": "A field whose plausible values do not change safety, execution feasibility, recommended direction, next action, or material answer scope; it can only improve detail.",
+    "status": "DESIGNED_NOT_IMPLEMENTED"
+  },
+  "R3": {
+    "canonical_semantic_statuses": {
+      "ASSERTED": "Explicit user-provided value, with source utterance, target, time/scope, and confidence.",
+      "DERIVED": "Deterministic value derived from identified source facts/rule; retain source IDs and derivation.",
+      "INVALID": "Malformed, contradictory, stale, or provenance-defective candidate value; retain the competing values and source records; do not silently overwrite.",
+      "NOT_APPLICABLE": "Explicitly or logically established as outside the current case scope; preserve justification.",
+      "RETRIEVED": "External evidence/resource result with tool/source IDs; never silently treat as a user-personal fact.",
+      "UNAVAILABLE": "User explicitly cannot/will not provide, or a resource/action is known unavailable; retain reason/source and do not collapse to UNKNOWN.",
+      "UNKNOWN": "No usable value is present and no explicit unavailability/decline is known."
+    },
+    "conflict_policy": "Retain all conflicting assertions with source/time/scope; mark target INVALID_CONFLICT rather than last-write-wins. Ask only if the conflict is material under R2; otherwise provide a qualified answer noting conflict.",
+    "duplicate_ask_policy": "Canonicalize semantic target IDs/aliases before candidate generation; block exact, adjacent, and paraphrased repeats while target status is ASSERTED, DERIVED, UNAVAILABLE, NOT_APPLICABLE, or already asked in current goal unless new evidence/changed scope reopens it. Reopening requires recorded trigger and value rationale.",
+    "observed_scope": {
+      "ask_events": 4,
+      "cases": 2,
+      "harmful_cases": 2
+    },
+    "projection_contract": "A valid ASSERTED/DERIVED fact is carried with provenance through State → Requirements → Information Value → Candidate Generation → Decision Policy → Answer Context. Only facts with accepted type, scope and validity satisfy a personal requirement. RETRIEVED satisfies only its evidence/resource dependency unless a requirement explicitly defines otherwise.",
+    "repair_id": "ASSERTED_FACT_AND_UNAVAILABLE_TARGET_STATE",
+    "status": "DESIGNED_NOT_IMPLEMENTED",
+    "unavailable_policy": "UNAVAILABLE persists across turns until user supplies new evidence or explicitly reopens the target; do not regenerate acquisition candidate by relabeling as UNKNOWN."
+  },
+  "cross_repair_order": [
+    "1. Normalize incoming utterance and merge provenance-bearing facts/statuses (R3).",
+    "2. Resolve task requirements and form separate user-fact, evidence, diary-resource, safety/execution dependencies (R1/R2).",
+    "3. Classify preconditions and materiality; preserve immutable hard safety/execution gates and safe fallbacks (R2).",
+    "4. Estimate information value against normalized status; suppress immaterial and duplicate asks (R2/R3).",
+    "5. Generate candidates for each independent actionable dependency; do not gate external resource actions on personal-fact sufficiency (R1).",
+    "6. Select/execute one or more compatible actions under explicit safety constraints; update only matched dependency and provenance (R1/R3).",
+    "7. Build answer context from normalized facts, dependency state and tool results; answer/validate task contract and uncertainty (R1/R3)."
+  ],
+  "files_not_to_modify": [
+    "evaluation/benchmarks/benchmark_v4_cases.yaml",
+    "evaluation/benchmarks/benchmark_v4_manifest.json",
+    "evaluation/v4_runs/heldout-v4-step9_28-20260925-01/*case_results.jsonl",
+    "evaluation/v4_runs/heldout-v4-step9_28-20260925-01/*raw_traces.jsonl",
+    "evaluation/v4_runs/heldout-v4-step9_28-20260925-01/attempts.jsonl",
+    "evaluation/v1_2_3/step9_30b_v4_human_adjudication.jsonl",
+    "evaluation/v1_2_3/step9_30b_v4_human_adjudication_freeze.json",
+    "evaluation/v1_2_3/step9_30a2_v4_lineage_sidecar.jsonl",
+    "evaluation/v1_2_3/step9_30c_v4_aggregate_metrics.json",
+    "evaluation/v1_2_3/step9_30c_v4_case_level_summary.jsonl",
+    "evaluation/benchmark_v1_1_scoring.md",
+    "evaluation/v1_2_3/step9_26_v4_metric_registry.json",
+    "evaluation/v1_2_3/step9_26_v4_one_shot_rules.md",
+    "evaluation/v1_2_3/step9_26_final_candidate_freeze.json",
+    ".env"
+  ],
+  "implementation_file_count": 12,
+  "implementation_scope": [
+    {
+      "file": "adaptive_agent/input_understanding.py",
+      "functions": [
+        "extract_explicit_facts",
+        "normalize_facts",
+        "apply_understanding"
+      ],
+      "repair_ids": [
+        "R3"
+      ],
+      "why_required": "Preserve semantically stated facts and explicit unknown/unavailable/conflicting statuses with provenance."
+    },
+    {
+      "file": "adaptive_agent/state.py",
+      "functions": [
+        "AdaptiveAgentState"
+      ],
+      "repair_ids": [
+        "R3",
+        "R1"
+      ],
+      "why_required": "Add canonical fact/target status and independent dependency/result state without merging evidence into personal facts."
+    },
+    {
+      "file": "adaptive_agent/requirements.py",
+      "functions": [
+        "is_known",
+        "requirement_is_known",
+        "calculate_missing",
+        "synchronize_requirements"
+      ],
+      "repair_ids": [
+        "R3",
+        "R2"
+      ],
+      "why_required": "Requirement satisfaction must respect status, provenance, aliases and conflict/unavailable semantics."
+    },
+    {
+      "file": "adaptive_agent/dependency_resolver.py",
+      "functions": [
+        "DependencyResolver.resolve",
+        "_needs_user_facts"
+      ],
+      "repair_ids": [
+        "R1",
+        "R2"
+      ],
+      "why_required": "Emit independent evidence/resource and user-fact dependencies; do not suppress evidence dependency solely due missing decision fields."
+    },
+    {
+      "file": "adaptive_agent/preconditions.py",
+      "functions": [
+        "evaluate_preconditions",
+        "_asked_equivalent"
+      ],
+      "repair_ids": [
+        "R2",
+        "R3"
+      ],
+      "why_required": "Classify true hard gates and safe fallbacks before returning a forced action; use semantic target state for repeats."
+    },
+    {
+      "file": "adaptive_agent/information_value.py",
+      "functions": [
+        "_uncertainty",
+        "_asked_count",
+        "estimate_information_value",
+        "acquisition_threshold_met"
+      ],
+      "repair_ids": [
+        "R2",
+        "R3"
+      ],
+      "why_required": "Estimate counterfactual materiality from normalized state and preserve UNAVAILABLE/asked distinctions."
+    },
+    {
+      "file": "adaptive_agent/candidates.py",
+      "functions": [
+        "_normalized_target",
+        "_asked_targets",
+        "ask_is_eligible",
+        "generate_candidates",
+        "build_candidates"
+      ],
+      "repair_ids": [
+        "R1",
+        "R2",
+        "R3"
+      ],
+      "why_required": "Generate independent required resource actions irrespective of user sufficiency and block semantic duplicate/known asks."
+    },
+    {
+      "file": "adaptive_agent/acquisition_gate.py",
+      "functions": [
+        "gate_acquisition_candidates"
+      ],
+      "repair_ids": [
+        "R1",
+        "R2"
+      ],
+      "why_required": "Ensure optional acquisition gate does not erase required independent resource candidates or override hard safety constraints."
+    },
+    {
+      "file": "adaptive_agent/policy.py",
+      "functions": [
+        "HeuristicDecisionPolicy.choose"
+      ],
+      "repair_ids": [
+        "R1",
+        "R2"
+      ],
+      "why_required": "Choose compatible resource acquisition and minimum material ASK without allowing optional uncertainty to block required evidence."
+    },
+    {
+      "file": "adaptive_agent/state_update.py",
+      "functions": [
+        "apply_retrieval_result",
+        "apply_diary_result"
+      ],
+      "repair_ids": [
+        "R1",
+        "R3"
+      ],
+      "why_required": "Persist typed result status, provenance and exact dependency satisfaction/unavailability."
+    },
+    {
+      "file": "adaptive_agent/runner.py",
+      "functions": [
+        "AdaptiveAgentLoop._refresh",
+        "run_turn",
+        "_snapshot"
+      ],
+      "repair_ids": [
+        "R1",
+        "R2",
+        "R3"
+      ],
+      "why_required": "Enforce sequencing at turn boundaries, merge user status without loss, record materiality and dependency transitions."
+    },
+    {
+      "file": "adaptive_agent/answer_generation.py",
+      "functions": [
+        "build_answer_context",
+        "validate_answer"
+      ],
+      "repair_ids": [
+        "R1",
+        "R3"
+      ],
+      "why_required": "Require relevant retrieved evidence and provenance in context; distinguish general evidence claims from personalized facts and unresolved conflicts."
+    }
+  ],
+  "invariant_boundaries": {
+    "CandidateGeneration→Policy": "Known/unavailable/asked targets are excluded; independent required resource candidates survive missing personal facts.",
+    "Input→State": "No silently dropped valid asserted facts; preserve conflict, time scope and source.",
+    "Preconditions→InformationValue": "Only safety/execution or material-no-fallback conditions are hard; soft conditions remain value-gated.",
+    "Requirements→Dependencies": "USER_FACTS, EXTERNAL_EVIDENCE and DIARY_DATA are separate dependency classes/statuses.",
+    "ToolResult→AnswerContext": "Result provenance and matching dependency status must be present; no fabricated success or cross-dependency satisfaction."
+  },
+  "non_goals": [
+    "No case ID or task-type-to-action branches",
+    "No expected-answer/action lookup",
+    "No V4 text/fixture lookup",
+    "No change to model, RAG corpus, tools, scoring or benchmark in Step 9.32"
+  ],
+  "schema_version": "step9_32_repair_design.v1",
+  "source_evidence": {
+    "agent_freeze_sha256": "4e2bffea0d7eaa9299074a960df84a1806b3ae9d4930662929abc58ca5b2ae79",
+    "ask_failures": 9,
+    "harmful_failures": 16,
+    "step9_31_architecture_failure_map": {
+      "path": "evaluation/v1_2_3/step9_31_architecture_failure_map.json",
+      "sha256": "02b2ce08e0993f6c4246a4c4766c8b3e11a01960f8f2941ae5e5420ea352fab7"
+    },
+    "step9_31_postmortem": {
+      "path": "evaluation/v1_2_3/step9_31_v4_postmortem.json",
+      "sha256": "cec333e148be0bd1947fa17ee3d97ce8831471a3c0687c32a255729769f7f619"
+    },
+    "valid_but_incomplete": 21
+  },
+  "status": "DESIGN_ONLY_NOT_IMPLEMENTED"
+}

@@ -1,0 +1,136 @@
+--- a/tests/test_step9_63a_r1_production_integration.py
++++ b/tests/test_step9_63a_r1_production_integration.py
+@@ -12,7 +12,6 @@
+ 
+ from scripts import authorization_lifecycle as lifecycle
+ from scripts import run_step9_35a_matched_treatment as parent
+-from scripts import run_step9_53_v3_identity_adapter as adapter
+ from scripts import run_step9_63_v3_formal_execution as entry
+ from scripts import v3_execution_transaction as tx
+ 
+@@ -46,6 +45,7 @@
+         self.assertIn("adapter.run(", inspect.getsource(entry.execute_formal))
+ 
+     def test_adapter_commits_before_namespace_and_parent(self):
++        from scripts import run_step9_53_v3_identity_adapter as adapter
+         source = inspect.getsource(adapter.run)
+         self.assertLess(source.index("begin_and_commit("), source.index("reserve_namespace("))
+         self.assertLess(source.index("reserve_namespace("), source.index("parent.run("))
+@@ -184,6 +184,7 @@
+         self.assertFalse(self.lock.exists())
+ 
+     def test_adapter_actual_dispatch_orders_commit_reserve_parent(self):
++        from scripts import run_step9_53_v3_identity_adapter as adapter
+         from scripts import v3_namespace_allocator as allocator
+         evaluation_id = adapter.EVALUATION_ID
+         namespace_id = allocator.derive_namespace_id(evaluation_id, "synthetic-auth", "synthetic-attempt")
+@@ -245,6 +246,7 @@
+         self.assertEqual(list(self.runs.glob("*/attempts.jsonl")), [])
+ 
+     def test_old_r6_authorization_rejected_at_r7_namespace_gate(self):
++        from scripts import run_step9_53_v3_identity_adapter as adapter
+         old = adapter.ROOT / "evaluation/v1_2_3/step9_62_v3_authorization_manifest.json"
+         authorization = adapter.read_json(old)
+         namespace = self.runs / "synthetic-fresh-namespace"
+--- a/tests/test_step9_63a_r2_retirement_eligibility.py
++++ b/tests/test_step9_63a_r2_retirement_eligibility.py
+@@ -10,7 +10,6 @@
+ 
+ from scripts import authorization_lifecycle as lifecycle
+ from scripts import preflight_step9_62b_mac_local as preflight
+-from scripts import run_step9_53_v3_identity_adapter as adapter
+ from scripts import run_step9_35a_matched_treatment as parent
+ from scripts import v3_execution_transaction as transaction
+ from scripts import v3_namespace_allocator as allocator
+@@ -151,6 +150,7 @@
+             self.assertEqual(preflight.active_authorizations(self.root), [])
+ 
+     def test_current_r7_identity_rejects_old_r6_authorization(self):
++        from scripts import run_step9_53_v3_identity_adapter as adapter
+         old = adapter.read_json(adapter.ROOT / "evaluation/v1_2_3/step9_62_v3_authorization_manifest.json")
+         historical_r7 = adapter.ROOT / "evaluation/v1_2_3/step9_63a_r1_v3_runner_freeze_r7.json"
+         freeze = adapter.read_json(historical_r7)
+@@ -160,6 +160,7 @@
+             historical_r7))
+ 
+     def test_v3_agent_and_evaluation_hash_mismatches_fail_closed(self):
++        from scripts import run_step9_53_v3_identity_adapter as adapter
+         freeze = adapter.read_json(adapter.ROOT / "evaluation/v1_2_3/step9_63a_r1_v3_runner_freeze_r7.json")
+         self.assertNotEqual("0" * 64, freeze["v3_agent_sha256"])
+         self.assertNotEqual("0" * 64, freeze["bound_identities_sha256"])
+@@ -168,6 +169,7 @@
+                 {"treatment_runner_sha256": "0" * 64}, freeze, "0" * 64)
+ 
+     def test_frozen_evaluation_identity_mismatch_fails_closed(self):
++        from scripts import run_step9_53_v3_identity_adapter as adapter
+         with mock.patch.object(adapter, "_current_evaluation_bindings",
+                                return_value={"all_frozen_hashes_match": False}):
+             with self.assertRaisesRegex(RuntimeError, "frozen V3/evaluation identity"):
+@@ -200,6 +202,7 @@
+             self.retire()
+ 
+     def test_retired_auth_cannot_enter_prepared_committing_or_committed(self):
++        from scripts import run_step9_53_v3_identity_adapter as adapter
+         self.retire()
+         with mock.patch.object(lifecycle, "EVENT_LEDGER_PATH", self.ledger):
+             with self.assertRaisesRegex(RuntimeError, "retired"):
+--- a/tests/test_step9_63c_r5_mac_local_preflight.py
++++ b/tests/test_step9_63c_r5_mac_local_preflight.py
+@@ -9,7 +9,6 @@
+ from pathlib import Path
+ from unittest.mock import patch
+ 
+-from scripts import preflight_step9_63b_mac_local as transport
+ from scripts import preflight_step9_63c_r5_mac_local as preflight
+ 
+ 
+@@ -45,6 +44,7 @@
+             preflight.validate_transport({**GOOD_NETWORK, "TLS_CERTIFICATE_VERIFIED": False})
+ 
+     def _config_failure(self, values, reason):
++        from scripts import preflight_step9_63b_mac_local as transport
+         with tempfile.TemporaryDirectory() as directory:
+             root = Path(directory)
+             (root / ".env").write_text("# synthetic only\n", encoding="utf-8")
+@@ -164,6 +164,7 @@
+             preflight.validate_identity_absence(preflight.read_json(preflight.AUTH_PATH))
+ 
+     def test_pre_post_state_change_fails_closed(self):
++        from scripts import preflight_step9_63b_mac_local as transport
+         with tempfile.TemporaryDirectory() as directory, \
+              patch.object(preflight, "ARTIFACT_DIR", Path(directory)), \
+              patch.object(transport, "_runtime_and_config", return_value={}), \
+@@ -173,6 +174,7 @@
+                 preflight.run_preflight(TEST_PREFLIGHT_ID)
+ 
+     def test_existing_artifact_blocks_network(self):
++        from scripts import preflight_step9_63b_mac_local as transport
+         with tempfile.TemporaryDirectory() as directory:
+             path = Path(directory) / preflight.artifact_path(TEST_PREFLIGHT_ID).name
+             path.write_text("historical")
+@@ -183,6 +185,7 @@
+             self.assertEqual(path.read_text(), "historical")
+ 
+     def test_success_fixture_exclusively_writes_only_evidence(self):
++        from scripts import preflight_step9_63b_mac_local as transport
+         with tempfile.TemporaryDirectory() as directory, \
+              patch.object(preflight, "ARTIFACT_DIR", Path(directory)), \
+              patch.object(transport, "_runtime_and_config", return_value={"PROJECT_ROOT_MATCH": True}), \
+--- a/tests/test_step9_63c_r5b_preflight_lifecycle.py
++++ b/tests/test_step9_63c_r5b_preflight_lifecycle.py
+@@ -12,7 +12,6 @@
+ from unittest.mock import patch
+ 
+ from scripts import preflight_step9_63c_r5_mac_local as preflight
+-from scripts import preflight_step9_63b_mac_local as transport
+ from scripts import run_step9_63_v3_formal_execution as formal
+ 
+ 
+@@ -166,6 +165,7 @@
+             self.assertNotIn(forbidden, source)
+ 
+     def test_T14_authorization_consumption_stays_zero(self):
++        from scripts import preflight_step9_63b_mac_local as transport
+         before = formal.sha256(self.auth_file)
+         with patch.object(preflight, "ARTIFACT_DIR", self.artifacts), \
+              patch.object(transport, "_runtime_and_config", return_value={}), \

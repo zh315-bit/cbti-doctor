@@ -1,0 +1,12 @@
+{
+  "run_status": "completed",
+  "benchmark_version": "2.0-evaluation-set",
+  "baseline_name": "adaptive-agent-v1-baseline",
+  "completed_cases": 40,
+  "overall_score": 63.85,
+  "dimension_means": {"goal_alignment": 18.02, "facts_state_integrity": 13.1, "action_resource_selection": 10.9, "evidence_answer_scope": 13.1, "interaction_efficiency": 8.72},
+  "critical_failures": 2,
+  "action_means": {"ASK_per_case": 2.775, "RETRIEVE_per_case": 0.325, "READ_DIARY_per_case": 0.175, "tool_calls_per_case": 0.5, "turns_per_case": 3.45, "steps_per_case": 3.95, "latency_ms_per_case": 8551.2},
+  "ask_quality": {"total_asks": 111, "necessary_or_useful": 19, "redundant": 80, "irrelevant": 12, "valuable_ask_rate": 0.1712, "redundant_ask_rate": 0.7207, "irrelevant_ask_rate": 0.1081},
+  "telemetry": {"token_usage": "not_available", "LLM_calls": "not_available", "LLM_latency": "not_available", "retrieval_latency": "not_available", "tool_latency": "not_available"}
+}

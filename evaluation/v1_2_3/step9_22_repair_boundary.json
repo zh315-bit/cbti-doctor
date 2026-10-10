@@ -1,0 +1,69 @@
+{
+  "status": "DESIGN_ONLY_NO_IMPLEMENTATION",
+  "constraints": {"agent_changed": false, "v3_changed": false, "scoring_changed": false, "harness_changed": false, "model_called": false, "v3_rerun": false, "case_specific_logic": false},
+  "candidate_repairs": [
+    {
+      "priority": "P1", "target_module": "Input Understanding → normalized State fact projection",
+      "failure_family": "Explicit Fact Missing from State",
+      "v3_evidence": ["V3-PD-05 initial 22:30/23:00/06:30 omitted then re-asked", "V3-DA-07 explicit 6/7/5-hour durations omitted, causing false diary dependency", "CA/PD qualitative context frequently absent"],
+      "expected_effect": "Preserve explicit numeric and qualitative facts with source spans; prevent downstream false missing fields and unnecessary tools without inferring unstated data.",
+      "risk": "Over-extraction or converting qualitative expressions into unsupported precise values; multi-turn merge regressions.",
+      "changes_policy": false, "requires_new_benchmark_for_new_heldout_claim": true, "v3_may_be_reused": "development/regression only"
+    },
+    {
+      "priority": "P1", "target_module": "Answer Context Construction / relevant-evidence selection",
+      "failure_family": "Evidence Retrieved but Unused",
+      "v3_evidence": ["9/12 RETRIEVE cases stored evidence but frozen lexical goal-term filter passed zero items to answer context", "V3-KQ-01/03/08 source evidence directly discussed the requested subject"],
+      "expected_effect": "Retain genuinely goal-relevant evidence across Chinese/English synonyms, while keeping unrelated retrieval excluded and provenance intact.",
+      "risk": "Broader filter may leak irrelevant or weakly sourced content into final answers; evidence relevance must be tested independently of V3 wording.",
+      "changes_policy": false, "requires_new_benchmark_for_new_heldout_claim": true, "v3_may_be_reused": "development/regression only"
+    },
+    {
+      "priority": "P1", "target_module": "Answer Generation / final claim-to-State consistency guard",
+      "failure_family": "Answer-layer Semantic Distortion",
+      "v3_evidence": ["V3-DA-08 valid entry for 2026-09-04 with missing duration, but final answer says the record itself is missing"],
+      "expected_effect": "Distinguish absent entry/date from absent field in an existing entry; reject or qualify unsupported existence claims while preserving valid deterministic calculations.",
+      "risk": "Over-broad guard can remove valid descriptive claims or make answers overly bounded; avoid date-specific branches.",
+      "changes_policy": false, "requires_new_benchmark_for_new_heldout_claim": true, "v3_may_be_reused": "development/regression only"
+    },
+    {
+      "priority": "P1", "target_module": "Goal semantics → VALIDITY_STATE dependency formation",
+      "failure_family": "Wrong Dependency",
+      "v3_evidence": ["V3-PD-04 classified sleep_onset_latency as a mandatory validity dependency for deciding which schedule endpoint to prioritize; the first ASK was irrelevant under frozen adjudication"],
+      "expected_effect": "Reserve hard validity preconditions for facts without which no valid bounded answer exists; keep optional precision in cost-aware acquisition.",
+      "risk": "Under-constraining truly critical personalized decisions; needs goal-level counterfactual safety tests.",
+      "changes_policy": false, "changes_dependency_semantics": true, "requires_new_benchmark_for_new_heldout_claim": true, "v3_may_be_reused": "development/regression only"
+    },
+    {
+      "priority": "P2", "target_module": "Information Value Gate / counterfactual decision-impact heuristic",
+      "failure_family": "Low-Value ASK",
+      "v3_evidence": ["12/19 low-value ASK events have primary INFORMATION_VALUE_OVERESTIMATED", "Optional bedtime/wake/latency fields were often tagged HIGH for single-event or causal-comparison goals"],
+      "expected_effect": "Require a concrete goal-specific change in decision or answer scope before an optional acquisition receives HIGH value; preserve necessary ASK and hard preconditions.",
+      "risk": "Under-asking and premature individualized answers; cannot tune to V3 case IDs or treat ASK reduction as sole objective.",
+      "changes_policy": true, "requires_new_benchmark_for_new_heldout_claim": true, "v3_may_be_reused": "development/regression only"
+    },
+    {
+      "priority": "P2", "target_module": "Effective Requirements / candidate prioritization",
+      "failure_family": "Generic sleep-field priority",
+      "v3_evidence": ["17/19 low-value ASK targets remained useful_optional, two mandatory; some are at best background for the actual goal"],
+      "expected_effect": "Represent goal-specific relevance of optional requirements and favor bounded answer when only detail-improving information remains.",
+      "risk": "May suppress legitimate context collection; must separate requirement membership from mandatory dependency.",
+      "changes_policy": true, "requires_new_benchmark_for_new_heldout_claim": true, "v3_may_be_reused": "development/regression only"
+    },
+    {
+      "priority": "P3", "target_module": "Deterministic diary analysis / Answer Generation completeness",
+      "failure_family": "Valid data but incomplete descriptive answer",
+      "v3_evidence": ["V3-DA-01 omitted longest-night identification", "V3-DA-02 omitted two-group comparison", "V3-DA-03 identified gaps then said they could not be listed"],
+      "expected_effect": "Offer deterministic goal-requested extrema/group comparison/gap description from valid projected entries only.",
+      "risk": "Incorrect aggregation over missing values, duplicate dates or ranges; preserve source-entry provenance and explicit denominators.",
+      "changes_policy": false, "requires_new_benchmark_for_new_heldout_claim": true, "v3_may_be_reused": "development/regression only"
+    }
+  ],
+  "evaluation_boundary": {
+    "v3_reusable_as_final_heldout": false,
+    "v3_future_role": "development/regression evidence only",
+    "next_required_heldout_set_after_repair": "V4",
+    "v4_timing": "Construct only after generalizable repairs are complete and the modified Agent, harness, scoring and protocol are frozen; no V4 construction or access in Step 9.22.",
+    "causal_claim_rule": "No V2/V3 paired or module-level causal claim from different case sets."
+  }
+}

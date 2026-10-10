@@ -1,0 +1,29 @@
+{
+  "artifact_type": "STEP9_63A_INFRASTRUCTURE_IMPLEMENTATION_AUDIT",
+  "step": "9.63a",
+  "status": "FAIL_CLOSED_PRODUCTION_INTEGRATION_AND_FREEZE_MISSING",
+  "current_persistence_model": {
+    "authorization_lifecycle": "append-only evaluation/v1_2_3/authorization_lifecycle_events.jsonl plus immutable issued manifest; retirement is serialized by scripts/authorization_lifecycle.py::lifecycle_lock",
+    "authorization_consumption": "attempts.jsonl AUTHORIZATION_CONSUMED event appended and fsynced by scripts/run_step9_35a_matched_treatment.py::run",
+    "attempt_persistence": "evaluation output directory and attempts.jsonl created separately with exclusive-create and directory fsync",
+    "namespace_persistence": "scripts/v3_namespace_allocator.py::reserve_namespace creates namespace container and allocation marker separately under .namespace-allocation.lock",
+    "execution_metadata": "PREPARED/FIRST_EVALUATION_ACCESS ledger events plus JSONL case/result/trace streams",
+    "case_start_completion": "STARTED is fsynced before production call; raw/result records and CASE_COMPLETED are fsynced after each case"
+  },
+  "current_commit_order": ["namespace reservation", "attempt directory/ledger creation", "PREPARED", "AUTHORIZATION_CONSUMED", "FIRST_EVALUATION_ACCESS", "case-set verification", "case STARTED"],
+  "existing_primitives": ["O_EXCL", "flock", "append-only JSONL", "file fsync", "parent-directory fsync", "atomic file creation"],
+  "current_locking": "namespace allocation and retirement share evaluation/v4_runs/.namespace-allocation.lock; parent writes its ledger after releasing lifecycle lock",
+  "current_crash_recovery": "partial artifacts are preserved and automatic resume forbidden; no unified transaction reconciliation state machine",
+  "prototype_module": "scripts/v3_execution_transaction.py",
+  "prototype_module_sha256": "cac450075ced33ce7490577079a6604c1a749541eaa2c4302be065d408569251",
+  "prototype_synthetic_tests": 32,
+  "prototype_contract_exercised": true,
+  "formal_runner_modified": false,
+  "authorization_lifecycle_validator_integrated": false,
+  "namespace_allocator_integrated": false,
+  "attempt_runner_integrated": false,
+  "case_start_gate_integrated": false,
+  "new_runner_freeze_created": false,
+  "why_fail_closed": "A detached transaction journal does not protect direct adapter/parent entry points; r6 authorization and validators do not recognize its state. Wiring requires coordinated r7 freeze and a fresh compatible authorization, neither can be inferred or fabricated here.",
+  "power_loss_durability_claim": "NO; fsync calls are present in the prototype, but storage-device/controller cache guarantees were not established"
+}

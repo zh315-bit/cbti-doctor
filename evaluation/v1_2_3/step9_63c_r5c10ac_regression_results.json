@@ -1,0 +1,65 @@
+{
+ "step": "9.63c-r5c10ac",
+ "interpreter": ".venv/bin/python (Python 3.12.14, base: bundled CPython 3.12)",
+ "framework": "stdlib unittest; pytest not installed/not used",
+ "harness": "evaluation/v1_2_3/step9_63c_r5c10ab_test_harness/run_all.sh <OUT outside repo> (SHA-256 verified unchanged; guard self-test 18/18)",
+ "env": {
+  "DEEPSEEK_API_KEY": "ci-placeholder-no-network",
+  "OPENAI/ANTHROPIC/TAVILY": "empty",
+  "ENABLE_WEB_SEARCH": "false",
+  "LANGCHAIN_TRACING_V2": "false",
+  "PYTHONDONTWRITEBYTECODE": "1"
+ },
+ "runs": {
+  "phase1_reproduction_before_repairs": {
+   "collected": 650,
+   "passed": 628,
+   "failed": 4,
+   "errors": 18,
+   "skipped": 0,
+   "import_blocked_modules": 8,
+   "module_processes": 66,
+   "guard_events": 2,
+   "guard_blocked": 0
+  },
+  "phase3_final_run_a": {
+   "collected": 745,
+   "passed": 659,
+   "failed": 8,
+   "errors": 78,
+   "skipped": 0,
+   "import_blocked_modules": 4,
+   "module_processes": 66,
+   "guard_events": 2,
+   "guard_blocked": 0
+  },
+  "phase3_final_run_b": {
+   "collected": 745,
+   "passed": 659,
+   "failed": 8,
+   "errors": 78,
+   "skipped": 0,
+   "import_blocked_modules": 4,
+   "module_processes": 66,
+   "guard_events": 2,
+   "guard_blocked": 0
+  }
+ },
+ "reproducibility": {
+  "phase1_vs_r5c10ab_matrix_non_pass_ids_and_outcomes_identical": true,
+  "final_run_a_vs_b_per_item_identical": true
+ },
+ "reconciliation": {
+  "collected": "650 + 95 (4 modules un-blocked by R2: 33+19+26+17) = 745",
+  "passed": "628 + 31 newly runnable passes = 659",
+  "non_pass": "22 previous (unchanged ids) + 64 newly visible = 86 (8 fail + 78 error)",
+  "import_blocked": "8 - 4 = 4 (remaining 45 static methods need the identity-bound import in every method/fixture)"
+ },
+ "ci_script_measurements": {
+  "clean_HEAD_export_before_R1": "Ran 277, errors=2 (two HEAD v1_2 mechanism tests attempt fixed historical trace writes; blocked by guard). HEAD lacks the r5c10o isolation fix.",
+  "clean_HEAD_export_after_R1": "Ran 277, errors=2; test-id set identical to before R1 (coverage unchanged)",
+  "working_tree_before_R1": "aborted: uncaught RuntimeError at import, 0 tests run, no report",
+  "working_tree_after_R1_before_R2": "Ran 576, failures=4, errors=25 (8 named import_<module> entries); equals harness numbers minus CI artifact_bound exclusions",
+  "github_ci_visibility": "Only 38 of 66 test modules and 47 of 70 scripts are Git-tracked; none of the import-blocked modules exist in GitHub CI checkouts"
+ }
+}

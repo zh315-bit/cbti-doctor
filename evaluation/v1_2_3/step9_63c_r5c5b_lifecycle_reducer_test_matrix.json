@@ -1,0 +1,38 @@
+{
+  "artifact_type": "STEP9_63C_R5C5B_LIFECYCLE_REDUCER_TEST_MATRIX",
+  "test_module": "tests/test_step9_63c_r5c5b_lifecycle_reducer.py",
+  "new_synthetic_test_count": 21,
+  "new_synthetic_test_names": [
+    "test_01_clean_issuance_is_executable",
+    "test_02_clean_issuance_is_reusable",
+    "test_03_retirement_is_terminal",
+    "test_04_retired_is_not_executable",
+    "test_05_burned_commit_is_terminal",
+    "test_06_burned_commit_is_not_executable",
+    "test_07_manifest_issued_does_not_override_burn",
+    "test_08_consumption_is_terminal",
+    "test_09_consumed_is_not_executable",
+    "test_10_retirement_and_transaction_conflict_fail_closed",
+    "test_11_malformed_transaction_fails_closed",
+    "test_12_unburned_commit_fails_closed",
+    "test_13_stray_namespace_marker_fails_closed",
+    "test_14_case_started_without_attempt_fails_closed",
+    "test_15_old_r7_historical_regression",
+    "test_16_old_r8_historical_regression",
+    "test_17_r7_and_r8_are_not_in_legacy_active_list",
+    "test_18_active_count_is_zero",
+    "test_19_assert_executable_rejects_r7",
+    "test_20_manifest_and_transaction_bytes_unchanged",
+    "test_21_historical_pin_inventory_still_passes"
+  ],
+  "focused_regression_modules": [
+    "tests.test_step9_63a_r3_authorization_issuance",
+    "tests.test_step9_62b_mac_local_preflight",
+    "tests.test_step9_63_v3_formal_execution"
+  ],
+  "combined_test_count": 68,
+  "failures": 0,
+  "errors": 0,
+  "network_or_inference": false,
+  "formal_execution": false
+}

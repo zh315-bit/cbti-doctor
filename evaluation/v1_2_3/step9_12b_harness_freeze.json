@@ -1,0 +1,36 @@
+{
+  "evaluation_id": "clean-evaluation-v1_2_3-20260922-01",
+  "harness_freeze_id": "step9_12b_observability_only",
+  "parent_manifest": "evaluation/v1_2_3/step9_11_clean_freeze_manifest.json",
+  "old_harness_freeze": {
+    "aggregate_hash": "43a4ccda69272e9eb0d6a02eb7f3812d386d47fd7ca4aa48c0d0ece925cca455",
+    "preflight_step9_12_local_sha256": "b7da10fccb83d4f15b8534469265adbf853ebb96578d413746f43a8ee5ad8f86"
+  },
+  "change_class": "OBSERVABILITY_ONLY",
+  "changed_files": [
+    {
+      "path": "scripts/preflight_step9_12_local.py",
+      "reason": "Recover action-specific lineage from LoopResult.state_history and validate conditional lineage shapes without changing production execution."
+    }
+  ],
+  "new_harness_files": [
+    ["scripts/frozen_run_guard.py", "e403e78094c25c9632588f0865b297454f4a044557a8a38541e617bd8b2b2b64"],
+    ["scripts/preflight_step9_12_local.py", "71eec91550e0b1e60f2c80b6c4024d73238f67b493afe8bd0ddf4f17cbc7572d"],
+    ["scripts/run_step8_9_v1_2_1.py", "183aace522fdf720308897c7c8f8620bc5947b7c287388c6083020eb2df2672c"],
+    ["scripts/run_step9_12_frozen_evaluation.py", "18017771df952b6bec374015bfa5e8a92bd3ff6ce57d3bebf8785d09e835d638"],
+    ["scripts/run_step9_8_frozen_evaluation.py", "7866cde09895f7d9f71a016f10c64740f1df257cb83a20d8ace621c20c1e0485"]
+  ],
+  "new_harness_aggregate_hash": "56df7699114ff8f09ad7ace091fd4fc3224ff69880b3b84bf37591c5f2ad20cf",
+  "unchanged_freezes": {
+    "agent_freeze_match_required": true,
+    "benchmark_freeze_match_required": true,
+    "scoring_freeze_match_required": true,
+    "benchmark_v2_case_count": 40,
+    "case_specific_logic_added": false
+  },
+  "notes": [
+    "This file does not rewrite the Step 9.11 manifest.",
+    "This file does not authorize a Benchmark run.",
+    "A future formal runner/harness reconciliation requires separate approval."
+  ]
+}

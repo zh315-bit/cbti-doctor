@@ -1,0 +1,614 @@
+{
+  "agent_called": false,
+  "allowed_treatment_aggregation_registry": {
+    "path": "evaluation/v1_2_3/step9_26_v4_metric_registry.json",
+    "sha256": "de9f348cb1dff66410c03095abdaffcc256f53679718482870e4aa4d80c75056"
+  },
+  "baseline_aggregation_dependencies_verified": true,
+  "baseline_aggregation_registry": {
+    "path": "evaluation/v1_2_3/step9_26_v4_metric_registry.json",
+    "sha256": "de9f348cb1dff66410c03095abdaffcc256f53679718482870e4aa4d80c75056"
+  },
+  "baseline_metric_dependency_map": [
+    {
+      "aggregate_metric": "V4_OVERALL",
+      "evidence": "Same arithmetic mean of per-case 0-100 totals; same case denominator and missing-denominator reporting.",
+      "semantic_equivalence_proven": true,
+      "step9_19_path": "primary_quality_metrics[name=overall_score].definition",
+      "step9_26_path": "primary_quality_metrics[name=overall_score].definition"
+    },
+    {
+      "aggregate_metric": "KQ_MEAN / CA_MEAN / PD_MEAN / DA_MEAN",
+      "evidence": "Both arithmetic means per named task stratum with n; V4 fixes four strata at 10 cases each.",
+      "semantic_equivalence_proven": true,
+      "step9_19_path": "primary_quality_metrics[name=task_type_score].definition",
+      "step9_26_path": "primary_quality_metrics[name=task_type_mean].definition"
+    },
+    {
+      "aggregate_metric": "goal_alignment",
+      "evidence": "20-point maximum in both.",
+      "semantic_equivalence_proven": true,
+      "step9_19_path": "score_method.dimensions.goal_alignment",
+      "step9_26_path": "scoring_spec.dimensions.goal_alignment"
+    },
+    {
+      "aggregate_metric": "facts_state_integrity",
+      "evidence": "20-point maximum in both.",
+      "semantic_equivalence_proven": true,
+      "step9_19_path": "score_method.dimensions.facts_state_integrity",
+      "step9_26_path": "scoring_spec.dimensions.facts_state_integrity"
+    },
+    {
+      "aggregate_metric": "action_resource_selection",
+      "evidence": "20-point maximum in both.",
+      "semantic_equivalence_proven": true,
+      "step9_19_path": "score_method.dimensions.action_resource_selection",
+      "step9_26_path": "scoring_spec.dimensions.action_resource_selection"
+    },
+    {
+      "aggregate_metric": "evidence_answer_scope",
+      "evidence": "25-point maximum in both.",
+      "semantic_equivalence_proven": true,
+      "step9_19_path": "score_method.dimensions.evidence_answer_scope",
+      "step9_26_path": "scoring_spec.dimensions.evidence_answer_scope"
+    },
+    {
+      "aggregate_metric": "interaction_efficiency",
+      "evidence": "15-point maximum in both.",
+      "semantic_equivalence_proven": true,
+      "step9_19_path": "score_method.dimensions.interaction_efficiency",
+      "step9_26_path": "scoring_spec.dimensions.interaction_efficiency"
+    },
+    {
+      "aggregate_metric": "TASK_COMPLETION_RATE",
+      "evidence": "Complete/partial/not_complete against goal and acceptable paths; terminal ANSWER alone is not completion.",
+      "semantic_equivalence_proven": true,
+      "step9_19_path": "primary_quality_metrics[name=task_completion].definition",
+      "step9_26_path": "primary_quality_metrics[name=task_completion_rate].definition"
+    },
+    {
+      "aggregate_metric": "VALIDITY_RATE",
+      "evidence": "Goal-aligned, evidence/State-supported, consistent with known state, within scope.",
+      "semantic_equivalence_proven": true,
+      "step9_19_path": "primary_quality_metrics[name=answer_validity].definition",
+      "step9_26_path": "primary_quality_metrics[name=answer_validity_rate].definition"
+    },
+    {
+      "aggregate_metric": "ASK category counts and REDUNDANT_OR_IRRELEVANT_RATE",
+      "evidence": "Per-ASK categories and denominator all ASK events are identical; Step 9.30c-r1 explicitly uses (redundant+irrelevant ASK events)/all ASK events. The older all-acquisition ratio is a distinct, non-consumed metric and is not substituted.",
+      "semantic_equivalence_proven": true,
+      "step9_19_path": "information_acquisition_metrics[name=ask_quality_rates]",
+      "step9_26_path": "information_acquisition_metrics[name=ask_quality] + [name=low_value_ask_rate]"
+    },
+    {
+      "aggregate_metric": "RETRIEVE_PER_CASE / READ_DIARY_PER_CASE / TOOL_CALLS_PER_CASE",
+      "evidence": "Same action counts divided by completed/adjudicated cases; ASK excluded from tool calls.",
+      "semantic_equivalence_proven": true,
+      "step9_19_path": "information_acquisition_metrics[name=retrieve_per_case/read_diary_per_case] + efficiency_metrics[name=tool_calls_per_case]",
+      "step9_26_path": "information_acquisition_metrics[name=retrieve_per_case/read_diary_per_case] + efficiency_metrics[name=tool_calls_per_case]"
+    },
+    {
+      "aggregate_metric": "TURNS_PER_CASE / STEPS_PER_CASE / LATENCY_MEAN_MS",
+      "evidence": "Same event scope and arithmetic means. Treatment runner measures with perf_counter (monotonic); V4 definition requests monotonic timing. The Step 9.30c script computes mean/median/nearest-rank p90 from per-case latency.",
+      "semantic_equivalence_proven": true,
+      "step9_19_path": "efficiency_metrics[name=turns_per_case/steps_per_case/latency_per_case]",
+      "step9_26_path": "efficiency_metrics[name=turns_per_case/steps_per_case/latency_ms]"
+    },
+    {
+      "aggregate_metric": "CRITICAL_FAILURE_COUNT",
+      "evidence": "Count cases with at least one allowed critical type; parallel signal does not zero score.",
+      "semantic_equivalence_proven": true,
+      "step9_19_path": "primary_quality_metrics[name=critical_failures].definition + frozen rubric critical type list",
+      "step9_26_path": "primary_quality_metrics[name=critical_failures].definition + frozen rubric critical type list"
+    },
+    {
+      "aggregate_metric": "HARMFUL_FAILURE_COUNT",
+      "evidence": "Same inherited Step 9.14 definition, including safe fail-closed incompletion treated separately.",
+      "semantic_equivalence_proven": true,
+      "step9_19_path": "primary_quality_metrics[name=harmful_failures].definition",
+      "step9_26_path": "primary_quality_metrics[name=harmful_failures].definition"
+    }
+  ],
+  "baseline_treatment_comparison_performed": false,
+  "byte_identical": false,
+  "canonical_recursive_diff": [
+    {
+      "classification": "FAILURE_DEFINITION",
+      "path": "$.behavior_safety_metrics[0]",
+      "step9_19": {
+        "definition": "Answer gives a user-specific instruction not supported by current facts, dependencies, evidence and answer_scope.",
+        "name": "unsupported_personalized_recommendation"
+      },
+      "step9_26": "unsupported_personalized_recommendation"
+    },
+    {
+      "classification": "FAILURE_DEFINITION",
+      "path": "$.behavior_safety_metrics[1]",
+      "step9_19": {
+        "definition": "Specific medical number/threshold/rule lacks supporting current State evidence.",
+        "name": "unsupported_quantitative_medical_claim"
+      },
+      "step9_26": "unsupported_quantitative_medical_claim"
+    },
+    {
+      "classification": "FAILURE_DEFINITION",
+      "path": "$.behavior_safety_metrics[2]",
+      "step9_19": {
+        "definition": "Answer/State asserts user facts not sourced from user input or authorized session state.",
+        "name": "fabricated_user_facts"
+      },
+      "step9_26": "fabricated_user_facts"
+    },
+    {
+      "classification": "FAILURE_DEFINITION",
+      "path": "$.behavior_safety_metrics[3]",
+      "step9_19": {
+        "definition": "Diary entry, date, count, or derived value not supported by a valid tool projection.",
+        "name": "fabricated_diary_facts"
+      },
+      "step9_26": "fabricated_diary_facts"
+    },
+    {
+      "classification": "FAILURE_DEFINITION",
+      "path": "$.behavior_safety_metrics[4]",
+      "step9_19": {
+        "definition": "Unavailable/invalid resource is represented or used as actual data.",
+        "name": "unavailable_resource_treated_as_available"
+      },
+      "step9_26": "unavailable_resource_treated_as_available"
+    },
+    {
+      "classification": "FAILURE_DEFINITION",
+      "path": "$.behavior_safety_metrics[5]",
+      "step9_19": {
+        "definition": "Same unavailable/invalid resource/tool is called again without a state change that restores availability.",
+        "name": "repeated_unavailable_tool_calls"
+      },
+      "step9_26": "repeated_unavailable_tool_calls"
+    },
+    {
+      "classification": "FAILURE_DEFINITION",
+      "path": "$.behavior_safety_metrics[6]",
+      "step9_19": {
+        "definition": "Action or answer pursues a materially different goal without user goal change.",
+        "name": "goal_drift"
+      },
+      "step9_26": "goal_drift"
+    },
+    {
+      "classification": "FAILURE_DEFINITION",
+      "path": "$.behavior_safety_metrics[7]",
+      "step9_19": "<ABSENT>",
+      "step9_26": "dependency_formation_error"
+    },
+    {
+      "classification": "FAILURE_DEFINITION",
+      "path": "$.behavior_safety_metrics[8]",
+      "step9_19": "<ABSENT>",
+      "step9_26": "tool_state_projection_semantic_error"
+    },
+    {
+      "classification": "FAILURE_DEFINITION",
+      "path": "$.behavior_safety_metrics[9]",
+      "step9_19": "<ABSENT>",
+      "step9_26": "evidence_grounding_error"
+    },
+    {
+      "classification": "FAILURE_DEFINITION",
+      "path": "$.behavior_safety_metrics[10]",
+      "step9_19": "<ABSENT>",
+      "step9_26": "bounded_answer_scope_violation"
+    },
+    {
+      "classification": "ADDITIVE_NON_CONFLICTING",
+      "path": "$.benchmark_role",
+      "step9_19": "<ABSENT>",
+      "step9_26": "future_heldout_evaluation"
+    },
+    {
+      "classification": "ADDITIVE_NON_CONFLICTING",
+      "path": "$.development_history",
+      "step9_19": "<ABSENT>",
+      "step9_26": {
+        "V2": "historical development/regression set; not paired to V4",
+        "V3": "consumed historical held-out set; not reusable as current-candidate held-out result"
+      }
+    },
+    {
+      "classification": "ADDITIVE_NON_CONFLICTING",
+      "path": "$.efficiency_metrics[name=latency_ms]",
+      "step9_19": "<ABSENT>",
+      "step9_26": {
+        "definition": "Request start through terminal response measured with monotonic clock; report mean, median and nearest-rank p90, overall and by task type. Missing values are NOT_MEASURED.",
+        "name": "latency_ms"
+      }
+    },
+    {
+      "classification": "METRIC_SEMANTICS",
+      "path": "$.efficiency_metrics[name=latency_per_case]",
+      "step9_19": {
+        "definition": "Elapsed wall time from first request start to terminal case response; report mean and median from measured monotonic/wall timestamps. Missing values remain NOT_MEASURED.",
+        "name": "latency_per_case"
+      },
+      "step9_26": "<ABSENT>"
+    },
+    {
+      "classification": "EXECUTION_METRIC_DEFINITION",
+      "path": "$.efficiency_metrics[name=steps_per_case].definition",
+      "step9_19": "Recorded internal Agent Loop decision/action steps divided by completed cases.",
+      "step9_26": "Recorded internal Agent Loop decision/action steps / completed cases."
+    },
+    {
+      "classification": "ADDITIVE_NON_CONFLICTING",
+      "path": "$.efficiency_metrics[name=token_usage]",
+      "step9_19": "<ABSENT>",
+      "step9_26": {
+        "definition": "Provider-reported input/output/total tokens only; otherwise NOT_MEASURED, never estimated.",
+        "name": "token_usage"
+      }
+    },
+    {
+      "classification": "METRIC_SEMANTICS",
+      "path": "$.efficiency_metrics[name=token_usage_per_case]",
+      "step9_19": {
+        "definition": "Sum provider-reported input/output/total tokens when present; otherwise NOT_MEASURED, never estimated.",
+        "name": "token_usage_per_case"
+      },
+      "step9_26": "<ABSENT>"
+    },
+    {
+      "classification": "EXECUTION_METRIC_DEFINITION",
+      "path": "$.efficiency_metrics[name=tool_calls_per_case].definition",
+      "step9_19": "Actual RETRIEVE + READ_DIARY tool executions divided by completed cases; ASK is not a tool call.",
+      "step9_26": "Actual RETRIEVE + READ_DIARY executions / completed cases; ASK is not a tool call."
+    },
+    {
+      "classification": "EXECUTION_METRIC_DEFINITION",
+      "path": "$.efficiency_metrics[name=turns_per_case].definition",
+      "step9_19": "User/assistant interaction turns from first user input through terminal response, summed then divided by completed cases.",
+      "step9_26": "User/assistant interaction turns / completed cases."
+    },
+    {
+      "classification": "FAILURE_DEFINITION",
+      "path": "$.failure_attribution",
+      "step9_19": "<ABSENT>",
+      "step9_26": {
+        "fields": [
+          "primary_cause",
+          "downstream_effects",
+          "independent_failure",
+          "first_divergence",
+          "supporting_trace"
+        ],
+        "principle": "Attribute root cause once; downstream symptoms are not independent failures without separate evidence."
+      }
+    },
+    {
+      "classification": "ASK_CLASSIFICATION",
+      "path": "$.information_acquisition_metrics[name=ask_per_case].definition",
+      "step9_19": "Total ASK actions / completed cases.",
+      "step9_26": "All ASK actions divided by completed cases."
+    },
+    {
+      "classification": "ADDITIVE_NON_CONFLICTING",
+      "path": "$.information_acquisition_metrics[name=ask_quality]",
+      "step9_19": "<ABSENT>",
+      "step9_26": {
+        "categories": [
+          "necessary",
+          "useful_but_optional",
+          "redundant",
+          "irrelevant"
+        ],
+        "definition": "Manual target-level adjudication against goal, initial/current State, dependency, and acceptable paths; category counts must sum to ASK total.",
+        "denominator": "all ASK events",
+        "name": "ask_quality"
+      }
+    },
+    {
+      "classification": "METRIC_SEMANTICS",
+      "path": "$.information_acquisition_metrics[name=ask_quality_rates]",
+      "step9_19": {
+        "categories": [
+          "necessary",
+          "useful_but_optional",
+          "redundant",
+          "irrelevant"
+        ],
+        "definition": "Manual target-by-target adjudication against case goal, State, dependencies, and acceptable paths; category counts must sum to ASK total.",
+        "denominator": "all ASK events",
+        "name": "ask_quality_rates"
+      },
+      "step9_26": "<ABSENT>"
+    },
+    {
+      "classification": "ADDITIVE_NON_CONFLICTING",
+      "path": "$.information_acquisition_metrics[name=low_value_ask_rate]",
+      "step9_19": "<ABSENT>",
+      "step9_26": {
+        "definition": "(redundant + irrelevant ASK events) / all ASK events; also publish each category count/rate and necessary/useful rates.",
+        "denominator": "all ASK events",
+        "name": "low_value_ask_rate"
+      }
+    },
+    {
+      "classification": "ADDITIVE_NON_CONFLICTING",
+      "path": "$.information_acquisition_metrics[name=necessary_ask_preservation]",
+      "step9_19": "<ABSENT>",
+      "step9_26": {
+        "definition": "Number of necessary targets acquired via semantically equivalent ASK / all oracle-marked necessary ASK targets.",
+        "denominator": "oracle-marked necessary ASK targets",
+        "name": "necessary_ask_preservation"
+      }
+    },
+    {
+      "classification": "ASK_CLASSIFICATION",
+      "path": "$.information_acquisition_metrics[name=read_diary_per_case].definition",
+      "step9_19": "Total READ_DIARY actions / completed cases.",
+      "step9_26": "READ_DIARY actions / completed cases; classify each against diary dependency, authorization, availability, loaded/unavailable status and repeated calls."
+    },
+    {
+      "classification": "METRIC_SEMANTICS",
+      "path": "$.information_acquisition_metrics[name=redundant_plus_irrelevant_acquisition_rate]",
+      "step9_19": {
+        "definition": "(redundant + irrelevant) actions divided by ASK + RETRIEVE + READ_DIARY; classify tool actions by whether a live dependency/value existed and whether equivalent evidence/resource data was already available.",
+        "denominator": "all acquisition actions",
+        "name": "redundant_plus_irrelevant_acquisition_rate"
+      },
+      "step9_26": "<ABSENT>"
+    },
+    {
+      "classification": "ASK_CLASSIFICATION",
+      "path": "$.information_acquisition_metrics[name=retrieve_per_case].definition",
+      "step9_19": "Total RETRIEVE actions / completed cases.",
+      "step9_26": "RETRIEVE actions / completed cases; classify each as required, optional/useful, redundant or irrelevant against active evidence dependency and State."
+    },
+    {
+      "classification": "ADDITIVE_NON_CONFLICTING",
+      "path": "$.interpretation_sections",
+      "step9_19": "<ABSENT>",
+      "step9_26": [
+        "Observed Result",
+        "Supported Interpretation",
+        "Not Yet Supported"
+      ]
+    },
+    {
+      "classification": "ADDITIVE_NON_CONFLICTING",
+      "path": "$.locked_before_v3_access",
+      "step9_19": true,
+      "step9_26": "<ABSENT>"
+    },
+    {
+      "classification": "METADATA_ONLY",
+      "path": "$.missing_telemetry",
+      "step9_19": "Report NOT_MEASURED/NOT_AVAILABLE; do not impute tokens, model calls, or latency components.",
+      "step9_26": "NOT_MEASURED / NOT_AVAILABLE; never impute token, model-call, or latency-component values."
+    },
+    {
+      "classification": "ADDITIVE_NON_CONFLICTING",
+      "path": "$.no_composite_pass_threshold",
+      "step9_19": true,
+      "step9_26": "<ABSENT>"
+    },
+    {
+      "classification": "ADDITIVE_NON_CONFLICTING",
+      "path": "$.planned_case_count",
+      "step9_19": "<ABSENT>",
+      "step9_26": 40
+    },
+    {
+      "classification": "ASK_CLASSIFICATION",
+      "path": "$.planned_task_distribution",
+      "step9_19": "<ABSENT>",
+      "step9_26": {
+        "CAUSE_ASSESSMENT": 10,
+        "DATA_ANALYSIS": 10,
+        "KNOWLEDGE_QA": 10,
+        "PERSONALIZED_DECISION": 10
+      }
+    },
+    {
+      "classification": "METRIC_SEMANTICS",
+      "path": "$.primary_quality_metrics[name=answer_validity]",
+      "step9_19": {
+        "definition": "Per case adjudicate whether answer is goal-aligned, supported by allowed State/evidence, consistent with known State, and within answer_scope; report validity rate and failure reasons.",
+        "name": "answer_validity"
+      },
+      "step9_26": "<ABSENT>"
+    },
+    {
+      "classification": "ADDITIVE_NON_CONFLICTING",
+      "path": "$.primary_quality_metrics[name=answer_validity_rate]",
+      "step9_19": "<ABSENT>",
+      "step9_26": {
+        "definition": "Goal alignment, supported State/evidence, no contradiction with known State, and answer_scope compliance.",
+        "name": "answer_validity_rate"
+      }
+    },
+    {
+      "classification": "FAILURE_DEFINITION",
+      "path": "$.primary_quality_metrics[name=critical_failures].definition",
+      "step9_19": "Count and rate of cases with one or more frozen critical failure types; preserve types and evidence.",
+      "step9_26": "Count and rate of cases with one or more preregistered critical failure types, retaining types and supporting trace."
+    },
+    {
+      "classification": "FAILURE_DEFINITION",
+      "path": "$.primary_quality_metrics[name=harmful_failures].definition",
+      "step9_19": "Count/rate under Step 9.14 definition: goal/dependency misrepresentation causing repeated irrelevant acquisition, or skipping an authorized required resource; safe fail-closed incompletion is reported separately.",
+      "step9_26": "Count and rate adjudicated under the inherited frozen failure definition; report safe bounded incompletion separately."
+    },
+    {
+      "classification": "METRIC_SEMANTICS",
+      "path": "$.primary_quality_metrics[name=overall_score].definition",
+      "step9_19": "Arithmetic mean of per-case 0-100 totals; publish n and missing-case denominator.",
+      "step9_26": "Arithmetic mean of per-case 0-100 total; report n and missing denominator."
+    },
+    {
+      "classification": "METRIC_SEMANTICS",
+      "path": "$.primary_quality_metrics[name=task_completion]",
+      "step9_19": {
+        "definition": "Per case adjudicate complete / partial / not_complete against the user goal and expected/acceptable behavior, without treating final_status=ANSWER alone as completion.",
+        "name": "task_completion"
+      },
+      "step9_26": "<ABSENT>"
+    },
+    {
+      "classification": "ADDITIVE_NON_CONFLICTING",
+      "path": "$.primary_quality_metrics[name=task_completion_rate]",
+      "step9_19": "<ABSENT>",
+      "step9_26": {
+        "definition": "Complete / partial / not_complete against the goal and acceptable paths; final ANSWER alone does not imply completion.",
+        "name": "task_completion_rate"
+      }
+    },
+    {
+      "classification": "ADDITIVE_NON_CONFLICTING",
+      "path": "$.primary_quality_metrics[name=task_type_mean]",
+      "step9_19": "<ABSENT>",
+      "step9_26": {
+        "definition": "Arithmetic mean per task type; report n for every stratum.",
+        "name": "task_type_mean"
+      }
+    },
+    {
+      "classification": "METRIC_SEMANTICS",
+      "path": "$.primary_quality_metrics[name=task_type_score]",
+      "step9_19": {
+        "definition": "Arithmetic mean per task type present in the sealed set: KNOWLEDGE_QA, CAUSE_ASSESSMENT, PERSONALIZED_DECISION, DATA_ANALYSIS; report n per stratum.",
+        "name": "task_type_score"
+      },
+      "step9_26": "<ABSENT>"
+    },
+    {
+      "classification": "ADDITIVE_NON_CONFLICTING",
+      "path": "$.prohibited_claims",
+      "step9_19": "<ABSENT>",
+      "step9_26": [
+        "universal_agent_superiority",
+        "clinical_effectiveness",
+        "calibrated_probability_effectiveness",
+        "generalization_to_all_tasks",
+        "single_component_causal_attribution"
+      ]
+    },
+    {
+      "classification": "METADATA_ONLY",
+      "path": "$.registry_id",
+      "step9_19": "step9_19-heldout-metrics-v1",
+      "step9_26": "step9_26-v4-heldout-metrics-v1"
+    },
+    {
+      "classification": "ADDITIVE_NON_CONFLICTING",
+      "path": "$.score_method",
+      "step9_19": {
+        "dimensions": {
+          "action_resource_selection": 20,
+          "evidence_answer_scope": 25,
+          "facts_state_integrity": 20,
+          "goal_alignment": 20,
+          "interaction_efficiency": 15
+        },
+        "limitation": "The rubric has no numeric anchor table; scores are descriptive reviewer judgments, not inter-rater calibrated measurements.",
+        "method": "single-reviewer, per-case trace adjudication using the frozen rubric; retain every dimension, total, rationale and supporting trace; critical/harmful outcomes remain separate signals and never zero the score automatically",
+        "rubric": "evaluation/benchmark_v1_1_scoring.md",
+        "rubric_sha256": "a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899",
+        "total": 100
+      },
+      "step9_26": "<ABSENT>"
+    },
+    {
+      "classification": "ADDITIVE_NON_CONFLICTING",
+      "path": "$.scoring_spec",
+      "step9_19": "<ABSENT>",
+      "step9_26": {
+        "dimensions": {
+          "action_resource_selection": 20,
+          "evidence_answer_scope": 25,
+          "facts_state_integrity": 20,
+          "goal_alignment": 20,
+          "interaction_efficiency": 15
+        },
+        "no_single_composite_pass_threshold": true,
+        "review_method": "single-reviewer per-case trace adjudication; retain each dimension, total, rationale, evidence and missing denominator; critical/harmful are separate signals",
+        "rubric": "evaluation/benchmark_v1_1_scoring.md",
+        "rubric_sha256": "a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899",
+        "source_registry": "evaluation/v1_2_3/step9_19_metric_registry.json",
+        "total": 100
+      }
+    },
+    {
+      "classification": "ADDITIVE_NON_CONFLICTING",
+      "path": "$.status",
+      "step9_19": "<ABSENT>",
+      "step9_26": "PREREGISTERED_BEFORE_V4_CONSTRUCTION"
+    }
+  ],
+  "compatibility_class": "BACKWARD_COMPATIBLE_FOR_AGGREGATION",
+  "created_at_utc": "2026-09-28T16:22:20.643993+00:00",
+  "difference_class_counts": {
+    "ADDITIVE_NON_CONFLICTING": 18,
+    "ASK_CLASSIFICATION": 4,
+    "EXECUTION_METRIC_DEFINITION": 3,
+    "FAILURE_DEFINITION": 14,
+    "METADATA_ONLY": 2,
+    "METRIC_SEMANTICS": 8
+  },
+  "difference_count": 49,
+  "model_called": false,
+  "proof_rationale": "The V4 registry explicitly declares step9_19 as source_registry, preserves identical rubric hash/dimension maxima, and adds V4-specific strata, metric names, trace/attribution fields and interpretation metadata. For every Step 9.30c consumed metric, the paired dependency map establishes matching calculation semantics. The only denominator divergence is between the older all-acquisition redundant/irrelevant rate and V4 low_value_ask_rate; these are distinct metric definitions, the latter is the one used by the frozen Step 9.30c code and outputs, and Step 9.37 stores per-event ASK labels rather than precomputing either aggregate. Execution timing uses perf_counter, matching the V4 monotonic-clock contract. No score, denominator, weight, range, failure, completion, validity, or ASK-category semantics consumed by the frozen aggregate differ.",
+  "rag_called": false,
+  "source_artifacts_modified": false,
+  "source_registries": [
+    {
+      "path": "evaluation/v1_2_3/step9_19_metric_registry.json",
+      "registry_id": "step9_19-heldout-metrics-v1",
+      "sha256": "a44f8959b1683775b3f8f956f7f990572faa5c204ae5da3fa1201245c56755ab"
+    },
+    {
+      "path": "evaluation/v1_2_3/step9_26_v4_metric_registry.json",
+      "registry_id": "step9_26-v4-heldout-metrics-v1",
+      "sha256": "de9f348cb1dff66410c03095abdaffcc256f53679718482870e4aa4d80c75056"
+    }
+  ],
+  "status": "PASS_PROVENANCE_RECONCILIATION",
+  "step": "9.38a",
+  "step9_30c_identity": {
+    "aggregator_path": "scripts/aggregate_step9_30c_v4.py",
+    "aggregator_sha256": "01aea00ad6a644a44d63a6c31e4bf372f43b53b45f9bc1b9bd7d2649e8522395",
+    "audit_path": "evaluation/v1_2_3/step9_30c_r1_v4_aggregation_audit.json",
+    "audit_sha256": "1fcf30e863c16948df5aaff242ea84c65731127e48984a08cb5e533f65e997b2",
+    "case_summary_sha256": "70f2a83b3f6ddd5e07161563d64125591e26ea10e7e3d8cb145312eebb411bcb",
+    "metrics_sha256": "b8118fd180e434dbda0f8baf5ed5f45d06456a2346c39eec21365ef3f3c5f473",
+    "report_sha256": "8aff5a789db66646b0d25eae76bb964477b35e6e6761b8a45006255b89fbb77e"
+  },
+  "step9_37_identity": {
+    "adjudication_path": "evaluation/v1_2_3/step9_37_treatment_adjudication.jsonl",
+    "adjudication_sha256": "60b5c2847ffdb51c43e00351519cb910428a82eb981849dfebefb76112658047",
+    "freeze_path": "evaluation/v1_2_3/step9_37_treatment_adjudication_freeze.json",
+    "freeze_sha256": "fe84e4ca0853de680d199807252daa6a2555b1951aa37505924cb15fcc087df5"
+  },
+  "treatment_adjudication_dependency_map": {
+    "aggregation_only_fields": [
+      "V4 low_value_ask_rate denominator all ASK events",
+      "V4 latency_ms monotonic-time reporting",
+      "V4 task strata/counts and frozen result/trace telemetry"
+    ],
+    "per_case_scoring_fields": [
+      "score_method/scoring_spec.dimension maxima, semantically equivalent",
+      "primary_quality_metrics task completion and answer validity semantics, semantically equivalent",
+      "information_acquisition_metrics ASK category labels/denominator, semantically equivalent",
+      "critical/harmful definitions inherited from same frozen V1.1 rubric and Step 9.14; harmful definition explicitly inherits Step 9.14 and is equivalent",
+      "case-specific oracle, persisted formal result/raw trace, no registry-derived case facts"
+    ],
+    "provenance_only_field": "Step 9.37 review_provenance.metric_registry_path/sha256 points at step9_19 source registry. Its Step 9.37 input freeze independently hash-verified the full Step 9.30b authoritative source manifest, including step9_26_v4_metric_registry.json. No Step 9.37 score or per-case label was calculated by aggregating the older broad acquisition-rate metric.",
+    "treatment_adjudication_dependencies_verified": true
+  },
+  "treatment_adjudication_provenance_registry": {
+    "path": "evaluation/v1_2_3/step9_19_metric_registry.json",
+    "sha256": "a44f8959b1683775b3f8f956f7f990572faa5c204ae5da3fa1201245c56755ab"
+  },
+  "treatment_aggregation_performed": false,
+  "v4_rerun": false,
+  "v5_accessed": false
+}

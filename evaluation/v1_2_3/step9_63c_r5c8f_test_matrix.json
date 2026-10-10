@@ -1,0 +1,38 @@
+{
+  "artifact_type": "STEP9_63C_R5C8F_OFFLINE_TEST_MATRIX",
+  "step": "9.63c-r5c8f",
+  "status": "PASS",
+  "new_test_module": "tests.test_step9_63c_r5c8f_invocation_registry",
+  "new_test_count": 16,
+  "focused_regression_test_count": 70,
+  "failures": 0,
+  "errors": 0,
+  "py_compile": "PASS",
+  "offline_only": true,
+  "new_test_cases": [
+    "test_fresh_invocation_with_missing_target_is_claimed",
+    "test_unclaimed_fresh_id_is_not_historical",
+    "test_historical_invocation_id_fails_closed",
+    "test_historical_id_with_missing_target_still_fails_closed",
+    "test_existing_target_fails_closed_without_overwrite",
+    "test_failed_invocation_without_artifact_remains_claimed",
+    "test_malformed_history_fails_closed",
+    "test_unreadable_or_missing_history_fails_closed",
+    "test_permission_denied_history_fails_closed",
+    "test_duplicate_history_entries_fail_closed",
+    "test_truncated_history_fails_closed",
+    "test_malformed_candidate_id_fails_closed",
+    "test_registry_symlink_fails_closed",
+    "test_claim_contains_no_secret_and_does_not_create_execution_state",
+    "test_append_failure_preserves_visible_claim",
+    "test_concurrent_same_id_has_exactly_one_claim"
+  ],
+  "regression_modules": [
+    "tests.test_step9_63c_r5c8b_preflight_contract (25 tests)",
+    "tests.test_step9_63c_r5c7_preflight (6 tests)",
+    "tests.test_step9_63c_r5c7b_diagnostics (13 tests)",
+    "10 focused cases from tests.test_step9_63c_r5c5b_lifecycle_reducer"
+  ],
+  "production_registry_claim_events_created_by_tests": 0,
+  "real_transport_or_model_calls": 0
+}

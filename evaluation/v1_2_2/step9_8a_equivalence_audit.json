@@ -1,0 +1,39 @@
+{
+  "step": "9.8a",
+  "purpose": "evaluation infrastructure initialization only",
+  "first_attempt_preserved": {
+    "status": "RUN_INITIALIZATION_FAILURE",
+    "executed_cases": 0,
+    "raw_traces": "none",
+    "result_selection_observation": false
+  },
+  "changes": {
+    "infrastructure_change": "Extracted the production adaptive Flask factory into adaptive_agent/flask_app.py and changed the benchmark harness to import that factory directly, avoiding legacy main_flask import-time RAG/LangChain workflow imports.",
+    "agent_behavior_changed": false,
+    "benchmark_changed": false,
+    "scoring_changed": false,
+    "case_specific_logic_introduced": false,
+    "production_components_reused": true,
+    "evaluation_harness_changes_behavior": false
+  },
+  "production_components": [
+    "AdaptiveChatService",
+    "AdaptiveSession",
+    "AdaptiveAgentLoop",
+    "DependencyResolver",
+    "effective_requirements synchronization",
+    "Hard Preconditions",
+    "RagRetrievalTool",
+    "SessionDiaryTool",
+    "State Update",
+    "LLMInputUnderstander",
+    "LLMAnswerGenerator"
+  ],
+  "equivalence_decision": "PASS",
+  "ready_for_one_authorized_frozen_step9_8_rerun": true,
+  "limitations": {
+    "tests_test_model_configuration": "NOT_VERIFIED",
+    "full_legacy_main_flask_import": "not required by the new production factory; legacy module remains import-heavy",
+    "external_model_call": "not performed during preflight"
+  }
+}

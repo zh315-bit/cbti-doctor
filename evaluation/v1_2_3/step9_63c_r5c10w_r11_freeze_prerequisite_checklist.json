@@ -1,0 +1,69 @@
+{
+  "step": "9.63c-r5c10w",
+  "scope": "read_only_review_of_formal_r11_freeze_prerequisites_not_authorization_or_execution",
+  "formal_r11_freeze_created": false,
+  "overall_prerequisites_met": false,
+  "checklist": [
+    {
+      "item": "Historical r10 freeze manifest preserved",
+      "status": "MET",
+      "evidence": "Current manifest SHA-256 d24244235e51e7bf6c8567880c654fe3fd73b87fa1bfe1ab0f10dfdc94db2693; no r10 historical manifest edit observed."
+    },
+    {
+      "item": "Versioned r11 builder and strict no-fallback resolver implemented",
+      "status": "MET_BY_PRIOR_OFFLINE_EVIDENCE",
+      "evidence": "r5c10j synthetic focused tests 78/78; formal publication has not been performed."
+    },
+    {
+      "item": "Synthetic r11 20-member 14 unchanged + 3 changed + 3 replaced identity exercise",
+      "status": "MET_BY_PRIOR_OFFLINE_EVIDENCE",
+      "evidence": "r5c10j/i synthetic matrix; not a current actual 20-member formal freeze validation."
+    },
+    {
+      "item": "Approved scanner repair and negative corruption coverage",
+      "status": "MET_BY_PRIOR_OFFLINE_EVIDENCE",
+      "evidence": "r5c10c 64/64 offline tests and r5c10d review; no current test execution."
+    },
+    {
+      "item": "Formal r11 pointer member exists and is bound to intended revision",
+      "status": "NOT_MET",
+      "evidence": "evaluation/v1_2_3/step9_63c_r11_current_runner_identity.json is absent. Builder requires this exact member before assembly."
+    },
+    {
+      "item": "All 20 proposed r11 member paths exist and their current bytes are hashed against approved candidate",
+      "status": "NOT_MET",
+      "evidence": "Only 19/20 proposed paths exist because the formal pointer is absent; no final 20-member candidate hash can be asserted."
+    },
+    {
+      "item": "Current Agent, Benchmark, Harness, Scoring, Metric Registry and One-shot hashes independently reverified at publication boundary",
+      "status": "NOT_YET_VERIFIED",
+      "evidence": "Prior frozen-identity evidence exists, but this read-only review did not rehash every member or access V4 cases. A separate authorized publication gate must do so."
+    },
+    {
+      "item": "Final r10-to-r11 member delta and unexplained-code-change audit",
+      "status": "NOT_YET_VERIFIED",
+      "evidence": "Design matrix and current 19-path observation exist; final pointer bytes and post-test publication candidate do not."
+    },
+    {
+      "item": "Full historical regression green or separately dispositioned failures",
+      "status": "NOT_MET",
+      "evidence": "Last full run in r5c10k had 20 failures, 6 runtime errors and 12 import blockers; later scoped runs do not establish full-regression success."
+    },
+    {
+      "item": "Separate human approval for formal r11 freeze publication",
+      "status": "NOT_MET",
+      "evidence": "This step expressly authorizes read-only review only."
+    },
+    {
+      "item": "Historical Trace original-content integrity as formal freeze gate",
+      "status": "CONTRACT_NOT_DETERMINED",
+      "evidence": "Original pre-run hashes are unavailable; do not silently elevate forward hash stability to original provenance or invent a freeze predicate."
+    }
+  ],
+  "post_freeze_dependencies_not_prerequisites_for_freeze_publication": [
+    "retirement/lifecycle audit of old authorization and separate new authorization issuance",
+    "real Mac-local preflight and append-only invocation registry claim",
+    "fresh attempt, namespace, transaction and formal V4 execution"
+  ],
+  "fail_closed_note": "No missing pointer or freeze is synthesized, and no r10 identity may be used as fallback."
+}

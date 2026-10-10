@@ -1,0 +1,123 @@
+{
+  "approver": null,
+  "ar14": {
+    "must_be_retired_before_pointer_creation": true,
+    "old_authorization_id": "auth-step9_63c_r5c6-aff5c4b96bb74278a14d3fd08bf8a84e",
+    "old_authorization_manifest_sha256": "beac52d1ed3bc11efa02b1a924a8abc7b210171bf5cc1b7910011a6ef9741241"
+  },
+  "artifact_type": "R11_ACTIVATION_APPROVAL",
+  "freeze": {
+    "created_at_utc": "2026-10-10T03:56:44+00:00",
+    "predicted_sha256": "872274d411e20d9797714f461bcea7e4a6d92684feba6b8084edd357fdee07b8",
+    "predicted_size": 9365
+  },
+  "historical": {
+    "lifecycle_ledger_prefix": {
+      "length": 1161,
+      "path": "evaluation/v1_2_3/authorization_lifecycle_events.jsonl",
+      "sha256": "ca168f6939c4697a7a7bccc0b365b414d9a0e632f40de4242eb0a47e2d985285"
+    },
+    "r10_authorization_manifest": {
+      "path": "evaluation/v1_2_3/step9_63c_r5c6_r10_v3_authorization_manifest.json",
+      "sha256": "beac52d1ed3bc11efa02b1a924a8abc7b210171bf5cc1b7910011a6ef9741241"
+    },
+    "r10_freeze_manifest": {
+      "path": "evaluation/v1_2_3/step9_63c_r5c5b_runner_freeze_r10.json",
+      "sha256": "d24244235e51e7bf6c8567880c654fe3fd73b87fa1bfe1ab0f10dfdc94db2693"
+    }
+  },
+  "issuance": {
+    "attempt_id": "attempt-step9_63c_r11-ff4f4029a43b48338db75dc95c1dfcce",
+    "authorization_id": "auth-step9_63c_r11-f21ad78ac3404eff9b92e5cf013ec70b",
+    "evaluation_id": "heldout-v4-step9_55a-treatment-v3-20260930-01",
+    "namespace_id": "heldout-v4-treatment-v3-run-d17d217d3c918d62d6ba"
+  },
+  "members": {
+    "evaluation/v1_2_3/step9_51_v3_development_freeze_r1.json": "106e18707aa66806c3953c8d5f38484f534d78e4fd230cbd6c491304aaf8cd27",
+    "evaluation/v1_2_3/step9_52_v3_pre_evaluation_validation.json": "7f2a5e43f4131feec1fed51121e0a398a9c9ca0ab1679073be8a91c19c4940d3",
+    "evaluation/v1_2_3/step9_58a_r1_v3_identity_contract.json": "16b6cd71cd75ea231ed3a10d3f43546e31cded9d1be120ce5d16c000391ae95f",
+    "evaluation/v1_2_3/step9_61a_v3_authorization_lifecycle_contract.json": "addb3880e7141ca14d7b3011cadb439ac83076fa6b7c2b9f28f3b024d3fd1174",
+    "evaluation/v1_2_3/step9_63a_r1_atomic_commit_contract.json": "4c63855bf08cb420436f5fce80d32e5ca4c6151d642571db9a9c9665194b66bd",
+    "evaluation/v1_2_3/step9_63a_r1_v3_runner_freeze_r7.json": "99ab870303e45497bf750b55f8382912089c2cf80e737b780922695d9906275c",
+    "evaluation/v1_2_3/step9_63c_r11_current_runner_identity.json": "4e077781faeecee57da02f37d1d3ad8cdc9dfa895d3eb72b1b4ab1f1d3f696fe",
+    "scripts/append_only_ledger.py": "5fd9f13b9aafbb8617c582ba1ed7de93d3814aefc30e8b442afe881bcd26825f",
+    "scripts/authorization_lifecycle.py": "f0d8b7e04fa2710765b74f4f293436b051af005d11851bf9583da14ff6612744",
+    "scripts/build_step9_63c_r11_runner_freeze.py": "7f72a17c584efe7ee66ee95290d28b6c55daf83ccc08ebebeb3f9319dec30f81",
+    "scripts/issue_step9_63c_r11_authorization.py": "f41763f5c82e04360b3d9bcf694e6d05a6fcfa42ae8d71ada29be4ab204e32ab",
+    "scripts/preflight_step9_62b_mac_local.py": "c4af2640e0e61a0b84a56b6a6c24f2cb3ceeaa4bb1d552d7180d8c5c54a8eda4",
+    "scripts/preflight_step9_63c_current_mac_local.py": "820cc2b6cc0e4f4569b2c8d8d7b19514ac233d6fa8e2cd96ddd58f14d3aefba6",
+    "scripts/preflight_step9_63c_r11_mac_local.py": "460ede115b319baf35f434915cce1c4a89e4d7ba912e02e1bc3919ef2fbcc05f",
+    "scripts/run_step9_35a_matched_treatment.py": "b79bc78a8439021023ee1d190919f5b519de49d3f1931789f788cdaad7776508",
+    "scripts/run_step9_53_v3_identity_adapter.py": "3a4ec3e526bde19e318e271a24569223087c8a6aadc77fd144b061825c0da282",
+    "scripts/run_step9_63_v3_formal_execution.py": "362eb4467fdadd29edc056ecf7b446f2cab99a2d3c407d350b4e91494c5b9528",
+    "scripts/v3_execution_transaction.py": "f0e74a49d152053b5455951c507edb8f7849a9e4708835711e5975a82e690e91",
+    "scripts/v3_namespace_allocator.py": "3ee484e52eb67003e0ae3b5548b821156e7ebc399c227df0b55dcd0fad385bc5",
+    "scripts/v3_runner_identity.py": "a0f5670d3834d5f91391b41a33fbac669d6162587bc620e9bd3acf202aa3c6a5"
+  },
+  "named_pins": {
+    "builder": {
+      "path": "scripts/build_step9_63c_r11_runner_freeze.py",
+      "sha256": "7f72a17c584efe7ee66ee95290d28b6c55daf83ccc08ebebeb3f9319dec30f81"
+    },
+    "consumer": {
+      "path": "scripts/run_step9_63_v3_formal_execution.py",
+      "sha256": "362eb4467fdadd29edc056ecf7b446f2cab99a2d3c407d350b4e91494c5b9528"
+    },
+    "issuer": {
+      "path": "scripts/issue_step9_63c_r11_authorization.py",
+      "sha256": "f41763f5c82e04360b3d9bcf694e6d05a6fcfa42ae8d71ada29be4ab204e32ab"
+    },
+    "producer": {
+      "path": "scripts/preflight_step9_63c_r11_mac_local.py",
+      "sha256": "460ede115b319baf35f434915cce1c4a89e4d7ba912e02e1bc3919ef2fbcc05f"
+    },
+    "resolver": {
+      "path": "scripts/v3_runner_identity.py",
+      "sha256": "a0f5670d3834d5f91391b41a33fbac669d6162587bc620e9bd3acf202aa3c6a5"
+    },
+    "scanner": {
+      "path": "scripts/v3_execution_transaction.py",
+      "sha256": "f0e74a49d152053b5455951c507edb8f7849a9e4708835711e5975a82e690e91"
+    }
+  },
+  "pointer": {
+    "canonical_sha256": "4e077781faeecee57da02f37d1d3ad8cdc9dfa895d3eb72b1b4ab1f1d3f696fe",
+    "canonical_size": 389,
+    "path": "evaluation/v1_2_3/step9_63c_r11_current_runner_identity.json"
+  },
+  "regression": {
+    "result_path": "evaluation/v1_2_3/step9_63c_r5c10ag_regression_results.json",
+    "result_sha256": "505663fcab46fd6375bfb21f019eb7dcd743e151c1b486e398963d87e0e346e8"
+  },
+  "repository_aggregate": {
+    "excludes": [
+      ".git",
+      ".venv",
+      "__pycache__",
+      "models",
+      "evaluation/v1_2_3/step9_63c_r11_activation_approval.json",
+      "evaluation/v1_2_3/step9_63c_r11_activation_approval.DRAFT.json",
+      "._*"
+    ],
+    "files": 1257,
+    "sha256": "49509adbb7ebf3a1fde6ed7db03305c7c0c95529d8eaf4e0d36836b764165371"
+  },
+  "schema_version": 1,
+  "signed_at_utc": null,
+  "status": "DRAFT_NOT_SIGNED",
+  "unchanged_members": {
+    "evaluation/v1_2_3/step9_51_v3_development_freeze_r1.json": "106e18707aa66806c3953c8d5f38484f534d78e4fd230cbd6c491304aaf8cd27",
+    "evaluation/v1_2_3/step9_52_v3_pre_evaluation_validation.json": "7f2a5e43f4131feec1fed51121e0a398a9c9ca0ab1679073be8a91c19c4940d3",
+    "evaluation/v1_2_3/step9_58a_r1_v3_identity_contract.json": "16b6cd71cd75ea231ed3a10d3f43546e31cded9d1be120ce5d16c000391ae95f",
+    "evaluation/v1_2_3/step9_61a_v3_authorization_lifecycle_contract.json": "addb3880e7141ca14d7b3011cadb439ac83076fa6b7c2b9f28f3b024d3fd1174",
+    "evaluation/v1_2_3/step9_63a_r1_atomic_commit_contract.json": "4c63855bf08cb420436f5fce80d32e5ca4c6151d642571db9a9c9665194b66bd",
+    "evaluation/v1_2_3/step9_63a_r1_v3_runner_freeze_r7.json": "99ab870303e45497bf750b55f8382912089c2cf80e737b780922695d9906275c",
+    "scripts/append_only_ledger.py": "5fd9f13b9aafbb8617c582ba1ed7de93d3814aefc30e8b442afe881bcd26825f",
+    "scripts/authorization_lifecycle.py": "f0d8b7e04fa2710765b74f4f293436b051af005d11851bf9583da14ff6612744",
+    "scripts/preflight_step9_62b_mac_local.py": "c4af2640e0e61a0b84a56b6a6c24f2cb3ceeaa4bb1d552d7180d8c5c54a8eda4",
+    "scripts/preflight_step9_63c_current_mac_local.py": "820cc2b6cc0e4f4569b2c8d8d7b19514ac233d6fa8e2cd96ddd58f14d3aefba6",
+    "scripts/run_step9_35a_matched_treatment.py": "b79bc78a8439021023ee1d190919f5b519de49d3f1931789f788cdaad7776508",
+    "scripts/run_step9_53_v3_identity_adapter.py": "3a4ec3e526bde19e318e271a24569223087c8a6aadc77fd144b061825c0da282",
+    "scripts/v3_namespace_allocator.py": "3ee484e52eb67003e0ae3b5548b821156e7ebc399c227df0b55dcd0fad385bc5"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "step": "9.63c-r5c10u",
+  "classification_recomputed_from_current_source": true,
+  "remaining_module_count": 10,
+  "counts": {"A": 1, "B": 0, "C": 1, "D": 8},
+  "A": {
+    "paths": ["tests/test_step9_63c_r3_parent_namespace_repair.py"],
+    "meaning": "One non-frozen test-file import relocation is sufficient to remove the known import-time collection blocker. Execution safety remains separate."
+  },
+  "B": {
+    "paths": [],
+    "meaning": "No module was proven to require multiple non-frozen test files or a shared test helper changed; this is not evidence that all other modules are one-file safe."
+  },
+  "C": {
+    "paths": ["tests/test_step9_63a_r3_authorization_issuance.py"],
+    "meaning": "Frozen issuer is transitive import and runtime dependency; separate issuer/lifecycle-boundary review required. A frozen edit is not established as necessary for collection."
+  },
+  "D": {
+    "paths": [
+      "tests/test_step9_53_v3_identity_adapter.py",
+      "tests/test_step9_55a_namespace_lifecycle.py",
+      "tests/test_step9_59a_auth_identity_binding.py",
+      "tests/test_step9_63a_r1_production_integration.py",
+      "tests/test_step9_63a_r2_retirement_eligibility.py",
+      "tests/test_step9_63b_mac_local_preflight.py",
+      "tests/test_step9_63c_r5_mac_local_preflight.py",
+      "tests/test_step9_63c_r5b_preflight_lifecycle.py"
+    ],
+    "meaning": "Static evidence does not yet justify a safe scoped collection-and-execution isolation patch; plausible lazy imports are not treated as test-pass proof."
+  },
+  "category_does_not_imply_collected_or_passed": true,
+  "no_production_or_frozen_change_authorized": true
+}

@@ -1,0 +1,9 @@
+{
+  "taxonomy":{
+    "A_dependency_formation_failure":{"A1":"evidence dependency missing after KQ→PERSONALIZED_DECISION task misrepresentation","A2":"resource dependency missing after DA→PERSONALIZED_DECISION task/state misrepresentation"},
+    "B_tool_contract_projection_failure":{"B2":"summary-shaped result has neither source cardinality nor source dates, yet is accepted as entry-shaped valid state"}
+  },
+  "hard_precondition_mechanism":"When precondition inputs exist, Step 8.9 traces show RESOURCE and VALIDITY_CRITICAL_STATE records; no recorded hard precondition was bypassed by bounded stop.",
+  "requirements_vs_dependencies":{"finding":"Partially conflated","evidence":"Requirements are resolved only after task representation. When task representation is wrong, DATA_ANALYSIS resource/evidence requirements are not available to form dependencies. The existing preconditions layer therefore cannot compensate.","candidate_boundary":"Goal → Dependency Resolver → {EVIDENCE, RESOURCE, VALIDITY_STATE} → Hard Preconditions; keep Requirements as information relevance/scope input."},
+  "not_a_policy_finding":"No trace supports classifying missing RETRIEVE/READ_DIARY in these three cases as a Decision Policy selection failure: the required candidate/precondition was absent." 
+}

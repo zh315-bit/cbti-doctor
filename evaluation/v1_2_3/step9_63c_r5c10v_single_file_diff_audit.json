@@ -1,0 +1,20 @@
+{
+  "step": "9.63c-r5c10v",
+  "approved_target": "tests/test_step9_63c_r3_parent_namespace_repair.py",
+  "target_is_r10_frozen_member": false,
+  "git_status_before_and_after": "UNTRACKED_BEFORE_AND_AFTER",
+  "git_diff_note": "git diff -- <target> is empty because this pre-existing file is untracked. The recorded before/after SHA-256 and exact two-line import relocation define this step's change; no pre-existing content was overwritten.",
+  "target_sha256_before": "c863410fccc43364c810d4e6d7ac22630d890e61798641a66c50dd0e1aa8f1d3",
+  "target_sha256_after": "f8c5b2e255ceda15c7d76e2f6b3a6a5af4afbfdcadbcae2f83cb6f5b3951262e",
+  "exact_change": [
+    "Removed module-scope: from scripts import run_step9_53_v3_identity_adapter as adapter",
+    "Added the identical import as the first statement inside test_t12_no_default_global_root_on_formal_path"
+  ],
+  "patched_file_count": 1,
+  "other_test_files_modified_in_this_step": 0,
+  "production_or_frozen_files_modified_in_this_step": 0,
+  "assertions_or_expected_results_changed": 0,
+  "test_data_changed": false,
+  "skips_xfails_or_identity_mocks_added": 0,
+  "preexisting_worktree_note": "Git already showed scripts/run_step9_35a_matched_treatment.py modified and several relevant scripts/test files untracked; this step did not edit those paths."
+}

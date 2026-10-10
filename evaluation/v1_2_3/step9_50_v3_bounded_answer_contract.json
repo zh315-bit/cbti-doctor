@@ -1,0 +1,34 @@
+{
+  "construction_contract": {
+    "answer_scope": "Explicit authorized scope and exclusions computed before generation.",
+    "empty_basis": "If no useful supported proposition exists, do not manufacture a bounded answer; select BLOCKED_NEEDS_INFORMATION or BLOCKED_UNSAFE_OR_INVALID by frozen rules.",
+    "generation": "Reuse grounded answer-generation path with a bounded context projection; deterministic diary facts remain sourced from validated state. No unrelated dependency/precondition relaxation.",
+    "supported_content_basis": "Nonempty list of provenance-bound evidence/fact IDs and permitted claim spans.",
+    "validation": "Reject output containing excluded action claims, unsupported quantities, fabricated facts, or claims without basis; never fallback to the current one-sentence generic template when supported content exists."
+  },
+  "content_requirements": [
+    "State material evidence/state limitation.",
+    "Do not provide unsupported individualized recommendations.",
+    "Preserve known user-specific constraints.",
+    "Provide the maximum useful supported answer within the authorized scope.",
+    "Do not present missing state as known.",
+    "UNKNOWN/DEFERRED/UNAVAILABLE remain unsatisfied.",
+    "Remain materially responsive to the request, not only generically cautious."
+  ],
+  "contract_id": "step9_50_bounded_answer_v1",
+  "entry_conditions": [
+    "A full individualized answer is not authorized or cannot be supported by validated state.",
+    "At least one useful proposition is supported by available, provenance-valid evidence or known user facts.",
+    "The unsupported individualized action can be explicitly excluded from the answer scope.",
+    "No HARD_PRECONDITION requires complete blocking; invalid/conflicting state is not silently bounded away.",
+    "The bounded scope and preserved user constraints can be represented explicitly before generation."
+  ],
+  "forbidden_behavior": [
+    "Fabricate missing personal facts.",
+    "Indirectly provide an excluded individualized action.",
+    "Weaken a REQUIRED dependency or bypass a HARD_PRECONDITION.",
+    "Replace useful supported content with generic boilerplate.",
+    "Qualify an otherwise unsafe individualized action rather than excluding it."
+  ],
+  "status": "DESIGN_ONLY_NOT_IMPLEMENTED"
+}

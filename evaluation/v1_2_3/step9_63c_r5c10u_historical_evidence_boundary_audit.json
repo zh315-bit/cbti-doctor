@@ -1,0 +1,49 @@
+{
+  "step": "9.63c-r5c10u",
+  "audit_mode": "READ_ONLY_NO_TEST_EXECUTION",
+  "r5c10t_target_post_patch": {
+    "path": "tests/test_step9_63c_r5c7b_diagnostics.py",
+    "current_sha256": "655a45c09b3751d24ea9f006649ecb5a9620b1f2acc744f4a2965fbb195f615c",
+    "matches_r5c10t_post_patch_hash": true,
+    "new_import_dependencies": false,
+    "import_timing_change": "Existing non-frozen transport import moved from module scope into DNS method/helper; diagnostic preflight import remains at module scope",
+    "new_test_side_effects": "NO NEW WRITE/NETWORK/EXECUTION CALL FOUND; four transport paths retain their prior connectivity calls and remain unexecuted without formal identity"
+  },
+  "r10_historical_freeze_manifest": {
+    "path": "evaluation/v1_2_3/step9_63c_r5c5b_runner_freeze_r10.json",
+    "current_sha256": "d24244235e51e7bf6c8567880c654fe3fd73b87fa1bfe1ab0f10dfdc94db2693",
+    "matches_recorded_historical_sha256": true,
+    "member_count": 20
+  },
+  "current_r10_member_path_hash_aggregate": "f6f20d9dad339ffef49a4e23179705c7857fe0ce0b882cb9a013d59c9e1b1197",
+  "aggregate_note": "Unchanged from prior observation; current r11-candidate working-tree edits mean this does not claim all member bytes match original r10 hashes.",
+  "historical_authorization_manifest": {
+    "path": "evaluation/v1_2_3/step9_63c_r5c6_r10_v3_authorization_manifest.json",
+    "current_sha256": "beac52d1ed3bc11efa02b1a924a8abc7b210171bf5cc1b7910011a6ef9741241"
+  },
+  "append_only_lifecycle_ledger": {
+    "path": "evaluation/v1_2_3/authorization_lifecycle_events.jsonl",
+    "current_sha256": "aaa2e9898a8869db052a1248a0ca2b0574d9c36093aee608db59457f24c2a60e"
+  },
+  "historical_traces": [
+    {
+      "path": "evaluation/v1_2/step8_3_mechanism_traces.jsonl",
+      "current_sha256": "e09321c89b75a4330799e4a4c286652cee82ed0e0d4fa1b8478c970dd7f6d8e5",
+      "size_bytes": 64294,
+      "mtime_local": "2026-10-09T11:37:42-0400"
+    },
+    {
+      "path": "evaluation/v1_2_1/step8_7_mechanism_traces.jsonl",
+      "current_sha256": "5518eb4b0b7e8880c5f84e59ba0264013bed99e25edb8da93dca558304d4f084",
+      "size_bytes": 33014,
+      "mtime_local": "2026-10-09T11:37:42-0400"
+    }
+  ],
+  "protected_historical_directory_path_hash_aggregate": "5dcaa341ef35160f3840e244f0943b1620f4b4bfcf0b6241247a7a5274f83751",
+  "historical_trace_original_content_integrity": "CONTENT_INTEGRITY_UNPROVEN",
+  "historical_trace_modified_in_this_step": false,
+  "formal_r11_pointer_exists": false,
+  "formal_r11_freeze_exists": false,
+  "new_authorization_issued_in_this_step": false,
+  "formal_v4_case_executed_in_this_step": 0
+}

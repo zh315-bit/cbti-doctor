@@ -1,0 +1,15 @@
+{
+  "artifact_type": "STEP9_63B_MAC_LOCAL_PREFLIGHT_OFFLINE_TEST_MANIFEST",
+  "command": ".venv/bin/python -m unittest -q tests.test_step9_63b_mac_local_preflight tests.test_step9_63a_r3_authorization_issuance tests.test_step9_63a_r1_production_integration",
+  "tests_run": 59,
+  "failures": 0,
+  "errors": 0,
+  "status": "PASS",
+  "py_compile": "PASS",
+  "read_only_execution_identity_audit": "PASS",
+  "real_mac_local_preflight_executed": false,
+  "real_dns_tcp_tls_checked": false,
+  "model_agent_rag_called": false,
+  "authorization_consumed": false,
+  "formal_v4_case_executed": 0
+}

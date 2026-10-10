@@ -1,0 +1,55 @@
+{
+  "step": "9.63c-r5c10z",
+  "audit_mode": "read_only_no_pytest_execution",
+  "interpreters": [
+    {
+      "path": "/Volumes/Elements/cbti-doctor-main/.venv/bin/python",
+      "version": "3.12.14",
+      "prefix": "/Volumes/Elements/cbti-doctor-main/.venv",
+      "venv_exists": true,
+      "venv_base_executable": "/Users/huzhuoyang/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+      "pip_version": "25.0.1",
+      "installed_distribution_count": 101,
+      "pytest_import_spec": null,
+      "pytest_distribution": null,
+      "assessment": "Functional project venv, pytest absent."
+    },
+    {
+      "path": "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "version": "3.9.6",
+      "pytest_import_spec": null,
+      "pytest_distribution": null,
+      "assessment": "Pytest absent; Python 3.9 is not the project's documented 3.12 runtime."
+    },
+    {
+      "path": "/Users/huzhuoyang/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "version": "3.12.14",
+      "pytest_import_spec": null,
+      "pytest_distribution": null,
+      "assessment": "Bundled base interpreter, pytest absent."
+    }
+  ],
+  "other_environment_search": {
+    "pytest_executable_on_path": false,
+    "common_homebrew_local_pyenv_conda_paths": "No pytest executable, distribution or wheel found in the inspected common locations; not an exhaustive whole-disk assertion.",
+    "local_pip_cache_found_in_inspected_path": false,
+    "compatible_installed_pytest_environment_found": false
+  },
+  "project_declarations": {
+    "requirements_txt_contains_pytest": false,
+    "requirements_lock_txt_contains_pytest": false,
+    "requirements_bge_txt_contains_pytest": false,
+    "requirements_bge_lock_txt_contains_pytest": false,
+    "pyproject_toml_present": false,
+    "makefile_present": false,
+    "pytest_ini_or_conftest_present": false,
+    "documented_offline_runner": "python -m unittest discover -s tests -v",
+    "ci_offline_runner": "unittest.TestLoader / unittest.TextTestRunner"
+  },
+  "target_patch": {
+    "path": "tests/test_step9_63b_mac_local_preflight.py",
+    "sha256": "bcf9b8289336d575a184bf3dfb4cd2b6583f05a2f7d205ed4c6d852c06784052",
+    "matches_step9_63c_r5c10y_post_patch_sha256": true,
+    "additional_code_change_observed_in_this_step": false
+  }
+}

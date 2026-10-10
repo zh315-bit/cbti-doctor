@@ -1,0 +1,50 @@
+{
+  "step": "9.42",
+  "status": "PASS",
+  "environment": {
+    "python": ".venv/bin/python",
+    "python_version": "3.12.14",
+    "test_runner": "unittest",
+    "pytest_installed_or_used": false
+  },
+  "step9_41_synthetic_tests": {
+    "status": "16/16 PASS",
+    "T1_T6": "6/6 PASS",
+    "interaction_tests": "10/10 PASS",
+    "test_module": "tests.test_step9_42_answer_authorization"
+  },
+  "focused_regression": {
+    "status": "147/147 PASS",
+    "modules": {
+      "tests.test_step9_33_r1_r2_r3_repairs": 11,
+      "tests.test_step9_24_information_value": 11,
+      "tests.test_step9_18_information_value_gate": 17,
+      "tests.test_step9_4_integration_audit": 6,
+      "tests.test_step9_16_dependency_formation": 8,
+      "tests.test_step9_17_tool_projection": 20,
+      "tests.test_step9_23_state_answer_integrity": 14,
+      "tests.test_step9_6_effective_requirements_lineage": 12,
+      "tests.test_adaptive_loop": 8,
+      "tests.test_answer_generation_grounding": 10,
+      "tests.test_step9_13a_authorization_infrastructure": 9,
+      "tests.test_step9_28_v4_runner": 5,
+      "tests.test_step9_42_answer_authorization": 16
+    }
+  },
+  "full_non_benchmark_regression": {
+    "command": ".venv/bin/python -m unittest discover -s tests",
+    "status": "PASS",
+    "tests_run": 333,
+    "failures": 0,
+    "errors": 0,
+    "elapsed_seconds": 47.327
+  },
+  "test_scope": {
+    "tests_use_synthetic_or_mocked_inputs": true,
+    "formal_v4_case_execution": false,
+    "model_calls": false,
+    "agent_evaluation_calls": false,
+    "rag_evaluation_calls": false,
+    "score_generation": false
+  }
+}

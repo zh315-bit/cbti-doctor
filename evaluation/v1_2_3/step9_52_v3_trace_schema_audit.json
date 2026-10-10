@@ -1,0 +1,15 @@
+{
+  "artifact_type": "STEP9_52_V3_TRACE_SCHEMA_AUDIT",
+  "step": "9.52",
+  "created_at_utc": "2026-09-30T18:40:19Z",
+  "status": "PASS_ADDITIVE_OBSERVATIONAL",
+  "trace_schema_change": "ADDITIVE_COMPATIBLE",
+  "schema_version": "step9_50_authorization_trace_v1",
+  "new_observational_fields": ["answer_authorization", "answer_generation_audit", "trace_schema_version"],
+  "authoritative_source": "DECISION.answer_authorization",
+  "mirrors": ["terminal state_history snapshot", "final_state.answer_authorization"],
+  "validation": {"unknown_mode_rejected": true, "missing_required_fields_rejected": true, "bounded_without_basis_or_exclusions_rejected": true, "conflicting_terminal_mirror_rejected": true, "conflicting_final_state_mirror_rejected": true, "unsupported_fact_or_evidence_reference_rejected": true, "authorization_not_reconstructed_from_answer_text": true},
+  "evaluation_semantics": {"agent_decision_semantics_changed_by_trace_projection": false, "scoring_fields_or_formula_changed": false, "adjudication_rubric_changed": false, "metric_registry_changed": false, "one_shot_rules_changed": false},
+  "evidence": ["evaluation/v1_2_3/step9_50_v3_traceability_contract.json", "tests/test_step9_50_traceability_contract.py (10 safe synthetic tests, previously passed)", "evaluation/v1_2_3/step9_51_v3_architecture_audit.json"],
+  "trace_schema_test_execution_in_step9_52": false
+}

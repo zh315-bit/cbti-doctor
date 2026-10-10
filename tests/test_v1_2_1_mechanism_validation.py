@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 from dataclasses import asdict
 from pathlib import Path
+import tempfile
 import unittest
 
 from adaptive_agent.candidates import build_candidates
@@ -13,7 +14,13 @@ from adaptive_agent.state_update import apply_diary_result
 from adaptive_agent.sufficiency import SufficiencyEstimator
 from adaptive_agent.tools import DiaryResult
 
-ROOT=Path(__file__).resolve().parents[1]; TRACE=ROOT/'evaluation/v1_2_1/step8_7_mechanism_traces.jsonl'
+ROOT=Path(__file__).resolve().parents[1]
+
+def isolated_trace_path(directory: str) -> Path:
+    path=(Path(directory)/'step8_7_mechanism_traces.jsonl').resolve()
+    if path == ROOT or ROOT in path.parents:
+        raise ValueError('trace output must be outside the repository')
+    return path
 
 def decide(name, state, req, expect):
     SufficiencyEstimator().update(state, req); state.candidate_actions=build_candidates(state, req)
@@ -51,7 +58,13 @@ class PreconditionsMechanismTests(unittest.TestCase):
         for name,result in [('cardinality',DiaryResult({'recent_sleep_pattern':[{'date':'2026-01-01'}]},True,source_entry_count=2)),('date',DiaryResult({'recent_sleep_pattern':[{'date':'bad'}]},True,source_entry_count=1,source_dates=('2026-01-01',)))]:
             state=S(action_history=[{'action':'READ_DIARY'}]); apply_diary_result(state,result)
             rows.append({'scenario':'fail_closed_'+name,'diary_projection':state.diary_projection,'facts':state.facts,'pass':state.diary_projection['projection_status']=='invalid' and not state.facts})
-        TRACE.parent.mkdir(parents=True,exist_ok=True); TRACE.write_text(''.join(json.dumps(x,ensure_ascii=False)+'\n' for x in rows),encoding='utf-8')
+        with tempfile.TemporaryDirectory(prefix='v121-mechanism-') as directory:
+            trace_path=isolated_trace_path(directory)
+            trace_path.write_text(''.join(json.dumps(x,ensure_ascii=False)+'\n' for x in rows),encoding='utf-8')
         self.assertEqual(len(rows),19)
+
+    def test_historical_trace_path_rejected(self):
+        with self.assertRaisesRegex(ValueError,'outside the repository'):
+            isolated_trace_path(str(ROOT/'evaluation/v1_2_1'))
 
 if __name__=='__main__': unittest.main()

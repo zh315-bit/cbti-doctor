@@ -1,0 +1,25 @@
+{
+  "artifact_type": "STEP9_63A_R1_EXECUTABLE_PRODUCTION_CALL_GRAPH",
+  "timestamp_utc": "2026-10-05T21:24:33Z",
+  "scope": "current Treatment-V3 r7 formal execution only; historical baseline/V2 runners are separate frozen protocols",
+  "edges": [
+    {"from": "scripts/run_step9_63_v3_formal_execution.py:main --execute-formal-v4", "to": "execute_formal", "action": "verify r7 freeze, new authorization binding, non-consuming connectivity preflight"},
+    {"from": "execute_formal", "to": "scripts/run_step9_53_v3_identity_adapter.py:run", "action": "delegate with exact supplied frozen hashes"},
+    {"from": "adapter.run", "to": "validate_frozen_v3_identity + parent.validate_authorization", "action": "read-only frozen identity, lifecycle, uniqueness and authorization validation"},
+    {"from": "adapter.run", "to": "scripts/v3_execution_transaction.py:begin_and_commit", "action": "shared-lock revalidation, exclusive journal PREPARED, COMMITTING, COMMITTED with fsync"},
+    {"from": "adapter.run", "to": "scripts/v3_namespace_allocator.py:reserve_namespace", "action": "exact COMMITTED binding before exclusive derived namespace reservation"},
+    {"from": "adapter.run", "to": "scripts/run_step9_35a_matched_treatment.py:run", "action": "transaction_id propagated to real parent"},
+    {"from": "parent.run", "to": "v3_execution_transaction.claim_attempt", "action": "one-time durable attempt claim before exclusive attempts.jsonl"},
+    {"from": "parent.run", "to": "attempts.jsonl", "action": "transaction-bound PREPARED, AUTHORIZATION_CONSUMED, FIRST_EVALUATION_ACCESS, CASE_SET_AND_ORDER_VERIFIED"},
+    {"from": "parent.run", "to": "v3_execution_transaction.append_case_started", "action": "exact COMMITTED + ATTEMPT_CLAIMED and all frozen binding checks before case STARTED"},
+    {"from": "parent.run", "to": "scripts/run_step9_28_v4_heldout.py:_case_result", "action": "only after transaction and attempt-ledger STARTED events"},
+    {"from": "_case_result", "to": "adaptive_agent/flask_app.py:/api/chat", "action": "production Flask route"},
+    {"from": "flask_app._create_adaptive_chat_service", "to": "AdaptiveChatService + AdaptiveAgentLoop + RagRetrievalTool + SessionDiaryTool + LLMAnswerGenerator", "action": "production Agent, RAG and model boundary"}
+  ],
+  "production_authorization_validator": "scripts/run_step9_35a_matched_treatment.py:validate_authorization plus scripts/authorization_lifecycle.py:assert_executable_authorization",
+  "production_authorization_transition": "scripts/v3_execution_transaction.py:begin_and_commit COMMITTED; parent attempts.jsonl AUTHORIZATION_CONSUMED is a transaction-bound projection",
+  "production_attempt_creator": "scripts/run_step9_35a_matched_treatment.py:run; transaction claim precedes exclusive attempts.jsonl creation",
+  "production_namespace_allocator": "scripts/v3_namespace_allocator.py:reserve_namespace",
+  "production_case_start_gate": "scripts/v3_execution_transaction.py:append_case_started called by parent.run before _case_result",
+  "production_model_call_boundary": "scripts/run_step9_28_v4_heldout.py:_case_result -> Flask /api/chat -> AdaptiveChatService/Agent Loop"
+}

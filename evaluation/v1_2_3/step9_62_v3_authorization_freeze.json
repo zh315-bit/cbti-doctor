@@ -1,0 +1,38 @@
+{
+  "artifact_type": "STEP9_62_V3_FRESH_AUTHORIZATION_FREEZE",
+  "step": "9.62",
+  "status": "FROZEN_AUTHORIZATION_ISSUED_NOT_CONSUMED",
+  "created_at_utc": "2026-10-02T18:16:32Z",
+  "evaluation_id": "heldout-v4-step9_55a-treatment-v3-20260930-01",
+  "authorization_id": "auth-step9_62-e796755748e14418b9da641f5d6c15e2",
+  "attempt_id": "attempt-step9_62-6620ce3a79684874a15f5e35eac97938",
+  "runner_freeze_revision": "r6",
+  "runner_freeze_path": "evaluation/v1_2_3/step9_61a_v3_runner_freeze_r6.json",
+  "runner_freeze_sha256": "4e6c0bf9ed718546ea1efa12ae48324fd5438129ad3cd3860f93bd33037f1593",
+  "runner_sha256": "4c53963466592203d4ad923cb09bf405629c47a44a8963e84bd0a459e0568317",
+  "authorization_manifest_path": "evaluation/v1_2_3/step9_62_v3_authorization_manifest.json",
+  "authorization_manifest_sha256": "7f97f9e42b8711a6ae745e4626d81fa8787a162bbfa8fdad6fe53c9fd4b975c8",
+  "authorization_audit_path": "evaluation/v1_2_3/step9_62_v3_authorization_audit.json",
+  "authorization_audit_sha256": "259c0fbe3c071a09323e34b7ff938e8d58c5a4826266838d05bb65d0b0f43527",
+  "identity_namespace_audit_sha256": "0d00fd1904309cb82b8b34331515b360a796e6e205e9da764a82acc14a4a94a4",
+  "historical_integrity_audit_sha256": "f2c00d593cae693af2ed86faa1a28530357904e34e0636127c3ee67dea4a860b",
+  "r6_binding_audit_sha256": "e22d1f3aad629a6677e5b34927ea05d5c895853687aed9506afcd6b2ead765ed",
+  "authorization_status": "ISSUED_NOT_CONSUMED",
+  "consumed": false,
+  "authorization_consumption_count": 0,
+  "attempt_created": false,
+  "namespace_id": "heldout-v4-treatment-v3-run-52b2c0c8ebbb06258291",
+  "namespace_created": false,
+  "reservation_marker_created": false,
+  "connectivity_must_be_revalidated_before_consumption": true,
+  "one_shot_semantics": {
+    "single_prebound_attempt_only": true,
+    "reuse_forbidden": true,
+    "automatic_resume_or_retry": false,
+    "formal_v4_case_executed": 0
+  },
+  "supersedes_for_execution_eligibility_only": [
+    "auth-step9_59b-0f63fb3bd6934e4b9a1c7e5808c24825"
+  ],
+  "does_not_authorize_execution_in_this_step": true
+}

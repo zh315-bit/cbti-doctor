@@ -1,0 +1,1273 @@
+{
+  "contains_v4_case_input": false,
+  "evaluation_id": "heldout-v4-step9_28-20260925-01",
+  "http_status": 200,
+  "latency_ms": 39572.99,
+  "lineage": {
+    "actions": [
+      {
+        "action": "RETRIEVE",
+        "action_id": "act_goal_t1_r1_1",
+        "candidate_history_found": true,
+        "candidate_id": "cand_goal_t1_r1_1",
+        "lineage_shape": "PRECONDITION_FORCED_ACTION",
+        "origin": "HARD_PRECONDITION",
+        "precondition_id": "pre_goal_t1_r1_1",
+        "source_dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+        "state_update_ids": [
+          "upd_goal_t1_r2_1"
+        ],
+        "tool_result_ids": [
+          "tool_goal_t1_r1_1"
+        ]
+      },
+      {
+        "action": "ANSWER",
+        "action_id": "act_goal_t1_r2_2",
+        "candidate_history_found": true,
+        "candidate_id": "cand_goal_t1_r2_1",
+        "lineage_shape": "POLICY_SELECTED_ACTION",
+        "origin": "OPTIONAL_ACQUISITION",
+        "precondition_id": null,
+        "source_dependency_id": null,
+        "state_update_ids": [],
+        "tool_result_ids": []
+      }
+    ],
+    "candidate_lineage_missing": false,
+    "fake_lineage_ids_created": false,
+    "missing_required_lineage": [],
+    "missing_root_lineage": [],
+    "ready": true,
+    "root_ids": {
+      "dependency_ids": [
+        "dep_goal_t1_r1_evidence_external_evidence",
+        "dep_goal_t1_r2_evidence_external_evidence"
+      ],
+      "goal_id": "goal_t1",
+      "semantic_id": "sem_goal_t1_r2_1"
+    }
+  },
+  "response": {
+    "assistant": "根据现有资料，固定的起床时间可以从以下几个方面帮助维持睡眠规律：\n\n- **帮助身体维持节律：** 资料建议“维持睡眠时间表”，并指出“规律、可预测的睡眠时间表有助于身体保持节律，让人更容易入睡”。这包括周末也尽量保持一致，因为周末是“容易忽视睡眠重要性的常见时段”。\n- **提供一个稳定的锚点：** 固定的起床时间建立起规律、可预测的模式，从而帮助身体维持节律，进而使入睡更容易。\n- **配合夜间放松流程：** 资料也建议建立夜间例行程序——留出足够时间做睡前准备、提早关闭电子设备、用放松的活动让自己平静下来。固定起床时间通过让整体睡眠—清醒模式保持可预测，与这一流程相互配合。\n\n需要说明的是，现有资料只提供了上述实践性建议（维持规律作息、建立夜间流程），并没有进一步解释固定起床时间为何在生理机制上支持睡眠规律（例如昼夜节律、光照或睡眠压力的作用）。因此，我能确认这一建议及其给出的理由，但更深入的生理学解释在当前资料中无法提供。",
+    "session_id": "step9_28a_synthetic_preflight",
+    "status": "ANSWER",
+    "steps": 2,
+    "tools_used": [
+      "retrieval_augmentation_generation"
+    ]
+  },
+  "session_id": "step9_28a_synthetic_preflight",
+  "state": {
+    "action_history": [
+      {
+        "action": "RETRIEVE",
+        "action_id": "act_goal_t1_r1_1",
+        "query": "Explain in general terms why a consistent wake time can support sleep routines.",
+        "result": "project_rag",
+        "selected_candidate_id": "cand_goal_t1_r1_1",
+        "target": null
+      },
+      {
+        "action": "ANSWER",
+        "action_id": "act_goal_t1_r2_2",
+        "query": null,
+        "selected_candidate_id": "cand_goal_t1_r2_1",
+        "target": null
+      }
+    ],
+    "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+    "base_requirements": {
+      "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+      "classifications": {},
+      "critical": [],
+      "decision_fields": [],
+      "diary_preferred": false,
+      "evidence_required": true,
+      "is_effective": false,
+      "requirement_ids": {},
+      "resources": [],
+      "secondary": [],
+      "semantic_adjustments": []
+    },
+    "candidate_actions": [
+      {
+        "acquisition_cost": "",
+        "acquisition_value": "",
+        "action": "ANSWER",
+        "candidate_id": "cand_goal_t1_r2_1",
+        "cost": "LOW",
+        "decision_impact": "MEDIUM",
+        "expected_benefit": "HIGH",
+        "expected_information_gain": "",
+        "gate_decision": "",
+        "gate_reason": "",
+        "goal_relevance": "MEDIUM",
+        "information_value": "",
+        "origin": "OPTIONAL_ACQUISITION",
+        "query": null,
+        "question": null,
+        "rationale": "当前目标所需的用户信息和证据均已充分。",
+        "redundancy": "LOW",
+        "source_dependency_id": null,
+        "source_precondition_id": null,
+        "source_requirement_id": null,
+        "target": null
+      }
+    ],
+    "claim_provenance": [
+      {
+        "certainty": "exact",
+        "claim": "Based on the retrieved material, here is a general explanation:\n\nA consistent wake time can support sleep routines in the following ways, according to the source material:\n\n- **Maintaining the body's rhythm:** The material advises people to \"maintain a sleep schedule,\" noting that \"having a regular, predictable sleep schedule can help your body maintain a rhythm and make it easier to fall asleep.\" This includes keeping the schedule consistent on weekends too, since weekends are \"a common time to forget about the importance of sleep\" [Sleep Solutions / Additional Tips for Sleeping With Insomnia].\n\n- **Setting a stable anchor point:** Because a fixed wake time establishes a regular, predictable pattern, it helps the body keep its rhythm, which in turn makes falling asleep easier [Sleep Solutions].\n\n- **Supporting a nightly wind-down routine:** The material also recommends creating a nightly routine—giving yourself enough time to get ready for bed, turning off electronics early, and finding relaxing activities to wind down before sleep [Sleep Solutions]. A consistent wake time complements this by keeping the overall sleep-wake pattern predictable.\n\n**Limitation of the available material:** The documents I retrieved address *practical* sleep-hygiene advice (maintain a regular schedule, create a nightly routine) and describe related techniques like sleep restriction and sleep compression [Sleep Restriction and Compression]. However, they do **not** provide a detailed mechanistic explanation (for example, discussion of the circadian clock, light exposure, or homeostatic sleep drive) of *why* a consistent wake time specifically reinforces routines. So I can confirm the general recommendation and its stated rationale, but a deeper physiological explanation is not available in the retrieved material.",
+        "claim_type": "evidence-grounded",
+        "derived_from": [],
+        "source": "evidence:0",
+        "source_field": null,
+        "state_update_id": "upd_goal_t1_r2_1",
+        "tool_result_id": "tool_goal_t1_r1_1"
+      }
+    ],
+    "considered_information": [],
+    "critical_missing": [],
+    "decision_missing": [],
+    "decision_relevant_missing": [],
+    "dependencies_considered": [
+      {
+        "dependency_class": "EXTERNAL_EVIDENCE",
+        "dependency_id": "dep_goal_t1_r2_evidence_external_evidence",
+        "dependency_reason": "current answer scope includes external CBT-I knowledge",
+        "dependency_source": [
+          "goal_semantics",
+          "requirements",
+          "task_type_signal"
+        ],
+        "dependency_type": "EVIDENCE",
+        "fallback": null,
+        "provenance": {
+          "evidence_count": 1
+        },
+        "reason": "current answer scope includes external CBT-I knowledge",
+        "required_for_goal": "Explain in general terms why a consistent wake time can support sleep routines.",
+        "requiredness": "required",
+        "satisfiable_by": [
+          "RETRIEVE"
+        ],
+        "satisfied_by": [
+          "RETRIEVE"
+        ],
+        "semantic_ids": [
+          "sem_goal_t1_r2_1"
+        ],
+        "source": [
+          "goal_semantics",
+          "requirements",
+          "task_type_signal"
+        ],
+        "status": "SATISFIED",
+        "supersedes_dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+        "target": "external_evidence"
+      }
+    ],
+    "dependencies_required": [],
+    "dependencies_satisfied": [
+      {
+        "dependency_class": "EXTERNAL_EVIDENCE",
+        "dependency_id": "dep_goal_t1_r2_evidence_external_evidence",
+        "dependency_reason": "current answer scope includes external CBT-I knowledge",
+        "dependency_source": [
+          "goal_semantics",
+          "requirements",
+          "task_type_signal"
+        ],
+        "dependency_type": "EVIDENCE",
+        "fallback": null,
+        "provenance": {
+          "evidence_count": 1
+        },
+        "reason": "current answer scope includes external CBT-I knowledge",
+        "required_for_goal": "Explain in general terms why a consistent wake time can support sleep routines.",
+        "requiredness": "required",
+        "satisfiable_by": [
+          "RETRIEVE"
+        ],
+        "satisfied_by": [
+          "RETRIEVE"
+        ],
+        "semantic_ids": [
+          "sem_goal_t1_r2_1"
+        ],
+        "source": [
+          "goal_semantics",
+          "requirements",
+          "task_type_signal"
+        ],
+        "status": "SATISFIED",
+        "supersedes_dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+        "target": "external_evidence"
+      }
+    ],
+    "dependencies_unavailable": [],
+    "diary_projection": {},
+    "effective_requirements": {
+      "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+      "classifications": {},
+      "critical": [],
+      "decision_fields": [],
+      "diary_preferred": false,
+      "evidence_required": true,
+      "is_effective": true,
+      "requirement_ids": {},
+      "resources": [],
+      "secondary": [],
+      "semantic_adjustments": []
+    },
+    "evidence": [
+      "Based on the retrieved material, here is a general explanation:\n\nA consistent wake time can support sleep routines in the following ways, according to the source material:\n\n- **Maintaining the body's rhythm:** The material advises people to \"maintain a sleep schedule,\" noting that \"having a regular, predictable sleep schedule can help your body maintain a rhythm and make it easier to fall asleep.\" This includes keeping the schedule consistent on weekends too, since weekends are \"a common time to forget about the importance of sleep\" [Sleep Solutions / Additional Tips for Sleeping With Insomnia].\n\n- **Setting a stable anchor point:** Because a fixed wake time establishes a regular, predictable pattern, it helps the body keep its rhythm, which in turn makes falling asleep easier [Sleep Solutions].\n\n- **Supporting a nightly wind-down routine:** The material also recommends creating a nightly routine—giving yourself enough time to get ready for bed, turning off electronics early, and finding relaxing activities to wind down before sleep [Sleep Solutions]. A consistent wake time complements this by keeping the overall sleep-wake pattern predictable.\n\n**Limitation of the available material:** The documents I retrieved address *practical* sleep-hygiene advice (maintain a regular schedule, create a nightly routine) and describe related techniques like sleep restriction and sleep compression [Sleep Restriction and Compression]. However, they do **not** provide a detailed mechanistic explanation (for example, discussion of the circadian clock, light exposure, or homeostatic sleep drive) of *why* a consistent wake time specifically reinforces routines. So I can confirm the general recommendation and its stated rationale, but a deeper physiological explanation is not available in the retrieved material."
+    ],
+    "evidence_sufficiency": "HIGH",
+    "fact_sources": {},
+    "facts": {},
+    "goal": "Explain in general terms why a consistent wake time can support sleep routines.",
+    "goal_id": "goal_t1",
+    "information_estimates": {},
+    "lineage_events": [
+      {
+        "available": true,
+        "date_coverage": null,
+        "payload_shape": "EVIDENCE_LIST",
+        "projected_entry_count": 1,
+        "projection_status": "valid",
+        "projection_warnings": [],
+        "provenance": {
+          "adapter": "project_rag"
+        },
+        "source_action_id": "act_goal_t1_r1_1",
+        "source_entry_count": 1,
+        "source_tool_result_id": "tool_goal_t1_r1_1",
+        "source_type": "RAG",
+        "state_update_id": "upd_goal_t1_r2_1",
+        "tool": "RETRIEVE",
+        "tool_result_id": "tool_goal_t1_r1_1"
+      }
+    ],
+    "preconditions_considered": [],
+    "rejected_information": [],
+    "required_missing": [],
+    "required_resources": [],
+    "resource_status": {},
+    "secondary_missing": [],
+    "semantic_provenance": [
+      {
+        "certainty": "HIGH",
+        "match_method": "deterministic_rule",
+        "matched_text": "why ",
+        "semantic_id": "sem_goal_t1_r2_1",
+        "semantic_reason": "goal requests general external CBT-I knowledge",
+        "semantic_rule_id": "KNOWLEDGE_EVIDENCE_REQUIRED"
+      }
+    ],
+    "state_revision": 2,
+    "stop_reason": "",
+    "task_type": "KNOWLEDGE_QA",
+    "user_info_sufficiency": "HIGH",
+    "validity_critical_missing": []
+  },
+  "state_history": [
+    {
+      "acquisition_decisions": [],
+      "answer_context_audit": {},
+      "answer_scope": "",
+      "available_diary": false,
+      "base_requirements": {},
+      "candidate_actions": [],
+      "claim_provenance": [],
+      "considered_information": [],
+      "critical_missing": [],
+      "decision_missing": [],
+      "decision_relevant_missing": [],
+      "dependencies_considered": [],
+      "dependencies_required": [],
+      "dependencies_satisfied": [],
+      "dependencies_unavailable": [],
+      "diary_projection": {},
+      "effective_requirements": {},
+      "event": "INPUT_UNDERSTANDING",
+      "evidence": [],
+      "evidence_sufficiency": "LOW",
+      "fact_sources": {},
+      "facts": {},
+      "goal": "Explain in general terms why a consistent wake time can support sleep routines.",
+      "goal_id": "goal_t1",
+      "information_estimates": {},
+      "lineage_events": [],
+      "preconditions_considered": [],
+      "rejected_information": [],
+      "required_missing": [],
+      "required_resources": [],
+      "resource_status": {},
+      "secondary_missing": [],
+      "semantic_provenance": [],
+      "state_revision": 1,
+      "stop_reason": "",
+      "task_type": "KNOWLEDGE_QA",
+      "turn_index": 1,
+      "user_info_sufficiency": "LOW",
+      "validity_critical_missing": []
+    },
+    {
+      "acquisition_decisions": [
+        {
+          "accepted": true,
+          "acquisition_value": "HIGH",
+          "action": "RETRIEVE",
+          "candidate_id": "cand_goal_t1_r1_1",
+          "counterfactual_candidate": null,
+          "counterfactual_outcomes": [
+            "dependency unsatisfied"
+          ],
+          "decision_impact": "HIGH",
+          "decision_relevant": true,
+          "dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+          "estimated_cost": "MEDIUM",
+          "expected_information_gain": "HIGH",
+          "gate_decision": "ACCEPT",
+          "goal_relevance": "HIGH",
+          "heuristic_not_calibrated_probability": true,
+          "impact_dimensions": [
+            "evidence_dependency"
+          ],
+          "lineage_complete": true,
+          "missing_criticality": "SECONDARY_OR_UNSCOPED",
+          "reason": "mandatory_dependency_precondition_cannot_be_overridden",
+          "redundancy": "LOW",
+          "resource_dependency": {
+            "dependency_class": "EXTERNAL_EVIDENCE",
+            "dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+            "dependency_reason": "current answer scope includes external CBT-I knowledge",
+            "dependency_source": [
+              "goal_semantics",
+              "requirements",
+              "task_type_signal"
+            ],
+            "dependency_type": "EVIDENCE",
+            "fallback": "state evidence limitation",
+            "provenance": {
+              "evidence_count": 0
+            },
+            "reason": "current answer scope includes external CBT-I knowledge",
+            "required_for_goal": "Explain in general terms why a consistent wake time can support sleep routines.",
+            "requiredness": "required",
+            "satisfiable_by": [
+              "RETRIEVE"
+            ],
+            "satisfied_by": [],
+            "semantic_ids": [
+              "sem_goal_t1_r1_1"
+            ],
+            "source": [
+              "goal_semantics",
+              "requirements",
+              "task_type_signal"
+            ],
+            "status": "REQUIRED",
+            "supersedes_dependency_id": null,
+            "target": "external_evidence"
+          },
+          "target": "Explain in general terms why a consistent wake time can support sleep routines."
+        }
+      ],
+      "answer_context_audit": {},
+      "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+      "available_diary": false,
+      "base_requirements": {
+        "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+        "classifications": {},
+        "critical": [],
+        "decision_fields": [],
+        "diary_preferred": false,
+        "evidence_required": true,
+        "is_effective": false,
+        "requirement_ids": {},
+        "resources": [],
+        "secondary": [],
+        "semantic_adjustments": []
+      },
+      "candidate_actions": [
+        {
+          "acquisition_cost": "MEDIUM",
+          "acquisition_value": "HIGH",
+          "action": "RETRIEVE",
+          "candidate_id": "cand_goal_t1_r1_1",
+          "cost": "MEDIUM",
+          "decision_impact": "HIGH",
+          "expected_benefit": "HIGH",
+          "expected_information_gain": "HIGH",
+          "gate_decision": "ACCEPT",
+          "gate_reason": "mandatory_dependency_precondition_cannot_be_overridden",
+          "goal_relevance": "HIGH",
+          "information_value": "HIGH",
+          "origin": "HARD_PRECONDITION",
+          "query": "Explain in general terms why a consistent wake time can support sleep routines.",
+          "question": null,
+          "rationale": "满足证据硬前置条件。",
+          "redundancy": "LOW",
+          "source_dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+          "source_precondition_id": "pre_goal_t1_r1_1",
+          "source_requirement_id": null,
+          "target": null
+        }
+      ],
+      "chosen_action": {
+        "acquisition_cost": "MEDIUM",
+        "acquisition_value": "HIGH",
+        "action": "RETRIEVE",
+        "candidate_id": "cand_goal_t1_r1_1",
+        "cost": "MEDIUM",
+        "decision_impact": "HIGH",
+        "expected_benefit": "HIGH",
+        "expected_information_gain": "HIGH",
+        "gate_decision": "ACCEPT",
+        "gate_reason": "mandatory_dependency_precondition_cannot_be_overridden",
+        "goal_relevance": "HIGH",
+        "information_value": "HIGH",
+        "origin": "HARD_PRECONDITION",
+        "query": "Explain in general terms why a consistent wake time can support sleep routines.",
+        "question": null,
+        "rationale": "满足证据硬前置条件。",
+        "redundancy": "LOW",
+        "source_dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+        "source_precondition_id": "pre_goal_t1_r1_1",
+        "source_requirement_id": null,
+        "target": null
+      },
+      "claim_provenance": [],
+      "considered_information": [
+        {
+          "accepted": true,
+          "candidate_action": "RETRIEVE",
+          "precondition": true,
+          "rationale": "满足证据硬前置条件。",
+          "target": "Explain in general terms why a consistent wake time can support sleep routines.",
+          "value_level": "HIGH"
+        }
+      ],
+      "critical_missing": [],
+      "decision_missing": [],
+      "decision_relevant_missing": [],
+      "dependencies_considered": [
+        {
+          "dependency_class": "EXTERNAL_EVIDENCE",
+          "dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+          "dependency_reason": "current answer scope includes external CBT-I knowledge",
+          "dependency_source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "dependency_type": "EVIDENCE",
+          "fallback": "state evidence limitation",
+          "provenance": {
+            "evidence_count": 0
+          },
+          "reason": "current answer scope includes external CBT-I knowledge",
+          "required_for_goal": "Explain in general terms why a consistent wake time can support sleep routines.",
+          "requiredness": "required",
+          "satisfiable_by": [
+            "RETRIEVE"
+          ],
+          "satisfied_by": [],
+          "semantic_ids": [
+            "sem_goal_t1_r1_1"
+          ],
+          "source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "status": "REQUIRED",
+          "supersedes_dependency_id": null,
+          "target": "external_evidence"
+        }
+      ],
+      "dependencies_required": [
+        {
+          "dependency_class": "EXTERNAL_EVIDENCE",
+          "dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+          "dependency_reason": "current answer scope includes external CBT-I knowledge",
+          "dependency_source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "dependency_type": "EVIDENCE",
+          "fallback": "state evidence limitation",
+          "provenance": {
+            "evidence_count": 0
+          },
+          "reason": "current answer scope includes external CBT-I knowledge",
+          "required_for_goal": "Explain in general terms why a consistent wake time can support sleep routines.",
+          "requiredness": "required",
+          "satisfiable_by": [
+            "RETRIEVE"
+          ],
+          "satisfied_by": [],
+          "semantic_ids": [
+            "sem_goal_t1_r1_1"
+          ],
+          "source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "status": "REQUIRED",
+          "supersedes_dependency_id": null,
+          "target": "external_evidence"
+        }
+      ],
+      "dependencies_satisfied": [],
+      "dependencies_unavailable": [],
+      "diary_projection": {},
+      "effective_requirements": {
+        "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+        "classifications": {},
+        "critical": [],
+        "decision_fields": [],
+        "diary_preferred": false,
+        "evidence_required": true,
+        "is_effective": true,
+        "requirement_ids": {},
+        "resources": [],
+        "secondary": [],
+        "semantic_adjustments": []
+      },
+      "event": "DECISION",
+      "evidence": [],
+      "evidence_sufficiency": "LOW",
+      "fact_sources": {},
+      "facts": {},
+      "goal": "Explain in general terms why a consistent wake time can support sleep routines.",
+      "goal_id": "goal_t1",
+      "information_estimates": {},
+      "lineage_events": [],
+      "preconditions_considered": [
+        {
+          "counterfactual_action": "not_available",
+          "counterfactual_candidate": null,
+          "counterfactual_stop_reason": "not_available",
+          "dependency_source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "precondition_forced_action": true,
+          "precondition_id": "pre_goal_t1_r1_1",
+          "reason": "current answer scope includes external CBT-I knowledge",
+          "required_action": "RETRIEVE",
+          "required_for": "Explain in general terms why a consistent wake time can support sleep routines.",
+          "satisfaction_source": null,
+          "satisfiers_considered": [
+            "RETRIEVE"
+          ],
+          "selected_satisfier": "RETRIEVE",
+          "semantic_ids": [
+            "sem_goal_t1_r1_1"
+          ],
+          "source_dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+          "status": "unsatisfied",
+          "target": "external_evidence",
+          "type": "EVIDENCE"
+        }
+      ],
+      "rejected_information": [],
+      "required_missing": [],
+      "required_resources": [],
+      "requirements": {
+        "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+        "classifications": {},
+        "critical": [],
+        "decision_fields": [],
+        "diary_preferred": false,
+        "evidence_required": true,
+        "is_effective": true,
+        "requirement_ids": {},
+        "resources": [],
+        "secondary": [],
+        "semantic_adjustments": []
+      },
+      "resource_status": {},
+      "secondary_missing": [],
+      "semantic_provenance": [
+        {
+          "certainty": "HIGH",
+          "match_method": "deterministic_rule",
+          "matched_text": "why ",
+          "semantic_id": "sem_goal_t1_r1_1",
+          "semantic_reason": "goal requests general external CBT-I knowledge",
+          "semantic_rule_id": "KNOWLEDGE_EVIDENCE_REQUIRED"
+        }
+      ],
+      "state_revision": 1,
+      "step": 1,
+      "stop_reason": "",
+      "task_type": "KNOWLEDGE_QA",
+      "turn_index": 1,
+      "user_info_sufficiency": "HIGH",
+      "validity_critical_missing": []
+    },
+    {
+      "acquisition_decisions": [],
+      "answer_context_audit": {},
+      "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+      "available_diary": false,
+      "base_requirements": {
+        "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+        "classifications": {},
+        "critical": [],
+        "decision_fields": [],
+        "diary_preferred": false,
+        "evidence_required": true,
+        "is_effective": false,
+        "requirement_ids": {},
+        "resources": [],
+        "secondary": [],
+        "semantic_adjustments": []
+      },
+      "candidate_actions": [
+        {
+          "acquisition_cost": "",
+          "acquisition_value": "",
+          "action": "ANSWER",
+          "candidate_id": "cand_goal_t1_r2_1",
+          "cost": "LOW",
+          "decision_impact": "MEDIUM",
+          "expected_benefit": "HIGH",
+          "expected_information_gain": "",
+          "gate_decision": "",
+          "gate_reason": "",
+          "goal_relevance": "MEDIUM",
+          "information_value": "",
+          "origin": "OPTIONAL_ACQUISITION",
+          "query": null,
+          "question": null,
+          "rationale": "当前目标所需的用户信息和证据均已充分。",
+          "redundancy": "LOW",
+          "source_dependency_id": null,
+          "source_precondition_id": null,
+          "source_requirement_id": null,
+          "target": null
+        }
+      ],
+      "claim_provenance": [],
+      "considered_information": [],
+      "critical_missing": [],
+      "decision_missing": [],
+      "decision_relevant_missing": [],
+      "dependencies_considered": [
+        {
+          "dependency_class": "EXTERNAL_EVIDENCE",
+          "dependency_id": "dep_goal_t1_r2_evidence_external_evidence",
+          "dependency_reason": "current answer scope includes external CBT-I knowledge",
+          "dependency_source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "dependency_type": "EVIDENCE",
+          "fallback": null,
+          "provenance": {
+            "evidence_count": 1
+          },
+          "reason": "current answer scope includes external CBT-I knowledge",
+          "required_for_goal": "Explain in general terms why a consistent wake time can support sleep routines.",
+          "requiredness": "required",
+          "satisfiable_by": [
+            "RETRIEVE"
+          ],
+          "satisfied_by": [
+            "RETRIEVE"
+          ],
+          "semantic_ids": [
+            "sem_goal_t1_r2_1"
+          ],
+          "source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "status": "SATISFIED",
+          "supersedes_dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+          "target": "external_evidence"
+        }
+      ],
+      "dependencies_required": [],
+      "dependencies_satisfied": [
+        {
+          "dependency_class": "EXTERNAL_EVIDENCE",
+          "dependency_id": "dep_goal_t1_r2_evidence_external_evidence",
+          "dependency_reason": "current answer scope includes external CBT-I knowledge",
+          "dependency_source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "dependency_type": "EVIDENCE",
+          "fallback": null,
+          "provenance": {
+            "evidence_count": 1
+          },
+          "reason": "current answer scope includes external CBT-I knowledge",
+          "required_for_goal": "Explain in general terms why a consistent wake time can support sleep routines.",
+          "requiredness": "required",
+          "satisfiable_by": [
+            "RETRIEVE"
+          ],
+          "satisfied_by": [
+            "RETRIEVE"
+          ],
+          "semantic_ids": [
+            "sem_goal_t1_r2_1"
+          ],
+          "source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "status": "SATISFIED",
+          "supersedes_dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+          "target": "external_evidence"
+        }
+      ],
+      "dependencies_unavailable": [],
+      "diary_projection": {},
+      "effective_requirements": {
+        "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+        "classifications": {},
+        "critical": [],
+        "decision_fields": [],
+        "diary_preferred": false,
+        "evidence_required": true,
+        "is_effective": true,
+        "requirement_ids": {},
+        "resources": [],
+        "secondary": [],
+        "semantic_adjustments": []
+      },
+      "event": "RETRIEVE",
+      "evidence": [
+        "Based on the retrieved material, here is a general explanation:\n\nA consistent wake time can support sleep routines in the following ways, according to the source material:\n\n- **Maintaining the body's rhythm:** The material advises people to \"maintain a sleep schedule,\" noting that \"having a regular, predictable sleep schedule can help your body maintain a rhythm and make it easier to fall asleep.\" This includes keeping the schedule consistent on weekends too, since weekends are \"a common time to forget about the importance of sleep\" [Sleep Solutions / Additional Tips for Sleeping With Insomnia].\n\n- **Setting a stable anchor point:** Because a fixed wake time establishes a regular, predictable pattern, it helps the body keep its rhythm, which in turn makes falling asleep easier [Sleep Solutions].\n\n- **Supporting a nightly wind-down routine:** The material also recommends creating a nightly routine—giving yourself enough time to get ready for bed, turning off electronics early, and finding relaxing activities to wind down before sleep [Sleep Solutions]. A consistent wake time complements this by keeping the overall sleep-wake pattern predictable.\n\n**Limitation of the available material:** The documents I retrieved address *practical* sleep-hygiene advice (maintain a regular schedule, create a nightly routine) and describe related techniques like sleep restriction and sleep compression [Sleep Restriction and Compression]. However, they do **not** provide a detailed mechanistic explanation (for example, discussion of the circadian clock, light exposure, or homeostatic sleep drive) of *why* a consistent wake time specifically reinforces routines. So I can confirm the general recommendation and its stated rationale, but a deeper physiological explanation is not available in the retrieved material."
+      ],
+      "evidence_sufficiency": "HIGH",
+      "fact_sources": {},
+      "facts": {},
+      "goal": "Explain in general terms why a consistent wake time can support sleep routines.",
+      "goal_id": "goal_t1",
+      "information_estimates": {},
+      "lineage_events": [
+        {
+          "available": true,
+          "date_coverage": null,
+          "payload_shape": "EVIDENCE_LIST",
+          "projected_entry_count": 1,
+          "projection_status": "valid",
+          "projection_warnings": [],
+          "provenance": {
+            "adapter": "project_rag"
+          },
+          "source_action_id": "act_goal_t1_r1_1",
+          "source_entry_count": 1,
+          "source_tool_result_id": "tool_goal_t1_r1_1",
+          "source_type": "RAG",
+          "state_update_id": "upd_goal_t1_r2_1",
+          "tool": "RETRIEVE",
+          "tool_result_id": "tool_goal_t1_r1_1"
+        }
+      ],
+      "preconditions_considered": [],
+      "rejected_information": [],
+      "required_missing": [],
+      "required_resources": [],
+      "resource_status": {},
+      "secondary_missing": [],
+      "semantic_provenance": [
+        {
+          "certainty": "HIGH",
+          "match_method": "deterministic_rule",
+          "matched_text": "why ",
+          "semantic_id": "sem_goal_t1_r2_1",
+          "semantic_reason": "goal requests general external CBT-I knowledge",
+          "semantic_rule_id": "KNOWLEDGE_EVIDENCE_REQUIRED"
+        }
+      ],
+      "state_revision": 2,
+      "step": 1,
+      "stop_reason": "",
+      "task_type": "KNOWLEDGE_QA",
+      "tool_result": {
+        "available": true,
+        "detail": "project_rag",
+        "evidence": [
+          "Based on the retrieved material, here is a general explanation:\n\nA consistent wake time can support sleep routines in the following ways, according to the source material:\n\n- **Maintaining the body's rhythm:** The material advises people to \"maintain a sleep schedule,\" noting that \"having a regular, predictable sleep schedule can help your body maintain a rhythm and make it easier to fall asleep.\" This includes keeping the schedule consistent on weekends too, since weekends are \"a common time to forget about the importance of sleep\" [Sleep Solutions / Additional Tips for Sleeping With Insomnia].\n\n- **Setting a stable anchor point:** Because a fixed wake time establishes a regular, predictable pattern, it helps the body keep its rhythm, which in turn makes falling asleep easier [Sleep Solutions].\n\n- **Supporting a nightly wind-down routine:** The material also recommends creating a nightly routine—giving yourself enough time to get ready for bed, turning off electronics early, and finding relaxing activities to wind down before sleep [Sleep Solutions]. A consistent wake time complements this by keeping the overall sleep-wake pattern predictable.\n\n**Limitation of the available material:** The documents I retrieved address *practical* sleep-hygiene advice (maintain a regular schedule, create a nightly routine) and describe related techniques like sleep restriction and sleep compression [Sleep Restriction and Compression]. However, they do **not** provide a detailed mechanistic explanation (for example, discussion of the circadian clock, light exposure, or homeostatic sleep drive) of *why* a consistent wake time specifically reinforces routines. So I can confirm the general recommendation and its stated rationale, but a deeper physiological explanation is not available in the retrieved material."
+        ]
+      },
+      "turn_index": 1,
+      "user_info_sufficiency": "HIGH",
+      "validity_critical_missing": []
+    },
+    {
+      "acquisition_decisions": [],
+      "answer_context_audit": {},
+      "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+      "available_diary": false,
+      "base_requirements": {
+        "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+        "classifications": {},
+        "critical": [],
+        "decision_fields": [],
+        "diary_preferred": false,
+        "evidence_required": true,
+        "is_effective": false,
+        "requirement_ids": {},
+        "resources": [],
+        "secondary": [],
+        "semantic_adjustments": []
+      },
+      "candidate_actions": [
+        {
+          "acquisition_cost": "",
+          "acquisition_value": "",
+          "action": "ANSWER",
+          "candidate_id": "cand_goal_t1_r2_1",
+          "cost": "LOW",
+          "decision_impact": "MEDIUM",
+          "expected_benefit": "HIGH",
+          "expected_information_gain": "",
+          "gate_decision": "",
+          "gate_reason": "",
+          "goal_relevance": "MEDIUM",
+          "information_value": "",
+          "origin": "OPTIONAL_ACQUISITION",
+          "query": null,
+          "question": null,
+          "rationale": "当前目标所需的用户信息和证据均已充分。",
+          "redundancy": "LOW",
+          "source_dependency_id": null,
+          "source_precondition_id": null,
+          "source_requirement_id": null,
+          "target": null
+        }
+      ],
+      "chosen_action": {
+        "acquisition_cost": "",
+        "acquisition_value": "",
+        "action": "ANSWER",
+        "candidate_id": "cand_goal_t1_r2_1",
+        "cost": "LOW",
+        "decision_impact": "MEDIUM",
+        "expected_benefit": "HIGH",
+        "expected_information_gain": "",
+        "gate_decision": "",
+        "gate_reason": "",
+        "goal_relevance": "MEDIUM",
+        "information_value": "",
+        "origin": "OPTIONAL_ACQUISITION",
+        "query": null,
+        "question": null,
+        "rationale": "当前目标所需的用户信息和证据均已充分。",
+        "redundancy": "LOW",
+        "source_dependency_id": null,
+        "source_precondition_id": null,
+        "source_requirement_id": null,
+        "target": null
+      },
+      "claim_provenance": [],
+      "considered_information": [],
+      "critical_missing": [],
+      "decision_missing": [],
+      "decision_relevant_missing": [],
+      "dependencies_considered": [
+        {
+          "dependency_class": "EXTERNAL_EVIDENCE",
+          "dependency_id": "dep_goal_t1_r2_evidence_external_evidence",
+          "dependency_reason": "current answer scope includes external CBT-I knowledge",
+          "dependency_source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "dependency_type": "EVIDENCE",
+          "fallback": null,
+          "provenance": {
+            "evidence_count": 1
+          },
+          "reason": "current answer scope includes external CBT-I knowledge",
+          "required_for_goal": "Explain in general terms why a consistent wake time can support sleep routines.",
+          "requiredness": "required",
+          "satisfiable_by": [
+            "RETRIEVE"
+          ],
+          "satisfied_by": [
+            "RETRIEVE"
+          ],
+          "semantic_ids": [
+            "sem_goal_t1_r2_1"
+          ],
+          "source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "status": "SATISFIED",
+          "supersedes_dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+          "target": "external_evidence"
+        }
+      ],
+      "dependencies_required": [],
+      "dependencies_satisfied": [
+        {
+          "dependency_class": "EXTERNAL_EVIDENCE",
+          "dependency_id": "dep_goal_t1_r2_evidence_external_evidence",
+          "dependency_reason": "current answer scope includes external CBT-I knowledge",
+          "dependency_source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "dependency_type": "EVIDENCE",
+          "fallback": null,
+          "provenance": {
+            "evidence_count": 1
+          },
+          "reason": "current answer scope includes external CBT-I knowledge",
+          "required_for_goal": "Explain in general terms why a consistent wake time can support sleep routines.",
+          "requiredness": "required",
+          "satisfiable_by": [
+            "RETRIEVE"
+          ],
+          "satisfied_by": [
+            "RETRIEVE"
+          ],
+          "semantic_ids": [
+            "sem_goal_t1_r2_1"
+          ],
+          "source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "status": "SATISFIED",
+          "supersedes_dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+          "target": "external_evidence"
+        }
+      ],
+      "dependencies_unavailable": [],
+      "diary_projection": {},
+      "effective_requirements": {
+        "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+        "classifications": {},
+        "critical": [],
+        "decision_fields": [],
+        "diary_preferred": false,
+        "evidence_required": true,
+        "is_effective": true,
+        "requirement_ids": {},
+        "resources": [],
+        "secondary": [],
+        "semantic_adjustments": []
+      },
+      "event": "DECISION",
+      "evidence": [
+        "Based on the retrieved material, here is a general explanation:\n\nA consistent wake time can support sleep routines in the following ways, according to the source material:\n\n- **Maintaining the body's rhythm:** The material advises people to \"maintain a sleep schedule,\" noting that \"having a regular, predictable sleep schedule can help your body maintain a rhythm and make it easier to fall asleep.\" This includes keeping the schedule consistent on weekends too, since weekends are \"a common time to forget about the importance of sleep\" [Sleep Solutions / Additional Tips for Sleeping With Insomnia].\n\n- **Setting a stable anchor point:** Because a fixed wake time establishes a regular, predictable pattern, it helps the body keep its rhythm, which in turn makes falling asleep easier [Sleep Solutions].\n\n- **Supporting a nightly wind-down routine:** The material also recommends creating a nightly routine—giving yourself enough time to get ready for bed, turning off electronics early, and finding relaxing activities to wind down before sleep [Sleep Solutions]. A consistent wake time complements this by keeping the overall sleep-wake pattern predictable.\n\n**Limitation of the available material:** The documents I retrieved address *practical* sleep-hygiene advice (maintain a regular schedule, create a nightly routine) and describe related techniques like sleep restriction and sleep compression [Sleep Restriction and Compression]. However, they do **not** provide a detailed mechanistic explanation (for example, discussion of the circadian clock, light exposure, or homeostatic sleep drive) of *why* a consistent wake time specifically reinforces routines. So I can confirm the general recommendation and its stated rationale, but a deeper physiological explanation is not available in the retrieved material."
+      ],
+      "evidence_sufficiency": "HIGH",
+      "fact_sources": {},
+      "facts": {},
+      "goal": "Explain in general terms why a consistent wake time can support sleep routines.",
+      "goal_id": "goal_t1",
+      "information_estimates": {},
+      "lineage_events": [
+        {
+          "available": true,
+          "date_coverage": null,
+          "payload_shape": "EVIDENCE_LIST",
+          "projected_entry_count": 1,
+          "projection_status": "valid",
+          "projection_warnings": [],
+          "provenance": {
+            "adapter": "project_rag"
+          },
+          "source_action_id": "act_goal_t1_r1_1",
+          "source_entry_count": 1,
+          "source_tool_result_id": "tool_goal_t1_r1_1",
+          "source_type": "RAG",
+          "state_update_id": "upd_goal_t1_r2_1",
+          "tool": "RETRIEVE",
+          "tool_result_id": "tool_goal_t1_r1_1"
+        }
+      ],
+      "preconditions_considered": [],
+      "rejected_information": [],
+      "required_missing": [],
+      "required_resources": [],
+      "requirements": {
+        "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+        "classifications": {},
+        "critical": [],
+        "decision_fields": [],
+        "diary_preferred": false,
+        "evidence_required": true,
+        "is_effective": true,
+        "requirement_ids": {},
+        "resources": [],
+        "secondary": [],
+        "semantic_adjustments": []
+      },
+      "resource_status": {},
+      "secondary_missing": [],
+      "semantic_provenance": [
+        {
+          "certainty": "HIGH",
+          "match_method": "deterministic_rule",
+          "matched_text": "why ",
+          "semantic_id": "sem_goal_t1_r2_1",
+          "semantic_reason": "goal requests general external CBT-I knowledge",
+          "semantic_rule_id": "KNOWLEDGE_EVIDENCE_REQUIRED"
+        }
+      ],
+      "state_revision": 2,
+      "step": 2,
+      "stop_reason": "",
+      "task_type": "KNOWLEDGE_QA",
+      "turn_index": 1,
+      "user_info_sufficiency": "HIGH",
+      "validity_critical_missing": []
+    },
+    {
+      "acquisition_decisions": [],
+      "answer_context_audit": {
+        "diary_fact_fields": [],
+        "evidence_projection": [
+          {
+            "content": "Based on the retrieved material, here is a general explanation:\n\nA consistent wake time can support sleep routines in the following ways, according to the source material:\n\n- **Maintaining the body's rhythm:** The material advises people to \"maintain a sleep schedule,\" noting that \"having a regular, predictable sleep schedule can help your body maintain a rhythm and make it easier to fall asleep.\" This includes keeping the schedule consistent on weekends too, since weekends are \"a common time to forget about the importance of sleep\" [Sleep Solutions / Additional Tips for Sleeping With Insomnia].\n\n- **Setting a stable anchor point:** Because a fixed wake time establishes a regular, predictable pattern, it helps the body keep its rhythm, which in turn makes falling asleep easier [Sleep Solutions].\n\n- **Supporting a nightly wind-down routine:** The material also recommends creating a nightly routine—giving yourself enough time to get ready for bed, turning off electronics early, and finding relaxing activities to wind down before sleep [Sleep Solutions]. A consistent wake time complements this by keeping the overall sleep-wake pattern predictable.\n\n**Limitation of the available material:** The documents I retrieved address *practical* sleep-hygiene advice (maintain a regular schedule, create a nightly routine) and describe related techniques like sleep restriction and sleep compression [Sleep Restriction and Compression]. However, they do **not** provide a detailed mechanistic explanation (for example, discussion of the circadian clock, light exposure, or homeostatic sleep drive) of *why* a consistent wake time specifically reinforces routines. So I can confirm the general recommendation and its stated rationale, but a deeper physiological explanation is not available in the retrieved material.",
+            "dependency_id": "dep_goal_t1_r2_evidence_external_evidence",
+            "exclusion_reason": null,
+            "included": true,
+            "index": 0,
+            "source": {
+              "evidence": "Based on the retrieved material, here is a general explanation:\n\nA consistent wake time can support sleep routines in the following ways, according to the source material:\n\n- **Maintaining the body's rhythm:** The material advises people to \"maintain a sleep schedule,\" noting that \"having a regular, predictable sleep schedule can help your body maintain a rhythm and make it easier to fall asleep.\" This includes keeping the schedule consistent on weekends too, since weekends are \"a common time to forget about the importance of sleep\" [Sleep Solutions / Additional Tips for Sleeping With Insomnia].\n\n- **Setting a stable anchor point:** Because a fixed wake time establishes a regular, predictable pattern, it helps the body keep its rhythm, which in turn makes falling asleep easier [Sleep Solutions].\n\n- **Supporting a nightly wind-down routine:** The material also recommends creating a nightly routine—giving yourself enough time to get ready for bed, turning off electronics early, and finding relaxing activities to wind down before sleep [Sleep Solutions]. A consistent wake time complements this by keeping the overall sleep-wake pattern predictable.\n\n**Limitation of the available material:** The documents I retrieved address *practical* sleep-hygiene advice (maintain a regular schedule, create a nightly routine) and describe related techniques like sleep restriction and sleep compression [Sleep Restriction and Compression]. However, they do **not** provide a detailed mechanistic explanation (for example, discussion of the circadian clock, light exposure, or homeostatic sleep drive) of *why* a consistent wake time specifically reinforces routines. So I can confirm the general recommendation and its stated rationale, but a deeper physiological explanation is not available in the retrieved material.",
+              "goal_id": "goal_t1",
+              "retrieval_query": "Explain in general terms why a consistent wake time can support sleep routines.",
+              "source_type": "RAG",
+              "state_update_id": "upd_goal_t1_r2_1",
+              "tool_result_id": "tool_goal_t1_r1_1"
+            }
+          }
+        ],
+        "semantic_status": {
+          "record_absence": "NOT_ESTABLISHED",
+          "records": [],
+          "resource": "UNKNOWN"
+        },
+        "user_fact_fields": []
+      },
+      "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+      "available_diary": false,
+      "base_requirements": {
+        "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+        "classifications": {},
+        "critical": [],
+        "decision_fields": [],
+        "diary_preferred": false,
+        "evidence_required": true,
+        "is_effective": false,
+        "requirement_ids": {},
+        "resources": [],
+        "secondary": [],
+        "semantic_adjustments": []
+      },
+      "candidate_actions": [
+        {
+          "acquisition_cost": "",
+          "acquisition_value": "",
+          "action": "ANSWER",
+          "candidate_id": "cand_goal_t1_r2_1",
+          "cost": "LOW",
+          "decision_impact": "MEDIUM",
+          "expected_benefit": "HIGH",
+          "expected_information_gain": "",
+          "gate_decision": "",
+          "gate_reason": "",
+          "goal_relevance": "MEDIUM",
+          "information_value": "",
+          "origin": "OPTIONAL_ACQUISITION",
+          "query": null,
+          "question": null,
+          "rationale": "当前目标所需的用户信息和证据均已充分。",
+          "redundancy": "LOW",
+          "source_dependency_id": null,
+          "source_precondition_id": null,
+          "source_requirement_id": null,
+          "target": null
+        }
+      ],
+      "claim_provenance": [
+        {
+          "certainty": "exact",
+          "claim": "Based on the retrieved material, here is a general explanation:\n\nA consistent wake time can support sleep routines in the following ways, according to the source material:\n\n- **Maintaining the body's rhythm:** The material advises people to \"maintain a sleep schedule,\" noting that \"having a regular, predictable sleep schedule can help your body maintain a rhythm and make it easier to fall asleep.\" This includes keeping the schedule consistent on weekends too, since weekends are \"a common time to forget about the importance of sleep\" [Sleep Solutions / Additional Tips for Sleeping With Insomnia].\n\n- **Setting a stable anchor point:** Because a fixed wake time establishes a regular, predictable pattern, it helps the body keep its rhythm, which in turn makes falling asleep easier [Sleep Solutions].\n\n- **Supporting a nightly wind-down routine:** The material also recommends creating a nightly routine—giving yourself enough time to get ready for bed, turning off electronics early, and finding relaxing activities to wind down before sleep [Sleep Solutions]. A consistent wake time complements this by keeping the overall sleep-wake pattern predictable.\n\n**Limitation of the available material:** The documents I retrieved address *practical* sleep-hygiene advice (maintain a regular schedule, create a nightly routine) and describe related techniques like sleep restriction and sleep compression [Sleep Restriction and Compression]. However, they do **not** provide a detailed mechanistic explanation (for example, discussion of the circadian clock, light exposure, or homeostatic sleep drive) of *why* a consistent wake time specifically reinforces routines. So I can confirm the general recommendation and its stated rationale, but a deeper physiological explanation is not available in the retrieved material.",
+          "claim_type": "evidence-grounded",
+          "derived_from": [],
+          "source": "evidence:0",
+          "source_field": null,
+          "state_update_id": "upd_goal_t1_r2_1",
+          "tool_result_id": "tool_goal_t1_r1_1"
+        }
+      ],
+      "considered_information": [],
+      "critical_missing": [],
+      "decision_missing": [],
+      "decision_relevant_missing": [],
+      "dependencies_considered": [
+        {
+          "dependency_class": "EXTERNAL_EVIDENCE",
+          "dependency_id": "dep_goal_t1_r2_evidence_external_evidence",
+          "dependency_reason": "current answer scope includes external CBT-I knowledge",
+          "dependency_source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "dependency_type": "EVIDENCE",
+          "fallback": null,
+          "provenance": {
+            "evidence_count": 1
+          },
+          "reason": "current answer scope includes external CBT-I knowledge",
+          "required_for_goal": "Explain in general terms why a consistent wake time can support sleep routines.",
+          "requiredness": "required",
+          "satisfiable_by": [
+            "RETRIEVE"
+          ],
+          "satisfied_by": [
+            "RETRIEVE"
+          ],
+          "semantic_ids": [
+            "sem_goal_t1_r2_1"
+          ],
+          "source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "status": "SATISFIED",
+          "supersedes_dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+          "target": "external_evidence"
+        }
+      ],
+      "dependencies_required": [],
+      "dependencies_satisfied": [
+        {
+          "dependency_class": "EXTERNAL_EVIDENCE",
+          "dependency_id": "dep_goal_t1_r2_evidence_external_evidence",
+          "dependency_reason": "current answer scope includes external CBT-I knowledge",
+          "dependency_source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "dependency_type": "EVIDENCE",
+          "fallback": null,
+          "provenance": {
+            "evidence_count": 1
+          },
+          "reason": "current answer scope includes external CBT-I knowledge",
+          "required_for_goal": "Explain in general terms why a consistent wake time can support sleep routines.",
+          "requiredness": "required",
+          "satisfiable_by": [
+            "RETRIEVE"
+          ],
+          "satisfied_by": [
+            "RETRIEVE"
+          ],
+          "semantic_ids": [
+            "sem_goal_t1_r2_1"
+          ],
+          "source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "status": "SATISFIED",
+          "supersedes_dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+          "target": "external_evidence"
+        }
+      ],
+      "dependencies_unavailable": [],
+      "diary_projection": {},
+      "effective_requirements": {
+        "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+        "classifications": {},
+        "critical": [],
+        "decision_fields": [],
+        "diary_preferred": false,
+        "evidence_required": true,
+        "is_effective": true,
+        "requirement_ids": {},
+        "resources": [],
+        "secondary": [],
+        "semantic_adjustments": []
+      },
+      "event": "ANSWER",
+      "evidence": [
+        "Based on the retrieved material, here is a general explanation:\n\nA consistent wake time can support sleep routines in the following ways, according to the source material:\n\n- **Maintaining the body's rhythm:** The material advises people to \"maintain a sleep schedule,\" noting that \"having a regular, predictable sleep schedule can help your body maintain a rhythm and make it easier to fall asleep.\" This includes keeping the schedule consistent on weekends too, since weekends are \"a common time to forget about the importance of sleep\" [Sleep Solutions / Additional Tips for Sleeping With Insomnia].\n\n- **Setting a stable anchor point:** Because a fixed wake time establishes a regular, predictable pattern, it helps the body keep its rhythm, which in turn makes falling asleep easier [Sleep Solutions].\n\n- **Supporting a nightly wind-down routine:** The material also recommends creating a nightly routine—giving yourself enough time to get ready for bed, turning off electronics early, and finding relaxing activities to wind down before sleep [Sleep Solutions]. A consistent wake time complements this by keeping the overall sleep-wake pattern predictable.\n\n**Limitation of the available material:** The documents I retrieved address *practical* sleep-hygiene advice (maintain a regular schedule, create a nightly routine) and describe related techniques like sleep restriction and sleep compression [Sleep Restriction and Compression]. However, they do **not** provide a detailed mechanistic explanation (for example, discussion of the circadian clock, light exposure, or homeostatic sleep drive) of *why* a consistent wake time specifically reinforces routines. So I can confirm the general recommendation and its stated rationale, but a deeper physiological explanation is not available in the retrieved material."
+      ],
+      "evidence_sufficiency": "HIGH",
+      "fact_sources": {},
+      "facts": {},
+      "goal": "Explain in general terms why a consistent wake time can support sleep routines.",
+      "goal_id": "goal_t1",
+      "information_estimates": {},
+      "lineage_events": [
+        {
+          "available": true,
+          "date_coverage": null,
+          "payload_shape": "EVIDENCE_LIST",
+          "projected_entry_count": 1,
+          "projection_status": "valid",
+          "projection_warnings": [],
+          "provenance": {
+            "adapter": "project_rag"
+          },
+          "source_action_id": "act_goal_t1_r1_1",
+          "source_entry_count": 1,
+          "source_tool_result_id": "tool_goal_t1_r1_1",
+          "source_type": "RAG",
+          "state_update_id": "upd_goal_t1_r2_1",
+          "tool": "RETRIEVE",
+          "tool_result_id": "tool_goal_t1_r1_1"
+        }
+      ],
+      "preconditions_considered": [],
+      "rejected_information": [],
+      "required_missing": [],
+      "required_resources": [],
+      "resource_status": {},
+      "secondary_missing": [],
+      "semantic_provenance": [
+        {
+          "certainty": "HIGH",
+          "match_method": "deterministic_rule",
+          "matched_text": "why ",
+          "semantic_id": "sem_goal_t1_r2_1",
+          "semantic_reason": "goal requests general external CBT-I knowledge",
+          "semantic_rule_id": "KNOWLEDGE_EVIDENCE_REQUIRED"
+        }
+      ],
+      "state_revision": 2,
+      "stop_reason": "",
+      "task_type": "KNOWLEDGE_QA",
+      "turn_index": 1,
+      "user_info_sufficiency": "HIGH",
+      "validity_critical_missing": []
+    }
+  ],
+  "trace_type": "STEP9_28A_SYNTHETIC_PRODUCTION_PREFLIGHT"
+}

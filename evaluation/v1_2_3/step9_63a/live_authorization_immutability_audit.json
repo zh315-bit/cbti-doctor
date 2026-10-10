@@ -1,0 +1,17 @@
+{
+  "artifact_type": "STEP9_63A_LIVE_AUTHORIZATION_IMMUTABILITY_AUDIT",
+  "step": "9.63a",
+  "status": "PASS_UNCHANGED",
+  "authorization_id": "auth-step9_62-e796755748e14418b9da641f5d6c15e2",
+  "authorization_manifest_sha256_before_after": "7f97f9e42b8711a6ae745e4626d81fa8787a162bbfa8fdad6fe53c9fd4b975c8",
+  "authorization_status": "ISSUED_NOT_CONSUMED",
+  "consumed": false,
+  "consumption_count": 0,
+  "attempt_id": "attempt-step9_62-6620ce3a79684874a15f5e35eac97938",
+  "attempt_created": false,
+  "namespace_id": "heldout-v4-treatment-v3-run-52b2c0c8ebbb06258291",
+  "formal_namespace_created": false,
+  "cases_started": 0,
+  "case_results_created": false,
+  "raw_traces_created": false
+}

@@ -1,0 +1,138 @@
+{
+  "artifact_type": "STEP9_57A_V3_EXECUTION_FAILURE_FORENSICS_READ_ONLY",
+  "step": "9.57a",
+  "status": "PASS_FORENSICS_DNS_INFRASTRUCTURE_FAILURE",
+  "created_at_utc": "2026-10-01T14:29:10Z",
+  "formal_attempt": {
+    "evaluation_id": "heldout-v4-step9_55a-treatment-v3-20260930-01",
+    "authorization_id": "auth-step9_56-a754eddd5c8a4ffc9243a7f1644aa611",
+    "attempt_id": "attempt-step9_56-93842f48f1554239ad14d2c11689635e",
+    "authorization_consumed": true,
+    "failed_case": "V4-KQ-01",
+    "ledger_path": "evaluation/v4_runs/heldout-v4-step9_55a-treatment-v3-20260930-01/attempts.jsonl",
+    "ledger_sha256": "10d3577bd59f886e5b5b79f23c8e911e117bfc52004eb234034f9314c2c5728e",
+    "case_results_path": "evaluation/v4_runs/heldout-v4-step9_55a-treatment-v3-20260930-01/attempt-step9_56-93842f48f1554239ad14d2c11689635e_case_results.jsonl",
+    "case_results_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "raw_traces_path": "evaluation/v4_runs/heldout-v4-step9_55a-treatment-v3-20260930-01/attempt-step9_56-93842f48f1554239ad14d2c11689635e_raw_traces.jsonl",
+    "raw_traces_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "cases_started": 1,
+    "cases_completed": 0,
+    "result_count": 0,
+    "raw_trace_count": 0,
+    "failure_stage": "FIRST_EVALUATION_ACCESS",
+    "failure_type": "APIConnectionError",
+    "recorded_nested_transport_error": "httpx.ConnectError / [Errno 8] nodename nor servname provided, or not known"
+  },
+  "root_cause": {
+    "class": "A_DNS_LOCAL_NETWORK_ENVIRONMENT_FAILURE",
+    "confidence": "HIGH",
+    "rationale": "The persisted contemporaneous Step 9.57 record reports a name-resolution error and the formal ledger records APIConnectionError at the first case. Current, non-production getaddrinfo diagnostic for the frozen configured host also fails with gaierror. There is no evidence of TCP/TLS/HTTP/provider response or completed model output. This does not establish behavioral failure of the V3 Agent.",
+    "static_configuration_result": {
+      "provider": "DeepSeek OpenAI-compatible API",
+      "client_class": "langchain_openai.ChatOpenAI",
+      "transport_family": "openai Python SDK over httpx",
+      "model_identifier": "deepseek-flash",
+      "base_url_source": "DEEPSEEK_BASE_URL, defaulted in model_config.py to https://api.deepseek.com",
+      "recoverable_configured_hostname": "api.deepseek.com",
+      "scheme": "https",
+      "endpoint_syntactically_valid": true,
+      "endpoint_matches_frozen_identity_check": true,
+      "credential_status_at_current_local_check": "PRESENT",
+      "credential_status_at_formal_request": "PRESENT_INFERRED_FROM_SUCCESSFUL_PRE_CASE_CONFIGURATION_GUARD; secret value not read or emitted",
+      "configuration_environment_names": ["DEEPSEEK_API_KEY", "DEEPSEEK_MODEL", "DEEPSEEK_BASE_URL"],
+      "secrets_emitted": false
+    },
+    "current_environment_dns_result": {
+      "diagnostic": "local getaddrinfo(host, 443); no HTTPS/API request",
+      "hostname": "api.deepseek.com",
+      "dns_ready_now": false,
+      "error_type": "gaierror",
+      "historical_state_inferred_from_current_dns": false
+    },
+    "configuration_identity": {
+      "model_configuration_match": true,
+      "tool_configuration_match": true,
+      "rag_configuration_match": true,
+      "runner_match": true,
+      "v3_agent_match": true,
+      "note": "Frozen checks and current read-only recomputation pass. Step 9.57 has no per-request model-config snapshot; the run-time binding is supported by its pre-case guard and unchanged identity evidence, not by a separately persisted environment snapshot."
+    },
+    "runner_responsibility": {
+      "request_entrypoint": "scripts/run_step9_28_v4_heldout.py::_case_result -> app.test_client().post('/api/chat')",
+      "adapter": "scripts/run_step9_53_v3_identity_adapter.py::run delegates to scripts/run_step9_35a_matched_treatment.py unchanged",
+      "production_path": "adaptive_agent/flask_app.py::_create_adaptive_chat_service -> model_config.create_chat_model -> adaptive_agent.service.AdaptiveChatService.chat -> adaptive_agent.runner.AdaptiveAgentLoop.run_turn -> adaptive_agent.input_understanding.LLMInputUnderstander.understand -> ChatOpenAI.with_structured_output(...).invoke",
+      "request_origin": "adaptive_agent/input_understanding.py::LLMInputUnderstander.understand",
+      "altered_endpoint_provider_or_model": false,
+      "overrode_or_stripped_configuration": false,
+      "conclusion": "Runner/adapter forwards the production service and frozen model configuration; no request/config construction defect evidenced."
+    }
+  },
+  "failure_boundary": {
+    "request_object_constructed": "YES — SDK/httpx request path was entered before ConnectError",
+    "dns_lookup_attempted": "YES — gaierror / nodename resolution failure",
+    "tcp_connection_established": "NO — DNS failed before socket connection",
+    "tls_established": "NO — no TCP connection",
+    "http_request_reached_provider": "NO — no endpoint connection",
+    "model_inference_started": "NO — no provider request reached the service",
+    "model_response_received": "NO",
+    "agent_behavior_evaluated": "NO — Agent Loop/input-understanding path was entered, but no model response, action decision, completed answer, or case result was produced",
+    "tool_or_rag_action_completed": "NO",
+    "persisted_raw_trace_available": "NO — raw trace file remains empty"
+  },
+  "retry_eligibility_analysis": {
+    "failure_external_to_v3_agent": "YES",
+    "failure_external_to_evaluation_semantics": "YES",
+    "infrastructure_remediation_possible_without_agent_change": "YES",
+    "fresh_authorization_could_be_considered_after_remediation": "YES — forensic eligibility only, not authorization; consumed authorization/attempt are never reusable"
+  },
+  "history_integrity": {
+    "step9_55_failed_ledger_sha256": "57967d950a3a4c700f3187e3d495ca39b4e01d5700ef31a9ebe36c3380450de6",
+    "step9_56_authorization_manifest_sha256": "c4baa12b60a2166c03d8d7c98d6aefe1897873141f5b9b18e6c8a4fb795dd606",
+    "step9_56_authorization_freeze_sha256": "9a45b3fb85632ad5cc0629f0b77fe479834291d05ffd136ab7d98138b23e7870",
+    "step9_56_authorization_audit_sha256": "925484ba15ec248f765459e80f0f4d2f78698479806d7ac775a72ff3661fed51",
+    "step9_56_authorization_report_sha256": "981c9b0ea4e8feed2cbf877ef2307fd4b920b80d77ae94ed6c6b6a713fd99172",
+    "step9_55b_r3_freeze_sha256": "581edb8e0091c3dd060735435091be0c5d826b6244a562fa1bfb21a0b3d850fc",
+    "step9_55b_audit_sha256": "2cb2fd8d5b8313c8e5f8ab5d9920c8c18bc6027779cacc8b8bd39aac856e9680",
+    "v3_agent_sha256": "085d338ed95bbef7370c41cf97ca0d6653ffdfd2f1c924eef4b7123dfdea4607",
+    "v3_runner_sha256": "ace3d58005a5c4ce01aeeb17ac54a437c64e4023f7c870e12964a1a5d72b0b7e",
+    "frozen_configuration_checks_all_pass": true,
+    "historical_artifacts_modified": false
+  },
+  "prohibited_activity": {
+    "retry_or_rerun": false,
+    "new_authorization_or_attempt": false,
+    "model_agent_or_rag_called_for_forensics": false,
+    "v4_case_rerun": false,
+    "scoring_adjudication_aggregation_comparison": false,
+    "v5_created_or_accessed": false,
+    "agent_runner_or_frozen_inputs_modified": false
+  },
+  "classification_options": {
+    "A_DNS_LOCAL_NETWORK_ENVIRONMENT_FAILURE": true,
+    "B_MALFORMED_MISSING_ENDPOINT_CONFIGURATION": false,
+    "C_PROVIDER_MODEL_CONFIGURATION_MISMATCH": false,
+    "D_MISSING_INVALID_CREDENTIAL_CONFIGURATION": false,
+    "E_RUNNER_REQUEST_CONSTRUCTION_DEFECT": false,
+    "F_FROZEN_CONFIGURATION_IDENTITY_DEFECT": false,
+    "G_INDETERMINATE_INFRASTRUCTURE_FAILURE": false
+  },
+  "source_artifacts": [
+    "evaluation/v4_runs/heldout-v4-step9_55a-treatment-v3-20260930-01/attempts.jsonl",
+    "evaluation/v4_runs/heldout-v4-step9_55a-treatment-v3-20260930-01/attempt-step9_56-93842f48f1554239ad14d2c11689635e_case_results.jsonl",
+    "evaluation/v4_runs/heldout-v4-step9_55a-treatment-v3-20260930-01/attempt-step9_56-93842f48f1554239ad14d2c11689635e_raw_traces.jsonl",
+    "evaluation/v1_2_3/step9_56_v3_authorization_manifest.json",
+    "evaluation/v1_2_3/step9_56_v3_authorization_freeze.json",
+    "evaluation/v1_2_3/step9_56_v3_authorization_audit.json",
+    "evaluation/v1_2_3/step9_55b_v3_runner_freeze_r3.json",
+    "evaluation/v1_2_3/step9_55b_v3_runner_audit.json",
+    "record.md",
+    "scripts/run_step9_53_v3_identity_adapter.py",
+    "scripts/run_step9_35a_matched_treatment.py",
+    "scripts/run_step9_28_v4_heldout.py",
+    "adaptive_agent/flask_app.py",
+    "adaptive_agent/service.py",
+    "adaptive_agent/runner.py",
+    "adaptive_agent/input_understanding.py",
+    "model_config.py"
+  ]
+}

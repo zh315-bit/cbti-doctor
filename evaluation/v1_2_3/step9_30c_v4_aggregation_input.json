@@ -1,0 +1,12 @@
+{
+  "adjudication_path": "evaluation/v1_2_3/step9_30b_v4_human_adjudication.jsonl",
+  "adjudication_sha256": "85d436955fe2b7ea2448bce94fcb4443d7004140c5b0c4090283f7a0907cd645",
+  "aggregation_authorized_by_this_artifact": false,
+  "aggregation_performed": false,
+  "case_count": 40,
+  "identity_resolution_path": "evaluation/v1_2_3/step9_30b1_v4_adjudication_identity_resolution.json",
+  "identity_resolution_sha256": "cb0d2acfe3956a9f4525d4c08881b1f35898719a918c3cf29dfc836f1eae4cc0",
+  "reviewer_type": "SINGLE_AI_REVIEWER",
+  "status": "CANONICAL_INPUT_READY_NOT_EXECUTED",
+  "step": "9.30c"
+}

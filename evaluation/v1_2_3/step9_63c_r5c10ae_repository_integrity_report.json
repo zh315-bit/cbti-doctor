@@ -1,0 +1,77 @@
+{
+ "step": "9.63c-r5c10ae",
+ "snapshot": {
+  "files_before": 2434,
+  "files_after": 2446,
+  "baseline_vs_previous_step_end": "0 changes",
+  "added": [
+   "evaluation/v1_2_3/step9_63c_r5c10ae_ar10.diff",
+   "evaluation/v1_2_3/step9_63c_r5c10ae_ar11.diff",
+   "evaluation/v1_2_3/step9_63c_r5c10ae_ar17.diff",
+   "evaluation/v1_2_3/step9_63c_r5c10ae_consumer_path_audit.md",
+   "tests/test_step9_63c_r5c10ae_builder_pins.py",
+   "tests/test_step9_63c_r5c10ae_consumer_precommit_gate.py"
+  ],
+  "removed": [],
+  "changed": [
+   "scripts/build_step9_63c_r11_runner_freeze.py",
+   "scripts/run_step9_63_v3_formal_execution.py"
+  ]
+ },
+ "changed_file_classification": {
+  "scripts/run_step9_63_v3_formal_execution.py": "r11 CHANGED member (r10 path whose r10 bytes ce836355... were already superseded in r5c10j); modified under explicit AR-17 authorization; cd0d0706... -> 297558393e56...",
+  "scripts/build_step9_63c_r11_runner_freeze.py": "r11 REPLACED member (not an r10 path); AR-10 + AR-11; c2924475... -> eaa113dab72961846003958050027490f495945f995a3d77e92b7a323a3733bc"
+ },
+ "r10_members": {
+  "match": 17,
+  "differ": [
+   "scripts/run_step9_63_v3_formal_execution.py",
+   "scripts/v3_execution_transaction.py",
+   "scripts/v3_runner_identity.py"
+  ],
+  "note": "same three paths as before this step (scanner, resolver, consumer); no additional r10 member changed"
+ },
+ "untouched_by_this_step": {
+  "evaluation/v1_2_3/step9_63c_r5c5b_runner_freeze_r10.json": {
+   "sha256": "d24244235e51e7bf6c8567880c654fe3fd73b87fa1bfe1ab0f10dfdc94db2693",
+   "unchanged": true
+  },
+  "scripts/run_step9_53_v3_identity_adapter.py": {
+   "sha256": "3a4ec3e526bde19e318e271a24569223087c8a6aadc77fd144b061825c0da282",
+   "unchanged": true
+  },
+  "scripts/authorization_lifecycle.py": {
+   "sha256": "f0d8b7e04fa2710765b74f4f293436b051af005d11851bf9583da14ff6612744",
+   "unchanged": true
+  },
+  "scripts/build_step9_63c_r5c4_runner_freeze.py": {
+   "sha256": "9ebfe83b099dc454ec2ec5f90cf6c53d272a48ee6bb4be9c9aae98136f1a3812",
+   "unchanged": true
+  },
+  "evaluation/v1_2/step8_3_mechanism_traces.jsonl": {
+   "sha256": "e09321c89b75a4330799e4a4c286652cee82ed0e0d4fa1b8478c970dd7f6d8e5",
+   "unchanged": true
+  },
+  "evaluation/v1_2_1/step8_7_mechanism_traces.jsonl": {
+   "sha256": "5518eb4b0b7e8880c5f84e59ba0264013bed99e25edb8da93dca558304d4f084",
+   "unchanged": true
+  },
+  "evaluation/v1_2_3/step9_51a_safe_test_manifest.json": {
+   "sha256": "a639ab7e674227f5c676071da6a6186572138fc88d0c899a9cf3fbaa6a59169d",
+   "unchanged": true
+  },
+  "evaluation/v1_2_3/step9_63c_r5c10ad_test_boundary_manifest.json": {
+   "sha256": "acf0b42973083f51c19273c5b9504e5b78491431a6f230df6fd4f8d37728f200",
+   "unchanged": true
+  }
+ },
+ "authorization_ledger_unchanged": true,
+ "r11_formal_artifacts_present": false,
+ "guard_blocked_events_final_runs": 0,
+ "rollback": {
+  "method": "git apply -R in order ar11 -> ar10 -> ar17 (git-verifiable; diffs use /dev/null labels for created files)",
+  "verified_on_scratch_copy": "4/4 touched paths restored byte-identical to the step baseline",
+  "command": "for n in 11 10 17; do git apply -R evaluation/v1_2_3/step9_63c_r5c10ae_ar$n.diff; done"
+ },
+ "git_commit_or_push": "NONE"
+}

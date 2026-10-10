@@ -1,0 +1,100 @@
+{
+ "purpose": "Explicitly archived (not collected) historical tests. Files keep their original bytes; the .retired suffix prevents collection by tests/test_*.py globs and unittest discovery.",
+ "entries": [
+  {
+   "step": "9.63c-r5c10ad AR-2",
+   "archive": "tests/retired/test_step9_63c_r5_mac_local_preflight.py.retired",
+   "original_path": "tests/test_step9_63c_r5_mac_local_preflight.py",
+   "archive_sha256": "6becc369b9eb92347bfd9de064bf35277da15743d9b331efb453b3548e2b78d3",
+   "original_sha256_at_archive": "6becc369b9eb92347bfd9de064bf35277da15743d9b331efb453b3548e2b78d3",
+   "original_sha256_before_r5c10ac_import_deferral": "3823e68eae92900f23b7fdd9c5f36e667c3bd1d80e5c065c4ac9f1f59104f564",
+   "disposition": "PARTIAL: original file stays active with RC1 and UNCOVERED methods; listed methods removed from it",
+   "retired_covered_methods": [
+    "test_v3_agent_mismatch",
+    "test_authorization_manifest_hash_mismatch",
+    "test_authorization_already_consumed",
+    "test_attempt_collision",
+    "test_namespace_collision",
+    "test_transaction_identity_collision_and_appledouble_sidecar",
+    "test_historical_global_root_not_current_collision",
+    "test_failed_payload_cannot_write_evidence",
+    "test_real_identity_state_now_requires_new_runner_freeze"
+   ],
+   "rewritten_methods": [
+    "test_dns_failure",
+    "test_tcp_failure",
+    "test_tls_failure",
+    "test_certificate_missing",
+    "test_certificate_unverified",
+    "test_r8_aggregate_hash_mismatch",
+    "test_r8_member_hash_mismatch",
+    "test_fail_closed_output_hides_exception"
+   ],
+   "coverage_mapping": "evaluation/v1_2_3/step9_63c_r5c10ad_r5_coverage_mapping.json"
+  },
+  {
+   "step": "9.63c-r5c10ad AR-2",
+   "archive": "tests/retired/test_step9_63c_r5b_preflight_lifecycle.py.retired",
+   "original_path": "tests/test_step9_63c_r5b_preflight_lifecycle.py",
+   "archive_sha256": "2d95a200d286e20ac35fa04f3665abff626ea5846270ca7a36164e0bb371f6c5",
+   "original_sha256_at_archive": "2d95a200d286e20ac35fa04f3665abff626ea5846270ca7a36164e0bb371f6c5",
+   "original_sha256_before_r5c10ac_import_deferral": "e5bed6c164bb858eebc70c277c794a1e89442d6d0e38a168fd015cbafc3cbc47",
+   "disposition": "FULL: module moved out of the active test set",
+   "retired_covered_methods": [
+    "test_T1_preparation_does_not_create_real_target",
+    "test_T6_unknown_old_artifact_untouched",
+    "test_T7_successful_new_artifact_binds_authorization",
+    "test_T8_mismatched_authorization_rejected",
+    "test_T9_mismatched_runner_rejected",
+    "test_T10_mismatched_attempt_or_namespace_rejected"
+   ],
+   "rewritten_methods": [
+    "test_T2_import_does_not_create_real_target",
+    "test_T3_offline_fixture_only_writes_temp",
+    "test_T4_first_id_path_is_unique",
+    "test_T5_second_nonconsuming_id_differs",
+    "test_T11_duplicate_preflight_id_exclusive_create_fails",
+    "test_T12_different_ids_do_not_collide",
+    "test_T13_no_http_model_agent_rag_execution",
+    "test_T14_authorization_consumption_stays_zero",
+    "test_old_fixed_path_cannot_be_substituted",
+    "test_wrong_explicit_sha_rejected",
+    "test_preissue_timestamp_rejected"
+   ],
+   "coverage_mapping": "evaluation/v1_2_3/step9_63c_r5c10ad_r5_coverage_mapping.json"
+  },
+  {
+   "step": "9.63c-r5c10ad AR-4",
+   "archive": "tests/retired/test_step9_63c_r5c4_bootstrap_repair.py.retired",
+   "original_path": "tests/test_step9_63c_r5c4_bootstrap_repair.py",
+   "archive_sha256": "0a7472d0c0ba3ef6aec4d5fdc7a84af27789473f7c7169330f6af36e477ad566",
+   "original_sha256_at_archive": "0a7472d0c0ba3ef6aec4d5fdc7a84af27789473f7c7169330f6af36e477ad566",
+   "disposition": "PARTIAL: three r9-contract methods removed; 19 methods stay active",
+   "retired_covered_methods": [],
+   "rewritten_methods": [
+    "test_09_pointer_resolves_only_exact_freeze",
+    "test_10_pointer_freeze_hash_mismatch_fails",
+    "test_18_old_r8_authorization_is_not_a_current_freeze_binding"
+   ],
+   "rewritten_in": "tests/test_step9_63c_r5c10ad_r11_resolver_contract.py",
+   "r5c10j_coverage_check": {
+    "test_09": "implicit only (consumer acceptance needs a successful resolve); rewritten explicitly",
+    "test_10": "not covered (r5c10j corrupts freeze bytes, not the pointer/freeze identity binding)",
+    "test_18": "not covered (r5c10j rejects an r10 pointer, not a pointer naming the r8 freeze)"
+   }
+  },
+  {
+   "step": "9.63c-r5c10af AR-2 (follow-up)",
+   "archive": "tests/retired/test_step9_63c_r5_mac_local_preflight.py.retired",
+   "original_path": "tests/test_step9_63c_r5_mac_local_preflight.py",
+   "archive_sha256": "6becc369b9eb92347bfd9de064bf35277da15743d9b331efb453b3548e2b78d3",
+   "disposition": "PARTIAL (additional): two former UNCOVERED methods removed from the active file; the archive above already holds them verbatim",
+   "retired_covered_methods": [
+    "test_multiple_active_authorizations",
+    "test_historical_pin_mismatch"
+   ],
+   "rewritten_methods": [],
+   "coverage_mapping": "evaluation/v1_2_3/step9_63c_r5c10af_r5_coverage_mapping.json"
+  }
+ ]
+}

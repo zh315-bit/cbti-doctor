@@ -1,0 +1,27 @@
+{
+  "comparison_type":"historical development/regression comparison; same frozen V2 case set; one run per version; single-reviewer score uncertainty",
+  "benchmark_v2_held_out":false,
+  "step8_9_historical":{
+    "overall":67.5,"task_scores":{"KNOWLEDGE_QA":83.5,"CAUSE_ASSESSMENT":72.5,"PERSONALIZED_DECISION":52.08,"DATA_ANALYSIS":64.38},
+    "ASK_per_case":1.65,"PD_ASK_per_case":2.917,"RETRIEVE_per_case":0.275,"READ_DIARY_per_case":0.225,
+    "turns_per_case":2.65,"steps_per_case":3.15,"critical_failures":4,"harmful_failure_cases_reported":7,"latency_ms_per_case":7478.7,
+    "token_usage":"NOT_MEASURED","model_call_count":"NOT_AVAILABLE"
+  },
+  "current_step9_14":{
+    "overall":68.275,"task_scores":{"KNOWLEDGE_QA":71.5,"CAUSE_ASSESSMENT":67.4,"PERSONALIZED_DECISION":57.167,"DATA_ANALYSIS":82.0},
+    "ASK_per_case":1.375,"PD_ASK_per_case":2.5,"RETRIEVE_per_case":0.35,"READ_DIARY_per_case":0.275,
+    "turns_per_case":2.375,"steps_per_case":3.0,"critical_failures":0,"harmful_interaction_or_dependency_cases":3,
+    "safe_available_diary_task_incomplete_cases":6,"mean_observable_latency_ms_per_case":7390.296,
+    "token_usage":"NOT_MEASURED","model_call_count":"NOT_AVAILABLE"
+  },
+  "delta_current_minus_step8_9":{
+    "overall":0.775,"task_scores":{"KNOWLEDGE_QA":-12.0,"CAUSE_ASSESSMENT":-5.1,"PERSONALIZED_DECISION":5.087,"DATA_ANALYSIS":17.62},
+    "ASK_per_case":-0.275,"PD_ASK_per_case":-0.417,"RETRIEVE_per_case":0.075,"READ_DIARY_per_case":0.05,
+    "turns_per_case":-0.275,"steps_per_case":-0.15,"critical_failures":-4,"latency_ms_per_case":-88.404
+  },
+  "comparability_caveats":[
+    "Step 8.9 historical scores are retained as recorded; current scores are a fresh single-reviewer trace-only adjudication under the same five dimension weights, whose rubric lacks numeric anchor definitions.",
+    "Harmful failure taxonomy is decomposed this run: 3 repeated ASK/resource-dependency failures plus 6 safely rejected diary payloads that made available-data cases incomplete; the Step 8.9 single count of 7 included its four diary critical failures and is not a like-for-like severity count.",
+    "No significance, held-out generalization, real-user performance, or causal policy superiority claim is supported."
+  ]
+}

@@ -1,0 +1,121 @@
+{
+  "step": "9.63c-r5c10w",
+  "method": "read_only_static_review_no_test_collection_or_execution",
+  "remaining_module_count": 9,
+  "current_collection_failure_count": "NOT_MEASURED",
+  "static_collection_blocker_paths": 9,
+  "blocker_definitions": {
+    "collection_blocker": "A top-level import currently reaches the r11 resolver while its formal pointer is absent; this is a static prediction, not a newly observed collection result.",
+    "missing_identity": "The formal r11 current-runner pointer and freeze are not published; this is an intentional fail-closed state, not permission to mock them.",
+    "transaction_side_effect": "A test may invoke the real transaction or parent runner even when using synthetic paths; execution requires separate side-effect review.",
+    "frozen_boundary_conflict": "A proposed fix would need to change a frozen member or formal identity contract; merely importing a frozen member is not itself a change.",
+    "historical_evidence_integrity": "Earlier contents of two historical Trace files have no trusted pre-run hash.",
+    "production_defect": "A demonstrated production-behavior regression, distinct from absent future r11 identity.",
+    "unknown": "Static evidence cannot establish the runtime result or safe repair scope."
+  },
+  "modules": [
+    {
+      "path": "tests/test_step9_53_v3_identity_adapter.py",
+      "sha256": "34643474b00e1e5c30b6c27c217b6547a72cb74be69551bf534f9a5e7c8c40c6",
+      "static_test_definitions": 8,
+      "import_chain": "test module -> top-level frozen V3 adapter -> r11 identity resolver -> absent formal pointer",
+      "blockers": ["collection_blocker", "missing_identity", "unknown"],
+      "side_effect_review": "Adapter source/introspection assertions; no direct historical Trace write or adapter.run found in this file. Runtime identity behavior remains unmeasured.",
+      "frozen_member_edit_required": "NOT_PROVEN",
+      "test_only_resolution": "NOT_PROVEN; module-level adapter-derived constants also require relocation analysis",
+      "production_defect_confirmed": false
+    },
+    {
+      "path": "tests/test_step9_55a_namespace_lifecycle.py",
+      "sha256": "34bf8a995edde108b5412e34ba0131bed1566d73f7dbbf86038744910daab83d",
+      "static_test_definitions": 12,
+      "import_chain": "test module -> top-level frozen V3 adapter -> r11 identity resolver -> absent formal pointer",
+      "blockers": ["collection_blocker", "missing_identity", "transaction_side_effect", "unknown"],
+      "side_effect_review": "Writes synthetic namespace/ledger fixtures; one method invokes adapter.run under mocks. No static fixed historical Trace write found.",
+      "frozen_member_edit_required": "NOT_PROVEN",
+      "test_only_resolution": "NOT_PROVEN; module helper references adapter",
+      "production_defect_confirmed": false
+    },
+    {
+      "path": "tests/test_step9_59a_auth_identity_binding.py",
+      "sha256": "39e3f2ba1342db714d88265c92f330d361d4504a45a383b2470a9acf10294189",
+      "static_test_definitions": 7,
+      "import_chain": "test module -> top-level frozen V3 adapter -> r11 identity resolver -> absent formal pointer",
+      "blockers": ["collection_blocker", "missing_identity", "transaction_side_effect", "unknown"],
+      "side_effect_review": "Writes synthetic auth/ledger fixtures and calls parent.run in a method; no execution authorized here.",
+      "frozen_member_edit_required": "NOT_PROVEN",
+      "test_only_resolution": "NOT_PROVEN; setUp reads live binding/freeze state",
+      "production_defect_confirmed": false
+    },
+    {
+      "path": "tests/test_step9_63a_r1_production_integration.py",
+      "sha256": "b5a15e30ccfc9900e86ea81e66de572d46e51744e509e12dfb4040598fae1c15",
+      "static_test_definitions": 33,
+      "import_chain": "test module -> top-level frozen V3 adapter and formal entry -> r11 identity resolver -> absent formal pointer",
+      "blockers": ["collection_blocker", "missing_identity", "transaction_side_effect", "unknown"],
+      "side_effect_review": "Methods call begin_and_commit, adapter.run and parent.run on synthetic fixtures; execution needs method-by-method boundary review.",
+      "frozen_member_edit_required": "NOT_PROVEN",
+      "test_only_resolution": "NOT_PROVEN; multiple runtime imports and execution paths",
+      "production_defect_confirmed": false
+    },
+    {
+      "path": "tests/test_step9_63a_r2_retirement_eligibility.py",
+      "sha256": "cca6f6d850f99398f4a47e53f89129e98dfb46716bad2d6353a3b7ec1eedf1a6",
+      "static_test_definitions": 19,
+      "import_chain": "test module -> top-level frozen V3 adapter -> r11 identity resolver -> absent formal pointer",
+      "blockers": ["collection_blocker", "missing_identity", "transaction_side_effect", "unknown"],
+      "side_effect_review": "Synthetic authorization/determination/transaction fixtures; parent.run appears in a method and old r7/r8 identity assumptions require review.",
+      "frozen_member_edit_required": "NOT_PROVEN",
+      "test_only_resolution": "NOT_PROVEN",
+      "production_defect_confirmed": false
+    },
+    {
+      "path": "tests/test_step9_63a_r3_authorization_issuance.py",
+      "sha256": "50839d3e2b79cbc20f2b86c2b5fad15b51ddf9a8c93846f6ed84c079bdbaa1c1",
+      "static_test_definitions": 18,
+      "import_chain": "test module -> top-level frozen issuer -> frozen V3 adapter -> r11 identity resolver -> absent formal pointer",
+      "blockers": ["collection_blocker", "missing_identity", "frozen_boundary_conflict", "unknown"],
+      "side_effect_review": "Synthetic issue_exactly_once calls on temporary paths; old issuer/identity contract may need distinct frozen-boundary approval, not a test-only assumption.",
+      "frozen_member_edit_required": "POSSIBLE_NOT_PROVEN",
+      "test_only_resolution": "NOT_PROVEN; separate issuer-boundary review required",
+      "production_defect_confirmed": false
+    },
+    {
+      "path": "tests/test_step9_63b_mac_local_preflight.py",
+      "sha256": "0a81c59db2969fc6b4fb7f09a5b4ed04b24422dd5f633620f49a4d61934ef191",
+      "static_test_definitions": 8,
+      "import_chain": "test module -> top-level non-frozen transport -> frozen issuer/adapter -> r11 identity resolver -> absent formal pointer",
+      "blockers": ["collection_blocker", "missing_identity", "unknown"],
+      "side_effect_review": "Runtime run_preflight calls with mocked connectivity and temporary artifacts; no execution without independent network/write-path review.",
+      "frozen_member_edit_required": "NOT_PROVEN",
+      "test_only_resolution": "NOT_PROVEN",
+      "production_defect_confirmed": false
+    },
+    {
+      "path": "tests/test_step9_63c_r5_mac_local_preflight.py",
+      "sha256": "3823e68eae92900f23b7fdd9c5f36e667c3bd1d80e5c065c4ac9f1f59104f564",
+      "static_test_definitions": 26,
+      "import_chain": "test module -> top-level non-frozen transport -> frozen issuer/adapter -> r11 identity resolver -> absent formal pointer",
+      "blockers": ["collection_blocker", "missing_identity", "unknown"],
+      "side_effect_review": "Runtime run_preflight calls and synthetic artifact writes; historical wrapper/current producer identity differences require contract review.",
+      "frozen_member_edit_required": "NOT_PROVEN",
+      "test_only_resolution": "NOT_PROVEN",
+      "production_defect_confirmed": false
+    },
+    {
+      "path": "tests/test_step9_63c_r5b_preflight_lifecycle.py",
+      "sha256": "e5bed6c164bb858eebc70c277c794a1e89442d6d0e38a168fd015cbafc3cbc47",
+      "static_test_definitions": 17,
+      "import_chain": "test module -> top-level non-frozen transport -> frozen issuer/adapter; also imports formal consumer -> r11 resolver -> absent formal pointer",
+      "blockers": ["collection_blocker", "missing_identity", "unknown"],
+      "side_effect_review": "Runtime run_preflight and formal.validate_preflight_evidence with temporary artifacts; no direct execute_formal found, but identity/write paths need review.",
+      "frozen_member_edit_required": "NOT_PROVEN",
+      "test_only_resolution": "NOT_PROVEN",
+      "production_defect_confirmed": false
+    }
+  ],
+  "static_test_definition_total": 148,
+  "test_only_repair_count_proven": 0,
+  "production_defects_confirmed_by_current_review": 0,
+  "classification_caution": "The nine import chains are present in source, but no fresh collection or test run was performed. Runtime failures and safe patch scopes remain unverified."
+}

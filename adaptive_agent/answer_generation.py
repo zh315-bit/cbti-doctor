@@ -9,6 +9,65 @@ from .state import AdaptiveAgentState, TaskType
 from .requirements import RequirementSet, requirement_is_known
 
 
+ANSWER_AUTHORIZATION_MODES = {
+    "AUTHORIZED_FULL", "AUTHORIZED_BOUNDED",
+    "BLOCKED_NEEDS_INFORMATION", "BLOCKED_UNSAFE_OR_INVALID",
+}
+ANSWER_AUTHORIZATION_SOURCE = "adaptive_agent.answer_generation.authorize_final_answer"
+ANSWER_AUTHORIZATION_VERSION = "step9_50_authorization_trace_v1"
+
+
+def _answer_basis_refs(state: AdaptiveAgentState) -> list[str]:
+    refs = [f"fact:{field}" for field, value in _answer_facts(state).items()
+            if value is not None and value != ""]
+    _, evidence_audit = project_evidence(state)
+    refs.extend(f"evidence:{item['index']}" for item in evidence_audit if item["included"])
+    return sorted(set(refs))
+
+
+def _authorization_trace_fields(state: AdaptiveAgentState, status: str, reason: str,
+                                material_missing: set[str], detail_missing: set[str],
+                                unresolved_resources: list[dict[str, Any]]) -> dict[str, Any]:
+    mode = status if status in ANSWER_AUTHORIZATION_MODES else "BLOCKED_UNSAFE_OR_INVALID"
+    unresolved = [item for item in state.dependencies_considered
+                  if item.get("status") not in {"SATISFIED", "NOT_APPLICABLE"}
+                  and (item.get("requiredness", "required") == "required"
+                       or item.get("dependency_type") == "VALIDITY_STATE")]
+    blocked_dependency_ids = sorted({str(item.get("dependency_id") or
+        f"dependency:{item.get('dependency_type')}:{item.get('target')}") for item in unresolved})
+    blocked_preconditions = [item for item in state.preconditions_considered
+                             if str(item.get("status", "")).lower() not in {"satisfied", "not_applicable"}]
+    blocked_precondition_ids = sorted({str(item.get("precondition_id") or item.get("target") or "unknown")
+                                       for item in blocked_preconditions})
+    excluded = sorted({f"individualized_action:{field}" for field in material_missing if field}
+                      | {f"dependency_scope:{item.get('target')}" for item in unresolved_resources
+                         if item.get("target")})
+    basis = _answer_basis_refs(state)
+    if mode == "AUTHORIZED_FULL":
+        reason_codes = ["ALL_MATERIAL_REQUIREMENTS_SATISFIED"]
+        excluded = []
+    elif mode == "AUTHORIZED_BOUNDED":
+        reason_codes = ["UNSUPPORTED_SCOPE_EXCLUDED"]
+    elif mode == "BLOCKED_NEEDS_INFORMATION":
+        reason_codes = ["RESOLVABLE_REQUIRED_INFORMATION_MISSING"]
+    else:
+        reason_codes = ["NO_SAFE_SUPPORTED_SCOPE_OR_ACQUISITION"]
+    if detail_missing:
+        reason_codes.append("OPTIONAL_DETAIL_UNAVAILABLE")
+    return {
+        "answer_authorization_mode": mode,
+        "answer_authorization_reason_codes": reason_codes,
+        "blocked_dependency_ids": blocked_dependency_ids,
+        "blocked_precondition_ids": blocked_precondition_ids,
+        "bounded_excluded_actions": excluded,
+        "bounded_supported_content_basis": basis,
+        "authorization_decision_source": ANSWER_AUTHORIZATION_SOURCE,
+        "authorization_decision_version": ANSWER_AUTHORIZATION_VERSION,
+        "authorization_scope": state.answer_scope,
+        "authorization_reason": reason,
+    }
+
+
 def authorize_final_answer(state: AdaptiveAgentState, requirements: RequirementSet) -> dict[str, Any]:
     """Authorize the proposed answer scope independently from resource acquisition."""
     dependencies = state.dependencies_considered
@@ -64,9 +123,18 @@ def authorize_final_answer(state: AdaptiveAgentState, requirements: RequirementS
         item.get("status") in {"REQUIRED", "AVAILABLE"}
         and item.get("dependency_type") in {"EVIDENCE", "RESOURCE", "VALIDITY_STATE"}
         for item in dependencies
-    )
+    ) or any(item.action in {"ASK", "READ_DIARY", "RETRIEVE"}
+             and (not item.target or not material_missing or item.target in material_missing)
+             for item in state.candidate_actions)
+    unresolved_hard_preconditions = [item for item in state.preconditions_considered
+        if str(item.get("status", "")).lower() not in {"satisfied", "not_applicable"}]
+    supported_basis = _answer_basis_refs(state)
 
-    if not material_missing and not unresolved_resources and not detail_missing:
+    if unresolved_hard_preconditions:
+        status = "BLOCKED_NEEDS_INFORMATION" if acquisition_available else "BLOCKED_UNSAFE_OR_INVALID"
+        reason = ("a hard precondition remains unresolved and has a valid acquisition route"
+                  if acquisition_available else "a hard precondition remains unresolved with no valid acquisition route")
+    elif not material_missing and not unresolved_resources and not detail_missing:
         status = "AUTHORIZED_FULL"
         reason = "all material answer dependencies are satisfied"
     elif safe_fallback:
@@ -81,13 +149,25 @@ def authorize_final_answer(state: AdaptiveAgentState, requirements: RequirementS
             reason = "no safe bounded scope or valid acquisition route remains"
     elif detail_missing and acquisition_available:
         status = "BLOCKED_NEEDS_INFORMATION"
+        reason = "material detail remains resolvable and no safe bounded scope is available"
     else:
         status = "BLOCKED_UNSAFE_OR_INVALID"
 
-    if invalid_conflicts and status == "AUTHORIZED_FULL":
-        status = "AUTHORIZED_BOUNDED" if requirements.answer_scope.strip() else "BLOCKED_UNSAFE_OR_INVALID"
-        reason = "invalid or conflicting state excludes the affected individualized scope"
-    return {
+    # The frozen contract permits bounded authorization only when there is
+    # actual provenance-bound content to say. This is fail-closed; it does not
+    # alter dependency/precondition classifications or promote missing state.
+    if status == "AUTHORIZED_BOUNDED" and not supported_basis:
+        if acquisition_available:
+            status = "BLOCKED_NEEDS_INFORMATION"
+            reason = "no useful supported content is available before a valid acquisition"
+        else:
+            status = "BLOCKED_UNSAFE_OR_INVALID"
+            reason = "no useful supported content or valid acquisition route remains"
+
+    if invalid_conflicts:
+        status = "BLOCKED_UNSAFE_OR_INVALID"
+        reason = "invalid or conflicting material state blocks the requested individualized scope"
+    result = {
         "status": status,
         "reason": reason,
         "material_missing": sorted(field for field in material_missing if field and field != "None"),
@@ -99,12 +179,15 @@ def authorize_final_answer(state: AdaptiveAgentState, requirements: RequirementS
         "invalid_conflicts": invalid_conflicts,
         "answer_scope": state.answer_scope,
     }
+    result.update(_authorization_trace_fields(state, status, reason, material_missing,
+                                               detail_missing, unresolved_resources))
+    return result
 
 
 def bounded_authorization_response(authorization: dict[str, Any]) -> str:
     """Deterministic non-personalized fallback; does not call a generative model."""
     if authorization.get("status") == "BLOCKED_UNSAFE_OR_INVALID":
-        return "当前状态不足以安全支持所请求的结论，因此我不能生成该项个性化判断。"
+        return "目前无法补足足以安全支持所请求结论的资料，因此我不能生成该项个性化判断。"
     unavailable = authorization.get("unresolved_resource_dependencies", [])
     if any(item.get("dependency_type") == "RESOURCE" and item.get("status") in {"UNAVAILABLE", "INVALID"}
            for item in unavailable):
@@ -114,6 +197,49 @@ def bounded_authorization_response(authorization: dict[str, Any]) -> str:
         return "目前无法获得所需外部证据；我不能据此给出确定结论或个性化建议。"
     return ("我可以提供一般性、非个体化的信息；但目前仍缺少会影响个体化判断的已验证资料，"
             "所以不能据此判断哪项具体行动适合你。")
+
+
+_BOUNDED_DIRECTIVE = re.compile(
+    r"(?:你|您)(?:应该|应当|需要|必须|可以|不妨)|(?:建议|推荐)(?:你|您)|"
+    r"你可以尝试|(?:建议|推荐|应当|必须|可尝试).{0,8}(?:调整|改变|增加|减少|推迟|提前|开始|停止)|"
+    r"适合你(?:的|采用|选择)?|对你来说.*(?:应该|建议|适合)"
+)
+
+
+def bounded_generation_limitation(authorization: dict[str, Any]) -> str:
+    """Constrain generation to the pre-authorized supported scope."""
+    excluded = authorization.get("bounded_excluded_actions", [])
+    fields = authorization.get("material_missing", [])
+    exclusions = "；".join(str(item) for item in excluded) or "任何依赖未知个人状态的个性化行动"
+    missing = "、".join(str(item) for item in fields) or "部分未验证的个体化细节"
+    return (f"AUTHORIZED_BOUNDED: 仅回答当前请求中有事实/证据依据的部分；明确说明{missing}尚未验证。"
+            f"必须保留用户已陈述的约束。明确排除并且不得间接给出：{exclusions}。"
+            "不得给出面向该用户的行动指令；有用的一般机制、已知事实和有来源依据的信息仍应具体回答，"
+            "不得用通用拒答模板替代。")
+
+
+def validate_bounded_response(answer: str, state: AdaptiveAgentState,
+                              authorization: dict[str, Any]) -> str | None:
+    """Return only materially relevant bounded text; None means fail closed."""
+    if not isinstance(answer, str) or not answer.strip():
+        return None
+    if _BOUNDED_DIRECTIVE.search(answer):
+        return None
+    facts = _answer_facts(state)
+    evidence, _ = project_evidence(state)
+    allowed = allowed_quantities(facts, evidence, deterministic_claim_records(facts))
+    clean = validate_answer(answer, state, allowed, bool(evidence), diary_semantic_status(state, facts))
+    if not clean.strip():
+        return None
+    # Require lexical grounding in the request or at least one persisted basis;
+    # this is a conservative check, not a second authorization decision.
+    topic = _topic_tokens(state.goal)
+    content = _topic_tokens(clean)
+    basis_tokens = set().union(*(_topic_tokens(item) for item in evidence)) if evidence else set()
+    basis_tokens.update(*( _topic_tokens(str(value)) for value in facts.values()))
+    if not (topic & content) or not (content & basis_tokens):
+        return None
+    return clean
 from .facts import duration_between
 
 
@@ -260,7 +386,10 @@ def _answer_facts(state: AdaptiveAgentState) -> dict[str, Any]:
     facts = {}
     projection_valid = state.diary_projection.get("projection_status") == "valid"
     for field, value in state.facts.items():
-        if state.fact_status.get(field) == "INVALID" or (isinstance(value, dict) and value.get("uncertainty") == "conflict"):
+        epistemic_status = str(state.fact_status.get(field) or
+                               state.target_status.get(field, {}).get("status") or "").upper()
+        if (epistemic_status in {"UNKNOWN", "DEFERRED", "UNAVAILABLE", "INVALID"}
+                or (isinstance(value, dict) and value.get("uncertainty") == "conflict")):
             continue
         source = state.fact_sources.get(field, {})
         if value is None or value == "":
@@ -339,6 +468,16 @@ def build_answer_context(state: AdaptiveAgentState, limitation: str | None = Non
                        "evidence": [source_metadata(item["source"]) for item in evidence_audit if item["included"]]},
         "limitation": limitation,
     }
+    authorization = state.answer_context_audit.get("final_answer_authorization")
+    if isinstance(authorization, dict):
+        context["answer_authorization"] = {
+            key: authorization.get(key) for key in (
+                "answer_authorization_mode", "answer_authorization_reason_codes",
+                "blocked_dependency_ids", "blocked_precondition_ids",
+                "bounded_excluded_actions", "bounded_supported_content_basis",
+                "authorization_decision_source", "authorization_decision_version",
+            )
+        }
     # The audit is visible in the terminal State snapshot without sending excluded
     # evidence content to the model.
     state.answer_context_audit = {"evidence_projection": evidence_audit,
@@ -495,7 +634,17 @@ RESOURCE_UNAVAILABLE 不代表记录不存在。不得诊断疾病或扩大 answ
         self.last_token_usage: dict[str, Any] | None = None
 
     def answer(self, state: AdaptiveAgentState, limitation: str | None = None) -> str:
+        authorization = state.answer_context_audit.get("final_answer_authorization")
         context = build_answer_context(state, limitation)
+        if isinstance(authorization, dict):
+            context["answer_authorization"] = {
+                key: authorization.get(key) for key in (
+                    "answer_authorization_mode", "answer_authorization_reason_codes",
+                    "blocked_dependency_ids", "blocked_precondition_ids",
+                    "bounded_excluded_actions", "bounded_supported_content_basis",
+                    "authorization_decision_source", "authorization_decision_version",
+                )
+            }
         evidence = context["relevant_evidence"]
         answer_facts = context["relevant_facts"]
         derived_records = deterministic_claim_records(answer_facts)
@@ -548,6 +697,7 @@ RESOURCE_UNAVAILABLE 不代表记录不存在。不得诊断疾病或扩大 answ
         answer = str(getattr(response, "content", response))
         answer = validate_answer(answer, state, allowed_quantities(answer_facts, evidence, derived),
                                  bool(evidence), context["semantic_status"])
+        state.answer_context_audit["answer_generation_outcome"] = "GENERATED"
         if state.task_type == TaskType.DATA_ANALYSIS and derived:
             description = "\n".join(f"- {claim}" for claim in derived)
             return f"基于日记的描述性计算：\n{description}\n\n{answer}"

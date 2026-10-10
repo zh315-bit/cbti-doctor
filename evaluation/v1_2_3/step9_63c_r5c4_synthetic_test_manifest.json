@@ -1,0 +1,29 @@
+{
+  "step": "9.63c-r5c4",
+  "test_mode": "OFFLINE_SYNTHETIC_ONLY",
+  "command": "python3 -m unittest tests.test_step9_63c_r5c4_bootstrap_repair tests.test_step9_61a_authorization_retirement tests.test_v3_execution_transaction tests.test_step9_55a_namespace_lifecycle tests.test_step9_63c_r3_parent_namespace_repair -q",
+  "test_files": [
+    {"path": "tests/test_step9_63c_r5c4_bootstrap_repair.py", "tests": 22},
+    {"path": "tests/test_step9_61a_authorization_retirement.py", "tests": 15},
+    {"path": "tests/test_v3_execution_transaction.py", "tests": 32},
+    {"path": "tests/test_step9_55a_namespace_lifecycle.py", "tests": 12},
+    {"path": "tests/test_step9_63c_r3_parent_namespace_repair.py", "tests": 13}
+  ],
+  "total_tests": 94,
+  "failures": 0,
+  "errors": 0,
+  "all_tests_offline": true,
+  "model_agent_rag_http_or_formal_case_execution": false,
+  "coverage": [
+    "retirement authority does not require current runner equality",
+    "consumed/retired authorization guards and duplicate retirement",
+    "append-only ledger prefix integrity across append, mutation and truncation",
+    "candidate member hashing and deterministic aggregate identity",
+    "dynamic current freeze binding and stale production r8 identity checks",
+    "historical r8 evidence remains permissible without becoming current execution identity",
+    "transaction-resolved namespace authority and collision handling",
+    "exactly-once, concurrency, crash-reconciliation and output-overwrite guards",
+    "preflight import/preparation non-creation and exclusive persistence",
+    "historical 55 pins and Step 9.58 provenance gap preservation"
+  ]
+}

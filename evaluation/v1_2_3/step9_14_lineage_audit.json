@@ -1,0 +1,36 @@
+{
+  "evaluation_id": "clean-evaluation-v1_2_3-20260922-01",
+  "attempt_id": "attempt_f68c187816f84678b200ea85aa32eb3d",
+  "lineage_status": "PARTIAL_WITH_OBSERVABILITY_GAP",
+  "selected_actions": 120,
+  "action_id_present": 120,
+  "selected_candidate_id_pointer_present": 120,
+  "candidate_object_recoverable_from_persisted_turn_snapshots": 95,
+  "selected_tool_candidate_objects_missing_from_persisted_turn_snapshots": 25,
+  "tool_actions": {"RETRIEVE":14,"READ_DIARY":11,"total":25},
+  "tool_result_lineage_events": 25,
+  "tool_result_ids_present": 25,
+  "source_action_ids_present": 25,
+  "state_update_ids_present": 25,
+  "retrieval_results_available": 14,
+  "diary_results_invalid_or_unavailable": 11,
+  "precondition_records": 34,
+  "precondition_types":{"RESOURCE":11,"VALIDITY_CRITICAL_STATE":23},
+  "evidence_hard_precondition_for_kq02_kq05":false,
+  "dependency_state_stale_after_tool":false,
+  "trace_gaps":[
+    {
+      "gap":"Tool-selected candidate object is not persisted in final turn snapshot",
+      "affected_action_count":25,
+      "evidence":"The raw action record preserves selected_candidate_id, and tool_result lineage preserves source_action_id, but the candidate_actions snapshot is the post-tool re-evaluation (usually ANSWER); the pre-tool Candidate payload is absent.",
+      "classification":"OBSERVABILITY_GAP"
+    },
+    {
+      "gap":"Some dependency failures have no corresponding hard precondition record",
+      "affected_cases":["V2-KQ-02","V2-KQ-05","V2-DA-07"],
+      "evidence":"Their traces have no dependency and no precondition; hence ASK/ANSWER cannot be attributed to a dependency precondition that never formed.",
+      "classification":"UPSTREAM_REPRESENTATION_FAILURE_NOT_TRACE_ID_FAILURE"
+    }
+  ],
+  "interpretation":"Lineage is sufficient to follow action IDs through tool result and State Update, but not to inspect the specific Candidate object for the 25 tool actions. No synthetic IDs were required or created by this analysis."
+}

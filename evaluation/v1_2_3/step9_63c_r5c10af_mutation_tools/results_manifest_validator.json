@@ -1,0 +1,37 @@
+[
+ {
+  "mutant": "version_check_removed",
+  "result": "KILLED",
+  "evidence": "TEST_FAILED",
+  "tests": [
+   "test_wrong_version_or_previous_reference_is_rejected"
+  ]
+ },
+ {
+  "mutant": "previous_manifest_hash_check_removed",
+  "result": "KILLED",
+  "evidence": "unmutated audit reports the tamper that the mutant misses"
+ },
+ {
+  "mutant": "previous_reference_check_removed",
+  "result": "KILLED",
+  "evidence": "TEST_FAILED",
+  "tests": [
+   "test_wrong_version_or_previous_reference_is_rejected"
+  ]
+ },
+ {
+  "mutant": "carried_decision_check_removed",
+  "result": "KILLED",
+  "evidence": "TEST_FAILED",
+  "tests": [
+   "test_decision_of_a_row_carried_from_r5c10ad_cannot_change"
+  ]
+ },
+ {
+  "mutant": "added_since_previous_check_removed",
+  "result": "KILLED",
+  "evidence": "unmutated audit reports the tamper that the mutant misses"
+ }
+]
+KILLED 5 of 5

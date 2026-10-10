@@ -1,0 +1,33 @@
+{
+  "step": "9.10b.1",
+  "method": "Read-only forensic reconstruction; no current hash was added to or used to rewrite the original Step 9.8 manifest.",
+  "frozen_attempt": {
+    "manifest": "evaluation/v1_2_2/step9_8_freeze_manifest.json",
+    "timestamp_utc": "2026-09-21T20:43:10.490696+00:00",
+    "listed_behavior_files": 13,
+    "listed_files_currently_match": 13,
+    "note": "This proves equivalence only for the listed 13 files."
+  },
+  "historical_evidence": [
+    {"source":"Step 9.8 source_sha256","strength":"STRONG","scope":"13 listed adaptive/model files","finding":"all current SHA-256 values exactly match"},
+    {"source":"Step 5.6 baseline manifest","strength":"MEDIUM","scope":"adaptive_agent/service.py and configs/requirements.yaml","finding":"prior dated hashes match current; no immutable continuity evidence reaches Step 9.8"},
+    {"source":"Git tree b61ce6dd7f9f80cdcd5a27820173400320e175a7","strength":"MEDIUM","scope":"rag_client.py and local_embeddings.py","finding":"immutable 2026-09-16 content matches current; it predates Step 9.8 and cannot establish its freeze-time contents"},
+    {"source":"Git tree cd80ece54198c3cd5c0a0ee389659059436f5949","strength":"UNUSABLE","scope":"post-event repository snapshot","finding":"timestamp is 2026-09-22; it cannot prove the 2026-09-21 frozen state"},
+    {"source":"Step 9.3/9.6/9.8a reports and record.md","strength":"WEAK","scope":"existence, intended scope and factory extraction","finding":"prose carries no immutable file identity and cannot prove MATCH"}
+  ],
+  "specifically_investigated_missing_files": [
+    {"path":"adaptive_agent/flask_app.py","existed_at_step9_8":"UNKNOWN","step9_8_content_known":"NO","historical_hash":"NO","modified_after_step9_8":"UNKNOWN","post_freeze_change_classification":"infrastructure-only is documented only by WEAK prose","equivalence_status":"UNKNOWN"},
+    {"path":"adaptive_agent/service.py","existed_at_step9_8":"YES (supported by earlier baseline)","step9_8_content_known":"NO","historical_hash":"prior-only, not freeze-time","modified_after_step9_8":"UNKNOWN","post_freeze_change_classification":"unknown","equivalence_status":"UNKNOWN"},
+    {"path":"adaptive_agent/dependency_resolver.py","existed_at_step9_8":"YES (WEAK implementation-report evidence)","step9_8_content_known":"NO","historical_hash":"NO","modified_after_step9_8":"UNKNOWN","post_freeze_change_classification":"unknown","equivalence_status":"UNKNOWN"},
+    {"path":"adaptive_agent/facts.py","existed_at_step9_8":"YES (WEAK record narrative)","step9_8_content_known":"NO","historical_hash":"NO","modified_after_step9_8":"UNKNOWN","post_freeze_change_classification":"unknown","equivalence_status":"UNKNOWN"},
+    {"path":"evaluation/recorder.py","existed_at_step9_8":"YES (WEAK Step 9.6 report)","step9_8_content_known":"NO","historical_hash":"NO","modified_after_step9_8":"UNKNOWN","post_freeze_change_classification":"unknown","equivalence_status":"UNKNOWN"}
+  ],
+  "determination": {
+    "agent_equivalence_status":"INSUFFICIENT_PROVENANCE",
+    "reason":"Ten behavior-affecting production dependencies lack a contemporaneous, immutable Step 9.8 identity. No DIFFERENT result was established.",
+    "recovery_experiment_status":"NOT_STRICTLY_RECOVERABLE",
+    "reason_for_recovery_status":"The unresolved files can affect API construction, session orchestration, dependency formation, deterministic facts, recording, requirements configuration, RAG behavior or RAG evidence.",
+    "ready_to_reassess_step9_10b":false
+  },
+  "integrity": {"agent_modified":false,"benchmark_modified":false,"scoring_modified":false,"benchmark_v2_executed":false,"real_model_called":false,"benchmark_v3_accessed":false,"original_step9_8_manifest_modified":false}
+}

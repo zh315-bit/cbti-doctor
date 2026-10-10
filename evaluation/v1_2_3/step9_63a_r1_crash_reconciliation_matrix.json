@@ -1,0 +1,21 @@
+{
+  "artifact_type": "STEP9_63A_R1_CRASH_RECONCILIATION_MATRIX",
+  "timestamp_utc": "2026-10-05T21:24:33Z",
+  "journal": "evaluation/v4_runs/.execution_transactions/<authorization_id>.jsonl",
+  "same_production_module": "scripts/v3_execution_transaction.py:reconcile_journal",
+  "production_entry": "scripts/run_step9_63_v3_formal_execution.py --reconcile-transaction --authorization-id <id>",
+  "cases": [
+    {"point": "before PREPARED", "journal_state": "ABSENT", "classification": "SAFE_TO_ABORT_UNCONSUMED", "new_attempt_automatic": false},
+    {"point": "after PREPARED", "journal_state": "PREPARED", "classification": "SAFE_TO_ABORT_UNCONSUMED; append ABORTED_UNCONSUMED tombstone", "new_attempt_automatic": false},
+    {"point": "during COMMITTING", "journal_state": "COMMITTING or malformed partial line", "classification": "MUST_COMPLETE_COMMIT from same journal if valid; otherwise FAIL_CLOSED_MANUAL_RECONCILIATION_REQUIRED", "new_attempt_automatic": false},
+    {"point": "after authorization-side persistence", "journal_state": "COMMITTING or COMMITTED", "classification": "same journal determines outcome; projection is not authority", "new_attempt_automatic": false},
+    {"point": "after attempt-side persistence", "journal_state": "COMMITTED plus ATTEMPT_CLAIMED if physical attempt began", "classification": "COMMITTED_ATTEMPT_CLAIMED_NO_AUTO_RESUME or manual reconciliation if projection disagrees", "new_attempt_automatic": false},
+    {"point": "after namespace-side persistence", "journal_state": "COMMITTED", "classification": "committed authorization burned; reservation must match exact transaction", "new_attempt_automatic": false},
+    {"point": "before COMMITTED persistence", "journal_state": "COMMITTING", "classification": "MUST_COMPLETE_COMMIT from same journal; no second identity", "new_attempt_automatic": false},
+    {"point": "after COMMITTED persistence", "journal_state": "COMMITTED", "classification": "COMMITTED_READY_FOR_EXECUTION; authorization burned", "new_attempt_automatic": false},
+    {"point": "before first case STARTED", "journal_state": "COMMITTED + ATTEMPT_CLAIMED", "classification": "COMMITTED_ATTEMPT_CLAIMED_NO_AUTO_RESUME", "new_attempt_automatic": false},
+    {"point": "after first case STARTED", "journal_state": "COMMITTED + ATTEMPT_CLAIMED + CASE_STARTED", "classification": "COMMITTED_EXECUTION_ALREADY_STARTED; preserve partial traces, no auto rerun", "new_attempt_automatic": false}
+  ],
+  "partial_or_torn_journal": "FAIL_CLOSED_MANUAL_RECONCILIATION_REQUIRED",
+  "power_loss_atomicity_claimed": false
+}

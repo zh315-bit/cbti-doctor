@@ -1,0 +1,131 @@
+{
+  "artifact_type": "STEP9_63C_R5C8G_FRESH_REGISTRY_AWARE_PREFLIGHT_PREPARATION_AUDIT",
+  "step": "9.63c-r5c8g",
+  "timestamp_utc": "2026-10-07T18:34:33Z",
+  "status": "PASS_READY_FOR_REGISTRY_AWARE_MAC_LOCAL_PREFLIGHT",
+  "execution_identity": {
+    "runner_freeze_revision": "r10",
+    "runner_freeze_path": "evaluation/v1_2_3/step9_63c_r5c5b_runner_freeze_r10.json",
+    "runner_freeze_sha256": "d24244235e51e7bf6c8567880c654fe3fd73b87fa1bfe1ab0f10dfdc94db2693",
+    "runner_freeze_member_count": 20,
+    "runner_freeze_hash_mismatch_count": 0,
+    "changed_r10_freeze_member_count": 0,
+    "current_runner_matches_r10_freeze": true,
+    "current_agent_matches_v3_freeze": true,
+    "v3_agent_sha256": "085d338ed95bbef7370c41cf97ca0d6653ffdfd2f1c924eef4b7123dfdea4607",
+    "frozen_evaluation_identities_match": true,
+    "case_count": 40,
+    "case_set_match": true,
+    "case_order_match": true,
+    "task_distribution": {
+      "KNOWLEDGE_QA": 10,
+      "CAUSE_ASSESSMENT": 10,
+      "PERSONALIZED_DECISION": 10,
+      "DATA_ANALYSIS": 10
+    },
+    "historical_pin_count": 55,
+    "historical_pin_mismatch_count": 0,
+    "step9_58_provenance_gap": "PRESENT_AND_DOCUMENTED",
+    "new_runner_freeze_required": false
+  },
+  "authorization_lifecycle": {
+    "unified_reducer_used": true,
+    "active_executable_authorization_count": 1,
+    "authorization_id": "auth-step9_63c_r5c6-aff5c4b96bb74278a14d3fd08bf8a84e",
+    "authorization_derived_state": "ISSUED_EXECUTABLE",
+    "authorization_consumed": false,
+    "authorization_consumption_count": 0,
+    "r7_derived_state": "COMMITTED_BURNED_PRE_CASE_NON_REUSABLE",
+    "r8_derived_state": "RETIRED_UNCONSUMED_NON_REUSABLE",
+    "attempt_exists": false,
+    "namespace_exists": false,
+    "namespace_reserved": false,
+    "transaction_started": false
+  },
+  "invocation_registry": {
+    "path": "evaluation/v1_2_3/step9_63c_r5c8f_preflight_invocations.jsonl",
+    "sha256": "ca76a6a95b870ff113cf3d1380a47aaa2f28c7c4a145af2f133d9e06575a67ae",
+    "exists": true,
+    "strict_parse_succeeds": true,
+    "schema_valid": true,
+    "invocation_registry_valid": true,
+    "invocation_registry_entry_count": 1,
+    "initialization_entry_count": 1,
+    "real_preflight_invocation_count": 0,
+    "registry_duplicate_id_count": 0,
+    "registry_malformed_entry_count": 0,
+    "credential_or_secret_content_found": false,
+    "initialization_entry_semantics": "Schema genesis only; not a Mac-local preflight invocation, authorization consumption or execution event",
+    "authoritative_historical_invocation_source": true
+  },
+  "producer_runtime_identity_contract": {
+    "producer_path": "scripts/preflight_step9_63c_r5c7_mac_local.py",
+    "producer_sha256": "49bffbf03b47a4455ba18f20544159115e72e1df71b5ea5545f0193ff8a9a920",
+    "authoritative_preflight_id_owner": "PRODUCER",
+    "authoritative_target_owner": "PRODUCER",
+    "work_generated_preflight_id": false,
+    "work_generated_preflight_target": false,
+    "uuid4_candidate_generated_at_runtime": true,
+    "historical_invocation_id_collision_protection": true,
+    "target_path_collision_protection": true,
+    "failed_invocation_without_artifact_protection": true,
+    "claim_lock_append_and_fsync_before_preflight": true,
+    "artifact_exclusive_create": true,
+    "consumer_compatible_id_and_authorization_scoped_path": true,
+    "old_r5c7e_artifact_sha256": "f07d8380e0d445938e0a4bd7b212380459a983ccfe8f04bc49ab2996b43cf4b7",
+    "producer_modified_in_this_step": false
+  },
+  "frozen_consumer_contract": {
+    "consumer_path": "scripts/run_step9_63_v3_formal_execution.py",
+    "consumer_sha256": "ce8363555b734e39802236eaa2ee31233359ee367acf1094630836f924256cf2",
+    "consumer_modified": false,
+    "required_top_level_field_count": 41,
+    "contract_mismatch_count": 0,
+    "offline_producer_fixture_passes_frozen_validator": true,
+    "validated_bindings": [
+      "preflight ID format and authorization scoped filename/path",
+      "explicit artifact SHA256 pin compared with file bytes",
+      "authorization manifest, attempt, namespace, r10 runner and V3 Agent",
+      "producer preflight snapshot of frozen evaluation and case set/order/distribution",
+      "DNS, TCP, TLS and certificate evidence plus derived readiness",
+      "historical 55-pin check and timestamp later than authorization issuance"
+    ],
+    "consumer_reads_invocation_registry": false,
+    "registry_claim_verified_by_producer_and_required_for_later_read_only_artifact_audit": true
+  },
+  "freshness_semantics": {
+    "earlier_r5c8d_claim_scope": "UUID4 and exclusive target creation proved no collision with an existing target; it did not prove that a failed invocation without an artifact had never used the ID",
+    "r5c8d_historical_artifact_modified": false,
+    "current_proof": "The producer durably claims each runtime ID before preflight work; a failed invocation retains its claim, and future duplicate IDs fail closed independently of target existence",
+    "historical_id_and_target_collision_checks_are_distinct": true
+  },
+  "offline_validation": {
+    "focused_test_count": 70,
+    "test_failures": 0,
+    "test_errors": 0,
+    "py_compile": "PASS",
+    "network_used": false
+  },
+  "manual_next_action": {
+    "canonical_mac_terminal_command": "cd /Volumes/Elements/cbti-doctor-main && .venv/bin/python scripts/preflight_step9_63c_r5c7_mac_local.py",
+    "command_executed_by_work": false,
+    "preflight_id_or_target_supplied_by_work": false,
+    "user_should_return_complete_json_output": true,
+    "success_output_fields": ["STEP9_63C_R5_STATUS", "preflight_id", "artifact_path", "artifact_sha256", "ready_for_single_atomic_formal_execution"],
+    "failure_output_fields": ["FAILURE_STAGE", "FAILURE_EXCEPTION_TYPE", "FAILURE_EXCEPTION_MESSAGE_SANITIZED"]
+  },
+  "prohibited_activity": {
+    "mac_local_preflight_executed_by_work": false,
+    "model_inference_executed": false,
+    "agent_evaluation_executed": false,
+    "rag_evaluation_executed": false,
+    "http_inference_request_sent": false,
+    "formal_v4_case_executed": 0,
+    "authorization_consumed": false,
+    "attempt_created": false,
+    "namespace_created_or_reserved": false,
+    "transaction_started": false,
+    "formal_execution_command_generated": false
+  },
+  "ready_for_user_registry_aware_mac_local_preflight": true
+}

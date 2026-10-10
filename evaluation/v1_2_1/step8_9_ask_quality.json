@@ -1,0 +1,34 @@
+{
+  "total_asks": 66,
+  "counts": {
+    "irrelevant": 23,
+    "redundant": 21,
+    "necessary": 16,
+    "useful_but_optional": 6
+  },
+  "rates": {
+    "irrelevant": 0.3485,
+    "redundant": 0.3182,
+    "necessary": 0.2424,
+    "useful_but_optional": 0.0909
+  },
+  "HIGH_value_ASK_retained": 16,
+  "LOW_NONE_ASK_selected": 44,
+  "note": "ASK quality is evaluator classification under the frozen rubric; value-level counts are trace observations.",
+  "information_value_observability": {
+    "value_counts": {
+      "HIGH": 124,
+      "MEDIUM": 183,
+      "NONE": 112
+    },
+    "candidates_rejected": 215,
+    "rejection_reasons": {
+      "unknown_or_redundant_or_not_decision_relevant": 112,
+      "value_below_threshold_high": 103
+    },
+    "candidate_rejection_rate": 0.5131,
+    "low_value_acquisition_avoidance_rate": "not_measurable",
+    "resource_alternatives_selected": 1,
+    "bounded_answer_stop_count": 20
+  }
+}

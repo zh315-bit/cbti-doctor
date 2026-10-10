@@ -1,0 +1,820 @@
+"""Construct a prospective r11 runner freeze; never reuse the r10 target."""
+from __future__ import annotations
+
+import hashlib
+import json
+import os
+import re
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any
+
+from scripts.v3_runner_identity import (
+    EXPECTED_FREEZE_PATH, IDENTITY_CONFIG_PATH, ROOT, load_identity_config,
+)
+
+PARENT_PATH = "evaluation/v1_2_3/step9_63c_r5c5b_runner_freeze_r10.json"
+PARENT_SHA256 = "d24244235e51e7bf6c8567880c654fe3fd73b87fa1bfe1ab0f10dfdc94db2693"
+SCANNER_SHA256 = "f0e74a49d152053b5455951c507edb8f7849a9e4708835711e5975a82e690e91"
+# Step 9.63c-r5c10ae AR-10: reviewed bytes of the other two changed members.
+RESOLVER_SHA256 = "a0f5670d3834d5f91391b41a33fbac669d6162587bc620e9bd3acf202aa3c6a5"
+CONSUMER_SHA256 = "362eb4467fdadd29edc056ecf7b446f2cab99a2d3c407d350b4e91494c5b9528"
+BUILDER_PATH = "scripts/build_step9_63c_r11_runner_freeze.py"
+# Step 9.63c-r5c10ag (D13-1a): the r11 issuer takes the place of the historical r7 issuer (member 7).
+ISSUER_PATH = "scripts/issue_step9_63c_r11_authorization.py"
+ISSUER_SHA256 = "f41763f5c82e04360b3d9bcf694e6d05a6fcfa42ae8d71ada29be4ab204e32ab"
+PRODUCER_PATH = "scripts/preflight_step9_63c_r11_mac_local.py"
+MEMBER_PATHS = (
+    "scripts/run_step9_53_v3_identity_adapter.py",
+    "scripts/run_step9_63_v3_formal_execution.py",
+    "scripts/run_step9_35a_matched_treatment.py",
+    "scripts/v3_namespace_allocator.py",
+    "scripts/v3_execution_transaction.py",
+    "scripts/authorization_lifecycle.py",
+    ISSUER_PATH,
+    "scripts/append_only_ledger.py",
+    PRODUCER_PATH,
+    "scripts/preflight_step9_63c_current_mac_local.py",
+    "scripts/v3_runner_identity.py",
+    BUILDER_PATH,
+    IDENTITY_CONFIG_PATH,
+    "evaluation/v1_2_3/step9_61a_v3_authorization_lifecycle_contract.json",
+    "evaluation/v1_2_3/step9_63a_r1_atomic_commit_contract.json",
+    "evaluation/v1_2_3/step9_58a_r1_v3_identity_contract.json",
+    "evaluation/v1_2_3/step9_51_v3_development_freeze_r1.json",
+    "evaluation/v1_2_3/step9_52_v3_pre_evaluation_validation.json",
+    "evaluation/v1_2_3/step9_63a_r1_v3_runner_freeze_r7.json",
+    "scripts/preflight_step9_62b_mac_local.py",
+)
+REPLACED = {
+    "scripts/issue_step9_63a_r3_authorization.py": ISSUER_PATH,
+    "scripts/build_step9_63c_r5c4_runner_freeze.py": BUILDER_PATH,
+    "evaluation/v1_2_3/step9_63c_r5c4_current_runner_identity.json": IDENTITY_CONFIG_PATH,
+    "scripts/preflight_step9_63c_r5_mac_local.py": PRODUCER_PATH,
+}
+CHANGED = {
+    "scripts/v3_execution_transaction.py",
+    "scripts/v3_runner_identity.py",
+    "scripts/run_step9_63_v3_formal_execution.py",
+}
+CHANGED_SHA256 = {
+    "scripts/v3_execution_transaction.py": SCANNER_SHA256,
+    "scripts/v3_runner_identity.py": RESOLVER_SHA256,
+    "scripts/run_step9_63_v3_formal_execution.py": CONSUMER_SHA256,
+}
+
+
+def sha256_file(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+# Step 9.63c-r5c10ae AR-11: copied verbatim from the r10-era
+# scripts/build_step9_63c_r5c4_runner_freeze.py (SHA-256 9ebfe83b...) so the r11
+# builder no longer depends on a file outside the r11 member inventory.
+def sha256_bytes(data: bytes) -> str:
+    return hashlib.sha256(data).hexdigest()
+
+
+def nonsecret_model_configuration_matches(root: Path) -> bool:
+    """Read only the two frozen non-secret model settings; never load credentials."""
+    values: dict[str, str] = {}
+    env_path = root / ".env"
+    if env_path.is_file():
+        for line in env_path.read_text(encoding="utf-8").splitlines():
+            match = re.match(r"^\s*(DEEPSEEK_MODEL|DEEPSEEK_BASE_URL)\s*=\s*(.*?)\s*$", line)
+            if match:
+                value = match.group(2)
+                if len(value) >= 2 and value[0] == value[-1] and value[0] in "\"'":
+                    value = value[1:-1]
+                values[match.group(1)] = value
+    model = os.environ.get("DEEPSEEK_MODEL", values.get("DEEPSEEK_MODEL", "deepseek-flash"))
+    base_url = os.environ.get("DEEPSEEK_BASE_URL", values.get("DEEPSEEK_BASE_URL", "https://api.deepseek.com"))
+    return model == "deepseek-flash" and base_url.rstrip("/") == "https://api.deepseek.com"
+
+
+def verify_frozen_inputs(root: Path, identities: dict[str, Any]) -> None:
+    from scripts import run_step9_53_v3_identity_adapter as adapter
+
+    agent_sha, agent_match = adapter.current_v3_agent_identity()
+    if not agent_match or agent_sha != identities["treatment_agent_sha256"]:
+        raise RuntimeError("V3 Agent freeze mismatch")
+    benchmark_path = root / identities["benchmark_path"]
+    if sha256_file(benchmark_path) != identities["benchmark_sha256"]:
+        raise RuntimeError("V4 benchmark SHA mismatch")
+    manifest = json.loads((root / "evaluation/benchmarks/benchmark_v4_manifest.json").read_text())
+    if (manifest.get("status") != "SEALED_NOT_EVALUATED"
+            or manifest.get("case_count") != 40
+            or sha256_file(root / "evaluation/benchmarks/benchmark_v4_manifest.json")
+            != identities["benchmark_manifest_sha256"]):
+        raise RuntimeError("V4 benchmark manifest mismatch")
+    # The byte-exact sealed dataset hash is the frozen case-set/order proof;
+    # its prior freeze already records the 40-case distribution and fingerprint.
+    if (identities.get("case_count") != 40
+            or identities.get("task_distribution") != {
+                "KNOWLEDGE_QA": 10, "CAUSE_ASSESSMENT": 10,
+                "PERSONALIZED_DECISION": 10, "DATA_ANALYSIS": 10}
+            or len(identities.get("case_order_fingerprint_sha256", "")) != 64):
+        raise RuntimeError("V4 frozen case identity metadata mismatch")
+    path_hashes = {
+        "scoring_rubric_sha256": "evaluation/benchmark_v1_1_scoring.md",
+        "metric_registry_sha256": "evaluation/v1_2_3/step9_26_v4_metric_registry.json",
+        "one_shot_rules_sha256": "evaluation/v1_2_3/step9_26_v4_one_shot_rules.md",
+        "matched_protocol_sha256": "evaluation/v1_2_3/step9_34a_matched_comparison_protocol.json",
+        "baseline_metric_lock_sha256": "evaluation/v1_2_3/step9_34a_baseline_metric_lock.json",
+        "claim_policy_sha256": "evaluation/v1_2_3/step9_34a_claim_policy.json",
+        "tool_adapter_sha256": "adaptive_agent/tools.py",
+        "dependency_lock_sha256": "requirements-lock.txt",
+    }
+    if any(sha256_file(root / path_hashes[key]) != identities[key] for key in path_hashes):
+        raise RuntimeError("frozen evaluation asset mismatch")
+    harness = json.loads((root / "evaluation/v1_2_3/step9_13a_harness_freeze.json").read_text())
+    scoring = json.loads((root / "evaluation/v1_2_3/step9_11_clean_freeze_manifest.json").read_text())
+    for field, inventory, expected in (
+        ("new_harness_files", harness, identities["harness_sha256"]),
+        ("scoring_files", scoring, identities["scoring_sha256"]),
+    ):
+        rows = inventory[field]
+        payload = "".join(f"{path}\t{digest}\n" for path, digest in sorted(rows))
+        if any(sha256_file(root / path) != digest for path, digest in rows) or sha256_bytes(payload.encode()) != expected:
+            raise RuntimeError(f"{field} frozen identity mismatch")
+    source_rows = json.loads((root / "evaluation/v1_2_3/step9_42_treatment_v2_freeze.json").read_text())["agent_behavior_files"]
+    rag_paths = {item["path"] for item in json.loads(
+        (root / "evaluation/v1_2_3/step9_32_baseline_agent_freeze.json").read_text()
+    )["baseline_rag_config_files"]}
+    rag_rows = []
+    for path, _ in source_rows:
+        if path in rag_paths:
+            target = root / ("rag_lib/pdfs" if path == "rag_lib/pdfs/" else path)
+            if path == "rag_lib/pdfs/":
+                entries = "".join(f"{sha256_file(item)}  {item.relative_to(root)}\n"
+                                   for item in sorted(target.glob("*"))
+                                   if item.is_file() and not item.name.startswith("._"))
+                digest = sha256_bytes(entries.encode())
+            else:
+                digest = sha256_file(target)
+            rag_rows.append([path, digest])
+    rag_payload = "".join(f"{path}\t{digest}\n" for path, digest in sorted(rag_rows))
+    if sha256_bytes(rag_payload.encode()) != identities["rag_configuration_fingerprint_sha256"]:
+        raise RuntimeError("frozen RAG configuration identity mismatch")
+    if not nonsecret_model_configuration_matches(root):
+        raise RuntimeError("frozen model configuration mismatch")
+
+
+def canonical_sha256(value: Any) -> str:
+    return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(",", ":"),
+                                     ensure_ascii=False).encode()).hexdigest()
+
+
+def assemble_candidate(root: Path, *, created_at_utc: str | None = None,
+                       allow_existing_target: bool = False) -> dict[str, Any]:
+    """Pure file-snapshot assembly; does not persist a freeze or read a case.
+
+    ``allow_existing_target`` exists only for the read-only verification of an already
+    persisted freeze (see ``verify_persisted_candidate``); persistence never sets it.
+    """
+    if set(CHANGED_SHA256) != CHANGED:
+        raise RuntimeError("every changed r11 member requires exactly one reviewed SHA pin")
+    if len(MEMBER_PATHS) != 20 or len(set(MEMBER_PATHS)) != 20:
+        raise RuntimeError("r11 member inventory is not exactly 20 unique paths")
+    output = root / EXPECTED_FREEZE_PATH
+    if not allow_existing_target and (output.exists() or output.is_symlink()):
+        raise RuntimeError("r11 freeze target already exists")
+    pointer = load_identity_config(root)
+    parent_path = root / PARENT_PATH
+    if parent_path.is_symlink() or sha256_file(parent_path) != PARENT_SHA256:
+        raise RuntimeError("historical r10 parent hash mismatch")
+    parent = json.loads(parent_path.read_text(encoding="utf-8"))
+    if parent.get("runner_freeze_revision") != "r10" or parent.get("member_count") != 20:
+        raise RuntimeError("historical r10 parent identity mismatch")
+    old = {item["path"]: item["sha256"] for item in parent["members"]}
+    expected = (set(old) - set(REPLACED)) | set(REPLACED.values())
+    if set(MEMBER_PATHS) != expected or len(old) != 20:
+        raise RuntimeError("r11 inventory does not map one-to-one from r10")
+    members = []
+    for relpath in MEMBER_PATHS:
+        path = root / relpath
+        if path.is_symlink() or not path.is_file():
+            raise RuntimeError(f"r11 member missing or unsafe: {relpath}")
+        digest = sha256_file(path)
+        if relpath in old and relpath not in CHANGED and digest != old[relpath]:
+            raise RuntimeError(f"unapproved r11 member drift: {relpath}")
+        # Every changed member must equal its reviewed SHA exactly; merely differing
+        # from r10 is never sufficient.
+        if relpath in CHANGED and digest != CHANGED_SHA256[relpath]:
+            raise RuntimeError(f"approved r11 member SHA mismatch: {relpath}")
+        if relpath == ISSUER_PATH and digest != ISSUER_SHA256:
+            raise RuntimeError("approved r11 issuer SHA mismatch")
+        members.append({"path": relpath, "sha256": digest})
+    identities = parent["bound_identities"]
+    if canonical_sha256(identities) != parent["bound_identities_sha256"]:
+        raise RuntimeError("frozen evaluation identity digest mismatch")
+    rows = "".join(f"{item['path']}\t{item['sha256']}\n"
+                   for item in sorted(members, key=lambda item: item["path"]))
+    member_sha = hashlib.sha256(rows.encode()).hexdigest()
+    return {
+        "artifact_type": "STEP9_63C_R11_V3_RUNNER_FREEZE_NOT_AUTHORIZATION",
+        "step": "9.63c-r11",
+        "runner_freeze_revision": "r11", "status": "FROZEN_NOT_AUTHORIZED",
+        "execution_permission": False,
+        "parent_runner_freeze_path": PARENT_PATH,
+        "parent_runner_freeze_sha256": PARENT_SHA256,
+        "supersedes_for_new_authorization_only": PARENT_PATH,
+        "identity_config_path": IDENTITY_CONFIG_PATH,
+        "identity_config_sha256": pointer["identity_config_sha256"],
+        "runner_path": MEMBER_PATHS[0], "runner_sha256": members[0]["sha256"],
+        "identity_adapter_sha256": members[0]["sha256"],
+        "formal_entry_runner_path": MEMBER_PATHS[1],
+        "formal_entry_runner_sha256": members[1]["sha256"],
+        "parent_runner": {"path": MEMBER_PATHS[2], "sha256": members[2]["sha256"]},
+        "namespace_allocator_path": MEMBER_PATHS[3],
+        "namespace_allocator_sha256": members[3]["sha256"],
+        "transaction_module_path": MEMBER_PATHS[4],
+        "transaction_module_sha256": members[4]["sha256"],
+        "authorization_lifecycle_module_path": MEMBER_PATHS[5],
+        "authorization_lifecycle_module_sha256": members[5]["sha256"],
+        "authorization_issuer_path": ISSUER_PATH,
+        "authorization_issuer_sha256": members[6]["sha256"],
+        "preflight_producer_path": PRODUCER_PATH,
+        "preflight_producer_sha256": members[8]["sha256"],
+        "authorization_lifecycle_contract_path": MEMBER_PATHS[13],
+        "authorization_lifecycle_contract_sha256": members[13]["sha256"],
+        "transaction_contract_path": MEMBER_PATHS[14],
+        "transaction_contract_sha256": members[14]["sha256"],
+        "identity_contract_path": MEMBER_PATHS[15],
+        "identity_contract_sha256": members[15]["sha256"],
+        "bound_identities": identities,
+        "bound_identities_sha256": parent["bound_identities_sha256"],
+        "v3_agent_sha256": parent["v3_agent_sha256"],
+        "development_freeze_sha256": parent["development_freeze_sha256"],
+        "step9_52_validation_sha256": parent["step9_52_validation_sha256"],
+        "transaction_commit_semantics": parent["transaction_commit_semantics"],
+        "single_namespace_authority": parent["single_namespace_authority"],
+        "namespace_contract": parent["namespace_contract"],
+        "historical_lifecycle_prefix": parent["historical_lifecycle_prefix"],
+        "members": members, "member_count": 20,
+        "member_aggregate_sha256": member_sha,
+        "authorization_issued": False, "formal_execution_performed": False,
+        "created_at_utc": created_at_utc or datetime.now(timezone.utc).isoformat(),
+    }
+
+
+def build_candidate(root: Path = ROOT) -> dict[str, Any]:
+    """Production qualification; this step only tests assemble_candidate in temp roots."""
+    candidate = assemble_candidate(root)
+    verify_frozen_inputs(root, candidate["bound_identities"])
+    return candidate
+
+
+def persist_candidate(candidate: dict[str, Any], root: Path = ROOT) -> str:
+    """Exclusive durable publication, reserved for a separately authorized freeze step."""
+    if candidate != assemble_candidate(root, created_at_utc=candidate.get("created_at_utc")):
+        raise RuntimeError("r11 candidate no longer matches current member bytes")
+    path = root / EXPECTED_FREEZE_PATH
+    data = (json.dumps(candidate, sort_keys=True, indent=2) + "\n").encode()
+    fd = os.open(path, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
+    with os.fdopen(fd, "wb") as stream:
+        stream.write(data)
+        stream.flush()
+        os.fsync(stream.fileno())
+    dir_fd = os.open(path.parent, os.O_RDONLY)
+    try:
+        os.fsync(dir_fd)
+    finally:
+        os.close(dir_fd)
+    return hashlib.sha256(data).hexdigest()
+
+
+# =====================================================================================
+# Step 9.63c-r5c10ag: identity-pointer creation (AR-12), "verify persisted freeze" (I4)
+# and activation approval records. Read-only modes: plan, status, verify, draft printing.
+# The only write entry is create_identity_pointer(); it refuses unless it runs in an
+# interactive terminal and a person types the confirmation token.
+# =====================================================================================
+import getpass
+import shutil
+import sys
+import tempfile
+import uuid
+
+from scripts.v3_runner_identity import EXPECTED_REVISION, resolve_current_freeze
+
+APPROVAL_PATH = "evaluation/v1_2_3/step9_63c_r11_activation_approval.json"
+APPROVAL_DRAFT_PATH = "evaluation/v1_2_3/step9_63c_r11_activation_approval.DRAFT.json"
+POINTER_CREATION_RECORD_PATH = "evaluation/v1_2_3/step9_63c_r11_identity_pointer_creation_record.json"
+REGISTRY_PATH = "evaluation/v1_2_3/step9_63c_r11_preflight_invocations.jsonl"
+AUTHORIZATION_MANIFEST_PATH = "evaluation/v1_2_3/step9_63c_r11_v3_authorization_manifest.json"
+LEDGER_PATH = "evaluation/v1_2_3/authorization_lifecycle_events.jsonl"
+LOCK_RELATIVE = "evaluation/v4_runs/.namespace-allocation.lock"
+TRANSACTION_RELATIVE = "evaluation/v4_runs/.execution_transactions"
+R10_AUTHORIZATION_PATH = "evaluation/v1_2_3/step9_63c_r5c6_r10_v3_authorization_manifest.json"
+R10_AUTHORIZATION_SHA256 = "beac52d1ed3bc11efa02b1a924a8abc7b210171bf5cc1b7910011a6ef9741241"
+R10_AUTHORIZATION_ID = "auth-step9_63c_r5c6-aff5c4b96bb74278a14d3fd08bf8a84e"
+R11_AUTHORIZATION_ID_PREFIX = "auth-step9_63c_r11-"
+SYNTHETIC_ROOT_ENV = "CBTI_ALLOW_SYNTHETIC_ROOT"
+APPROVAL_DRAFT, APPROVAL_SIGNED = "DRAFT_NOT_SIGNED", "SIGNED"
+# Excluded from the repository aggregate pin: caches, environments, VCS data, AppleDouble
+# companions and the approval record itself (it carries the pin).
+AGGREGATE_SKIP_DIRS = frozenset({".git", ".venv", "models", "__pycache__"})
+POINTER_DOCUMENT = {
+    "artifact_type": "V3_CURRENT_RUNNER_IDENTITY_POINTER",
+    "step": "9.63c-r11",
+    "status": "FROZEN_IDENTITY_POINTER_NOT_AUTHORIZATION",
+    "runner_freeze_revision": "r11",
+    "runner_freeze_path": EXPECTED_FREEZE_PATH,
+    "supersedes_for_new_authorization_only": PARENT_PATH,
+    "execution_permission": False,
+}
+POINTER_SHA256 = "4e077781faeecee57da02f37d1d3ad8cdc9dfa895d3eb72b1b4ab1f1d3f696fe"
+POINTER_SIZE = 389
+POINTER_TOKEN = f"CREATE-R11-POINTER-{POINTER_SHA256[:12]}"
+
+
+def canonical_pointer_bytes() -> bytes:
+    """UTF-8, sorted keys, indent 2, exactly one trailing newline. No free inputs."""
+    if POINTER_DOCUMENT["runner_freeze_revision"] != EXPECTED_REVISION:
+        raise RuntimeError("pointer document disagrees with the resolver revision")
+    return (json.dumps(POINTER_DOCUMENT, indent=2, sort_keys=True) + "\n").encode("utf-8")
+
+
+def sha256_bytes(data: bytes) -> str:
+    return hashlib.sha256(data).hexdigest()
+
+
+def is_production_root(root: Path) -> bool:
+    return Path(root).resolve() == ROOT.resolve()
+
+
+def interactive_terminal() -> bool:
+    try:
+        return bool(sys.stdin.isatty() and sys.stdout.isatty())
+    except (AttributeError, ValueError):
+        return False
+
+
+def require_write_environment(root: Path, action: str) -> None:
+    """Gate shared by every write entry (pointer creation, issuance, record completion)."""
+    if not interactive_terminal():
+        raise PermissionError(f"{action}: refused - an interactive terminal (stdin and stdout "
+                              f"attached to a TTY) is required; agents, CI and pipes may not write")
+    if is_production_root(root):
+        problems = []
+        if sys.platform != "darwin":
+            problems.append("not macOS")
+        if Path(sys.prefix).resolve() != (ROOT / ".venv").resolve():
+            problems.append("not running inside the project .venv")
+        if Path.cwd().resolve() != ROOT.resolve():
+            problems.append("working directory is not the project root")
+        if problems:
+            raise PermissionError(f"{action}: refused - production environment mismatch: " + "; ".join(problems))
+    elif os.environ.get(SYNTHETIC_ROOT_ENV) != "1":
+        raise PermissionError(f"{action}: refused - a non-production root requires {SYNTHETIC_ROOT_ENV}=1")
+
+
+def confirm_with_token(expected: str, action: str) -> None:
+    typed = input(f"{action}\nType exactly {expected} to proceed: ")
+    if typed.strip() != expected:
+        raise PermissionError(f"{action}: refused - confirmation token mismatch")
+
+
+def repository_aggregate(root: Path, *, extra_excludes: tuple[str, ...] = ()) -> dict[str, Any]:
+    """Aggregate over every file except caches/environments/VCS data and AppleDouble files."""
+    root = Path(root)
+    skip = {APPROVAL_PATH, APPROVAL_DRAFT_PATH, *extra_excludes}
+    rows: list[str] = []
+    for directory, dirnames, filenames in os.walk(root, followlinks=False):
+        dirnames[:] = sorted(d for d in dirnames if d not in AGGREGATE_SKIP_DIRS and not d.startswith("._"))
+        base = Path(directory)
+        for name in sorted(list(filenames) + [d for d in dirnames if (base / d).is_symlink()]):
+            if name.startswith("._"):
+                continue
+            path = base / name
+            relative = path.relative_to(root).as_posix()
+            if relative in skip:
+                continue
+            if path.is_symlink():
+                rows.append(f"{relative}\tlink:{os.readlink(path)}\n")
+            elif path.is_file():
+                rows.append(f"{relative}\t{sha256_file(path)}\n")
+    rows.sort()
+    return {"sha256": sha256_bytes("".join(rows).encode()), "files": len(rows)}
+
+
+def read_json_file(path: Path) -> dict[str, Any]:
+    value = json.loads(Path(path).read_text(encoding="utf-8"))
+    if not isinstance(value, dict):
+        raise RuntimeError(f"expected a JSON object: {path}")
+    return value
+
+
+def member_shas(root: Path) -> dict[str, str]:
+    """Current bytes of the 19 members that exist before activation; the pointer is canonical."""
+    result = {}
+    for relative in MEMBER_PATHS:
+        if relative == IDENTITY_CONFIG_PATH:
+            result[relative] = POINTER_SHA256
+        else:
+            path = Path(root) / relative
+            result[relative] = sha256_file(path) if path.is_file() and not path.is_symlink() else "ABSENT"
+    return result
+
+
+def predict_freeze(root: Path, created_at_utc: str) -> dict[str, Any]:
+    """Freeze bytes/SHA the builder will produce for the CURRENT member bytes and the
+    canonical pointer at the given timestamp. Builds in a throw-away directory."""
+    root = Path(root)
+    with tempfile.TemporaryDirectory(prefix="r11-predict-") as directory:
+        scratch = Path(directory)
+        for relative in {*MEMBER_PATHS, PARENT_PATH} - {IDENTITY_CONFIG_PATH}:
+            source = root / relative
+            if not source.is_file() or source.is_symlink():
+                raise RuntimeError(f"cannot predict freeze: member missing or unsafe: {relative}")
+            (scratch / relative).parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(source, scratch / relative)
+        (scratch / IDENTITY_CONFIG_PATH).parent.mkdir(parents=True, exist_ok=True)
+        (scratch / IDENTITY_CONFIG_PATH).write_bytes(canonical_pointer_bytes())
+        candidate = assemble_candidate(scratch, created_at_utc=created_at_utc)
+    data = (json.dumps(candidate, sort_keys=True, indent=2) + "\n").encode()
+    return {"created_at_utc": created_at_utc, "predicted_sha256": sha256_bytes(data), "predicted_size": len(data)}
+
+
+def verify_persisted_candidate(root: Path) -> dict[str, Any]:
+    """Read-only: reassemble the freeze from current bytes and the recorded timestamp and
+    compare with the persisted file byte for byte (detects hand-edited or stale freezes)."""
+    path = Path(root) / EXPECTED_FREEZE_PATH
+    if path.is_symlink() or not path.is_file():
+        return {"ok": False, "reason": "freeze missing or unsafe"}
+    data = path.read_bytes()
+    try:
+        recorded = json.loads(data.decode("utf-8"))
+        candidate = assemble_candidate(Path(root), created_at_utc=recorded.get("created_at_utc"),
+                                       allow_existing_target=True)
+    except (ValueError, RuntimeError, KeyError, OSError) as error:
+        return {"ok": False, "reason": f"{type(error).__name__}: {error}", "sha256": sha256_bytes(data)}
+    expected = (json.dumps(candidate, sort_keys=True, indent=2) + "\n").encode()
+    return {"ok": expected == data, "sha256": sha256_bytes(data),
+            "reason": "ok" if expected == data else "persisted freeze differs from the reassembled candidate"}
+
+
+def build_approval(root: Path, *, created_at_utc: str, regression_result: str | None = None,
+                   issuance: dict[str, str] | None = None) -> dict[str, Any]:
+    """Unsigned approval record built from the CURRENT bytes (printed by --print-approval-draft)."""
+    root = Path(root)
+    members = member_shas(root)
+    r10 = read_json_file(root / PARENT_PATH)
+    old = {item["path"]: item["sha256"] for item in r10["members"]}
+    named = {"resolver": "scripts/v3_runner_identity.py", "consumer": "scripts/run_step9_63_v3_formal_execution.py",
+             "scanner": "scripts/v3_execution_transaction.py", "builder": BUILDER_PATH,
+             "producer": PRODUCER_PATH, "issuer": ISSUER_PATH}
+    unchanged = {path: sha for path, sha in members.items()
+                 if path in old and path not in CHANGED and old[path] == sha}
+    cleaned = (issuance or {})
+    if not cleaned:
+        evaluation = read_json_file(root / R10_AUTHORIZATION_PATH)["evaluation_id"]
+        from scripts.v3_namespace_allocator import derive_namespace_id
+        authorization_id = f"{R11_AUTHORIZATION_ID_PREFIX}{uuid.uuid4().hex}"
+        attempt_id = f"attempt-step9_63c_r11-{uuid.uuid4().hex}"
+        cleaned = {"authorization_id": authorization_id, "attempt_id": attempt_id, "evaluation_id": evaluation,
+                   "namespace_id": derive_namespace_id(evaluation, authorization_id, attempt_id)}
+    result = {
+        "artifact_type": "R11_ACTIVATION_APPROVAL", "schema_version": 1,
+        "status": APPROVAL_DRAFT, "approver": None, "signed_at_utc": None,
+        "pointer": {"path": IDENTITY_CONFIG_PATH, "canonical_sha256": POINTER_SHA256, "canonical_size": POINTER_SIZE},
+        "members": members,
+        "named_pins": {label: {"path": path, "sha256": members[path]} for label, path in named.items()},
+        "unchanged_members": unchanged,
+        "historical": {
+            "r10_freeze_manifest": {"path": PARENT_PATH, "sha256": PARENT_SHA256},
+            "r10_authorization_manifest": {"path": R10_AUTHORIZATION_PATH, "sha256": R10_AUTHORIZATION_SHA256},
+            "lifecycle_ledger_prefix": {"path": LEDGER_PATH, "length": 1161,
+                                        "sha256": "ca168f6939c4697a7a7bccc0b365b414d9a0e632f40de4242eb0a47e2d985285"}},
+        "regression": {"result_path": regression_result,
+                       "result_sha256": sha256_file(root / regression_result) if regression_result else None},
+        "repository_aggregate": {**repository_aggregate(root), "excludes": sorted(AGGREGATE_SKIP_DIRS) + [APPROVAL_PATH, APPROVAL_DRAFT_PATH, "._*"]},
+        "freeze": predict_freeze(root, created_at_utc),
+        "issuance": cleaned,
+        "ar14": {"old_authorization_id": R10_AUTHORIZATION_ID, "old_authorization_manifest_sha256": R10_AUTHORIZATION_SHA256,
+                 "must_be_retired_before_pointer_creation": True},
+    }
+    return result
+
+
+def load_approval(root: Path, path: Path | None = None) -> dict[str, Any]:
+    target = Path(path) if path else Path(root) / APPROVAL_PATH
+    if target.is_symlink() or not target.is_file():
+        raise RuntimeError(f"activation approval record missing or unsafe: {target}")
+    return read_json_file(target)
+
+
+def verify_approval(root: Path, approval: dict[str, Any], *, require_signed: bool = True,
+                    check_aggregate: bool = True) -> list[str]:
+    """Every pinned value must equal the current bytes. Empty list means consistent."""
+    root = Path(root)
+    problems: list[str] = []
+    if approval.get("artifact_type") != "R11_ACTIVATION_APPROVAL" or approval.get("schema_version") != 1:
+        return ["approval record has the wrong artifact type or schema version"]
+    if require_signed:
+        if approval.get("status") != APPROVAL_SIGNED:
+            problems.append("approval record is not signed (status != SIGNED)")
+        if not isinstance(approval.get("approver"), str) or not approval.get("approver"):
+            problems.append("approval record names no approver")
+        try:
+            datetime.fromisoformat(approval.get("signed_at_utc"))
+        except (TypeError, ValueError):
+            problems.append("approval record has no valid signed_at_utc")
+    pointer = approval.get("pointer", {})
+    if (pointer.get("canonical_sha256") != POINTER_SHA256 or pointer.get("canonical_size") != POINTER_SIZE
+            or sha256_bytes(canonical_pointer_bytes()) != POINTER_SHA256 or len(canonical_pointer_bytes()) != POINTER_SIZE):
+        problems.append("pointer canonical bytes differ from the approved SHA/size")
+    pinned = approval.get("members", {})
+    current = member_shas(root)
+    if set(pinned) != set(MEMBER_PATHS):
+        problems.append("approval member list differs from the 20 r11 member paths")
+    for path, sha in current.items():
+        if pinned.get(path) != sha:
+            problems.append(f"member differs from the approved value: {path}")
+    for label, entry in approval.get("named_pins", {}).items():
+        if current.get(entry.get("path")) != entry.get("sha256"):
+            problems.append(f"named pin differs: {label}")
+    for path, sha in CHANGED_SHA256.items():
+        if current.get(path) != sha:
+            problems.append(f"builder pin differs from the file: {path}")
+    if current.get(ISSUER_PATH) != ISSUER_SHA256:
+        problems.append("issuer bytes differ from the builder's ISSUER_SHA256")
+    if current.get(BUILDER_PATH) != sha256_file(Path(__file__)) and is_production_root(root):
+        problems.append("running builder differs from the approved builder bytes")
+    history = approval.get("historical", {})
+    if sha256_file(root / PARENT_PATH) != history.get("r10_freeze_manifest", {}).get("sha256") or PARENT_SHA256 != history.get("r10_freeze_manifest", {}).get("sha256"):
+        problems.append("r10 freeze manifest differs from the approved value")
+    if sha256_file(root / R10_AUTHORIZATION_PATH) != history.get("r10_authorization_manifest", {}).get("sha256") or R10_AUTHORIZATION_SHA256 != history.get("r10_authorization_manifest", {}).get("sha256"):
+        problems.append("r10 authorization manifest differs from the approved value")
+    regression = approval.get("regression", {})
+    if regression.get("result_path"):
+        result = root / regression["result_path"]
+        if not result.is_file() or sha256_file(result) != regression.get("result_sha256"):
+            problems.append("regression result file differs from the approved SHA")
+    if check_aggregate:
+        aggregate = approval.get("repository_aggregate", {})
+        if repository_aggregate(root)["sha256"] != aggregate.get("sha256"):
+            problems.append("repository state changed since the approval record was prepared")
+    freeze = approval.get("freeze", {})
+    if not isinstance(freeze.get("created_at_utc"), str) or not re.fullmatch(r"[0-9a-f]{64}", str(freeze.get("predicted_sha256", ""))):
+        problems.append("approval record has no valid predicted freeze")
+    return problems
+
+
+def _artifact_present(path: Path) -> bool:
+    return path.exists() or path.is_symlink()
+
+
+def _condition(conditions: list[dict[str, Any]], name: str, function) -> Any:
+    try:
+        value = function()
+        ok, detail = (value if isinstance(value, tuple) else (bool(value), ""))
+    except Exception as error:  # a check that cannot run is a failed check
+        ok, detail = False, f"{type(error).__name__}: {error}"
+    conditions.append({"name": name, "ok": bool(ok), "detail": str(detail)})
+    return ok
+
+
+def pointer_preconditions(root: Path, approval: dict[str, Any] | None, *, resume: bool = False) -> list[dict[str, Any]]:
+    """PP1-PP9 of the AR-12 design. Read-only; each entry is {name, ok, detail}.
+
+    ``resume`` is the F5 case (pointer already written, creation record missing): the pointer
+    must exist with canonical bytes and nothing else may exist, and the repository
+    aggregate (which the pointer itself changed) is not re-checked."""
+    from scripts import authorization_lifecycle as lifecycle
+    from scripts import run_step9_63_v3_formal_execution as formal
+
+    root = Path(root)
+    conditions: list[dict[str, Any]] = []
+    if resume:
+        _condition(conditions, "PP1 only the canonical pointer exists (creation record missing)", lambda: (
+            (root / IDENTITY_CONFIG_PATH).is_file() and not (root / IDENTITY_CONFIG_PATH).is_symlink()
+            and (root / IDENTITY_CONFIG_PATH).read_bytes() == canonical_pointer_bytes()
+            and not any(_artifact_present(root / p) for p in (EXPECTED_FREEZE_PATH, REGISTRY_PATH,
+                                                              AUTHORIZATION_MANIFEST_PATH, POINTER_CREATION_RECORD_PATH)),
+            "pointer canonical; freeze, registry, r11 authorization and record absent"))
+    else:
+        _condition(conditions, "PP1 no activation artifact exists", lambda: (
+            not any(_artifact_present(root / p) for p in (IDENTITY_CONFIG_PATH, EXPECTED_FREEZE_PATH, REGISTRY_PATH,
+                                                          AUTHORIZATION_MANIFEST_PATH, POINTER_CREATION_RECORD_PATH)),
+            "pointer, freeze, registry, r11 authorization and creation record must all be absent"))
+    _condition(conditions, "PP2 approval record signed and every pin matches the current bytes", lambda: (
+        (lambda problems: (not problems, "; ".join(problems)))(verify_approval(root, approval, check_aggregate=not resume)))
+        if approval is not None else (False, "no approval record"))
+    ledger = root / LEDGER_PATH
+    manifest_path = root / R10_AUTHORIZATION_PATH
+
+    def ar14_done() -> tuple[bool, str]:
+        event = lifecycle.authorization_retirement_event(R10_AUTHORIZATION_ID, ledger_path=ledger)
+        if event is None:
+            return False, "the r10 authorization has no terminal retirement event (AR-14 not done)"
+        result = lifecycle.reduce_authorization_lifecycle(
+            authorization_id=R10_AUTHORIZATION_ID, manifest=read_json_file(manifest_path), manifest_path=manifest_path,
+            ledger_path=ledger, run_root=root / "evaluation/v4_runs", transaction_root=root / TRANSACTION_RELATIVE)
+        return result["executable"] is False, f"reducer state {result['derived_state']}"
+    _condition(conditions, "PP4 AR-14 done: the r10 authorization is retired and non-executable", ar14_done)
+    _condition(conditions, "PP5 every non-current V3 authorization is non-executable", lambda: (
+        lambda rows: (all(r["executable"] is False for r in rows), f"{len(rows)} superseded authorizations checked"))(
+            formal._superseded_v3_authorizations(root, EXPECTED_REVISION)))
+    _condition(conditions, "PP6 the 55 historical pins verify", lambda: formal.verify_historical_pins(root) == formal.HISTORICAL_PIN_COUNT)
+    _condition(conditions, "PP7 no r11 transaction journal exists", lambda: not list(
+        (root / TRANSACTION_RELATIVE).glob(f"{R11_AUTHORIZATION_ID_PREFIX}*")) if (root / TRANSACTION_RELATIVE).exists() else True)
+
+    def environment() -> tuple[bool, str]:
+        if is_production_root(root):
+            problems = []
+            if sys.platform != "darwin":
+                problems.append("not macOS")
+            if Path(sys.prefix).resolve() != (ROOT / ".venv").resolve():
+                problems.append("not running inside the project .venv")
+            if Path.cwd().resolve() != ROOT.resolve():
+                problems.append("cwd is not the project root")
+            return not problems, "production root" + (": " + "; ".join(problems) if problems else "")
+        return os.environ.get(SYNTHETIC_ROOT_ENV) == "1", f"synthetic root (requires {SYNTHETIC_ROOT_ENV}=1)"
+    _condition(conditions, "PP9 environment", environment)
+    return conditions
+
+
+def identity_status(root: Path) -> dict[str, Any]:
+    """Read-only state machine of the activation."""
+    root = Path(root)
+    pointer, freeze = root / IDENTITY_CONFIG_PATH, root / EXPECTED_FREEZE_PATH
+    record = root / POINTER_CREATION_RECORD_PATH
+    has_pointer, has_freeze, has_record = (_artifact_present(p) for p in (pointer, freeze, record))
+    pointer_ok = has_pointer and pointer.is_file() and not pointer.is_symlink() and pointer.read_bytes() == canonical_pointer_bytes()
+    details = {"pointer_present": has_pointer, "pointer_canonical": pointer_ok, "freeze_present": has_freeze,
+               "creation_record_present": has_record,
+               "registry_present": _artifact_present(root / REGISTRY_PATH),
+               "r11_authorization_present": _artifact_present(root / AUTHORIZATION_MANIFEST_PATH)}
+    if not has_pointer and not has_freeze and not has_record:
+        state = "S0_NOT_ACTIVATED"
+    elif has_pointer and not pointer_ok:
+        state = "ANOMALY_POINTER_NOT_CANONICAL"
+    elif has_freeze and not has_pointer:
+        state = "ANOMALY_FREEZE_WITHOUT_POINTER"
+    elif has_record and not has_pointer:
+        state = "ANOMALY_RECORD_WITHOUT_POINTER"
+    elif has_pointer and not has_freeze:
+        state = "S1_POINTER_ONLY" if has_record else "ANOMALY_POINTER_WITHOUT_CREATION_RECORD"
+    else:
+        state = "S2_FREEZE_PERSISTED" if verify_persisted_candidate(root)["ok"] else "ANOMALY_FREEZE_NOT_REPRODUCIBLE"
+    return {"state": state, **details}
+
+
+def plan_identity_pointer(root: Path, approval_path: Path | None = None, *, resume: bool = False) -> dict[str, Any]:
+    root = Path(root)
+    try:
+        approval = load_approval(root, approval_path)
+        approval_error = None
+    except (RuntimeError, ValueError, OSError) as error:
+        approval, approval_error = None, f"{type(error).__name__}: {error}"
+    conditions = pointer_preconditions(root, approval, resume=resume)
+    if approval_error:
+        conditions.insert(0, {"name": "approval record readable", "ok": False, "detail": approval_error})
+    return {"mode": "plan", "writes_nothing": True, "target": IDENTITY_CONFIG_PATH,
+            "canonical_size": len(canonical_pointer_bytes()), "canonical_sha256": sha256_bytes(canonical_pointer_bytes()),
+            "canonical_bytes": canonical_pointer_bytes().decode("utf-8"), "confirmation_token": POINTER_TOKEN,
+            "status": identity_status(root), "preconditions": conditions,
+            "ready": all(c["ok"] for c in conditions)}
+
+
+def verify_identity_pointer(root: Path, approval_path: Path | None = None) -> dict[str, Any]:
+    """Read-only post-creation verification (AR-12 section 10)."""
+    root = Path(root)
+    checks: list[dict[str, Any]] = []
+    pointer, record = root / IDENTITY_CONFIG_PATH, root / POINTER_CREATION_RECORD_PATH
+    _condition(checks, "V1 pointer is a regular file with the canonical bytes", lambda: (
+        pointer.is_file() and not pointer.is_symlink() and pointer.read_bytes() == canonical_pointer_bytes()
+        and sha256_file(pointer) == POINTER_SHA256))
+
+    def record_ok() -> tuple[bool, str]:
+        data = read_json_file(record)
+        return (data.get("pointer_sha256") == POINTER_SHA256 and data.get("approval_record_sha256")
+                == (sha256_file(Path(approval_path)) if approval_path else sha256_file(root / APPROVAL_PATH))), "creation record binds pointer and approval"
+    _condition(checks, "V2 creation record exists and binds the pointer and the approval", record_ok)
+
+    def resolution() -> tuple[bool, str]:
+        freeze_exists = _artifact_present(root / EXPECTED_FREEZE_PATH)
+        try:
+            resolve_current_freeze(root)
+            return freeze_exists, "pointer and freeze resolve" if freeze_exists else "resolved without a freeze (unexpected)"
+        except RuntimeError as error:
+            expected = "current runner freeze is missing or unsafe"
+            if not freeze_exists:
+                return str(error) == expected, f"expected fail-closed result: {error}"
+            return False, f"freeze present but resolver refused: {error}"
+    _condition(checks, "V3 resolver accepts the pointer (a missing freeze is the expected refusal)", resolution)
+    return {"mode": "verify", "writes_nothing": True, "status": identity_status(root), "checks": checks,
+            "ok": all(c["ok"] for c in checks)}
+
+
+def _fsync_dir(path: Path) -> None:
+    fd = os.open(path, os.O_RDONLY)
+    try:
+        os.fsync(fd)
+    finally:
+        os.close(fd)
+
+
+def _write_exclusive(path: Path, data: bytes) -> None:
+    fd = os.open(path, os.O_CREAT | os.O_EXCL | os.O_WRONLY | getattr(os, "O_NOFOLLOW", 0), 0o600)
+    with os.fdopen(fd, "wb") as stream:
+        stream.write(data)
+        stream.flush()
+        os.fsync(stream.fileno())
+    _fsync_dir(path.parent)
+
+
+def _creation_record(root: Path, approval: dict[str, Any], approval_file: Path, conditions: list[dict[str, Any]]) -> bytes:
+    record = {
+        "artifact_type": "R11_IDENTITY_POINTER_CREATION_RECORD", "pointer_path": IDENTITY_CONFIG_PATH,
+        "pointer_sha256": POINTER_SHA256, "pointer_size": POINTER_SIZE,
+        "approval_record_path": approval_file.relative_to(root).as_posix() if approval_file.resolve().is_relative_to(root.resolve()) else str(approval_file),
+        "approval_record_sha256": sha256_file(approval_file), "approver": approval.get("approver"),
+        "created_at_utc": datetime.now(timezone.utc).isoformat(), "tool_path": BUILDER_PATH,
+        "tool_sha256": sha256_file(Path(__file__)), "operator": getpass.getuser(),
+        "confirmation_token_sha256": sha256_bytes(POINTER_TOKEN.encode()), "interactive_terminal": True,
+        "synthetic_root": not is_production_root(root),
+        "preconditions": [{"name": c["name"], "ok": c["ok"]} for c in conditions],
+    }
+    return (json.dumps(record, indent=2, sort_keys=True) + "\n").encode()
+
+
+def create_identity_pointer(root: Path, approval_path: Path | None = None) -> dict[str, Any]:
+    """THE write entry. Needs an interactive terminal and a typed token; never overwrites.
+
+    Idempotent: with the canonical pointer and its record already present it only reports.
+    Resumable (F5): with the canonical pointer present but no record, it writes only the record.
+    """
+    root = Path(root)
+    require_write_environment(root, "create the r11 identity pointer")  # first: no side effect before the gate
+    from scripts import authorization_lifecycle as lifecycle
+
+    status = identity_status(root)
+    if status["pointer_canonical"] and status["creation_record_present"]:
+        return {"result": "ALREADY_CREATED", "writes": 0, "state": status["state"]}
+    resume = bool(status["pointer_canonical"] and not status["creation_record_present"])
+    plan = plan_identity_pointer(root, approval_path, resume=resume)
+    if not plan["ready"]:
+        raise RuntimeError("pointer creation refused; failed preconditions: "
+                           + "; ".join(c["name"] for c in plan["preconditions"] if not c["ok"]))
+    confirm_with_token(POINTER_TOKEN, "complete the r11 pointer creation record" if resume else "create the r11 identity pointer")
+    approval = load_approval(root, approval_path)
+    approval_file = Path(approval_path) if approval_path else root / APPROVAL_PATH
+    with lifecycle.lifecycle_lock(root / LOCK_RELATIVE):
+        again = plan_identity_pointer(root, approval_path, resume=resume)  # re-check inside the lock
+        if not again["ready"]:
+            raise RuntimeError("pointer creation refused after taking the lock: " + "; ".join(
+                c["name"] for c in again["preconditions"] if not c["ok"]))
+        target = root / IDENTITY_CONFIG_PATH
+        if not resume:
+            data = canonical_pointer_bytes()
+            _write_exclusive(target, data)
+            if target.read_bytes() != data or sha256_file(target) != POINTER_SHA256:
+                raise RuntimeError("POINTER_READBACK_MISMATCH: follow recovery R-1; nothing was deleted automatically")
+        _write_exclusive(root / POINTER_CREATION_RECORD_PATH, _creation_record(root, approval, approval_file, again["preconditions"]))
+    return {"result": "RECORD_COMPLETED" if resume else "CREATED", "pointer_sha256": POINTER_SHA256,
+            "state": identity_status(root)["state"]}
+
+
+def main(argv: list[str] | None = None) -> int:
+    import argparse
+
+    parser = argparse.ArgumentParser(description="r11 identity pointer: plan/status/verify (read-only) and one gated write")
+    parser.add_argument("--root", type=Path, default=ROOT)
+    parser.add_argument("--approval", type=Path)
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument("--plan", action="store_true", help="read-only (default)")
+    mode.add_argument("--status", action="store_true", help="read-only")
+    mode.add_argument("--verify", action="store_true", help="read-only")
+    mode.add_argument("--verify-freeze", action="store_true", help="read-only: reassemble and compare the persisted freeze")
+    mode.add_argument("--print-approval-draft", action="store_true", help="read-only: print an unsigned approval record")
+    mode.add_argument("--create-pointer", action="store_true", help="WRITE: interactive terminal and typed token required")
+    parser.add_argument("--created-at", default="2026-10-10T00:00:00+00:00")
+    parser.add_argument("--regression-result")
+    args = parser.parse_args(argv)
+    root = args.root
+    try:
+        if args.status:
+            out = identity_status(root)
+        elif args.verify:
+            out = verify_identity_pointer(root, args.approval)
+        elif args.verify_freeze:
+            out = verify_persisted_candidate(root)
+        elif args.print_approval_draft:
+            out = build_approval(root, created_at_utc=args.created_at, regression_result=args.regression_result)
+        elif args.create_pointer:
+            out = create_identity_pointer(root, args.approval)
+        else:
+            out = plan_identity_pointer(root, args.approval)
+    except (PermissionError, RuntimeError) as error:
+        print(json.dumps({"result": "REFUSED", "reason": str(error)}, indent=2))
+        return 2
+    print(json.dumps(out, indent=2, sort_keys=True, default=str))
+    ok = out["ok"] if "ok" in out else out["ready"] if "ready" in out else True
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

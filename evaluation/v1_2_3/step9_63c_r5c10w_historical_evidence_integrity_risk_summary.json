@@ -1,0 +1,41 @@
+{
+  "step": "9.63c-r5c10w",
+  "original_historical_trace_content_integrity": "CONTENT_INTEGRITY_UNPROVEN",
+  "reason": "No independently trusted pre-r5c10l byte hash exists for the two affected historical Trace files. Current hashes are only forward non-change baselines.",
+  "current_observations": [
+    {
+      "path": "evaluation/v1_2/step8_3_mechanism_traces.jsonl",
+      "sha256": "e09321c89b75a4330799e4a4c286652cee82ed0e0d4fa1b8478c970dd7f6d8e5",
+      "size_bytes": 64294,
+      "mtime_local": "2026-10-09T11:37:42-04:00"
+    },
+    {
+      "path": "evaluation/v1_2_1/step8_7_mechanism_traces.jsonl",
+      "sha256": "5518eb4b0b7e8880c5f84e59ba0264013bed99e25edb8da93dca558304d4f084",
+      "size_bytes": 33014,
+      "mtime_local": "2026-10-09T11:37:42-04:00"
+    }
+  ],
+  "forward_hash_observation": "Same SHA-256 values as r5c10o/t/u/v forward baselines; this does not prove earlier original contents.",
+  "r10_historical_freeze_manifest": {
+    "path": "evaluation/v1_2_3/step9_63c_r5c5b_runner_freeze_r10.json",
+    "sha256": "d24244235e51e7bf6c8567880c654fe3fd73b87fa1bfe1ab0f10dfdc94db2693",
+    "historical_manifest_modified_in_this_step": false
+  },
+  "two_test_patch_review": {
+    "r5c10t_target": "tests/test_step9_63c_r5c7b_diagnostics.py",
+    "post_patch_sha256": "655a45c09b3751d24ea9f006649ecb5a9620b1f2acc744f4a2965fbb195f615c",
+    "r5c10v_target": "tests/test_step9_63c_r3_parent_namespace_repair.py",
+    "post_patch_sha256": "f8c5b2e255ceda15c7d76e2f6b3a6a5af4afbfdcadbcae2f83cb6f5b3951262e",
+    "new_import_dependency_found": false,
+    "frozen_member_edit_from_these_patches": false,
+    "production_semantics_change_from_these_patches": false,
+    "scope_limit": "These are source-diff and forward-hash observations, not proof that all historical test execution is safe."
+  },
+  "protective_rules": [
+    "Do not execute unreviewed tests that may write historical Trace or real transaction paths.",
+    "Do not restore, overwrite or rebaseline historical files as if original content were known.",
+    "Any future test batch must use temporary directories and compare these forward SHA baselines before and after."
+  ],
+  "this_step_historical_evidence_modified": false
+}

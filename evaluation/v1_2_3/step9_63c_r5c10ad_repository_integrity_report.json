@@ -1,0 +1,157 @@
+{
+ "step": "9.63c-r5c10ad",
+ "snapshot": {
+  "method": "SHA-256+size+mtime_ns of every file except .venv/.git/models/__pycache__",
+  "files_before": 2373,
+  "files_after": 2424,
+  "baseline_vs_previous_step_end": "0 changes",
+  "added": [
+   "evaluation/v1_2_3/step9_63c_r5c10ad_ar1.diff",
+   "evaluation/v1_2_3/step9_63c_r5c10ad_ar2.diff",
+   "evaluation/v1_2_3/step9_63c_r5c10ad_ar3.diff",
+   "evaluation/v1_2_3/step9_63c_r5c10ad_ar4.diff",
+   "evaluation/v1_2_3/step9_63c_r5c10ad_ar5.diff",
+   "evaluation/v1_2_3/step9_63c_r5c10ad_ar6.diff",
+   "evaluation/v1_2_3/step9_63c_r5c10ad_ar7.diff",
+   "evaluation/v1_2_3/step9_63c_r5c10ad_r5_coverage_mapping.json",
+   "evaluation/v1_2_3/step9_63c_r5c10ad_test_boundary_manifest.json",
+   "evaluation/v1_2_3/step9_63c_r5c10ad_test_harness/aggregate.py",
+   "evaluation/v1_2_3/step9_63c_r5c10ad_test_harness/collect.py",
+   "evaluation/v1_2_3/step9_63c_r5c10ad_test_harness/compare.py",
+   "evaluation/v1_2_3/step9_63c_r5c10ad_test_harness/guard/sitecustomize.py",
+   "evaluation/v1_2_3/step9_63c_r5c10ad_test_harness/run_all.sh",
+   "evaluation/v1_2_3/step9_63c_r5c10ad_test_harness/run_module.py",
+   "evaluation/v1_2_3/step9_63c_r5c10ad_test_harness/snapshot.py",
+   "scripts/validate_step9_63c_test_boundary.py",
+   "tests/retired/RETIRED_INDEX.json",
+   "tests/retired/test_step9_63c_r5_mac_local_preflight.py.retired",
+   "tests/retired/test_step9_63c_r5b_preflight_lifecycle.py.retired",
+   "tests/retired/test_step9_63c_r5c4_bootstrap_repair.py.retired",
+   "tests/test_step9_63c_r5c10ad_r11_resolver_contract.py",
+   "tests/test_step9_63c_r5c10ad_r5_producer_equivalence.py",
+   "tests/test_step9_63c_r5c10ad_test_boundary_manifest.py",
+   "tests/test_step9_63c_r5c10ad_v2_archival_replay.py"
+  ],
+  "removed": [
+   "tests/test_step9_63c_r5b_preflight_lifecycle.py"
+  ],
+  "changed": [
+   "tests/test_step9_63a_r1_production_integration.py",
+   "tests/test_step9_63a_r2_retirement_eligibility.py",
+   "tests/test_step9_63c_r5_mac_local_preflight.py",
+   "tests/test_step9_63c_r5c4_bootstrap_repair.py",
+   "tests/test_step9_63c_r5c7d_import_context.py",
+   "tests/test_step9_63c_r5c7e_preparation.py"
+  ],
+  "appledouble_only_changes": [
+   "evaluation/v1_2_3/._step9_63c_r5c10ad_ar1.diff",
+   "evaluation/v1_2_3/._step9_63c_r5c10ad_ar2.diff",
+   "evaluation/v1_2_3/._step9_63c_r5c10ad_ar3.diff",
+   "evaluation/v1_2_3/._step9_63c_r5c10ad_ar4.diff",
+   "evaluation/v1_2_3/._step9_63c_r5c10ad_ar5.diff",
+   "evaluation/v1_2_3/._step9_63c_r5c10ad_ar6.diff",
+   "evaluation/v1_2_3/._step9_63c_r5c10ad_ar7.diff",
+   "evaluation/v1_2_3/._step9_63c_r5c10ad_r5_coverage_mapping.json",
+   "evaluation/v1_2_3/._step9_63c_r5c10ad_test_boundary_manifest.json",
+   "evaluation/v1_2_3/._step9_63c_r5c10ad_test_harness",
+   "evaluation/v1_2_3/step9_63c_r5c10ad_test_harness/._aggregate.py",
+   "evaluation/v1_2_3/step9_63c_r5c10ad_test_harness/._collect.py",
+   "evaluation/v1_2_3/step9_63c_r5c10ad_test_harness/._compare.py",
+   "evaluation/v1_2_3/step9_63c_r5c10ad_test_harness/._guard",
+   "evaluation/v1_2_3/step9_63c_r5c10ad_test_harness/._run_all.sh",
+   "evaluation/v1_2_3/step9_63c_r5c10ad_test_harness/._run_module.py",
+   "evaluation/v1_2_3/step9_63c_r5c10ad_test_harness/._snapshot.py",
+   "evaluation/v1_2_3/step9_63c_r5c10ad_test_harness/guard/._sitecustomize.py",
+   "scripts/._validate_step9_63c_test_boundary.py",
+   "tests/._retired",
+   "tests/._test_step9_63a_r1_production_integration.py",
+   "tests/._test_step9_63a_r2_retirement_eligibility.py",
+   "tests/._test_step9_63c_r5b_preflight_lifecycle.py",
+   "tests/._test_step9_63c_r5c10ad_r11_resolver_contract.py",
+   "tests/._test_step9_63c_r5c10ad_r5_producer_equivalence.py",
+   "tests/._test_step9_63c_r5c10ad_test_boundary_manifest.py",
+   "tests/._test_step9_63c_r5c10ad_v2_archival_replay.py",
+   "tests/._test_step9_63c_r5c4_bootstrap_repair.py",
+   "tests/._test_step9_63c_r5c7d_import_context.py",
+   "tests/._test_step9_63c_r5c7e_preparation.py",
+   "tests/retired/._RETIRED_INDEX.json",
+   "tests/retired/._test_step9_63c_r5_mac_local_preflight.py.retired",
+   "tests/retired/._test_step9_63c_r5b_preflight_lifecycle.py.retired",
+   "tests/retired/._test_step9_63c_r5c4_bootstrap_repair.py.retired"
+  ],
+  "unexpected_changes": []
+ },
+ "r10_members": {
+  "match": 17,
+  "differ": [
+   "scripts/run_step9_63_v3_formal_execution.py",
+   "scripts/v3_execution_transaction.py",
+   "scripts/v3_runner_identity.py"
+  ],
+  "differ_explanation": "pre-existing approved r11 deltas (scanner, resolver, formal consumer); not touched in this step"
+ },
+ "frozen_members_touched": [],
+ "r11_inventory_paths_touched": [],
+ "protected_pins": {
+  "evaluation/v1_2_3/step9_51a_safe_test_manifest.json": {
+   "expected": "a639ab7e674227f5c676071da6a6186572138fc88d0c899a9cf3fbaa6a59169d",
+   "current": "a639ab7e674227f5c676071da6a6186572138fc88d0c899a9cf3fbaa6a59169d",
+   "match": true
+  },
+  "scripts/validate_step9_51a_test_boundary.py": {
+   "expected": "312f3ca29670c7b092851a37f161aa3cb2e0af17d275c38ca924a3987d7fc9fe",
+   "current": "312f3ca29670c7b092851a37f161aa3cb2e0af17d275c38ca924a3987d7fc9fe",
+   "match": true
+  },
+  "tests/test_step9_51a_validation_boundary.py": {
+   "expected": "127751fe917bca0c6992a2c722d6f7a70c32c34603e444292e5a8a097685573e",
+   "current": "127751fe917bca0c6992a2c722d6f7a70c32c34603e444292e5a8a097685573e",
+   "match": true
+  },
+  "tests/test_step9_43a_treatment_identity.py": {
+   "expected": "9936772aee53ae523a28669025a678d2cda58a30cea6a0561189d9afc0e891ef",
+   "current": "9936772aee53ae523a28669025a678d2cda58a30cea6a0561189d9afc0e891ef",
+   "match": true
+  },
+  "scripts/run_step9_35a_matched_treatment.py": {
+   "expected": "b79bc78a8439021023ee1d190919f5b519de49d3f1931789f788cdaad7776508",
+   "current": "b79bc78a8439021023ee1d190919f5b519de49d3f1931789f788cdaad7776508",
+   "match": true
+  },
+  "evaluation/v1_2/step8_3_mechanism_traces.jsonl": {
+   "expected": "e09321c89b75a4330799e4a4c286652cee82ed0e0d4fa1b8478c970dd7f6d8e5",
+   "current": "e09321c89b75a4330799e4a4c286652cee82ed0e0d4fa1b8478c970dd7f6d8e5",
+   "match": true
+  },
+  "evaluation/v1_2_1/step8_7_mechanism_traces.jsonl": {
+   "expected": "5518eb4b0b7e8880c5f84e59ba0264013bed99e25edb8da93dca558304d4f084",
+   "current": "5518eb4b0b7e8880c5f84e59ba0264013bed99e25edb8da93dca558304d4f084",
+   "match": true
+  },
+  "evaluation/v1_2_3/step9_63c_r5c5b_runner_freeze_r10.json": {
+   "expected": "d24244235e51e7bf6c8567880c654fe3fd73b87fa1bfe1ab0f10dfdc94db2693",
+   "current": "d24244235e51e7bf6c8567880c654fe3fd73b87fa1bfe1ab0f10dfdc94db2693",
+   "match": true
+  },
+  "evaluation/v1_2_3/step9_63c_r5c6_r10_v3_authorization_manifest.json": {
+   "expected": "beac52d1ed3bc11efa02b1a924a8abc7b210171bf5cc1b7910011a6ef9741241",
+   "current": "beac52d1ed3bc11efa02b1a924a8abc7b210171bf5cc1b7910011a6ef9741241",
+   "match": true
+  }
+ },
+ "historical_trace_original_content_integrity": "CONTENT_INTEGRITY_UNPROVEN (unchanged status)",
+ "r11_formal_artifacts_present": false,
+ "authorization_ledger_sha256": "aaa2e9898a8869db052a1248a0ca2b0574d9c36093aee608db59457f24c2a60e",
+ "authorization_ledger_unchanged": true,
+ "guard": {
+  "version": "v2 (entry-level ops resolve parent directory only; writes through symlinks still resolve to target)",
+  "self_test": "21/21 (18 base + 3 symlink cases)",
+  "blocked_events_in_final_runs": 0
+ },
+ "rollback_verification": {
+  "bsd_patch_reverse_dry_run": "ar1, ar3, ar4, ar5, ar6, ar7 CLEAN against final state; ar2 needs file re-creation which macOS BSD patch 2.0 cannot do in -R mode",
+  "git_apply_reverse_in_order_ar7_to_ar1_on_scratch_copy": "CLEAN; 17/17 touched paths restored byte-identical to the step baseline",
+  "dependencies": "ar4 modifies tests/retired/RETIRED_INDEX.json created by ar2; ar7 manifest encodes the final test inventory, so roll back ar7 first (or regenerate) before rolling back ar2/ar4/ar6"
+ },
+ "git_commit_or_push": "NONE"
+}

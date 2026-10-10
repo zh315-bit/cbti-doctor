@@ -1,0 +1,119 @@
+{
+  "artifact_type": "STEP9_58B_HISTORICAL_EVIDENCE_INVENTORY_POST_HOC",
+  "artifact_origin": "POST_HOC",
+  "original_step": "9.58",
+  "reconstruction_step": "9.58b",
+  "created_at_utc": "2026-10-01T18:50:04Z",
+  "original_artifacts_missing": true,
+  "historical_record_rewritten": false,
+  "git_identity": {
+    "head_commit": "201ef5c2d406b0eaf2ebf5ce12db912b3caf5762",
+    "working_tree_clean": false,
+    "note": "Existing unrelated tracked modifications were present; no code or historical artifacts were changed by Step 9.58b."
+  },
+  "record_md_before_attestation": {
+    "sha256": "2f232e13274aa92e2e5a9fb81e70cf3a6f3fcfc614439d5ee917e98d887dba1c",
+    "path": "record.md"
+  },
+  "step9_58_original_artifact_inventory": {
+    "manifest": {"path": "evaluation/v1_2_3/step9_58_v3_authorization_manifest.json", "exists": false},
+    "audit": {"path": "evaluation/v1_2_3/step9_58_v3_authorization_audit.json", "exists": false},
+    "report": {"path": "evaluation/v1_2_3/step9_58_v3_authorization_report.md", "exists": false},
+    "freeze": {"path": "evaluation/v1_2_3/step9_58_v3_authorization_freeze.json", "exists": false},
+    "artifact_set_complete": false
+  },
+  "step9_58a_original_artifact_inventory": {
+    "audit": {"path": "evaluation/v1_2_3/step9_58a_v3_namespace_remediation_audit.json", "exists": false},
+    "report": {"path": "evaluation/v1_2_3/step9_58a_v3_namespace_remediation_report.md", "exists": false},
+    "test_report": {"path": "evaluation/v1_2_3/step9_58a_v3_namespace_lifecycle_test_report.json", "exists": false},
+    "r4_freeze": {"path": "evaluation/v1_2_3/step9_58a_v3_runner_freeze_r4.json", "exists": false}
+  },
+  "evidence_inventory": [
+    {
+      "path": "evaluation/v4_runs/heldout-v4-step9_55a-treatment-v3-20260930-01/attempts.jsonl",
+      "sha256": "10d3577bd59f886e5b5b79f23c8e911e117bfc52004eb234034f9314c2c5728e",
+      "evidence": "Immutable Step 9.57 event sequence ends FAILED_AFTER_PARTIAL_EXECUTION; exact old evaluation/authorization/attempt identity; one case STARTED, zero completed."
+    },
+    {
+      "path": "evaluation/v4_runs/heldout-v4-step9_55a-treatment-v3-20260930-01/attempt-step9_56-93842f48f1554239ad14d2c11689635e_case_results.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence": "Preserved empty Step 9.57 case-results output."
+    },
+    {
+      "path": "evaluation/v4_runs/heldout-v4-step9_55a-treatment-v3-20260930-01/attempt-step9_56-93842f48f1554239ad14d2c11689635e_raw_traces.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence": "Preserved empty Step 9.57 raw-trace output."
+    },
+    {
+      "path": "evaluation/v1_2_3/step9_55b_v3_runner_freeze_r3.json",
+      "sha256": "581edb8e0091c3dd060735435091be0c5d826b6244a562fa1bfb21a0b3d850fc",
+      "evidence": "Frozen r3 runner binds the occupied evaluation namespace and requires a pre-attempt namespace to be absent."
+    },
+    {
+      "path": "scripts/run_step9_53_v3_identity_adapter.py",
+      "sha256": "ace3d58005a5c4ce01aeeb17ac54a437c64e4023f7c870e12964a1a5d72b0b7e",
+      "evidence": "Source has PRE_ATTEMPT guard: namespace.exists() or symlink raises 'pre-attempt output namespace already exists'; preflight does not execute the model/Agent/RAG."
+    },
+    {
+      "path": "evaluation/v1_2_3/step9_56_v3_authorization_manifest.json",
+      "sha256": "c4baa12b60a2166c03d8d7c98d6aefe1897873141f5b9b18e6c8a4fb795dd606",
+      "evidence": "Historical prebound one-shot identity; actual consumption/failure is established by the Step 9.57 ledger, not by rewriting this manifest."
+    },
+    {
+      "path": "evaluation/v1_2_3/step9_56_v3_authorization_freeze.json",
+      "sha256": "9a45b3fb85632ad5cc0629f0b77fe479834291d05ffd136ab7d98138b23e7870",
+      "evidence": "Step 9.56 frozen authorization provenance."
+    },
+    {
+      "path": "evaluation/v1_2_3/step9_56_v3_authorization_audit.json",
+      "sha256": "925484ba15ec248f765459e80f0f4d2f78698479806d7ac775a72ff3661fed51",
+      "evidence": "Step 9.56 authorization audit."
+    },
+    {
+      "path": "evaluation/v1_2_3/step9_56_v3_authorization_report.md",
+      "sha256": "981c9b0ea4e8feed2cbf877ef2307fd4b920b80d77ae94ed6c6b6a713fd99172",
+      "evidence": "Step 9.56 authorization report."
+    },
+    {
+      "path": "evaluation/v1_2_3/step9_57a_v3_execution_failure_forensics.json",
+      "sha256": "8217038ca627643d9cff384293156a5eaa591e7aaa52f6030889f63e651dbb3d",
+      "evidence": "Post-failure forensics identifies DNS/local network failure and preserves the failure boundary."
+    },
+    {
+      "path": "evaluation/v1_2_3/step9_57b_v3_connectivity_preclearance.json",
+      "sha256": "41338b5a87a94c046e53d072a9f8621f024a50908206caab5c3f11f1f07aaab9",
+      "evidence": "Step 9.57b DNS fail-closed result."
+    },
+    {
+      "path": "evaluation/v1_2_3/step9_57c_v3_connectivity_recovery.json",
+      "sha256": "40dfee10d891d0ecfcd9a4cee6c40702877a6ff7f358b9c78266b7b6ff73cd14",
+      "evidence": "Non-consuming current connectivity recovery and frozen identity checks."
+    },
+    {
+      "path": "evaluation/v1_2_3/step9_57c_v3_connectivity_recovery_audit.json",
+      "sha256": "916adb8ca3a2504a98e80f8e8c234008ece85b7baa316aee8219deeb1cdb6c02",
+      "evidence": "Audit binds Step 9.57c checks and confirms no evaluation action."
+    },
+    {
+      "path": "record.md",
+      "sha256": "2f232e13274aa92e2e5a9fb81e70cf3a6f3fcfc614439d5ee917e98d887dba1c",
+      "evidence": "Existing history through Step 9.57c; contains no Step 9.58 entry before this post-hoc append."
+    },
+    {
+      "path": "/var/folders/9c/900zw79d6y5f51r1vtf5tpx00000gn/T/codex-clipboard-64097366-87cc-414a-b038-e6832eff6b16.png",
+      "sha256": "87852ec92f54381fd87f30bf866bcaa4cd9a2b8e3e4bee59ce1e134a56216e5e",
+      "evidence": "User-supplied screenshot of the prior Step 9.58 fail-closed report; supplemental conversation evidence, not an original repository artifact."
+    },
+    {
+      "path": "conversation://current-thread/Step-9.58-preflight-tool-output",
+      "sha256": "NOT_APPLICABLE_NONFILE_CONVERSATION_RECORD",
+      "evidence": "Prior same-thread read-only call reported BOUND_NAMESPACE_EXISTS=True and RuntimeError 'pre-attempt output namespace already exists'. This is explicitly non-repository evidence and is not represented as a hashed file."
+    },
+    {
+      "path": "conversation://current-thread/Step-9.58a-historical-artifact-precheck",
+      "sha256": "NOT_APPLICABLE_NONFILE_CONVERSATION_RECORD",
+      "evidence": "Prior same-thread Step 9.58a output listed the four Step 9.58 expected artifacts as absent and stopped before repair. This documents when the provenance gap was first detected; no repository file was created by that failed precheck."
+    }
+  ],
+  "historical_record_rewritten": false
+}

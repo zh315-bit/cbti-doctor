@@ -1,0 +1,115 @@
+{
+ "artifact_type": "R5C10AG_REPOSITORY_INTEGRITY_REPORT",
+ "step": "9.63c-r5c10ag",
+ "baseline": "af_snap_final (end of r5c10af) -> ag_snap_end (end of the second guarded regression)",
+ "added_this_step": [
+  "evaluation/v1_2_3/step9_63c_r5c10af_repository_integrity_report.json",
+  "evaluation/v1_2_3/step9_63c_r5c10ag_e2e_rehearsal_report.json",
+  "evaluation/v1_2_3/step9_63c_r5c10ag_guard_scope.md",
+  "evaluation/v1_2_3/step9_63c_r5c10ag_mutation_results.json",
+  "evaluation/v1_2_3/step9_63c_r5c10ag_mutation_tools/ag_mutation.py",
+  "evaluation/v1_2_3/step9_63c_r5c10ag_mutation_tools/e2e_rehearsal_report.py",
+  "evaluation/v1_2_3/step9_63c_r5c10ag_mutation_tools/run_log_builder.txt",
+  "evaluation/v1_2_3/step9_63c_r5c10ag_mutation_tools/run_log_consumer.txt",
+  "evaluation/v1_2_3/step9_63c_r5c10ag_mutation_tools/run_log_issuer.txt",
+  "evaluation/v1_2_3/step9_63c_r5c10ag_test_boundary_manifest.json",
+  "scripts/issue_step9_63c_r11_authorization.py",
+  "scripts/validate_step9_63c_r5c10ag_test_boundary.py",
+  "tests/r11_activation_fixtures.py",
+  "tests/test_step9_63c_r5c10ag_authorization_issuer.py",
+  "tests/test_step9_63c_r5c10ag_consumer_issuance_crosscheck.py",
+  "tests/test_step9_63c_r5c10ag_end_to_end_rehearsal.py",
+  "tests/test_step9_63c_r5c10ag_identity_pointer_creation.py",
+  "tests/test_step9_63c_r5c10ag_test_boundary_manifest.py"
+ ],
+ "appledouble_files_added": 19,
+ "modified_this_step": [
+  "scripts/build_step9_63c_r11_runner_freeze.py",
+  "scripts/run_step9_63_v3_formal_execution.py",
+  "tests/test_step9_63c_r5c10ad_test_boundary_manifest.py"
+ ],
+ "removed_this_step": [],
+ "checks": [
+  {
+   "id": "C1",
+   "check": "resolver SHA unchanged (a0f5670d\u2026)",
+   "ok": true,
+   "value": "a0f5670d3834d5f91391b41a33fbac669d6162587bc620e9bd3acf202aa3c6a5"
+  },
+  {
+   "id": "C2",
+   "check": "r10 frozen members, adapter, authorization_lifecycle.py and the r7 issuer file equal their r10 manifest SHA",
+   "ok": true,
+   "paths": [
+    "scripts/run_step9_53_v3_identity_adapter.py",
+    "scripts/authorization_lifecycle.py",
+    "scripts/issue_step9_63a_r3_authorization.py",
+    "scripts/run_step9_35a_matched_treatment.py",
+    "scripts/v3_namespace_allocator.py",
+    "scripts/append_only_ledger.py",
+    "scripts/preflight_step9_63c_current_mac_local.py",
+    "scripts/preflight_step9_62b_mac_local.py"
+   ]
+  },
+  {
+   "id": "C3",
+   "check": "scanner SHA unchanged",
+   "ok": true
+  },
+  {
+   "id": "C4",
+   "check": "r10 freeze manifest and r10 authorization manifest SHA unchanged",
+   "ok": true
+  },
+  {
+   "id": "C5",
+   "check": "real ledger byte-identical to the step start (3856 bytes) and its frozen 1161-byte prefix pin holds",
+   "ok": true,
+   "sha256": "aaa2e9898a8869db052a1248a0ca2b0574d9c36093aee608db59457f24c2a60e"
+  },
+  {
+   "id": "C6",
+   "check": "55 historical pins verify on the real repository",
+   "ok": true
+  },
+  {
+   "id": "C7",
+   "check": "no r11 pointer, Freeze, Registry, authorization manifest, approval record, determination file or creation record exists",
+   "ok": true,
+   "found": []
+  },
+  {
+   "id": "C8",
+   "check": "no historical test, manifest, trace or earlier-step artifact changed during this step (only the ad test rollback)",
+   "ok": true,
+   "changed_files": [
+    "scripts/build_step9_63c_r11_runner_freeze.py",
+    "scripts/run_step9_63_v3_formal_execution.py",
+    "tests/test_step9_63c_r5c10ad_test_boundary_manifest.py"
+   ]
+  },
+  {
+   "id": "C9",
+   "check": "r5c10ad manifest test restored to the pre-ad-diff bytes (eaa60942\u2026)",
+   "ok": true
+  },
+  {
+   "id": "C10",
+   "check": "r5c10ae manifest unchanged (pinned in the ag validator)",
+   "ok": true
+  },
+  {
+   "id": "C11",
+   "check": "whole repository unchanged by the two guarded regression runs and by the mutation and rehearsal tools (0 added / removed / content-changed / mtime-only)",
+   "ok": true,
+   "files": 2568
+  },
+  {
+   "id": "C12",
+   "check": "the tools wrote nothing in the repository other than the files listed under added_this_step",
+   "ok": true
+  }
+ ],
+ "all_ok": true,
+ "note": "The r5c10af_repository_integrity_report.json listed as added was produced at the end of the previous step, after the baseline snapshot."
+}

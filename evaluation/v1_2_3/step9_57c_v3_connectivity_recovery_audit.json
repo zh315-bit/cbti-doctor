@@ -1,0 +1,57 @@
+{
+  "artifact_type": "STEP9_57C_V3_CONNECTIVITY_RECOVERY_AUDIT",
+  "step": "9.57c",
+  "status": "PASS_CONNECTIVITY_RECOVERY_NON_CONSUMING",
+  "created_at_utc": "2026-10-01T14:45:00Z",
+  "recovery_artifact": "evaluation/v1_2_3/step9_57c_v3_connectivity_recovery.json",
+  "recovery_artifact_sha256": "40dfee10d891d0ecfcd9a4cee6c40702877a6ff7f358b9c78266b7b6ff73cd14",
+  "recovery_report": "evaluation/v1_2_3/step9_57c_v3_connectivity_recovery.md",
+  "exclusive_create_targets_absent_before_write": true,
+  "connectivity": {
+    "system_resolver": "PASS",
+    "dig_default": "PASS_NOERROR",
+    "dig_1_1_1_1": "PASS_NOERROR",
+    "dig_8_8_8_8": "PASS_NOERROR",
+    "socket_getaddrinfo": "PASS",
+    "current_dns_status": "PASS",
+    "current_dns_address_count": 1,
+    "current_transport_status": "PASS_TLS_1_3_CERTIFICATE_VERIFIED",
+    "http_or_inference_request_sent": false,
+    "api_key_sent": false
+  },
+  "identity": {
+    "v3_agent_match": true,
+    "runner_match": true,
+    "frozen_model_tool_rag_and_evaluation_identities_match": true,
+    "case_specific_agent_logic_found": false,
+    "case_specific_runner_logic_found": false,
+    "evaluation_semantics_changed": false
+  },
+  "history": {
+    "historical_step9_57_dns_failure_preserved": true,
+    "historical_step9_57b_fail_closed_preserved": true,
+    "historical_artifact_integrity": "PASS",
+    "step9_57_ledger_sha256": "10d3577bd59f886e5b5b79f23c8e911e117bfc52004eb234034f9314c2c5728e",
+    "step9_57_results_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "step9_57_traces_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "step9_56_authorization_artifacts_unchanged": true,
+    "step9_55b_freeze_unchanged": true,
+    "step9_57a_artifacts_unchanged": true,
+    "step9_57b_artifacts_unchanged": true
+  },
+  "authorization_boundary": {
+    "new_authorization_issued": false,
+    "new_attempt_created": false,
+    "authorization_consumed": false,
+    "formal_v4_case_executed": 0,
+    "model_inference_executed": false,
+    "agent_evaluation_executed": false,
+    "rag_evaluation_executed": false,
+    "adjudication_executed": false,
+    "aggregation_executed": false,
+    "comparison_executed": false,
+    "v5_accessed": false,
+    "ready_for_fresh_v3_authorization": true,
+    "this_artifact_is_authorization": false
+  }
+}

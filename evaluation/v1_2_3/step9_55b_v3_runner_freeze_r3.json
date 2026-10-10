@@ -1,0 +1,113 @@
+{
+  "artifact_type": "STEP9_55B_V3_RUNNER_FREEZE_REVISION_NOT_AUTHORIZATION",
+  "step": "9.55b",
+  "runner_freeze_revision": "r3",
+  "freeze_id": "step9_55b-v3-repaired-runner-20260930-r3",
+  "status": "FROZEN_NOT_AUTHORIZED",
+  "created_at_utc": "2026-09-30T20:42:12Z",
+  "supersedes_for_future_authorization_only": "evaluation/v1_2_3/step9_53_v3_runner_freeze_r2.json",
+  "r2_freeze_sha256": "4c4749cde621ed989ec9c0dc77a194931079cdaee7f20dc6ba5668afee46eb43",
+  "repair_parent_freeze_path": "evaluation/v1_2_3/step9_55a_v3_runner_freeze.json",
+  "repair_parent_freeze_sha256": "745ea26d044909e398eccdfd41da2f9f58b138612d28af57ed7a507fca2acc14",
+  "runner_path": "scripts/run_step9_53_v3_identity_adapter.py",
+  "runner_sha256": "ace3d58005a5c4ce01aeeb17ac54a437c64e4023f7c870e12964a1a5d72b0b7e",
+  "runner_sha_match": true,
+  "parent_runner": {
+    "path": "scripts/run_step9_35a_matched_treatment.py",
+    "sha256": "920486b1d7984fae6ee77b5ac51af0d0a98caf42e445d1abcf7ff75b46038505",
+    "freeze_path": "evaluation/v1_2_3/step9_35a_treatment_runner_freeze.json",
+    "freeze_sha256": "0c4e6ab752164bfe436d14b06d3bdc6d5cfc1506cbca92bc1bb9675c437aa7e9"
+  },
+  "v3_adapter_identity": {
+    "path": "scripts/run_step9_53_v3_identity_adapter.py",
+    "sha256": "ace3d58005a5c4ce01aeeb17ac54a437c64e4023f7c870e12964a1a5d72b0b7e",
+    "identity_contract_path": "evaluation/v1_2_3/step9_55a_v3_identity_contract.json",
+    "identity_contract_sha256": "a8f6e54f78d0f7d3f2722390da4779d87f68838c76fe17ccc2f5930adb1d68c0",
+    "evaluation_id": "heldout-v4-step9_55a-treatment-v3-20260930-01",
+    "v3_agent_sha256": "085d338ed95bbef7370c41cf97ca0d6653ffdfd2f1c924eef4b7123dfdea4607",
+    "development_freeze_path": "evaluation/v1_2_3/step9_51_v3_development_freeze_r1.json",
+    "development_freeze_sha256": "106e18707aa66806c3953c8d5f38484f534d78e4fd230cbd6c491304aaf8cd27"
+  },
+  "frozen_evaluation_identity": {
+    "benchmark_path": "evaluation/benchmarks/benchmark_v4_cases.yaml",
+    "benchmark_sha256": "8b8c72092fcd7544e69d5d2ecd13610c7bb4c14210fca330698b3e5ab3f01d7f",
+    "benchmark_manifest_sha256": "b5feb7832b6267d8cff9d25fb2d8cf0043829feb5fd04ec1bea77dba932a13db",
+    "case_count": 40,
+    "case_order_fingerprint_sha256": "d930455e417935337a6e3459defbdc3ee3829b71786fbd8438ef092b62429e68",
+    "task_distribution": {
+      "KNOWLEDGE_QA": 10,
+      "CAUSE_ASSESSMENT": 10,
+      "PERSONALIZED_DECISION": 10,
+      "DATA_ANALYSIS": 10
+    },
+    "harness_sha256": "8bc271bebc1c5da5351d517e2bb4a0d1a99fda3de1b713a6197b12f81fad70c7",
+    "scoring_sha256": "f742a8f8af7c8747818dadad81621c15d12d74f50538019913dfe18ab53bf59b",
+    "scoring_rubric_sha256": "a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899",
+    "metric_registry_sha256": "de9f348cb1dff66410c03095abdaffcc256f53679718482870e4aa4d80c75056",
+    "one_shot_rules_sha256": "1c7ed4ef47865b117bc943f3e0ad9a859f4f74cfb4e8001f723ac5532af140d0",
+    "matched_protocol_sha256": "a71ba06090370b576fbba66bc4b005e519ddbabff3021a40c6546fc855f90265",
+    "model_configuration_fingerprint_sha256": "d0802478a59e6b2021b0476490149d7fec672fab5bda5cc45f55241268f1a7e0",
+    "tool_adapter_sha256": "65223ad962417d68d16326c2431a205f1bdc953a0f64c5585ff38e4017a1c084",
+    "rag_configuration_fingerprint_sha256": "58467abc2abafce62e8d71713684802f64a35946accf35c08007e67b0edd60a5",
+    "dependency_lock_sha256": "4e7ec8e873364b418536494b049d09e37e957a824a1989072cdc5a62f8af72b0",
+    "all_frozen_identities_match": true
+  },
+  "namespace_lifecycle_contract": {
+    "pre_attempt": {
+      "namespace_must_be_absent": true,
+      "existing_namespace_result": "FAIL_CLOSED",
+      "authorization_and_attempt_ids_must_be_fresh_and_paired": true
+    },
+    "post_attempt_creation_pre_first_case": {
+      "namespace_may_exist_only_for_exact_authorization_and_attempt": true,
+      "requires_exact_parent_ledger_prefix": ["PREPARED", "AUTHORIZATION_CONSUMED", "FIRST_EVALUATION_ACCESS", "CASE_SET_AND_ORDER_VERIFIED"],
+      "requires_zero_cases_started_and_completed": true,
+      "prior_results_or_raw_traces": "FAIL_CLOSED",
+      "completed_or_stale_or_reused_attempt": "FAIL_CLOSED"
+    },
+    "callback_phase_order": ["PRE_ATTEMPT", "PRE_ATTEMPT", "POST_ATTEMPT_CREATION_PRE_FIRST_CASE"],
+    "phase_order_test_passed": true
+  },
+  "exactly_once_contract": {
+    "one_attempt_only": true,
+    "authorization_or_attempt_id_reuse_rejected": true,
+    "exclusive_new_output_namespace": true,
+    "exclusive_append_only_ledger_creation": true,
+    "first_access_event_fsynced_before_dataset_read": true,
+    "case_set_and_order_verified_before_first_agent_call": true,
+    "per_case_started_event_fsynced_before_agent_call": true,
+    "raw_trace_and_case_result_files_created_exclusively": true,
+    "per_case_records_fsynced": true,
+    "interruption_preserves_attempt_and_automatic_resume_forbidden": true,
+    "old_step9_54_authorization_reuse_rejected": true,
+    "old_step9_55_attempt_resume_rejected": true,
+    "completed_attempt_reuse_rejected": true
+  },
+  "namespace_collision_contract": {
+    "future_namespace_path": "evaluation/v4_runs/heldout-v4-step9_55a-treatment-v3-20260930-01",
+    "future_namespace_absent_at_preclearance": true,
+    "any_preexisting_namespace_fails_closed": true,
+    "identity_reuse_in_other_ledgers_fails_closed": true
+  },
+  "output_namespace_contract": {
+    "root": "evaluation/v4_runs",
+    "layout": "<evaluation_id>/attempts.jsonl and exclusively-created attempt outputs",
+    "ledger": "append-only and fsynced",
+    "raw_traces_and_case_results": "exclusive creation; only after per-case STARTED event",
+    "automatic_resume": false
+  },
+  "boundary": {
+    "agent_modified": false,
+    "benchmark_modified": false,
+    "evaluation_semantics_changed": false,
+    "authorization_issued": false,
+    "attempt_created": false,
+    "authorization_consumed": false,
+    "formal_v4_case_executed": 0,
+    "model_agent_rag_called_for_evaluation": false,
+    "adjudication_executed": false,
+    "aggregation_executed": false,
+    "comparison_executed": false,
+    "v5_created_or_accessed": false
+  }
+}

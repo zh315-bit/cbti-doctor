@@ -1,0 +1,2531 @@
+{
+  "source_artifacts": [
+    "v1_1_v2_raw_traces.jsonl",
+    "v1_vs_v1_1_paired_results.jsonl",
+    "v1_vs_v1_1_metrics.json",
+    "evaluation/v2/adaptive_v1_v2_traces.jsonl",
+    "evaluation/v2/adaptive_v1_v2_metrics.json"
+  ],
+  "ask_quality_reanalysis": {
+    "total_ASK": 112,
+    "necessary_ASK_rate": 0.1875,
+    "useful_but_optional_ASK_rate": 0.0804,
+    "redundant_ASK_rate": 0.3482,
+    "irrelevant_ASK_rate": 0.3839,
+    "V1_reference": {
+      "ASK_per_case": 2.775,
+      "redundant_ASK_rate": 0.7207,
+      "total_ASK": 111
+    }
+  },
+  "per_task": {
+    "KNOWLEDGE_QA": {
+      "cases": 10,
+      "v1_score": 91.5,
+      "v1_1_score": 78.1,
+      "v1_ASK_per_case": 0.9,
+      "score": 78.1,
+      "ASK_per_case": 1.0,
+      "redundant_ask_rate": 0.0,
+      "six_ASK_limit_cases": 1,
+      "critical_failures": 0,
+      "ask_quality": {
+        "necessary": 0,
+        "useful_but_optional": 0,
+        "redundant": 0,
+        "irrelevant": 10
+      }
+    },
+    "CAUSE_ASSESSMENT": {
+      "cases": 10,
+      "v1_score": 65.4,
+      "v1_1_score": 71.0,
+      "v1_ASK_per_case": 3.1,
+      "score": 71.0,
+      "ASK_per_case": 3.2,
+      "redundant_ask_rate": 0.5,
+      "six_ASK_limit_cases": 0,
+      "critical_failures": 0,
+      "ask_quality": {
+        "necessary": 11,
+        "useful_but_optional": 0,
+        "redundant": 16,
+        "irrelevant": 5
+      }
+    },
+    "PERSONALIZED_DECISION": {
+      "cases": 12,
+      "v1_score": 31.67,
+      "v1_1_score": 34.17,
+      "v1_ASK_per_case": 5.417,
+      "score": 34.17,
+      "ASK_per_case": 5.333,
+      "redundant_ask_rate": 0.3594,
+      "six_ASK_limit_cases": 9,
+      "critical_failures": 0,
+      "ask_quality": {
+        "necessary": 10,
+        "useful_but_optional": 9,
+        "redundant": 23,
+        "irrelevant": 22
+      }
+    },
+    "DATA_ANALYSIS": {
+      "cases": 8,
+      "v1_score": 75.62,
+      "v1_1_score": 87.5,
+      "v1_ASK_per_case": 0.75,
+      "score": 87.5,
+      "ASK_per_case": 0.75,
+      "redundant_ask_rate": 0.0,
+      "six_ASK_limit_cases": 1,
+      "critical_failures": 0,
+      "ask_quality": {
+        "necessary": 0,
+        "useful_but_optional": 0,
+        "redundant": 0,
+        "irrelevant": 6
+      }
+    }
+  },
+  "six_ASK_limit_cases": [
+    {
+      "case_id": "V2-KQ-02",
+      "goal": "Decide whether to stay in bed or get up after waking in the middle of the night",
+      "action_path": [
+        "ASK",
+        "ASK",
+        "ASK",
+        "ASK",
+        "ASK",
+        "ASK"
+      ],
+      "ask_targets": [
+        "bedtime",
+        "nighttime_awakenings",
+        "sleep_onset_latency",
+        "total_sleep_time",
+        "wake_time",
+        "recent_sleep_pattern"
+      ],
+      "asks": [
+        {
+          "turn": 1,
+          "target": "bedtime",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "bedtime",
+            "sleep_onset_latency",
+            "wake_time",
+            "total_sleep_time",
+            "nighttime_awakenings",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 2,
+          "target": "nighttime_awakenings",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "sleep_onset_latency",
+            "wake_time",
+            "total_sleep_time",
+            "nighttime_awakenings",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 3,
+          "target": "sleep_onset_latency",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "sleep_onset_latency",
+            "wake_time",
+            "total_sleep_time",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 4,
+          "target": "total_sleep_time",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "wake_time",
+            "total_sleep_time",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 5,
+          "target": "wake_time",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "wake_time",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 6,
+          "target": "recent_sleep_pattern",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        }
+      ],
+      "termination_reason": "max six ASK turns",
+      "root_cause": "extraction_failure"
+    },
+    {
+      "case_id": "V2-PD-01",
+      "goal": "判断是否需要把上床时间往后挪",
+      "action_path": [
+        "ASK",
+        "ASK",
+        "ASK",
+        "ASK",
+        "ASK",
+        "ASK"
+      ],
+      "ask_targets": [
+        "bedtime",
+        "nighttime_awakenings",
+        "sleep_onset_latency",
+        "total_sleep_time",
+        "wake_time",
+        "recent_sleep_pattern"
+      ],
+      "asks": [
+        {
+          "turn": 1,
+          "target": "bedtime",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "bedtime",
+            "sleep_onset_latency",
+            "wake_time",
+            "total_sleep_time",
+            "nighttime_awakenings",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 2,
+          "target": "nighttime_awakenings",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "sleep_onset_latency",
+            "wake_time",
+            "total_sleep_time",
+            "nighttime_awakenings",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 3,
+          "target": "sleep_onset_latency",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "sleep_onset_latency",
+            "wake_time",
+            "total_sleep_time",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 4,
+          "target": "total_sleep_time",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "wake_time",
+            "total_sleep_time",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 5,
+          "target": "wake_time",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "wake_time",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 6,
+          "target": "recent_sleep_pattern",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        }
+      ],
+      "termination_reason": "max six ASK turns",
+      "root_cause": "extraction_failure"
+    },
+    {
+      "case_id": "V2-PD-03",
+      "goal": "Determine whether moving bedtime earlier by a small amount is sensible.",
+      "action_path": [
+        "ASK",
+        "ASK",
+        "ASK",
+        "ASK",
+        "ASK",
+        "ASK"
+      ],
+      "ask_targets": [
+        "bedtime",
+        "nighttime_awakenings",
+        "sleep_onset_latency",
+        "total_sleep_time",
+        "wake_time",
+        "recent_sleep_pattern"
+      ],
+      "asks": [
+        {
+          "turn": 1,
+          "target": "bedtime",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "bedtime",
+            "sleep_onset_latency",
+            "wake_time",
+            "total_sleep_time",
+            "nighttime_awakenings",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 2,
+          "target": "nighttime_awakenings",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "sleep_onset_latency",
+            "wake_time",
+            "total_sleep_time",
+            "nighttime_awakenings",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 3,
+          "target": "sleep_onset_latency",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "sleep_onset_latency",
+            "wake_time",
+            "total_sleep_time",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 4,
+          "target": "total_sleep_time",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "wake_time",
+            "total_sleep_time",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 5,
+          "target": "wake_time",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "wake_time",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 6,
+          "target": "recent_sleep_pattern",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        }
+      ],
+      "termination_reason": "max six ASK turns",
+      "root_cause": "extraction_failure"
+    },
+    {
+      "case_id": "V2-PD-04",
+      "goal": "获取缩短卧床时间的具体睡眠限制方案",
+      "action_path": [
+        "ASK",
+        "ASK",
+        "ASK",
+        "ASK",
+        "ASK",
+        "ASK"
+      ],
+      "ask_targets": [
+        "bedtime",
+        "nighttime_awakenings",
+        "sleep_onset_latency",
+        "total_sleep_time",
+        "wake_time",
+        "recent_sleep_pattern"
+      ],
+      "asks": [
+        {
+          "turn": 1,
+          "target": "bedtime",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "bedtime",
+            "sleep_onset_latency",
+            "wake_time",
+            "total_sleep_time",
+            "nighttime_awakenings",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 2,
+          "target": "nighttime_awakenings",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "sleep_onset_latency",
+            "wake_time",
+            "total_sleep_time",
+            "nighttime_awakenings",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 3,
+          "target": "sleep_onset_latency",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "sleep_onset_latency",
+            "wake_time",
+            "total_sleep_time",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 4,
+          "target": "total_sleep_time",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "wake_time",
+            "total_sleep_time",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 5,
+          "target": "wake_time",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "wake_time",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 6,
+          "target": "recent_sleep_pattern",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        }
+      ],
+      "termination_reason": "max six ASK turns",
+      "root_cause": "extraction_failure"
+    },
+    {
+      "case_id": "V2-PD-05",
+      "goal": "判断把工作日就寝时间提前是否可行（结合工作日6:30起床、周末能睡到十点的情况）",
+      "action_path": [
+        "ASK",
+        "ASK",
+        "ASK",
+        "ASK",
+        "ASK",
+        "ASK"
+      ],
+      "ask_targets": [
+        "wake_time",
+        "bedtime",
+        "nighttime_awakenings",
+        "sleep_onset_latency",
+        "total_sleep_time",
+        "recent_sleep_pattern"
+      ],
+      "asks": [
+        {
+          "turn": 1,
+          "target": "wake_time",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "bedtime",
+            "sleep_onset_latency",
+            "wake_time",
+            "total_sleep_time",
+            "nighttime_awakenings",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 2,
+          "target": "bedtime",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "bedtime",
+            "sleep_onset_latency",
+            "total_sleep_time",
+            "nighttime_awakenings",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 3,
+          "target": "nighttime_awakenings",
+          "state_before_ask": {
+            "facts": {
+              "bedtime": "00:30"
+            },
+            "required_missing": [
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "sleep_onset_latency",
+            "total_sleep_time",
+            "nighttime_awakenings",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 4,
+          "target": "sleep_onset_latency",
+          "state_before_ask": {
+            "facts": {
+              "bedtime": "00:30"
+            },
+            "required_missing": [
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "sleep_onset_latency",
+            "total_sleep_time",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 5,
+          "target": "total_sleep_time",
+          "state_before_ask": {
+            "facts": {
+              "bedtime": "00:30"
+            },
+            "required_missing": [
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "total_sleep_time",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 6,
+          "target": "recent_sleep_pattern",
+          "state_before_ask": {
+            "facts": {
+              "bedtime": "00:30"
+            },
+            "required_missing": [
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        }
+      ],
+      "termination_reason": "max six ASK turns",
+      "root_cause": "sufficiency_failure"
+    },
+    {
+      "case_id": "V2-PD-06",
+      "goal": "Decide whether to keep one fixed bedtime despite working rotating shifts",
+      "action_path": [
+        "ASK",
+        "ASK",
+        "ASK",
+        "ASK",
+        "ASK",
+        "ASK"
+      ],
+      "ask_targets": [
+        "bedtime",
+        "nighttime_awakenings",
+        "sleep_onset_latency",
+        "total_sleep_time",
+        "wake_time",
+        "recent_sleep_pattern"
+      ],
+      "asks": [
+        {
+          "turn": 1,
+          "target": "bedtime",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "bedtime",
+            "sleep_onset_latency",
+            "wake_time",
+            "total_sleep_time",
+            "nighttime_awakenings",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 2,
+          "target": "nighttime_awakenings",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "sleep_onset_latency",
+            "wake_time",
+            "total_sleep_time",
+            "nighttime_awakenings",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 3,
+          "target": "sleep_onset_latency",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "sleep_onset_latency",
+            "wake_time",
+            "total_sleep_time",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 4,
+          "target": "total_sleep_time",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "wake_time",
+            "total_sleep_time",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 5,
+          "target": "wake_time",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "wake_time",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 6,
+          "target": "recent_sleep_pattern",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        }
+      ],
+      "termination_reason": "max six ASK turns",
+      "root_cause": "extraction_failure"
+    },
+    {
+      "case_id": "V2-PD-08",
+      "goal": "Decide whether to cancel the daytime nap or delay bedtime, given that the nap leaves the user not sleepy at night",
+      "action_path": [
+        "ASK",
+        "ASK",
+        "ASK",
+        "ASK",
+        "ASK",
+        "ASK"
+      ],
+      "ask_targets": [
+        "bedtime",
+        "nighttime_awakenings",
+        "sleep_onset_latency",
+        "total_sleep_time",
+        "wake_time",
+        "recent_sleep_pattern"
+      ],
+      "asks": [
+        {
+          "turn": 1,
+          "target": "bedtime",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "bedtime",
+            "sleep_onset_latency",
+            "wake_time",
+            "total_sleep_time",
+            "nighttime_awakenings",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 2,
+          "target": "nighttime_awakenings",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "sleep_onset_latency",
+            "wake_time",
+            "total_sleep_time",
+            "nighttime_awakenings",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 3,
+          "target": "sleep_onset_latency",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "sleep_onset_latency",
+            "wake_time",
+            "total_sleep_time",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 4,
+          "target": "total_sleep_time",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "wake_time",
+            "total_sleep_time",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 5,
+          "target": "wake_time",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "wake_time",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 6,
+          "target": "recent_sleep_pattern",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        }
+      ],
+      "termination_reason": "max six ASK turns",
+      "root_cause": "extraction_failure"
+    },
+    {
+      "case_id": "V2-PD-10",
+      "goal": "Decide whether moving bedtime earlier makes sense when sleep onset latency is long (usually awake a long time before falling asleep).",
+      "action_path": [
+        "ASK",
+        "ASK",
+        "ASK",
+        "ASK",
+        "ASK",
+        "ASK"
+      ],
+      "ask_targets": [
+        "bedtime",
+        "nighttime_awakenings",
+        "sleep_onset_latency",
+        "total_sleep_time",
+        "wake_time",
+        "recent_sleep_pattern"
+      ],
+      "asks": [
+        {
+          "turn": 1,
+          "target": "bedtime",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "bedtime",
+            "sleep_onset_latency",
+            "wake_time",
+            "total_sleep_time",
+            "nighttime_awakenings",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 2,
+          "target": "nighttime_awakenings",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "sleep_onset_latency",
+            "wake_time",
+            "total_sleep_time",
+            "nighttime_awakenings",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 3,
+          "target": "sleep_onset_latency",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "sleep_onset_latency",
+            "wake_time",
+            "total_sleep_time",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 4,
+          "target": "total_sleep_time",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "wake_time",
+            "total_sleep_time",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 5,
+          "target": "wake_time",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "wake_time",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 6,
+          "target": "recent_sleep_pattern",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        }
+      ],
+      "termination_reason": "max six ASK turns",
+      "root_cause": "extraction_failure"
+    },
+    {
+      "case_id": "V2-PD-11",
+      "goal": "判断昨晚睡眠差后，今晚是否应通过早早上床来补觉",
+      "action_path": [
+        "ASK",
+        "ASK",
+        "ASK",
+        "ASK",
+        "ASK",
+        "ASK"
+      ],
+      "ask_targets": [
+        "bedtime",
+        "nighttime_awakenings",
+        "sleep_onset_latency",
+        "total_sleep_time",
+        "wake_time",
+        "recent_sleep_pattern"
+      ],
+      "asks": [
+        {
+          "turn": 1,
+          "target": "bedtime",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "bedtime",
+            "sleep_onset_latency",
+            "wake_time",
+            "total_sleep_time",
+            "nighttime_awakenings",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 2,
+          "target": "nighttime_awakenings",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "sleep_onset_latency",
+            "wake_time",
+            "total_sleep_time",
+            "nighttime_awakenings",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 3,
+          "target": "sleep_onset_latency",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "sleep_onset_latency",
+            "wake_time",
+            "total_sleep_time",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 4,
+          "target": "total_sleep_time",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "wake_time",
+            "total_sleep_time",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 5,
+          "target": "wake_time",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "wake_time",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 6,
+          "target": "recent_sleep_pattern",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        }
+      ],
+      "termination_reason": "max six ASK turns",
+      "root_cause": "extraction_failure"
+    },
+    {
+      "case_id": "V2-PD-12",
+      "goal": "用户想自行尝试睡眠限制（sleep restriction），已记录十天但数据散落在纸上未整理；希望先告知今晚该怎么做。",
+      "action_path": [
+        "ASK",
+        "ASK",
+        "ASK",
+        "ASK",
+        "ASK",
+        "ASK"
+      ],
+      "ask_targets": [
+        "bedtime",
+        "nighttime_awakenings",
+        "sleep_onset_latency",
+        "total_sleep_time",
+        "wake_time",
+        "recent_sleep_pattern"
+      ],
+      "asks": [
+        {
+          "turn": 1,
+          "target": "bedtime",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "bedtime",
+            "sleep_onset_latency",
+            "wake_time",
+            "total_sleep_time",
+            "nighttime_awakenings",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 2,
+          "target": "nighttime_awakenings",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "sleep_onset_latency",
+            "wake_time",
+            "total_sleep_time",
+            "nighttime_awakenings",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 3,
+          "target": "sleep_onset_latency",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "sleep_onset_latency",
+            "wake_time",
+            "total_sleep_time",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 4,
+          "target": "total_sleep_time",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "wake_time",
+            "total_sleep_time",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 5,
+          "target": "wake_time",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "wake_time",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 6,
+          "target": "recent_sleep_pattern",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        }
+      ],
+      "termination_reason": "max six ASK turns",
+      "root_cause": "extraction_failure"
+    },
+    {
+      "case_id": "V2-DA-07",
+      "goal": "判断周末晚睡还是夜醒更应优先改善",
+      "action_path": [
+        "ASK",
+        "ASK",
+        "ASK",
+        "ASK",
+        "ASK",
+        "ASK"
+      ],
+      "ask_targets": [
+        "nighttime_awakenings",
+        "bedtime",
+        "sleep_onset_latency",
+        "total_sleep_time",
+        "wake_time",
+        "recent_sleep_pattern"
+      ],
+      "asks": [
+        {
+          "turn": 1,
+          "target": "nighttime_awakenings",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "bedtime",
+            "sleep_onset_latency",
+            "wake_time",
+            "total_sleep_time",
+            "nighttime_awakenings",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 2,
+          "target": "bedtime",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "bedtime",
+            "sleep_onset_latency",
+            "wake_time",
+            "total_sleep_time",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 3,
+          "target": "sleep_onset_latency",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "sleep_onset_latency",
+            "wake_time",
+            "total_sleep_time",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 4,
+          "target": "total_sleep_time",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "wake_time",
+            "total_sleep_time",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 5,
+          "target": "wake_time",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "wake_time",
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        },
+        {
+          "turn": 6,
+          "target": "recent_sleep_pattern",
+          "state_before_ask": {
+            "facts": {},
+            "required_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern",
+              "perceived_stress",
+              "nap",
+              "caffeine"
+            ],
+            "decision_relevant_missing": [
+              "bedtime",
+              "sleep_onset_latency",
+              "wake_time",
+              "total_sleep_time",
+              "nighttime_awakenings",
+              "recent_sleep_pattern"
+            ]
+          },
+          "eligible_candidates": [
+            "recent_sleep_pattern"
+          ],
+          "eligibility_observable": true
+        }
+      ],
+      "termination_reason": "max six ASK turns",
+      "root_cause": "extraction_failure"
+    }
+  ],
+  "step_effectiveness": {
+    "step7_1": {
+      "resolved": [
+        "diary projection contradiction not observed in DA-04/DA-08 final outputs",
+        "unsupported user-fact critical failure not observed"
+      ],
+      "persisted": [
+        "model-facing explicit-fact omissions and repeated ASK in CA/PD/DA-07 traces"
+      ]
+    },
+    "step7_2": {
+      "ASK_gate_blocked_exact_count": "not_observable_from_frozen_trace schema",
+      "auditable_observation": "all selected ASK actions were present in candidate_actions; rejected candidates were not persisted",
+      "persisted_problem": "irrelevant and redundant ASK remain high"
+    },
+    "step7_3": {
+      "resolved": [
+        "V1 diary projection critical failures not observed in this offline review"
+      ],
+      "new_failures": "none observed as critical failures",
+      "measurement_note": "offline review, not identical automated detector"
+    }
+  },
+  "critical_failure_interpretation": {
+    "V1": 2,
+    "V1_1": 0,
+    "measurement_same": false,
+    "note": "V1 uses frozen historical reviewer records; V1.1 uses Step 7.4 first-pass offline trace review, so the 2→0 comparison is not a strictly identical measurement."
+  }
+}

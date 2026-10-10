@@ -1,0 +1,44 @@
+{
+  "authorization_id": "clean-evaluation-v1_2_3-20260922-01-auth-step9_13b-22c60aff04df448ea142b2a788d53fbf",
+  "evaluation_id": "clean-evaluation-v1_2_3-20260922-01",
+  "authorized_by": "user (explicit Step 9.13b instruction)",
+  "authorized_at": "2026-09-22T19:06:37Z",
+  "authorization_status": "ISSUED_NOT_EXECUTED",
+  "scope": {
+    "benchmark": "Benchmark V2",
+    "case_count": 40,
+    "start_at_first_case": true,
+    "attempts_allowed": 1,
+    "automatic_retry": false,
+    "benchmark_v3_access": false
+  },
+  "parent_failure": "STEP9_8_FAILED_EVALUATION",
+  "local_preflight_artifact": "evaluation/v1_2_3/step9_13a_local_real_preflight_20260922T185940Z_c7153f2c4b6f47b5a7943132a24f9e12.json",
+  "local_preflight_artifact_sha256": "cd65b8b955c48a3366343cb494646cfeca1bff450b3ca0ef816c0554bd1efeb5",
+  "frozen_identity": {
+    "agent_aggregate": "ee914db7b8b5538c5607fdff34cff9083f6d069d50cf342964ae91c8a6446927",
+    "benchmark_sha256": "dfa9b9e5a12b0017fa68d344d01b313ebc29e583b933fbe1e93c125f55ecafd2",
+    "scoring_rubric_sha256": "a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899",
+    "scoring_aggregate": "f742a8f8af7c8747818dadad81621c15d12d74f50538019913dfe18ab53bf59b",
+    "current_harness_aggregate": "8bc271bebc1c5da5351d517e2bb4a0d1a99fda3de1b713a6197b12f81fad70c7"
+  },
+  "pre_execution_audit": {
+    "local_real_preflight_pass": true,
+    "evaluation_identity_match": true,
+    "all_four_freeze_domains_match": true,
+    "benchmark_v2_case_count": 40,
+    "case_specific_logic_present": false,
+    "production_path_benchmark_leakage_found": false,
+    "prior_attempt_count": 0,
+    "benchmark_v2_executed_at_issuance": false,
+    "benchmark_v3_accessed": false,
+    "model_called_during_step_9_13b_audit": false
+  },
+  "execution_constraints": [
+    "Use only the exact command recorded in step9_13b_authorized_command.txt.",
+    "The runner must re-check all frozen hashes before execution.",
+    "Exactly one formal attempt is authorized for this evaluation identity.",
+    "Do not retry after any execution attempt, including partial or failed attempts.",
+    "Preserve all prior Step 9.8 and recovery history append-only."
+  ]
+}

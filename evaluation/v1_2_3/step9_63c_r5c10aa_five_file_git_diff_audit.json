@@ -1,0 +1,41 @@
+{
+  "step": "9.63c-r5c10aa",
+  "scope_interpretation": "The five r5c10z-written files are four new environment-audit artifacts plus an append-only record.md section; no code file was edited in r5c10z.",
+  "git_limitation": "All five are currently untracked. Ordinary git diff -- <path> shows no output, while git diff --no-index --stat /dev/null <path> shows the entire current file as added. Without a tracked before-image, Git alone cannot independently prove the prior-step append delta or exclude unrelated pre-existing dirty-worktree state.",
+  "files": [
+    {
+      "path": "evaluation/v1_2_3/step9_63c_r5c10z_pytest_environment_audit_report.md",
+      "git_status": "??",
+      "sha256": "8b13fe2be981c321fe1ecbf0c6b39629a35950c4d4f0dc4cc9a5bafab249d209",
+      "no_index_diff_vs_dev_null": "33 lines added; audit report only"
+    },
+    {
+      "path": "evaluation/v1_2_3/step9_63c_r5c10z_interpreter_dependency_matrix.json",
+      "git_status": "??",
+      "sha256": "aa110ed040714c46927e912bf153d3102c26e2426333842f61c6081c7e8d63c8",
+      "no_index_diff_vs_dev_null": "55 lines added; interpreter/dependency data only"
+    },
+    {
+      "path": "evaluation/v1_2_3/step9_63c_r5c10z_minimal_recovery_recommendation.md",
+      "git_status": "??",
+      "sha256": "ec5932293e1374711ebac3378a1f8ee9e7df816d8403afb21705db536176393d",
+      "no_index_diff_vs_dev_null": "11 lines added; recommendation only"
+    },
+    {
+      "path": "evaluation/v1_2_3/step9_63c_r5c10z_environment_change_risk_assessment.json",
+      "git_status": "??",
+      "sha256": "ffe5376abd2902f7742242ff3524e59de6852897914aee1e9ce8c16c56c176a5",
+      "no_index_diff_vs_dev_null": "28 lines added; risk assessment only"
+    },
+    {
+      "path": "record.md",
+      "git_status": "??",
+      "sha256_at_start_of_r5c10aa": "e085409d034b5a0fe128fe2e784163a23d33117ef2641ff6de50e68e1ddf7015",
+      "no_index_diff_vs_dev_null": "3234 lines presented as added because record.md is wholly untracked; the r5c10z section is at the end before this step's append"
+    }
+  ],
+  "r5c10y_test_patch_still_present": true,
+  "r5c10y_test_patch_sha256": "bcf9b8289336d575a184bf3dfb4cd2b6583f05a2f7d205ed4c6d852c06784052",
+  "out_of_scope_code_change_in_r5c10z_or_this_review": "NONE_OBSERVED_FROM_STEP_ACTIONS_AND_TARGET_HASH; GLOBAL_PREEXISTING_WORKTREE_NOT_PROVEN_BY_GIT",
+  "frozen_member_modified_by_this_review": false
+}

@@ -1,0 +1,21 @@
+{
+  "step": "9.63c-r5c10k",
+  "status": "HISTORICAL_TEST_FIXTURE_ONLY_PRODUCTION_CODE_UNCHANGED",
+  "changed_files": [
+    {
+      "path": "tests/test_step9_63c_r5c8b_preflight_contract.py",
+      "current_sha256": "d71e152391fda292d0dec9f881139718c5ca94fc8a640208c2d7a1a6e2db88a3",
+      "reason": "remove unnecessary import-time r7 transport dependency; construct a SHA-checked historical r10 payload-contract fixture; intercept network primitives in no-network test",
+      "test_methods_removed_or_skipped": 0
+    },
+    {
+      "path": "tests/test_step9_63c_r5c5b_lifecycle_reducer.py",
+      "current_sha256": "bf0e701ef5564fb86bd72fb038ef2176ec97e7b805522176131a36cd248d9ef9",
+      "reason": "test historical authorization version filtering against an explicitly marked temporary r11 pointer and copied historical manifest fixtures, not the unfrozen production root",
+      "test_methods_removed_or_skipped": 0
+    }
+  ],
+  "production_code_modified_this_step": false,
+  "frozen_member_modified_this_step": false,
+  "formal_identity_created": false
+}

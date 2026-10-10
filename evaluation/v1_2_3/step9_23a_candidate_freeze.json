@@ -1,0 +1,42 @@
+{
+  "freeze_id": "post-step9_23-candidate-20260924-01",
+  "created_at": "2026-09-24T18:58:36Z",
+  "freeze_kind": "DEVELOPMENT_CANDIDATE_NOT_BENCHMARK_AUTHORIZATION",
+  "parent_candidate_freeze": "evaluation/v1_2_3/step9_18_candidate_freeze.json",
+  "parent_candidate_agent_aggregate_hash": "0dfdbac361d68dfeb577433107395b50f4c2fa8ca59f3e1d226fbd9271a839a7",
+  "parent_v3_evaluated_candidate": {
+    "manifest": "evaluation/v1_2_3/step9_19_final_candidate_manifest.json",
+    "manifest_sha256": "21e325516f955986497b69e18eebca1d0a0658a24c4293fe75853dd464c901f5",
+    "agent_aggregate_hash": "0dfdbac361d68dfeb577433107395b50f4c2fa8ca59f3e1d226fbd9271a839a7",
+    "v3_status": "historical_consumed_not_reusable"
+  },
+  "authorized_divergence": {
+    "step": "9.23",
+    "report": "evaluation/v1_2_3/step9_23_p1_repair_report.md",
+    "scope": "State-to-Answer context, evidence projection, provenance, semantic status, final factual consistency",
+    "changed_agent_files": [
+      ["adaptive_agent/answer_generation.py", "0cc8b831d88972ded0f8ee6538e2298ef03e807a693b022cbb6f3dbcdcde40cb"],
+      ["adaptive_agent/runner.py", "a91a576dca6febbeb06fab4717dbe705447520daf6e6376512a39f2f4fa0d0ef"],
+      ["adaptive_agent/state.py", "1d96470d4774cf40836c2fb0d8389ba75545defad3266b308f2608d5c2981ed4"],
+      ["adaptive_agent/state_update.py", "0d7ba355795060939fa35265a9fcdf2171f3bcd8b2731a1791be692d79c60ad2"]
+    ]
+  },
+  "effective_inventory_source": "parent_candidate.agent_behavior_files with Step 9.23 changed files replacing same paths",
+  "effective_agent_file_count": 26,
+  "agent_aggregate_hash": "d9d657e3c74587291fbb0eea99d762fcf5a4db53e280198de5f3251f5d1ed14e",
+  "unchanged_components": [
+    "Input Understanding", "Requirements", "DependencyResolver", "Sufficiency",
+    "Information Value Gate", "Candidate Generation", "Decision Policy",
+    "Tool behavior", "Diary Contract V2", "RAG behavior", "Scoring", "Harness"
+  ],
+  "historical_freezes_modified": false,
+  "v3_identity_modified": false,
+  "v3_results_modified": false,
+  "benchmark_v2_rerun": false,
+  "benchmark_v3_rerun": false,
+  "benchmark_v3_reusable_as_final_heldout": false,
+  "case_specific_logic_present": false,
+  "regression_status": "PASS",
+  "regression_tests": {"run": 232, "passed": 232, "failed": 0, "skipped": 0},
+  "notes": "New P1 candidate identity. Does not replace historical Step 9.18, Step 9.19, or consumed V3 identities, and does not authorize any benchmark execution."
+}

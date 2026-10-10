@@ -1,0 +1,90 @@
+--- a/tests/test_step9_63c_r5c10ae_builder_pins.py
++++ b/tests/test_step9_63c_r5c10ae_builder_pins.py
+@@ -41,6 +41,35 @@
+         yield root
+ 
+ 
++@contextmanager
++def scoped_adapter_stub(stub):
++    """Equivalent of monkeypatch.setitem(sys.modules, ...) for unittest (pytest is not
++    installed): install the stand-in, always restore the exact prior state, and assert
++    it. The prior state is the real adapter module once r11 exists, or 'absent' while
++    the formal r11 identity is missing and the real adapter cannot be imported."""
++    import sys
++    import scripts
++    name, attribute = "scripts.run_step9_53_v3_identity_adapter", "run_step9_53_v3_identity_adapter"
++    missing = object()
++    modules_before = sys.modules.get(name, missing)
++    attribute_before = scripts.__dict__.get(attribute, missing)
++    sys.modules[name] = stub
++    setattr(scripts, attribute, stub)
++    try:
++        yield stub
++    finally:
++        if modules_before is missing:
++            sys.modules.pop(name, None)
++        else:
++            sys.modules[name] = modules_before
++        if attribute_before is missing:
++            scripts.__dict__.pop(attribute, None)
++        else:
++            setattr(scripts, attribute, attribute_before)
++        assert sys.modules.get(name, missing) is modules_before, "adapter sys.modules entry not restored"
++        assert scripts.__dict__.get(attribute, missing) is attribute_before, "adapter attribute not restored"
++
++
+ class BuilderPinTests(unittest.TestCase):
+     def test_pins_equal_reviewed_constants_and_current_bytes(self):
+         self.assertEqual(builder.CHANGED_SHA256, {
+@@ -85,7 +114,8 @@
+     """AR-11: the inlined verify_frozen_inputs behaves exactly like the r5c4 original.
+ 
+     Both functions import the frozen identity adapter internally. For this
+-    differential test only, a scoped stand-in (restored by patch.dict) answers the
++    differential test only, a scoped stand-in (restored and asserted by
++    scoped_adapter_stub) answers the
+     agent-identity question identically for both; nothing is written and no
+     repository identity artifact exists or is created.
+     """
+@@ -113,21 +143,35 @@
+ 
+     def outcome(self, function, identities, agent=None, agent_ok=True, env=None):
+         import os
+-        import sys
+         import types
+-        import scripts
+         stub = types.SimpleNamespace(current_v3_agent_identity=lambda: (
+             agent or identities["treatment_agent_sha256"], agent_ok))
+-        name = "scripts.run_step9_53_v3_identity_adapter"
+-        with patch.dict(sys.modules, {name: stub}), \
+-             patch.object(scripts, "run_step9_53_v3_identity_adapter", stub, create=True), \
+-             patch.dict(os.environ, env or {}):
++        with scoped_adapter_stub(stub), patch.dict(os.environ, env or {}):
+             try:
+                 function(REPO, identities)
+             except Exception as error:  # compare type and message exactly
+                 return type(error).__name__, str(error)
+             return None
+ 
++    def test_adapter_stub_is_fully_restored_after_use(self):
++        import sys
++        import scripts
++        name, attribute = "scripts.run_step9_53_v3_identity_adapter", "run_step9_53_v3_identity_adapter"
++        missing = object()
++        modules_before = sys.modules.get(name, missing)
++        attribute_before = scripts.__dict__.get(attribute, missing)
++        self.outcome(builder.verify_frozen_inputs, self.identities)
++        self.assertIs(sys.modules.get(name, missing), modules_before)
++        self.assertIs(scripts.__dict__.get(attribute, missing), attribute_before)
++        if modules_before is not missing:  # r11 exists: the entry is the real module again
++            self.assertTrue(hasattr(modules_before, "run"))
++        # Restoration also happens when the body raises.
++        with self.assertRaises(RuntimeError):
++            with scoped_adapter_stub(object()):
++                raise RuntimeError("body failure")
++        self.assertIs(sys.modules.get(name, missing), modules_before)
++        self.assertIs(scripts.__dict__.get(attribute, missing), attribute_before)
++
+     def test_differential_behaviour_matches_original(self):
+         base = dict(self.identities)
+         scenarios = {

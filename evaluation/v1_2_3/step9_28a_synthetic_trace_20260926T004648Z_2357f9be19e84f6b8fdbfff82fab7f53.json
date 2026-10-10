@@ -1,0 +1,1273 @@
+{
+  "contains_v4_case_input": false,
+  "evaluation_id": "heldout-v4-step9_28-20260925-01",
+  "http_status": 200,
+  "latency_ms": 44214.22,
+  "lineage": {
+    "actions": [
+      {
+        "action": "RETRIEVE",
+        "action_id": "act_goal_t1_r1_1",
+        "candidate_history_found": true,
+        "candidate_id": "cand_goal_t1_r1_1",
+        "lineage_shape": "PRECONDITION_FORCED_ACTION",
+        "origin": "HARD_PRECONDITION",
+        "precondition_id": "pre_goal_t1_r1_1",
+        "source_dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+        "state_update_ids": [
+          "upd_goal_t1_r2_1"
+        ],
+        "tool_result_ids": [
+          "tool_goal_t1_r1_1"
+        ]
+      },
+      {
+        "action": "ANSWER",
+        "action_id": "act_goal_t1_r2_2",
+        "candidate_history_found": true,
+        "candidate_id": "cand_goal_t1_r2_1",
+        "lineage_shape": "POLICY_SELECTED_ACTION",
+        "origin": "OPTIONAL_ACQUISITION",
+        "precondition_id": null,
+        "source_dependency_id": null,
+        "state_update_ids": [],
+        "tool_result_ids": []
+      }
+    ],
+    "candidate_lineage_missing": false,
+    "fake_lineage_ids_created": false,
+    "missing_required_lineage": [],
+    "missing_root_lineage": [],
+    "ready": true,
+    "root_ids": {
+      "dependency_ids": [
+        "dep_goal_t1_r1_evidence_external_evidence",
+        "dep_goal_t1_r2_evidence_external_evidence"
+      ],
+      "goal_id": "goal_t1",
+      "semantic_id": "sem_goal_t1_r2_1"
+    }
+  },
+  "response": {
+    "assistant": "根据目前检索到的资料，我能说明以下几点：\n\n**1. 行为睡眠治疗本身依赖稳定的日常结构。** CBT-I（失眠认知行为治疗）关注想法、行为与睡眠之间的关系，常用技术包括刺激控制、睡眠限制和放松训练。这些方法都依托可预测的每日安排，因此固定的起床时间与它们自然契合。\n\n**2. 睡眠限制把固定时间作为锚点。保持一致的起床时间正是让这个固定时间表成立的关键——不过资料中强调的是调整**就寝时间**，而非明确强调起床时间。\n\n**一个重要局限：** 我没有检索到直接解释“为什么固定起床时间能调节体内昼夜节律（生物钟）”，或“晨光与稳定起床时间如何强化睡眠—觉醒周期”的具体内容。资料中虽提到“节律性睡眠障碍”和“时差”这两个与昼夜节律最相关的主题，但相关解释性正文未被检索到，因此我不能凭空补充细节。\n\n**小结：** 仅依据现有资料，最能支持的结论是：**固定、可预测的作息是行为睡眠治疗的核心**，睡眠限制和刺激控制都依赖稳定的日常结构。而固定起床时间“校准”昼夜节律的具体机制，目前资料中并未记载，我把它标注为证据缺口，而不是用未经支持的推断填补。\n\n如果你希望更完整地了解昼夜节律层面的原因，我可以尝试进一步检索“节律性睡眠障碍”或“时差”相关章节。\n\n当前回答范围不提供具体阈值、时长或治疗规则。",
+    "session_id": "step9_28a_synthetic_preflight",
+    "status": "ANSWER",
+    "steps": 2,
+    "tools_used": [
+      "retrieval_augmentation_generation"
+    ]
+  },
+  "session_id": "step9_28a_synthetic_preflight",
+  "state": {
+    "action_history": [
+      {
+        "action": "RETRIEVE",
+        "action_id": "act_goal_t1_r1_1",
+        "query": "Explain in general terms why a consistent wake time can support sleep routines",
+        "result": "project_rag",
+        "selected_candidate_id": "cand_goal_t1_r1_1",
+        "target": null
+      },
+      {
+        "action": "ANSWER",
+        "action_id": "act_goal_t1_r2_2",
+        "query": null,
+        "selected_candidate_id": "cand_goal_t1_r2_1",
+        "target": null
+      }
+    ],
+    "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+    "base_requirements": {
+      "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+      "classifications": {},
+      "critical": [],
+      "decision_fields": [],
+      "diary_preferred": false,
+      "evidence_required": true,
+      "is_effective": false,
+      "requirement_ids": {},
+      "resources": [],
+      "secondary": [],
+      "semantic_adjustments": []
+    },
+    "candidate_actions": [
+      {
+        "acquisition_cost": "",
+        "acquisition_value": "",
+        "action": "ANSWER",
+        "candidate_id": "cand_goal_t1_r2_1",
+        "cost": "LOW",
+        "decision_impact": "MEDIUM",
+        "expected_benefit": "HIGH",
+        "expected_information_gain": "",
+        "gate_decision": "",
+        "gate_reason": "",
+        "goal_relevance": "MEDIUM",
+        "information_value": "",
+        "origin": "OPTIONAL_ACQUISITION",
+        "query": null,
+        "question": null,
+        "rationale": "当前目标所需的用户信息和证据均已充分。",
+        "redundancy": "LOW",
+        "source_dependency_id": null,
+        "source_precondition_id": null,
+        "source_requirement_id": null,
+        "target": null
+      }
+    ],
+    "claim_provenance": [
+      {
+        "certainty": "exact",
+        "claim": "Based on my search of the available reference material, here is what I found — along with an important note about the limits of the sources.\n\n## What the sources support\n\n**1. CBT-I uses structured behavioral techniques.** Cognitive Behavioral Therapy for Insomnia (CBT-I) focuses on the connection between thoughts, behaviors, and sleep, and its techniques include **stimulus control, sleep restriction, and relaxation training** [CBT-I/Sleep Foundation file]. Because these approaches rely on a predictable daily structure, a fixed wake time fits naturally into them.\n\n**2. Sleep restriction sets a defined wake time as its anchor.** Sleep restriction works by first calculating the actual time spent asleep on a typical night (using a sleep diary) and adjusting time in bed to that amount plus about 30 minutes. For example, someone trying to sleep 8 hours but only getting 5 would **start by adjusting their bedtime** so they spend about 5.5 hours in bed, then gradually increase time in bed as sleep improves [Sleep Foundation – Sleep Restriction and Compression]. Keeping a consistent wake time is what makes this fixed schedule work, though the excerpt emphasizes adjusting **bedtime** rather than wake time explicitly.\n\n## Important limitation\n\nI could **not** find detailed, explicit material in the retrieved documents that directly explains *why* a consistent wake time regulates the body's circadian (\"internal clock\") rhythm, or how morning light and a stable wake time strengthen the sleep–wake cycle.\n\nThe files do reference topics titled **\"Rhythm Sleep Disorders\"** and **\"Jet Lag\"** [table-of-contents fragment], which are the areas most relevant to circadian timing — but the actual explanatory content on those topics was **not retrieved**, so I cannot cite specifics from them without risking fabrication.\n\n## Summary\n\nBased only on the retrieved material, the clearest supportable point is that a **fixed, predictable schedule is central to behavioral sleep therapy** — sleep restriction and stimulus control both depend on a stable daily structure [CBT-I/Sleep Foundation file; Sleep Foundation – Sleep Restriction and Compression]. The precise mechanism by which a consistent *wake* time entrains circadian rhythm is **not documented in the material I retrieved**, so I'm flagging that as a gap rather than filling it in with unsupported claims.\n\nIf you'd like a fuller answer, I can try retrieving the specific sections on **Rhythm Sleep Disorders** or **Jet Lag**, which likely contain the circadian-rhythm explanation.",
+        "claim_type": "evidence-grounded",
+        "derived_from": [],
+        "source": "evidence:0",
+        "source_field": null,
+        "state_update_id": "upd_goal_t1_r2_1",
+        "tool_result_id": "tool_goal_t1_r1_1"
+      }
+    ],
+    "considered_information": [],
+    "critical_missing": [],
+    "decision_missing": [],
+    "decision_relevant_missing": [],
+    "dependencies_considered": [
+      {
+        "dependency_class": "EXTERNAL_EVIDENCE",
+        "dependency_id": "dep_goal_t1_r2_evidence_external_evidence",
+        "dependency_reason": "current answer scope includes external CBT-I knowledge",
+        "dependency_source": [
+          "goal_semantics",
+          "requirements",
+          "task_type_signal"
+        ],
+        "dependency_type": "EVIDENCE",
+        "fallback": null,
+        "provenance": {
+          "evidence_count": 1
+        },
+        "reason": "current answer scope includes external CBT-I knowledge",
+        "required_for_goal": "Explain in general terms why a consistent wake time can support sleep routines",
+        "requiredness": "required",
+        "satisfiable_by": [
+          "RETRIEVE"
+        ],
+        "satisfied_by": [
+          "RETRIEVE"
+        ],
+        "semantic_ids": [
+          "sem_goal_t1_r2_1"
+        ],
+        "source": [
+          "goal_semantics",
+          "requirements",
+          "task_type_signal"
+        ],
+        "status": "SATISFIED",
+        "supersedes_dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+        "target": "external_evidence"
+      }
+    ],
+    "dependencies_required": [],
+    "dependencies_satisfied": [
+      {
+        "dependency_class": "EXTERNAL_EVIDENCE",
+        "dependency_id": "dep_goal_t1_r2_evidence_external_evidence",
+        "dependency_reason": "current answer scope includes external CBT-I knowledge",
+        "dependency_source": [
+          "goal_semantics",
+          "requirements",
+          "task_type_signal"
+        ],
+        "dependency_type": "EVIDENCE",
+        "fallback": null,
+        "provenance": {
+          "evidence_count": 1
+        },
+        "reason": "current answer scope includes external CBT-I knowledge",
+        "required_for_goal": "Explain in general terms why a consistent wake time can support sleep routines",
+        "requiredness": "required",
+        "satisfiable_by": [
+          "RETRIEVE"
+        ],
+        "satisfied_by": [
+          "RETRIEVE"
+        ],
+        "semantic_ids": [
+          "sem_goal_t1_r2_1"
+        ],
+        "source": [
+          "goal_semantics",
+          "requirements",
+          "task_type_signal"
+        ],
+        "status": "SATISFIED",
+        "supersedes_dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+        "target": "external_evidence"
+      }
+    ],
+    "dependencies_unavailable": [],
+    "diary_projection": {},
+    "effective_requirements": {
+      "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+      "classifications": {},
+      "critical": [],
+      "decision_fields": [],
+      "diary_preferred": false,
+      "evidence_required": true,
+      "is_effective": true,
+      "requirement_ids": {},
+      "resources": [],
+      "secondary": [],
+      "semantic_adjustments": []
+    },
+    "evidence": [
+      "Based on my search of the available reference material, here is what I found — along with an important note about the limits of the sources.\n\n## What the sources support\n\n**1. CBT-I uses structured behavioral techniques.** Cognitive Behavioral Therapy for Insomnia (CBT-I) focuses on the connection between thoughts, behaviors, and sleep, and its techniques include **stimulus control, sleep restriction, and relaxation training** [CBT-I/Sleep Foundation file]. Because these approaches rely on a predictable daily structure, a fixed wake time fits naturally into them.\n\n**2. Sleep restriction sets a defined wake time as its anchor.** Sleep restriction works by first calculating the actual time spent asleep on a typical night (using a sleep diary) and adjusting time in bed to that amount plus about 30 minutes. For example, someone trying to sleep 8 hours but only getting 5 would **start by adjusting their bedtime** so they spend about 5.5 hours in bed, then gradually increase time in bed as sleep improves [Sleep Foundation – Sleep Restriction and Compression]. Keeping a consistent wake time is what makes this fixed schedule work, though the excerpt emphasizes adjusting **bedtime** rather than wake time explicitly.\n\n## Important limitation\n\nI could **not** find detailed, explicit material in the retrieved documents that directly explains *why* a consistent wake time regulates the body's circadian (\"internal clock\") rhythm, or how morning light and a stable wake time strengthen the sleep–wake cycle.\n\nThe files do reference topics titled **\"Rhythm Sleep Disorders\"** and **\"Jet Lag\"** [table-of-contents fragment], which are the areas most relevant to circadian timing — but the actual explanatory content on those topics was **not retrieved**, so I cannot cite specifics from them without risking fabrication.\n\n## Summary\n\nBased only on the retrieved material, the clearest supportable point is that a **fixed, predictable schedule is central to behavioral sleep therapy** — sleep restriction and stimulus control both depend on a stable daily structure [CBT-I/Sleep Foundation file; Sleep Foundation – Sleep Restriction and Compression]. The precise mechanism by which a consistent *wake* time entrains circadian rhythm is **not documented in the material I retrieved**, so I'm flagging that as a gap rather than filling it in with unsupported claims.\n\nIf you'd like a fuller answer, I can try retrieving the specific sections on **Rhythm Sleep Disorders** or **Jet Lag**, which likely contain the circadian-rhythm explanation."
+    ],
+    "evidence_sufficiency": "HIGH",
+    "fact_sources": {},
+    "facts": {},
+    "goal": "Explain in general terms why a consistent wake time can support sleep routines",
+    "goal_id": "goal_t1",
+    "information_estimates": {},
+    "lineage_events": [
+      {
+        "available": true,
+        "date_coverage": null,
+        "payload_shape": "EVIDENCE_LIST",
+        "projected_entry_count": 1,
+        "projection_status": "valid",
+        "projection_warnings": [],
+        "provenance": {
+          "adapter": "project_rag"
+        },
+        "source_action_id": "act_goal_t1_r1_1",
+        "source_entry_count": 1,
+        "source_tool_result_id": "tool_goal_t1_r1_1",
+        "source_type": "RAG",
+        "state_update_id": "upd_goal_t1_r2_1",
+        "tool": "RETRIEVE",
+        "tool_result_id": "tool_goal_t1_r1_1"
+      }
+    ],
+    "preconditions_considered": [],
+    "rejected_information": [],
+    "required_missing": [],
+    "required_resources": [],
+    "resource_status": {},
+    "secondary_missing": [],
+    "semantic_provenance": [
+      {
+        "certainty": "HIGH",
+        "match_method": "deterministic_rule",
+        "matched_text": "why ",
+        "semantic_id": "sem_goal_t1_r2_1",
+        "semantic_reason": "goal requests general external CBT-I knowledge",
+        "semantic_rule_id": "KNOWLEDGE_EVIDENCE_REQUIRED"
+      }
+    ],
+    "state_revision": 2,
+    "stop_reason": "",
+    "task_type": "KNOWLEDGE_QA",
+    "user_info_sufficiency": "HIGH",
+    "validity_critical_missing": []
+  },
+  "state_history": [
+    {
+      "acquisition_decisions": [],
+      "answer_context_audit": {},
+      "answer_scope": "",
+      "available_diary": false,
+      "base_requirements": {},
+      "candidate_actions": [],
+      "claim_provenance": [],
+      "considered_information": [],
+      "critical_missing": [],
+      "decision_missing": [],
+      "decision_relevant_missing": [],
+      "dependencies_considered": [],
+      "dependencies_required": [],
+      "dependencies_satisfied": [],
+      "dependencies_unavailable": [],
+      "diary_projection": {},
+      "effective_requirements": {},
+      "event": "INPUT_UNDERSTANDING",
+      "evidence": [],
+      "evidence_sufficiency": "LOW",
+      "fact_sources": {},
+      "facts": {},
+      "goal": "Explain in general terms why a consistent wake time can support sleep routines",
+      "goal_id": "goal_t1",
+      "information_estimates": {},
+      "lineage_events": [],
+      "preconditions_considered": [],
+      "rejected_information": [],
+      "required_missing": [],
+      "required_resources": [],
+      "resource_status": {},
+      "secondary_missing": [],
+      "semantic_provenance": [],
+      "state_revision": 1,
+      "stop_reason": "",
+      "task_type": "KNOWLEDGE_QA",
+      "turn_index": 1,
+      "user_info_sufficiency": "LOW",
+      "validity_critical_missing": []
+    },
+    {
+      "acquisition_decisions": [
+        {
+          "accepted": true,
+          "acquisition_value": "HIGH",
+          "action": "RETRIEVE",
+          "candidate_id": "cand_goal_t1_r1_1",
+          "counterfactual_candidate": null,
+          "counterfactual_outcomes": [
+            "dependency unsatisfied"
+          ],
+          "decision_impact": "HIGH",
+          "decision_relevant": true,
+          "dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+          "estimated_cost": "MEDIUM",
+          "expected_information_gain": "HIGH",
+          "gate_decision": "ACCEPT",
+          "goal_relevance": "HIGH",
+          "heuristic_not_calibrated_probability": true,
+          "impact_dimensions": [
+            "evidence_dependency"
+          ],
+          "lineage_complete": true,
+          "missing_criticality": "SECONDARY_OR_UNSCOPED",
+          "reason": "mandatory_dependency_precondition_cannot_be_overridden",
+          "redundancy": "LOW",
+          "resource_dependency": {
+            "dependency_class": "EXTERNAL_EVIDENCE",
+            "dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+            "dependency_reason": "current answer scope includes external CBT-I knowledge",
+            "dependency_source": [
+              "goal_semantics",
+              "requirements",
+              "task_type_signal"
+            ],
+            "dependency_type": "EVIDENCE",
+            "fallback": "state evidence limitation",
+            "provenance": {
+              "evidence_count": 0
+            },
+            "reason": "current answer scope includes external CBT-I knowledge",
+            "required_for_goal": "Explain in general terms why a consistent wake time can support sleep routines",
+            "requiredness": "required",
+            "satisfiable_by": [
+              "RETRIEVE"
+            ],
+            "satisfied_by": [],
+            "semantic_ids": [
+              "sem_goal_t1_r1_1"
+            ],
+            "source": [
+              "goal_semantics",
+              "requirements",
+              "task_type_signal"
+            ],
+            "status": "REQUIRED",
+            "supersedes_dependency_id": null,
+            "target": "external_evidence"
+          },
+          "target": "Explain in general terms why a consistent wake time can support sleep routines"
+        }
+      ],
+      "answer_context_audit": {},
+      "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+      "available_diary": false,
+      "base_requirements": {
+        "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+        "classifications": {},
+        "critical": [],
+        "decision_fields": [],
+        "diary_preferred": false,
+        "evidence_required": true,
+        "is_effective": false,
+        "requirement_ids": {},
+        "resources": [],
+        "secondary": [],
+        "semantic_adjustments": []
+      },
+      "candidate_actions": [
+        {
+          "acquisition_cost": "MEDIUM",
+          "acquisition_value": "HIGH",
+          "action": "RETRIEVE",
+          "candidate_id": "cand_goal_t1_r1_1",
+          "cost": "MEDIUM",
+          "decision_impact": "HIGH",
+          "expected_benefit": "HIGH",
+          "expected_information_gain": "HIGH",
+          "gate_decision": "ACCEPT",
+          "gate_reason": "mandatory_dependency_precondition_cannot_be_overridden",
+          "goal_relevance": "HIGH",
+          "information_value": "HIGH",
+          "origin": "HARD_PRECONDITION",
+          "query": "Explain in general terms why a consistent wake time can support sleep routines",
+          "question": null,
+          "rationale": "满足证据硬前置条件。",
+          "redundancy": "LOW",
+          "source_dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+          "source_precondition_id": "pre_goal_t1_r1_1",
+          "source_requirement_id": null,
+          "target": null
+        }
+      ],
+      "chosen_action": {
+        "acquisition_cost": "MEDIUM",
+        "acquisition_value": "HIGH",
+        "action": "RETRIEVE",
+        "candidate_id": "cand_goal_t1_r1_1",
+        "cost": "MEDIUM",
+        "decision_impact": "HIGH",
+        "expected_benefit": "HIGH",
+        "expected_information_gain": "HIGH",
+        "gate_decision": "ACCEPT",
+        "gate_reason": "mandatory_dependency_precondition_cannot_be_overridden",
+        "goal_relevance": "HIGH",
+        "information_value": "HIGH",
+        "origin": "HARD_PRECONDITION",
+        "query": "Explain in general terms why a consistent wake time can support sleep routines",
+        "question": null,
+        "rationale": "满足证据硬前置条件。",
+        "redundancy": "LOW",
+        "source_dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+        "source_precondition_id": "pre_goal_t1_r1_1",
+        "source_requirement_id": null,
+        "target": null
+      },
+      "claim_provenance": [],
+      "considered_information": [
+        {
+          "accepted": true,
+          "candidate_action": "RETRIEVE",
+          "precondition": true,
+          "rationale": "满足证据硬前置条件。",
+          "target": "Explain in general terms why a consistent wake time can support sleep routines",
+          "value_level": "HIGH"
+        }
+      ],
+      "critical_missing": [],
+      "decision_missing": [],
+      "decision_relevant_missing": [],
+      "dependencies_considered": [
+        {
+          "dependency_class": "EXTERNAL_EVIDENCE",
+          "dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+          "dependency_reason": "current answer scope includes external CBT-I knowledge",
+          "dependency_source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "dependency_type": "EVIDENCE",
+          "fallback": "state evidence limitation",
+          "provenance": {
+            "evidence_count": 0
+          },
+          "reason": "current answer scope includes external CBT-I knowledge",
+          "required_for_goal": "Explain in general terms why a consistent wake time can support sleep routines",
+          "requiredness": "required",
+          "satisfiable_by": [
+            "RETRIEVE"
+          ],
+          "satisfied_by": [],
+          "semantic_ids": [
+            "sem_goal_t1_r1_1"
+          ],
+          "source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "status": "REQUIRED",
+          "supersedes_dependency_id": null,
+          "target": "external_evidence"
+        }
+      ],
+      "dependencies_required": [
+        {
+          "dependency_class": "EXTERNAL_EVIDENCE",
+          "dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+          "dependency_reason": "current answer scope includes external CBT-I knowledge",
+          "dependency_source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "dependency_type": "EVIDENCE",
+          "fallback": "state evidence limitation",
+          "provenance": {
+            "evidence_count": 0
+          },
+          "reason": "current answer scope includes external CBT-I knowledge",
+          "required_for_goal": "Explain in general terms why a consistent wake time can support sleep routines",
+          "requiredness": "required",
+          "satisfiable_by": [
+            "RETRIEVE"
+          ],
+          "satisfied_by": [],
+          "semantic_ids": [
+            "sem_goal_t1_r1_1"
+          ],
+          "source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "status": "REQUIRED",
+          "supersedes_dependency_id": null,
+          "target": "external_evidence"
+        }
+      ],
+      "dependencies_satisfied": [],
+      "dependencies_unavailable": [],
+      "diary_projection": {},
+      "effective_requirements": {
+        "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+        "classifications": {},
+        "critical": [],
+        "decision_fields": [],
+        "diary_preferred": false,
+        "evidence_required": true,
+        "is_effective": true,
+        "requirement_ids": {},
+        "resources": [],
+        "secondary": [],
+        "semantic_adjustments": []
+      },
+      "event": "DECISION",
+      "evidence": [],
+      "evidence_sufficiency": "LOW",
+      "fact_sources": {},
+      "facts": {},
+      "goal": "Explain in general terms why a consistent wake time can support sleep routines",
+      "goal_id": "goal_t1",
+      "information_estimates": {},
+      "lineage_events": [],
+      "preconditions_considered": [
+        {
+          "counterfactual_action": "not_available",
+          "counterfactual_candidate": null,
+          "counterfactual_stop_reason": "not_available",
+          "dependency_source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "precondition_forced_action": true,
+          "precondition_id": "pre_goal_t1_r1_1",
+          "reason": "current answer scope includes external CBT-I knowledge",
+          "required_action": "RETRIEVE",
+          "required_for": "Explain in general terms why a consistent wake time can support sleep routines",
+          "satisfaction_source": null,
+          "satisfiers_considered": [
+            "RETRIEVE"
+          ],
+          "selected_satisfier": "RETRIEVE",
+          "semantic_ids": [
+            "sem_goal_t1_r1_1"
+          ],
+          "source_dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+          "status": "unsatisfied",
+          "target": "external_evidence",
+          "type": "EVIDENCE"
+        }
+      ],
+      "rejected_information": [],
+      "required_missing": [],
+      "required_resources": [],
+      "requirements": {
+        "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+        "classifications": {},
+        "critical": [],
+        "decision_fields": [],
+        "diary_preferred": false,
+        "evidence_required": true,
+        "is_effective": true,
+        "requirement_ids": {},
+        "resources": [],
+        "secondary": [],
+        "semantic_adjustments": []
+      },
+      "resource_status": {},
+      "secondary_missing": [],
+      "semantic_provenance": [
+        {
+          "certainty": "HIGH",
+          "match_method": "deterministic_rule",
+          "matched_text": "why ",
+          "semantic_id": "sem_goal_t1_r1_1",
+          "semantic_reason": "goal requests general external CBT-I knowledge",
+          "semantic_rule_id": "KNOWLEDGE_EVIDENCE_REQUIRED"
+        }
+      ],
+      "state_revision": 1,
+      "step": 1,
+      "stop_reason": "",
+      "task_type": "KNOWLEDGE_QA",
+      "turn_index": 1,
+      "user_info_sufficiency": "HIGH",
+      "validity_critical_missing": []
+    },
+    {
+      "acquisition_decisions": [],
+      "answer_context_audit": {},
+      "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+      "available_diary": false,
+      "base_requirements": {
+        "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+        "classifications": {},
+        "critical": [],
+        "decision_fields": [],
+        "diary_preferred": false,
+        "evidence_required": true,
+        "is_effective": false,
+        "requirement_ids": {},
+        "resources": [],
+        "secondary": [],
+        "semantic_adjustments": []
+      },
+      "candidate_actions": [
+        {
+          "acquisition_cost": "",
+          "acquisition_value": "",
+          "action": "ANSWER",
+          "candidate_id": "cand_goal_t1_r2_1",
+          "cost": "LOW",
+          "decision_impact": "MEDIUM",
+          "expected_benefit": "HIGH",
+          "expected_information_gain": "",
+          "gate_decision": "",
+          "gate_reason": "",
+          "goal_relevance": "MEDIUM",
+          "information_value": "",
+          "origin": "OPTIONAL_ACQUISITION",
+          "query": null,
+          "question": null,
+          "rationale": "当前目标所需的用户信息和证据均已充分。",
+          "redundancy": "LOW",
+          "source_dependency_id": null,
+          "source_precondition_id": null,
+          "source_requirement_id": null,
+          "target": null
+        }
+      ],
+      "claim_provenance": [],
+      "considered_information": [],
+      "critical_missing": [],
+      "decision_missing": [],
+      "decision_relevant_missing": [],
+      "dependencies_considered": [
+        {
+          "dependency_class": "EXTERNAL_EVIDENCE",
+          "dependency_id": "dep_goal_t1_r2_evidence_external_evidence",
+          "dependency_reason": "current answer scope includes external CBT-I knowledge",
+          "dependency_source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "dependency_type": "EVIDENCE",
+          "fallback": null,
+          "provenance": {
+            "evidence_count": 1
+          },
+          "reason": "current answer scope includes external CBT-I knowledge",
+          "required_for_goal": "Explain in general terms why a consistent wake time can support sleep routines",
+          "requiredness": "required",
+          "satisfiable_by": [
+            "RETRIEVE"
+          ],
+          "satisfied_by": [
+            "RETRIEVE"
+          ],
+          "semantic_ids": [
+            "sem_goal_t1_r2_1"
+          ],
+          "source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "status": "SATISFIED",
+          "supersedes_dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+          "target": "external_evidence"
+        }
+      ],
+      "dependencies_required": [],
+      "dependencies_satisfied": [
+        {
+          "dependency_class": "EXTERNAL_EVIDENCE",
+          "dependency_id": "dep_goal_t1_r2_evidence_external_evidence",
+          "dependency_reason": "current answer scope includes external CBT-I knowledge",
+          "dependency_source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "dependency_type": "EVIDENCE",
+          "fallback": null,
+          "provenance": {
+            "evidence_count": 1
+          },
+          "reason": "current answer scope includes external CBT-I knowledge",
+          "required_for_goal": "Explain in general terms why a consistent wake time can support sleep routines",
+          "requiredness": "required",
+          "satisfiable_by": [
+            "RETRIEVE"
+          ],
+          "satisfied_by": [
+            "RETRIEVE"
+          ],
+          "semantic_ids": [
+            "sem_goal_t1_r2_1"
+          ],
+          "source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "status": "SATISFIED",
+          "supersedes_dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+          "target": "external_evidence"
+        }
+      ],
+      "dependencies_unavailable": [],
+      "diary_projection": {},
+      "effective_requirements": {
+        "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+        "classifications": {},
+        "critical": [],
+        "decision_fields": [],
+        "diary_preferred": false,
+        "evidence_required": true,
+        "is_effective": true,
+        "requirement_ids": {},
+        "resources": [],
+        "secondary": [],
+        "semantic_adjustments": []
+      },
+      "event": "RETRIEVE",
+      "evidence": [
+        "Based on my search of the available reference material, here is what I found — along with an important note about the limits of the sources.\n\n## What the sources support\n\n**1. CBT-I uses structured behavioral techniques.** Cognitive Behavioral Therapy for Insomnia (CBT-I) focuses on the connection between thoughts, behaviors, and sleep, and its techniques include **stimulus control, sleep restriction, and relaxation training** [CBT-I/Sleep Foundation file]. Because these approaches rely on a predictable daily structure, a fixed wake time fits naturally into them.\n\n**2. Sleep restriction sets a defined wake time as its anchor.** Sleep restriction works by first calculating the actual time spent asleep on a typical night (using a sleep diary) and adjusting time in bed to that amount plus about 30 minutes. For example, someone trying to sleep 8 hours but only getting 5 would **start by adjusting their bedtime** so they spend about 5.5 hours in bed, then gradually increase time in bed as sleep improves [Sleep Foundation – Sleep Restriction and Compression]. Keeping a consistent wake time is what makes this fixed schedule work, though the excerpt emphasizes adjusting **bedtime** rather than wake time explicitly.\n\n## Important limitation\n\nI could **not** find detailed, explicit material in the retrieved documents that directly explains *why* a consistent wake time regulates the body's circadian (\"internal clock\") rhythm, or how morning light and a stable wake time strengthen the sleep–wake cycle.\n\nThe files do reference topics titled **\"Rhythm Sleep Disorders\"** and **\"Jet Lag\"** [table-of-contents fragment], which are the areas most relevant to circadian timing — but the actual explanatory content on those topics was **not retrieved**, so I cannot cite specifics from them without risking fabrication.\n\n## Summary\n\nBased only on the retrieved material, the clearest supportable point is that a **fixed, predictable schedule is central to behavioral sleep therapy** — sleep restriction and stimulus control both depend on a stable daily structure [CBT-I/Sleep Foundation file; Sleep Foundation – Sleep Restriction and Compression]. The precise mechanism by which a consistent *wake* time entrains circadian rhythm is **not documented in the material I retrieved**, so I'm flagging that as a gap rather than filling it in with unsupported claims.\n\nIf you'd like a fuller answer, I can try retrieving the specific sections on **Rhythm Sleep Disorders** or **Jet Lag**, which likely contain the circadian-rhythm explanation."
+      ],
+      "evidence_sufficiency": "HIGH",
+      "fact_sources": {},
+      "facts": {},
+      "goal": "Explain in general terms why a consistent wake time can support sleep routines",
+      "goal_id": "goal_t1",
+      "information_estimates": {},
+      "lineage_events": [
+        {
+          "available": true,
+          "date_coverage": null,
+          "payload_shape": "EVIDENCE_LIST",
+          "projected_entry_count": 1,
+          "projection_status": "valid",
+          "projection_warnings": [],
+          "provenance": {
+            "adapter": "project_rag"
+          },
+          "source_action_id": "act_goal_t1_r1_1",
+          "source_entry_count": 1,
+          "source_tool_result_id": "tool_goal_t1_r1_1",
+          "source_type": "RAG",
+          "state_update_id": "upd_goal_t1_r2_1",
+          "tool": "RETRIEVE",
+          "tool_result_id": "tool_goal_t1_r1_1"
+        }
+      ],
+      "preconditions_considered": [],
+      "rejected_information": [],
+      "required_missing": [],
+      "required_resources": [],
+      "resource_status": {},
+      "secondary_missing": [],
+      "semantic_provenance": [
+        {
+          "certainty": "HIGH",
+          "match_method": "deterministic_rule",
+          "matched_text": "why ",
+          "semantic_id": "sem_goal_t1_r2_1",
+          "semantic_reason": "goal requests general external CBT-I knowledge",
+          "semantic_rule_id": "KNOWLEDGE_EVIDENCE_REQUIRED"
+        }
+      ],
+      "state_revision": 2,
+      "step": 1,
+      "stop_reason": "",
+      "task_type": "KNOWLEDGE_QA",
+      "tool_result": {
+        "available": true,
+        "detail": "project_rag",
+        "evidence": [
+          "Based on my search of the available reference material, here is what I found — along with an important note about the limits of the sources.\n\n## What the sources support\n\n**1. CBT-I uses structured behavioral techniques.** Cognitive Behavioral Therapy for Insomnia (CBT-I) focuses on the connection between thoughts, behaviors, and sleep, and its techniques include **stimulus control, sleep restriction, and relaxation training** [CBT-I/Sleep Foundation file]. Because these approaches rely on a predictable daily structure, a fixed wake time fits naturally into them.\n\n**2. Sleep restriction sets a defined wake time as its anchor.** Sleep restriction works by first calculating the actual time spent asleep on a typical night (using a sleep diary) and adjusting time in bed to that amount plus about 30 minutes. For example, someone trying to sleep 8 hours but only getting 5 would **start by adjusting their bedtime** so they spend about 5.5 hours in bed, then gradually increase time in bed as sleep improves [Sleep Foundation – Sleep Restriction and Compression]. Keeping a consistent wake time is what makes this fixed schedule work, though the excerpt emphasizes adjusting **bedtime** rather than wake time explicitly.\n\n## Important limitation\n\nI could **not** find detailed, explicit material in the retrieved documents that directly explains *why* a consistent wake time regulates the body's circadian (\"internal clock\") rhythm, or how morning light and a stable wake time strengthen the sleep–wake cycle.\n\nThe files do reference topics titled **\"Rhythm Sleep Disorders\"** and **\"Jet Lag\"** [table-of-contents fragment], which are the areas most relevant to circadian timing — but the actual explanatory content on those topics was **not retrieved**, so I cannot cite specifics from them without risking fabrication.\n\n## Summary\n\nBased only on the retrieved material, the clearest supportable point is that a **fixed, predictable schedule is central to behavioral sleep therapy** — sleep restriction and stimulus control both depend on a stable daily structure [CBT-I/Sleep Foundation file; Sleep Foundation – Sleep Restriction and Compression]. The precise mechanism by which a consistent *wake* time entrains circadian rhythm is **not documented in the material I retrieved**, so I'm flagging that as a gap rather than filling it in with unsupported claims.\n\nIf you'd like a fuller answer, I can try retrieving the specific sections on **Rhythm Sleep Disorders** or **Jet Lag**, which likely contain the circadian-rhythm explanation."
+        ]
+      },
+      "turn_index": 1,
+      "user_info_sufficiency": "HIGH",
+      "validity_critical_missing": []
+    },
+    {
+      "acquisition_decisions": [],
+      "answer_context_audit": {},
+      "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+      "available_diary": false,
+      "base_requirements": {
+        "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+        "classifications": {},
+        "critical": [],
+        "decision_fields": [],
+        "diary_preferred": false,
+        "evidence_required": true,
+        "is_effective": false,
+        "requirement_ids": {},
+        "resources": [],
+        "secondary": [],
+        "semantic_adjustments": []
+      },
+      "candidate_actions": [
+        {
+          "acquisition_cost": "",
+          "acquisition_value": "",
+          "action": "ANSWER",
+          "candidate_id": "cand_goal_t1_r2_1",
+          "cost": "LOW",
+          "decision_impact": "MEDIUM",
+          "expected_benefit": "HIGH",
+          "expected_information_gain": "",
+          "gate_decision": "",
+          "gate_reason": "",
+          "goal_relevance": "MEDIUM",
+          "information_value": "",
+          "origin": "OPTIONAL_ACQUISITION",
+          "query": null,
+          "question": null,
+          "rationale": "当前目标所需的用户信息和证据均已充分。",
+          "redundancy": "LOW",
+          "source_dependency_id": null,
+          "source_precondition_id": null,
+          "source_requirement_id": null,
+          "target": null
+        }
+      ],
+      "chosen_action": {
+        "acquisition_cost": "",
+        "acquisition_value": "",
+        "action": "ANSWER",
+        "candidate_id": "cand_goal_t1_r2_1",
+        "cost": "LOW",
+        "decision_impact": "MEDIUM",
+        "expected_benefit": "HIGH",
+        "expected_information_gain": "",
+        "gate_decision": "",
+        "gate_reason": "",
+        "goal_relevance": "MEDIUM",
+        "information_value": "",
+        "origin": "OPTIONAL_ACQUISITION",
+        "query": null,
+        "question": null,
+        "rationale": "当前目标所需的用户信息和证据均已充分。",
+        "redundancy": "LOW",
+        "source_dependency_id": null,
+        "source_precondition_id": null,
+        "source_requirement_id": null,
+        "target": null
+      },
+      "claim_provenance": [],
+      "considered_information": [],
+      "critical_missing": [],
+      "decision_missing": [],
+      "decision_relevant_missing": [],
+      "dependencies_considered": [
+        {
+          "dependency_class": "EXTERNAL_EVIDENCE",
+          "dependency_id": "dep_goal_t1_r2_evidence_external_evidence",
+          "dependency_reason": "current answer scope includes external CBT-I knowledge",
+          "dependency_source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "dependency_type": "EVIDENCE",
+          "fallback": null,
+          "provenance": {
+            "evidence_count": 1
+          },
+          "reason": "current answer scope includes external CBT-I knowledge",
+          "required_for_goal": "Explain in general terms why a consistent wake time can support sleep routines",
+          "requiredness": "required",
+          "satisfiable_by": [
+            "RETRIEVE"
+          ],
+          "satisfied_by": [
+            "RETRIEVE"
+          ],
+          "semantic_ids": [
+            "sem_goal_t1_r2_1"
+          ],
+          "source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "status": "SATISFIED",
+          "supersedes_dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+          "target": "external_evidence"
+        }
+      ],
+      "dependencies_required": [],
+      "dependencies_satisfied": [
+        {
+          "dependency_class": "EXTERNAL_EVIDENCE",
+          "dependency_id": "dep_goal_t1_r2_evidence_external_evidence",
+          "dependency_reason": "current answer scope includes external CBT-I knowledge",
+          "dependency_source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "dependency_type": "EVIDENCE",
+          "fallback": null,
+          "provenance": {
+            "evidence_count": 1
+          },
+          "reason": "current answer scope includes external CBT-I knowledge",
+          "required_for_goal": "Explain in general terms why a consistent wake time can support sleep routines",
+          "requiredness": "required",
+          "satisfiable_by": [
+            "RETRIEVE"
+          ],
+          "satisfied_by": [
+            "RETRIEVE"
+          ],
+          "semantic_ids": [
+            "sem_goal_t1_r2_1"
+          ],
+          "source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "status": "SATISFIED",
+          "supersedes_dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+          "target": "external_evidence"
+        }
+      ],
+      "dependencies_unavailable": [],
+      "diary_projection": {},
+      "effective_requirements": {
+        "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+        "classifications": {},
+        "critical": [],
+        "decision_fields": [],
+        "diary_preferred": false,
+        "evidence_required": true,
+        "is_effective": true,
+        "requirement_ids": {},
+        "resources": [],
+        "secondary": [],
+        "semantic_adjustments": []
+      },
+      "event": "DECISION",
+      "evidence": [
+        "Based on my search of the available reference material, here is what I found — along with an important note about the limits of the sources.\n\n## What the sources support\n\n**1. CBT-I uses structured behavioral techniques.** Cognitive Behavioral Therapy for Insomnia (CBT-I) focuses on the connection between thoughts, behaviors, and sleep, and its techniques include **stimulus control, sleep restriction, and relaxation training** [CBT-I/Sleep Foundation file]. Because these approaches rely on a predictable daily structure, a fixed wake time fits naturally into them.\n\n**2. Sleep restriction sets a defined wake time as its anchor.** Sleep restriction works by first calculating the actual time spent asleep on a typical night (using a sleep diary) and adjusting time in bed to that amount plus about 30 minutes. For example, someone trying to sleep 8 hours but only getting 5 would **start by adjusting their bedtime** so they spend about 5.5 hours in bed, then gradually increase time in bed as sleep improves [Sleep Foundation – Sleep Restriction and Compression]. Keeping a consistent wake time is what makes this fixed schedule work, though the excerpt emphasizes adjusting **bedtime** rather than wake time explicitly.\n\n## Important limitation\n\nI could **not** find detailed, explicit material in the retrieved documents that directly explains *why* a consistent wake time regulates the body's circadian (\"internal clock\") rhythm, or how morning light and a stable wake time strengthen the sleep–wake cycle.\n\nThe files do reference topics titled **\"Rhythm Sleep Disorders\"** and **\"Jet Lag\"** [table-of-contents fragment], which are the areas most relevant to circadian timing — but the actual explanatory content on those topics was **not retrieved**, so I cannot cite specifics from them without risking fabrication.\n\n## Summary\n\nBased only on the retrieved material, the clearest supportable point is that a **fixed, predictable schedule is central to behavioral sleep therapy** — sleep restriction and stimulus control both depend on a stable daily structure [CBT-I/Sleep Foundation file; Sleep Foundation – Sleep Restriction and Compression]. The precise mechanism by which a consistent *wake* time entrains circadian rhythm is **not documented in the material I retrieved**, so I'm flagging that as a gap rather than filling it in with unsupported claims.\n\nIf you'd like a fuller answer, I can try retrieving the specific sections on **Rhythm Sleep Disorders** or **Jet Lag**, which likely contain the circadian-rhythm explanation."
+      ],
+      "evidence_sufficiency": "HIGH",
+      "fact_sources": {},
+      "facts": {},
+      "goal": "Explain in general terms why a consistent wake time can support sleep routines",
+      "goal_id": "goal_t1",
+      "information_estimates": {},
+      "lineage_events": [
+        {
+          "available": true,
+          "date_coverage": null,
+          "payload_shape": "EVIDENCE_LIST",
+          "projected_entry_count": 1,
+          "projection_status": "valid",
+          "projection_warnings": [],
+          "provenance": {
+            "adapter": "project_rag"
+          },
+          "source_action_id": "act_goal_t1_r1_1",
+          "source_entry_count": 1,
+          "source_tool_result_id": "tool_goal_t1_r1_1",
+          "source_type": "RAG",
+          "state_update_id": "upd_goal_t1_r2_1",
+          "tool": "RETRIEVE",
+          "tool_result_id": "tool_goal_t1_r1_1"
+        }
+      ],
+      "preconditions_considered": [],
+      "rejected_information": [],
+      "required_missing": [],
+      "required_resources": [],
+      "requirements": {
+        "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+        "classifications": {},
+        "critical": [],
+        "decision_fields": [],
+        "diary_preferred": false,
+        "evidence_required": true,
+        "is_effective": true,
+        "requirement_ids": {},
+        "resources": [],
+        "secondary": [],
+        "semantic_adjustments": []
+      },
+      "resource_status": {},
+      "secondary_missing": [],
+      "semantic_provenance": [
+        {
+          "certainty": "HIGH",
+          "match_method": "deterministic_rule",
+          "matched_text": "why ",
+          "semantic_id": "sem_goal_t1_r2_1",
+          "semantic_reason": "goal requests general external CBT-I knowledge",
+          "semantic_rule_id": "KNOWLEDGE_EVIDENCE_REQUIRED"
+        }
+      ],
+      "state_revision": 2,
+      "step": 2,
+      "stop_reason": "",
+      "task_type": "KNOWLEDGE_QA",
+      "turn_index": 1,
+      "user_info_sufficiency": "HIGH",
+      "validity_critical_missing": []
+    },
+    {
+      "acquisition_decisions": [],
+      "answer_context_audit": {
+        "diary_fact_fields": [],
+        "evidence_projection": [
+          {
+            "content": "Based on my search of the available reference material, here is what I found — along with an important note about the limits of the sources.\n\n## What the sources support\n\n**1. CBT-I uses structured behavioral techniques.** Cognitive Behavioral Therapy for Insomnia (CBT-I) focuses on the connection between thoughts, behaviors, and sleep, and its techniques include **stimulus control, sleep restriction, and relaxation training** [CBT-I/Sleep Foundation file]. Because these approaches rely on a predictable daily structure, a fixed wake time fits naturally into them.\n\n**2. Sleep restriction sets a defined wake time as its anchor.** Sleep restriction works by first calculating the actual time spent asleep on a typical night (using a sleep diary) and adjusting time in bed to that amount plus about 30 minutes. For example, someone trying to sleep 8 hours but only getting 5 would **start by adjusting their bedtime** so they spend about 5.5 hours in bed, then gradually increase time in bed as sleep improves [Sleep Foundation – Sleep Restriction and Compression]. Keeping a consistent wake time is what makes this fixed schedule work, though the excerpt emphasizes adjusting **bedtime** rather than wake time explicitly.\n\n## Important limitation\n\nI could **not** find detailed, explicit material in the retrieved documents that directly explains *why* a consistent wake time regulates the body's circadian (\"internal clock\") rhythm, or how morning light and a stable wake time strengthen the sleep–wake cycle.\n\nThe files do reference topics titled **\"Rhythm Sleep Disorders\"** and **\"Jet Lag\"** [table-of-contents fragment], which are the areas most relevant to circadian timing — but the actual explanatory content on those topics was **not retrieved**, so I cannot cite specifics from them without risking fabrication.\n\n## Summary\n\nBased only on the retrieved material, the clearest supportable point is that a **fixed, predictable schedule is central to behavioral sleep therapy** — sleep restriction and stimulus control both depend on a stable daily structure [CBT-I/Sleep Foundation file; Sleep Foundation – Sleep Restriction and Compression]. The precise mechanism by which a consistent *wake* time entrains circadian rhythm is **not documented in the material I retrieved**, so I'm flagging that as a gap rather than filling it in with unsupported claims.\n\nIf you'd like a fuller answer, I can try retrieving the specific sections on **Rhythm Sleep Disorders** or **Jet Lag**, which likely contain the circadian-rhythm explanation.",
+            "dependency_id": "dep_goal_t1_r2_evidence_external_evidence",
+            "exclusion_reason": null,
+            "included": true,
+            "index": 0,
+            "source": {
+              "evidence": "Based on my search of the available reference material, here is what I found — along with an important note about the limits of the sources.\n\n## What the sources support\n\n**1. CBT-I uses structured behavioral techniques.** Cognitive Behavioral Therapy for Insomnia (CBT-I) focuses on the connection between thoughts, behaviors, and sleep, and its techniques include **stimulus control, sleep restriction, and relaxation training** [CBT-I/Sleep Foundation file]. Because these approaches rely on a predictable daily structure, a fixed wake time fits naturally into them.\n\n**2. Sleep restriction sets a defined wake time as its anchor.** Sleep restriction works by first calculating the actual time spent asleep on a typical night (using a sleep diary) and adjusting time in bed to that amount plus about 30 minutes. For example, someone trying to sleep 8 hours but only getting 5 would **start by adjusting their bedtime** so they spend about 5.5 hours in bed, then gradually increase time in bed as sleep improves [Sleep Foundation – Sleep Restriction and Compression]. Keeping a consistent wake time is what makes this fixed schedule work, though the excerpt emphasizes adjusting **bedtime** rather than wake time explicitly.\n\n## Important limitation\n\nI could **not** find detailed, explicit material in the retrieved documents that directly explains *why* a consistent wake time regulates the body's circadian (\"internal clock\") rhythm, or how morning light and a stable wake time strengthen the sleep–wake cycle.\n\nThe files do reference topics titled **\"Rhythm Sleep Disorders\"** and **\"Jet Lag\"** [table-of-contents fragment], which are the areas most relevant to circadian timing — but the actual explanatory content on those topics was **not retrieved**, so I cannot cite specifics from them without risking fabrication.\n\n## Summary\n\nBased only on the retrieved material, the clearest supportable point is that a **fixed, predictable schedule is central to behavioral sleep therapy** — sleep restriction and stimulus control both depend on a stable daily structure [CBT-I/Sleep Foundation file; Sleep Foundation – Sleep Restriction and Compression]. The precise mechanism by which a consistent *wake* time entrains circadian rhythm is **not documented in the material I retrieved**, so I'm flagging that as a gap rather than filling it in with unsupported claims.\n\nIf you'd like a fuller answer, I can try retrieving the specific sections on **Rhythm Sleep Disorders** or **Jet Lag**, which likely contain the circadian-rhythm explanation.",
+              "goal_id": "goal_t1",
+              "retrieval_query": "Explain in general terms why a consistent wake time can support sleep routines",
+              "source_type": "RAG",
+              "state_update_id": "upd_goal_t1_r2_1",
+              "tool_result_id": "tool_goal_t1_r1_1"
+            }
+          }
+        ],
+        "semantic_status": {
+          "record_absence": "NOT_ESTABLISHED",
+          "records": [],
+          "resource": "UNKNOWN"
+        },
+        "user_fact_fields": []
+      },
+      "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+      "available_diary": false,
+      "base_requirements": {
+        "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+        "classifications": {},
+        "critical": [],
+        "decision_fields": [],
+        "diary_preferred": false,
+        "evidence_required": true,
+        "is_effective": false,
+        "requirement_ids": {},
+        "resources": [],
+        "secondary": [],
+        "semantic_adjustments": []
+      },
+      "candidate_actions": [
+        {
+          "acquisition_cost": "",
+          "acquisition_value": "",
+          "action": "ANSWER",
+          "candidate_id": "cand_goal_t1_r2_1",
+          "cost": "LOW",
+          "decision_impact": "MEDIUM",
+          "expected_benefit": "HIGH",
+          "expected_information_gain": "",
+          "gate_decision": "",
+          "gate_reason": "",
+          "goal_relevance": "MEDIUM",
+          "information_value": "",
+          "origin": "OPTIONAL_ACQUISITION",
+          "query": null,
+          "question": null,
+          "rationale": "当前目标所需的用户信息和证据均已充分。",
+          "redundancy": "LOW",
+          "source_dependency_id": null,
+          "source_precondition_id": null,
+          "source_requirement_id": null,
+          "target": null
+        }
+      ],
+      "claim_provenance": [
+        {
+          "certainty": "exact",
+          "claim": "Based on my search of the available reference material, here is what I found — along with an important note about the limits of the sources.\n\n## What the sources support\n\n**1. CBT-I uses structured behavioral techniques.** Cognitive Behavioral Therapy for Insomnia (CBT-I) focuses on the connection between thoughts, behaviors, and sleep, and its techniques include **stimulus control, sleep restriction, and relaxation training** [CBT-I/Sleep Foundation file]. Because these approaches rely on a predictable daily structure, a fixed wake time fits naturally into them.\n\n**2. Sleep restriction sets a defined wake time as its anchor.** Sleep restriction works by first calculating the actual time spent asleep on a typical night (using a sleep diary) and adjusting time in bed to that amount plus about 30 minutes. For example, someone trying to sleep 8 hours but only getting 5 would **start by adjusting their bedtime** so they spend about 5.5 hours in bed, then gradually increase time in bed as sleep improves [Sleep Foundation – Sleep Restriction and Compression]. Keeping a consistent wake time is what makes this fixed schedule work, though the excerpt emphasizes adjusting **bedtime** rather than wake time explicitly.\n\n## Important limitation\n\nI could **not** find detailed, explicit material in the retrieved documents that directly explains *why* a consistent wake time regulates the body's circadian (\"internal clock\") rhythm, or how morning light and a stable wake time strengthen the sleep–wake cycle.\n\nThe files do reference topics titled **\"Rhythm Sleep Disorders\"** and **\"Jet Lag\"** [table-of-contents fragment], which are the areas most relevant to circadian timing — but the actual explanatory content on those topics was **not retrieved**, so I cannot cite specifics from them without risking fabrication.\n\n## Summary\n\nBased only on the retrieved material, the clearest supportable point is that a **fixed, predictable schedule is central to behavioral sleep therapy** — sleep restriction and stimulus control both depend on a stable daily structure [CBT-I/Sleep Foundation file; Sleep Foundation – Sleep Restriction and Compression]. The precise mechanism by which a consistent *wake* time entrains circadian rhythm is **not documented in the material I retrieved**, so I'm flagging that as a gap rather than filling it in with unsupported claims.\n\nIf you'd like a fuller answer, I can try retrieving the specific sections on **Rhythm Sleep Disorders** or **Jet Lag**, which likely contain the circadian-rhythm explanation.",
+          "claim_type": "evidence-grounded",
+          "derived_from": [],
+          "source": "evidence:0",
+          "source_field": null,
+          "state_update_id": "upd_goal_t1_r2_1",
+          "tool_result_id": "tool_goal_t1_r1_1"
+        }
+      ],
+      "considered_information": [],
+      "critical_missing": [],
+      "decision_missing": [],
+      "decision_relevant_missing": [],
+      "dependencies_considered": [
+        {
+          "dependency_class": "EXTERNAL_EVIDENCE",
+          "dependency_id": "dep_goal_t1_r2_evidence_external_evidence",
+          "dependency_reason": "current answer scope includes external CBT-I knowledge",
+          "dependency_source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "dependency_type": "EVIDENCE",
+          "fallback": null,
+          "provenance": {
+            "evidence_count": 1
+          },
+          "reason": "current answer scope includes external CBT-I knowledge",
+          "required_for_goal": "Explain in general terms why a consistent wake time can support sleep routines",
+          "requiredness": "required",
+          "satisfiable_by": [
+            "RETRIEVE"
+          ],
+          "satisfied_by": [
+            "RETRIEVE"
+          ],
+          "semantic_ids": [
+            "sem_goal_t1_r2_1"
+          ],
+          "source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "status": "SATISFIED",
+          "supersedes_dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+          "target": "external_evidence"
+        }
+      ],
+      "dependencies_required": [],
+      "dependencies_satisfied": [
+        {
+          "dependency_class": "EXTERNAL_EVIDENCE",
+          "dependency_id": "dep_goal_t1_r2_evidence_external_evidence",
+          "dependency_reason": "current answer scope includes external CBT-I knowledge",
+          "dependency_source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "dependency_type": "EVIDENCE",
+          "fallback": null,
+          "provenance": {
+            "evidence_count": 1
+          },
+          "reason": "current answer scope includes external CBT-I knowledge",
+          "required_for_goal": "Explain in general terms why a consistent wake time can support sleep routines",
+          "requiredness": "required",
+          "satisfiable_by": [
+            "RETRIEVE"
+          ],
+          "satisfied_by": [
+            "RETRIEVE"
+          ],
+          "semantic_ids": [
+            "sem_goal_t1_r2_1"
+          ],
+          "source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "status": "SATISFIED",
+          "supersedes_dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+          "target": "external_evidence"
+        }
+      ],
+      "dependencies_unavailable": [],
+      "diary_projection": {},
+      "effective_requirements": {
+        "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+        "classifications": {},
+        "critical": [],
+        "decision_fields": [],
+        "diary_preferred": false,
+        "evidence_required": true,
+        "is_effective": true,
+        "requirement_ids": {},
+        "resources": [],
+        "secondary": [],
+        "semantic_adjustments": []
+      },
+      "event": "ANSWER",
+      "evidence": [
+        "Based on my search of the available reference material, here is what I found — along with an important note about the limits of the sources.\n\n## What the sources support\n\n**1. CBT-I uses structured behavioral techniques.** Cognitive Behavioral Therapy for Insomnia (CBT-I) focuses on the connection between thoughts, behaviors, and sleep, and its techniques include **stimulus control, sleep restriction, and relaxation training** [CBT-I/Sleep Foundation file]. Because these approaches rely on a predictable daily structure, a fixed wake time fits naturally into them.\n\n**2. Sleep restriction sets a defined wake time as its anchor.** Sleep restriction works by first calculating the actual time spent asleep on a typical night (using a sleep diary) and adjusting time in bed to that amount plus about 30 minutes. For example, someone trying to sleep 8 hours but only getting 5 would **start by adjusting their bedtime** so they spend about 5.5 hours in bed, then gradually increase time in bed as sleep improves [Sleep Foundation – Sleep Restriction and Compression]. Keeping a consistent wake time is what makes this fixed schedule work, though the excerpt emphasizes adjusting **bedtime** rather than wake time explicitly.\n\n## Important limitation\n\nI could **not** find detailed, explicit material in the retrieved documents that directly explains *why* a consistent wake time regulates the body's circadian (\"internal clock\") rhythm, or how morning light and a stable wake time strengthen the sleep–wake cycle.\n\nThe files do reference topics titled **\"Rhythm Sleep Disorders\"** and **\"Jet Lag\"** [table-of-contents fragment], which are the areas most relevant to circadian timing — but the actual explanatory content on those topics was **not retrieved**, so I cannot cite specifics from them without risking fabrication.\n\n## Summary\n\nBased only on the retrieved material, the clearest supportable point is that a **fixed, predictable schedule is central to behavioral sleep therapy** — sleep restriction and stimulus control both depend on a stable daily structure [CBT-I/Sleep Foundation file; Sleep Foundation – Sleep Restriction and Compression]. The precise mechanism by which a consistent *wake* time entrains circadian rhythm is **not documented in the material I retrieved**, so I'm flagging that as a gap rather than filling it in with unsupported claims.\n\nIf you'd like a fuller answer, I can try retrieving the specific sections on **Rhythm Sleep Disorders** or **Jet Lag**, which likely contain the circadian-rhythm explanation."
+      ],
+      "evidence_sufficiency": "HIGH",
+      "fact_sources": {},
+      "facts": {},
+      "goal": "Explain in general terms why a consistent wake time can support sleep routines",
+      "goal_id": "goal_t1",
+      "information_estimates": {},
+      "lineage_events": [
+        {
+          "available": true,
+          "date_coverage": null,
+          "payload_shape": "EVIDENCE_LIST",
+          "projected_entry_count": 1,
+          "projection_status": "valid",
+          "projection_warnings": [],
+          "provenance": {
+            "adapter": "project_rag"
+          },
+          "source_action_id": "act_goal_t1_r1_1",
+          "source_entry_count": 1,
+          "source_tool_result_id": "tool_goal_t1_r1_1",
+          "source_type": "RAG",
+          "state_update_id": "upd_goal_t1_r2_1",
+          "tool": "RETRIEVE",
+          "tool_result_id": "tool_goal_t1_r1_1"
+        }
+      ],
+      "preconditions_considered": [],
+      "rejected_information": [],
+      "required_missing": [],
+      "required_resources": [],
+      "resource_status": {},
+      "secondary_missing": [],
+      "semantic_provenance": [
+        {
+          "certainty": "HIGH",
+          "match_method": "deterministic_rule",
+          "matched_text": "why ",
+          "semantic_id": "sem_goal_t1_r2_1",
+          "semantic_reason": "goal requests general external CBT-I knowledge",
+          "semantic_rule_id": "KNOWLEDGE_EVIDENCE_REQUIRED"
+        }
+      ],
+      "state_revision": 2,
+      "stop_reason": "",
+      "task_type": "KNOWLEDGE_QA",
+      "turn_index": 1,
+      "user_info_sufficiency": "HIGH",
+      "validity_critical_missing": []
+    }
+  ],
+  "trace_type": "STEP9_28A_SYNTHETIC_PRODUCTION_PREFLIGHT"
+}

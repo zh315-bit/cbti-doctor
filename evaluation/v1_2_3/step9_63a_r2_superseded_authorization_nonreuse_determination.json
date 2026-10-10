@@ -1,0 +1,39 @@
+{
+  "artifact_type": "STEP9_63A_R2_PINNED_SUPERSEDED_AUTHORIZATION_NONREUSE_DETERMINATION",
+  "timestamp_utc": "2026-10-05T21:34:10Z",
+  "old_authorization_id": "auth-step9_62-e796755748e14418b9da641f5d6c15e2",
+  "old_attempt_id": "attempt-step9_62-6620ce3a79684874a15f5e35eac97938",
+  "old_namespace_id": "heldout-v4-treatment-v3-run-52b2c0c8ebbb06258291",
+  "old_authorization_reuse_status": "PROVEN_NON_REUSABLE_BY_FROZEN_CONTRACT",
+  "retirement_reason": "SUPERSEDED_RUNNER_FREEZE",
+  "old_runner_revision": "r6",
+  "old_runner_freeze_path": "evaluation/v1_2_3/step9_61a_v3_runner_freeze_r6.json",
+  "old_runner_freeze_sha256": "4e6c0bf9ed718546ea1efa12ae48324fd5438129ad3cd3860f93bd33037f1593",
+  "current_runner_revision": "r7",
+  "current_runner_freeze_path": "evaluation/v1_2_3/step9_63a_r1_v3_runner_freeze_r7.json",
+  "current_runner_freeze_sha256": "99ab870303e45497bf750b55f8382912089c2cf80e737b780922695d9906275c",
+  "old_authorization_manifest_path": "evaluation/v1_2_3/step9_62_v3_authorization_manifest.json",
+  "old_authorization_manifest_sha256": "7f97f9e42b8711a6ae745e4626d81fa8787a162bbfa8fdad6fe53c9fd4b975c8",
+  "lifecycle_contract_path": "evaluation/v1_2_3/step9_61a_v3_authorization_lifecycle_contract.json",
+  "lifecycle_contract_sha256": "addb3880e7141ca14d7b3011cadb439ac83076fa6b7c2b9f28f3b024d3fd1174",
+  "lifecycle_contract_revision": "1",
+  "transition": "ISSUED_NOT_CONSUMED -> RETIRED_UNCONSUMED_NON_REUSABLE",
+  "nonreuse_proof": "The immutable Step 9.62 manifest binds r6; the current r7 validator requires the exact r7 freeze SHA and rejects r6. The frozen Step 9.61a lifecycle contract permits terminal non-consuming retirement when its predicates pass.",
+  "pre_retirement_state": {
+    "authorization_status": "ISSUED_NOT_CONSUMED",
+    "consumed": false,
+    "consumption_count": 0,
+    "transaction_exists": false,
+    "attempt_created": false,
+    "namespace_created": false,
+    "cases_started": 0,
+    "active_executable_authorization_count": 1
+  },
+  "source_artifacts": [
+    "evaluation/v1_2_3/step9_62_v3_authorization_manifest.json",
+    "evaluation/v1_2_3/step9_61a_v3_authorization_lifecycle_contract.json",
+    "evaluation/v1_2_3/step9_61a_v3_runner_freeze_r6.json",
+    "evaluation/v1_2_3/step9_63a_r1_v3_runner_freeze_r7.json",
+    "evaluation/v1_2_3/step9_63a_r1_production_integration_audit.json"
+  ]
+}

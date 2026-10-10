@@ -1,0 +1,82 @@
+{
+  "step": "9.42",
+  "freeze_id": "step9_42-treatment-v2-development-20260928-01",
+  "freeze_kind": "TREATMENT_V2_DEVELOPMENT_FREEZE_NOT_EVALUATION_AUTHORIZATION",
+  "status": "FROZEN_AFTER_SYNTHETIC_AND_FULL_REGRESSION_PASS",
+  "created_at_utc": "2026-09-28T19:08:16Z",
+  "parent_treatment_v1": {
+    "freeze_path": "evaluation/v1_2_3/step9_33a_treatment_freeze.json",
+    "freeze_sha256": "b281cc43db617a2580a86e4593e432798195e637382e5f74244fd08ac45a45b7",
+    "agent_sha256": "e5e4841b51ecc6bced0f342a261a356756d07b39764670d774b910b86b8625a7",
+    "overwritten": false
+  },
+  "pre_step9_42_agent_sha256": "e5e4841b51ecc6bced0f342a261a356756d07b39764670d774b910b86b8625a7",
+  "pre_step9_42_modified_file_hashes": {
+    "adaptive_agent/answer_generation.py": "76c089613a90f88a0216f88405b4df9c5a4339bc42d0a38d33ff51f4f12a1122",
+    "adaptive_agent/runner.py": "0a3d30d8557faa967a8a32e5ea38ef0c9892a2ac390e9e0628add82decb9a5be"
+  },
+  "treatment_v2_agent_sha256": "b9e891e7cd077dd5b3c6fa72b71faad978a24226c2b5e89e0b06aabde93b51d6",
+  "aggregate_method": "SHA256(concat(sorted(repository_relative_path + TAB + entry_sha256 + LF)))",
+  "agent_behavior_file_count": 26,
+  "agent_behavior_files": [
+    ["adaptive_agent/acquisition_gate.py", "532902873ff23bb4f0dc278f05360787a6f93b737328e4b7859d90fc1e6e14e5"],
+    ["adaptive_agent/answer_generation.py", "349221cd82a875990283f8958da5e2f22f7c10da0fe99391da3b043fbff9cbbb"],
+    ["adaptive_agent/candidates.py", "3b56dc315ed2109f75ec4adbfc9215c3d7b7c216fbd6a09816eaf55b0b757f6d"],
+    ["adaptive_agent/dependency_resolver.py", "8af9da5a035be7aee52e77f1ee6b10031005fe20516445c041fee766796d3ceb"],
+    ["adaptive_agent/facts.py", "fa2553a0d2e67cfc38f66b554c81d4ce4f66d925d83cce367652bc35bdc42a0a"],
+    ["adaptive_agent/flask_app.py", "82ab75eb1055b16c7e2fd4b039ff00d626c583fba1c755dbdbd6867e1bd81c7c"],
+    ["adaptive_agent/information_value.py", "6f9672fac293e648bfa824707a39f7275f19000e2cd8e99a3a483da24cbe98d5"],
+    ["adaptive_agent/input_understanding.py", "123298d84eeb69b28c3087c0e365783996ba1833cf81276c18f29bce79912bcf"],
+    ["adaptive_agent/policy.py", "f6bd425eadc3006168c40f050ad93e2a257b6b53cff6d0ae07926fd2c93cfe47"],
+    ["adaptive_agent/preconditions.py", "b4dc3f3f389b785db9b4483fff0da64261d035cc3ee415a1d4f77e74a3020365"],
+    ["adaptive_agent/requirements.py", "5b1820aacca8f94caba5470e2315227d3b90d6b1af5d73fe3572982157baaf7b"],
+    ["adaptive_agent/runner.py", "e1dc32788f105b7ce4912853201e601a37c627b6df39493a49103ad7945a5781"],
+    ["adaptive_agent/service.py", "07e2819af3ca6bfab511a7f5e5efa2634537ea5468cf92bbc253f94f543031ff"],
+    ["adaptive_agent/state.py", "f05582ef5f2a7a66535daf587d48f638a9c07eb2dfe3e13097e2dc342c4b0546"],
+    ["adaptive_agent/state_update.py", "9e35cdbbba8ce4ad99a22873f1a7cf928887e4086e4bd3b82c5fef4a6cc3c579"],
+    ["adaptive_agent/sufficiency.py", "e76b221c94c5018f6b3653027b1d3d89d1f931311572d838c619c575a87d729d"],
+    ["adaptive_agent/tools.py", "65223ad962417d68d16326c2431a205f1bdc953a0f64c5585ff38e4017a1c084"],
+    ["configs/requirements.yaml", "f61d5055114c7186373cb8a079b73ecdbe1d7e37217d12c97a4e6e56539bb40b"],
+    ["evaluation/recorder.py", "ca0bc7488f5af7d117298f817ccfd7f3b814bb80f60b114d1f9750c939877d9d"],
+    ["local_embeddings.py", "f5aa8745407582c4dbb8caa470f110238e820f00be54a86444367815be83905f"],
+    ["model_config.py", "566a6b5c3d69636c270434f3daf6e8d05dd403f8de67e92107a2efcc6d7cc34a"],
+    ["rag_client.py", "6b6858af5eb4c5e07a29ca41723ea4de9c2a7087947ca7b877eeff4070bb590a"],
+    ["rag_lib/.rag_db/bge-small-zh-v1.5-ch400-v1/index.faiss", "8c6d6b6ba0c8461a3c12b4182887c01fa34ebdc7d3ae654f38ed827e15c2be89"],
+    ["rag_lib/.rag_db/bge-small-zh-v1.5-ch400-v1/index.pkl", "e1acd20fe2c16649f2bbce93ff5210b58104a50500cab530df08ba8fc2fbb4a1"],
+    ["rag_lib/pdfs/", "01645761780c7d2cb1864cb26732334791c7cfd2984f5419dbf54c31a74b027d"],
+    ["runtime:deepseek_nonsecret_configuration", "d0802478a59e6b2021b0476490149d7fec672fab5bda5cc45f55241268f1a7e0"]
+  ],
+  "changed_files": [
+    {"path": "adaptive_agent/answer_generation.py", "pre_sha256": "76c089613a90f88a0216f88405b4df9c5a4339bc42d0a38d33ff51f4f12a1122", "post_sha256": "349221cd82a875990283f8958da5e2f22f7c10da0fe99391da3b043fbff9cbbb"},
+    {"path": "adaptive_agent/runner.py", "pre_sha256": "0a3d30d8557faa967a8a32e5ea38ef0c9892a2ac390e9e0628add82decb9a5be", "post_sha256": "e1dc32788f105b7ce4912853201e601a37c627b6df39493a49103ad7945a5781"}
+  ],
+  "test_code": {
+    "path": "tests/test_step9_42_answer_authorization.py",
+    "sha256": "f3c3b9f17fb874379b7ac907d280c08a66678f6b09f91c11baaaf8108b93c784",
+    "step9_41_classes_passed": 6,
+    "interaction_tests_passed": 10,
+    "focused_regression_passed": 147,
+    "full_non_benchmark_regression_passed": 333,
+    "failures": 0,
+    "errors": 0
+  },
+  "audit_artifacts": {
+    "architecture_audit_path": "evaluation/v1_2_3/step9_42_architecture_audit.json",
+    "architecture_audit_sha256": "7eeaf5b9c8138cd62835025b0c6f9fc9d51a18753ee96e0a4d8d042155657c12",
+    "test_report_path": "evaluation/v1_2_3/step9_42_test_report.json",
+    "test_report_sha256": "2c0282ff86e15221d9e4944a74707d9256eb13d9330a720a8cf527974810cdb6"
+  },
+  "case_specific_logic_found": false,
+  "no_evaluation_authority": {
+    "v4_case_executed": 0,
+    "v4_rerun": false,
+    "v5_created": false,
+    "v5_accessed": false,
+    "authorization_issued": false,
+    "attempt_created": false
+  },
+  "claim_status": {
+    "resume_descriptive_matched_comparative_claim_eligible": false,
+    "step9_39_results_preserved_as_historical_development_evidence": true
+  }
+}

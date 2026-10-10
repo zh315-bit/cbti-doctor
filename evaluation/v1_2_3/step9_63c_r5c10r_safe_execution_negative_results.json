@@ -1,0 +1,28 @@
+{
+  "step": "9.63c-r5c10r",
+  "static_safety_basis": "The eight selected allocator-only methods write markers and synthetic attempts.jsonl exclusively below method-local tempfile.TemporaryDirectory roots. reserve_namespace reads the existing authorization-retirement ledger but does not write it. The ninth method imports the frozen adapter and was not run.",
+  "safe_test_method_count_executed": 8,
+  "safe_test_method_count_passed": 8,
+  "safe_test_failures": 0,
+  "safe_test_errors": 0,
+  "safe_test_skipped": 0,
+  "safe_test_methods": [
+    "test_fresh_derived_namespace_is_absent_and_unique",
+    "test_old_occupied_and_failed_namespaces_are_forbidden",
+    "test_identity_cannot_reserve_a_second_namespace",
+    "test_authorization_cannot_be_rebound_to_another_attempt",
+    "test_parallel_duplicate_allocation_has_one_winner",
+    "test_historical_ledger_identity_cannot_be_reallocated",
+    "test_nested_historical_ledger_without_marker_cannot_be_reallocated",
+    "test_allocation_marker_corruption_fails_closed"
+  ],
+  "negative_identity_checks": [
+    {"subject": "v3_runner_identity.load_identity_config(ROOT)", "expected": "RuntimeError on absent formal r11 pointer", "result": "PASS"},
+    {"subject": "v3_runner_identity.resolve_current_freeze(ROOT)", "expected": "RuntimeError on absent formal r11 pointer", "result": "PASS"},
+    {"subject": "importlib.import_module(scripts.run_step9_53_v3_identity_adapter)", "expected": "RuntimeError on absent formal r11 pointer", "result": "PASS"}
+  ],
+  "formal_execution_negative_path": "Not invoked: the real resolver and frozen adapter import rejected missing identity before any adapter.run call, authorization consumption, transaction, namespace or model call.",
+  "identity_guard_bypassed": false,
+  "network_or_model_called": false,
+  "formal_v4_case_executed": 0
+}

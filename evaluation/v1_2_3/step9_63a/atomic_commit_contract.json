@@ -1,0 +1,28 @@
+{
+  "artifact_type": "STEP9_63A_TRANSACTION_PROTOCOL_CONTRACT",
+  "step": "9.63a",
+  "status": "PROTOTYPE_ONLY_NOT_INTEGRATED",
+  "state_machine": ["PREPARED", "COMMITTING", "COMMITTED", "ABORTED_UNCONSUMED", "RECONCILIATION_REQUIRED"],
+  "transition_policy": {
+    "PREPARED": ["COMMITTING", "ABORTED_UNCONSUMED", "RECONCILIATION_REQUIRED"],
+    "COMMITTING": ["COMMITTED", "RECONCILIATION_REQUIRED"],
+    "COMMITTED": [],
+    "ABORTED_UNCONSUMED": [],
+    "RECONCILIATION_REQUIRED": []
+  },
+  "logical_binding": ["transaction_id", "authorization_id", "attempt_id", "namespace_id", "runner_sha256", "agent_sha256", "evaluation_identity_sha256", "case_set_sha256"],
+  "proposed_authoritative_commit_point": "durable COMMITTED journal event after file fsync and parent-directory fsync",
+  "implementation_path": "scripts/v3_execution_transaction.py::begin_and_commit",
+  "commit_point_is_current_production_authority": false,
+  "formal_runner_integration": false,
+  "lifecycle_validator_integration": false,
+  "parent_case_start_integration": false,
+  "transaction_journal_root_production_bound": false,
+  "live_authorization_may_use_this_protocol": false,
+  "durability_claim": "process-crash-oriented append journal with file and parent-directory fsync calls; no power-loss/device-cache guarantee claimed",
+  "corrupt_or_torn_journal_policy": "FAIL_CLOSED_MANUAL_RECONCILIATION_REQUIRED",
+  "automatic_resume_allowed": false,
+  "authorization_reuse_after_terminal_transaction": false,
+  "runner_r6_remains_current": true,
+  "step9_62_authorization_remains_bound_to_r6": true
+}

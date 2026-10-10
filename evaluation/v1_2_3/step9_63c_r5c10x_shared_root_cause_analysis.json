@@ -1,0 +1,26 @@
+{
+  "step": "9.63c-r5c10x",
+  "current_collection_run": false,
+  "primary_shared_root_cause_count": 1,
+  "primary_shared_root_cause": {
+    "name": "IMPORT_TIME_FORMAL_R11_POINTER_RESOLUTION",
+    "code_evidence": [
+      "scripts/run_step9_53_v3_identity_adapter.py:23-27 imports the resolver and calls load_identity_config(ROOT) at module import time.",
+      "scripts/v3_runner_identity.py:11,27-40 requires the exact r11 pointer and rejects missing or invalid state.",
+      "scripts/issue_step9_63a_r3_authorization.py:17 imports the adapter at module import time.",
+      "scripts/preflight_step9_63b_mac_local.py:26,29 imports the issuer and adapter at module import time."
+    ],
+    "affected_static_test_import_paths": 9,
+    "formal_pointer_present": false,
+    "formal_freeze_present": false,
+    "classification": "One shared import-time identity dependency with several import-route variants, not nine proven independent production defects.",
+    "protection": "Do not create a synthetic formal pointer, fall back to r10, or disable the resolver."
+  },
+  "secondary_independent_execution_boundaries_not_new_collection_root_causes": [
+    "Real transaction begin_and_commit or parent.run call sites in several test modules require method-level side-effect review.",
+    "Historical r7/r8 issuer and authorization assumptions may not apply to eventual r11; current runtime outcomes are unknown.",
+    "Historical Trace original-content integrity is unproven and must be protected independently of import collection."
+  ],
+  "production_defect_confirmed": false,
+  "nine_current_test_failures_claimed": false
+}

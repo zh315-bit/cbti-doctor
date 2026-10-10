@@ -1,0 +1,1133 @@
+--- /dev/null
++++ b/evaluation/v1_2_3/step9_63c_r5c10af_test_harness/guard/sitecustomize.py
+@@ -0,0 +1,325 @@
++"""Step 9.63c-r5c10af test side-effect guard, v3 CANDIDATE (not approved; evidence copy).
++
++Activated only through PYTHONPATH. v1 (r5c10ab) and v2 (r5c10ad) stay untouched as
++historical evidence. Blocks and logs, for the protected root CBTI_GUARD_ROOT:
++  * writes, creations, renames, deletions and metadata changes (path, descriptor and
++    dir_fd forms),
++  * writes through symlinks, through '..' after a symlink, and through hard links,
++  * non-loopback network use, non-Python subprocesses, and Python children started
++    without this guard (isolated/no-site/ignore-environment flags, scrubbed environment).
++Known limits (not blockable from Python): ctypes/C-extension syscalls, and anything
++that bypasses the audit hook machinery.
++"""
++import json
++import os
++import stat
++import sys
++import threading
++
++_ROOT = os.environ.get("CBTI_GUARD_ROOT")
++_LOG = os.environ.get("CBTI_GUARD_LOG")
++_GUARD_DIR = os.path.dirname(os.path.abspath(__file__))
++_LOCAL = threading.local()
++_LOOPBACK = {"localhost", "127.0.0.1", "::1", "", None}
++_WRITE_FLAGS = os.O_WRONLY | os.O_RDWR | os.O_CREAT | os.O_TRUNC | os.O_APPEND
++_ROOT_ID = None
++_WALK_LIMIT = 300000
++
++# Events whose path operand names a directory ENTRY (the link itself, not its target).
++_ENTRY_EVENTS = {"os.remove", "os.rmdir", "os.rename", "os.symlink", "os.link", "shutil.rmtree"}
++# (path index, dir_fd index) pairs per audit event.
++_DIR_FD_ARGS = {
++    "os.remove": [(0, 1)], "os.rmdir": [(0, 1)], "os.mkdir": [(0, 2)],
++    "os.chmod": [(0, 2)], "os.chown": [(0, 3)], "os.utime": [(0, 3)],
++    "os.symlink": [(1, 2)], "os.link": [(0, 2), (1, 3)], "os.rename": [(0, 2), (1, 3)],
++}
++# Events that modify the inode behind the path (shared by every hard link to it).
++_INODE_MUTATING = {"os.truncate", "os.chmod", "os.chown", "os.utime", "os.setxattr",
++                   "os.removexattr", "os.chflags", "os.lchflags"}
++_FIRST_ARG_EVENTS = {"os.truncate", "os.setxattr", "os.removexattr", "os.chflags", "os.lchflags"}
++# Events that, applied to an ANCESTOR of the root, move/delete/lock the whole repository.
++_ANCESTOR_EVENTS = {"os.remove", "os.rmdir", "os.rename", "shutil.rmtree", "shutil.move",
++                    "os.chmod", "os.chown", "os.chflags", "os.lchflags"}
++_COPY_DST_EVENTS = {"shutil.copyfile", "shutil.copymode", "shutil.copystat", "shutil.copytree"}
++_EXEC_EVENTS = {"subprocess.Popen": (0, 1, 3), "os.exec": (0, 1, 2), "os.posix_spawn": (0, 1, 2)}
++
++
++class _Unresolvable(Exception):
++    pass
++
++
++def _record(event, detail, blocked):
++    if not _LOG:
++        return
++    row = {"pid": os.getpid(), "event": event, "detail": detail, "blocked": blocked,
++           "test": os.environ.get("CBTI_GUARD_CURRENT_TEST")}
++    with open(_LOG, "a", encoding="utf-8") as handle:
++        handle.write(json.dumps(row, default=repr) + "\n")
++
++
++def _fd_dir(fd):
++    import fcntl
++    return os.fsdecode(fcntl.fcntl(fd, fcntl.F_GETPATH, bytes(1024)).rstrip(b"\0"))
++
++
++def _resolve(path, dir_fd, entry):
++    """Real path of the operand; None when it is not a filesystem path at all."""
++    if isinstance(path, int):
++        try:
++            return _fd_dir(path)
++        except OSError:
++            return None  # pipe/socket/etc.: cannot name a repository file
++    try:
++        p = os.fsdecode(os.fspath(path))
++    except TypeError:
++        return None
++    if isinstance(dir_fd, int) and dir_fd >= 0 and not os.path.isabs(p):
++        try:
++            p = os.path.join(_fd_dir(dir_fd), p)
++        except OSError as error:
++            raise _Unresolvable() from error
++    base = os.path.basename(p)
++    if entry and base not in ("", ".", ".."):
++        # Directory-entry operations act on the entry itself: resolve only its parent.
++        # (No abspath: textual '..' collapsing would skip symlinks.)
++        return os.path.join(os.path.realpath(os.path.dirname(p) or "."), base)
++    # Trailing slash or dot components make the OS follow the final symlink.
++    return os.path.realpath(p)
++
++
++def _under_root(real):
++    if real == _ROOT or real.startswith(_ROOT + os.sep):
++        return True
++    # Case-insensitive/normalising filesystems: compare identities along the ancestry.
++    candidate = real
++    while True:
++        try:
++            st = os.lstat(candidate)
++            if _ROOT_ID is not None and (st.st_dev, st.st_ino) == _ROOT_ID:
++                return True
++        except OSError:
++            pass
++        parent = os.path.dirname(candidate)
++        if parent == candidate:
++            return False
++        candidate = parent
++
++
++def _inode_in_root(dev, ino):
++    seen = 0
++    for directory, _, files in os.walk(_ROOT, followlinks=False):
++        for name in files:
++            seen += 1
++            if seen > _WALK_LIMIT:
++                return True  # cannot prove otherwise: fail closed
++            try:
++                st = os.lstat(os.path.join(directory, name))
++            except OSError:
++                continue
++            if st.st_ino == ino and st.st_dev == dev:
++                return True
++    return False
++
++
++def _is_ancestor_of_root(real):
++    if real != _ROOT and (_ROOT + os.sep).startswith(real.rstrip(os.sep) + os.sep):
++        return True
++    try:
++        wanted = os.lstat(real)
++    except OSError:
++        return False
++    candidate = os.path.dirname(_ROOT)
++    while True:
++        try:
++            info = os.lstat(candidate)
++            if (info.st_dev, info.st_ino) == (wanted.st_dev, wanted.st_ino):
++                return True
++        except OSError:
++            pass
++        parent = os.path.dirname(candidate)
++        if parent == candidate:
++            return False
++        candidate = parent
++
++
++def _hardlinked_into_root(real):
++    try:
++        st = os.stat(real)
++    except OSError:
++        return False
++    if (not stat.S_ISREG(st.st_mode) or st.st_nlink <= 1 or _ROOT_ID is None
++            or st.st_dev != _ROOT_ID[0]):
++        return False
++    return _inode_in_root(st.st_dev, st.st_ino)
++
++
++def _check(event, detail, path, dir_fd=None, entry=False, mutating=False, ancestors=False):
++    try:
++        real = _resolve(path, dir_fd, entry)
++    except _Unresolvable:
++        real = ""
++        reason = "unresolvable descriptor"
++    else:
++        reason = None
++        if real is not None:
++            if _under_root(real):
++                reason = "protected path"
++            elif ancestors and _is_ancestor_of_root(real):
++                reason = "ancestor of the protected root"
++            elif mutating and not entry and _hardlinked_into_root(real):
++                reason = "hard link to a protected file"
++    if reason:
++        _record(event, detail, True)
++        raise PermissionError(f"CBTI guard blocked repository mutation ({reason}): {event} {detail}")
++
++
++def _python_executable(executable):
++    try:
++        return os.path.basename(os.fsdecode(executable)).startswith("python")
++    except TypeError:
++        return False
++
++
++def _unguarded_python_reason(argv, env):
++    """Why a child Python would run without this guard, or None."""
++    for arg in list(argv or [])[1:]:
++        arg = os.fsdecode(arg)
++        if not arg.startswith("-") or arg in ("-c", "-m"):
++            break
++        if arg.startswith("--"):
++            if arg == "--isolated":
++                return "isolated mode ignores PYTHONPATH"
++            continue
++        for char in arg[1:]:
++            if char in "ISE":
++                return f"python flag -{char} disables the guard"
++            if char in "cmWXQ":
++                break
++    effective = os.environ if env is None else env
++    try:
++        items = effective.items() if hasattr(effective, "items") else [
++            os.fsdecode(entry).split("=", 1) for entry in effective]
++        merged = {os.fsdecode(k): os.fsdecode(v) for k, v in items}
++    except (TypeError, ValueError):
++        return "environment not inspectable"
++    if merged.get("CBTI_GUARD_ROOT") != _ROOT:
++        return "child environment drops CBTI_GUARD_ROOT"
++    if _GUARD_DIR not in merged.get("PYTHONPATH", "").split(os.pathsep):
++        return "child environment drops the guard directory from PYTHONPATH"
++    return None
++
++
++def _hook(event, args):
++    if getattr(_LOCAL, "busy", False):
++        return
++    _LOCAL.busy = True
++    try:
++        if event == "open":
++            path, mode, flags = (list(args) + [None, None, None])[:3]
++            writing = (isinstance(mode, str) and any(c in mode for c in "wax+")) or (
++                isinstance(flags, int) and flags & _WRITE_FLAGS)
++            if writing:
++                _check(event, [path, mode, flags], path, mutating=True)
++        elif event in _DIR_FD_ARGS:
++            for index, fd_index in _DIR_FD_ARGS[event]:
++                if index < len(args):
++                    _check(event, [args[index]], args[index],
++                           args[fd_index] if fd_index < len(args) else None,
++                           entry=event in _ENTRY_EVENTS, mutating=event in _INODE_MUTATING,
++                           ancestors=event in _ANCESTOR_EVENTS)
++        elif event in _COPY_DST_EVENTS:
++            if len(args) > 1:
++                _check(event, [args[1]], args[1])
++        elif event == "shutil.move":
++            if args:
++                _check(event, [args[0]], args[0], entry=True, ancestors=True)
++            if len(args) > 1:
++                _check(event, [args[1]], args[1])
++        elif event in _FIRST_ARG_EVENTS:
++            if args:
++                _check(event, [args[0]], args[0], mutating=True, ancestors=event in _ANCESTOR_EVENTS)
++        elif event == "shutil.rmtree":
++            if args:
++                _check(event, [args[0]], args[0], entry=True, ancestors=True)
++        elif event == "sqlite3.connect":
++            database = args[0] if args else None
++            if isinstance(database, (str, bytes, os.PathLike)):
++                name = os.fsdecode(database)
++                read_only = name.startswith("file:") and "mode=ro" in name
++                if name.startswith("file:"):
++                    name = name[len("file:"):].split("?", 1)[0]
++                if name and name != ":memory:" and not read_only:
++                    _check(event, [database], name, mutating=True)
++        elif event in {"socket.getaddrinfo", "socket.gethostbyname", "socket.gethostbyname_ex"}:
++            host = args[0] if args else None
++            if isinstance(host, bytes):
++                host = host.decode(errors="replace")
++            if host not in _LOOPBACK:
++                _record(event, [host], True)
++                raise PermissionError(f"CBTI guard blocked network resolution: {host}")
++        elif event in {"socket.connect", "socket.sendto"}:
++            address = args[1] if len(args) > 1 else None
++            host = address[0] if isinstance(address, tuple) else address
++            if isinstance(address, tuple) and host not in _LOOPBACK:
++                _record(event, [repr(address)], True)
++                raise PermissionError(f"CBTI guard blocked network connection: {address}")
++        elif event in _EXEC_EVENTS:
++            exe_i, argv_i, env_i = _EXEC_EVENTS[event]
++            executable = args[exe_i] if len(args) > exe_i else None
++            argv = args[argv_i] if len(args) > argv_i else None
++            env = args[env_i] if len(args) > env_i else None
++            reason = None if _python_executable(executable) else "non-Python subprocess"
++            if reason is None:
++                reason = _unguarded_python_reason(argv, env)
++            _record(event, [executable, argv], reason is not None)
++            if reason:
++                raise PermissionError(f"CBTI guard blocked subprocess ({reason}): {executable}")
++        elif event in {"os.system", "os.fork", "os.forkpty", "os.spawn"}:
++            _record(event, list(args), True)
++            raise PermissionError(f"CBTI guard blocked {event}")
++    finally:
++        _LOCAL.busy = False
++
++
++def _install_wrappers():
++    """Operations that raise no audit event, or hide operands from it."""
++    real_open = os.open
++
++    def guarded_open(path, flags, mode=0o777, *, dir_fd=None):
++        # The audit event omits dir_fd, so a relative name would be resolved against
++        # the working directory instead of the directory descriptor.
++        if dir_fd is not None and flags & _WRITE_FLAGS and not getattr(_LOCAL, "busy", False):
++            _LOCAL.busy = True
++            try:
++                _check("os.open(dir_fd)", [path, flags], path, dir_fd, mutating=True)
++            finally:
++                _LOCAL.busy = False
++        return real_open(path, flags, mode, dir_fd=dir_fd)
++
++    os.open = guarded_open
++    for name in ("mkfifo", "mknod"):  # create filesystem nodes without any audit event
++        real = getattr(os, name, None)
++        if real is None:
++            continue
++
++        def guarded(path, *rest, __real=real, __name=name, dir_fd=None, **kwargs):
++            if not getattr(_LOCAL, "busy", False):
++                _LOCAL.busy = True
++                try:
++                    _check(f"os.{__name}", [path], path, dir_fd, entry=True)
++                finally:
++                    _LOCAL.busy = False
++            return __real(path, *rest, dir_fd=dir_fd, **kwargs)
++
++        setattr(os, name, guarded)
++
++
++if _ROOT:
++    _ROOT = os.path.realpath(_ROOT)
++    try:
++        _info = os.lstat(_ROOT)
++        _ROOT_ID = (_info.st_dev, _info.st_ino)
++    except OSError:
++        _ROOT_ID = None
++    sys.addaudithook(_hook)
++    _install_wrappers()
+--- /dev/null
++++ b/evaluation/v1_2_3/step9_63c_r5c10af_test_harness/guard_negative_scenarios.py
+@@ -0,0 +1,351 @@
++#!/usr/bin/env python3
++"""Negative-scenario catalogue for the test side-effect guard (Step 9.63c-r5c10af).
++
++Every scenario runs in its own subprocess against a FRESH temporary tree that plays the
++protected repository ("Repo") next to an unprotected "out" directory. The real
++repository is never a target. For each scenario the same action is first run with no
++guard at all to prove it really changes something (an ineffective scenario would make
++"blocked" meaningless), then with the guard under test.
++
++expect = BLOCK  guard must raise its PermissionError and nothing may change in Repo or out
++         ALLOW  action must complete, the guard must stay silent, Repo must be unchanged
++         SAFE   Repo must be unchanged (guard block or OS refusal are both acceptable)
++         LIMIT  documented non-blockable path; reported, never asserted
++
++CLI: guard_negative_scenarios.py --guard-dir DIR [--name LABEL] [--out FILE.json]
++"""
++from __future__ import annotations
++
++import argparse
++import hashlib
++import json
++import os
++import shutil
++import subprocess
++import sys
++import tempfile
++from dataclasses import dataclass
++from pathlib import Path
++
++MARKER = "@@RESULT@@"
++
++
++@dataclass(frozen=True)
++class Scenario:
++    id: str
++    group: str
++    expect: str
++    code: str
++    note: str = ""
++    needs_case_insensitive: bool = False
++
++
++PRELUDE = r'''
++import json, os, sys, shutil, io, subprocess, pathlib, sqlite3
++from pathlib import Path
++ROOT = {root!r}
++OUT = {out!r}
++ALT = {alt!r}
++VICTIM = ROOT + "/victim.txt"
++'''
++
++TAIL = r'''
++result = {{"outcome": "ALLOWED"}}
++try:
++    exec(compile(ACTION, "<scenario>", "exec"), globals())
++except BaseException as error:  # noqa: BLE001 - classify everything
++    text = repr(error)
++    result = {{"outcome": "BLOCKED" if "CBTI guard" in text else "OS_ERROR", "error": text[:300]}}
++print({marker!r} + json.dumps(result))
++'''
++
++
++def S(id, group, expect, code, note="", ci=False):
++    return Scenario(id, group, expect, code.strip("\n"), note, ci)
++
++
++SCENARIOS = [
++    # ---- a: hard links -----------------------------------------------------------------
++    S("a1_link_from_repo_file", "a", "BLOCK", "os.link(VICTIM, OUT + '/new_hl')", "never create a link whose source is a repository file"),
++    S("a2_link_into_repo", "a", "BLOCK", "os.link(OUT + '/plain.txt', ROOT + '/new_hl')"),
++    S("a3_write_via_existing_hardlink", "a", "BLOCK", "open(OUT + '/hl', 'w').write('PWNED')", "hard link created before the guard existed"),
++    S("a4_append_via_existing_hardlink", "a", "BLOCK", "fd = os.open(OUT + '/hl', os.O_WRONLY | os.O_APPEND); os.write(fd, b'PWNED')"),
++    S("a5_truncate_via_existing_hardlink", "a", "BLOCK", "os.truncate(OUT + '/hl', 0)"),
++    S("a6_chmod_via_existing_hardlink", "a", "BLOCK", "os.chmod(OUT + '/hl', 0o000)", "metadata of a shared inode"),
++    S("a7_utime_via_existing_hardlink", "a", "BLOCK", "os.utime(OUT + '/hl', (1, 1))"),
++    S("a8_pathlib_write_via_existing_hardlink", "a", "BLOCK", "Path(OUT + '/hl').write_text('PWNED')"),
++    S("a9_unlink_the_hardlink_name_itself", "a", "ALLOW", "os.remove(OUT + '/hl')", "removing an outside name leaves the repository file intact"),
++    S("a10_write_unrelated_multilink_file", "a", "ALLOW", "open(OUT + '/plain.txt', 'w').write('fine')", "plain.txt has a second name, but both names are outside"),
++    # ---- b: rename / replace with either end in the repository -------------------------
++    S("b1_rename_source_in_repo", "b", "BLOCK", "os.rename(VICTIM, OUT + '/moved')"),
++    S("b2_rename_target_in_repo", "b", "BLOCK", "os.rename(OUT + '/plain.txt', VICTIM)"),
++    S("b3_replace_source_in_repo", "b", "BLOCK", "os.replace(VICTIM, OUT + '/moved')"),
++    S("b4_replace_target_in_repo", "b", "BLOCK", "os.replace(OUT + '/plain.txt', VICTIM)"),
++    S("b5_pathlib_rename_source_in_repo", "b", "BLOCK", "Path(VICTIM).rename(OUT + '/moved')"),
++    S("b6_pathlib_replace_target_in_repo", "b", "BLOCK", "Path(OUT + '/plain.txt').replace(VICTIM)"),
++    S("b7_shutil_move_source_in_repo", "b", "BLOCK", "shutil.move(VICTIM, OUT + '/moved')"),
++    S("b8_shutil_move_target_in_repo", "b", "BLOCK", "shutil.move(OUT + '/plain.txt', ROOT + '/moved_in')"),
++    S("b9_rename_directory_in_repo", "b", "BLOCK", "os.rename(ROOT + '/emptydir', OUT + '/moved_dir')"),
++    S("b10_rename_source_dir_fd_in_repo", "b", "BLOCK", "fd = os.open(ROOT, os.O_RDONLY); os.rename('victim.txt', OUT + '/moved', src_dir_fd=fd)"),
++    S("b11_rename_target_dir_fd_in_repo", "b", "BLOCK", "fd = os.open(ROOT, os.O_RDONLY); os.rename(OUT + '/plain.txt', 'victim.txt', dst_dir_fd=fd)"),
++    S("b12_rename_into_repo_via_symlinked_dir", "b", "BLOCK", "os.rename(OUT + '/plain.txt', OUT + '/lnk_dir/moved_in')"),
++    S("b13_rename_outside_to_outside", "b", "ALLOW", "os.rename(OUT + '/plain.txt', OUT + '/renamed.txt')"),
++    S("b14_rename_the_symlink_itself", "b", "ALLOW", "os.rename(OUT + '/lnk_file', OUT + '/lnk_renamed')", "moves the link, not its target"),
++    # ---- c: symlinks -----------------------------------------------------------------------
++    S("c1_remove_symlink_itself", "c", "ALLOW", "os.remove(OUT + '/lnk_file')", "deleting the link is allowed"),
++    S("c2_unlink_symlink_itself", "c", "ALLOW", "os.unlink(OUT + '/lnk_file')"),
++    S("c3_pathlib_unlink_symlink_itself", "c", "ALLOW", "Path(OUT + '/lnk_file').unlink()"),
++    S("c4_write_through_symlink", "c", "BLOCK", "open(OUT + '/lnk_file', 'w').write('PWNED')"),
++    S("c5_os_open_through_symlink", "c", "BLOCK", "os.close(os.open(OUT + '/lnk_file', os.O_WRONLY | os.O_TRUNC))"),
++    S("c6_write_text_through_symlink", "c", "BLOCK", "Path(OUT + '/lnk_file').write_text('PWNED')"),
++    S("c7_copy_onto_symlink", "c", "BLOCK", "shutil.copy(OUT + '/plain.txt', OUT + '/lnk_file')"),
++    S("c8_new_file_through_symlinked_dir", "c", "BLOCK", "open(OUT + '/lnk_dir/created.txt', 'w').write('PWNED')"),
++    S("c9_overwrite_through_symlinked_dir", "c", "BLOCK", "open(OUT + '/lnk_dir/inner.txt', 'w').write('PWNED')"),
++    S("c10_delete_through_symlinked_dir", "c", "BLOCK", "os.remove(OUT + '/lnk_dir/inner.txt')"),
++    S("c11_dotdot_after_symlink_write", "c", "BLOCK", "open(OUT + '/lnk_dir/../victim.txt', 'w').write('PWNED')", "'..' after a symlink leaves the link's target, not the link's parent"),
++    S("c12_dotdot_after_symlink_remove", "c", "BLOCK", "os.remove(OUT + '/lnk_dir/../victim.txt')"),
++    S("c13_trailing_slash_rmdir_through_symlink", "c", "BLOCK", "os.rmdir(OUT + '/lnk_empty/')", "a trailing slash makes the OS follow the final symlink"),
++    S("c14_trailing_slash_rmtree_through_symlink", "c", "SAFE", "shutil.rmtree(OUT + '/lnk_dir/')"),
++    S("c15_rmtree_symlink_without_slash", "c", "SAFE", "shutil.rmtree(OUT + '/lnk_dir')", "the standard library itself refuses a symlink here, so there is nothing to block"),
++    S("c16_relative_symlink_write", "c", "BLOCK", "open(OUT + '/lnk_rel', 'w').write('PWNED')", "relative link ../Repo/victim.txt"),
++    S("c17_create_symlink_inside_repo", "c", "BLOCK", "os.symlink('/nonexistent', ROOT + '/new_link')"),
++    S("c18_create_symlink_pointing_into_repo", "c", "ALLOW", "os.symlink(VICTIM, OUT + '/another_link')", "creating a link is harmless; writing through it is blocked (c4)"),
++    S("c19_read_through_symlink", "c", "ALLOW", "assert open(OUT + '/lnk_file').read() == 'ORIGINAL'"),
++    S("c20_chmod_through_symlink", "c", "BLOCK", "os.chmod(OUT + '/lnk_file', 0o000)"),
++    # ---- d: every write entry point against the repository --------------------------------
++    S("d1_open_w", "d", "BLOCK", "open(VICTIM, 'w').write('PWNED')"),
++    S("d2_open_a", "d", "BLOCK", "open(VICTIM, 'a').write('PWNED')"),
++    S("d3_open_x_new", "d", "BLOCK", "open(ROOT + '/brand_new.txt', 'x').write('PWNED')"),
++    S("d4_open_r_plus", "d", "BLOCK", "open(VICTIM, 'r+').write('PWNED')"),
++    S("d5_open_wb", "d", "BLOCK", "open(VICTIM, 'wb').write(b'PWNED')"),
++    S("d6_io_open_w", "d", "BLOCK", "io.open(VICTIM, 'w').write('PWNED')"),
++    S("d7_os_open_wronly", "d", "BLOCK", "fd = os.open(VICTIM, os.O_WRONLY); os.write(fd, b'PWNED'); os.close(fd)"),
++    S("d8_os_open_creat", "d", "BLOCK", "os.close(os.open(ROOT + '/created', os.O_CREAT | os.O_WRONLY, 0o644))"),
++    S("d9_os_open_rdwr", "d", "BLOCK", "fd = os.open(VICTIM, os.O_RDWR); os.write(fd, b'PWNED'); os.close(fd)"),
++    S("d10_os_open_trunc", "d", "BLOCK", "os.close(os.open(VICTIM, os.O_WRONLY | os.O_TRUNC))"),
++    S("d11_os_open_append", "d", "BLOCK", "fd = os.open(VICTIM, os.O_WRONLY | os.O_APPEND); os.write(fd, b'PWNED'); os.close(fd)"),
++    S("d12_os_open_excl", "d", "BLOCK", "os.close(os.open(ROOT + '/excl', os.O_CREAT | os.O_EXCL | os.O_WRONLY))"),
++    S("d13_shutil_copy", "d", "BLOCK", "shutil.copy(OUT + '/plain.txt', VICTIM)"),
++    S("d14_shutil_copyfile", "d", "BLOCK", "shutil.copyfile(OUT + '/plain.txt', VICTIM)"),
++    S("d15_shutil_copy2", "d", "BLOCK", "shutil.copy2(OUT + '/plain.txt', VICTIM)"),
++    S("d16_shutil_copy_into_repo_dir", "d", "BLOCK", "shutil.copy(OUT + '/plain.txt', ROOT)"),
++    S("d17_shutil_copyfileobj", "d", "BLOCK", "shutil.copyfileobj(io.BytesIO(b'PWNED'), open(VICTIM, 'wb'))"),
++    S("d18_shutil_copytree", "d", "BLOCK", "shutil.copytree(OUT + '/tree', ROOT + '/tree_copy')"),
++    S("d19_shutil_copymode", "d", "BLOCK", "shutil.copymode(OUT + '/mode_src', VICTIM)"),
++    S("d20_shutil_copystat", "d", "BLOCK", "shutil.copystat(OUT + '/stat_src', VICTIM)"),
++    S("d21_pathlib_write_text", "d", "BLOCK", "Path(VICTIM).write_text('PWNED')"),
++    S("d22_pathlib_write_bytes", "d", "BLOCK", "Path(VICTIM).write_bytes(b'PWNED')"),
++    S("d23_pathlib_open_w", "d", "BLOCK", "Path(VICTIM).open('w').write('PWNED')"),
++    S("d24_pathlib_touch_new", "d", "BLOCK", "Path(ROOT + '/touched').touch()"),
++    S("d25_pathlib_touch_existing", "d", "BLOCK", "Path(VICTIM).touch()", "updates mtime"),
++    S("d26_pathlib_mkdir", "d", "BLOCK", "Path(ROOT + '/newdir').mkdir()"),
++    S("d27_os_makedirs", "d", "BLOCK", "os.makedirs(ROOT + '/a/b/c')"),
++    S("d28_os_mkdir", "d", "BLOCK", "os.mkdir(ROOT + '/newdir')"),
++    S("d29_os_truncate_path", "d", "BLOCK", "os.truncate(VICTIM, 0)"),
++    S("d30_os_chmod_path", "d", "BLOCK", "os.chmod(VICTIM, 0o000)"),
++    S("d31_os_chmod_fd", "d", "BLOCK", "fd = os.open(VICTIM, os.O_RDONLY); os.chmod(fd, 0o000)", "descriptor opened read-only is still a handle on a repository file"),
++    S("d32_os_fchmod_fd", "d", "BLOCK", "fd = os.open(VICTIM, os.O_RDONLY); os.fchmod(fd, 0o000)"),
++    S("d33_os_utime_path", "d", "BLOCK", "os.utime(VICTIM, (1, 1))"),
++    S("d34_os_utime_fd", "d", "BLOCK", "fd = os.open(VICTIM, os.O_RDONLY); os.utime(fd, (1, 1))"),
++    S("d35_os_chown_path", "d", "BLOCK", "gids = [g for g in os.getgroups() if g != os.stat(VICTIM).st_gid]; os.chown(VICTIM, -1, gids[0])"),
++    S("d36_os_remove", "d", "BLOCK", "os.remove(VICTIM)"),
++    S("d37_os_unlink", "d", "BLOCK", "os.unlink(VICTIM)"),
++    S("d38_pathlib_unlink", "d", "BLOCK", "Path(VICTIM).unlink()"),
++    S("d39_os_rmdir", "d", "BLOCK", "os.rmdir(ROOT + '/emptydir')"),
++    S("d40_shutil_rmtree", "d", "BLOCK", "shutil.rmtree(ROOT + '/sub')"),
++    S("d41_os_symlink_dst_in_repo", "d", "BLOCK", "os.symlink(OUT + '/plain.txt', ROOT + '/lnk')"),
++    S("d42_os_mkfifo", "d", "BLOCK", "os.mkfifo(ROOT + '/fifo')", "raises no audit event of its own"),
++    S("d43_os_mknod_fifo", "d", "BLOCK", "import stat; os.mknod(ROOT + '/node', stat.S_IFIFO | 0o600)", "raises no audit event of its own"),
++    S("d44_sqlite3_connect_write", "d", "BLOCK", "c = sqlite3.connect(ROOT + '/new.db'); c.execute('create table t(x)'); c.commit()"),
++    S("d45_dir_fd_open_create", "d", "BLOCK", "fd = os.open(ROOT, os.O_RDONLY); os.close(os.open('via_dirfd', os.O_WRONLY | os.O_CREAT, 0o644, dir_fd=fd))", "audit event omits dir_fd"),
++    S("d46_dir_fd_open_overwrite", "d", "BLOCK", "fd = os.open(ROOT, os.O_RDONLY); os.close(os.open('victim.txt', os.O_WRONLY | os.O_TRUNC, dir_fd=fd))"),
++    S("d47_dir_fd_mkdir", "d", "BLOCK", "fd = os.open(ROOT, os.O_RDONLY); os.mkdir('via_dirfd_dir', dir_fd=fd)"),
++    S("d48_dir_fd_unlink", "d", "BLOCK", "fd = os.open(ROOT, os.O_RDONLY); os.unlink('victim.txt', dir_fd=fd)"),
++    S("d49_dir_fd_mkfifo", "d", "BLOCK", "fd = os.open(ROOT, os.O_RDONLY); os.mkfifo('via_dirfd_fifo', dir_fd=fd)"),
++    S("d50_relative_path_after_chdir", "d", "BLOCK", "os.chdir(ROOT); open('victim.txt', 'w').write('PWNED')"),
++    S("d51_dotdot_relative_from_out", "d", "BLOCK", "open('../Repo/victim.txt', 'w').write('PWNED')"),
++    S("d52_case_variant_of_root", "d", "BLOCK", "open(ALT + '/victim.txt', 'w').write('PWNED')", "case-insensitive filesystem alias of the root", True),
++    S("d53_tempfile_inside_repo", "d", "BLOCK", "import tempfile; tempfile.NamedTemporaryFile(dir=ROOT, delete=False)"),
++    S("d54_logging_file_handler", "d", "BLOCK", "import logging; logging.FileHandler(ROOT + '/x.log')"),
++    S("d58_rename_ancestor_of_repo", "d", "BLOCK", "os.rename(os.path.dirname(ROOT), os.path.dirname(ROOT) + '_x')", "moves the whole repository in one call"),
++    S("d59_rmtree_ancestor_of_repo", "d", "SAFE", "shutil.rmtree(os.path.dirname(ROOT))", "must never delete the repository; unprotected siblings may be removed"),
++    S("d60_chmod_ancestor_of_repo", "d", "BLOCK", "os.chmod(os.path.dirname(ROOT), 0o000)", "locks the repository out"),
++    S("d61_rmdir_ancestor_alias_case", "d", "BLOCK", "os.rename(os.path.dirname(ROOT).rsplit('/', 1)[0] + '/' + os.path.basename(os.path.dirname(ROOT)).swapcase(), os.path.dirname(ROOT) + '_y')", "case-variant alias of the ancestor", True),
++    S("d55_read_repo_file", "d", "ALLOW", "assert open(VICTIM).read() == 'ORIGINAL'; assert os.listdir(ROOT); os.stat(VICTIM)"),
++    S("d56_write_outside", "d", "ALLOW", "open(OUT + '/new.txt', 'w').write('ok'); shutil.copy(VICTIM, OUT + '/copy_of_victim'); os.makedirs(OUT + '/x/y')", "copying FROM the repo is a read"),
++    S("d57_delete_outside_tree", "d", "ALLOW", "shutil.rmtree(OUT + '/tree'); os.remove(OUT + '/plain.txt')"),
++    # ---- e: child processes ------------------------------------------------------------------
++    S("e1_child_python_inherits_guard", "e", "BLOCK", "r = subprocess.run([sys.executable, '-c', 'open(' + repr(VICTIM) + ', \"w\").write(\"PWNED\")'], capture_output=True, text=True); assert 'CBTI guard' in r.stderr, r.stderr[-300:]; raise PermissionError('CBTI guard (child blocked)')", "control: child inherits the guard through PYTHONPATH"),
++    S("e2_child_isolated_flag", "e", "BLOCK", "subprocess.run([sys.executable, '-I', '-c', 'open(' + repr(VICTIM) + ', \"w\").write(\"PWNED\")'], check=True)", "-I ignores PYTHONPATH, so the child would run unguarded"),
++    S("e3_child_no_site_flag", "e", "BLOCK", "subprocess.run([sys.executable, '-S', '-c', 'open(' + repr(VICTIM) + ', \"w\").write(\"PWNED\")'], check=True)", "-S skips sitecustomize"),
++    S("e4_child_ignore_env_flag", "e", "BLOCK", "subprocess.run([sys.executable, '-E', '-c', 'open(' + repr(VICTIM) + ', \"w\").write(\"PWNED\")'], check=True)"),
++    S("e5_child_clustered_flags", "e", "BLOCK", "subprocess.run([sys.executable, '-Ic', 'open(' + repr(VICTIM) + ', \"w\").write(\"PWNED\")'], check=True)"),
++    S("e6_child_scrubbed_environment", "e", "BLOCK", "subprocess.run([sys.executable, '-c', 'open(' + repr(VICTIM) + ', \"w\").write(\"PWNED\")'], env={}, check=True)"),
++    S("e7_child_environment_without_guard_path", "e", "BLOCK", "env = dict(os.environ); env.pop('PYTHONPATH', None); subprocess.run([sys.executable, '-c', 'open(' + repr(VICTIM) + ', \"w\").write(\"PWNED\")'], env=env, check=True)"),
++    S("e8_parent_environ_mutated_then_inherit", "e", "BLOCK", "os.environ.pop('PYTHONPATH', None); subprocess.run([sys.executable, '-c', 'open(' + repr(VICTIM) + ', \"w\").write(\"PWNED\")'], check=True)"),
++    S("e9_exec_isolated_python", "e", "BLOCK", "os.execv(sys.executable, [sys.executable, '-I', '-c', 'open(' + repr(VICTIM) + ', \"w\").write(\"PWNED\")'])"),
++    S("e10_posix_spawn_isolated_python", "e", "BLOCK", "pid = os.posix_spawn(sys.executable, [sys.executable, '-I', '-c', 'open(' + repr(VICTIM) + ', \"w\").write(\"PWNED\")'], os.environ); os.waitpid(pid, 0)"),
++    S("e11_shell_subprocess", "e", "BLOCK", "subprocess.run('echo PWNED > ' + VICTIM, shell=True, check=True)"),
++    S("e12_non_python_binary", "e", "BLOCK", "subprocess.run(['/bin/cp', OUT + '/plain.txt', VICTIM], check=True)"),
++    S("e13_child_python_writes_outside", "e", "ALLOW", "env = {**os.environ, 'PYTHONDONTWRITEBYTECODE': '1'}; subprocess.run([sys.executable, '-c', 'open(' + repr(OUT + '/from_child') + ', \"w\").write(\"ok\")'], env=env, check=True)", "control: ordinary child with a copied environment is fine"),
++    # ---- f: documented limits (reported, never asserted) ---------------------------------------
++    S("f1_ctypes_libc_write", "f", "LIMIT", "import ctypes; libc = ctypes.CDLL(None); fd = libc.open(VICTIM.encode(), os.O_WRONLY | os.O_TRUNC); libc.write(fd, b'PWNED', 5); libc.close(fd)", "direct libc syscalls never reach the audit hook"),
++]
++
++
++def build_tree(base: Path) -> tuple[Path, Path]:
++    root = base / "Repo"
++    out = base / "out"
++    for directory in (root / "sub", root / "emptydir", out / "tree" / "deep"):
++        directory.mkdir(parents=True)
++    (root / "victim.txt").write_text("ORIGINAL")
++    (root / "sub" / "inner.txt").write_text("INNER")
++    (out / "plain.txt").write_text("PLAIN")
++    (out / "tree" / "deep" / "f.txt").write_text("T")
++    (out / "mode_src").write_text("M"); os.chmod(out / "mode_src", 0o755)
++    (out / "stat_src").write_text("T"); os.utime(out / "stat_src", (1, 1))
++    os.link(out / "plain.txt", out / "plain_second_name")        # unrelated multi-link file
++    (root / "hl_target.txt").write_text("HLTARGET")
++    os.link(root / "hl_target.txt", out / "hl")                    # hard link INTO the repository (victim.txt keeps one link)
++    os.symlink(root / "victim.txt", out / "lnk_file")
++    os.symlink(root / "sub", out / "lnk_dir")
++    os.symlink(root / "emptydir", out / "lnk_empty")
++    os.symlink("../Repo/victim.txt", out / "lnk_rel")
++    return root, out
++
++
++def digest_tree(top: Path) -> dict:
++    rows = {}
++    try:
++        entries = sorted(top.rglob("*"))
++        rows["."] = ("root", top.lstat().st_mode, top.parent.lstat().st_mode)
++    except OSError:
++        return {"__unreadable_or_missing__": True}
++    for path in entries:
++        rel = path.relative_to(top).as_posix()
++        info = path.lstat()
++        if path.is_symlink():
++            rows[rel] = ("link", os.readlink(path))
++        elif path.is_dir():
++            rows[rel] = ("dir", info.st_mode)
++        elif path.is_file():
++            try:
++                content = hashlib.sha256(path.read_bytes()).hexdigest()
++            except OSError:  # e.g. mode 000 after an (unguarded) chmod: the mode already differs
++                content = "UNREADABLE"
++            rows[rel] = ("file", info.st_mode, info.st_size, info.st_mtime_ns, info.st_gid, content)
++        else:
++            rows[rel] = ("other", info.st_mode)
++    return rows
++
++
++def _clean_env(extra: dict | None = None) -> dict:
++    env = {k: v for k, v in os.environ.items()
++           if not k.startswith("CBTI_") and k not in ("PYTHONPATH", "PYTHONHOME")}
++    env["PYTHONDONTWRITEBYTECODE"] = "1"
++    env.update(extra or {})
++    return env
++
++
++def run_once(scenario: Scenario, guard_dir: str | None, python: str) -> dict:
++    base = Path(tempfile.mkdtemp(prefix="guardneg-")).resolve()
++    try:
++        root, out = build_tree(base)
++        alt = base / root.name.swapcase()
++        if scenario.needs_case_insensitive and not (alt.exists() and Path(str(base).swapcase()).exists()):
++            return {"skipped": "filesystem is case-sensitive"}
++        before_repo, before_out = digest_tree(root), digest_tree(out)
++        logdir = Path(tempfile.mkdtemp(prefix="guardneg-log-")).resolve()  # outside base: scenarios may move base
++        log = logdir / "guard.jsonl"
++        script = (PRELUDE.format(root=str(root), out=str(out), alt=str(alt))
++                  + f"ACTION = {scenario.code!r}\n" + TAIL.format(marker=MARKER))
++        extra = {}
++        if guard_dir:
++            extra = {"CBTI_GUARD_ROOT": str(root), "CBTI_GUARD_LOG": str(log), "PYTHONPATH": guard_dir}
++        process = subprocess.run([python, "-c", script], env=_clean_env(extra), cwd=out,
++                                 capture_output=True, text=True, timeout=120)
++        line = next((l for l in process.stdout.splitlines() if l.startswith(MARKER)), None)
++        result = json.loads(line[len(MARKER):]) if line else {"outcome": "NO_RESULT", "stderr": process.stderr[-300:]}
++        blocked_events = 0
++        if log.exists():
++            blocked_events = sum(1 for l in log.read_text().splitlines() if l and json.loads(l).get("blocked"))
++        # Descendant processes (e.g. a child Python) log to the same file.
++        result.update(repo_changed=digest_tree(root) != before_repo, out_changed=digest_tree(out) != before_out,
++                      guard_blocked_events=blocked_events)
++        return result
++    finally:
++        for leftover in (base, Path(str(base) + "_x"), Path(str(base) + "_y")):
++            try:
++                os.chmod(leftover, 0o755)
++            except OSError:
++                pass
++            shutil.rmtree(leftover, ignore_errors=True)
++        shutil.rmtree(locals().get("logdir", base), ignore_errors=True) if "logdir" in locals() else None
++
++
++def verdict(scenario: Scenario, guarded: dict, unguarded: dict) -> str:
++    if guarded.get("skipped"):
++        return "SKIPPED"
++    if scenario.expect == "LIMIT":
++        return "LIMIT_BYPASSED" if guarded["repo_changed"] else "LIMIT_NOT_REPRODUCED"
++    blocked = guarded["outcome"] == "BLOCKED" or guarded["guard_blocked_events"] > 0
++    if scenario.expect == "BLOCK":
++        if guarded["repo_changed"] or guarded["out_changed"]:
++            return "BYPASS"
++        return "PASS" if blocked else "NOT_BLOCKED"
++    if scenario.expect == "SAFE":
++        return "BYPASS" if guarded["repo_changed"] else "PASS"
++    # ALLOW
++    if guarded["repo_changed"]:
++        return "BYPASS"
++    return "PASS" if (guarded["outcome"] == "ALLOWED" and not blocked) else "FALSE_POSITIVE"
++
++
++def effective(scenario: Scenario, unguarded: dict) -> bool:
++    """Without any guard the scenario must change the tree (or run to completion for ALLOW)."""
++    if unguarded.get("skipped"):
++        return True
++    if scenario.expect in ("BLOCK", "SAFE", "LIMIT"):
++        return bool(unguarded["repo_changed"] or unguarded["out_changed"])
++    return unguarded["outcome"] == "ALLOWED"
++
++
++def run_catalogue(guard_dir: str | None, python: str = sys.executable, include_unguarded: bool = True) -> list[dict]:
++    rows = []
++    for scenario in SCENARIOS:
++        unguarded = run_once(scenario, None, python) if include_unguarded else {}
++        guarded = run_once(scenario, guard_dir, python) if guard_dir else {}
++        rows.append({"id": scenario.id, "group": scenario.group, "expect": scenario.expect, "note": scenario.note,
++                     "scenario_effective_without_guard": effective(scenario, unguarded) if include_unguarded else None,
++                     "unguarded": unguarded, "guarded": guarded,
++                     "verdict": verdict(scenario, guarded, unguarded) if guard_dir else None})
++    return rows
++
++
++def main(argv=None) -> int:
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument("--guard-dir", required=True)
++    parser.add_argument("--name", default="guard")
++    parser.add_argument("--out")
++    args = parser.parse_args(argv)
++    rows = run_catalogue(str(Path(args.guard_dir).resolve()))
++    counts: dict = {}
++    for row in rows:
++        counts[row["verdict"]] = counts.get(row["verdict"], 0) + 1
++    report = {"guard": args.name, "guard_dir": args.guard_dir, "scenarios": len(rows), "verdicts": counts,
++              "guard_sitecustomize_sha256": hashlib.sha256((Path(args.guard_dir) / "sitecustomize.py").read_bytes()).hexdigest(),
++              "scenario_catalogue_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
++              "ineffective_scenarios": [r["id"] for r in rows if not r["scenario_effective_without_guard"]],
++              "failures": [{"id": r["id"], "verdict": r["verdict"], "guarded": r["guarded"]} for r in rows
++                           if r["verdict"] not in ("PASS", "SKIPPED", "LIMIT_BYPASSED", "LIMIT_NOT_REPRODUCED")],
++              "rows": rows}
++    if args.out:
++        Path(args.out).write_text(json.dumps(report, indent=1, default=str) + "\n")
++    print(json.dumps({k: report[k] for k in ("guard", "scenarios", "verdicts", "ineffective_scenarios")}, indent=1))
++    for failure in report["failures"]:
++        print(f"  {failure['verdict']:<15} {failure['id']}")
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+--- /dev/null
++++ b/evaluation/v1_2_3/step9_63c_r5c10af_test_harness/run_module.py
+@@ -0,0 +1,74 @@
++"""Run one test module (or explicit test ids) and emit per-test outcomes as JSON.
++
++Usage: run_module.py OUT.json NAME [NAME ...]   (names are unittest dotted names)
++Each test's id is exported as CBTI_GUARD_CURRENT_TEST so guard events are attributable.
++"""
++import importlib
++import json
++import os
++import sys
++import time
++import traceback
++import unittest
++from pathlib import Path
++
++root = Path.cwd()
++sys.path.insert(0, str(root / "tests"))
++sys.path.insert(0, str(root))
++out, names = sys.argv[1], sys.argv[2:]
++
++
++class Recorder(unittest.TextTestResult):
++    def __init__(self, *a, **k):
++        super().__init__(*a, **k)
++        self.rows = {}
++
++    def startTest(self, test):
++        os.environ["CBTI_GUARD_CURRENT_TEST"] = test.id()
++        self.rows[test.id()] = {"outcome": "pass"}
++        super().startTest(test)
++
++    def _mark(self, test, outcome, err=None):
++        row = self.rows.setdefault(test.id(), {})
++        row["outcome"] = outcome
++        if err is not None:
++            row["detail"] = "".join(traceback.format_exception(*err))[-3000:]
++
++    def addFailure(self, test, err):
++        super().addFailure(test, err); self._mark(test, "fail", err)
++
++    def addError(self, test, err):
++        super().addError(test, err); self._mark(test, "error", err)
++
++    def addSkip(self, test, reason):
++        super().addSkip(test, reason); self.rows[test.id()] = {"outcome": "skip", "detail": reason}
++
++    def addExpectedFailure(self, test, err):
++        super().addExpectedFailure(test, err); self._mark(test, "xfail", err)
++
++    def addUnexpectedSuccess(self, test):
++        super().addUnexpectedSuccess(test); self._mark(test, "unexpected_success")
++
++
++result = {"names": names, "import_errors": {}, "tests": {}}
++loader = unittest.TestLoader()
++suite = unittest.TestSuite()
++for name in names:
++    try:
++        if "." in name:
++            suite.addTests(loader.loadTestsFromName(name))
++        else:
++            suite.addTests(loader.loadTestsFromModule(importlib.import_module(name)))
++    except BaseException as exc:
++        result["import_errors"][name] = f"{type(exc).__name__}: {exc}"
++started = time.time()
++runner = unittest.TextTestRunner(stream=sys.stderr, verbosity=1, resultclass=Recorder)
++outcome = runner.run(suite)
++os.environ.pop("CBTI_GUARD_CURRENT_TEST", None)
++# Errors raised in setUpClass/setUpModule appear as _ErrorHolder entries.
++for holder, err in outcome.errors:
++    if holder.id() not in outcome.rows:
++        result["tests"][holder.id()] = {"outcome": "error", "detail": err[-3000:]}
++result["tests"].update(outcome.rows)
++result["seconds"] = round(time.time() - started, 2)
++json.dump(result, open(out, "w"), indent=1)
+--- /dev/null
++++ b/evaluation/v1_2_3/step9_63c_r5c10af_test_harness/run_all.sh
+@@ -0,0 +1,21 @@
++#!/bin/zsh
++# Usage: run_all.sh OUTPUT_DIR   (OUTPUT_DIR must be outside the repository)
++# Runs every tests/test_*.py module in its own guarded subprocess (Step 9.63c-r5c10ab).
++S=${0:A:h}
++REPO=${S:h:h:h}
++OUT=${1:?output directory required}; mkdir -p $OUT
++cd $REPO
++# Step 0: the guard's own negative catalogue runs OUTSIDE any guard (it must spawn children whose
++# environment differs from ours, which the guard itself forbids); the test module verifies this output.
++.venv/bin/python $S/guard_negative_scenarios.py --guard-dir $S/guard --name harness_guard --out $OUT/guard_negative_live.json > $OUT/guard_negative_live.log 2>&1
++echo "guard_negative_catalogue exit=$?" >> $OUT/exit_codes.txt
++export CBTI_GUARD_NEGATIVE_RESULTS=$OUT/guard_negative_live.json
++export CBTI_GUARD_ROOT=$REPO CBTI_GUARD_LOG=$OUT/guard.jsonl PYTHONPATH=$S/guard PYTHONDONTWRITEBYTECODE=1
++export DEEPSEEK_API_KEY=ci-placeholder-no-network OPENAI_API_KEY= ANTHROPIC_API_KEY= TAVILY_API_KEY=
++export ENABLE_WEB_SEARCH=false LANGCHAIN_TRACING_V2=false
++for f in tests/test_*.py; do
++  m=${f:t:r}
++  perl -e "alarm shift; exec @ARGV" 900 .venv/bin/python $S/run_module.py $OUT/$m.json $m > $OUT/$m.log 2>&1
++  echo "$m exit=$?" >> $OUT/exit_codes.txt
++done
++echo DONE
+--- /dev/null
++++ b/evaluation/v1_2_3/step9_63c_r5c10af_test_harness/collect.py
+@@ -0,0 +1,40 @@
++"""Collection-only: load every tests/test_*.py via unittest; never call run()."""
++import ast, importlib, json, sys, unittest
++from pathlib import Path
++root = Path.cwd(); out = sys.argv[1]
++files = sorted((root / "tests").glob("test_*.py"))
++syntax_fail = []
++static = {}
++for f in files:
++    try:
++        tree = ast.parse(f.read_text(encoding="utf-8"))
++        static[f.stem] = sum(1 for n in ast.walk(tree) if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef)) and n.name.startswith("test"))
++    except SyntaxError as e:
++        syntax_fail.append((f.name, str(e)))
++sys.path.insert(0, str(root / "tests")); sys.path.insert(0, str(root))
++result = {"files": len(files), "syntax_failures": syntax_fail, "modules": {}}
++for f in files:
++    loader = unittest.TestLoader()
++    try:
++        suite = loader.loadTestsFromModule(importlib.import_module(f.stem))
++    except BaseException as exc:
++        result["modules"][f.stem] = {"collected": 0, "static_defs": static.get(f.stem),
++                                     "import_error": f"{type(exc).__name__}: {exc}"}
++        continue
++    def walk(s):
++        for t in s:
++            if isinstance(t, unittest.TestSuite): yield from walk(t)
++            else: yield t
++    tests = list(walk(suite))
++    errs = [e.strip().splitlines()[-1] for e in loader.errors]
++    real = [t.id() for t in tests if not t.id().startswith("unittest.loader._FailedTest")]
++    result["modules"][f.stem] = {"collected": len(real), "static_defs": static.get(f.stem),
++                                 "import_error": errs[0] if errs else None}
++json.dump(result, open(out, "w"), indent=1)
++blocked = {k: v for k, v in result["modules"].items() if v["import_error"]}
++print("files", len(files), "syntax_failures", len(syntax_fail))
++print("collected_methods", sum(v["collected"] for v in result["modules"].values()))
++print("import_blockers", len(blocked))
++for k, v in blocked.items(): print("  BLOCKED", k, "static_defs=", v["static_defs"], "|", v["import_error"][:150])
++mism = {k: (v["collected"], v["static_defs"]) for k, v in result["modules"].items() if not v["import_error"] and v["collected"] != v["static_defs"]}
++print("collected!=static (non-blocked):", mism)
+--- /dev/null
++++ b/evaluation/v1_2_3/step9_63c_r5c10af_test_harness/aggregate.py
+@@ -0,0 +1,20 @@
++import json, sys, glob, os, collections
++d = sys.argv[1]
++tot = collections.Counter(); imp = {}; bad = []
++for f in sorted(glob.glob(f"{d}/test_*.json")):
++    r = json.load(open(f))
++    imp.update(r["import_errors"])
++    for tid, row in r["tests"].items():
++        tot[row["outcome"]] += 1
++        if row["outcome"] not in ("pass",):
++            last = (row.get("detail") or "").strip().splitlines()
++            bad.append((row["outcome"], tid, last[-1][:170] if last else ""))
++mods = {os.path.basename(f)[:-5] for f in glob.glob(f"{d}/test_*.json")}
++logs = {os.path.basename(f)[:-4] for f in glob.glob(f"{d}/test_*.log")}
++print("modules with json:", len(mods), "| logs:", len(logs), "| missing json:", sorted(logs - mods))
++print("exit codes:", collections.Counter(l.split("exit=")[1].strip() for l in open(f"{d}/exit_codes.txt")))
++print("collected(executed) =", sum(tot.values()), dict(tot))
++print("import_blockers =", len(imp)); [print("  IMPORT", k, "|", v[:120]) for k, v in sorted(imp.items())]
++for b in sorted(bad): print(" ", b[0].upper(), b[1], "|", b[2])
++g = f"{d}/guard.jsonl"
++print("guard events:", sum(1 for _ in open(g)) if os.path.exists(g) else 0)
+--- /dev/null
++++ b/evaluation/v1_2_3/step9_63c_r5c10af_test_harness/snapshot.py
+@@ -0,0 +1,16 @@
++"""Hash every repo file (excluding .venv/.git/models/__pycache__) with size+mtime_ns."""
++import hashlib, json, os, sys
++root = sys.argv[1]; out = sys.argv[2]
++SKIP = {".venv", ".git", "models", "__pycache__", ".rag_db"}
++rows = {}
++for d, dirs, files in os.walk(root):
++    dirs[:] = [x for x in dirs if x not in SKIP]
++    for f in files:
++        p = os.path.join(d, f); rel = os.path.relpath(p, root)
++        if os.path.islink(p): rows[rel] = {"link": os.readlink(p)}; continue
++        st = os.stat(p); h = hashlib.sha256()
++        with open(p, "rb") as fh:
++            for chunk in iter(lambda: fh.read(1 << 20), b""): h.update(chunk)
++        rows[rel] = {"sha256": h.hexdigest(), "size": st.st_size, "mtime_ns": st.st_mtime_ns}
++json.dump(rows, open(out, "w"), indent=0, sort_keys=True)
++print(len(rows), "files")
+--- /dev/null
++++ b/evaluation/v1_2_3/step9_63c_r5c10af_test_harness/compare.py
+@@ -0,0 +1,7 @@
++import json, sys
++a = json.load(open(sys.argv[1])); b = json.load(open(sys.argv[2]))
++added = sorted(set(b) - set(a)); removed = sorted(set(a) - set(b))
++changed = sorted(k for k in set(a) & set(b) if a[k].get("sha256") != b[k].get("sha256"))
++touched = sorted(k for k in set(a) & set(b) if a[k].get("sha256") == b[k].get("sha256") and a[k].get("mtime_ns") != b[k].get("mtime_ns"))
++for name, lst in [("ADDED", added), ("REMOVED", removed), ("CONTENT_CHANGED", changed), ("MTIME_ONLY", touched)]:
++    print(f"{name}: {len(lst)}"); [print("  ", x) for x in lst[:50]]
+--- /dev/null
++++ b/tests/test_step9_63c_r5c10af_guard_negative.py
+@@ -0,0 +1,252 @@
++"""Step 9.63c-r5c10af: negative tests for the test side-effect guard (v3 candidate).
++
++The guard under test is ``evaluation/v1_2_3/step9_63c_r5c10af_test_harness/guard``.
++Its scenarios run against a throw-away temporary tree that plays the protected
++repository; the real repository is never a target. Each scenario is first run with no
++guard at all to prove it really changes something, then with the guard.
++
++Because the guard (correctly) refuses to start Python children whose environment
++differs from its own, this module cannot spawn the scenarios while it runs under that
++very guard. The harness therefore runs the catalogue first, outside any guard
++(``CBTI_GUARD_NEGATIVE_RESULTS``); this module verifies that the results are bound to
++the exact guard and catalogue bytes in the repository. Run outside a guard it executes
++the catalogue itself. Under a guard with no results it fails; it never skips.
++
++Requested coverage (user decision, Step 9.63c-r5c10ae review):
++  a  hard links: creating one from a repository file is blocked; writing through an
++     existing one is blocked
++  b  rename/replace blocked when either end is in the repository
++  c  symlinks: deleting the link itself is allowed; writing through it is blocked
++  d  every write entry point: os.open, shutil.copy*, Path.write_text, builtin open, ...
++"""
++from __future__ import annotations
++
++import hashlib
++import importlib.util
++import json
++import os
++import sys
++import unittest
++from pathlib import Path
++
++REPO = Path(__file__).resolve().parents[1]
++HARNESS = REPO / "evaluation/v1_2_3/step9_63c_r5c10af_test_harness"
++GUARD_DIR = HARNESS / "guard"
++SCENARIOS_PATH = HARNESS / "guard_negative_scenarios.py"
++# Historical evidence that must stay byte-identical.
++V1_GUARD = (REPO / "evaluation/v1_2_3/step9_63c_r5c10ab_test_harness/guard/sitecustomize.py",
++            "1376cf088cfbb7441829430a2e62924c73c606851af37b93764d0f1f9201fcbd")
++V2_GUARD = (REPO / "evaluation/v1_2_3/step9_63c_r5c10ad_test_harness/guard/sitecustomize.py",
++            "b85280bd79ec78e0ca8c6e7ef04bf580ba84fcfd9e2aef1d999395a59fea9f23")
++# The standard library itself refuses rmtree on a symlink, so this scenario has no effect
++# without a guard; it is a SAFE-class scenario kept for completeness.
++DOCUMENTED_INEFFECTIVE = {"c15_rmtree_symlink_without_slash"}
++
++
++def sha256(path: Path) -> str:
++    return hashlib.sha256(path.read_bytes()).hexdigest()
++
++
++def load_scenarios():
++    spec = importlib.util.spec_from_file_location("guard_negative_scenarios", SCENARIOS_PATH)
++    module = importlib.util.module_from_spec(spec)
++    sys.modules[spec.name] = module  # dataclasses resolve annotations through sys.modules
++    spec.loader.exec_module(module)
++    return module
++
++
++SCEN = load_scenarios()
++_REPORT: dict | None = None
++
++
++def report() -> dict:
++    global _REPORT
++    if _REPORT is not None:
++        return _REPORT
++    results = os.environ.get("CBTI_GUARD_NEGATIVE_RESULTS")
++    if results:
++        data = json.loads(Path(results).read_text(encoding="utf-8"))
++    elif "CBTI_GUARD_ROOT" not in os.environ:
++        rows = SCEN.run_catalogue(str(GUARD_DIR))
++        data = {"rows": rows, "guard_sitecustomize_sha256": sha256(GUARD_DIR / "sitecustomize.py"),
++                "scenario_catalogue_sha256": sha256(SCENARIOS_PATH)}
++    else:
++        raise AssertionError("running under a guard without CBTI_GUARD_NEGATIVE_RESULTS; "
++                             "run the suite through the r5c10af harness (run_all.sh)")
++    _REPORT = data
++    return data
++
++
++class GuardNegativeCatalogueTests(unittest.TestCase):
++    def setUp(self):
++        self.report = report()
++        self.rows = {row["id"]: row for row in self.report["rows"]}
++
++    def test_results_are_bound_to_current_guard_and_catalogue_bytes(self):
++        self.assertEqual(self.report["guard_sitecustomize_sha256"], sha256(GUARD_DIR / "sitecustomize.py"))
++        self.assertEqual(self.report["scenario_catalogue_sha256"], sha256(SCENARIOS_PATH))
++        self.assertEqual({row["id"] for row in self.report["rows"]}, {s.id for s in SCEN.SCENARIOS})
++
++    def test_every_asserted_scenario_passes(self):
++        for scenario in SCEN.SCENARIOS:
++            if scenario.expect == "LIMIT":
++                continue
++            with self.subTest(scenario=scenario.id, expect=scenario.expect):
++                row = self.rows[scenario.id]
++                self.assertEqual(row["verdict"], "PASS",
++                                 f"{row['verdict']}: guarded={row['guarded']}")
++
++    def test_scenarios_have_an_effect_without_the_guard(self):
++        ineffective = {sid for sid, row in self.rows.items() if not row["scenario_effective_without_guard"]}
++        self.assertEqual(ineffective, DOCUMENTED_INEFFECTIVE)
++
++    def test_blocked_scenarios_were_blocked_by_the_guard_not_by_the_os(self):
++        for sid, row in self.rows.items():
++            if row["expect"] == "BLOCK":
++                with self.subTest(scenario=sid):
++                    guarded = row["guarded"]
++                    self.assertTrue(guarded["outcome"] == "BLOCKED" or guarded["guard_blocked_events"] > 0, guarded)
++                    self.assertFalse(guarded["repo_changed"] or guarded["out_changed"])
++
++    def test_allowed_scenarios_stay_silent(self):
++        allowed = [row for row in self.rows.values() if row["expect"] == "ALLOW"]
++        self.assertGreaterEqual(len(allowed), 10)
++        for row in allowed:
++            with self.subTest(scenario=row["id"]):
++                self.assertEqual(row["guarded"]["outcome"], "ALLOWED")
++                self.assertEqual(row["guarded"]["guard_blocked_events"], 0)
++                self.assertFalse(row["guarded"]["repo_changed"])
++
++    # ---- the four requested families, by name -----------------------------------------
++    def expect(self, mapping: dict[str, str]):
++        for sid, expected in mapping.items():
++            with self.subTest(scenario=sid):
++                self.assertIn(sid, self.rows)
++                self.assertEqual(self.rows[sid]["expect"], expected)
++                self.assertEqual(self.rows[sid]["verdict"], "PASS")
++
++    def test_a_hard_links(self):
++        self.expect({"a1_link_from_repo_file": "BLOCK", "a2_link_into_repo": "BLOCK",
++                     "a3_write_via_existing_hardlink": "BLOCK", "a4_append_via_existing_hardlink": "BLOCK",
++                     "a5_truncate_via_existing_hardlink": "BLOCK", "a6_chmod_via_existing_hardlink": "BLOCK",
++                     "a7_utime_via_existing_hardlink": "BLOCK", "a8_pathlib_write_via_existing_hardlink": "BLOCK",
++                     "a9_unlink_the_hardlink_name_itself": "ALLOW", "a10_write_unrelated_multilink_file": "ALLOW"})
++
++    def test_b_rename_replace_either_end(self):
++        self.expect({"b1_rename_source_in_repo": "BLOCK", "b2_rename_target_in_repo": "BLOCK",
++                     "b3_replace_source_in_repo": "BLOCK", "b4_replace_target_in_repo": "BLOCK",
++                     "b5_pathlib_rename_source_in_repo": "BLOCK", "b6_pathlib_replace_target_in_repo": "BLOCK",
++                     "b7_shutil_move_source_in_repo": "BLOCK", "b8_shutil_move_target_in_repo": "BLOCK",
++                     "b9_rename_directory_in_repo": "BLOCK", "b10_rename_source_dir_fd_in_repo": "BLOCK",
++                     "b11_rename_target_dir_fd_in_repo": "BLOCK", "b12_rename_into_repo_via_symlinked_dir": "BLOCK",
++                     "b13_rename_outside_to_outside": "ALLOW", "b14_rename_the_symlink_itself": "ALLOW"})
++
++    def test_c_symlinks(self):
++        self.expect({"c1_remove_symlink_itself": "ALLOW", "c2_unlink_symlink_itself": "ALLOW",
++                     "c3_pathlib_unlink_symlink_itself": "ALLOW", "c4_write_through_symlink": "BLOCK",
++                     "c5_os_open_through_symlink": "BLOCK", "c6_write_text_through_symlink": "BLOCK",
++                     "c7_copy_onto_symlink": "BLOCK", "c8_new_file_through_symlinked_dir": "BLOCK",
++                     "c9_overwrite_through_symlinked_dir": "BLOCK", "c10_delete_through_symlinked_dir": "BLOCK",
++                     "c11_dotdot_after_symlink_write": "BLOCK", "c12_dotdot_after_symlink_remove": "BLOCK",
++                     "c13_trailing_slash_rmdir_through_symlink": "BLOCK", "c16_relative_symlink_write": "BLOCK",
++                     "c17_create_symlink_inside_repo": "BLOCK", "c18_create_symlink_pointing_into_repo": "ALLOW",
++                     "c19_read_through_symlink": "ALLOW", "c20_chmod_through_symlink": "BLOCK"})
++
++    def test_d_write_entry_points(self):
++        self.expect({"d1_open_w": "BLOCK", "d2_open_a": "BLOCK", "d3_open_x_new": "BLOCK", "d4_open_r_plus": "BLOCK",
++                     "d5_open_wb": "BLOCK", "d6_io_open_w": "BLOCK",
++                     "d7_os_open_wronly": "BLOCK", "d8_os_open_creat": "BLOCK", "d9_os_open_rdwr": "BLOCK",
++                     "d10_os_open_trunc": "BLOCK", "d11_os_open_append": "BLOCK", "d12_os_open_excl": "BLOCK",
++                     "d13_shutil_copy": "BLOCK", "d14_shutil_copyfile": "BLOCK", "d15_shutil_copy2": "BLOCK",
++                     "d16_shutil_copy_into_repo_dir": "BLOCK", "d17_shutil_copyfileobj": "BLOCK",
++                     "d18_shutil_copytree": "BLOCK", "d19_shutil_copymode": "BLOCK", "d20_shutil_copystat": "BLOCK",
++                     "d21_pathlib_write_text": "BLOCK", "d22_pathlib_write_bytes": "BLOCK", "d23_pathlib_open_w": "BLOCK",
++                     "d24_pathlib_touch_new": "BLOCK", "d25_pathlib_touch_existing": "BLOCK", "d26_pathlib_mkdir": "BLOCK",
++                     "d27_os_makedirs": "BLOCK", "d28_os_mkdir": "BLOCK", "d29_os_truncate_path": "BLOCK",
++                     "d30_os_chmod_path": "BLOCK", "d31_os_chmod_fd": "BLOCK", "d32_os_fchmod_fd": "BLOCK",
++                     "d33_os_utime_path": "BLOCK", "d34_os_utime_fd": "BLOCK", "d35_os_chown_path": "BLOCK",
++                     "d36_os_remove": "BLOCK", "d37_os_unlink": "BLOCK", "d38_pathlib_unlink": "BLOCK",
++                     "d39_os_rmdir": "BLOCK", "d40_shutil_rmtree": "BLOCK", "d41_os_symlink_dst_in_repo": "BLOCK",
++                     "d42_os_mkfifo": "BLOCK", "d43_os_mknod_fifo": "BLOCK", "d44_sqlite3_connect_write": "BLOCK",
++                     "d45_dir_fd_open_create": "BLOCK", "d46_dir_fd_open_overwrite": "BLOCK", "d47_dir_fd_mkdir": "BLOCK",
++                     "d48_dir_fd_unlink": "BLOCK", "d49_dir_fd_mkfifo": "BLOCK", "d50_relative_path_after_chdir": "BLOCK",
++                     "d51_dotdot_relative_from_out": "BLOCK", "d53_tempfile_inside_repo": "BLOCK",
++                     "d54_logging_file_handler": "BLOCK", "d55_read_repo_file": "ALLOW", "d56_write_outside": "ALLOW",
++                     "d57_delete_outside_tree": "ALLOW", "d58_rename_ancestor_of_repo": "BLOCK",
++                     "d59_rmtree_ancestor_of_repo": "SAFE", "d60_chmod_ancestor_of_repo": "BLOCK"})
++
++    def test_case_insensitive_aliases_are_blocked_or_explicitly_skipped(self):
++        for sid in ("d52_case_variant_of_root", "d61_rmdir_ancestor_alias_case"):
++            with self.subTest(scenario=sid):
++                row = self.rows[sid]
++                self.assertIn(row["verdict"], ("PASS", "SKIPPED"))
++                if row["verdict"] == "SKIPPED":
++                    self.assertEqual(row["guarded"]["skipped"], "filesystem is case-sensitive")
++
++    def test_child_process_escape_routes(self):
++        self.expect({"e1_child_python_inherits_guard": "BLOCK", "e2_child_isolated_flag": "BLOCK",
++                     "e3_child_no_site_flag": "BLOCK", "e4_child_ignore_env_flag": "BLOCK",
++                     "e5_child_clustered_flags": "BLOCK", "e6_child_scrubbed_environment": "BLOCK",
++                     "e7_child_environment_without_guard_path": "BLOCK",
++                     "e8_parent_environ_mutated_then_inherit": "BLOCK", "e9_exec_isolated_python": "BLOCK",
++                     "e10_posix_spawn_isolated_python": "BLOCK", "e11_shell_subprocess": "BLOCK",
++                     "e12_non_python_binary": "BLOCK", "e13_child_python_writes_outside": "ALLOW"})
++
++    def test_known_limits_are_reported_not_hidden(self):
++        limits = [row for row in self.rows.values() if row["expect"] == "LIMIT"]
++        self.assertEqual([row["id"] for row in limits], ["f1_ctypes_libc_write"])
++        self.assertIn(limits[0]["verdict"], ("LIMIT_BYPASSED", "LIMIT_NOT_REPRODUCED"))
++
++
++class HistoricalGuardEvidenceTests(unittest.TestCase):
++    def test_v1_and_v2_guards_are_unchanged(self):
++        for path, expected in (V1_GUARD, V2_GUARD):
++            with self.subTest(path=path.relative_to(REPO).as_posix()):
++                self.assertEqual(sha256(path), expected)
++
++    def test_v3_candidate_is_a_separate_file(self):
++        self.assertNotEqual(sha256(GUARD_DIR / "sitecustomize.py"), V1_GUARD[1])
++        self.assertNotEqual(sha256(GUARD_DIR / "sitecustomize.py"), V2_GUARD[1])
++
++
++class OracleTests(unittest.TestCase):
++    """The pass/fail oracle itself, on synthetic outcomes."""
++
++    def row(self, **kwargs):
++        base = {"outcome": "BLOCKED", "repo_changed": False, "out_changed": False, "guard_blocked_events": 1}
++        return {**base, **kwargs}
++
++    def scenario(self, expect):
++        return SCEN.Scenario("x", "x", expect, "pass")
++
++    def test_verdicts(self):
++        verdict = SCEN.verdict
++        self.assertEqual(verdict(self.scenario("BLOCK"), self.row(), {}), "PASS")
++        self.assertEqual(verdict(self.scenario("BLOCK"), self.row(outcome="ALLOWED", repo_changed=True, guard_blocked_events=0), {}), "BYPASS")
++        self.assertEqual(verdict(self.scenario("BLOCK"), self.row(outcome="OS_ERROR", guard_blocked_events=0), {}), "NOT_BLOCKED")
++        self.assertEqual(verdict(self.scenario("BLOCK"), self.row(out_changed=True), {}), "BYPASS")
++        self.assertEqual(verdict(self.scenario("ALLOW"), self.row(), {}), "FALSE_POSITIVE")
++        self.assertEqual(verdict(self.scenario("ALLOW"), self.row(outcome="ALLOWED", guard_blocked_events=0), {}), "PASS")
++        self.assertEqual(verdict(self.scenario("SAFE"), self.row(repo_changed=True), {}), "BYPASS")
++        self.assertEqual(verdict(self.scenario("SAFE"), self.row(outcome="OS_ERROR", guard_blocked_events=0), {}), "PASS")
++
++    def test_digest_detects_content_mode_and_listing_changes(self):
++        import tempfile
++        with tempfile.TemporaryDirectory() as directory:
++            root = Path(directory) / "Repo"
++            root.mkdir()
++            (root / "f").write_text("a")
++            before = SCEN.digest_tree(root)
++            self.assertEqual(SCEN.digest_tree(root), before)
++            (root / "f").write_text("b")
++            self.assertNotEqual(SCEN.digest_tree(root), before)
++            (root / "f").write_text("a")
++            os.chmod(root / "f", 0o000)
++            self.assertNotEqual(SCEN.digest_tree(root), before)
++            os.chmod(root / "f", 0o644)
++            (root / "g").write_text("")
++            self.assertNotEqual(SCEN.digest_tree(root), before)
++
++
++if __name__ == "__main__":
++    unittest.main()

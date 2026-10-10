@@ -1,0 +1,159 @@
+{
+  "adjudication_path": "evaluation/v1_2_3/step9_37_treatment_adjudication.jsonl",
+  "adjudication_sha256": "60b5c2847ffdb51c43e00351519cb910428a82eb981849dfebefb76112658047",
+  "agent_called": false,
+  "aggregate_generated": false,
+  "attempt_id": "attempt-step9_35b-e469d82618d4c51d91d193bb439507e4",
+  "baseline_authoritative_inputs": [
+    {
+      "path": "evaluation/v1_2_3/step9_30a_v4_run_input_freeze.json",
+      "sha256": "6b95f6b896da08767bb8861bad0ccf49dcfcc41cb7490e868ca077a83b2c581e"
+    },
+    {
+      "path": "evaluation/v1_2_3/step9_30a1_v4_lineage_forensics.json",
+      "sha256": "9db6cc080feffa9688e90cfa60ffdf3c122897243345e31290b99fa507aa4b5f"
+    },
+    {
+      "path": "evaluation/v1_2_3/step9_30a1_v4_lineage_forensics.md",
+      "sha256": "52487d0228527ad773a2db15c64575cc301f04dfa9502597738511705304ffea"
+    },
+    {
+      "path": "evaluation/v1_2_3/step9_30a1_v4_lineage_case_matrix.jsonl",
+      "sha256": "9c3db4396a82e923a6759cfa3418cfb9136a641e1ed3fe4bb7d27f136333d36b"
+    },
+    {
+      "path": "evaluation/v1_2_3/step9_30a2_v4_input_manifest.json",
+      "sha256": "4bb909b00dc72e8a2e5c14496bbe5423cfedaf33c2199af0c513c5b97f991465"
+    },
+    {
+      "path": "evaluation/v1_2_3/step9_30a2_v4_lineage_sidecar.jsonl",
+      "sha256": "a7b39f70b8f2591982f19ae2ea6d66918b4bd4bba0e588300317ec14f0cfd447"
+    },
+    {
+      "path": "evaluation/v1_2_3/step9_30a2_v4_true_failure_adjudication_audit.json",
+      "sha256": "676c400283541a99ac3ff18d8d3b3d47d36da3b4818be1ee9d578725284a8d58"
+    },
+    {
+      "path": "evaluation/v1_2_3/step9_30a_v4_adjudication_template.jsonl",
+      "sha256": "3bec40f5a771497118a85b0e5db7b300f97e7a69408c5259cbba4238267d2c4d"
+    },
+    {
+      "path": "evaluation/v4_runs/heldout-v4-step9_28-20260925-01/attempts.jsonl",
+      "sha256": "5fe1b11cbe0c28ccdfd056e3141862748897dc3b419ff6f05eb3ad8cb847b59f"
+    },
+    {
+      "path": "evaluation/v4_runs/heldout-v4-step9_28-20260925-01/heldout-v4-step9_28-20260925-01-attempt-step9_29b-5370d36a64d84a3da4f2585e9b57055a_case_results.jsonl",
+      "sha256": "77042ae9f5a5a75f7f7efd068e3c182e5725fa709e4f68ae63e58f0bbad0d2ea"
+    },
+    {
+      "path": "evaluation/v4_runs/heldout-v4-step9_28-20260925-01/heldout-v4-step9_28-20260925-01-attempt-step9_29b-5370d36a64d84a3da4f2585e9b57055a_raw_traces.jsonl",
+      "sha256": "e1aac03f4dbedf567c625694e084fa23155c8bfc2db1d43c4dffbce158734189"
+    },
+    {
+      "path": "evaluation/benchmarks/benchmark_v4_manifest.json",
+      "sha256": "b5feb7832b6267d8cff9d25fb2d8cf0043829feb5fd04ec1bea77dba932a13db"
+    },
+    {
+      "path": "evaluation/benchmarks/benchmark_v4_cases.yaml",
+      "sha256": "8b8c72092fcd7544e69d5d2ecd13610c7bb4c14210fca330698b3e5ab3f01d7f"
+    },
+    {
+      "path": "evaluation/benchmark_v1_1_scoring.md",
+      "sha256": "a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899"
+    },
+    {
+      "path": "evaluation/v1_2_3/step9_26_v4_metric_registry.json",
+      "sha256": "de9f348cb1dff66410c03095abdaffcc256f53679718482870e4aa4d80c75056"
+    },
+    {
+      "path": "evaluation/v1_2_3/step9_26_v4_protocol.md",
+      "sha256": "3ef036ab9f24d659f8f057ce7e9039cd7d87f6b50ff0c1d5d34ff75eabc17fa1"
+    },
+    {
+      "path": "evaluation/v1_2_3/step9_28_v4_execution_protocol.md",
+      "sha256": "b8d53793622048da195960f80eb75df1d9983d64e82cf4506fa0b804fae64bec"
+    },
+    {
+      "path": "evaluation/v1_2_3/step9_26_v4_one_shot_rules.md",
+      "sha256": "1c7ed4ef47865b117bc943f3e0ad9a859f4f74cfb4e8001f723ac5532af140d0"
+    }
+  ],
+  "baseline_freeze_path": "evaluation/v1_2_3/step9_30b_v4_human_adjudication_freeze.json",
+  "baseline_freeze_sha256": "0c42b69083e9bc0aca5bba83687cd152ad6620945c0a16b98980c347b1f100d8",
+  "baseline_treatment_comparison_generated": false,
+  "case_count": 40,
+  "completion_distribution": {
+    "complete": 20,
+    "not_complete": 3,
+    "partial": 17
+  },
+  "created_at_utc": "2026-09-28T14:58:05.215797+00:00",
+  "derived_lineage_case_count": 8,
+  "derived_lineage_cases": [
+    "V4-CA-02",
+    "V4-CA-04",
+    "V4-PD-01",
+    "V4-PD-03",
+    "V4-PD-04",
+    "V4-PD-05",
+    "V4-PD-09",
+    "V4-PD-10"
+  ],
+  "evaluation_id": "heldout-v4-step9_34a-treatment-20260928-01",
+  "freeze_id": "step9_37-treatment-adjudication-20260928T145805Z",
+  "freeze_kind": "COMPLETED_SINGLE_AI_REVIEWER_TREATMENT_ADJUDICATION_NOT_AGGREGATE",
+  "fully_adjudication_eligible_cases": 40,
+  "human_adjudication": false,
+  "inter_rater_reliability": "NOT_MEASURED",
+  "lineage_sidecar_sha256": "62f3fc844bbabbf59df0e42122d1b570faa11fc16e74b41a0f682f15939f2c42",
+  "metric_registry_sha256": "a44f8959b1683775b3f8f956f7f990572faa5c204ae5da3fa1201245c56755ab",
+  "model_called_for_case_execution": false,
+  "overall_generated": false,
+  "preservation": {
+    "metric_registry_modified": false,
+    "scoring_rubric_modified": false,
+    "treatment_attempt_ledger_modified": false,
+    "treatment_case_results_modified": false,
+    "treatment_lineage_sidecar_modified": false,
+    "treatment_raw_traces_modified": false
+  },
+  "rag_called": false,
+  "report_path": "evaluation/v1_2_3/step9_37_treatment_adjudication_report.md",
+  "report_sha256": "57dcecba01ed9619f83b8eedeca0122692a4bec9f64a9de9f4e7f0badeb83699",
+  "reviewer_identity": "Codex AI reviewer (user-authorized single reviewer; not a human reviewer)",
+  "reviewer_type": "AI; not human",
+  "rubric_sha256": "a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899",
+  "schema_sha256": "21367c176f6b070d875a203ff779cfd44e2cb86a4e8956e1f93870fd054834c8",
+  "task_type_counts": {
+    "CAUSE_ASSESSMENT": 10,
+    "DATA_ANALYSIS": 10,
+    "KNOWLEDGE_QA": 10,
+    "PERSONALIZED_DECISION": 10
+  },
+  "treatment_case_results_sha256": "9c926a69f9a4dfd19c559be0cbe8a08abc0902d5728c6f0202ba048b9e67e561",
+  "treatment_ledger_sha256": "fc29a97cced81605dd0ec90b3ff8de80ca85e42b898ba5a5fb90f5db09d26d2a",
+  "treatment_raw_traces_sha256": "0a8483e4125577e860eb0a7c72c399651800eb94d45eeb9481e6b21795302fdf",
+  "treatment_run_input_freeze_path": "evaluation/v1_2_3/step9_36_treatment_run_input_freeze.json",
+  "treatment_run_input_freeze_sha256": "fcda7bfb4b09321385593b583008edd3da2304778d0e72e26e6c843ba66d21cd",
+  "true_lineage_failure_cases": [
+    "V4-DA-01",
+    "V4-DA-03",
+    "V4-DA-06",
+    "V4-DA-09",
+    "V4-DA-10"
+  ],
+  "true_lineage_failure_count": 5,
+  "v4_rerun": false,
+  "v5_accessed": false,
+  "validation_checks": [
+    "40 unique case IDs exactly match frozen result/trace coverage",
+    "task-type distribution 10 per stratum",
+    "frozen result/trace line hashes recorded for every case",
+    "all five dimension ranges and totals validated by frozen Step 9.30b validator",
+    "ASK denominator/category sums and tool-call category counts validated",
+    "critical failure labels validated against frozen taxonomy",
+    "all required reviewer fields complete",
+    "no aggregate/Overall/comparison generated"
+  ],
+  "validation_status": "PASS"
+}

@@ -1,0 +1,86 @@
+{
+  "artifact_type": "STEP9_63C_R5C10C_TRANSACTION_SCANNER_REPAIR_IMPLEMENTATION_AUDIT",
+  "step": "9.63c-r5c10c",
+  "timestamp_utc": "2026-10-08T19:23:55Z",
+  "status": "PASS_OFFLINE_SCANNER_REPAIR_UNFROZEN",
+  "approved_design": {
+    "design_json_path": "evaluation/v1_2_3/step9_63c_r5c10b_transaction_scanner_repair_design.json",
+    "design_json_sha256": "a33280aba4f21b7430a1c2a6b35a0dbaba056da64261d0fa3077b719bc52e204",
+    "design_report_path": "evaluation/v1_2_3/step9_63c_r5c10b_transaction_scanner_repair_design_report.md",
+    "design_report_sha256": "6f4f2666d176d3fe2acf62a94941306a68068e0e159090dcc2c4d6c789ad4cb3",
+    "test_plan_path": "evaluation/v1_2_3/step9_63c_r5c10b_synthetic_test_plan.json",
+    "test_plan_sha256": "08774053349a766f4365da9e2a1e10514f1ba45116c1a348f8ed15456564bb91"
+  },
+  "scanner_repair": {
+    "implemented": true,
+    "target_path": "scripts/v3_execution_transaction.py",
+    "r10_frozen_sha256": "f1a253730953abf51307f4e9404bf59d7856c15d2367b7a62d6809dbb64b2797",
+    "current_working_copy_sha256": "f0e74a49d152053b5455951c507edb8f7849a9e4708835711e5975a82e690e91",
+    "changed_function": "_find_identity",
+    "rules": [
+      "Reject symlink or non-directory transaction root; retain absent root as no prior identity.",
+      "Enumerate direct children in sorted name order; unrelated non-JSONL files do not enter event decoding.",
+      "Reject symlink/non-regular JSONL candidates.",
+      "Exclude only verified regular AppleDouble ._ companion with 00051607 magic and canonical regular non-symlink companion journal.",
+      "Require SAFE_ID authorization stem for every canonical JSONL candidate; existing read_events validates UTF-8 JSONL and event sequence.",
+      "Reject empty candidate and filename-to-first-event authorization mismatch.",
+      "Scan all candidates before returning collision result so later corrupt journals cannot be hidden by earlier match."
+    ],
+    "appledouble_excluded": true,
+    "unrelated_binary_excluded": true,
+    "valid_journal_corruption_fail_closed": true,
+    "duplicate_authorization_attempt_namespace_identity_rejected": true,
+    "independent_transaction_id_collision_behavior_changed": false,
+    "commit_point_changed": false,
+    "transaction_append_lock_fsync_order_changed": false
+  },
+  "freeze_boundary": {
+    "r10_freeze_path": "evaluation/v1_2_3/step9_63c_r5c5b_runner_freeze_r10.json",
+    "r10_freeze_sha256": "d24244235e51e7bf6c8567880c654fe3fd73b87fa1bfe1ab0f10dfdc94db2693",
+    "r10_freeze_member_count": 20,
+    "changed_r10_freeze_member_count": 1,
+    "changed_r10_freeze_member_paths": ["scripts/v3_execution_transaction.py"],
+    "current_runner_matches_r10_freeze": false,
+    "current_runner_no_longer_matches_r10_freeze": true,
+    "r10_freeze_modified": false,
+    "new_runner_freeze_created": false,
+    "new_runner_freeze_required_before_future_authorization": true
+  },
+  "semantic_integrity": {
+    "transaction_semantics_unchanged": true,
+    "transaction_evidence": "Only _find_identity candidate classification/collision scan changed; begin_and_commit state order, COMMITTED fsync authority and exact journal APIs remain unchanged; 32 existing transaction and 14 synthetic lifecycle tests pass.",
+    "transaction_contract_path": "evaluation/v1_2_3/step9_63a_r1_atomic_commit_contract.json",
+    "transaction_contract_sha256_unchanged": "4c63855bf08cb420436f5fce80d32e5ca4c6151d642571db9a9c9665194b66bd",
+    "authorization_lifecycle_unchanged": true,
+    "authorization_lifecycle_module_sha256_unchanged": "f0d8b7e04fa2710765b74f4f293436b051af005d11851bf9583da14ff6612744",
+    "authorization_lifecycle_contract_sha256_unchanged": "addb3880e7141ca14d7b3011cadb439ac83076fa6b7c2b9f28f3b024d3fd1174",
+    "one_shot_rules_unchanged": true,
+    "one_shot_rules_sha256_unchanged": "1c7ed4ef47865b117bc943f3e0ad9a859f4f74cfb4e8001f723ac5532af140d0"
+  },
+  "offline_tests": {
+    "test_matrix_path": "evaluation/v1_2_3/step9_63c_r5c10c_test_matrix.json",
+    "passed": 64,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "new_synthetic_scanner_tests": 18,
+    "existing_synthetic_transaction_tests": 32,
+    "selected_synthetic_lifecycle_tests": 14,
+    "real_production_transaction_journal_read_or_modified_by_tests": false,
+    "network_model_agent_rag_or_http_used_by_tests": false
+  },
+  "current_authorization_boundary": {
+    "authorization_id": "auth-step9_63c_r5c6-aff5c4b96bb74278a14d3fd08bf8a84e",
+    "read_only_reducer_state": "ISSUED_EXECUTABLE",
+    "authorization_consumed": false,
+    "authorization_consumption_count": 0,
+    "exact_current_transaction_journal_exists": false,
+    "current_namespace_exists": false,
+    "old_formal_command_safe_to_rerun": false,
+    "new_authorization_issued": false,
+    "attempt_namespace_transaction_created_by_step": false,
+    "formal_v4_case_executed": 0
+  },
+  "ready_for_new_runner_freeze_review": true,
+  "not_authorized_for_execution": true
+}

@@ -1,0 +1,62 @@
+{
+  "step": "9.63c-r5c10j",
+  "status": "IMPLEMENTED_FOCUSED_OFFLINE_PASS_LEGACY_IMPORT_REGRESSION_BLOCKED_NO_FORMAL_FREEZE",
+  "timestamp_utc": "2026-10-08T20:15:43Z",
+  "approved_scope": "versioned r11 builder, strict resolver, frozen producer, append-only registry contract, formal consumer provenance gate, offline tests",
+  "implementation": {
+    "infrastructure_implemented": true,
+    "registry_contract_tested": true,
+    "consumer_provenance_guard_tested": true,
+    "r11_synthetic_freeze_validated": true,
+    "r11_frozen_member_count": 20,
+    "pre_commit_fail_closed_verified_offline": true,
+    "consumer_gate_stage": "validate_preflight_evidence before adapter.run",
+    "authorization_and_transaction_commit_logic_modified": false,
+    "formal_r11_pointer_exists": false,
+    "formal_r11_freeze_exists": false,
+    "real_r11_registry_exists": false
+  },
+  "r10_history": {
+    "manifest_path": "evaluation/v1_2_3/step9_63c_r5c5b_runner_freeze_r10.json",
+    "recorded_and_current_sha256": "d24244235e51e7bf6c8567880c654fe3fd73b87fa1bfe1ab0f10dfdc94db2693",
+    "historical_manifest_modified": false,
+    "old_pointer_sha256": "0f908fb566ad69f52246bf3c762d46d476c1bad40b0be300c152a576a64df412",
+    "current_worktree_changed_r10_member_paths": [
+      "scripts/run_step9_63_v3_formal_execution.py",
+      "scripts/v3_execution_transaction.py",
+      "scripts/v3_runner_identity.py"
+    ],
+    "changed_r10_member_count": 3,
+    "unchanged_r10_member_count": 17,
+    "note": "The scanner was already approved and changed in r5c10c; this step changes only the formal consumer and identity resolver among existing r10 member paths. The historical r10 SHA records remain unchanged."
+  },
+  "offline_tests": {
+    "focused_command": "python3 -B -m unittest tests.test_step9_63c_r5c10j_r11_infrastructure tests.test_step9_63c_r5c10c_transaction_scanner tests.test_v3_execution_transaction tests.test_step9_63c_r5c8f_invocation_registry -q",
+    "focused_passed": 78,
+    "focused_failed": 0,
+    "focused_errors": 0,
+    "additional_legacy_suite_attempt_errors": 2,
+    "legacy_suite_blocker": "r11 current identity pointer and formal freeze are intentionally absent until separately approved construction; historical preflight and lifecycle suites import an adapter that requires the current pointer at module import",
+    "legacy_suite_attempted": [
+      "tests.test_step9_63c_r5c8b_preflight_contract",
+      "tests.test_step9_63c_r5c5b_lifecycle_reducer"
+    ],
+    "diff_check": "PASS"
+  },
+  "risks_and_blockers": [
+    "Full historical preflight/lifecycle regression cannot import under the intentionally unfrozen r11 working copy; no production pointer was created to make these tests pass.",
+    "Synthetic freeze validation is not formal freeze publication and does not prove real Mac-local transport readiness.",
+    "Old r10 authorization remains historical and cannot be used for r11; separate retirement and fresh authorization review are required.",
+    "Real producer entry and formal execution were not invoked in this step."
+  ],
+  "prohibitions": {
+    "new_formal_r11_freeze_created": false,
+    "new_authorization_issued": false,
+    "authorization_consumed": false,
+    "formal_attempt_or_namespace_or_transaction_created": false,
+    "real_preflight_run": false,
+    "network_or_inference_called": false,
+    "formal_v4_case_executed": 0
+  },
+  "ready_for_separate_r11_freeze_review": false
+}

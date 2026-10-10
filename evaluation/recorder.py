@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+from copy import deepcopy
 from dataclasses import asdict
 from datetime import datetime, timezone
 from pathlib import Path
@@ -14,7 +15,7 @@ from adaptive_agent.state import AdaptiveAgentState
 
 
 def serialize_state(state: AdaptiveAgentState) -> dict[str, Any]:
-    return {
+    payload = {
         "goal": state.goal,
         "task_type": state.task_type.value if state.task_type else None,
         "facts": dict(state.facts),
@@ -51,6 +52,17 @@ def serialize_state(state: AdaptiveAgentState) -> dict[str, Any]:
         "decision_missing": list(state.decision_missing),
         "answer_scope": state.answer_scope,
     }
+    authorization = state.answer_context_audit.get("final_answer_authorization")
+    if isinstance(authorization, dict):
+        payload["answer_authorization"] = deepcopy(authorization)
+    payload["answer_generation_audit"] = {
+        key: deepcopy(state.answer_context_audit[key])
+        for key in ("answer_generation_outcome", "generated_content_basis_ids",
+                    "bounded_contract_validation", "terminal_response_kind")
+        if key in state.answer_context_audit
+    }
+    payload["trace_schema_version"] = "step9_50_authorization_trace_v1"
+    return payload
 
 
 class EvaluationRecorder:

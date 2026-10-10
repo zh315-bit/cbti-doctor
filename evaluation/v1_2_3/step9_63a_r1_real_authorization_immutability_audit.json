@@ -1,0 +1,22 @@
+{
+  "artifact_type": "STEP9_63A_R1_REAL_AUTHORIZATION_IMMUTABILITY_AUDIT",
+  "timestamp_utc": "2026-10-05T21:24:33Z",
+  "authorization_id": "auth-step9_62-e796755748e14418b9da641f5d6c15e2",
+  "attempt_id": "attempt-step9_62-6620ce3a79684874a15f5e35eac97938",
+  "namespace_id": "heldout-v4-treatment-v3-run-52b2c0c8ebbb06258291",
+  "authorization_manifest_path": "evaluation/v1_2_3/step9_62_v3_authorization_manifest.json",
+  "manifest_sha256_before": "7f97f9e42b8711a6ae745e4626d81fa8787a162bbfa8fdad6fe53c9fd4b975c8",
+  "manifest_sha256_after": "7f97f9e42b8711a6ae745e4626d81fa8787a162bbfa8fdad6fe53c9fd4b975c8",
+  "authorization_status": "ISSUED_NOT_CONSUMED",
+  "authorization_consumed": false,
+  "authorization_consumption_count": 0,
+  "old_runner_freeze_revision": "r6",
+  "new_runner_freeze_revision": "r7",
+  "old_authorization_matches_new_runner": false,
+  "transaction_journal_exists": false,
+  "attempt_ledger_hits": 0,
+  "real_attempt_created": false,
+  "real_namespace_created": false,
+  "real_cases_started": 0,
+  "authorization_retired_or_replaced_here": false
+}

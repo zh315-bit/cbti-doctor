@@ -1,0 +1,1622 @@
+{
+  "OVERALL_PASS_THRESHOLD": "NOT_DEFINED",
+  "adjudicated_case_count": 40,
+  "aggregation_provenance": {
+    "comparison_generated": false,
+    "metric_registry_path": "evaluation/v1_2_3/step9_26_v4_metric_registry.json",
+    "metric_registry_sha256": "de9f348cb1dff66410c03095abdaffcc256f53679718482870e4aa4d80c75056",
+    "scoring_rubric_path": "evaluation/benchmark_v1_1_scoring.md",
+    "scoring_rubric_sha256": "a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899"
+  },
+  "aggregation_status": "DESCRIPTIVE_SINGLE_AI_REVIEWER_AGGREGATE",
+  "ask_quality": {
+    "IRRELEVANT_ASK_COUNT": 6,
+    "LOW_VALUE_ASK_RATE": {
+      "denominator": 12,
+      "formula": "(redundant + irrelevant ASK events) / all ASK events",
+      "numerator": 8,
+      "source_case_ids": [
+        "V4-CA-01",
+        "V4-CA-02",
+        "V4-CA-03",
+        "V4-CA-04",
+        "V4-CA-05",
+        "V4-CA-06",
+        "V4-CA-07",
+        "V4-CA-08",
+        "V4-CA-09",
+        "V4-CA-10",
+        "V4-DA-01",
+        "V4-DA-02",
+        "V4-DA-03",
+        "V4-DA-04",
+        "V4-DA-05",
+        "V4-DA-06",
+        "V4-DA-07",
+        "V4-DA-08",
+        "V4-DA-09",
+        "V4-DA-10",
+        "V4-KQ-01",
+        "V4-KQ-02",
+        "V4-KQ-03",
+        "V4-KQ-04",
+        "V4-KQ-05",
+        "V4-KQ-06",
+        "V4-KQ-07",
+        "V4-KQ-08",
+        "V4-KQ-09",
+        "V4-KQ-10",
+        "V4-PD-01",
+        "V4-PD-02",
+        "V4-PD-03",
+        "V4-PD-04",
+        "V4-PD-05",
+        "V4-PD-06",
+        "V4-PD-07",
+        "V4-PD-08",
+        "V4-PD-09",
+        "V4-PD-10"
+      ],
+      "value": 0.6667
+    },
+    "NECESSARY_ASK_COUNT": 1,
+    "NECESSARY_ASK_PRESERVATION_RATE": {
+      "denominator": 1,
+      "formula": "acquired oracle-required targets / all oracle-required targets",
+      "numerator": 0,
+      "source_case_ids": [
+        "V4-CA-01",
+        "V4-CA-02",
+        "V4-CA-03",
+        "V4-CA-04",
+        "V4-CA-05",
+        "V4-CA-06",
+        "V4-CA-07",
+        "V4-CA-08",
+        "V4-CA-09",
+        "V4-CA-10",
+        "V4-DA-01",
+        "V4-DA-02",
+        "V4-DA-03",
+        "V4-DA-04",
+        "V4-DA-05",
+        "V4-DA-06",
+        "V4-DA-07",
+        "V4-DA-08",
+        "V4-DA-09",
+        "V4-DA-10",
+        "V4-KQ-01",
+        "V4-KQ-02",
+        "V4-KQ-03",
+        "V4-KQ-04",
+        "V4-KQ-05",
+        "V4-KQ-06",
+        "V4-KQ-07",
+        "V4-KQ-08",
+        "V4-KQ-09",
+        "V4-KQ-10",
+        "V4-PD-01",
+        "V4-PD-02",
+        "V4-PD-03",
+        "V4-PD-04",
+        "V4-PD-05",
+        "V4-PD-06",
+        "V4-PD-07",
+        "V4-PD-08",
+        "V4-PD-09",
+        "V4-PD-10"
+      ],
+      "value": 0.0
+    },
+    "REDUNDANT_ASK_COUNT": 2,
+    "TOTAL_ASK_COUNT": 12,
+    "USEFUL_OPTIONAL_ASK_COUNT": 3,
+    "category_counts": {
+      "irrelevant": 6,
+      "necessary": 1,
+      "redundant": 2,
+      "useful_but_optional": 3
+    }
+  },
+  "attempt_id": "attempt-step9_44r1-cb362342ae31449aaffba8092c346864",
+  "completion_and_validity": {
+    "by_task_type": {
+      "CAUSE_ASSESSMENT": {
+        "distribution": {
+          "not_complete": 9,
+          "partial": 1
+        },
+        "rate": {
+          "denominator": 10,
+          "formula": "complete judgments / adjudicated cases",
+          "numerator": 0,
+          "source_case_ids": [
+            "V4-CA-01",
+            "V4-CA-02",
+            "V4-CA-03",
+            "V4-CA-04",
+            "V4-CA-05",
+            "V4-CA-06",
+            "V4-CA-07",
+            "V4-CA-08",
+            "V4-CA-09",
+            "V4-CA-10"
+          ],
+          "value": 0.0
+        },
+        "validity_rate": {
+          "denominator": 10,
+          "formula": "validity=true judgments / adjudicated cases",
+          "numerator": 10,
+          "source_case_ids": [
+            "V4-CA-01",
+            "V4-CA-02",
+            "V4-CA-03",
+            "V4-CA-04",
+            "V4-CA-05",
+            "V4-CA-06",
+            "V4-CA-07",
+            "V4-CA-08",
+            "V4-CA-09",
+            "V4-CA-10"
+          ],
+          "value": 1.0
+        }
+      },
+      "DATA_ANALYSIS": {
+        "distribution": {
+          "complete": 2,
+          "not_complete": 4,
+          "partial": 4
+        },
+        "rate": {
+          "denominator": 10,
+          "formula": "complete judgments / adjudicated cases",
+          "numerator": 2,
+          "source_case_ids": [
+            "V4-DA-01",
+            "V4-DA-02",
+            "V4-DA-03",
+            "V4-DA-04",
+            "V4-DA-05",
+            "V4-DA-06",
+            "V4-DA-07",
+            "V4-DA-08",
+            "V4-DA-09",
+            "V4-DA-10"
+          ],
+          "value": 0.2
+        },
+        "validity_rate": {
+          "denominator": 10,
+          "formula": "validity=true judgments / adjudicated cases",
+          "numerator": 10,
+          "source_case_ids": [
+            "V4-DA-01",
+            "V4-DA-02",
+            "V4-DA-03",
+            "V4-DA-04",
+            "V4-DA-05",
+            "V4-DA-06",
+            "V4-DA-07",
+            "V4-DA-08",
+            "V4-DA-09",
+            "V4-DA-10"
+          ],
+          "value": 1.0
+        }
+      },
+      "KNOWLEDGE_QA": {
+        "distribution": {
+          "complete": 5,
+          "partial": 5
+        },
+        "rate": {
+          "denominator": 10,
+          "formula": "complete judgments / adjudicated cases",
+          "numerator": 5,
+          "source_case_ids": [
+            "V4-KQ-01",
+            "V4-KQ-02",
+            "V4-KQ-03",
+            "V4-KQ-04",
+            "V4-KQ-05",
+            "V4-KQ-06",
+            "V4-KQ-07",
+            "V4-KQ-08",
+            "V4-KQ-09",
+            "V4-KQ-10"
+          ],
+          "value": 0.5
+        },
+        "validity_rate": {
+          "denominator": 10,
+          "formula": "validity=true judgments / adjudicated cases",
+          "numerator": 10,
+          "source_case_ids": [
+            "V4-KQ-01",
+            "V4-KQ-02",
+            "V4-KQ-03",
+            "V4-KQ-04",
+            "V4-KQ-05",
+            "V4-KQ-06",
+            "V4-KQ-07",
+            "V4-KQ-08",
+            "V4-KQ-09",
+            "V4-KQ-10"
+          ],
+          "value": 1.0
+        }
+      },
+      "PERSONALIZED_DECISION": {
+        "distribution": {
+          "not_complete": 9,
+          "partial": 1
+        },
+        "rate": {
+          "denominator": 10,
+          "formula": "complete judgments / adjudicated cases",
+          "numerator": 0,
+          "source_case_ids": [
+            "V4-PD-01",
+            "V4-PD-02",
+            "V4-PD-03",
+            "V4-PD-04",
+            "V4-PD-05",
+            "V4-PD-06",
+            "V4-PD-07",
+            "V4-PD-08",
+            "V4-PD-09",
+            "V4-PD-10"
+          ],
+          "value": 0.0
+        },
+        "validity_rate": {
+          "denominator": 10,
+          "formula": "validity=true judgments / adjudicated cases",
+          "numerator": 10,
+          "source_case_ids": [
+            "V4-PD-01",
+            "V4-PD-02",
+            "V4-PD-03",
+            "V4-PD-04",
+            "V4-PD-05",
+            "V4-PD-06",
+            "V4-PD-07",
+            "V4-PD-08",
+            "V4-PD-09",
+            "V4-PD-10"
+          ],
+          "value": 1.0
+        }
+      }
+    },
+    "overall": {
+      "distribution": {
+        "complete": 7,
+        "not_complete": 22,
+        "partial": 11
+      },
+      "rate": {
+        "denominator": 40,
+        "formula": "complete judgments / adjudicated cases",
+        "numerator": 7,
+        "source_case_ids": [
+          "V4-CA-01",
+          "V4-CA-02",
+          "V4-CA-03",
+          "V4-CA-04",
+          "V4-CA-05",
+          "V4-CA-06",
+          "V4-CA-07",
+          "V4-CA-08",
+          "V4-CA-09",
+          "V4-CA-10",
+          "V4-DA-01",
+          "V4-DA-02",
+          "V4-DA-03",
+          "V4-DA-04",
+          "V4-DA-05",
+          "V4-DA-06",
+          "V4-DA-07",
+          "V4-DA-08",
+          "V4-DA-09",
+          "V4-DA-10",
+          "V4-KQ-01",
+          "V4-KQ-02",
+          "V4-KQ-03",
+          "V4-KQ-04",
+          "V4-KQ-05",
+          "V4-KQ-06",
+          "V4-KQ-07",
+          "V4-KQ-08",
+          "V4-KQ-09",
+          "V4-KQ-10",
+          "V4-PD-01",
+          "V4-PD-02",
+          "V4-PD-03",
+          "V4-PD-04",
+          "V4-PD-05",
+          "V4-PD-06",
+          "V4-PD-07",
+          "V4-PD-08",
+          "V4-PD-09",
+          "V4-PD-10"
+        ],
+        "value": 0.175
+      },
+      "validity_rate": {
+        "denominator": 40,
+        "formula": "validity=true judgments / adjudicated cases",
+        "numerator": 40,
+        "source_case_ids": [
+          "V4-CA-01",
+          "V4-CA-02",
+          "V4-CA-03",
+          "V4-CA-04",
+          "V4-CA-05",
+          "V4-CA-06",
+          "V4-CA-07",
+          "V4-CA-08",
+          "V4-CA-09",
+          "V4-CA-10",
+          "V4-DA-01",
+          "V4-DA-02",
+          "V4-DA-03",
+          "V4-DA-04",
+          "V4-DA-05",
+          "V4-DA-06",
+          "V4-DA-07",
+          "V4-DA-08",
+          "V4-DA-09",
+          "V4-DA-10",
+          "V4-KQ-01",
+          "V4-KQ-02",
+          "V4-KQ-03",
+          "V4-KQ-04",
+          "V4-KQ-05",
+          "V4-KQ-06",
+          "V4-KQ-07",
+          "V4-KQ-08",
+          "V4-KQ-09",
+          "V4-KQ-10",
+          "V4-PD-01",
+          "V4-PD-02",
+          "V4-PD-03",
+          "V4-PD-04",
+          "V4-PD-05",
+          "V4-PD-06",
+          "V4-PD-07",
+          "V4-PD-08",
+          "V4-PD-09",
+          "V4-PD-10"
+        ],
+        "value": 1.0
+      }
+    }
+  },
+  "efficiency": {
+    "latency_ms": {
+      "by_task_type": {
+        "CAUSE_ASSESSMENT": {
+          "formula": "mean=sum(latency_ms)/n; median=statistics.median; p90=sorted[ceil(0.9*n)-1]",
+          "mean_ms": 6292.243,
+          "median_ms": 6135.315,
+          "n": 10,
+          "p90_nearest_rank_ms": 6995.03,
+          "source_case_ids": [
+            "V4-CA-01",
+            "V4-CA-02",
+            "V4-CA-03",
+            "V4-CA-04",
+            "V4-CA-05",
+            "V4-CA-06",
+            "V4-CA-07",
+            "V4-CA-08",
+            "V4-CA-09",
+            "V4-CA-10"
+          ]
+        },
+        "DATA_ANALYSIS": {
+          "formula": "mean=sum(latency_ms)/n; median=statistics.median; p90=sorted[ceil(0.9*n)-1]",
+          "mean_ms": 3167.635,
+          "median_ms": 2627.185,
+          "n": 10,
+          "p90_nearest_rank_ms": 4580.05,
+          "source_case_ids": [
+            "V4-DA-01",
+            "V4-DA-02",
+            "V4-DA-03",
+            "V4-DA-04",
+            "V4-DA-05",
+            "V4-DA-06",
+            "V4-DA-07",
+            "V4-DA-08",
+            "V4-DA-09",
+            "V4-DA-10"
+          ]
+        },
+        "KNOWLEDGE_QA": {
+          "formula": "mean=sum(latency_ms)/n; median=statistics.median; p90=sorted[ceil(0.9*n)-1]",
+          "mean_ms": 13168.569,
+          "median_ms": 10748.01,
+          "n": 10,
+          "p90_nearest_rank_ms": 12642.78,
+          "source_case_ids": [
+            "V4-KQ-01",
+            "V4-KQ-02",
+            "V4-KQ-03",
+            "V4-KQ-04",
+            "V4-KQ-05",
+            "V4-KQ-06",
+            "V4-KQ-07",
+            "V4-KQ-08",
+            "V4-KQ-09",
+            "V4-KQ-10"
+          ]
+        },
+        "PERSONALIZED_DECISION": {
+          "formula": "mean=sum(latency_ms)/n; median=statistics.median; p90=sorted[ceil(0.9*n)-1]",
+          "mean_ms": 7348.025,
+          "median_ms": 7391.03,
+          "n": 10,
+          "p90_nearest_rank_ms": 9818.2,
+          "source_case_ids": [
+            "V4-PD-01",
+            "V4-PD-02",
+            "V4-PD-03",
+            "V4-PD-04",
+            "V4-PD-05",
+            "V4-PD-06",
+            "V4-PD-07",
+            "V4-PD-08",
+            "V4-PD-09",
+            "V4-PD-10"
+          ]
+        }
+      },
+      "overall": {
+        "formula": "mean=sum(latency_ms)/n; median=statistics.median; p90=sorted[ceil(0.9*n)-1]",
+        "mean_ms": 7494.118,
+        "median_ms": 6418.67,
+        "n": 40,
+        "p90_nearest_rank_ms": 10829.96,
+        "source_case_ids": [
+          "V4-CA-01",
+          "V4-CA-02",
+          "V4-CA-03",
+          "V4-CA-04",
+          "V4-CA-05",
+          "V4-CA-06",
+          "V4-CA-07",
+          "V4-CA-08",
+          "V4-CA-09",
+          "V4-CA-10",
+          "V4-DA-01",
+          "V4-DA-02",
+          "V4-DA-03",
+          "V4-DA-04",
+          "V4-DA-05",
+          "V4-DA-06",
+          "V4-DA-07",
+          "V4-DA-08",
+          "V4-DA-09",
+          "V4-DA-10",
+          "V4-KQ-01",
+          "V4-KQ-02",
+          "V4-KQ-03",
+          "V4-KQ-04",
+          "V4-KQ-05",
+          "V4-KQ-06",
+          "V4-KQ-07",
+          "V4-KQ-08",
+          "V4-KQ-09",
+          "V4-KQ-10",
+          "V4-PD-01",
+          "V4-PD-02",
+          "V4-PD-03",
+          "V4-PD-04",
+          "V4-PD-05",
+          "V4-PD-06",
+          "V4-PD-07",
+          "V4-PD-08",
+          "V4-PD-09",
+          "V4-PD-10"
+        ]
+      }
+    },
+    "steps_per_case": {
+      "denominator": 40,
+      "formula": "sum(step_count)/n cases",
+      "mean": 2.325,
+      "numerator": 93,
+      "source_case_ids": [
+        "V4-CA-01",
+        "V4-CA-02",
+        "V4-CA-03",
+        "V4-CA-04",
+        "V4-CA-05",
+        "V4-CA-06",
+        "V4-CA-07",
+        "V4-CA-08",
+        "V4-CA-09",
+        "V4-CA-10",
+        "V4-DA-01",
+        "V4-DA-02",
+        "V4-DA-03",
+        "V4-DA-04",
+        "V4-DA-05",
+        "V4-DA-06",
+        "V4-DA-07",
+        "V4-DA-08",
+        "V4-DA-09",
+        "V4-DA-10",
+        "V4-KQ-01",
+        "V4-KQ-02",
+        "V4-KQ-03",
+        "V4-KQ-04",
+        "V4-KQ-05",
+        "V4-KQ-06",
+        "V4-KQ-07",
+        "V4-KQ-08",
+        "V4-KQ-09",
+        "V4-KQ-10",
+        "V4-PD-01",
+        "V4-PD-02",
+        "V4-PD-03",
+        "V4-PD-04",
+        "V4-PD-05",
+        "V4-PD-06",
+        "V4-PD-07",
+        "V4-PD-08",
+        "V4-PD-09",
+        "V4-PD-10"
+      ]
+    },
+    "tool_calls_per_case": {
+      "denominator": 40,
+      "formula": "sum(actual RETRIEVE+READ_DIARY calls)/n cases; ASK excluded",
+      "mean": 1.025,
+      "numerator": 41,
+      "source_case_ids": [
+        "V4-CA-01",
+        "V4-CA-02",
+        "V4-CA-03",
+        "V4-CA-04",
+        "V4-CA-05",
+        "V4-CA-06",
+        "V4-CA-07",
+        "V4-CA-08",
+        "V4-CA-09",
+        "V4-CA-10",
+        "V4-DA-01",
+        "V4-DA-02",
+        "V4-DA-03",
+        "V4-DA-04",
+        "V4-DA-05",
+        "V4-DA-06",
+        "V4-DA-07",
+        "V4-DA-08",
+        "V4-DA-09",
+        "V4-DA-10",
+        "V4-KQ-01",
+        "V4-KQ-02",
+        "V4-KQ-03",
+        "V4-KQ-04",
+        "V4-KQ-05",
+        "V4-KQ-06",
+        "V4-KQ-07",
+        "V4-KQ-08",
+        "V4-KQ-09",
+        "V4-KQ-10",
+        "V4-PD-01",
+        "V4-PD-02",
+        "V4-PD-03",
+        "V4-PD-04",
+        "V4-PD-05",
+        "V4-PD-06",
+        "V4-PD-07",
+        "V4-PD-08",
+        "V4-PD-09",
+        "V4-PD-10"
+      ]
+    },
+    "turns_per_case": {
+      "denominator": 40,
+      "formula": "sum(turn_count)/n cases",
+      "mean": 1.3,
+      "numerator": 52,
+      "source_case_ids": [
+        "V4-CA-01",
+        "V4-CA-02",
+        "V4-CA-03",
+        "V4-CA-04",
+        "V4-CA-05",
+        "V4-CA-06",
+        "V4-CA-07",
+        "V4-CA-08",
+        "V4-CA-09",
+        "V4-CA-10",
+        "V4-DA-01",
+        "V4-DA-02",
+        "V4-DA-03",
+        "V4-DA-04",
+        "V4-DA-05",
+        "V4-DA-06",
+        "V4-DA-07",
+        "V4-DA-08",
+        "V4-DA-09",
+        "V4-DA-10",
+        "V4-KQ-01",
+        "V4-KQ-02",
+        "V4-KQ-03",
+        "V4-KQ-04",
+        "V4-KQ-05",
+        "V4-KQ-06",
+        "V4-KQ-07",
+        "V4-KQ-08",
+        "V4-KQ-09",
+        "V4-KQ-10",
+        "V4-PD-01",
+        "V4-PD-02",
+        "V4-PD-03",
+        "V4-PD-04",
+        "V4-PD-05",
+        "V4-PD-06",
+        "V4-PD-07",
+        "V4-PD-08",
+        "V4-PD-09",
+        "V4-PD-10"
+      ]
+    }
+  },
+  "evaluation_id": "heldout-v4-step9_43-treatment-v2-20260928-01",
+  "failures": {
+    "CRITICAL_FAILURE_CASE_IDS": [],
+    "CRITICAL_FAILURE_COUNT": 0,
+    "HARMFUL_FAILURE_CASE_IDS": [],
+    "HARMFUL_FAILURE_COUNT": 0,
+    "downstream_effect_distribution": {
+      "ACTION_SELECTION": 2,
+      "INTERACTION_EFFICIENCY": 8,
+      "TASK_COMPLETION": 30
+    },
+    "first_divergence_case_ids": {
+      "ASK seeks sleep timing/latency although a general relationship between late work, arousal, and bedtime can be addressed without that exact value; final answer is generic.": {
+        "case_ids": [
+          "V4-CA-04"
+        ],
+        "count": 1
+      },
+      "ASK targets sleep-onset latency, not the missing decision variable for the wake-time/bedtime choice under a fixed departure; user says unknown.": {
+        "case_ids": [
+          "V4-PD-03"
+        ],
+        "count": 1
+      },
+      "Bedtime and onset/timing could refine individualized comparison but are optional for a bounded discussion of the explicitly stated in-bed-work behavior; both replies say unknown.": {
+        "case_ids": [
+          "V4-PD-06"
+        ],
+        "count": 1
+      },
+      "Diary contains sleep-onset estimates 35 and 50 and one null, but answer lists dates only and omits both the values and count of non-null entries.": {
+        "case_ids": [
+          "V4-DA-05"
+        ],
+        "count": 1
+      },
+      "Diary has four recorded wake times that can be sorted; answer gives only a range and says evidence is insufficient.": {
+        "case_ids": [
+          "V4-DA-06"
+        ],
+        "count": 1
+      },
+      "Diary has values for two of three dates; answer gives the two-value mean but does not explicitly identify the missing date/value or report both present values. External retrieval is irrelevant to diary completeness.": {
+        "case_ids": [
+          "V4-DA-07"
+        ],
+        "count": 1
+      },
+      "Diary is read and six-day summary is produced, but no separate three-days-last-week versus three-days-this-week values or comparison is given.": {
+        "case_ids": [
+          "V4-DA-01"
+        ],
+        "count": 1
+      },
+      "Diary read and 55-minute bedtime range reported; frozen evidence supplies no binary stability threshold.": {
+        "case_ids": [
+          "V4-DA-04"
+        ],
+        "count": 1
+      },
+      "Diary values show a tie for maximum total sleep time (405) on two dates; answer repeats only the mean and does not identify either night.": {
+        "case_ids": [
+          "V4-DA-09"
+        ],
+        "count": 1
+      },
+      "Direct group-versus-individual evidence is absent from retrieval.": {
+        "case_ids": [
+          "V4-KQ-04"
+        ],
+        "count": 1
+      },
+      "Exact latency ASK is not needed to answer whether modest bedtime variation alone warrants an overhaul given restorative waking; final response gives a qualified bounded answer.": {
+        "case_ids": [
+          "V4-PD-04"
+        ],
+        "count": 1
+      },
+      "Final response declines despite the user asking for general possible causes and explicitly not knowing onset date.": {
+        "case_ids": [
+          "V4-CA-01"
+        ],
+        "count": 1
+      },
+      "Final response declines despite the user asking what a recurring hotel-context change might suggest.": {
+        "case_ids": [
+          "V4-CA-03"
+        ],
+        "count": 1
+      },
+      "Final response declines despite the user supplying the noisy-apartment change and asking whether noise is plausible.": {
+        "case_ids": [
+          "V4-CA-06"
+        ],
+        "count": 1
+      },
+      "Final response declines instead of addressing the user's stated Sunday/weekend schedule association.": {
+        "case_ids": [
+          "V4-CA-05"
+        ],
+        "count": 1
+      },
+      "Final response is generic and does not address early waking with daytime irritability.": {
+        "case_ids": [
+          "V4-CA-07"
+        ],
+        "count": 1
+      },
+      "Fixed 5:45 caregiving wake and early sleepiness are stated, but final answer is generic.": {
+        "case_ids": [
+          "V4-PD-08"
+        ],
+        "count": 1
+      },
+      "Reports diary-derived efficiency values and refuses to apply a clinical standard without a supporting reference; no external retrieval was performed.": {
+        "case_ids": [
+          "V4-DA-10"
+        ],
+        "count": 1
+      },
+      "Retrieved material does not describe how clinicians adapt exercises when adherence is difficult.": {
+        "case_ids": [
+          "V4-KQ-06"
+        ],
+        "count": 1
+      },
+      "Retrieved material does not specify the contents of shared decision-making.": {
+        "case_ids": [
+          "V4-KQ-09"
+        ],
+        "count": 1
+      },
+      "Retrieved material supports regular schedules, but does not give the specific weekday/weekend circadian mechanism requested.": {
+        "case_ids": [
+          "V4-CA-08"
+        ],
+        "count": 1
+      },
+      "State records occasional after-dinner coffee and inconsistent onset, but final answer is generic.": {
+        "case_ids": [
+          "V4-PD-07"
+        ],
+        "count": 1
+      },
+      "The ASK seeks nap details relevant to selecting a duration adjustment; user says unknown, so the necessary target was not acquired.": {
+        "case_ids": [
+          "V4-PD-09"
+        ],
+        "count": 1
+      },
+      "The ASK targets sleep timing/latency after the user already states vigorous exercise close to bedtime and evening alertness; final response is generic non-answer.": {
+        "case_ids": [
+          "V4-CA-02"
+        ],
+        "count": 1
+      },
+      "The response is generic despite state containing easy sleep onset, restorative waking, and a routine fitting obligations; retrieval adds no answer.": {
+        "case_ids": [
+          "V4-PD-02"
+        ],
+        "count": 1
+      },
+      "The retrieved material does not define a mandatory minimum component set.": {
+        "case_ids": [
+          "V4-KQ-10"
+        ],
+        "count": 1
+      },
+      "The rotating-night-shift constraint is in the user turn, but final response does not compare schedule-following with a fixed anchor.": {
+        "case_ids": [
+          "V4-PD-01"
+        ],
+        "count": 1
+      },
+      "Three ASK actions request exact bedtime, onset latency, and wake time despite the prompt already saying schedule is stable, sleep onset usually succeeds, and awakening is occasional.": {
+        "case_ids": [
+          "V4-PD-10"
+        ],
+        "count": 1
+      },
+      "Trace records diary resource as unavailable and the answer explicitly refuses to infer account data.": {
+        "case_ids": [
+          "V4-DA-08"
+        ],
+        "count": 1
+      },
+      "Two ASK actions target nap and sleep-onset latency already substantially specified (1 pm, about 20 minutes, no observed onset effect); both user replies say unknown.": {
+        "case_ids": [
+          "V4-PD-05"
+        ],
+        "count": 1
+      },
+      "User-provided fact caffeine='一杯茶' is preserved in state, but final answer gives only a generic disclaimer.": {
+        "case_ids": [
+          "V4-CA-09"
+        ],
+        "count": 1
+      },
+      "User-provided worry after poor sleep is in state, but final answer is generic and omits the requested reciprocal-cycle explanation.": {
+        "case_ids": [
+          "V4-CA-10"
+        ],
+        "count": 1
+      }
+    },
+    "first_divergence_layer_distribution": {
+      "ASK seeks sleep timing/latency although a general relationship between late work, arousal, and bedtime can be addressed without that exact value; final answer is generic.": 1,
+      "ASK targets sleep-onset latency, not the missing decision variable for the wake-time/bedtime choice under a fixed departure; user says unknown.": 1,
+      "Bedtime and onset/timing could refine individualized comparison but are optional for a bounded discussion of the explicitly stated in-bed-work behavior; both replies say unknown.": 1,
+      "Diary contains sleep-onset estimates 35 and 50 and one null, but answer lists dates only and omits both the values and count of non-null entries.": 1,
+      "Diary has four recorded wake times that can be sorted; answer gives only a range and says evidence is insufficient.": 1,
+      "Diary has values for two of three dates; answer gives the two-value mean but does not explicitly identify the missing date/value or report both present values. External retrieval is irrelevant to diary completeness.": 1,
+      "Diary is read and six-day summary is produced, but no separate three-days-last-week versus three-days-this-week values or comparison is given.": 1,
+      "Diary read and 55-minute bedtime range reported; frozen evidence supplies no binary stability threshold.": 1,
+      "Diary values show a tie for maximum total sleep time (405) on two dates; answer repeats only the mean and does not identify either night.": 1,
+      "Direct group-versus-individual evidence is absent from retrieval.": 1,
+      "Exact latency ASK is not needed to answer whether modest bedtime variation alone warrants an overhaul given restorative waking; final response gives a qualified bounded answer.": 1,
+      "Final response declines despite the user asking for general possible causes and explicitly not knowing onset date.": 1,
+      "Final response declines despite the user asking what a recurring hotel-context change might suggest.": 1,
+      "Final response declines despite the user supplying the noisy-apartment change and asking whether noise is plausible.": 1,
+      "Final response declines instead of addressing the user's stated Sunday/weekend schedule association.": 1,
+      "Final response is generic and does not address early waking with daytime irritability.": 1,
+      "Fixed 5:45 caregiving wake and early sleepiness are stated, but final answer is generic.": 1,
+      "Reports diary-derived efficiency values and refuses to apply a clinical standard without a supporting reference; no external retrieval was performed.": 1,
+      "Retrieved material does not describe how clinicians adapt exercises when adherence is difficult.": 1,
+      "Retrieved material does not specify the contents of shared decision-making.": 1,
+      "Retrieved material supports regular schedules, but does not give the specific weekday/weekend circadian mechanism requested.": 1,
+      "State records occasional after-dinner coffee and inconsistent onset, but final answer is generic.": 1,
+      "The ASK seeks nap details relevant to selecting a duration adjustment; user says unknown, so the necessary target was not acquired.": 1,
+      "The ASK targets sleep timing/latency after the user already states vigorous exercise close to bedtime and evening alertness; final response is generic non-answer.": 1,
+      "The response is generic despite state containing easy sleep onset, restorative waking, and a routine fitting obligations; retrieval adds no answer.": 1,
+      "The retrieved material does not define a mandatory minimum component set.": 1,
+      "The rotating-night-shift constraint is in the user turn, but final response does not compare schedule-following with a fixed anchor.": 1,
+      "Three ASK actions request exact bedtime, onset latency, and wake time despite the prompt already saying schedule is stable, sleep onset usually succeeds, and awakening is occasional.": 1,
+      "Trace records diary resource as unavailable and the answer explicitly refuses to infer account data.": 1,
+      "Two ASK actions target nap and sleep-onset latency already substantially specified (1 pm, about 20 minutes, no observed onset effect); both user replies say unknown.": 1,
+      "User-provided fact caffeine='一杯茶' is preserved in state, but final answer gives only a generic disclaimer.": 1,
+      "User-provided worry after poor sleep is in state, but final answer is generic and omits the requested reciprocal-cycle explanation.": 1
+    },
+    "primary_cause_case_ids": {
+      "EVIDENCE_OR_INFORMATION_LIMITATION": {
+        "case_ids": [
+          "V4-CA-01",
+          "V4-CA-02",
+          "V4-CA-03",
+          "V4-CA-05",
+          "V4-CA-06",
+          "V4-CA-07",
+          "V4-CA-08",
+          "V4-CA-09",
+          "V4-CA-10",
+          "V4-DA-04",
+          "V4-DA-10",
+          "V4-KQ-04",
+          "V4-KQ-06",
+          "V4-KQ-09",
+          "V4-KQ-10",
+          "V4-PD-01",
+          "V4-PD-02",
+          "V4-PD-06",
+          "V4-PD-07",
+          "V4-PD-08",
+          "V4-PD-09"
+        ],
+        "count": 21
+      },
+      "LOW_VALUE_INFORMATION_ACQUISITION": {
+        "case_ids": [
+          "V4-CA-04",
+          "V4-PD-03",
+          "V4-PD-04",
+          "V4-PD-05",
+          "V4-PD-10"
+        ],
+        "count": 5
+      },
+      "TASK_COMPLETION_FAILURE": {
+        "case_ids": [
+          "V4-DA-01",
+          "V4-DA-05",
+          "V4-DA-06",
+          "V4-DA-07",
+          "V4-DA-09"
+        ],
+        "count": 5
+      }
+    },
+    "primary_cause_root_cause_distribution": {
+      "EVIDENCE_OR_INFORMATION_LIMITATION": 21,
+      "LOW_VALUE_INFORMATION_ACQUISITION": 5,
+      "TASK_COMPLETION_FAILURE": 5
+    }
+  },
+  "final_status_note": "final_status=ANSWER is execution telemetry and is not substituted for completion judgment.",
+  "lineage": {
+    "DERIVED_LINEAGE_COMPLETE": 8,
+    "FORMAL_LINEAGE_READY": 27,
+    "INCOMPLETE_FORMAL_BUT_ADJUDICATABLE": 5,
+    "interpretation": "Provenance metrics only; derived repairs remain derived, and incomplete formal cases remain incomplete. No score adjustment."
+  },
+  "needs_review_case_count": 0,
+  "reviewer_limitations": {
+    "deterministic_consistency_checks": "PASS_SINGLE_REVIEWER_DETERMINISTIC_CHECKS",
+    "human_adjudication": false,
+    "inter_rater_reliability": "NOT_MEASURED",
+    "interpretation": "Rubric scores are single-reviewer descriptive judgments; they are not human/expert review or inter-rater validated.",
+    "reviewer_type": "SINGLE_AI_REVIEWER"
+  },
+  "scores": {
+    "dimensions": {
+      "action_resource_selection": {
+        "denominator": 40,
+        "formula": "sum(case dimension_scores.action_resource_selection)/number of adjudicated cases",
+        "maximum": 20,
+        "mean": 13.65,
+        "numerator": 546,
+        "source_case_ids": [
+          "V4-CA-01",
+          "V4-CA-02",
+          "V4-CA-03",
+          "V4-CA-04",
+          "V4-CA-05",
+          "V4-CA-06",
+          "V4-CA-07",
+          "V4-CA-08",
+          "V4-CA-09",
+          "V4-CA-10",
+          "V4-DA-01",
+          "V4-DA-02",
+          "V4-DA-03",
+          "V4-DA-04",
+          "V4-DA-05",
+          "V4-DA-06",
+          "V4-DA-07",
+          "V4-DA-08",
+          "V4-DA-09",
+          "V4-DA-10",
+          "V4-KQ-01",
+          "V4-KQ-02",
+          "V4-KQ-03",
+          "V4-KQ-04",
+          "V4-KQ-05",
+          "V4-KQ-06",
+          "V4-KQ-07",
+          "V4-KQ-08",
+          "V4-KQ-09",
+          "V4-KQ-10",
+          "V4-PD-01",
+          "V4-PD-02",
+          "V4-PD-03",
+          "V4-PD-04",
+          "V4-PD-05",
+          "V4-PD-06",
+          "V4-PD-07",
+          "V4-PD-08",
+          "V4-PD-09",
+          "V4-PD-10"
+        ]
+      },
+      "evidence_answer_scope": {
+        "denominator": 40,
+        "formula": "sum(case dimension_scores.evidence_answer_scope)/number of adjudicated cases",
+        "maximum": 25,
+        "mean": 15.125,
+        "numerator": 605,
+        "source_case_ids": [
+          "V4-CA-01",
+          "V4-CA-02",
+          "V4-CA-03",
+          "V4-CA-04",
+          "V4-CA-05",
+          "V4-CA-06",
+          "V4-CA-07",
+          "V4-CA-08",
+          "V4-CA-09",
+          "V4-CA-10",
+          "V4-DA-01",
+          "V4-DA-02",
+          "V4-DA-03",
+          "V4-DA-04",
+          "V4-DA-05",
+          "V4-DA-06",
+          "V4-DA-07",
+          "V4-DA-08",
+          "V4-DA-09",
+          "V4-DA-10",
+          "V4-KQ-01",
+          "V4-KQ-02",
+          "V4-KQ-03",
+          "V4-KQ-04",
+          "V4-KQ-05",
+          "V4-KQ-06",
+          "V4-KQ-07",
+          "V4-KQ-08",
+          "V4-KQ-09",
+          "V4-KQ-10",
+          "V4-PD-01",
+          "V4-PD-02",
+          "V4-PD-03",
+          "V4-PD-04",
+          "V4-PD-05",
+          "V4-PD-06",
+          "V4-PD-07",
+          "V4-PD-08",
+          "V4-PD-09",
+          "V4-PD-10"
+        ]
+      },
+      "facts_state_integrity": {
+        "denominator": 40,
+        "formula": "sum(case dimension_scores.facts_state_integrity)/number of adjudicated cases",
+        "maximum": 20,
+        "mean": 15.675,
+        "numerator": 627,
+        "source_case_ids": [
+          "V4-CA-01",
+          "V4-CA-02",
+          "V4-CA-03",
+          "V4-CA-04",
+          "V4-CA-05",
+          "V4-CA-06",
+          "V4-CA-07",
+          "V4-CA-08",
+          "V4-CA-09",
+          "V4-CA-10",
+          "V4-DA-01",
+          "V4-DA-02",
+          "V4-DA-03",
+          "V4-DA-04",
+          "V4-DA-05",
+          "V4-DA-06",
+          "V4-DA-07",
+          "V4-DA-08",
+          "V4-DA-09",
+          "V4-DA-10",
+          "V4-KQ-01",
+          "V4-KQ-02",
+          "V4-KQ-03",
+          "V4-KQ-04",
+          "V4-KQ-05",
+          "V4-KQ-06",
+          "V4-KQ-07",
+          "V4-KQ-08",
+          "V4-KQ-09",
+          "V4-KQ-10",
+          "V4-PD-01",
+          "V4-PD-02",
+          "V4-PD-03",
+          "V4-PD-04",
+          "V4-PD-05",
+          "V4-PD-06",
+          "V4-PD-07",
+          "V4-PD-08",
+          "V4-PD-09",
+          "V4-PD-10"
+        ]
+      },
+      "goal_alignment": {
+        "denominator": 40,
+        "formula": "sum(case dimension_scores.goal_alignment)/number of adjudicated cases",
+        "maximum": 20,
+        "mean": 13.625,
+        "numerator": 545,
+        "source_case_ids": [
+          "V4-CA-01",
+          "V4-CA-02",
+          "V4-CA-03",
+          "V4-CA-04",
+          "V4-CA-05",
+          "V4-CA-06",
+          "V4-CA-07",
+          "V4-CA-08",
+          "V4-CA-09",
+          "V4-CA-10",
+          "V4-DA-01",
+          "V4-DA-02",
+          "V4-DA-03",
+          "V4-DA-04",
+          "V4-DA-05",
+          "V4-DA-06",
+          "V4-DA-07",
+          "V4-DA-08",
+          "V4-DA-09",
+          "V4-DA-10",
+          "V4-KQ-01",
+          "V4-KQ-02",
+          "V4-KQ-03",
+          "V4-KQ-04",
+          "V4-KQ-05",
+          "V4-KQ-06",
+          "V4-KQ-07",
+          "V4-KQ-08",
+          "V4-KQ-09",
+          "V4-KQ-10",
+          "V4-PD-01",
+          "V4-PD-02",
+          "V4-PD-03",
+          "V4-PD-04",
+          "V4-PD-05",
+          "V4-PD-06",
+          "V4-PD-07",
+          "V4-PD-08",
+          "V4-PD-09",
+          "V4-PD-10"
+        ]
+      },
+      "interaction_efficiency": {
+        "denominator": 40,
+        "formula": "sum(case dimension_scores.interaction_efficiency)/number of adjudicated cases",
+        "maximum": 15,
+        "mean": 10.8,
+        "numerator": 432,
+        "source_case_ids": [
+          "V4-CA-01",
+          "V4-CA-02",
+          "V4-CA-03",
+          "V4-CA-04",
+          "V4-CA-05",
+          "V4-CA-06",
+          "V4-CA-07",
+          "V4-CA-08",
+          "V4-CA-09",
+          "V4-CA-10",
+          "V4-DA-01",
+          "V4-DA-02",
+          "V4-DA-03",
+          "V4-DA-04",
+          "V4-DA-05",
+          "V4-DA-06",
+          "V4-DA-07",
+          "V4-DA-08",
+          "V4-DA-09",
+          "V4-DA-10",
+          "V4-KQ-01",
+          "V4-KQ-02",
+          "V4-KQ-03",
+          "V4-KQ-04",
+          "V4-KQ-05",
+          "V4-KQ-06",
+          "V4-KQ-07",
+          "V4-KQ-08",
+          "V4-KQ-09",
+          "V4-KQ-10",
+          "V4-PD-01",
+          "V4-PD-02",
+          "V4-PD-03",
+          "V4-PD-04",
+          "V4-PD-05",
+          "V4-PD-06",
+          "V4-PD-07",
+          "V4-PD-08",
+          "V4-PD-09",
+          "V4-PD-10"
+        ]
+      }
+    },
+    "overall": {
+      "denominator": 40,
+      "formula": "sum(case total_score)/number of adjudicated cases",
+      "mean": 68.875,
+      "numerator": 2755,
+      "scale": "0-100 descriptive; no pass threshold",
+      "source_case_ids": [
+        "V4-CA-01",
+        "V4-CA-02",
+        "V4-CA-03",
+        "V4-CA-04",
+        "V4-CA-05",
+        "V4-CA-06",
+        "V4-CA-07",
+        "V4-CA-08",
+        "V4-CA-09",
+        "V4-CA-10",
+        "V4-DA-01",
+        "V4-DA-02",
+        "V4-DA-03",
+        "V4-DA-04",
+        "V4-DA-05",
+        "V4-DA-06",
+        "V4-DA-07",
+        "V4-DA-08",
+        "V4-DA-09",
+        "V4-DA-10",
+        "V4-KQ-01",
+        "V4-KQ-02",
+        "V4-KQ-03",
+        "V4-KQ-04",
+        "V4-KQ-05",
+        "V4-KQ-06",
+        "V4-KQ-07",
+        "V4-KQ-08",
+        "V4-KQ-09",
+        "V4-KQ-10",
+        "V4-PD-01",
+        "V4-PD-02",
+        "V4-PD-03",
+        "V4-PD-04",
+        "V4-PD-05",
+        "V4-PD-06",
+        "V4-PD-07",
+        "V4-PD-08",
+        "V4-PD-09",
+        "V4-PD-10"
+      ]
+    },
+    "task_type_means": {
+      "CAUSE_ASSESSMENT": {
+        "denominator": 10,
+        "formula": "sum(case total_score in task stratum)/number of adjudicated cases in task stratum",
+        "mean": 57.2,
+        "numerator": 572,
+        "source_case_ids": [
+          "V4-CA-01",
+          "V4-CA-02",
+          "V4-CA-03",
+          "V4-CA-04",
+          "V4-CA-05",
+          "V4-CA-06",
+          "V4-CA-07",
+          "V4-CA-08",
+          "V4-CA-09",
+          "V4-CA-10"
+        ]
+      },
+      "DATA_ANALYSIS": {
+        "denominator": 10,
+        "formula": "sum(case total_score in task stratum)/number of adjudicated cases in task stratum",
+        "mean": 77.6,
+        "numerator": 776,
+        "source_case_ids": [
+          "V4-DA-01",
+          "V4-DA-02",
+          "V4-DA-03",
+          "V4-DA-04",
+          "V4-DA-05",
+          "V4-DA-06",
+          "V4-DA-07",
+          "V4-DA-08",
+          "V4-DA-09",
+          "V4-DA-10"
+        ]
+      },
+      "KNOWLEDGE_QA": {
+        "denominator": 10,
+        "formula": "sum(case total_score in task stratum)/number of adjudicated cases in task stratum",
+        "mean": 84.4,
+        "numerator": 844,
+        "source_case_ids": [
+          "V4-KQ-01",
+          "V4-KQ-02",
+          "V4-KQ-03",
+          "V4-KQ-04",
+          "V4-KQ-05",
+          "V4-KQ-06",
+          "V4-KQ-07",
+          "V4-KQ-08",
+          "V4-KQ-09",
+          "V4-KQ-10"
+        ]
+      },
+      "PERSONALIZED_DECISION": {
+        "denominator": 10,
+        "formula": "sum(case total_score in task stratum)/number of adjudicated cases in task stratum",
+        "mean": 56.3,
+        "numerator": 563,
+        "source_case_ids": [
+          "V4-PD-01",
+          "V4-PD-02",
+          "V4-PD-03",
+          "V4-PD-04",
+          "V4-PD-05",
+          "V4-PD-06",
+          "V4-PD-07",
+          "V4-PD-08",
+          "V4-PD-09",
+          "V4-PD-10"
+        ]
+      }
+    }
+  },
+  "task_distribution": {
+    "CAUSE_ASSESSMENT": 10,
+    "DATA_ANALYSIS": 10,
+    "KNOWLEDGE_QA": 10,
+    "PERSONALIZED_DECISION": 10
+  },
+  "token_usage_status": "NOT_MEASURED",
+  "tool_resource_behavior": {
+    "appropriateness_judgments": {
+      "READ_DIARY": {
+        "required": 10
+      },
+      "RETRIEVE": {
+        "irrelevant": 2,
+        "optional_useful": 1,
+        "required": 28
+      }
+    },
+    "counts": {
+      "ASK": 12,
+      "READ_DIARY": 10,
+      "RETRIEVE": 31,
+      "TOOL_CALL": 41
+    },
+    "per_case_means": {
+      "ask_per_case": {
+        "denominator": 40,
+        "formula": "ASK actions / adjudicated cases",
+        "numerator": 12,
+        "source_case_ids": [
+          "V4-CA-01",
+          "V4-CA-02",
+          "V4-CA-03",
+          "V4-CA-04",
+          "V4-CA-05",
+          "V4-CA-06",
+          "V4-CA-07",
+          "V4-CA-08",
+          "V4-CA-09",
+          "V4-CA-10",
+          "V4-DA-01",
+          "V4-DA-02",
+          "V4-DA-03",
+          "V4-DA-04",
+          "V4-DA-05",
+          "V4-DA-06",
+          "V4-DA-07",
+          "V4-DA-08",
+          "V4-DA-09",
+          "V4-DA-10",
+          "V4-KQ-01",
+          "V4-KQ-02",
+          "V4-KQ-03",
+          "V4-KQ-04",
+          "V4-KQ-05",
+          "V4-KQ-06",
+          "V4-KQ-07",
+          "V4-KQ-08",
+          "V4-KQ-09",
+          "V4-KQ-10",
+          "V4-PD-01",
+          "V4-PD-02",
+          "V4-PD-03",
+          "V4-PD-04",
+          "V4-PD-05",
+          "V4-PD-06",
+          "V4-PD-07",
+          "V4-PD-08",
+          "V4-PD-09",
+          "V4-PD-10"
+        ],
+        "value": 0.3
+      },
+      "read_diary_per_case": {
+        "denominator": 40,
+        "formula": "READ_DIARY actions / adjudicated cases",
+        "numerator": 10,
+        "source_case_ids": [
+          "V4-CA-01",
+          "V4-CA-02",
+          "V4-CA-03",
+          "V4-CA-04",
+          "V4-CA-05",
+          "V4-CA-06",
+          "V4-CA-07",
+          "V4-CA-08",
+          "V4-CA-09",
+          "V4-CA-10",
+          "V4-DA-01",
+          "V4-DA-02",
+          "V4-DA-03",
+          "V4-DA-04",
+          "V4-DA-05",
+          "V4-DA-06",
+          "V4-DA-07",
+          "V4-DA-08",
+          "V4-DA-09",
+          "V4-DA-10",
+          "V4-KQ-01",
+          "V4-KQ-02",
+          "V4-KQ-03",
+          "V4-KQ-04",
+          "V4-KQ-05",
+          "V4-KQ-06",
+          "V4-KQ-07",
+          "V4-KQ-08",
+          "V4-KQ-09",
+          "V4-KQ-10",
+          "V4-PD-01",
+          "V4-PD-02",
+          "V4-PD-03",
+          "V4-PD-04",
+          "V4-PD-05",
+          "V4-PD-06",
+          "V4-PD-07",
+          "V4-PD-08",
+          "V4-PD-09",
+          "V4-PD-10"
+        ],
+        "value": 0.25
+      },
+      "retrieve_per_case": {
+        "denominator": 40,
+        "formula": "RETRIEVE actions / adjudicated cases",
+        "numerator": 31,
+        "source_case_ids": [
+          "V4-CA-01",
+          "V4-CA-02",
+          "V4-CA-03",
+          "V4-CA-04",
+          "V4-CA-05",
+          "V4-CA-06",
+          "V4-CA-07",
+          "V4-CA-08",
+          "V4-CA-09",
+          "V4-CA-10",
+          "V4-DA-01",
+          "V4-DA-02",
+          "V4-DA-03",
+          "V4-DA-04",
+          "V4-DA-05",
+          "V4-DA-06",
+          "V4-DA-07",
+          "V4-DA-08",
+          "V4-DA-09",
+          "V4-DA-10",
+          "V4-KQ-01",
+          "V4-KQ-02",
+          "V4-KQ-03",
+          "V4-KQ-04",
+          "V4-KQ-05",
+          "V4-KQ-06",
+          "V4-KQ-07",
+          "V4-KQ-08",
+          "V4-KQ-09",
+          "V4-KQ-10",
+          "V4-PD-01",
+          "V4-PD-02",
+          "V4-PD-03",
+          "V4-PD-04",
+          "V4-PD-05",
+          "V4-PD-06",
+          "V4-PD-07",
+          "V4-PD-08",
+          "V4-PD-09",
+          "V4-PD-10"
+        ],
+        "value": 0.775
+      },
+      "tool_call_per_case": {
+        "denominator": 40,
+        "formula": "TOOL_CALL actions / adjudicated cases",
+        "numerator": 41,
+        "source_case_ids": [
+          "V4-CA-01",
+          "V4-CA-02",
+          "V4-CA-03",
+          "V4-CA-04",
+          "V4-CA-05",
+          "V4-CA-06",
+          "V4-CA-07",
+          "V4-CA-08",
+          "V4-CA-09",
+          "V4-CA-10",
+          "V4-DA-01",
+          "V4-DA-02",
+          "V4-DA-03",
+          "V4-DA-04",
+          "V4-DA-05",
+          "V4-DA-06",
+          "V4-DA-07",
+          "V4-DA-08",
+          "V4-DA-09",
+          "V4-DA-10",
+          "V4-KQ-01",
+          "V4-KQ-02",
+          "V4-KQ-03",
+          "V4-KQ-04",
+          "V4-KQ-05",
+          "V4-KQ-06",
+          "V4-KQ-07",
+          "V4-KQ-08",
+          "V4-KQ-09",
+          "V4-KQ-10",
+          "V4-PD-01",
+          "V4-PD-02",
+          "V4-PD-03",
+          "V4-PD-04",
+          "V4-PD-05",
+          "V4-PD-06",
+          "V4-PD-07",
+          "V4-PD-08",
+          "V4-PD-09",
+          "V4-PD-10"
+        ],
+        "value": 1.025
+      }
+    },
+    "quality_note": "Tool counts are behavior telemetry, not quality scores; appropriateness remains separate reviewer judgment.",
+    "total_acquisition_actions_per_case": {
+      "denominator": 40,
+      "formula": "(ASK + RETRIEVE + READ_DIARY) / adjudicated cases",
+      "numerator": 53,
+      "source_case_ids": [
+        "V4-CA-01",
+        "V4-CA-02",
+        "V4-CA-03",
+        "V4-CA-04",
+        "V4-CA-05",
+        "V4-CA-06",
+        "V4-CA-07",
+        "V4-CA-08",
+        "V4-CA-09",
+        "V4-CA-10",
+        "V4-DA-01",
+        "V4-DA-02",
+        "V4-DA-03",
+        "V4-DA-04",
+        "V4-DA-05",
+        "V4-DA-06",
+        "V4-DA-07",
+        "V4-DA-08",
+        "V4-DA-09",
+        "V4-DA-10",
+        "V4-KQ-01",
+        "V4-KQ-02",
+        "V4-KQ-03",
+        "V4-KQ-04",
+        "V4-KQ-05",
+        "V4-KQ-06",
+        "V4-KQ-07",
+        "V4-KQ-08",
+        "V4-KQ-09",
+        "V4-KQ-10",
+        "V4-PD-01",
+        "V4-PD-02",
+        "V4-PD-03",
+        "V4-PD-04",
+        "V4-PD-05",
+        "V4-PD-06",
+        "V4-PD-07",
+        "V4-PD-08",
+        "V4-PD-09",
+        "V4-PD-10"
+      ],
+      "value": 1.325
+    }
+  },
+  "valid_case_count": 40
+}

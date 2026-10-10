@@ -1,0 +1,190 @@
+{
+ "step": "9.63c-r5c10af",
+ "snapshot": {
+  "method": "SHA-256+size+mtime_ns of every file except .venv/.git/models/__pycache__",
+  "files_before": 2458,
+  "files_after": 2531,
+  "baseline_vs_previous_step_end": "0 changes",
+  "added": [
+   "evaluation/v1_2_3/step9_63c_r5c10ae_test_boundary_manifest.json",
+   "evaluation/v1_2_3/step9_63c_r5c10af_ar11t.diff",
+   "evaluation/v1_2_3/step9_63c_r5c10af_ar12_identity_pointer_design.md",
+   "evaluation/v1_2_3/step9_63c_r5c10af_ar13_authorization_issuer_design.md",
+   "evaluation/v1_2_3/step9_63c_r5c10af_ar2r.diff",
+   "evaluation/v1_2_3/step9_63c_r5c10af_ar4g.diff",
+   "evaluation/v1_2_3/step9_63c_r5c10af_ar7e.diff",
+   "evaluation/v1_2_3/step9_63c_r5c10af_ar7e_adtest.diff",
+   "evaluation/v1_2_3/step9_63c_r5c10af_change_report.md",
+   "evaluation/v1_2_3/step9_63c_r5c10af_guard_negative_results.json",
+   "evaluation/v1_2_3/step9_63c_r5c10af_mutation_tools/ae_mutation.py",
+   "evaluation/v1_2_3/step9_63c_r5c10af_mutation_tools/ae_mutation_builder.py",
+   "evaluation/v1_2_3/step9_63c_r5c10af_mutation_tools/af_guard_mutation.py",
+   "evaluation/v1_2_3/step9_63c_r5c10af_mutation_tools/af_mutation_manifest.py",
+   "evaluation/v1_2_3/step9_63c_r5c10af_mutation_tools/af_mutation_r5.py",
+   "evaluation/v1_2_3/step9_63c_r5c10af_mutation_tools/results_ar17_consumer_gate.json",
+   "evaluation/v1_2_3/step9_63c_r5c10af_mutation_tools/results_builder_pins_and_inlining.json",
+   "evaluation/v1_2_3/step9_63c_r5c10af_mutation_tools/results_guard_v3.json",
+   "evaluation/v1_2_3/step9_63c_r5c10af_mutation_tools/results_manifest_validator.json",
+   "evaluation/v1_2_3/step9_63c_r5c10af_mutation_tools/results_r5_retirement_properties.json",
+   "evaluation/v1_2_3/step9_63c_r5c10af_r11_freeze_readiness_matrix.json",
+   "evaluation/v1_2_3/step9_63c_r5c10af_r5_coverage_mapping.json",
+   "evaluation/v1_2_3/step9_63c_r5c10af_regression_results.json",
+   "evaluation/v1_2_3/step9_63c_r5c10af_remaining_blockers.md",
+   "evaluation/v1_2_3/step9_63c_r5c10af_test_harness/aggregate.py",
+   "evaluation/v1_2_3/step9_63c_r5c10af_test_harness/collect.py",
+   "evaluation/v1_2_3/step9_63c_r5c10af_test_harness/compare.py",
+   "evaluation/v1_2_3/step9_63c_r5c10af_test_harness/guard/sitecustomize.py",
+   "evaluation/v1_2_3/step9_63c_r5c10af_test_harness/guard_negative_scenarios.py",
+   "evaluation/v1_2_3/step9_63c_r5c10af_test_harness/run_all.sh",
+   "evaluation/v1_2_3/step9_63c_r5c10af_test_harness/run_module.py",
+   "evaluation/v1_2_3/step9_63c_r5c10af_test_harness/snapshot.py",
+   "scripts/validate_step9_63c_r5c10ae_test_boundary.py",
+   "tests/test_step9_63c_r5c10ae_test_boundary_manifest.py",
+   "tests/test_step9_63c_r5c10af_guard_negative.py"
+  ],
+  "removed": [],
+  "changed": [
+   "record.md",
+   "tests/retired/RETIRED_INDEX.json",
+   "tests/test_step9_63c_r5_mac_local_preflight.py",
+   "tests/test_step9_63c_r5c10ad_test_boundary_manifest.py",
+   "tests/test_step9_63c_r5c10ae_builder_pins.py",
+   "tests/test_step9_63c_r5c10ae_consumer_precommit_gate.py"
+  ],
+  "mtime_only_changes": [],
+  "unexpected_changes": [],
+  "note": "this report is written after the final snapshot and is therefore the only file not listed under 'added'"
+ },
+ "frozen_or_pinned_files_touched": [],
+ "pins": {
+  "scripts/v3_runner_identity.py (AR-10 resolver pin)": {
+   "path": "scripts/v3_runner_identity.py",
+   "expected": "a0f5670d3834d5f91391b41a33fbac669d6162587bc620e9bd3acf202aa3c6a5",
+   "current": "a0f5670d3834d5f91391b41a33fbac669d6162587bc620e9bd3acf202aa3c6a5",
+   "match": true
+  },
+  "scripts/run_step9_63_v3_formal_execution.py (AR-10 consumer pin)": {
+   "path": "scripts/run_step9_63_v3_formal_execution.py",
+   "expected": "297558393e56c645fb02b4ec45d4af41486b504034bdd717237b7738a21f4879",
+   "current": "297558393e56c645fb02b4ec45d4af41486b504034bdd717237b7738a21f4879",
+   "match": true
+  },
+  "r10 freeze manifest": {
+   "path": "evaluation/v1_2_3/step9_63c_r5c5b_runner_freeze_r10.json",
+   "expected": "d24244235e51e7bf6c8567880c654fe3fd73b87fa1bfe1ab0f10dfdc94db2693",
+   "current": "d24244235e51e7bf6c8567880c654fe3fd73b87fa1bfe1ab0f10dfdc94db2693",
+   "match": true
+  },
+  "r10 authorization manifest": {
+   "path": "evaluation/v1_2_3/step9_63c_r5c6_r10_v3_authorization_manifest.json",
+   "expected": "beac52d1ed3bc11efa02b1a924a8abc7b210171bf5cc1b7910011a6ef9741241",
+   "current": "beac52d1ed3bc11efa02b1a924a8abc7b210171bf5cc1b7910011a6ef9741241",
+   "match": true
+  },
+  "trace v1_2": {
+   "path": "evaluation/v1_2/step8_3_mechanism_traces.jsonl",
+   "expected": "e09321c89b75a4330799e4a4c286652cee82ed0e0d4fa1b8478c970dd7f6d8e5",
+   "current": "e09321c89b75a4330799e4a4c286652cee82ed0e0d4fa1b8478c970dd7f6d8e5",
+   "match": true
+  },
+  "trace v1_2_1": {
+   "path": "evaluation/v1_2_1/step8_7_mechanism_traces.jsonl",
+   "expected": "5518eb4b0b7e8880c5f84e59ba0264013bed99e25edb8da93dca558304d4f084",
+   "current": "5518eb4b0b7e8880c5f84e59ba0264013bed99e25edb8da93dca558304d4f084",
+   "match": true
+  },
+  "step9_51a safe test manifest": {
+   "path": "evaluation/v1_2_3/step9_51a_safe_test_manifest.json",
+   "expected": "a639ab7e674227f5c676071da6a6186572138fc88d0c899a9cf3fbaa6a59169d",
+   "current": "a639ab7e674227f5c676071da6a6186572138fc88d0c899a9cf3fbaa6a59169d",
+   "match": true
+  },
+  "step9_51a validator": {
+   "path": "scripts/validate_step9_51a_test_boundary.py",
+   "expected": "312f3ca29670c7b092851a37f161aa3cb2e0af17d275c38ca924a3987d7fc9fe",
+   "current": "312f3ca29670c7b092851a37f161aa3cb2e0af17d275c38ca924a3987d7fc9fe",
+   "match": true
+  },
+  "step9_51a test": {
+   "path": "tests/test_step9_51a_validation_boundary.py",
+   "expected": "127751fe917bca0c6992a2c722d6f7a70c32c34603e444292e5a8a097685573e",
+   "current": "127751fe917bca0c6992a2c722d6f7a70c32c34603e444292e5a8a097685573e",
+   "match": true
+  },
+  "V2 identity test (pinned by V2 runner freeze)": {
+   "path": "tests/test_step9_43a_treatment_identity.py",
+   "expected": "9936772aee53ae523a28669025a678d2cda58a30cea6a0561189d9afc0e891ef",
+   "current": "9936772aee53ae523a28669025a678d2cda58a30cea6a0561189d9afc0e891ef",
+   "match": true
+  },
+  "r5c10ad test boundary manifest": {
+   "path": "evaluation/v1_2_3/step9_63c_r5c10ad_test_boundary_manifest.json",
+   "expected": "acf0b42973083f51c19273c5b9504e5b78491431a6f230df6fd4f8d37728f200",
+   "current": "acf0b42973083f51c19273c5b9504e5b78491431a6f230df6fd4f8d37728f200",
+   "match": true
+  },
+  "guard v1 (historical)": {
+   "path": "evaluation/v1_2_3/step9_63c_r5c10ab_test_harness/guard/sitecustomize.py",
+   "expected": "1376cf088cfbb7441829430a2e62924c73c606851af37b93764d0f1f9201fcbd",
+   "current": "1376cf088cfbb7441829430a2e62924c73c606851af37b93764d0f1f9201fcbd",
+   "match": true
+  },
+  "guard v2 (historical, not approved)": {
+   "path": "evaluation/v1_2_3/step9_63c_r5c10ad_test_harness/guard/sitecustomize.py",
+   "expected": "b85280bd79ec78e0ca8c6e7ef04bf580ba84fcfd9e2aef1d999395a59fea9f23",
+   "current": "b85280bd79ec78e0ca8c6e7ef04bf580ba84fcfd9e2aef1d999395a59fea9f23",
+   "match": true
+  },
+  "r5c10ad validator (unchanged)": {
+   "path": "scripts/validate_step9_63c_test_boundary.py",
+   "expected": "82a4dde5b226863572b7c178b50f7fb93c6e537abbc024e4da61e217ba28dd58",
+   "current": "82a4dde5b226863572b7c178b50f7fb93c6e537abbc024e4da61e217ba28dd58",
+   "match": true
+  },
+  "r11 builder (unchanged this step)": {
+   "path": "scripts/build_step9_63c_r11_runner_freeze.py",
+   "expected": "eaa113dab72961846003958050027490f495945f995a3d77e92b7a323a3733bc",
+   "current": "eaa113dab72961846003958050027490f495945f995a3d77e92b7a323a3733bc",
+   "match": true
+  },
+  "authorization lifecycle ledger": {
+   "path": "evaluation/v1_2_3/authorization_lifecycle_events.jsonl",
+   "expected": "aaa2e9898a8869db052a1248a0ca2b0574d9c36093aee608db59457f24c2a60e",
+   "current": "aaa2e9898a8869db052a1248a0ca2b0574d9c36093aee608db59457f24c2a60e",
+   "match": true
+  }
+ },
+ "r10_members": {
+  "match": 17,
+  "differ": [
+   "scripts/run_step9_63_v3_formal_execution.py",
+   "scripts/v3_execution_transaction.py",
+   "scripts/v3_runner_identity.py"
+  ],
+  "note": "the same three approved r11 deltas as before (scanner, resolver, formal consumer); nothing new"
+ },
+ "r11_formal_artifacts_present": [],
+ "ar14_executed": false,
+ "authorization_ledger_unchanged": true,
+ "guard": {
+  "used_for_final_runs": "v3 candidate (not approved)",
+  "blocked_events_in_repository_runs": 0,
+  "catalogue": "119 scenarios, 118 PASS + 1 documented non-blockable (ctypes), 0 bypass"
+ },
+ "rollback": {
+  "method": "git apply -R in reverse order: ar7e_adtest, ar7e, ar4g, ar2r, ar11t",
+  "verified_on_scratch_copy": "17/17 touched paths restored byte-identical to the step baseline (created files disappear)"
+ },
+ "git_commit_or_push": "NONE",
+ "git_tracked_modifications": [
+  " M .github/workflows/tests.yml",
+  " M adaptive_agent/answer_generation.py",
+  " M adaptive_agent/runner.py",
+  " M evaluation/recorder.py",
+  " M scripts/run_step9_35a_matched_treatment.py",
+  " M tests/test_step9_35a_treatment_runner.py",
+  " M tests/test_step9_42_answer_authorization.py",
+  " M tests/test_v1_2_1_mechanism_validation.py",
+  " M tests/test_v1_2_mechanism_validation.py"
+ ]
+}

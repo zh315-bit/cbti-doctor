@@ -1,0 +1,44 @@
+{
+  "step": "9.63c-r5c5a",
+  "inventory_type": "READ_ONLY_AUTHORIZATION_LIFECYCLE_RECONCILIATION",
+  "inventory_timestamp_utc": "2026-10-06T20:12:33Z",
+  "current_run_manifest_glob": "evaluation/v1_2_3/step9*_authorization_manifest.json",
+  "manifest_artifacts_scanned": 15,
+  "issued_identity_records": 12,
+  "nonissued_or_identityless_artifacts": [
+    {"path": "evaluation/v1_2_3/step9_13_authorization_manifest.json", "authorization_id": null, "authorization_status": "NOT_ISSUED"},
+    {"path": "evaluation/v1_2_3/step9_20_v3_authorization_manifest.json", "authorization_id": null, "authorization_status": "NOT_ISSUED"},
+    {"path": "evaluation/v1_2_3/step9_61_v3_authorization_manifest.json", "authorization_id": null, "status": "NOT_ISSUED_FAIL_CLOSED_OLD_AUTHORIZATION_RETIREMENT_CONTRACT_GAP"}
+  ],
+  "authorization_records": [
+    {"authorization_id":"clean-evaluation-v1_2_3-20260922-01-auth-step9_13b-22c60aff04df448ea142b2a788d53fbf","manifest_path":"evaluation/v1_2_3/step9_13b_authorization_manifest.json","manifest_status":"ISSUED_NOT_EXECUTED","issued_event_exists":false,"retirement_event_exists":false,"attempt_consumption_event_exists":false,"transaction_state":null,"derived_lifecycle_status":"LEGACY_ISSUANCE_SCHEMA_NO_CURRENT_R9_BINDING","executable_under_current_r9":false,"reusable_under_current_r9":false},
+    {"authorization_id":"heldout-v3-step9_20-20260923-01-auth-step9_20d-dcbc098c121c4488b6c649c7544b7454","manifest_path":"evaluation/v1_2_3/step9_20d_v3_authorization_manifest.json","manifest_status":"ISSUED_NOT_EXECUTED","issued_event_exists":false,"retirement_event_exists":false,"attempt_consumption_event_exists":false,"transaction_state":null,"derived_lifecycle_status":"LEGACY_ISSUANCE_SCHEMA_NO_CURRENT_R9_BINDING","executable_under_current_r9":false,"reusable_under_current_r9":false},
+    {"authorization_id":"heldout-v4-step9_28-20260925-01-auth-step9_29b-7c9d4ba6c7b649e69a64f9b9e68175db","manifest_path":"evaluation/v1_2_3/step9_29b_v4_authorization_manifest.json","manifest_status":"ISSUED_NOT_EXECUTED","issued_event_exists":false,"retirement_event_exists":false,"attempt_consumption_event_exists":false,"transaction_state":null,"derived_lifecycle_status":"LEGACY_V4_ISSUANCE_OUTSIDE_CURRENT_R9_V3_AUTHORITY","executable_under_current_r9":false,"reusable_under_current_r9":false},
+    {"authorization_id":"auth-step9_35b-19cb1db7c4b46f073df71237a8608fc2","manifest_path":"evaluation/v1_2_3/step9_35b_matched_treatment_authorization_manifest.json","manifest_status":"ISSUED_NOT_EXECUTED","issued_event_exists":false,"retirement_event_exists":false,"attempt_consumption_event_exists":true,"transaction_state":null,"derived_lifecycle_status":"CONSUMED_BY_ATTEMPT_LEDGER","executable_under_current_r9":false,"reusable_under_current_r9":false},
+    {"authorization_id":"auth-step9_44r1-ecce3f6d87e64ace822fc46c97c18f55","manifest_path":"evaluation/v1_2_3/step9_44_r1_treatment_v2_authorization_manifest.json","manifest_status":"ISSUED_NOT_EXECUTED","issued_event_exists":false,"retirement_event_exists":false,"attempt_consumption_event_exists":true,"transaction_state":null,"derived_lifecycle_status":"CONSUMED_BY_ATTEMPT_LEDGER","executable_under_current_r9":false,"reusable_under_current_r9":false},
+    {"authorization_id":"auth-step9_54r1-b43c3282fd9344f6a7c3548e376ec6d1","manifest_path":"evaluation/v1_2_3/step9_54_r1_v3_authorization_manifest.json","manifest_status":"ISSUED_NOT_CONSUMED","issued_event_exists":false,"retirement_event_exists":false,"attempt_consumption_event_exists":true,"transaction_state":null,"derived_lifecycle_status":"CONSUMED_BY_ATTEMPT_LEDGER","executable_under_current_r9":false,"reusable_under_current_r9":false},
+    {"authorization_id":"auth-step9_56-a754eddd5c8a4ffc9243a7f1644aa611","manifest_path":"evaluation/v1_2_3/step9_56_v3_authorization_manifest.json","manifest_status":"ISSUED_NOT_CONSUMED","issued_event_exists":false,"retirement_event_exists":false,"attempt_consumption_event_exists":true,"transaction_state":null,"derived_lifecycle_status":"CONSUMED_BY_ATTEMPT_LEDGER","executable_under_current_r9":false,"reusable_under_current_r9":false},
+    {"authorization_id":"auth-step9_59-1645056dcfc34afeaac91b643f7621ec","manifest_path":"evaluation/v1_2_3/step9_59_v3_authorization_manifest.json","manifest_status":"NOT_ISSUED_FAIL_CLOSED_RUNNER_PARENT_IDENTITY_MISMATCH","issued_event_exists":false,"retirement_event_exists":false,"attempt_consumption_event_exists":false,"transaction_state":null,"derived_lifecycle_status":"NOT_ISSUED_FAIL_CLOSED","executable_under_current_r9":false,"reusable_under_current_r9":false},
+    {"authorization_id":"auth-step9_59b-0f63fb3bd6934e4b9a1c7e5808c24825","manifest_path":"evaluation/v1_2_3/step9_59b_v3_authorization_manifest.json","manifest_status":"ISSUED_NOT_CONSUMED","issued_event_exists":false,"retirement_event_exists":true,"attempt_consumption_event_exists":false,"transaction_state":null,"derived_lifecycle_status":"RETIRED_UNCONSUMED_NON_REUSABLE","executable_under_current_r9":false,"reusable_under_current_r9":false},
+    {"authorization_id":"auth-step9_62-e796755748e14418b9da641f5d6c15e2","manifest_path":"evaluation/v1_2_3/step9_62_v3_authorization_manifest.json","manifest_status":"ISSUED_NOT_CONSUMED","issued_event_exists":false,"retirement_event_exists":true,"attempt_consumption_event_exists":false,"transaction_state":null,"derived_lifecycle_status":"RETIRED_UNCONSUMED_NON_REUSABLE","executable_under_current_r9":false,"reusable_under_current_r9":false},
+    {"authorization_id":"auth-step9_63a_r3-d53bbaa35b1e4522bc4a5f57d42c8ef7","manifest_path":"evaluation/v1_2_3/step9_63a_r3_v3_authorization_manifest.json","manifest_sha256":"1514438d0afe23a39de2a696e9ea5bd97faac4dd546a88cdbd7b91f450046345","manifest_status":"ISSUED_NOT_CONSUMED","manifest_consumed":false,"manifest_consumption_count":0,"issued_event_exists":false,"retirement_event_exists":false,"attempt_consumption_event_exists":false,"transaction_journal_path":"evaluation/v4_runs/.execution_transactions/auth-step9_63a_r3-d53bbaa35b1e4522bc4a5f57d42c8ef7.jsonl","transaction_journal_sha256":"76afd557e4559c50090e9e4939a2e52746cbaefff1d4d6bd886206798b2e96fa","transaction_state":"COMMITTED","transaction_events":["PREPARED","COMMITTING","COMMITTED"],"authorization_irreversibly_burned":true,"transaction_reconcile_label":"COMMITTED_READY_FOR_EXECUTION","attempt_claimed_event_exists":false,"case_started_event_exists":false,"physical_namespace_exists":true,"namespace_id":"heldout-v4-treatment-v3-run-2b23978e98ac414ca26e","reservation_marker_path":"evaluation/v4_runs/heldout-v4-treatment-v3-run-2b23978e98ac414ca26e/.namespace_allocation.json","reservation_marker_sha256":"37179292afafb149971961f5d50c82bf2ff42f1bfac9f7db56e5701e3017c7e9","derived_lifecycle_status":"COMMITTED_BURNED_PRE_CASE_REQUIRES_MANUAL_NO_RESUME_DISPOSITION","executable_under_current_r9":false,"reusable_under_current_r9":false},
+    {"authorization_id":"auth-step9_63c_r4-4b2749ce10014634ac6de155d37ec6a9","manifest_path":"evaluation/v1_2_3/step9_63c_r4_r8_authorization_manifest.json","manifest_status":"ISSUED_NOT_CONSUMED","issued_event_exists":false,"retirement_event_exists":true,"attempt_consumption_event_exists":false,"runner_freeze_revision":"r8","derived_lifecycle_status":"RETIRED_UNCONSUMED_NON_REUSABLE","executable_under_current_r9":false,"reusable_under_current_r9":false}
+  ],
+  "all_v3_attempt_ledgers_scanned":true,
+  "all_transaction_journals_scanned":true,
+  "all_namespace_markers_scanned":true,
+  "lifecycle_event_ledger_path":"evaluation/v1_2_3/authorization_lifecycle_events.jsonl",
+  "other_authorization_lifecycle_event_ledgers_found":0,
+  "issuance_events_in_lifecycle_ledger":0,
+  "retirement_events_in_lifecycle_ledger":3,
+  "r5c5_legacy_active_authorization_enumerator_result": {
+    "count":1,
+    "ids":["auth-step9_63a_r3-d53bbaa35b1e4522bc4a5f57d42c8ef7"],
+    "source":"scripts/preflight_step9_62b_mac_local.py:active_authorizations",
+    "omitted_source":"evaluation/v4_runs/.execution_transactions"
+  },
+  "r9_current_executable_authorization_count":0,
+  "committed_burned_pre_case_transaction_count":1,
+  "pending_transaction_authorization_ids":["auth-step9_63a_r3-d53bbaa35b1e4522bc4a5f57d42c8ef7"],
+  "inventory_disclaimer":"Legacy artifacts without current r9 bindings are retained and classified non-executable/non-reusable under the current r9 V3 protocol; their historical system-specific state is not rewritten."
+}

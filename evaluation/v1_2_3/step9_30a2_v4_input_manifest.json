@@ -1,0 +1,97 @@
+{
+  "created_at_utc": "2026-09-27T03:48:06.976650+00:00",
+  "formal_run_inputs_reverified_against_step9_30a_freeze": true,
+  "formal_v4_artifacts_modified": false,
+  "frozen_identity_audit": {
+    "agent_expected_aggregate_sha256": "4e2bffea0d7eaa9299074a960df84a1806b3ae9d4930662929abc58ca5b2ae79",
+    "benchmark_v4_matches_sealed_manifest": true,
+    "benchmark_v4_sha256": "8b8c72092fcd7544e69d5d2ecd13610c7bb4c14210fca330698b3e5ab3f01d7f",
+    "current_agent_matches_final_freeze": true,
+    "final_candidate_manifest_sha256": "2de40b76bf0ad6d6c3be68294fb8b390d8c6e675c328ac59e22ec78ec010282e",
+    "metric_registry_expected_sha256": "de9f348cb1dff66410c03095abdaffcc256f53679718482870e4aa4d80c75056",
+    "metric_registry_matches_freeze": true,
+    "one_shot_rules_expected_sha256": "1c7ed4ef47865b117bc943f3e0ad9a859f4f74cfb4e8001f723ac5532af140d0",
+    "one_shot_rules_match_freeze": true,
+    "scoring_expected_aggregate_sha256": "f742a8f8af7c8747818dadad81621c15d12d74f50538019913dfe18ab53bf59b",
+    "scoring_rubric_matches_freeze": true
+  },
+  "inputs": [
+    {
+      "byte_size": 29460,
+      "path": "evaluation/v1_2_3/step9_30a_v4_run_input_freeze.json",
+      "sha256": "6b95f6b896da08767bb8861bad0ccf49dcfcc41cb7490e868ca077a83b2c581e"
+    },
+    {
+      "byte_size": 2478,
+      "path": "evaluation/v1_2_3/step9_30a1_v4_lineage_forensics.json",
+      "sha256": "9db6cc080feffa9688e90cfa60ffdf3c122897243345e31290b99fa507aa4b5f"
+    },
+    {
+      "byte_size": 26825,
+      "path": "evaluation/v1_2_3/step9_30a1_v4_lineage_case_matrix.jsonl",
+      "sha256": "9c3db4396a82e923a6759cfa3418cfb9136a641e1ed3fe4bb7d27f136333d36b"
+    },
+    {
+      "byte_size": 3787,
+      "path": "evaluation/v1_2_3/step9_30a1_v4_lineage_forensics.md",
+      "sha256": "52487d0228527ad773a2db15c64575cc301f04dfa9502597738511705304ffea"
+    },
+    {
+      "byte_size": 60989,
+      "path": "evaluation/v4_runs/heldout-v4-step9_28-20260925-01/attempts.jsonl",
+      "sha256": "5fe1b11cbe0c28ccdfd056e3141862748897dc3b419ff6f05eb3ad8cb847b59f"
+    },
+    {
+      "byte_size": 56134,
+      "path": "evaluation/v4_runs/heldout-v4-step9_28-20260925-01/heldout-v4-step9_28-20260925-01-attempt-step9_29b-5370d36a64d84a3da4f2585e9b57055a_case_results.jsonl",
+      "sha256": "77042ae9f5a5a75f7f7efd068e3c182e5725fa709e4f68ae63e58f0bbad0d2ea"
+    },
+    {
+      "byte_size": 4430984,
+      "path": "evaluation/v4_runs/heldout-v4-step9_28-20260925-01/heldout-v4-step9_28-20260925-01-attempt-step9_29b-5370d36a64d84a3da4f2585e9b57055a_raw_traces.jsonl",
+      "sha256": "e1aac03f4dbedf567c625694e084fa23155c8bfc2db1d43c4dffbce158734189"
+    },
+    {
+      "byte_size": 2220,
+      "path": "evaluation/benchmark_v1_1_scoring.md",
+      "sha256": "a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899"
+    },
+    {
+      "byte_size": 5412,
+      "path": "evaluation/v1_2_3/step9_26_v4_metric_registry.json",
+      "sha256": "de9f348cb1dff66410c03095abdaffcc256f53679718482870e4aa4d80c75056"
+    },
+    {
+      "byte_size": 5887,
+      "path": "evaluation/v1_2_3/step9_26_final_candidate_freeze.json",
+      "sha256": "2de40b76bf0ad6d6c3be68294fb8b390d8c6e675c328ac59e22ec78ec010282e"
+    },
+    {
+      "byte_size": 5142,
+      "path": "evaluation/v1_2_3/step9_26_v4_protocol.md",
+      "sha256": "3ef036ab9f24d659f8f057ce7e9039cd7d87f6b50ff0c1d5d34ff75eabc17fa1"
+    },
+    {
+      "byte_size": 1394,
+      "path": "evaluation/v1_2_3/step9_28_v4_execution_protocol.md",
+      "sha256": "b8d53793622048da195960f80eb75df1d9983d64e82cf4506fa0b804fae64bec"
+    },
+    {
+      "byte_size": 2715,
+      "path": "evaluation/v1_2_3/step9_26_v4_one_shot_rules.md",
+      "sha256": "1c7ed4ef47865b117bc943f3e0ad9a859f4f74cfb4e8001f723ac5532af140d0"
+    },
+    {
+      "byte_size": 2754,
+      "path": "evaluation/benchmarks/benchmark_v4_manifest.json",
+      "sha256": "b5feb7832b6267d8cff9d25fb2d8cf0043829feb5fd04ec1bea77dba932a13db"
+    },
+    {
+      "byte_size": 52012,
+      "path": "evaluation/benchmarks/benchmark_v4_cases.yaml",
+      "sha256": "8b8c72092fcd7544e69d5d2ecd13610c7bb4c14210fca330698b3e5ab3f01d7f"
+    }
+  ],
+  "manifest_type": "FROZEN_FORENSIC_INPUTS",
+  "step": "9.30a.2"
+}

@@ -1,0 +1,26 @@
+{
+  "step": "9.63c-r5c10k",
+  "status": "HISTORICAL_IDENTITY_PRESERVED_CURRENT_R11_FAIL_CLOSED",
+  "r10_historical": {
+    "freeze_manifest_path": "evaluation/v1_2_3/step9_63c_r5c5b_runner_freeze_r10.json",
+    "freeze_manifest_sha256": "d24244235e51e7bf6c8567880c654fe3fd73b87fa1bfe1ab0f10dfdc94db2693",
+    "pointer_sha256": "0f908fb566ad69f52246bf3c762d46d476c1bad40b0be300c152a576a64df412",
+    "builder_sha256": "9ebfe83b099dc454ec2ec5f90cf6c53d272a48ee6bb4be9c9aae98136f1a3812",
+    "unchanged_adapter_sha256": "3a4ec3e526bde19e318e271a24569223087c8a6aadc77fd144b061825c0da282",
+    "unchanged_lifecycle_sha256": "f0d8b7e04fa2710765b74f4f293436b051af005d11851bf9583da14ff6612744",
+    "historical_freeze_modified": false
+  },
+  "r11_current": {
+    "formal_pointer_exists": false,
+    "formal_freeze_exists": false,
+    "real_invocation_registry_exists": false,
+    "missing_pointer_fail_closed": true,
+    "r10_implicit_fallback": false,
+    "synthetic_pointer_and_freeze": "temporary test directories only; removed after tests",
+    "synthetic_20_member_freeze_validated": true,
+    "consumer_negative_provenance_tests_passed": true
+  },
+  "real_authorization_issued_or_retired": false,
+  "real_authorization_consumed": false,
+  "formal_v4_case_executed": 0
+}

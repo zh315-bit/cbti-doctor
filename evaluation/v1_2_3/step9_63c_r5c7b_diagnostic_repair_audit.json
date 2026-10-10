@@ -1,0 +1,98 @@
+{
+  "artifact_type": "STEP9_63C_R5C7B_DIAGNOSTIC_INSTRUMENTATION_REPAIR_AUDIT",
+  "step": "9.63c-r5c7b",
+  "status": "PASS_DIAGNOSTIC_REPAIR_OFFLINE_VALIDATED",
+  "completed_at_utc": "2026-10-07T15:39:28+00:00",
+  "changed_files": [
+    {
+      "path": "scripts/preflight_step9_63c_r5c7_mac_local.py",
+      "sha256": "2a6a13e00b63703cbd1bad21546054dfca1ebd54be76e5887411d245d95c5664",
+      "change_scope": "stage-aware diagnostics, sanitized fail-closed output, process-environment-only credential presence check"
+    },
+    {
+      "path": "scripts/preflight_step9_63b_mac_local.py",
+      "sha256": "bea6ab3de9816f38e508807862d5b4ff1fa75dffff21c01b6c54ed3b5e427c71",
+      "change_scope": "optional diagnostic stage callback around existing DNS/TCP/TLS operations; network operations/order unchanged"
+    },
+    {
+      "path": "tests/test_step9_63c_r5c7b_diagnostics.py",
+      "sha256": "ea89f6eefdd1086a06adc5593366ba6ea510ee95c9999ccbd90760c9555547b4",
+      "change_scope": "offline synthetic diagnostics tests with all external/network effects mocked"
+    }
+  ],
+  "generic_exception_swallowing_before": true,
+  "stage_aware_diagnostics_after": true,
+  "failure_output": {
+    "status": "FAIL_CLOSED_PREFLIGHT_ERROR",
+    "includes_stage": true,
+    "includes_exception_type": true,
+    "includes_sanitized_message": true,
+    "traceback_emitted": false,
+    "lifecycle_failure_flags_remain_false": true,
+    "formal_v4_case_executed_on_failure": 0
+  },
+  "tracked_stages": [
+    "CONFIG", "PROJECT_PATH", "VENV", "AUTHORIZATION_VALIDATION", "LIFECYCLE_REDUCER",
+    "R10_FREEZE_VALIDATION", "FROZEN_EVALUATION_IDENTITIES", "HISTORICAL_PIN_VALIDATION",
+    "PREFLIGHT_TARGET_CHECK", "SYSTEM_DNS", "PYTHON_GETADDRINFO", "DIG_DEFAULT",
+    "DIG_GOOGLE", "DIG_CLOUDFLARE", "TCP_CONNECTION", "TLS_CONNECTION",
+    "TLS_CERTIFICATE_VALIDATION", "ARTIFACT_SERIALIZATION", "ARTIFACT_WRITE"
+  ],
+  "exception_sanitization": {
+    "status": "PASS",
+    "redacts_api_key_assignments": true,
+    "redacts_authorization_and_bearer_tokens": true,
+    "redacts_common_token_password_secret_assignments": true,
+    "redacts_request_headers_blocks": true,
+    "reads_environment_secret_for_redaction": false,
+    "dumps_environment_or_headers": false
+  },
+  "credential_presence_check": {
+    "uses_process_environment_presence_only": true,
+    "calls_dotenv_values": false,
+    "opens_dotenv_file_directly": false,
+    "retains_existing_load_dotenv_behavior_if_preflight_is_later_run": true
+  },
+  "process_boundary_violation": "DOTENV_VALUES_PARSED_DURING_READ_ONLY_FORENSICS",
+  "process_boundary_violation_recorded": true,
+  "secret_printed": false,
+  "secret_persisted": false,
+  "known_credential_disclosure": false,
+  "test_validation": {
+    "focused_synthetic_test_count": 13,
+    "focused_synthetic_test_failures": 0,
+    "offline_regression_count": 33,
+    "offline_regression_failures": 0,
+    "offline_regression_errors": 0,
+    "py_compile": "PASS",
+    "network_or_external_side_effects_in_tests": false
+  },
+  "stale_test_note": "An exploratory unfiltered 34-test lifecycle/regression run included test_18_active_count_is_zero and failed because Step 9.63c-r5c6 intentionally creates the single active executable authorization. That pre-issuance-only assertion was excluded from the final applicable regression selection; the remaining 33 passed. No test or lifecycle state was altered.",
+  "runner_freeze": {
+    "revision": "r10",
+    "path": "evaluation/v1_2_3/step9_63c_r5c5b_runner_freeze_r10.json",
+    "sha256": "d24244235e51e7bf6c8567880c654fe3fd73b87fa1bfe1ab0f10dfdc94db2693",
+    "member_count": 20,
+    "all_members_match": true,
+    "modified_files_in_freeze": false,
+    "runner_execution_identity_changed": false,
+    "new_runner_freeze_required": false
+  },
+  "authorization_id": "auth-step9_63c_r5c6-aff5c4b96bb74278a14d3fd08bf8a84e",
+  "authorization_manifest_sha256": "beac52d1ed3bc11efa02b1a924a8abc7b210171bf5cc1b7910011a6ef9741241",
+  "authorization_derived_state": "ISSUED_EXECUTABLE",
+  "authorization_consumed": false,
+  "authorization_consumption_count": 0,
+  "attempt_created": false,
+  "namespace_created": false,
+  "namespace_reserved": false,
+  "transaction_started": false,
+  "preflight_rerun": false,
+  "formal_v4_case_executed": 0,
+  "model_inference_executed": false,
+  "agent_evaluation_executed": false,
+  "rag_evaluation_executed": false,
+  "http_inference_request_sent": false,
+  "ready_for_next_freeze_lifecycle": true,
+  "safe_to_retry_mac_local_preflight_in_this_step": false
+}

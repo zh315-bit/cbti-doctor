@@ -1,0 +1,140 @@
+{
+ "step": "9.63c-r5c10ad",
+ "supersedes_view_of": "evaluation/v1_2_3/step9_63c_r5c10ac_r11_freeze_readiness_matrix.json (unchanged)",
+ "READY_FOR_R11_FREEZE_REVIEW": "NO",
+ "summary": {
+  "PASS": 8,
+  "FAIL": 8,
+  "BLOCKED": 3,
+  "NOT_VERIFIED": 2
+ },
+ "note": "PASS = statically reviewed and/or synthetic-test verified; not formal freeze readiness. No r11 freeze, pointer, registry or authorization was created.",
+ "conditions": [
+  {
+   "id": "R01",
+   "condition": "Formal r11 identity pointer exists",
+   "status": "BLOCKED",
+   "evidence": "evaluation/v1_2_3/step9_63c_r11_current_runner_identity.json absent (correct; creation requires approval)."
+  },
+  {
+   "id": "R02",
+   "condition": "Reviewed r11 identity-pointer creation procedure",
+   "status": "FAIL",
+   "evidence": "No production writer or reviewed procedure found in scripts/; only synthetic temp-root pointers in tests."
+  },
+  {
+   "id": "R03",
+   "condition": "Resolver strict r11, no r10 fallback",
+   "status": "PASS",
+   "evidence": "scripts/v3_runner_identity.py checks EXPECTED_REVISION='r11' and exact freeze path; test_r11_pointer_missing_corrupt_and_r10_fallback_forbidden passes; 32 RC1 items still fail closed with pointer absent."
+  },
+  {
+   "id": "R04",
+   "condition": "r11 member inventory = 20 unique paths mapped 1:1 from r10",
+   "status": "PASS",
+   "evidence": "Builder MEMBER_PATHS: 14 unchanged (all equal r10 SHA) + 3 changed + 3 replaced; assemble_candidate enforces mapping."
+  },
+  {
+   "id": "R05",
+   "condition": "All 20 r11 members present",
+   "status": "BLOCKED",
+   "evidence": "19/20 present; pointer (member 13) absent."
+  },
+  {
+   "id": "R06",
+   "condition": "Changed members pinned to reviewed SHA-256",
+   "status": "FAIL",
+   "evidence": "Only scanner pinned (SCANNER_SHA256 f0e74a49\u2026). Resolver (current a0f5670d\u2026) and formal consumer (current cd0d0706\u2026) only checked to differ from r10; any later edit would be accepted."
+  },
+  {
+   "id": "R07",
+   "condition": "Builder dependency closure inside r11 freeze",
+   "status": "FAIL",
+   "evidence": "build_candidate() imports verify_frozen_inputs from scripts/build_step9_63c_r5c4_runner_freeze.py (replaced r10 path, not an r11 member; currently unchanged at r10 SHA 9ebfe83b\u2026)."
+  },
+  {
+   "id": "R08",
+   "condition": "Builder refuses to overwrite / exclusive publication",
+   "status": "PASS",
+   "evidence": "assemble_candidate rejects existing target; persist_candidate uses O_CREAT|O_EXCL + fsync (static review; synthetic test passes)."
+  },
+  {
+   "id": "R09",
+   "condition": "Preflight producer \u2194 consumer grammar and provenance binding",
+   "status": "PASS",
+   "evidence": "Producer ID 'preflight-step9_63c_r5-r11-<hex32>' matches consumer regex; consumer verifies producer SHA vs freeze, preflight_script_sha256, registry claim+persistence before adapter.run(); r5c10j 12/12 synthetic tests pass."
+  },
+  {
+   "id": "R10",
+   "condition": "Registry claim uniqueness / non-replay",
+   "status": "PASS",
+   "evidence": "Synthetic tests: durable claim, concurrent single winner, failed ID non-reusable, tamper/AppleDouble rejection. Production registry correctly absent."
+  },
+  {
+   "id": "R11",
+   "condition": "Formal r11 authorization issuer",
+   "status": "FAIL",
+   "evidence": "Only issuer scripts/issue_step9_63a_r3_authorization.py is hard-bound to r7 (EXPECTED_R7_SHA256)."
+  },
+  {
+   "id": "R12",
+   "condition": "Authorization bound to exact r11 freeze path+SHA at consumption",
+   "status": "NOT_VERIFIED",
+   "evidence": "Consumer code checks runner_freeze_path/sha256 (static PASS) but no r11 authorization exists to verify end to end."
+  },
+  {
+   "id": "R13",
+   "condition": "Old r10 authorization retired",
+   "status": "FAIL",
+   "evidence": "Read-only reducer: auth-step9_63c_r5c6-aff5c4b96bb74278a14d3fd08bf8a84e derived_state=ISSUED_EXECUTABLE. Retirement requires separate approval; it remains non-runnable today only because current identity is absent/non-r10."
+  },
+  {
+   "id": "R14",
+   "condition": "r10 historical freeze and members preserved",
+   "status": "PASS",
+   "evidence": "Manifest SHA d24244\u20262693 unchanged; 17/20 members equal; 3 approved deltas."
+  },
+  {
+   "id": "R15",
+   "condition": "Historical trace original content integrity",
+   "status": "BLOCKED",
+   "evidence": "CONTENT_INTEGRITY_UNPROVEN; current hashes stable but no pre-r5c10l original exists. Requires decision to accept as documented gap."
+  },
+  {
+   "id": "R16",
+   "condition": "Full guarded regression green",
+   "status": "FAIL",
+   "evidence": "742 collected / 709 pass / 2 fail / 31 error / 4 import-blocked. Non-identity residue = 4 (two files pinned by frozen evidence, two UNCOVERED properties); 33 RC1 items blocked on formal r11."
+  },
+  {
+   "id": "R17",
+   "condition": "CI reports complete results",
+   "status": "PASS",
+   "evidence": "After R1: working tree runs to completion with named import failures; HEAD coverage unchanged. Note: GitHub CI sees only Git-tracked tests (38/66)."
+  },
+  {
+   "id": "R18",
+   "condition": "Test runs cannot pollute protected evidence",
+   "status": "PASS",
+   "evidence": "Guard v2 (self-test 21/21) + full snapshots: 0 blocked events, 0 unexpected file changes in this step."
+  },
+  {
+   "id": "R19",
+   "condition": "55 historical pins enforced on the r11 preflight/execution path",
+   "status": "FAIL",
+   "evidence": "No r11 producer, formal consumer, adapter or parent runner checks the 55 pins; only the r7 issuer and the r10-era 62b preflight do. Consumer validate_precommit has the predicate but execute_formal() never calls it."
+  },
+  {
+   "id": "R20",
+   "condition": "Exactly-one-active-authorization enforced on the r11 path and tested",
+   "status": "NOT_VERIFIED",
+   "evidence": "Enforced only inside current producer validate_authorization_state (imports frozen adapter); untestable without formal r11 identity. Consumer predicate (test_12) not wired into execute_formal()."
+  },
+  {
+   "id": "R21",
+   "condition": "Consumer precommit gate wired into formal execution",
+   "status": "FAIL",
+   "evidence": "scripts/run_step9_63_v3_formal_execution.py: validate_precommit() is only a pure predicate; main() prints a hard-coded empty 'precommit_failures'. Changing this touches an r11 member (formal consumer) and needs approval."
+  }
+ ]
+}

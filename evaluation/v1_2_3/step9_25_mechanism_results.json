@@ -1,0 +1,2214 @@
+{
+  "freeze_audit": {
+    "freeze_id": "post-step9_24-candidate-20260924-01",
+    "inventory_count": 26,
+    "inventory_matches_manifest": true,
+    "all_inventory_files_match": true,
+    "benchmark_v2_rerun": false,
+    "benchmark_v3_accessed": false
+  },
+  "metrics": {
+    "case_count": 12,
+    "passed": 12,
+    "failed": 0,
+    "low_value_ask_suppression_rate": 1.0,
+    "low_value_ask_candidate_count": 3,
+    "low_value_ask_accepted_total": 0,
+    "low_value_ask_per_case": 0.0,
+    "necessary_ask_preservation_rate": 1.0,
+    "necessary_ask_case_count": 2,
+    "decision_relevant_ask_preservation_rate": 1.0,
+    "decision_relevant_ask_case_count": 5,
+    "hard_precondition_acquisition_preservation_rate": 1.0,
+    "hard_precondition_acquisition_case_count": 4,
+    "under_acquisition_failures": 0,
+    "hard_precondition_violations": 0,
+    "retrieve_required_preservation_rate": 1.0,
+    "read_diary_required_preservation_rate": 1.0,
+    "ask_per_case": 0.4166666666666667,
+    "planned_retrieve_actions": 2,
+    "planned_read_diary_actions": 1,
+    "planned_tool_actions_per_case": 0.25,
+    "tool_calls_per_case": "NOT_MEASURED; tool actions are selected, not executed",
+    "pre_p2_baseline_available": false,
+    "pre_p2_mechanism_improvement": "NOT_MEASURED",
+    "steps_turns_latency_tokens": "NOT_MEASURED; one synthetic decision evaluation per case, no loop/API/model timing"
+  },
+  "cases": [
+    {
+      "case_id": "A-01",
+      "group": "low_value_optional_missing",
+      "pair_id": "CF-CAFFEINE",
+      "expected_action": "ANSWER",
+      "observed_action": "ANSWER",
+      "expected_value": "LOW",
+      "observed_value": "LOW",
+      "expected_gate": "REJECT",
+      "observed_gate": "REJECT",
+      "selected_target": null,
+      "selected_origin": "BOUNDED_STOP",
+      "action_path": [
+        "ANSWER"
+      ],
+      "dependencies": [
+        {
+          "dependency_id": "dep_synthetic_a_01_r0_user_facts_user_facts",
+          "dependency_type": "USER_FACTS",
+          "target": "user_facts",
+          "status": "DEFERRED",
+          "reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+          "source": [
+            "goal_semantics",
+            "requirements"
+          ],
+          "required_for_goal": "概括我已经提供的睡眠安排",
+          "satisfiable_by": [
+            "ASK",
+            "READ_DIARY"
+          ],
+          "fallback": "bounded answer using only supplied facts",
+          "provenance": {
+            "missing_fields": [
+              "caffeine"
+            ]
+          },
+          "semantic_ids": [
+            "sem_synthetic_a_01_r0_4"
+          ],
+          "supersedes_dependency_id": null,
+          "dependency_class": "USER_FACTS",
+          "requiredness": "optional",
+          "dependency_source": [
+            "goal_semantics",
+            "requirements"
+          ],
+          "dependency_reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+          "satisfied_by": []
+        }
+      ],
+      "preconditions": [],
+      "acquisition_decisions": [
+        {
+          "candidate_id": "cand_synthetic_a_01_r0_1",
+          "action": "ASK",
+          "target": "caffeine",
+          "expected_information_gain": "LOW",
+          "goal_relevance": "MEDIUM",
+          "decision_impact": "LOW",
+          "missing_criticality": "DECISION_RELEVANT",
+          "redundancy": "LOW",
+          "resource_dependency": {
+            "dependency_id": "dep_synthetic_a_01_r0_user_facts_user_facts",
+            "dependency_type": "USER_FACTS",
+            "target": "user_facts",
+            "status": "DEFERRED",
+            "reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+            "source": [
+              "goal_semantics",
+              "requirements"
+            ],
+            "required_for_goal": "概括我已经提供的睡眠安排",
+            "satisfiable_by": [
+              "ASK",
+              "READ_DIARY"
+            ],
+            "fallback": "bounded answer using only supplied facts",
+            "provenance": {
+              "missing_fields": [
+                "caffeine"
+              ]
+            },
+            "semantic_ids": [
+              "sem_synthetic_a_01_r0_4"
+            ],
+            "supersedes_dependency_id": null,
+            "dependency_class": "USER_FACTS",
+            "requiredness": "optional",
+            "dependency_source": [
+              "goal_semantics",
+              "requirements"
+            ],
+            "dependency_reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+            "satisfied_by": []
+          },
+          "estimated_cost": "LOW",
+          "acquisition_value": "NONE",
+          "gate_decision": "REJECT",
+          "accepted": false,
+          "reason": "counterfactual_values_do_not_change_action_direction_or_answer_scope",
+          "dependency_id": "dep_synthetic_a_01_r0_user_facts_user_facts",
+          "lineage_complete": true,
+          "decision_relevant": true,
+          "counterfactual_outcomes": [
+            "unknown: current bounded answer and next action remain unchanged",
+            "plausible values: no supported change to action, direction, or answer scope"
+          ],
+          "impact_dimensions": [
+            "answer_detail"
+          ],
+          "counterfactual_candidate": {
+            "if_unknown": "unknown: current bounded answer and next action remain unchanged",
+            "if_resolved": "plausible values: no supported change to action, direction, or answer scope"
+          },
+          "heuristic_not_calibrated_probability": true
+        }
+      ],
+      "rejected_information": [
+        {
+          "candidate_id": "cand_synthetic_a_01_r0_1",
+          "action": "ASK",
+          "target": "caffeine",
+          "expected_information_gain": "LOW",
+          "goal_relevance": "MEDIUM",
+          "decision_impact": "LOW",
+          "missing_criticality": "DECISION_RELEVANT",
+          "redundancy": "LOW",
+          "resource_dependency": {
+            "dependency_id": "dep_synthetic_a_01_r0_user_facts_user_facts",
+            "dependency_type": "USER_FACTS",
+            "target": "user_facts",
+            "status": "DEFERRED",
+            "reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+            "source": [
+              "goal_semantics",
+              "requirements"
+            ],
+            "required_for_goal": "概括我已经提供的睡眠安排",
+            "satisfiable_by": [
+              "ASK",
+              "READ_DIARY"
+            ],
+            "fallback": "bounded answer using only supplied facts",
+            "provenance": {
+              "missing_fields": [
+                "caffeine"
+              ]
+            },
+            "semantic_ids": [
+              "sem_synthetic_a_01_r0_4"
+            ],
+            "supersedes_dependency_id": null,
+            "dependency_class": "USER_FACTS",
+            "requiredness": "optional",
+            "dependency_source": [
+              "goal_semantics",
+              "requirements"
+            ],
+            "dependency_reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+            "satisfied_by": []
+          },
+          "estimated_cost": "LOW",
+          "acquisition_value": "NONE",
+          "gate_decision": "REJECT",
+          "accepted": false,
+          "reason": "counterfactual_values_do_not_change_action_direction_or_answer_scope",
+          "dependency_id": "dep_synthetic_a_01_r0_user_facts_user_facts",
+          "lineage_complete": true,
+          "decision_relevant": true,
+          "counterfactual_outcomes": [
+            "unknown: current bounded answer and next action remain unchanged",
+            "plausible values: no supported change to action, direction, or answer scope"
+          ],
+          "impact_dimensions": [
+            "answer_detail"
+          ],
+          "counterfactual_candidate": {
+            "if_unknown": "unknown: current bounded answer and next action remain unchanged",
+            "if_resolved": "plausible values: no supported change to action, direction, or answer scope"
+          },
+          "heuristic_not_calibrated_probability": true,
+          "rejection_reason": "counterfactual_values_do_not_change_action_direction_or_answer_scope"
+        }
+      ],
+      "stop_reason": "no_worthwhile_information_after_acquisition_gate",
+      "match": true,
+      "rationale": "目标只要求概括已提供信息，咖啡信息不会改变方向或范围。"
+    },
+    {
+      "case_id": "A-02",
+      "group": "low_value_optional_missing",
+      "pair_id": null,
+      "expected_action": "ANSWER",
+      "observed_action": "ANSWER",
+      "expected_value": "LOW",
+      "observed_value": "LOW",
+      "expected_gate": "REJECT",
+      "observed_gate": "REJECT",
+      "selected_target": null,
+      "selected_origin": "BOUNDED_STOP",
+      "action_path": [
+        "ANSWER"
+      ],
+      "dependencies": [
+        {
+          "dependency_id": "dep_synthetic_a_02_r0_user_facts_user_facts",
+          "dependency_type": "USER_FACTS",
+          "target": "user_facts",
+          "status": "DEFERRED",
+          "reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+          "source": [
+            "goal_semantics",
+            "requirements"
+          ],
+          "required_for_goal": "用一句话总结我的作息，不分析影响因素",
+          "satisfiable_by": [
+            "ASK",
+            "READ_DIARY"
+          ],
+          "fallback": "bounded answer using only supplied facts",
+          "provenance": {
+            "missing_fields": [
+              "caffeine"
+            ]
+          },
+          "semantic_ids": [
+            "sem_synthetic_a_02_r0_4"
+          ],
+          "supersedes_dependency_id": null,
+          "dependency_class": "USER_FACTS",
+          "requiredness": "optional",
+          "dependency_source": [
+            "goal_semantics",
+            "requirements"
+          ],
+          "dependency_reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+          "satisfied_by": []
+        }
+      ],
+      "preconditions": [],
+      "acquisition_decisions": [
+        {
+          "candidate_id": "cand_synthetic_a_02_r0_1",
+          "action": "ASK",
+          "target": "caffeine",
+          "expected_information_gain": "LOW",
+          "goal_relevance": "MEDIUM",
+          "decision_impact": "LOW",
+          "missing_criticality": "DECISION_RELEVANT",
+          "redundancy": "LOW",
+          "resource_dependency": {
+            "dependency_id": "dep_synthetic_a_02_r0_user_facts_user_facts",
+            "dependency_type": "USER_FACTS",
+            "target": "user_facts",
+            "status": "DEFERRED",
+            "reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+            "source": [
+              "goal_semantics",
+              "requirements"
+            ],
+            "required_for_goal": "用一句话总结我的作息，不分析影响因素",
+            "satisfiable_by": [
+              "ASK",
+              "READ_DIARY"
+            ],
+            "fallback": "bounded answer using only supplied facts",
+            "provenance": {
+              "missing_fields": [
+                "caffeine"
+              ]
+            },
+            "semantic_ids": [
+              "sem_synthetic_a_02_r0_4"
+            ],
+            "supersedes_dependency_id": null,
+            "dependency_class": "USER_FACTS",
+            "requiredness": "optional",
+            "dependency_source": [
+              "goal_semantics",
+              "requirements"
+            ],
+            "dependency_reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+            "satisfied_by": []
+          },
+          "estimated_cost": "LOW",
+          "acquisition_value": "NONE",
+          "gate_decision": "REJECT",
+          "accepted": false,
+          "reason": "counterfactual_values_do_not_change_action_direction_or_answer_scope",
+          "dependency_id": "dep_synthetic_a_02_r0_user_facts_user_facts",
+          "lineage_complete": true,
+          "decision_relevant": true,
+          "counterfactual_outcomes": [
+            "unknown: current bounded answer and next action remain unchanged",
+            "plausible values: no supported change to action, direction, or answer scope"
+          ],
+          "impact_dimensions": [
+            "answer_detail"
+          ],
+          "counterfactual_candidate": {
+            "if_unknown": "unknown: current bounded answer and next action remain unchanged",
+            "if_resolved": "plausible values: no supported change to action, direction, or answer scope"
+          },
+          "heuristic_not_calibrated_probability": true
+        }
+      ],
+      "rejected_information": [
+        {
+          "candidate_id": "cand_synthetic_a_02_r0_1",
+          "action": "ASK",
+          "target": "caffeine",
+          "expected_information_gain": "LOW",
+          "goal_relevance": "MEDIUM",
+          "decision_impact": "LOW",
+          "missing_criticality": "DECISION_RELEVANT",
+          "redundancy": "LOW",
+          "resource_dependency": {
+            "dependency_id": "dep_synthetic_a_02_r0_user_facts_user_facts",
+            "dependency_type": "USER_FACTS",
+            "target": "user_facts",
+            "status": "DEFERRED",
+            "reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+            "source": [
+              "goal_semantics",
+              "requirements"
+            ],
+            "required_for_goal": "用一句话总结我的作息，不分析影响因素",
+            "satisfiable_by": [
+              "ASK",
+              "READ_DIARY"
+            ],
+            "fallback": "bounded answer using only supplied facts",
+            "provenance": {
+              "missing_fields": [
+                "caffeine"
+              ]
+            },
+            "semantic_ids": [
+              "sem_synthetic_a_02_r0_4"
+            ],
+            "supersedes_dependency_id": null,
+            "dependency_class": "USER_FACTS",
+            "requiredness": "optional",
+            "dependency_source": [
+              "goal_semantics",
+              "requirements"
+            ],
+            "dependency_reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+            "satisfied_by": []
+          },
+          "estimated_cost": "LOW",
+          "acquisition_value": "NONE",
+          "gate_decision": "REJECT",
+          "accepted": false,
+          "reason": "counterfactual_values_do_not_change_action_direction_or_answer_scope",
+          "dependency_id": "dep_synthetic_a_02_r0_user_facts_user_facts",
+          "lineage_complete": true,
+          "decision_relevant": true,
+          "counterfactual_outcomes": [
+            "unknown: current bounded answer and next action remain unchanged",
+            "plausible values: no supported change to action, direction, or answer scope"
+          ],
+          "impact_dimensions": [
+            "answer_detail"
+          ],
+          "counterfactual_candidate": {
+            "if_unknown": "unknown: current bounded answer and next action remain unchanged",
+            "if_resolved": "plausible values: no supported change to action, direction, or answer scope"
+          },
+          "heuristic_not_calibrated_probability": true,
+          "rejection_reason": "counterfactual_values_do_not_change_action_direction_or_answer_scope"
+        }
+      ],
+      "stop_reason": "no_worthwhile_information_after_acquisition_gate",
+      "match": true,
+      "rationale": "缺少因素只会增加细节，不会改变目标答案。"
+    },
+    {
+      "case_id": "A-03",
+      "group": "low_value_optional_missing",
+      "pair_id": null,
+      "expected_action": "RETRIEVE",
+      "observed_action": "RETRIEVE",
+      "expected_value": null,
+      "observed_value": null,
+      "expected_gate": null,
+      "observed_gate": null,
+      "selected_target": null,
+      "selected_origin": "HARD_PRECONDITION",
+      "action_path": [
+        "RETRIEVE"
+      ],
+      "dependencies": [
+        {
+          "dependency_id": "dep_synthetic_a_03_r0_evidence_external_evidence",
+          "dependency_type": "EVIDENCE",
+          "target": "external_evidence",
+          "status": "REQUIRED",
+          "reason": "current answer scope includes external CBT-I knowledge",
+          "source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "required_for_goal": "解释刺激控制的基本含义",
+          "satisfiable_by": [
+            "RETRIEVE"
+          ],
+          "fallback": "state evidence limitation",
+          "provenance": {
+            "evidence_count": 0
+          },
+          "semantic_ids": [
+            "sem_synthetic_a_03_r0_1"
+          ],
+          "supersedes_dependency_id": null,
+          "dependency_class": "EXTERNAL_EVIDENCE",
+          "requiredness": "required",
+          "dependency_source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "dependency_reason": "current answer scope includes external CBT-I knowledge",
+          "satisfied_by": []
+        }
+      ],
+      "preconditions": [
+        {
+          "precondition_id": "pre_synthetic_a_03_r0_1",
+          "source_dependency_id": "dep_synthetic_a_03_r0_evidence_external_evidence",
+          "semantic_ids": [
+            "sem_synthetic_a_03_r0_1"
+          ],
+          "precondition_forced_action": true,
+          "counterfactual_candidate": null,
+          "counterfactual_action": "not_available",
+          "counterfactual_stop_reason": "not_available",
+          "type": "EVIDENCE",
+          "target": "external_evidence",
+          "required_for": "解释刺激控制的基本含义",
+          "status": "unsatisfied",
+          "satisfaction_source": null,
+          "required_action": "RETRIEVE",
+          "reason": "current answer scope includes external CBT-I knowledge",
+          "dependency_source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "satisfiers_considered": [
+            "RETRIEVE"
+          ],
+          "selected_satisfier": "RETRIEVE"
+        }
+      ],
+      "acquisition_decisions": [
+        {
+          "candidate_id": "cand_synthetic_a_03_r0_1",
+          "action": "RETRIEVE",
+          "target": "解释刺激控制的基本含义",
+          "expected_information_gain": "HIGH",
+          "goal_relevance": "HIGH",
+          "decision_impact": "HIGH",
+          "missing_criticality": "SECONDARY_OR_UNSCOPED",
+          "redundancy": "LOW",
+          "resource_dependency": {
+            "dependency_id": "dep_synthetic_a_03_r0_evidence_external_evidence",
+            "dependency_type": "EVIDENCE",
+            "target": "external_evidence",
+            "status": "REQUIRED",
+            "reason": "current answer scope includes external CBT-I knowledge",
+            "source": [
+              "goal_semantics",
+              "requirements",
+              "task_type_signal"
+            ],
+            "required_for_goal": "解释刺激控制的基本含义",
+            "satisfiable_by": [
+              "RETRIEVE"
+            ],
+            "fallback": "state evidence limitation",
+            "provenance": {
+              "evidence_count": 0
+            },
+            "semantic_ids": [
+              "sem_synthetic_a_03_r0_1"
+            ],
+            "supersedes_dependency_id": null,
+            "dependency_class": "EXTERNAL_EVIDENCE",
+            "requiredness": "required",
+            "dependency_source": [
+              "goal_semantics",
+              "requirements",
+              "task_type_signal"
+            ],
+            "dependency_reason": "current answer scope includes external CBT-I knowledge",
+            "satisfied_by": []
+          },
+          "estimated_cost": "MEDIUM",
+          "acquisition_value": "HIGH",
+          "gate_decision": "ACCEPT",
+          "accepted": true,
+          "reason": "mandatory_dependency_precondition_cannot_be_overridden",
+          "dependency_id": "dep_synthetic_a_03_r0_evidence_external_evidence",
+          "lineage_complete": true,
+          "decision_relevant": true,
+          "counterfactual_outcomes": [
+            "dependency unsatisfied"
+          ],
+          "impact_dimensions": [
+            "evidence_dependency"
+          ],
+          "counterfactual_candidate": null,
+          "heuristic_not_calibrated_probability": true
+        }
+      ],
+      "rejected_information": [],
+      "stop_reason": "",
+      "match": true,
+      "rationale": "咖啡事实无关；知识 goal 的 evidence precondition 保留 RETRIEVE。"
+    },
+    {
+      "case_id": "A-04",
+      "group": "low_value_optional_missing",
+      "pair_id": null,
+      "expected_action": "ANSWER",
+      "observed_action": "ANSWER",
+      "expected_value": null,
+      "observed_value": null,
+      "expected_gate": null,
+      "observed_gate": null,
+      "selected_target": null,
+      "selected_origin": "OPTIONAL_ACQUISITION",
+      "action_path": [
+        "ANSWER"
+      ],
+      "dependencies": [
+        {
+          "dependency_id": "dep_synthetic_a_04_r0_user_facts_user_facts",
+          "dependency_type": "USER_FACTS",
+          "target": "user_facts",
+          "status": "SATISFIED",
+          "reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+          "source": [
+            "goal_semantics",
+            "requirements"
+          ],
+          "required_for_goal": "描述我最近的睡眠情况",
+          "satisfiable_by": [
+            "ASK",
+            "READ_DIARY"
+          ],
+          "fallback": "bounded answer using only supplied facts",
+          "provenance": {
+            "missing_fields": []
+          },
+          "semantic_ids": [
+            "sem_synthetic_a_04_r0_4"
+          ],
+          "supersedes_dependency_id": null,
+          "dependency_class": "USER_FACTS",
+          "requiredness": "optional",
+          "dependency_source": [
+            "goal_semantics",
+            "requirements"
+          ],
+          "dependency_reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+          "satisfied_by": [
+            "ASK",
+            "READ_DIARY"
+          ]
+        }
+      ],
+      "preconditions": [],
+      "acquisition_decisions": [],
+      "rejected_information": [],
+      "stop_reason": "",
+      "match": true,
+      "rationale": "State 已含等价目标事实，不应重复 ASK。"
+    },
+    {
+      "case_id": "B-01",
+      "group": "decision_relevant_missing",
+      "pair_id": "CF-CAFFEINE",
+      "expected_action": "ASK",
+      "observed_action": "ASK",
+      "expected_value": "HIGH",
+      "observed_value": "HIGH",
+      "expected_gate": "ACCEPT",
+      "observed_gate": "ACCEPT",
+      "selected_target": "caffeine",
+      "selected_origin": "OPTIONAL_ACQUISITION",
+      "action_path": [
+        "ASK"
+      ],
+      "dependencies": [
+        {
+          "dependency_id": "dep_synthetic_b_01_r0_user_facts_user_facts",
+          "dependency_type": "USER_FACTS",
+          "target": "user_facts",
+          "status": "DEFERRED",
+          "reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+          "source": [
+            "goal_semantics",
+            "requirements"
+          ],
+          "required_for_goal": "咖啡摄入会改变我应该怎样调整睡前安排吗？",
+          "satisfiable_by": [
+            "ASK",
+            "READ_DIARY"
+          ],
+          "fallback": "bounded answer using only supplied facts",
+          "provenance": {
+            "missing_fields": [
+              "caffeine"
+            ]
+          },
+          "semantic_ids": [
+            "sem_synthetic_b_01_r0_4"
+          ],
+          "supersedes_dependency_id": null,
+          "dependency_class": "USER_FACTS",
+          "requiredness": "optional",
+          "dependency_source": [
+            "goal_semantics",
+            "requirements"
+          ],
+          "dependency_reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+          "satisfied_by": []
+        }
+      ],
+      "preconditions": [],
+      "acquisition_decisions": [
+        {
+          "candidate_id": "cand_synthetic_b_01_r0_1",
+          "action": "ASK",
+          "target": "caffeine",
+          "expected_information_gain": "HIGH",
+          "goal_relevance": "HIGH",
+          "decision_impact": "HIGH",
+          "missing_criticality": "DECISION_RELEVANT",
+          "redundancy": "LOW",
+          "resource_dependency": {
+            "dependency_id": "dep_synthetic_b_01_r0_user_facts_user_facts",
+            "dependency_type": "USER_FACTS",
+            "target": "user_facts",
+            "status": "DEFERRED",
+            "reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+            "source": [
+              "goal_semantics",
+              "requirements"
+            ],
+            "required_for_goal": "咖啡摄入会改变我应该怎样调整睡前安排吗？",
+            "satisfiable_by": [
+              "ASK",
+              "READ_DIARY"
+            ],
+            "fallback": "bounded answer using only supplied facts",
+            "provenance": {
+              "missing_fields": [
+                "caffeine"
+              ]
+            },
+            "semantic_ids": [
+              "sem_synthetic_b_01_r0_4"
+            ],
+            "supersedes_dependency_id": null,
+            "dependency_class": "USER_FACTS",
+            "requiredness": "optional",
+            "dependency_source": [
+              "goal_semantics",
+              "requirements"
+            ],
+            "dependency_reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+            "satisfied_by": []
+          },
+          "estimated_cost": "LOW",
+          "acquisition_value": "HIGH",
+          "gate_decision": "ACCEPT",
+          "accepted": true,
+          "reason": "the goal explicitly links this missing fact to a choice or adjustment; plausible values can change the direction",
+          "dependency_id": "dep_synthetic_b_01_r0_user_facts_user_facts",
+          "lineage_complete": true,
+          "decision_relevant": true,
+          "counterfactual_outcomes": [
+            "unknown: keep the current decision bounded",
+            "plausible values: recommendation/action direction may differ"
+          ],
+          "impact_dimensions": [
+            "next_action",
+            "recommendation_direction",
+            "answer_scope"
+          ],
+          "counterfactual_candidate": {
+            "if_unknown": "unknown: keep the current decision bounded",
+            "if_resolved": "plausible values: recommendation/action direction may differ"
+          },
+          "heuristic_not_calibrated_probability": true
+        }
+      ],
+      "rejected_information": [],
+      "stop_reason": "",
+      "match": true,
+      "rationale": "相对 CF-CAFFEINE 的 A 组，只改变 goal 所要求的决策影响；合理取值可改变建议方向。"
+    },
+    {
+      "case_id": "B-02",
+      "group": "decision_relevant_missing",
+      "pair_id": null,
+      "expected_action": "ASK",
+      "observed_action": "ASK",
+      "expected_value": "MEDIUM",
+      "observed_value": "MEDIUM",
+      "expected_gate": "ACCEPT",
+      "observed_gate": "ACCEPT",
+      "selected_target": "caffeine",
+      "selected_origin": "OPTIONAL_ACQUISITION",
+      "action_path": [
+        "ASK"
+      ],
+      "dependencies": [
+        {
+          "dependency_id": "dep_synthetic_b_02_r0_user_facts_user_facts",
+          "dependency_type": "USER_FACTS",
+          "target": "user_facts",
+          "status": "DEFERRED",
+          "reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+          "source": [
+            "goal_semantics",
+            "requirements"
+          ],
+          "required_for_goal": "比较咖啡摄入与睡眠安排的关系",
+          "satisfiable_by": [
+            "ASK",
+            "READ_DIARY"
+          ],
+          "fallback": "bounded answer using only supplied facts",
+          "provenance": {
+            "missing_fields": [
+              "caffeine"
+            ]
+          },
+          "semantic_ids": [
+            "sem_synthetic_b_02_r0_4"
+          ],
+          "supersedes_dependency_id": null,
+          "dependency_class": "USER_FACTS",
+          "requiredness": "optional",
+          "dependency_source": [
+            "goal_semantics",
+            "requirements"
+          ],
+          "dependency_reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+          "satisfied_by": []
+        }
+      ],
+      "preconditions": [],
+      "acquisition_decisions": [
+        {
+          "candidate_id": "cand_synthetic_b_02_r0_1",
+          "action": "ASK",
+          "target": "caffeine",
+          "expected_information_gain": "MEDIUM",
+          "goal_relevance": "HIGH",
+          "decision_impact": "MEDIUM",
+          "missing_criticality": "DECISION_RELEVANT",
+          "redundancy": "LOW",
+          "resource_dependency": {
+            "dependency_id": "dep_synthetic_b_02_r0_user_facts_user_facts",
+            "dependency_type": "USER_FACTS",
+            "target": "user_facts",
+            "status": "DEFERRED",
+            "reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+            "source": [
+              "goal_semantics",
+              "requirements"
+            ],
+            "required_for_goal": "比较咖啡摄入与睡眠安排的关系",
+            "satisfiable_by": [
+              "ASK",
+              "READ_DIARY"
+            ],
+            "fallback": "bounded answer using only supplied facts",
+            "provenance": {
+              "missing_fields": [
+                "caffeine"
+              ]
+            },
+            "semantic_ids": [
+              "sem_synthetic_b_02_r0_4"
+            ],
+            "supersedes_dependency_id": null,
+            "dependency_class": "USER_FACTS",
+            "requiredness": "optional",
+            "dependency_source": [
+              "goal_semantics",
+              "requirements"
+            ],
+            "dependency_reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+            "satisfied_by": []
+          },
+          "estimated_cost": "LOW",
+          "acquisition_value": "MEDIUM",
+          "gate_decision": "ACCEPT",
+          "accepted": true,
+          "reason": "the named missing fact changes the requested comparison scope, without establishing a treatment direction",
+          "dependency_id": "dep_synthetic_b_02_r0_user_facts_user_facts",
+          "lineage_complete": true,
+          "decision_relevant": true,
+          "counterfactual_outcomes": [
+            "unknown: comparison remains qualified on this dimension",
+            "resolved: comparison can include or exclude the named dimension"
+          ],
+          "impact_dimensions": [
+            "answer_scope",
+            "comparison_basis"
+          ],
+          "counterfactual_candidate": {
+            "if_unknown": "unknown: comparison remains qualified on this dimension",
+            "if_resolved": "resolved: comparison can include or exclude the named dimension"
+          },
+          "heuristic_not_calibrated_probability": true
+        }
+      ],
+      "rejected_information": [],
+      "stop_reason": "",
+      "match": true,
+      "rationale": "目标要求比较相关维度；事实影响比较范围，但不单独决定治疗方向。"
+    },
+    {
+      "case_id": "C-01",
+      "group": "hard_preconditions",
+      "pair_id": null,
+      "expected_action": "ASK",
+      "observed_action": "ASK",
+      "expected_value": null,
+      "observed_value": null,
+      "expected_gate": null,
+      "observed_gate": null,
+      "selected_target": "sleep_time_or_sleep_onset_latency",
+      "selected_origin": "HARD_PRECONDITION",
+      "action_path": [
+        "ASK"
+      ],
+      "dependencies": [
+        {
+          "dependency_id": "dep_synthetic_c_01_r0_user_facts_user_facts",
+          "dependency_type": "USER_FACTS",
+          "target": "user_facts",
+          "status": "DEFERRED",
+          "reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+          "source": [
+            "goal_semantics",
+            "requirements"
+          ],
+          "required_for_goal": "我应该早点上床吗？",
+          "satisfiable_by": [
+            "ASK",
+            "READ_DIARY"
+          ],
+          "fallback": "bounded answer using only supplied facts",
+          "provenance": {
+            "missing_fields": [
+              "bedtime",
+              "sleep_time_or_sleep_onset_latency",
+              "wake_time"
+            ]
+          },
+          "semantic_ids": [
+            "sem_synthetic_c_01_r0_4"
+          ],
+          "supersedes_dependency_id": null,
+          "dependency_class": "USER_FACTS",
+          "requiredness": "optional",
+          "dependency_source": [
+            "goal_semantics",
+            "requirements"
+          ],
+          "dependency_reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+          "satisfied_by": []
+        },
+        {
+          "dependency_id": "dep_synthetic_c_01_r0_validity_state_sleep_time_or_sleep_onset_latency",
+          "dependency_type": "VALIDITY_STATE",
+          "target": "sleep_time_or_sleep_onset_latency",
+          "status": "REQUIRED",
+          "reason": "direction cannot be determined without this timing context",
+          "source": [
+            "goal_semantics",
+            "state_missing"
+          ],
+          "required_for_goal": "我应该早点上床吗？",
+          "satisfiable_by": [
+            "READ_DIARY",
+            "ASK"
+          ],
+          "fallback": "bounded non-directional limitation",
+          "provenance": {
+            "decision_missing": [
+              "bedtime",
+              "sleep_time_or_sleep_onset_latency",
+              "wake_time"
+            ]
+          },
+          "semantic_ids": [
+            "sem_synthetic_c_01_r0_3"
+          ],
+          "supersedes_dependency_id": null,
+          "dependency_class": "VALIDITY_STATE",
+          "requiredness": "required",
+          "dependency_source": [
+            "goal_semantics",
+            "state_missing"
+          ],
+          "dependency_reason": "direction cannot be determined without this timing context",
+          "satisfied_by": []
+        }
+      ],
+      "preconditions": [
+        {
+          "precondition_id": "pre_synthetic_c_01_r0_1",
+          "source_dependency_id": "dep_synthetic_c_01_r0_validity_state_sleep_time_or_sleep_onset_latency",
+          "semantic_ids": [
+            "sem_synthetic_c_01_r0_3"
+          ],
+          "precondition_forced_action": true,
+          "counterfactual_candidate": null,
+          "counterfactual_action": "not_available",
+          "counterfactual_stop_reason": "not_available",
+          "type": "VALIDITY_CRITICAL_STATE",
+          "target": "sleep_time_or_sleep_onset_latency",
+          "required_for": "我应该早点上床吗？",
+          "status": "unsatisfied",
+          "satisfaction_source": null,
+          "required_action": "ASK",
+          "validity_reason": "direction cannot be determined without this timing context",
+          "reason": "direction cannot be determined without this timing context",
+          "resource_alternative": null,
+          "dependency_source": [
+            "goal_semantics",
+            "state_missing"
+          ],
+          "satisfiers_considered": [
+            "READ_DIARY",
+            "ASK"
+          ],
+          "selected_satisfier": "ASK"
+        }
+      ],
+      "acquisition_decisions": [
+        {
+          "candidate_id": "cand_synthetic_c_01_r0_1",
+          "action": "ASK",
+          "target": "sleep_time_or_sleep_onset_latency",
+          "expected_information_gain": "NONE",
+          "goal_relevance": "LOW",
+          "decision_impact": "LOW",
+          "missing_criticality": "VALIDITY_CRITICAL",
+          "redundancy": "LOW",
+          "resource_dependency": {
+            "dependency_id": "dep_synthetic_c_01_r0_user_facts_user_facts",
+            "dependency_type": "USER_FACTS",
+            "target": "user_facts",
+            "status": "DEFERRED",
+            "reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+            "source": [
+              "goal_semantics",
+              "requirements"
+            ],
+            "required_for_goal": "我应该早点上床吗？",
+            "satisfiable_by": [
+              "ASK",
+              "READ_DIARY"
+            ],
+            "fallback": "bounded answer using only supplied facts",
+            "provenance": {
+              "missing_fields": [
+                "bedtime",
+                "sleep_time_or_sleep_onset_latency",
+                "wake_time"
+              ]
+            },
+            "semantic_ids": [
+              "sem_synthetic_c_01_r0_4"
+            ],
+            "supersedes_dependency_id": null,
+            "dependency_class": "USER_FACTS",
+            "requiredness": "optional",
+            "dependency_source": [
+              "goal_semantics",
+              "requirements"
+            ],
+            "dependency_reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+            "satisfied_by": []
+          },
+          "estimated_cost": "MEDIUM",
+          "acquisition_value": "HIGH",
+          "gate_decision": "ACCEPT",
+          "accepted": true,
+          "reason": "mandatory_dependency_precondition_cannot_be_overridden",
+          "dependency_id": "dep_synthetic_c_01_r0_user_facts_user_facts",
+          "lineage_complete": false,
+          "decision_relevant": true,
+          "counterfactual_outcomes": [
+            "unresolved: current answer remains bounded",
+            "resolved: no supported downstream change identified"
+          ],
+          "impact_dimensions": [],
+          "counterfactual_candidate": {
+            "if_unknown": "unresolved: current answer remains bounded",
+            "if_resolved": "resolved: no supported downstream change identified"
+          },
+          "heuristic_not_calibrated_probability": true
+        }
+      ],
+      "rejected_information": [],
+      "stop_reason": "",
+      "match": true,
+      "rationale": "缺少起床时间使上床方向判断无法有效成立，属于 validity-state hard precondition。"
+    },
+    {
+      "case_id": "C-02",
+      "group": "hard_preconditions",
+      "pair_id": null,
+      "expected_action": "RETRIEVE",
+      "observed_action": "RETRIEVE",
+      "expected_value": null,
+      "observed_value": "HIGH",
+      "expected_gate": null,
+      "observed_gate": "ACCEPT",
+      "selected_target": null,
+      "selected_origin": "HARD_PRECONDITION",
+      "action_path": [
+        "RETRIEVE"
+      ],
+      "dependencies": [
+        {
+          "dependency_id": "dep_synthetic_c_02_r0_evidence_external_evidence",
+          "dependency_type": "EVIDENCE",
+          "target": "external_evidence",
+          "status": "REQUIRED",
+          "reason": "current answer scope includes external CBT-I knowledge",
+          "source": [
+            "goal_semantics",
+            "task_type_signal"
+          ],
+          "required_for_goal": "为什么保持稳定的起床时刻有助于睡眠？",
+          "satisfiable_by": [
+            "RETRIEVE"
+          ],
+          "fallback": "state evidence limitation",
+          "provenance": {
+            "evidence_count": 0
+          },
+          "semantic_ids": [
+            "sem_synthetic_c_02_r0_1"
+          ],
+          "supersedes_dependency_id": null,
+          "dependency_class": "EXTERNAL_EVIDENCE",
+          "requiredness": "required",
+          "dependency_source": [
+            "goal_semantics",
+            "task_type_signal"
+          ],
+          "dependency_reason": "current answer scope includes external CBT-I knowledge",
+          "satisfied_by": []
+        }
+      ],
+      "preconditions": [
+        {
+          "precondition_id": "pre_synthetic_c_02_r0_1",
+          "source_dependency_id": "dep_synthetic_c_02_r0_evidence_external_evidence",
+          "semantic_ids": [
+            "sem_synthetic_c_02_r0_1"
+          ],
+          "precondition_forced_action": true,
+          "counterfactual_candidate": null,
+          "counterfactual_action": "not_available",
+          "counterfactual_stop_reason": "not_available",
+          "type": "EVIDENCE",
+          "target": "external_evidence",
+          "required_for": "为什么保持稳定的起床时刻有助于睡眠？",
+          "status": "unsatisfied",
+          "satisfaction_source": null,
+          "required_action": "RETRIEVE",
+          "reason": "current answer scope includes external CBT-I knowledge",
+          "dependency_source": [
+            "goal_semantics",
+            "task_type_signal"
+          ],
+          "satisfiers_considered": [
+            "RETRIEVE"
+          ],
+          "selected_satisfier": "RETRIEVE"
+        }
+      ],
+      "acquisition_decisions": [
+        {
+          "candidate_id": "cand_synthetic_c_02_r0_1",
+          "action": "RETRIEVE",
+          "target": "为什么保持稳定的起床时刻有助于睡眠？",
+          "expected_information_gain": "HIGH",
+          "goal_relevance": "HIGH",
+          "decision_impact": "HIGH",
+          "missing_criticality": "SECONDARY_OR_UNSCOPED",
+          "redundancy": "LOW",
+          "resource_dependency": {
+            "dependency_id": "dep_synthetic_c_02_r0_evidence_external_evidence",
+            "dependency_type": "EVIDENCE",
+            "target": "external_evidence",
+            "status": "REQUIRED",
+            "reason": "current answer scope includes external CBT-I knowledge",
+            "source": [
+              "goal_semantics",
+              "task_type_signal"
+            ],
+            "required_for_goal": "为什么保持稳定的起床时刻有助于睡眠？",
+            "satisfiable_by": [
+              "RETRIEVE"
+            ],
+            "fallback": "state evidence limitation",
+            "provenance": {
+              "evidence_count": 0
+            },
+            "semantic_ids": [
+              "sem_synthetic_c_02_r0_1"
+            ],
+            "supersedes_dependency_id": null,
+            "dependency_class": "EXTERNAL_EVIDENCE",
+            "requiredness": "required",
+            "dependency_source": [
+              "goal_semantics",
+              "task_type_signal"
+            ],
+            "dependency_reason": "current answer scope includes external CBT-I knowledge",
+            "satisfied_by": []
+          },
+          "estimated_cost": "MEDIUM",
+          "acquisition_value": "HIGH",
+          "gate_decision": "ACCEPT",
+          "accepted": true,
+          "reason": "mandatory_dependency_precondition_cannot_be_overridden",
+          "dependency_id": "dep_synthetic_c_02_r0_evidence_external_evidence",
+          "lineage_complete": true,
+          "decision_relevant": true,
+          "counterfactual_outcomes": [
+            "dependency unsatisfied"
+          ],
+          "impact_dimensions": [
+            "evidence_dependency"
+          ],
+          "counterfactual_candidate": null,
+          "heuristic_not_calibrated_probability": true
+        }
+      ],
+      "rejected_information": [],
+      "stop_reason": "",
+      "match": true,
+      "rationale": "goal 的一般 CBT-I 知识解释依赖外部 evidence，即使 task signal 错误或不要求 evidence。"
+    },
+    {
+      "case_id": "C-03",
+      "group": "hard_preconditions",
+      "pair_id": null,
+      "expected_action": "READ_DIARY",
+      "observed_action": "READ_DIARY",
+      "expected_value": null,
+      "observed_value": null,
+      "expected_gate": null,
+      "observed_gate": null,
+      "selected_target": "sleep_diary",
+      "selected_origin": "HARD_PRECONDITION",
+      "action_path": [
+        "READ_DIARY"
+      ],
+      "dependencies": [
+        {
+          "dependency_id": "dep_synthetic_c_03_r0_resource_sleep_diary",
+          "dependency_type": "RESOURCE",
+          "target": "sleep_diary",
+          "status": "AVAILABLE",
+          "reason": "goal requests diary-derived historical analysis",
+          "source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "required_for_goal": "请总结我的睡眠日记中这段时间的变化",
+          "satisfiable_by": [
+            "READ_DIARY"
+          ],
+          "fallback": null,
+          "provenance": {
+            "resource_status": "unread",
+            "authorized": true,
+            "available": true
+          },
+          "semantic_ids": [
+            "sem_synthetic_c_03_r0_2"
+          ],
+          "supersedes_dependency_id": null,
+          "dependency_class": "DIARY_DATA",
+          "requiredness": "required",
+          "dependency_source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "dependency_reason": "goal requests diary-derived historical analysis",
+          "satisfied_by": [
+            "READ_DIARY"
+          ]
+        }
+      ],
+      "preconditions": [
+        {
+          "precondition_id": "pre_synthetic_c_03_r0_1",
+          "source_dependency_id": "dep_synthetic_c_03_r0_resource_sleep_diary",
+          "semantic_ids": [
+            "sem_synthetic_c_03_r0_2"
+          ],
+          "precondition_forced_action": true,
+          "counterfactual_candidate": null,
+          "counterfactual_action": "not_available",
+          "counterfactual_stop_reason": "not_available",
+          "type": "RESOURCE",
+          "target": "sleep_diary",
+          "required_for": "请总结我的睡眠日记中这段时间的变化",
+          "status": "unsatisfied",
+          "satisfaction_source": null,
+          "required_action": "READ_DIARY",
+          "reason": "goal requests diary-derived historical analysis",
+          "dependency_source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "satisfiers_considered": [
+            "READ_DIARY"
+          ],
+          "selected_satisfier": "READ_DIARY"
+        }
+      ],
+      "acquisition_decisions": [
+        {
+          "candidate_id": "cand_synthetic_c_03_r0_1",
+          "action": "READ_DIARY",
+          "target": "sleep_diary",
+          "expected_information_gain": "HIGH",
+          "goal_relevance": "HIGH",
+          "decision_impact": "HIGH",
+          "missing_criticality": "SECONDARY_OR_UNSCOPED",
+          "redundancy": "LOW",
+          "resource_dependency": {
+            "dependency_id": "dep_synthetic_c_03_r0_resource_sleep_diary",
+            "dependency_type": "RESOURCE",
+            "target": "sleep_diary",
+            "status": "AVAILABLE",
+            "reason": "goal requests diary-derived historical analysis",
+            "source": [
+              "goal_semantics",
+              "requirements",
+              "task_type_signal"
+            ],
+            "required_for_goal": "请总结我的睡眠日记中这段时间的变化",
+            "satisfiable_by": [
+              "READ_DIARY"
+            ],
+            "fallback": null,
+            "provenance": {
+              "resource_status": "unread",
+              "authorized": true,
+              "available": true
+            },
+            "semantic_ids": [
+              "sem_synthetic_c_03_r0_2"
+            ],
+            "supersedes_dependency_id": null,
+            "dependency_class": "DIARY_DATA",
+            "requiredness": "required",
+            "dependency_source": [
+              "goal_semantics",
+              "requirements",
+              "task_type_signal"
+            ],
+            "dependency_reason": "goal requests diary-derived historical analysis",
+            "satisfied_by": [
+              "READ_DIARY"
+            ]
+          },
+          "estimated_cost": "LOW",
+          "acquisition_value": "HIGH",
+          "gate_decision": "ACCEPT",
+          "accepted": true,
+          "reason": "mandatory_dependency_precondition_cannot_be_overridden",
+          "dependency_id": "dep_synthetic_c_03_r0_resource_sleep_diary",
+          "lineage_complete": true,
+          "decision_relevant": true,
+          "counterfactual_outcomes": [
+            "dependency unsatisfied"
+          ],
+          "impact_dimensions": [
+            "diary_resource"
+          ],
+          "counterfactual_candidate": null,
+          "heuristic_not_calibrated_probability": true
+        }
+      ],
+      "rejected_information": [],
+      "stop_reason": "",
+      "match": true,
+      "rationale": "明确 diary goal + 授权且可用未读资源形成 RESOURCE 前置依赖。"
+    },
+    {
+      "case_id": "C-04",
+      "group": "hard_preconditions",
+      "pair_id": null,
+      "expected_action": "ANSWER",
+      "observed_action": "ANSWER",
+      "expected_value": null,
+      "observed_value": "MEDIUM",
+      "expected_gate": null,
+      "observed_gate": "PRECONDITION",
+      "selected_target": null,
+      "selected_origin": "HARD_PRECONDITION",
+      "action_path": [
+        "ANSWER"
+      ],
+      "dependencies": [
+        {
+          "dependency_id": "dep_synthetic_c_04_r0_resource_sleep_diary",
+          "dependency_type": "RESOURCE",
+          "target": "sleep_diary",
+          "status": "UNAVAILABLE",
+          "reason": "goal requests diary-derived historical analysis",
+          "source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "required_for_goal": "分析我的睡眠日记记录",
+          "satisfiable_by": [
+            "READ_DIARY"
+          ],
+          "fallback": "state diary unavailable or invalid",
+          "provenance": {
+            "resource_status": "unavailable",
+            "authorized": true,
+            "available": false
+          },
+          "semantic_ids": [
+            "sem_synthetic_c_04_r0_2"
+          ],
+          "supersedes_dependency_id": null,
+          "dependency_class": "DIARY_DATA",
+          "requiredness": "required",
+          "dependency_source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "dependency_reason": "goal requests diary-derived historical analysis",
+          "satisfied_by": []
+        }
+      ],
+      "preconditions": [
+        {
+          "precondition_id": "pre_synthetic_c_04_r0_1",
+          "source_dependency_id": "dep_synthetic_c_04_r0_resource_sleep_diary",
+          "semantic_ids": [
+            "sem_synthetic_c_04_r0_2"
+          ],
+          "precondition_forced_action": false,
+          "counterfactual_candidate": null,
+          "counterfactual_action": "not_available",
+          "counterfactual_stop_reason": "not_available",
+          "type": "RESOURCE",
+          "target": "sleep_diary",
+          "required_for": "分析我的睡眠日记记录",
+          "status": "unavailable",
+          "satisfaction_source": "unavailable",
+          "required_action": null,
+          "reason": "goal requests diary-derived historical analysis",
+          "dependency_source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "satisfiers_considered": [
+            "READ_DIARY"
+          ],
+          "selected_satisfier": null
+        }
+      ],
+      "acquisition_decisions": [],
+      "rejected_information": [],
+      "stop_reason": "",
+      "match": true,
+      "rationale": "资源不可用时应说明限制，不 READ_DIARY、不伪造，也不重试。"
+    },
+    {
+      "case_id": "D-01",
+      "group": "mixed_missing",
+      "pair_id": null,
+      "expected_action": "ASK",
+      "observed_action": "ASK",
+      "expected_value": null,
+      "observed_value": "LOW",
+      "expected_gate": null,
+      "observed_gate": "ACCEPT",
+      "selected_target": "wake_time",
+      "selected_origin": "HARD_PRECONDITION",
+      "action_path": [
+        "ASK"
+      ],
+      "dependencies": [
+        {
+          "dependency_id": "dep_synthetic_d_01_r0_user_facts_user_facts",
+          "dependency_type": "USER_FACTS",
+          "target": "user_facts",
+          "status": "DEFERRED",
+          "reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+          "source": [
+            "goal_semantics",
+            "requirements"
+          ],
+          "required_for_goal": "我应该早点上床吗？",
+          "satisfiable_by": [
+            "ASK",
+            "READ_DIARY"
+          ],
+          "fallback": "bounded answer using only supplied facts",
+          "provenance": {
+            "missing_fields": [
+              "wake_time"
+            ]
+          },
+          "semantic_ids": [
+            "sem_synthetic_d_01_r0_4"
+          ],
+          "supersedes_dependency_id": null,
+          "dependency_class": "USER_FACTS",
+          "requiredness": "optional",
+          "dependency_source": [
+            "goal_semantics",
+            "requirements"
+          ],
+          "dependency_reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+          "satisfied_by": []
+        },
+        {
+          "dependency_id": "dep_synthetic_d_01_r0_validity_state_wake_time",
+          "dependency_type": "VALIDITY_STATE",
+          "target": "wake_time",
+          "status": "REQUIRED",
+          "reason": "direction cannot be determined without this timing context",
+          "source": [
+            "goal_semantics",
+            "state_missing"
+          ],
+          "required_for_goal": "我应该早点上床吗？",
+          "satisfiable_by": [
+            "READ_DIARY",
+            "ASK"
+          ],
+          "fallback": "bounded non-directional limitation",
+          "provenance": {
+            "decision_missing": [
+              "wake_time"
+            ]
+          },
+          "semantic_ids": [
+            "sem_synthetic_d_01_r0_3"
+          ],
+          "supersedes_dependency_id": null,
+          "dependency_class": "VALIDITY_STATE",
+          "requiredness": "required",
+          "dependency_source": [
+            "goal_semantics",
+            "state_missing"
+          ],
+          "dependency_reason": "direction cannot be determined without this timing context",
+          "satisfied_by": []
+        }
+      ],
+      "preconditions": [
+        {
+          "precondition_id": "pre_synthetic_d_01_r0_1",
+          "source_dependency_id": "dep_synthetic_d_01_r0_validity_state_wake_time",
+          "semantic_ids": [
+            "sem_synthetic_d_01_r0_3"
+          ],
+          "precondition_forced_action": true,
+          "counterfactual_candidate": null,
+          "counterfactual_action": "not_available",
+          "counterfactual_stop_reason": "not_available",
+          "type": "VALIDITY_CRITICAL_STATE",
+          "target": "wake_time",
+          "required_for": "我应该早点上床吗？",
+          "status": "unsatisfied",
+          "satisfaction_source": null,
+          "required_action": "ASK",
+          "validity_reason": "direction cannot be determined without this timing context",
+          "reason": "direction cannot be determined without this timing context",
+          "resource_alternative": null,
+          "dependency_source": [
+            "goal_semantics",
+            "state_missing"
+          ],
+          "satisfiers_considered": [
+            "READ_DIARY",
+            "ASK"
+          ],
+          "selected_satisfier": "ASK"
+        }
+      ],
+      "acquisition_decisions": [
+        {
+          "candidate_id": "cand_synthetic_d_01_r0_1",
+          "action": "ASK",
+          "target": "wake_time",
+          "expected_information_gain": "LOW",
+          "goal_relevance": "MEDIUM",
+          "decision_impact": "LOW",
+          "missing_criticality": "VALIDITY_CRITICAL",
+          "redundancy": "LOW",
+          "resource_dependency": {
+            "dependency_id": "dep_synthetic_d_01_r0_user_facts_user_facts",
+            "dependency_type": "USER_FACTS",
+            "target": "user_facts",
+            "status": "DEFERRED",
+            "reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+            "source": [
+              "goal_semantics",
+              "requirements"
+            ],
+            "required_for_goal": "我应该早点上床吗？",
+            "satisfiable_by": [
+              "ASK",
+              "READ_DIARY"
+            ],
+            "fallback": "bounded answer using only supplied facts",
+            "provenance": {
+              "missing_fields": [
+                "wake_time"
+              ]
+            },
+            "semantic_ids": [
+              "sem_synthetic_d_01_r0_4"
+            ],
+            "supersedes_dependency_id": null,
+            "dependency_class": "USER_FACTS",
+            "requiredness": "optional",
+            "dependency_source": [
+              "goal_semantics",
+              "requirements"
+            ],
+            "dependency_reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+            "satisfied_by": []
+          },
+          "estimated_cost": "LOW",
+          "acquisition_value": "HIGH",
+          "gate_decision": "ACCEPT",
+          "accepted": true,
+          "reason": "mandatory_dependency_precondition_cannot_be_overridden",
+          "dependency_id": "dep_synthetic_d_01_r0_user_facts_user_facts",
+          "lineage_complete": true,
+          "decision_relevant": true,
+          "counterfactual_outcomes": [
+            "unknown: current bounded answer and next action remain unchanged",
+            "plausible values: no supported change to action, direction, or answer scope"
+          ],
+          "impact_dimensions": [
+            "answer_detail"
+          ],
+          "counterfactual_candidate": {
+            "if_unknown": "unknown: current bounded answer and next action remain unchanged",
+            "if_resolved": "plausible values: no supported change to action, direction, or answer scope"
+          },
+          "heuristic_not_calibrated_probability": true
+        }
+      ],
+      "rejected_information": [],
+      "stop_reason": "",
+      "match": true,
+      "rationale": "State 同时有已知 optional fact、次要缺失与真正 validity-critical wake_time；只选必要问题。"
+    },
+    {
+      "case_id": "D-02",
+      "group": "mixed_missing",
+      "pair_id": null,
+      "expected_action": "ASK",
+      "observed_action": "ASK",
+      "expected_value": "HIGH",
+      "observed_value": "HIGH",
+      "expected_gate": "ACCEPT",
+      "observed_gate": "ACCEPT",
+      "selected_target": "caffeine",
+      "selected_origin": "OPTIONAL_ACQUISITION",
+      "action_path": [
+        "ASK"
+      ],
+      "dependencies": [
+        {
+          "dependency_id": "dep_synthetic_d_02_r0_user_facts_user_facts",
+          "dependency_type": "USER_FACTS",
+          "target": "user_facts",
+          "status": "DEFERRED",
+          "reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+          "source": [
+            "goal_semantics",
+            "requirements"
+          ],
+          "required_for_goal": "咖啡摄入会改变我应该怎样调整睡前安排吗？",
+          "satisfiable_by": [
+            "ASK",
+            "READ_DIARY"
+          ],
+          "fallback": "bounded answer using only supplied facts",
+          "provenance": {
+            "missing_fields": [
+              "caffeine",
+              "nap"
+            ]
+          },
+          "semantic_ids": [
+            "sem_synthetic_d_02_r0_4"
+          ],
+          "supersedes_dependency_id": null,
+          "dependency_class": "USER_FACTS",
+          "requiredness": "optional",
+          "dependency_source": [
+            "goal_semantics",
+            "requirements"
+          ],
+          "dependency_reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+          "satisfied_by": []
+        }
+      ],
+      "preconditions": [],
+      "acquisition_decisions": [
+        {
+          "candidate_id": "cand_synthetic_d_02_r0_1",
+          "action": "ASK",
+          "target": "caffeine",
+          "expected_information_gain": "HIGH",
+          "goal_relevance": "HIGH",
+          "decision_impact": "HIGH",
+          "missing_criticality": "DECISION_RELEVANT",
+          "redundancy": "LOW",
+          "resource_dependency": {
+            "dependency_id": "dep_synthetic_d_02_r0_user_facts_user_facts",
+            "dependency_type": "USER_FACTS",
+            "target": "user_facts",
+            "status": "DEFERRED",
+            "reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+            "source": [
+              "goal_semantics",
+              "requirements"
+            ],
+            "required_for_goal": "咖啡摄入会改变我应该怎样调整睡前安排吗？",
+            "satisfiable_by": [
+              "ASK",
+              "READ_DIARY"
+            ],
+            "fallback": "bounded answer using only supplied facts",
+            "provenance": {
+              "missing_fields": [
+                "caffeine",
+                "nap"
+              ]
+            },
+            "semantic_ids": [
+              "sem_synthetic_d_02_r0_4"
+            ],
+            "supersedes_dependency_id": null,
+            "dependency_class": "USER_FACTS",
+            "requiredness": "optional",
+            "dependency_source": [
+              "goal_semantics",
+              "requirements"
+            ],
+            "dependency_reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+            "satisfied_by": []
+          },
+          "estimated_cost": "LOW",
+          "acquisition_value": "HIGH",
+          "gate_decision": "ACCEPT",
+          "accepted": true,
+          "reason": "the goal explicitly links this missing fact to a choice or adjustment; plausible values can change the direction",
+          "dependency_id": "dep_synthetic_d_02_r0_user_facts_user_facts",
+          "lineage_complete": true,
+          "decision_relevant": true,
+          "counterfactual_outcomes": [
+            "unknown: keep the current decision bounded",
+            "plausible values: recommendation/action direction may differ"
+          ],
+          "impact_dimensions": [
+            "next_action",
+            "recommendation_direction",
+            "answer_scope"
+          ],
+          "counterfactual_candidate": {
+            "if_unknown": "unknown: keep the current decision bounded",
+            "if_resolved": "plausible values: recommendation/action direction may differ"
+          },
+          "heuristic_not_calibrated_probability": true
+        },
+        {
+          "candidate_id": "cand_synthetic_d_02_r0_2",
+          "action": "ASK",
+          "target": "nap",
+          "expected_information_gain": "LOW",
+          "goal_relevance": "MEDIUM",
+          "decision_impact": "LOW",
+          "missing_criticality": "DECISION_RELEVANT",
+          "redundancy": "LOW",
+          "resource_dependency": {
+            "dependency_id": "dep_synthetic_d_02_r0_user_facts_user_facts",
+            "dependency_type": "USER_FACTS",
+            "target": "user_facts",
+            "status": "DEFERRED",
+            "reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+            "source": [
+              "goal_semantics",
+              "requirements"
+            ],
+            "required_for_goal": "咖啡摄入会改变我应该怎样调整睡前安排吗？",
+            "satisfiable_by": [
+              "ASK",
+              "READ_DIARY"
+            ],
+            "fallback": "bounded answer using only supplied facts",
+            "provenance": {
+              "missing_fields": [
+                "caffeine",
+                "nap"
+              ]
+            },
+            "semantic_ids": [
+              "sem_synthetic_d_02_r0_4"
+            ],
+            "supersedes_dependency_id": null,
+            "dependency_class": "USER_FACTS",
+            "requiredness": "optional",
+            "dependency_source": [
+              "goal_semantics",
+              "requirements"
+            ],
+            "dependency_reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+            "satisfied_by": []
+          },
+          "estimated_cost": "LOW",
+          "acquisition_value": "NONE",
+          "gate_decision": "REJECT",
+          "accepted": false,
+          "reason": "counterfactual_values_do_not_change_action_direction_or_answer_scope",
+          "dependency_id": "dep_synthetic_d_02_r0_user_facts_user_facts",
+          "lineage_complete": true,
+          "decision_relevant": true,
+          "counterfactual_outcomes": [
+            "unknown: current bounded answer and next action remain unchanged",
+            "plausible values: no supported change to action, direction, or answer scope"
+          ],
+          "impact_dimensions": [
+            "answer_detail"
+          ],
+          "counterfactual_candidate": {
+            "if_unknown": "unknown: current bounded answer and next action remain unchanged",
+            "if_resolved": "plausible values: no supported change to action, direction, or answer scope"
+          },
+          "heuristic_not_calibrated_probability": true
+        }
+      ],
+      "rejected_information": [
+        {
+          "candidate_id": "cand_synthetic_d_02_r0_2",
+          "action": "ASK",
+          "target": "nap",
+          "expected_information_gain": "LOW",
+          "goal_relevance": "MEDIUM",
+          "decision_impact": "LOW",
+          "missing_criticality": "DECISION_RELEVANT",
+          "redundancy": "LOW",
+          "resource_dependency": {
+            "dependency_id": "dep_synthetic_d_02_r0_user_facts_user_facts",
+            "dependency_type": "USER_FACTS",
+            "target": "user_facts",
+            "status": "DEFERRED",
+            "reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+            "source": [
+              "goal_semantics",
+              "requirements"
+            ],
+            "required_for_goal": "咖啡摄入会改变我应该怎样调整睡前安排吗？",
+            "satisfiable_by": [
+              "ASK",
+              "READ_DIARY"
+            ],
+            "fallback": "bounded answer using only supplied facts",
+            "provenance": {
+              "missing_fields": [
+                "caffeine",
+                "nap"
+              ]
+            },
+            "semantic_ids": [
+              "sem_synthetic_d_02_r0_4"
+            ],
+            "supersedes_dependency_id": null,
+            "dependency_class": "USER_FACTS",
+            "requiredness": "optional",
+            "dependency_source": [
+              "goal_semantics",
+              "requirements"
+            ],
+            "dependency_reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+            "satisfied_by": []
+          },
+          "estimated_cost": "LOW",
+          "acquisition_value": "NONE",
+          "gate_decision": "REJECT",
+          "accepted": false,
+          "reason": "counterfactual_values_do_not_change_action_direction_or_answer_scope",
+          "dependency_id": "dep_synthetic_d_02_r0_user_facts_user_facts",
+          "lineage_complete": true,
+          "decision_relevant": true,
+          "counterfactual_outcomes": [
+            "unknown: current bounded answer and next action remain unchanged",
+            "plausible values: no supported change to action, direction, or answer scope"
+          ],
+          "impact_dimensions": [
+            "answer_detail"
+          ],
+          "counterfactual_candidate": {
+            "if_unknown": "unknown: current bounded answer and next action remain unchanged",
+            "if_resolved": "plausible values: no supported change to action, direction, or answer scope"
+          },
+          "heuristic_not_calibrated_probability": true,
+          "rejection_reason": "counterfactual_values_do_not_change_action_direction_or_answer_scope"
+        }
+      ],
+      "stop_reason": "",
+      "match": true,
+      "rationale": "混合状态下保留与当前决策直接相关的 caffeine acquisition，不追问已知 screen、不因次要 nap 缺失追加问题。"
+    }
+  ],
+  "counterfactual_pairs": [
+    {
+      "pair_id": "CF-CAFFEINE",
+      "cases": [
+        {
+          "case_id": "A-01",
+          "group": "low_value_optional_missing",
+          "pair_id": "CF-CAFFEINE",
+          "expected_action": "ANSWER",
+          "observed_action": "ANSWER",
+          "expected_value": "LOW",
+          "observed_value": "LOW",
+          "expected_gate": "REJECT",
+          "observed_gate": "REJECT",
+          "selected_target": null,
+          "selected_origin": "BOUNDED_STOP",
+          "action_path": [
+            "ANSWER"
+          ],
+          "dependencies": [
+            {
+              "dependency_id": "dep_synthetic_a_01_r0_user_facts_user_facts",
+              "dependency_type": "USER_FACTS",
+              "target": "user_facts",
+              "status": "DEFERRED",
+              "reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+              "source": [
+                "goal_semantics",
+                "requirements"
+              ],
+              "required_for_goal": "概括我已经提供的睡眠安排",
+              "satisfiable_by": [
+                "ASK",
+                "READ_DIARY"
+              ],
+              "fallback": "bounded answer using only supplied facts",
+              "provenance": {
+                "missing_fields": [
+                  "caffeine"
+                ]
+              },
+              "semantic_ids": [
+                "sem_synthetic_a_01_r0_4"
+              ],
+              "supersedes_dependency_id": null,
+              "dependency_class": "USER_FACTS",
+              "requiredness": "optional",
+              "dependency_source": [
+                "goal_semantics",
+                "requirements"
+              ],
+              "dependency_reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+              "satisfied_by": []
+            }
+          ],
+          "preconditions": [],
+          "acquisition_decisions": [
+            {
+              "candidate_id": "cand_synthetic_a_01_r0_1",
+              "action": "ASK",
+              "target": "caffeine",
+              "expected_information_gain": "LOW",
+              "goal_relevance": "MEDIUM",
+              "decision_impact": "LOW",
+              "missing_criticality": "DECISION_RELEVANT",
+              "redundancy": "LOW",
+              "resource_dependency": {
+                "dependency_id": "dep_synthetic_a_01_r0_user_facts_user_facts",
+                "dependency_type": "USER_FACTS",
+                "target": "user_facts",
+                "status": "DEFERRED",
+                "reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+                "source": [
+                  "goal_semantics",
+                  "requirements"
+                ],
+                "required_for_goal": "概括我已经提供的睡眠安排",
+                "satisfiable_by": [
+                  "ASK",
+                  "READ_DIARY"
+                ],
+                "fallback": "bounded answer using only supplied facts",
+                "provenance": {
+                  "missing_fields": [
+                    "caffeine"
+                  ]
+                },
+                "semantic_ids": [
+                  "sem_synthetic_a_01_r0_4"
+                ],
+                "supersedes_dependency_id": null,
+                "dependency_class": "USER_FACTS",
+                "requiredness": "optional",
+                "dependency_source": [
+                  "goal_semantics",
+                  "requirements"
+                ],
+                "dependency_reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+                "satisfied_by": []
+              },
+              "estimated_cost": "LOW",
+              "acquisition_value": "NONE",
+              "gate_decision": "REJECT",
+              "accepted": false,
+              "reason": "counterfactual_values_do_not_change_action_direction_or_answer_scope",
+              "dependency_id": "dep_synthetic_a_01_r0_user_facts_user_facts",
+              "lineage_complete": true,
+              "decision_relevant": true,
+              "counterfactual_outcomes": [
+                "unknown: current bounded answer and next action remain unchanged",
+                "plausible values: no supported change to action, direction, or answer scope"
+              ],
+              "impact_dimensions": [
+                "answer_detail"
+              ],
+              "counterfactual_candidate": {
+                "if_unknown": "unknown: current bounded answer and next action remain unchanged",
+                "if_resolved": "plausible values: no supported change to action, direction, or answer scope"
+              },
+              "heuristic_not_calibrated_probability": true
+            }
+          ],
+          "rejected_information": [
+            {
+              "candidate_id": "cand_synthetic_a_01_r0_1",
+              "action": "ASK",
+              "target": "caffeine",
+              "expected_information_gain": "LOW",
+              "goal_relevance": "MEDIUM",
+              "decision_impact": "LOW",
+              "missing_criticality": "DECISION_RELEVANT",
+              "redundancy": "LOW",
+              "resource_dependency": {
+                "dependency_id": "dep_synthetic_a_01_r0_user_facts_user_facts",
+                "dependency_type": "USER_FACTS",
+                "target": "user_facts",
+                "status": "DEFERRED",
+                "reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+                "source": [
+                  "goal_semantics",
+                  "requirements"
+                ],
+                "required_for_goal": "概括我已经提供的睡眠安排",
+                "satisfiable_by": [
+                  "ASK",
+                  "READ_DIARY"
+                ],
+                "fallback": "bounded answer using only supplied facts",
+                "provenance": {
+                  "missing_fields": [
+                    "caffeine"
+                  ]
+                },
+                "semantic_ids": [
+                  "sem_synthetic_a_01_r0_4"
+                ],
+                "supersedes_dependency_id": null,
+                "dependency_class": "USER_FACTS",
+                "requiredness": "optional",
+                "dependency_source": [
+                  "goal_semantics",
+                  "requirements"
+                ],
+                "dependency_reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+                "satisfied_by": []
+              },
+              "estimated_cost": "LOW",
+              "acquisition_value": "NONE",
+              "gate_decision": "REJECT",
+              "accepted": false,
+              "reason": "counterfactual_values_do_not_change_action_direction_or_answer_scope",
+              "dependency_id": "dep_synthetic_a_01_r0_user_facts_user_facts",
+              "lineage_complete": true,
+              "decision_relevant": true,
+              "counterfactual_outcomes": [
+                "unknown: current bounded answer and next action remain unchanged",
+                "plausible values: no supported change to action, direction, or answer scope"
+              ],
+              "impact_dimensions": [
+                "answer_detail"
+              ],
+              "counterfactual_candidate": {
+                "if_unknown": "unknown: current bounded answer and next action remain unchanged",
+                "if_resolved": "plausible values: no supported change to action, direction, or answer scope"
+              },
+              "heuristic_not_calibrated_probability": true,
+              "rejection_reason": "counterfactual_values_do_not_change_action_direction_or_answer_scope"
+            }
+          ],
+          "stop_reason": "no_worthwhile_information_after_acquisition_gate",
+          "match": true,
+          "rationale": "目标只要求概括已提供信息，咖啡信息不会改变方向或范围。"
+        },
+        {
+          "case_id": "B-01",
+          "group": "decision_relevant_missing",
+          "pair_id": "CF-CAFFEINE",
+          "expected_action": "ASK",
+          "observed_action": "ASK",
+          "expected_value": "HIGH",
+          "observed_value": "HIGH",
+          "expected_gate": "ACCEPT",
+          "observed_gate": "ACCEPT",
+          "selected_target": "caffeine",
+          "selected_origin": "OPTIONAL_ACQUISITION",
+          "action_path": [
+            "ASK"
+          ],
+          "dependencies": [
+            {
+              "dependency_id": "dep_synthetic_b_01_r0_user_facts_user_facts",
+              "dependency_type": "USER_FACTS",
+              "target": "user_facts",
+              "status": "DEFERRED",
+              "reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+              "source": [
+                "goal_semantics",
+                "requirements"
+              ],
+              "required_for_goal": "咖啡摄入会改变我应该怎样调整睡前安排吗？",
+              "satisfiable_by": [
+                "ASK",
+                "READ_DIARY"
+              ],
+              "fallback": "bounded answer using only supplied facts",
+              "provenance": {
+                "missing_fields": [
+                  "caffeine"
+                ]
+              },
+              "semantic_ids": [
+                "sem_synthetic_b_01_r0_4"
+              ],
+              "supersedes_dependency_id": null,
+              "dependency_class": "USER_FACTS",
+              "requiredness": "optional",
+              "dependency_source": [
+                "goal_semantics",
+                "requirements"
+              ],
+              "dependency_reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+              "satisfied_by": []
+            }
+          ],
+          "preconditions": [],
+          "acquisition_decisions": [
+            {
+              "candidate_id": "cand_synthetic_b_01_r0_1",
+              "action": "ASK",
+              "target": "caffeine",
+              "expected_information_gain": "HIGH",
+              "goal_relevance": "HIGH",
+              "decision_impact": "HIGH",
+              "missing_criticality": "DECISION_RELEVANT",
+              "redundancy": "LOW",
+              "resource_dependency": {
+                "dependency_id": "dep_synthetic_b_01_r0_user_facts_user_facts",
+                "dependency_type": "USER_FACTS",
+                "target": "user_facts",
+                "status": "DEFERRED",
+                "reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+                "source": [
+                  "goal_semantics",
+                  "requirements"
+                ],
+                "required_for_goal": "咖啡摄入会改变我应该怎样调整睡前安排吗？",
+                "satisfiable_by": [
+                  "ASK",
+                  "READ_DIARY"
+                ],
+                "fallback": "bounded answer using only supplied facts",
+                "provenance": {
+                  "missing_fields": [
+                    "caffeine"
+                  ]
+                },
+                "semantic_ids": [
+                  "sem_synthetic_b_01_r0_4"
+                ],
+                "supersedes_dependency_id": null,
+                "dependency_class": "USER_FACTS",
+                "requiredness": "optional",
+                "dependency_source": [
+                  "goal_semantics",
+                  "requirements"
+                ],
+                "dependency_reason": "personalized goal may use user facts; missing fields remain candidate-level acquisition",
+                "satisfied_by": []
+              },
+              "estimated_cost": "LOW",
+              "acquisition_value": "HIGH",
+              "gate_decision": "ACCEPT",
+              "accepted": true,
+              "reason": "the goal explicitly links this missing fact to a choice or adjustment; plausible values can change the direction",
+              "dependency_id": "dep_synthetic_b_01_r0_user_facts_user_facts",
+              "lineage_complete": true,
+              "decision_relevant": true,
+              "counterfactual_outcomes": [
+                "unknown: keep the current decision bounded",
+                "plausible values: recommendation/action direction may differ"
+              ],
+              "impact_dimensions": [
+                "next_action",
+                "recommendation_direction",
+                "answer_scope"
+              ],
+              "counterfactual_candidate": {
+                "if_unknown": "unknown: keep the current decision bounded",
+                "if_resolved": "plausible values: recommendation/action direction may differ"
+              },
+              "heuristic_not_calibrated_probability": true
+            }
+          ],
+          "rejected_information": [],
+          "stop_reason": "",
+          "match": true,
+          "rationale": "相对 CF-CAFFEINE 的 A 组，只改变 goal 所要求的决策影响；合理取值可改变建议方向。"
+        }
+      ],
+      "action_differs": true,
+      "interpretation": "同一 caffeine target 在描述 goal 与决策 goal 下的价值/行动差异"
+    }
+  ],
+  "agent_modified": false,
+  "benchmark_v3_rerun": false,
+  "v3_results_modified": false,
+  "model_called": false
+}

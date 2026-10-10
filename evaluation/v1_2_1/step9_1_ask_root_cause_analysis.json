@@ -1,0 +1,10 @@
+{
+  "source":"Step 8.9 frozen 66-ASK adjudication",
+  "quality":{"necessary":16,"useful_but_optional":6,"redundant":21,"irrelevant":23},
+  "clusters":[
+    {"name":"task/dependency representation failure","cases":["V2-KQ-02","V2-KQ-05","V2-DA-07"],"asks":11,"quality":"all irrelevant","mechanism":"wrong task/state exposes generic personalized requirements; required dependency candidate never forms"},
+    {"name":"known-query-fact not preserved in State","cases":["V2-CA-01","V2-CA-04","V2-CA-05","V2-CA-10","V2-PD-01","V2-PD-02","V2-PD-03","V2-PD-04","V2-PD-07","V2-PD-09","V2-PD-10"],"asks":21,"quality":"redundant","mechanism":"upstream Input Understanding/State Integrity; not a Policy-only finding"},
+    {"name":"goal/requirement mismatch or candidate selection","cases":["V2-KQ-06","V2-CA-02","V2-CA-04","V2-CA-05","V2-PD-04","V2-PD-06","V2-PD-09","V2-PD-11","V2-PD-12"],"asks":12,"quality":"irrelevant","mechanism":"requires case-level review; trace alone does not prove Information Value versus candidate-generation cause"}
+  ],
+  "conclusion":"At least 32 of 44 low-value ASK are directly trace-linked to representation/state clusters. The remaining 12 cannot be assigned to Information Value or Policy without stronger counterfactual instrumentation."
+}

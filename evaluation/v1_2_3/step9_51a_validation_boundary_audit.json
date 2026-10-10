@@ -1,0 +1,84 @@
+{
+  "artifact_type": "STEP9_51A_VALIDATION_BOUNDARY_AUDIT",
+  "step": "9.51a",
+  "status": "PASS_SAFE_NON_BENCHMARK_VALIDATION",
+  "created_at_utc": "2026-09-30T17:03:16.706216+00:00",
+  "original_step9_51_failure": {
+    "cause": "UNSAFE_TEST_DISCOVERY_BOUNDARY",
+    "selector": "unittest discover('tests') followed by class.__module__ exclusion against tests.test_step9_30a_v4_adjudication and tests.test_step9_30c_v4_aggregation",
+    "why_exclusions_failed": "unittest discovery assigns module names test_step9_30a_v4_adjudication and test_step9_30c_v4_aggregation, without the tests. prefix, so the exclusion set did not match.",
+    "step9_30a_effect": "The V4 adjudication-template/validator module was selected; its synthetic completed-copy aggregate_completed test ran.",
+    "step9_30c_effect": "The frozen 40-case V4 aggregate_records function was recomputed in memory by tests; no aggregate artifact was written.",
+    "historical_v2_identity_error": "The frozen V2 live-identity assertion compared current V3 development source against the historical V2 identity; this mismatch is expected and the frozen V2 artifact itself remains self-consistent.",
+    "prior_discovery_runs": 2,
+    "prior_runs_each_reported_tests": 399
+  },
+  "remediation": {
+    "manifest_path": "evaluation/v1_2_3/step9_51a_safe_test_manifest.json",
+    "manifest_sha256": "a639ab7e674227f5c676071da6a6186572138fc88d0c899a9cf3fbaa6a59169d",
+    "guard_path": "scripts/validate_step9_51a_test_boundary.py",
+    "guard_sha256": "312f3ca29670c7b092851a37f161aa3cb2e0af17d275c38ca924a3987d7fc9fe",
+    "guard_test_path": "tests/test_step9_51a_validation_boundary.py",
+    "guard_test_sha256": "4b0de36a65f9d8d51916000b5f78d6c5dde38a58a797dc1d4e14559fee83b4ea",
+    "modules_discovered": 41,
+    "safe_module_count": 31,
+    "excluded_module_count": 10,
+    "safe_test_case_count": 323,
+    "dry_run_status": "PASS",
+    "step9_30a_selected_in_safe_rerun": false,
+    "step9_30c_selected_in_safe_rerun": false,
+    "formal_v4_test_selected": false,
+    "aggregation_test_selected": false,
+    "adjudication_test_selected": false,
+    "v5_test_selected": false
+  },
+  "safe_rerun": {
+    "command": ".venv/bin/python scripts/validate_step9_51a_test_boundary.py --run",
+    "status": "PASS",
+    "total": 323,
+    "passed": 323,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "step9_50_synthetic_tests": "40/40 PASS",
+    "step9_41_42_safety_tests": "16/16 PASS",
+    "real_model_calls": false,
+    "real_rag_calls": false,
+    "formal_agent_execution": false
+  },
+  "historical_integrity": {
+    "pre_run_frozen_result_hashes_checked": 183,
+    "pre_run_hash_failures": 0,
+    "post_run_historical_hashes_checked": 40,
+    "post_run_hash_failures": 0,
+    "historical_artifact_write": false,
+    "historical_artifact_overwrite": false,
+    "formal_result_modified": false,
+    "formal_trace_modified": false,
+    "historical_aggregate_modified": false,
+    "note": "Step 9.49 and Step 9.50 intentionally pin pre-V3 source code. Their source-code hash differences are current development identity changes, not changes to historical evaluation artifacts. All pinned historical result, trace, adjudication, aggregate, and comparison artifacts checked matched their frozen hashes."
+  },
+  "v2_identity": {
+    "frozen_v2_artifact_sha256": "06d0835af73c01c89e4aa8d2a7f03d3da023c14a7195ab8a1213817f7b353bc0",
+    "frozen_v2_inventory_self_consistent": true,
+    "frozen_v2_inventory_entry_count": 26,
+    "current_tree_matches_v2": false,
+    "current_tree_expected_to_match_v2": false
+  },
+  "implementation_boundary": {
+    "production_implementation_changed_during_remediation": false,
+    "step9_51a_changes": [
+      "scripts/validate_step9_51a_test_boundary.py",
+      "tests/test_step9_51a_validation_boundary.py",
+      "evaluation/v1_2_3/step9_51a_safe_test_manifest.json"
+    ]
+  },
+  "prohibited_activity": {
+    "v4_case_executed": 0,
+    "formal_v4_aggregate_executed_during_step9_51a": false,
+    "formal_adjudication_executed": false,
+    "v5_accessed": false,
+    "authorization_issued": false,
+    "formal_attempt_created": false
+  }
+}

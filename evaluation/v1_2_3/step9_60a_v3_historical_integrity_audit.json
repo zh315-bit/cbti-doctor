@@ -1,0 +1,52 @@
+{
+  "artifact_type": "STEP9_60A_V3_HISTORICAL_INTEGRITY_AUDIT",
+  "step": "9.60a",
+  "created_at_utc": "2026-10-01T20:25:51Z",
+  "status": "PASS_PINNED_EXISTING_ARTIFACTS_WITH_DOCUMENTED_PROVENANCE_GAPS",
+  "step9_58_provenance_gap": "PRESENT_AND_DOCUMENTED",
+  "historical_pins": {
+    "step9_55_failed_attempt_ledger": {"path": "evaluation/v4_runs/heldout-v4-step9_53-treatment-v3-20260930-01/attempts.jsonl", "sha256": "57967d950a3a4c700f3187e3d495ca39b4e01d5700ef31a9ebe36c3380450de6", "match": true},
+    "step9_57_failed_attempt_ledger": {"path": "evaluation/v4_runs/heldout-v4-step9_55a-treatment-v3-20260930-01/attempts.jsonl", "sha256": "10d3577bd59f886e5b5b79f23c8e911e117bfc52004eb234034f9314c2c5728e", "match": true},
+    "step9_57a_forensics": {"path": "evaluation/v1_2_3/step9_57a_v3_execution_failure_forensics.json", "sha256": "8217038ca627643d9cff384293156a5eaa591e7aaa52f6030889f63e651dbb3d", "match": true},
+    "step9_57a_report": {"path": "evaluation/v1_2_3/step9_57a_v3_execution_failure_forensics.md", "sha256": "42ac2273868c8c0101a63a6709df0a8d6ade17d424ed852e555f21353abdbc49", "match": true},
+    "step9_57a_audit": {"path": "evaluation/v1_2_3/step9_57a_v3_execution_failure_audit.json", "sha256": "92a92fe8bb3bc66aa11cb74be3a01f6b59ea61f0ebdc03b8194df4d667a08f96", "match": true},
+    "step9_57b_preclearance": {"path": "evaluation/v1_2_3/step9_57b_v3_connectivity_preclearance.json", "sha256": "41338b5a87a94c046e53d072a9f8621f024a50908206caab5c3f11f1f07aaab9", "match": true},
+    "step9_57b_report": {"path": "evaluation/v1_2_3/step9_57b_v3_connectivity_preclearance.md", "sha256": "6ab6bf65820e0de318cb48f120155d47e06eceaf55578cf2b772ba8868485039", "match": true},
+    "step9_57b_audit": {"path": "evaluation/v1_2_3/step9_57b_v3_connectivity_audit.json", "sha256": "ba590829b119fddb7ec3ca0a31e941a1e3e3c04dd8033226b7b6984b2fcddead", "match": true},
+    "step9_57c_recovery": {"path": "evaluation/v1_2_3/step9_57c_v3_connectivity_recovery.json", "sha256": "40dfee10d891d0ecfcd9a4cee6c40702877a6ff7f358b9c78266b7b6ff73cd14", "match": true},
+    "step9_57c_report": {"path": "evaluation/v1_2_3/step9_57c_v3_connectivity_recovery.md", "sha256": "680326dbadcfb46e51b53e1b9c1a0d0f7a08ccc01892e4cbe45c17fd7e426d02", "match": true},
+    "step9_57c_audit": {"path": "evaluation/v1_2_3/step9_57c_v3_connectivity_recovery_audit.json", "sha256": "916adb8ca3a2504a98e80f8e8c234008ece85b7baa316aee8219deeb1cdb6c02", "match": true},
+    "step9_58b_post_hoc_inventory": {"path": "evaluation/v1_2_3/step9_58b_historical_evidence_inventory.json", "sha256": "38854ce933a739916621c5ff3ec6d006bb37afa5a159da378c844c77eb9b71f7", "match": true},
+    "step9_58b_attestation": {"path": "evaluation/v1_2_3/step9_58b_post_hoc_attestation.json", "sha256": "a91271e9a9589de31527e2a0adef3e0ae995233a58374b73817964f6780dfbb7", "match": true},
+    "step9_58b_report": {"path": "evaluation/v1_2_3/step9_58b_post_hoc_attestation.md", "sha256": "ade47269aa8365d628e8f4e51b32517f4b4e1683ec4b775f5d8b2474e3b4405a", "match": true},
+    "step9_58b_provenance_audit": {"path": "evaluation/v1_2_3/step9_58b_provenance_audit.json", "sha256": "14c22ad9bc7fdc481ea8517246b45e43fc61b428a7c173b7ebb7226107d65d71", "match": true},
+    "step9_58a_r1_identity_contract": {"path": "evaluation/v1_2_3/step9_58a_r1_v3_identity_contract.json", "sha256": "16b6cd71cd75ea231ed3a10d3f43546e31cded9d1be120ce5d16c000391ae95f", "match": true},
+    "step9_58a_r1_freeze": {"path": "evaluation/v1_2_3/step9_58a_r1_v3_runner_freeze_r4.json", "sha256": "2b930fa589e99def45c7978e7051a36b8e5d29659e0fb7624f998f8a2e4ab8b4", "match": true},
+    "step9_58a_r1_preclearance": {"path": "evaluation/v1_2_3/step9_58a_r1_v3_runner_preclearance.json", "sha256": "8c580a10339d473bb5c6b7f44c5ac7220641f078a4f5ef8717f08f1f5f7dbcaa", "match": true},
+    "step9_58a_r1_namespace_audit": {"path": "evaluation/v1_2_3/step9_58a_r1_v3_namespace_allocation_audit.json", "sha256": "8f82962dee8e216ad09550a39363df6923531b07c0f59409d8075e3eae72f81b", "match": true},
+    "step9_58a_r1_lifecycle_tests": {"path": "evaluation/v1_2_3/step9_58a_r1_v3_namespace_lifecycle_test_report.json", "sha256": "4ecdd3b8a68bea65050fbcab14b546836e95734c6e58d782e1033076048a59fe", "match": true},
+    "step9_58a_r1_report": {"path": "evaluation/v1_2_3/step9_58a_r1_v3_namespace_remediation_report.md", "sha256": "537e52b9dcb0ed0a40439051712919cac9516b1fb79cab443d250b8fe7e7871a", "match": true},
+    "step9_59_failed_freeze": {"path": "evaluation/v1_2_3/step9_59_v3_authorization_freeze.json", "sha256": "b1c53d6f9c245d42dc8a66d112abef85eb650b02d6b972b97365d27e6a15e975", "match": true},
+    "step9_59_failed_manifest": {"path": "evaluation/v1_2_3/step9_59_v3_authorization_manifest.json", "sha256": "e2c689ab1c1979ed6d79b3b7baa8090575436fe7a2b2c6e7313f8df12ad41f2c", "match": true},
+    "step9_59_failed_audit": {"path": "evaluation/v1_2_3/step9_59_v3_authorization_audit.json", "sha256": "9ada89b710778d51450a8403c68fc71c081b04f9e185107fbd562067268421d0", "match": true},
+    "step9_59_failed_report": {"path": "evaluation/v1_2_3/step9_59_v3_authorization_report.md", "sha256": "099a2b3af7ea2c90d2109bcbab1b30c1c2fa25fe5417b747a3ab38c45f345a25", "match": true},
+    "step9_59a_repair_audit": {"path": "evaluation/v1_2_3/step9_59a_v3_runner_repair_audit.json", "sha256": "716a3c799835b8f1d81b76ee46458651464b50a3158ef91e8fa780c92f1112a7", "match": true},
+    "step9_59a_tests": {"path": "evaluation/v1_2_3/step9_59a_v3_runner_regression_test_report.json", "sha256": "2da3f916c515d3d68af4cdf5a430e989f1c36c9b71ac1c579d47c2dc61bb73ed", "match": true},
+    "step9_59a_r5_freeze": {"path": "evaluation/v1_2_3/step9_59a_v3_runner_freeze_r5.json", "sha256": "1007fde3dbfc604383a592523f100dc050fa21c93f23d8c88e9835e29f868314", "match": true},
+    "step9_59a_preclearance": {"path": "evaluation/v1_2_3/step9_59a_v3_runner_preclearance.json", "sha256": "0412acd4c2145ec186bf3cba18400e29debf0e0a9f497d18ba7aed76caaf6ce8", "match": true},
+    "step9_59a_report": {"path": "evaluation/v1_2_3/step9_59a_v3_runner_repair_report.md", "sha256": "4cfff567ee81eb0b22ddef642b86a15bd1517e21ee29c2b4cca405ae039b3b3b", "match": true},
+    "step9_59b_authorization_freeze": {"path": "evaluation/v1_2_3/step9_59b_v3_authorization_freeze.json", "sha256": "5c7a248dcc202a1bd83ac887dbae9abb01348fd9775980277b106853a225cb0b", "match": true}
+    ,"step9_59b_manifest": {"path": "evaluation/v1_2_3/step9_59b_v3_authorization_manifest.json", "sha256": "163dc22d36dc97f2159f59f6dfcef9f1497c538149949a94683d00bf84420f44", "match": true}
+    ,"step9_59b_audit": {"path": "evaluation/v1_2_3/step9_59b_v3_authorization_audit.json", "sha256": "8835e2cde24399fb19f37a41071b76d867630a5f0978c4564deffc2daa02640b", "match": true}
+    ,"step9_59b_report": {"path": "evaluation/v1_2_3/step9_59b_v3_authorization_report.md", "sha256": "163297659ec7505e8d943af2c16a48700aebf08504510f1f51c0184db9597584", "match": true}
+  },
+  "known_historical_supersessions_and_gaps": {
+    "step9_58_original_artifact_set": "MISSING_AS_DOCUMENTED_BY_STEP9_58B; not recreated",
+    "step9_60_failure_artifact": "NO_PERSISTED_ORIGINAL_ARTIFACT_FOUND; failure preserved as conversation/user-provided evidence, not synthesized",
+    "step9_58b_historical_runner_source_pin": "Historical r3 source bytes have since been superseded by current r5 source; preserved r3 freeze and current r5 identity separately verified",
+    "record_md": "Append-only cumulative record; earlier inventory hash is a historical snapshot and is expected to differ after later entries"
+  },
+  "step9_58b_provenance_audit_sha256": "14c22ad9bc7fdc481ea8517246b45e43fc61b428a7c173b7ebb7226107d65d71",
+  "historical_artifacts_modified": false,
+  "step9_60_failure_rewritten": false
+}

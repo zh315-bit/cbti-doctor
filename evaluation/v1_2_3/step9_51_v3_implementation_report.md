@@ -1,0 +1,11 @@
+# Step 9.51 — V3 Implementation Validation
+
+Status: **PASS — V3 development-only validation; no formal evaluation authority.**
+
+The implementation present before Step 9.51a was preserved. No production Agent files were changed during remediation. The failed Step 9.51 validation was caused by an unsafe `unittest` discovery filter: discovered module names omit the `tests.` prefix used in the exclusion set, so Step 9.30a and Step 9.30c tests were included. Step 9.30c recomputed the historical frozen V4 aggregate in memory; hash audits found no historical result, trace, adjudication, aggregate, or comparison artifact write or overwrite. The separate frozen V2 live-identity assertion was incompatible by design with current V3 development; the frozen V2 identity artifact itself is self-consistent and unchanged.
+
+Step 9.51a replaces discovery exclusions with the pinned explicit allowlist in `step9_51a_safe_test_manifest.json` and the fail-closed selector in `scripts/validate_step9_51a_test_boundary.py`. Dry-run selected 31 modules / 323 cases and excluded 10 modules. Step 9.30a, Step 9.30c, formal V4, aggregation, adjudication, and V5 tests were not selected. The safe rerun passed **323/323**, including all **40 Step 9.50 synthetic contract tests** and **16 Step 9.41/9.42 safety tests**.
+
+Frozen historical hashes: 183 references checked before rerun and 40 direct historical output references rechecked afterward; zero mismatches. The current V3 development Agent inventory fingerprint is `085d338ed95bbef7370c41cf97ca0d6653ffdfd2f1c924eef4b7123dfdea4607`; it is intentionally not the frozen V2 identity. PD06, PD08, common safety, epistemic-state, authorization-mirroring, and traceability requirements passed their synthetic coverage. Static anti-overfit audit found no benchmark IDs, expected benchmark answers, recovery-count hacks, task-specific score hacks, or V4-specific completion logic in audited production paths.
+
+No formal V4 case was executed. The earlier Step 9.51 failure did execute an in-memory historical aggregate; Step 9.51a itself did not aggregate, adjudicate, call a model/RAG/Agent for formal evaluation, access V5, issue authorization, or create a formal attempt. Step 9.52 was not run.

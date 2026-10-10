@@ -55,8 +55,17 @@ jobs:
           loader = unittest.TestLoader()
           suite = unittest.TestSuite()
           for path in test_files:
-              if path.stem not in artifact_bound:
+              if path.stem in artifact_bound:
+                  continue
+              try:
                   suite.addTests(loader.loadTestsFromName(path.stem))
+              except Exception as error:
+                  # loadTestsFromName only converts ImportError; any other import-time
+                  # exception would abort the whole run. Report it as a failing test.
+                  def failed_import(message=f"{path.stem}: {type(error).__name__}: {error}"):
+                      raise ImportError(message)
+                  failed_import.__name__ = f"import_{path.stem}"
+                  suite.addTest(unittest.FunctionTestCase(failed_import))
           print("Local-artifact test modules excluded:", ", ".join(sorted(artifact_bound)), flush=True)
           result = unittest.TextTestRunner(verbosity=2).run(suite)
           raise SystemExit(not result.wasSuccessful())

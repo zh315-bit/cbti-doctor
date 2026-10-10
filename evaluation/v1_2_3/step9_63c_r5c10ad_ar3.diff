@@ -1,0 +1,77 @@
+--- a/tests/test_step9_63a_r1_production_integration.py
++++ b/tests/test_step9_63a_r1_production_integration.py
+@@ -68,11 +68,25 @@
+     def test_authorization_validator_checks_transaction(self):
+         self.assertIn("require_committed(", inspect.getsource(parent.validate_authorization))
+ 
++    def reduce(self, ledger, journals):
++        """Reducer result with the synthetic issuance manifest supplied explicitly."""
++        return lifecycle.reduce_authorization_lifecycle(
++            authorization_id="synthetic-auth", manifest=self.auth, ledger_path=ledger,
++            run_root=self.runs, transaction_root=journals)
++
+     def test_lifecycle_rejects_committed_authorization(self):
++        # Step 9.63c-r5c10ad AR-3: the frozen reducer reports every rejection as a
++        # derived state; it no longer surfaces the transaction message ("already bound").
++        empty = self.root / "empty-events.jsonl"
++        self.assertEqual(self.reduce(empty, self.journals)["derived_state"],
++                         lifecycle.ISSUED_EXECUTABLE)  # control: rejection below is caused by the commit
+         self.commit()
+-        with self.assertRaisesRegex(RuntimeError, "already bound"):
++        with self.assertRaisesRegex(RuntimeError, "not executable: INCONSISTENT_FAIL_CLOSED"):
+             lifecycle.assert_executable_authorization("synthetic-auth",
+-                ledger_path=self.root / "empty-events.jsonl", transaction_root=self.journals)
++                ledger_path=empty, transaction_root=self.journals)
++        committed = self.reduce(empty, self.journals)
++        self.assertIs(committed["executable"], False)
++        self.assertNotEqual(committed["derived_state"], lifecycle.ISSUED_EXECUTABLE)
+ 
+     def test_lifecycle_rejects_prepared_authorization(self):
+         self.journals.mkdir()
+@@ -87,9 +101,16 @@
+         ledger.write_text(json.dumps({"authorization_id": "synthetic-auth",
+             "event_type": lifecycle.RETIRE_EVENT, "final_status": lifecycle.RETIRED,
+             "authorization_consumed": False, "authorization_consumption_count": 0}) + "\n")
+-        with self.assertRaisesRegex(RuntimeError, "retired"):
++        # Step 9.63c-r5c10ad AR-3: assert the reducer's derived state, not a message.
++        empty = self.root / "empty-events.jsonl"
++        self.assertEqual(self.reduce(empty, self.journals)["derived_state"],
++                         lifecycle.ISSUED_EXECUTABLE)  # control: rejection below is caused by retirement
++        with self.assertRaisesRegex(RuntimeError, "not executable: INCONSISTENT_FAIL_CLOSED"):
+             lifecycle.assert_executable_authorization("synthetic-auth", ledger_path=ledger,
+                 transaction_root=self.journals)
++        retired = self.reduce(ledger, self.journals)
++        self.assertEqual(retired["derived_state"], lifecycle.RETIRED_STATE)
++        self.assertIs(retired["executable"], False)
+ 
+     def test_second_transaction_rejected(self):
+         self.commit()
+--- a/tests/test_step9_63a_r2_retirement_eligibility.py
++++ b/tests/test_step9_63a_r2_retirement_eligibility.py
+@@ -111,12 +111,23 @@
+         self.assertEqual(len(self.ledger.read_text().splitlines()), 1)
+ 
+     def test_retired_auth_cannot_enter_new_transaction(self):
++        # Step 9.63c-r5c10ad AR-3 (same RC7 root cause, surfaced after AR-1): assert the
++        # reducer's derived state; the frozen reducer no longer emits a "retired" message.
++        journals = self.run_root / ".execution_transactions"
++        def reduce():
++            return lifecycle.reduce_authorization_lifecycle(
++                authorization_id=self.auth["authorization_id"], manifest=self.auth,
++                ledger_path=self.ledger, run_root=self.run_root, transaction_root=journals)
++        self.assertEqual(reduce()["derived_state"], lifecycle.ISSUED_EXECUTABLE)  # control
+         self.retire()
+-        with self.assertRaisesRegex(RuntimeError, "retired"):
++        with self.assertRaisesRegex(RuntimeError, "not executable: INCONSISTENT_FAIL_CLOSED"):
+             lifecycle.assert_executable_authorization(
+                 self.auth["authorization_id"], ledger_path=self.ledger,
+-                transaction_root=self.run_root / ".execution_transactions")
+-        self.assertFalse((self.run_root / ".execution_transactions").exists())
++                transaction_root=journals)
++        retired = reduce()
++        self.assertEqual(retired["derived_state"], lifecycle.RETIRED_STATE)
++        self.assertIs(retired["executable"], False)
++        self.assertFalse(journals.exists())
+ 
+     def test_retired_auth_cannot_reserve_namespace(self):
+         self.retire()

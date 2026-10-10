@@ -1,0 +1,15 @@
+{
+  "artifact_type": "STEP9_63A_R1_SYNTHETIC_CONCURRENCY_TEST_REPORT",
+  "timestamp_utc": "2026-10-05T21:24:33Z",
+  "filesystem_scope": "temporary synthetic identities/directories only",
+  "test": "tests.test_step9_63a_r1_production_integration.ProductionWiringTests.test_two_production_commit_contenders_only_one_wins",
+  "contenders": 2,
+  "committed_winners": 1,
+  "rejected_contenders": 1,
+  "same_authorization_double_commit": false,
+  "one_time_attempt_claim_test": "PASS",
+  "duplicate_case_start_test": "PASS",
+  "namespace_collision_test": "PASS",
+  "attempt_collision_test": "PASS",
+  "real_step9_62_authorization_touched": false
+}

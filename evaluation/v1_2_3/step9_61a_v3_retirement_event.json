@@ -1,0 +1,23 @@
+{
+  "artifact_type": "STEP9_61A_V3_AUTHORIZATION_RETIREMENT_EVENT_COPY",
+  "event_type": "AUTHORIZATION_RETIRED_UNCONSUMED_NON_REUSABLE",
+  "timestamp_utc": "2026-10-02T18:00:12.019361+00:00",
+  "evaluation_id": "heldout-v4-step9_55a-treatment-v3-20260930-01",
+  "authorization_id": "auth-step9_59b-0f63fb3bd6934e4b9a1c7e5808c24825",
+  "attempt_id": "attempt-step9_59b-f3a11b5d44914eb9b335ccec4f1bcf86",
+  "original_status": "ISSUED_NOT_CONSUMED",
+  "final_status": "RETIRED_UNCONSUMED_NON_REUSABLE",
+  "authorization_consumed": false,
+  "authorization_consumption_count": 0,
+  "attempt_created": false,
+  "namespace_created": false,
+  "cases_started": 0,
+  "cases_completed": 0,
+  "reuse_determination": "evaluation/v1_2_3/step9_61_v3_authorization_audit.json",
+  "reuse_determination_sha256": "8917201996c69ae7f8ac283fdf49391c771a620fc3e6ba08cb8594122df6888d",
+  "authorization_manifest_sha256": "163dc22d36dc97f2159f59f6dfcef9f1497c538149949a94683d00bf84420f44",
+  "lifecycle_contract_path": "evaluation/v1_2_3/step9_61a_v3_authorization_lifecycle_contract.json",
+  "lifecycle_contract_sha256": "addb3880e7141ca14d7b3011cadb439ac83076fa6b7c2b9f28f3b024d3fd1174",
+  "terminal": true,
+  "canonical_append_only_ledger": "evaluation/v1_2_3/authorization_lifecycle_events.jsonl"
+}

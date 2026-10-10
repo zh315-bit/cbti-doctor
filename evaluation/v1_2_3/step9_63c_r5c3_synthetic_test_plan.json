@@ -1,0 +1,33 @@
+{
+  "artifact_type": "STEP9_63C_R5C3_SYNTHETIC_TEST_PLAN",
+  "step": "9.63c-r5c3",
+  "timestamp_utc": "2026-10-06T19:11:39Z",
+  "status": "DESIGNED_NOT_IMPLEMENTED_OR_RUN",
+  "execution_policy": "Future implementation step only; tests must use temporary directories and synthetic identities, no model/Agent/RAG/HTTP and no real lifecycle ledger mutation.",
+  "tests": [
+    {"id": 1, "name": "historical_r8_authorization_retirable_after_production_runner_changes", "expected": "PASS retirement eligibility when historical r8 manifest/freeze are exact and state is unconsumed with no attempt/namespace, regardless of current runner r9 bytes"},
+    {"id": 2, "name": "retirement_checks_historical_r8_freeze_not_current_r9_bytes", "expected": "PASS only when authorization historical freeze hash/path/revision matches r8; wrong historical proof fails closed"},
+    {"id": 3, "name": "retired_r8_authorization_cannot_execute", "expected": "FAIL_CLOSED terminal retirement blocks formal entry and transaction claim"},
+    {"id": 4, "name": "retired_r8_authorization_cannot_be_reused", "expected": "FAIL_CLOSED on any second retirement/issue/execute reuse path"},
+    {"id": 5, "name": "r8_authorization_cannot_authorize_r9", "expected": "FAIL_CLOSED when revision, freeze hash, runner hash, or member set differs"},
+    {"id": 6, "name": "r9_freeze_creation_grants_no_execution_permission", "expected": "PASS passive freeze creation while formal execution and authorization status remain absent"},
+    {"id": 7, "name": "fresh_r9_authorization_rejected_while_old_executable_auth_active", "expected": "FAIL_CLOSED active authorization exclusivity; retirement required first"},
+    {"id": 8, "name": "append_only_retirement_preserves_historical_prefix_pin", "expected": "PASS when current ledger length is at least pinned prefix length and prefix digest is exact; appended event validates"},
+    {"id": 9, "name": "historical_prefix_mutation_detected", "expected": "FAIL_CLOSED prefix SHA mismatch"},
+    {"id": 10, "name": "historical_ledger_truncation_detected", "expected": "FAIL_CLOSED current length below pinned prefix length"},
+    {"id": 11, "name": "duplicate_retirement_rejected", "expected": "FAIL_CLOSED exactly one terminal retirement event per auth"},
+    {"id": 12, "name": "concurrent_retirement_serialized", "expected": "One append succeeds; competing append sees terminal event and fails under shared lock"},
+    {"id": 13, "name": "crash_during_retirement_recoverable_without_retry", "expected": "Complete fsynced event recognized; malformed/partial append enters manual reconciliation and is never auto-retried"},
+    {"id": 14, "name": "namespace_authority_unchanged", "expected": "All namespace values derive from transaction-resolved execution identity; no second allocator accepted"},
+    {"id": 15, "name": "wrong_attempt_namespace_or_preflight_rejected", "expected": "FAIL_CLOSED on any mismatch among auth, attempt, derived namespace, runner freeze, and preflight identity/hash"},
+    {"id": 16, "name": "unknown_provenance_r5_artifact_remains_rejected", "expected": "FAIL_CLOSED; byte hash match alone does not establish provenance"},
+    {"id": 17, "name": "freeze_creation_performs_no_execution", "expected": "PASS instrumentation shows no model, Agent, RAG, API/HTTP, benchmark case, attempt, namespace, or result access"},
+    {"id": 18, "name": "canonical_freeze_source_shared_by_formal_entry_and_adapter", "expected": "PASS exact same freeze path/revision/hash; conflicting source or stale r8 binding fails closed"},
+    {"id": 19, "name": "malformed_appended_lifecycle_event_rejected", "expected": "FAIL_CLOSED without modifying prior ledger prefix"},
+    {"id": 20, "name": "old_manifest_and_r8_freeze_immutable", "expected": "PASS hash pins unchanged before and after synthetic r9 setup/retirement simulation"}
+  ],
+  "planned_test_count": 20,
+  "tests_run": 0,
+  "formal_v4_execution": false,
+  "model_agent_rag_http_calls": false
+}

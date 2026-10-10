@@ -1,0 +1,43 @@
+{
+  "step": "9.63c-r5c10h",
+  "status": "DESIGN_DECISION_ONLY_NOT_IMPLEMENTED",
+  "producer_role": "Independent pre-execution evidence producer; not imported by formal runner at execution, but trusted as an authorization-readiness dependency",
+  "registry_role": "Versioned-schema, append-only mutable runtime invocation audit log; not an immutable member file",
+  "observed_current_binding": {
+    "r10_actual_producer_path": "scripts/preflight_step9_63c_r5c7_mac_local.py",
+    "r10_actual_producer_sha256": "49bffbf03b47a4455ba18f20544159115e72e1df71b5ea5545f0193ff8a9a920",
+    "producer_in_r10_20_member_list": false,
+    "artifact_contains_preflight_script_sha256": true,
+    "frozen_consumer_verifies_producer_sha_or_registry_claim": false,
+    "consumer_id_grammar": "preflight-step9_63c_r5-[a-z0-9]+-[0-9a-f]{32}",
+    "generic_producer_id_grammar": "preflight-step9_63c-<revision>-<uuid32>",
+    "generic_producer_compatible_as_is": false,
+    "registry_sha256_at_review": "01de3e5f9bced87785e851c4071b9eb2f320b43d2a36b1fcf9390b7e9c0ab377",
+    "registry_sha_is_historical_observation_not_future_freeze_pin": true
+  },
+  "option_a": {
+    "producer": "New versioned r11 producer replaces one r10 wrapper row in the 20-member r11 manifest",
+    "registry": "Independent append-only runtime state; schema/locator and validation code covered by frozen producer and consumer",
+    "strength": "The same r11 member-hash root of trust protects the evidence producer and formal consumer; preflight startup and formal handoff can both verify exact producer bytes.",
+    "required_guard": "Frozen consumer verifies producer member SHA, artifact producer SHA, exact claim/prefix and all existing identity/safety fields before adapter execution.",
+    "limitation": "This is local integrity/lineage evidence, not cryptographic attestation that a process with no filesystem write access other than the producer created the artifact.",
+    "member_accounting": "14 unchanged + 3 changed existing (scanner, resolver, consumer) + 3 replacement paths (builder, pointer, producer) = 20",
+    "decision": "RECOMMENDED_CONDITIONAL_ON_EXPLICIT_IMPLEMENTATION_APPROVAL"
+  },
+  "option_b": {
+    "producer": "Outside 20 members, but immutable independent path/version/raw SHA pin required",
+    "registry": "Independent append-only runtime state with same uniqueness and prefix checks",
+    "strength": "Can version producer separately without replacing a member row.",
+    "required_guard": "Future authorization binds producer path/SHA/contract version; producer self-checks those pins before claim; frozen consumer verifies code bytes and artifact/registry evidence against the same pins.",
+    "missing_today": "No current issuer or frozen consumer enforces this separate producer pin; artifact self-reported script SHA alone is insufficient.",
+    "risk": "Second trust root and independent rotation lifecycle could drift from r11 freeze/authorization if any binding is omitted.",
+    "decision": "VIABLE_ONLY_AFTER_SEPARATE_CONTRACT_AND_VALIDATOR_DESIGN; NOT_RECOMMENDED_NOW"
+  },
+  "registry_fixed_elements": ["repository-relative locator or frozen resolver rule", "schema version", "genesis shape", "allowed claim fields and ID grammar", "duplicate/invalid/truncated-history rejection", "lock and append/fsync protocol"],
+  "registry_mutable_elements": ["append-only real invocation claims", "timestamps", "per-claim identity and target bindings", "prefix length/hash after claim"],
+  "registry_never_freeze_full_file_sha": true,
+  "open_contracts": ["Exact future r11 authorization issuer and its producer binding fields", "Exact r11 registry genesis/claim serialization and path", "Formal consumer provenance-check API and locking/prefix rule", "Whether local filesystem threat model needs stronger signed producer attestation"],
+  "new_r11_freeze_created": false,
+  "new_authorization_issued": false,
+  "formal_v4_cases_executed": 0
+}

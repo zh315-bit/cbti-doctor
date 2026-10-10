@@ -1,0 +1,27 @@
+{
+  "artifact_type": "V3_PRODUCTION_TRANSACTION_COMMIT_CONTRACT",
+  "step": "9.63a-r1",
+  "status": "FROZEN_INFRASTRUCTURE_NOT_AUTHORIZATION",
+  "runner_revision": "r7",
+  "authority": "evaluation/v4_runs/.execution_transactions/<authorization_id>.jsonl",
+  "lock": "evaluation/v4_runs/.namespace-allocation.lock",
+  "state_order": ["PREPARED", "COMMITTING", "COMMITTED", "ATTEMPT_CLAIMED", "CASE_STARTED"],
+  "commit_point": "COMMITTED JSONL event after file fsync and parent-directory fsync",
+  "committed_binding_fields": ["transaction_id", "authorization_id", "attempt_id", "namespace_id", "runner_sha256", "agent_sha256", "evaluation_identity_sha256", "case_set_sha256"],
+  "fresh_authorization_requires": "ISSUED_NOT_CONSUMED, not retired, no prior transaction, no attempt/namespace collision, all frozen identities match",
+  "attempt_rule": "ATTEMPT_CLAIMED is appended exactly once before exclusive attempt ledger creation; crash after claim forbids automatic resume",
+  "case_rule": "CASE_STARTED in transaction journal precedes attempt-ledger STARTED and model/Agent/RAG entry; exact committed identity required",
+  "reconciliation": {
+    "before_prepared": "SAFE_TO_ABORT_UNCONSUMED",
+    "after_prepared": "SAFE_TO_ABORT_UNCONSUMED; journal tombstone is non-reusable",
+    "committing": "MUST_COMPLETE_COMMIT from same journal only; no new identity",
+    "committed_pre_claim": "COMMITTED_READY_FOR_EXECUTION; authorization irreversibly burned",
+    "claimed_pre_case": "COMMITTED_ATTEMPT_CLAIMED_NO_AUTO_RESUME",
+    "after_case_start": "COMMITTED_EXECUTION_ALREADY_STARTED_NO_AUTO_RESUME",
+    "ambiguous_or_corrupt": "FAIL_CLOSED_MANUAL_RECONCILIATION_REQUIRED"
+  },
+  "durability_guarantee": "PROCESS_CRASH_RECOVERABLE_WITH_FSYNCED_APPEND_ONLY_JOURNAL_ON_SUPPORTED_FILESYSTEM",
+  "power_loss_atomicity_claimed": false,
+  "historical_authorizations_rebound": false,
+  "formal_execution_performed": false
+}

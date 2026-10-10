@@ -1,0 +1,13 @@
+# Step 9.63a-r2 — Superseded authorization retirement and r7 eligibility
+
+Status: `PASS_SUPERSEDED_AUTHORIZATION_RETIRED_AND_R7_ELIGIBILITY_CONFIRMED`.
+
+The frozen Step 9.61a lifecycle contract explicitly permits `ISSUED_NOT_CONSUMED → RETIRED_UNCONSUMED_NON_REUSABLE` through a predicate-validated, append-only event. Before the transition, the Step 9.62 authorization was still issued/unconsumed (count 0), bound to r6, not r7, with no transaction, physical attempt, namespace, reservation, or started case. The r7 runner, V3 Agent and frozen 40-case evaluation identities matched.
+
+The canonical lifecycle function appended exactly one terminal event for `auth-step9_62-e796755748e14418b9da641f5d6c15e2`. That event pins the new non-reuse determination by SHA-256 `b6f431b3369d2040454cfc6790cac40d7272249fd794dfa1d05eb5d6198fcef7`; the determination records `SUPERSEDED_RUNNER_FREEZE` and the exact r6/r7 freeze identities. The original Step 9.62 manifest remains byte-for-byte unchanged, so its historical issued state is preserved. Retirement is **not** consumption: consumed remains false and count remains 0. Lifecycle, adapter and parent validator checks reject the retired ID; no transaction can begin for it.
+
+The lifecycle ledger grew only by append. Its original 1161-byte prefix still has SHA-256 `ca168f6939c4697a7a7bccc0b365b414d9a0e632f40de4242eb0a47e2d985285`; the new full-file SHA is `f573185bc39c26e14306ff1ac7c1a3e3a64e9940cb1e6f089a08942b96cb044d`. Thus the old full-file pin necessarily differs after this authorized append; the integrity audit treats that pin as an immutable historical prefix and reports the new full hash explicitly. The other historical pins and all 11 Step 9.63a-r1 artifacts remained unchanged. Step 9.58 provenance gap remains `PRESENT_AND_DOCUMENTED`.
+
+There are now zero active executable V3 authorizations. The frozen identity policy requires a globally new authorization and attempt ID; the fresh authorization must derive a distinct namespace. No such ID was allocated here. The eligibility audit therefore says `READY_FOR_FRESH_R7_AUTHORIZATION_ISSUE = YES`, but **no authorization was issued** and `READY_FOR_STEP9_63B_FINAL_PRECLEARANCE = NO`. The separate issuance step must account for this authorized append-only ledger extension when checking historical integrity and must perform its own non-consuming preflight.
+
+Focused lifecycle/transaction regression: 152 tests passed, 0 failures/errors; `py_compile` passed. No endpoint test, model/Agent/RAG call, V4 case execution, authorization consumption, attempt, or namespace creation occurred.

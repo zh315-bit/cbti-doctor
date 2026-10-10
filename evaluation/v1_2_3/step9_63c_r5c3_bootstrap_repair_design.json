@@ -1,0 +1,122 @@
+{
+  "artifact_type": "STEP9_63C_R5C3_BOOTSTRAP_REPAIR_DESIGN",
+  "step": "9.63c-r5c3",
+  "timestamp_utc": "2026-10-06T19:11:39Z",
+  "status": "DESIGN_ONLY_NOT_IMPLEMENTED",
+  "recommended_retirement_authority": {
+    "option": "C_INDEPENDENT_LIFECYCLE_AUTHORITY_WITH_HISTORICAL_BINDING_PROOF",
+    "semantics": "Validate exact immutable old authorization manifest bytes/hash and its recorded issuance binding to the exact historical r8 freeze path/hash/revision and relevant frozen identities. Independently validate terminal-eligible current lifecycle state under the shared lock: no consumption, no transaction journal, attempt, reservation, namespace, results or traces; validate determination and contract; append exactly one retirement event with fsync. Do not require current production runner bytes to equal the old r8 runner.",
+    "option_comparison": {
+      "A_historical_manifest_plus_historical_freeze": "Strong and auditable when the old manifest and its referenced freeze are both independently hash-pinned; replay is blocked by current terminal lifecycle scan and lock. Slightly couples lifecycle implementation to old freeze schema.",
+      "B_current_production_runner": "Reject. Makes legitimate retirement impossible after runner mutation, mixes mutable execution identity with lifecycle authority, and sustains bootstrap cycle. It does not improve stale-auth rejection beyond exact historical binding and terminal retirement state.",
+      "C_independent_lifecycle_authority": "Recommend. Keeps historical issuance proof immutable and lifecycle state append-only, permits retirement after runner updates without transferring authority, preserves exactly-once via lock and collision checks, and avoids current-runner dependency. Requires strict historical manifest/freeze hash and lifecycle event validation."
+    },
+    "retirement_is_not_consumption": true,
+    "old_authorization_consumption_count_remains": 0,
+    "authorization_migration_r8_to_r9": "FORBIDDEN"
+  },
+  "freeze_transition": {
+    "new_freeze_creation_is_non_executing": true,
+    "freeze_creation_grants_execution_permission": false,
+    "recommended_order": [
+      "Repair only bootstrap validators and append-compatible historical pin semantics; focused offline synthetic tests in a later authorized implementation step.",
+      "Inventory and freeze current production bytes as r9 with exact members and parent identities; this records identity only and creates no auth, attempt, namespace, or execution right.",
+      "Using the independent lifecycle authority, retire the exact r8 authorization against its historical manifest and r8 freeze; preserve consumed=false and count=0.",
+      "Verify the appended lifecycle ledger preserves its pinned historical prefix and all old artifact hashes.",
+      "Only in a separate later authorization step, issue a fresh authorization bound to r9, exact case set/order/configs, and one transaction-derived attempt/namespace."
+    ],
+    "ordering_analysis": "Freeze-before-retirement avoids an irreversible retirement that could strand the system if r9 identity construction fails. It is safe only if freeze is passive and cannot authorize execution; the old authorization remains bound solely to r8 and current modified bytes already fail its frozen member check. Retirement-before-freeze reduces lifecycle-active state first but creates an unnecessary irreversible dependency on successful freeze construction. Never issue fresh r9 authorization before old r8 is terminally retired.",
+    "freeze_builder_zero_active_auth_gate": "No builder gate was found in inspected code. If a future builder imposes one, design it as passive identity capture and remove only that unnecessary lifecycle coupling; keep zero-active-auth as a gate for fresh authorization issuance, not for freeze creation."
+  },
+  "historical_pin_model": {
+    "recommendation": "A_PREFIX_HASH_AND_PREFIX_LENGTH",
+    "proof": "current_length >= pinned_historical_length AND SHA256(current_bytes[0:pinned_historical_length]) == pinned_historical_sha256",
+    "append_allowed": true,
+    "prefix_mutation_rejected": true,
+    "truncation_rejected": true,
+    "models_compared": {
+      "prefix_hash_length": "Smallest compatible repair for this JSONL append-only ledger; simple to audit and adequate at present scale. It does not authenticate ordering of newly appended events beyond their own validated content.",
+      "per_event_hash_chain": "Strong event-order integrity and explicit chain linkage; more invasive migration and requires legacy-chain anchoring.",
+      "merkle": "Efficient selective proofs but operationally unnecessary for one small local ledger and adds root-management complexity.",
+      "immutable_segments": "Good append isolation and straightforward retention, but requires segment rotation and readers that compose multiple files."
+    },
+    "required_controls": ["exclusive lifecycle lock", "validate every complete JSONL event", "reject malformed/truncated records", "fsync appended event and containing directory", "never rewrite/delete prefix", "record prior prefix length/hash and new ledger length/hash"]
+  },
+  "minimal_production_repair_scope": [
+    {
+      "path": "scripts/run_step9_63_v3_formal_execution.py",
+      "function_or_area": "CURRENT_FREEZE_PATH/CURRENT_FREEZE_REVISION, execute_formal, preflight binding",
+      "current_behavior": "Hard-codes r8 and compares authorization/preflight to r8 path/hash/revision.",
+      "required_behavior": "Read exactly one authoritative current freeze identity from a frozen config or a single versioned source; require all auth/preflight/member hashes to match it. Never accept caller-selected alternate freeze and never fall back across revisions.",
+      "reason": "Formal entry must admit only a separately frozen r9 identity.",
+      "risk": "Accidental multi-freeze downgrade or loosened hash validation.",
+      "tests_required": ["r8 current pin rejects r9 auth", "r9 current pin accepts only exact r9 identity", "unknown revision/hash fail closed"]
+    },
+    {
+      "path": "scripts/run_step9_53_v3_identity_adapter.py",
+      "function_or_area": "freeze constants, _assert_authorization_runner_binding, _authoritative_authorization_bindings, validate_frozen_v3_identity PRE_ATTEMPT",
+      "current_behavior": "Binds adapter and authorization to fixed r8 path/revision.",
+      "required_behavior": "Consume the same single authoritative r9 freeze identity as the formal entry, validate all members and immutable evaluation bindings, retain no migration from r8 auth.",
+      "reason": "Identity authority must agree end-to-end.",
+      "risk": "Divergent freeze sources between entry, adapter, and parent.",
+      "tests_required": ["entry and adapter resolve identical freeze", "r8 auth rejected under r9", "member drift rejected"]
+    },
+    {
+      "path": "scripts/preflight_step9_63c_r5_mac_local.py",
+      "function_or_area": "authorization/freeze constants, ID grammar, validate_freeze, validate_authorization, artifact naming",
+      "current_behavior": "r8 and old authorization-specific; cannot create fresh r9-bound evidence.",
+      "required_behavior": "Accept only explicit fresh authorization/freeze identity input, derive evidence identity/file from that immutable binding, use exclusive creation, and prove no consumption/attempt/namespace; keep transport check local and non-inference.",
+      "reason": "A future r9 authorization needs matching Mac-local preflight without reusing old r8 evidence.",
+      "risk": "Cross-authorization evidence substitution or duplicate artifact overwrite.",
+      "tests_required": ["wrong auth/freeze rejected", "unique instance identity", "existing artifact exclusive-create failure", "no inference side effects"]
+    },
+    {
+      "path": "scripts/issue_step9_63a_r3_authorization.py",
+      "function_or_area": "historical_pins_match",
+      "current_behavior": "Requires exact old whole-ledger length and SHA plus historical prefix SHA.",
+      "required_behavior": "Verify immutable historical prefix by pinned length and prefix SHA; accept valid append-only suffix after validating each complete lifecycle event and preserve old inventory pins.",
+      "reason": "Retirement append must not invalidate earlier historical facts.",
+      "risk": "A changed prefix or malformed suffix being accepted.",
+      "tests_required": ["append accepted", "prefix mutation/truncation/malformed suffix rejected"]
+    },
+    {
+      "path": "scripts/authorization_lifecycle.py",
+      "function_or_area": "retire_unconsumed_authorization",
+      "current_behavior": "Already avoids current runner comparison; validates contract, pinned determination, manifest state, no transaction/attempt/reservation/namespace, then append/fsync under shared lock.",
+      "required_behavior": "No broad change recommended. Add or require explicit proof that manifest hash and its historical runner freeze path/hash/revision are valid; preserve current no-side-effect checks and terminal event. Make retries after uncertain partial append fail closed for manual reconciliation, not auto-append.",
+      "reason": "Retirement should prove original issuance, not current execution version.",
+      "risk": "Insufficient historical issuance authentication or ambiguous crash state.",
+      "tests_required": ["retire after current runner changes", "historical freeze mismatch rejected", "duplicate/concurrent retirement serialized", "partial write manual reconciliation"]
+    },
+    {
+      "path": "scripts/run_step9_35a_matched_treatment.py and scripts/v3_execution_transaction.py",
+      "function_or_area": "parent run and transaction claim/commit",
+      "current_behavior": "Parent requires committed transaction and explicit execution root; transaction binds auth/attempt/namespace/runner/Agent/evaluation/case set and burns authorization at durable commit.",
+      "required_behavior": "No semantic change. Ensure r9 path preserves exact existing transaction-resolved namespace authority and lock/collision/exactly-once contracts.",
+      "reason": "Avoid parallel namespace authority or weakened commit semantics.",
+      "risk": "Identity split or replay if changed.",
+      "tests_required": ["wrong derived namespace rejected", "wrong attempt/auth/preflight rejected", "durable commit cannot rerun"]
+    }
+  ],
+  "required_invariants": {
+    "old_authorization_consumption_count": 0,
+    "retirement_is_consumption": false,
+    "old_authorization_manifest_immutable": true,
+    "r8_freeze_immutable": true,
+    "v3_agent_immutable": true,
+    "v4_immutable": true,
+    "evaluation_semantics_unchanged": true,
+    "exactly_once_preserved": true,
+    "append_only_preserved": true,
+    "r8_authorization_migrates_to_r9": false,
+    "fresh_r9_authorization_requires_separate_later_issuance": true,
+    "freeze_creation_alone_executes_cases": false,
+    "unknown_provenance_r5_artifact_usable": false
+  },
+  "not_implemented": true,
+  "production_code_modified": false,
+  "tests_executed": false,
+  "authorization_retired": false,
+  "r9_freeze_created": false,
+  "new_authorization_issued": false
+}

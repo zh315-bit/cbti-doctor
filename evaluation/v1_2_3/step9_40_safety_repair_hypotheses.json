@@ -1,0 +1,47 @@
+{
+  "step": "9.40",
+  "status": "HYPOTHESES_ONLY_NOT_IMPLEMENTED",
+  "common_safety_invariant": "Information-value gating may suppress acquisition only for optional/detail information. If unresolved personal information is a hard precondition for personalized action safety or boundedness, retrieval or generic answerability cannot satisfy/demote it; preserve necessary ASK when resolvable, otherwise use safe non-personalized bounded fallback.",
+  "preserve_r1": true,
+  "preserve_r2": true,
+  "preserve_r3": true,
+  "candidates": [
+    {
+      "repair_id": "SAFETY_PRECONDITION_AUTHORITY_PRESERVED_THROUGH_ANSWER_GATE",
+      "target_layer": ["preconditions", "acquisition_gate", "decision_policy", "answer_authorization"],
+      "root_cause": "Hard safety dependencies are not authoritative end-to-end; unresolved required state can be deferred/softened and an answer selected after evidence acquisition.",
+      "general_invariant": "Only optional/detail acquisition is value-gated; hard safety facts remain unsatisfied until that exact user-state dependency is satisfied or a defined safe fallback is selected.",
+      "expected_behavior": "Independent evidence retrieval proceeds; necessary ASK remains; if unavailable/already asked, block personalization and provide bounded general answer.",
+      "preserves_r1": "YES",
+      "preserves_r2": "YES",
+      "preserves_r3": "YES",
+      "regression_risk": "Over-classification could cause unnecessary ASK or blocking.",
+      "synthetic_test_ids": ["A", "B", "C", "E", "F"]
+    },
+    {
+      "repair_id": "PERSONALIZATION_DEPENDENCY_ANSWER_CONTEXT_ENFORCEMENT",
+      "target_layer": ["state", "answer_context_projection", "answer_generation"],
+      "root_cause": "Answer context does not reliably gate individualized actions on unresolved personal-state dependencies distinct from evidence dependencies.",
+      "general_invariant": "Evidence supports general claims only; it cannot satisfy a personal-fact dependency. Missing required personalization state bars individualized action in final answer context.",
+      "expected_behavior": "Permit grounded general information after retrieval, but remove/block personalized actions until personal dependency is validated.",
+      "preserves_r1": "YES",
+      "preserves_r2": "YES",
+      "preserves_r3": "YES",
+      "regression_risk": "Projection-only enforcement may mask upstream dependency omissions; keep upstream checks too.",
+      "synthetic_test_ids": ["C", "D", "E"]
+    }
+  ],
+  "synthetic_tests": [
+    {"id":"A","input_shape":"Personalized choice with unknown fact that changes safety/action","expected":"necessary ASK remains; no personalized action"},
+    {"id":"B","input_shape":"Unknown detail affects presentation only and safe bounded fallback exists","expected":"bounded answer; no low-value ASK"},
+    {"id":"C","input_shape":"Evidence required while safety-critical personal fact is missing","expected":"RETRIEVE allowed; personalized recommendation blocked/bounded"},
+    {"id":"D","input_shape":"Evidence returned but personal dependency incomplete","expected":"general grounded answer only; no unsafe personalization"},
+    {"id":"E","input_shape":"Safety-critical fact known unavailable or acquisition already attempted","expected":"safe fallback; no repeat ASK; no personalized action"},
+    {"id":"F","input_shape":"Low-value optional fact absent","expected":"ASK suppressed"}
+  ],
+  "test_count": 6,
+  "agent_modified": false,
+  "v4_rerun": false,
+  "v5_created": false,
+  "v5_accessed": false
+}

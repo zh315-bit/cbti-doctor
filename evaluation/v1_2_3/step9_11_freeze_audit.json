@@ -1,0 +1,13 @@
+{
+  "step": "9.11",
+  "evaluation_id": "clean-evaluation-v1_2_3-20260922-01",
+  "validation_method": "Read manifest, recompute each file/content digest, recompute sorted domain aggregate hashes, then recompute the four-domain evaluation aggregate. No model, Flask request, or Benchmark case was executed.",
+  "benchmark_v2": {"case_count":40,"expected_sha256":"dfa9b9e5a12b0017fa68d344d01b313ebc29e583b933fbe1e93c125f55ecafd2","observed_sha256":"dfa9b9e5a12b0017fa68d344d01b313ebc29e583b933fbe1e93c125f55ecafd2","hash_match":true},
+  "scoring": {"expected_rubric_sha256":"a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899","observed_rubric_sha256":"a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899","hash_match":true},
+  "reproducibility": {"agent_freeze_reproducible":true,"harness_freeze_reproducible":true,"benchmark_freeze_reproducible":true,"scoring_freeze_reproducible":true,"agent_behavior_aggregate_hash":"ee914db7b8b5538c5607fdff34cff9083f6d069d50cf342964ae91c8a6446927","evaluation_harness_aggregate_hash":"3eaaa44053e57bedeb5e546f46a4f44cd1a293f346e6b1b3501ded2c32fbf125","benchmark_aggregate_hash":"723ab458f5808d7d8ea542e519ddbf19afe59463e0b355700b1b537f942bb4f6","scoring_aggregate_hash":"f742a8f8af7c8747818dadad81621c15d12d74f50538019913dfe18ab53bf59b","evaluation_aggregate_hash":"54239085d05aae8547b16c2344e6dc5d4d09ef7c56d1d61aa86587ae94bcabe6"},
+  "leakage_audit": {"benchmark_v2_is_held_out":false,"case_specific_logic_present":false,"scope":"Production Agent/configuration was searched for V2 IDs, expected-action lookups, benchmark-specific keywords, requirements, prompts and answer rules. No production-path occurrence was found. Case-level reviewer mappings exist in the separately frozen scoring implementation and are not Agent behavior."},
+  "tests": {"focused_unittest_modules":"59 passed, 0 failed","non_external_model_regression":"152 passed, 0 failed","test_model_configuration":"NOT_RUN (excluded; model/environment dependent)"},
+  "historical_chain": {"step9_8_recovery_closed":true,"historical_parent":"STEP9_8_FAILED_EVALUATION","recovery_of_step9_8":false,"original_history_modified":false},
+  "integrity": {"agent_modified":false,"benchmark_modified":false,"scoring_modified":false,"real_model_called":false,"benchmark_v2_executed":false,"benchmark_v3_accessed":false},
+  "ready_for_step9_12":true
+}

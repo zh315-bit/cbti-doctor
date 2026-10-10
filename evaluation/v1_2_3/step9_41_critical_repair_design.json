@@ -1,0 +1,79 @@
+{
+  "step": "9.41",
+  "status": "DESIGN_ONLY",
+  "design_identity": "step9_41_final_answer_authorization_gate_v1",
+  "source": "evaluation/v1_2_3/step9_40_critical_regression_analysis.json",
+  "invariant": "Resource/evidence completion and answer authorization are separate. Only an exact satisfied personal-state dependency can authorize the corresponding individualized scope. Missing optional detail may be ignored; missing safety/validity/execution-critical state cannot be value-gated away.",
+  "answer_authorization": {
+    "output_enum": ["AUTHORIZED_FULL", "AUTHORIZED_BOUNDED", "BLOCKED_NEEDS_INFORMATION", "BLOCKED_UNSAFE_OR_INVALID"],
+    "concept_mapping": {
+      "ANSWER_AUTHORIZED": "AUTHORIZED_FULL",
+      "ANSWER_BOUNDED": "AUTHORIZED_BOUNDED",
+      "ANSWER_BLOCKED": ["BLOCKED_NEEDS_INFORMATION", "BLOCKED_UNSAFE_OR_INVALID"]
+    },
+    "authorized_full": "Every required evidence/resource dependency for the selected answer is satisfied or validly unavailable with an allowed fallback; every material personalization dependency for the proposed individualized action is satisfied by validated, target-matched state; all safety, validity, and execution preconditions are satisfied; no unresolved invalid/conflict state affects the action.",
+    "authorized_bounded": "A safe non-personalized/general scope exists. The answer context explicitly records limitations and excludes any individualized action whose material dependency is unresolved. Optional/detail missing state does not block this scope. Any required evidence limitation is disclosed.",
+    "blocked_needs_information": "No safe bounded answer can fulfill the requested decision without a missing, resolvable material dependency. Route to one necessary acquisition action (ASK/READ_DIARY) if available and not already exhausted; never generate the personalized answer first.",
+    "blocked_unsafe_or_invalid": "A proposed action conflicts with invalid/conflicted state, an unresolved safety/execution hard precondition without a safe fallback, or an explicitly prohibited/invalid resource state. Do not generate the unsafe answer; emit a safe refusal/limitation or stop according to product contract.",
+    "gate_position": "After state update, resource/tool projection, evidence availability, and dependency re-evaluation; before personalized answer-context finalization and answer generation.",
+    "inputs": ["goal", "task_type", "effective_requirements", "dependency states and exact targets", "personalization requirements/materiality", "safety and execution preconditions", "resource/evidence status and provenance", "answer_scope", "candidate final action", "prior acquisition attempts/unavailability"],
+    "determinism": "Same normalized state, requirements, provenance, candidate scope, and policy version yield the same authorization enum and required next action; no benchmark ID or case text lookup."
+  },
+  "personalization_dependency_definition": "A typed dependency on a user-specific fact/state whose plausible values materially change the correctness, safety, allowed scope, or execution of an individualized recommendation. It is created only when task semantics/requirements identify that material effect and no safe bounded answer covers the requested individualized action. It is not synonymous with every USER_FACTS field.",
+  "generic_examples": [
+    "A user-specific schedule parameter needed to choose between two materially different plans is unresolved: decision dependency, potentially blocking.",
+    "A preferred display format is unknown but does not change the recommendation: optional detail, not blocking.",
+    "Evidence retrieval is required for a general explanation while an unrelated preference is unknown: retrieve independently, do not ask first."
+  ],
+  "missing_state_semantics": {
+    "ASSERTED": "Satisfies only an exact matching dependency when explicit user provenance, validity, scope, and freshness requirements pass.",
+    "DERIVED": "Satisfies only when the dependency permits derivation and every source input and derivation provenance is valid; otherwise not satisfied.",
+    "RETRIEVED": "By default satisfies only the matching evidence/resource dependency. A user-specific dependency may be satisfied only when its contract explicitly accepts that typed source (for example, validated user-linked records), exact target/provenance checks pass, and privacy/authorization checks pass. Generic external evidence never satisfies personal state.",
+    "UNKNOWN": "Not satisfied. Nonblocking only for optional/detail state or when choosing an explicitly safe bounded non-personalized scope.",
+    "UNAVAILABLE": "Not satisfied. Do not retry/ASK-loop after known exhaustion; select safe bounded fallback if valid, else BLOCKED_UNSAFE_OR_INVALID.",
+    "NOT_APPLICABLE": "Satisfies only if the dependency contract explicitly allows NOT_APPLICABLE and the state is validated for this goal/scope.",
+    "INVALID": "Never satisfies. Block affected individualized scope; resolve conflict/invalidity or use a safe unaffected fallback.",
+    "DEFERRED": "Not satisfied. It may remain nonblocking for optional/detail state or for a bounded scope that excludes the dependent action; it cannot authorize individualized use."
+  },
+  "transition_semantics": {
+    "FULL_TO_BOUNDED": "A required personalization dependency becomes UNKNOWN, DEFERRED, or UNAVAILABLE, but a safe general answer scope exists. Narrow answer_scope, expose limitation, exclude dependent individualized action, then return AUTHORIZED_BOUNDED.",
+    "ANSWER_TO_ASK": "A material dependency is unresolved, a safe bounded response cannot satisfy the requested decision, and a valid acquisition route remains. Return BLOCKED_NEEDS_INFORMATION and route one ASK/READ_DIARY; preserve prior attempts to prevent loops.",
+    "TO_BLOCKED_UNSAFE_OR_INVALID": "No safe bounded scope and no valid acquisition/fallback exists, or relevant state is INVALID/conflicted/prohibited. Do not generate an answer that appears to authorize the action."
+  },
+  "precedence": [
+    "Resolve and preserve exact typed dependency state and provenance.",
+    "Information-value gate may remove only optional/detail acquisition candidates; it cannot change a hard dependency's class/status or authorize a dependent answer.",
+    "Independent required resource/evidence acquisition remains eligible regardless of unrelated missing personal facts (R1).",
+    "After each acquisition result, update only its matching dependency and re-evaluate all dependencies.",
+    "Immediately before any ANSWER generation, final authorization evaluates proposed answer scope and dependent action.",
+    "If full scope fails but bounded scope passes, generate only bounded context; otherwise route acquisition or block."
+  ],
+  "repair_placement": [
+    {"file":"adaptive_agent/dependency_resolver.py","function_or_class":"DependencyResolver.resolve; validity_critical_fields","why_needed":"Canonical typed personal-state dependency/materiality and target-specific status must exist for final authorization; avoid blanket hard requirements.","repair_responsibility":"Represent personalization dependency separately from generic USER_FACTS; retain class, materiality basis, target, exact satisfiers, fallback, and source provenance. Preserve independent EVIDENCE/RESOURCE dependency formation."},
+    {"file":"adaptive_agent/preconditions.py","function_or_class":"evaluate_preconditions","why_needed":"Current code selects evidence before some validity checks and records soft validity as awaiting information-value gate; the hard/soft distinction must remain explicit and non-demotable where safety/execution critical.","repair_responsibility":"Create acquisition candidates for material resolvable dependencies without making every personal fact hard; ensure accepted safety-critical ASK/READ_DIARY and required retrieval remain independently actionable; persist unresolved hard gate state."},
+    {"file":"adaptive_agent/runner.py","function_or_class":"AdaptiveAgentLoop.run_turn; _refresh","why_needed":"The loop owns tool projection, state re-evaluation, the ANSWER dispatch, and the exact point before generation; this is the narrow authoritative gate location.","repair_responsibility":"After refresh and immediately before answer generation, evaluate final answer authorization. On BLOCKED_NEEDS_INFORMATION route a single valid acquisition action; on AUTHORIZED_BOUNDED pass narrowed scope; on BLOCKED_UNSAFE_OR_INVALID do not call the personalized generator. Record the enum and reasons in trace."},
+    {"file":"adaptive_agent/answer_generation.py","function_or_class":"build_answer_context; LLMAnswerGenerator.answer","why_needed":"The context builder is the State→Answer boundary; a runner decision alone should not let unresolved personal data enter as implied known facts or retain forbidden individualized scope.","repair_responsibility":"Accept/consume the authorization result, constrain answer_scope and context to authorized scope, preserve missing/status/provenance, and make unauthorized full generation fail closed. Do not infer personal facts from evidence."}
+  ],
+  "preservation_proofs_by_design": {
+    "R1": "The final authorization gate is not consulted before resource actions. Resolver/preconditions continue to emit and execute required retrieval when unrelated USER_FACTS are incomplete. Retrieval satisfies only its typed dependency; after retrieval, answer authorization independently checks personalization.",
+    "R2": "Personalization classification requires material effect on safety, validity, individualized scope, or execution and absence of a safe bounded scope. Detail/preferences remain optional; the information-value gate can still suppress their ASK candidates.",
+    "R3": "All canonical statuses remain explicit with provenance; UNKNOWN, DEFERRED, and UNAVAILABLE never become SATISFIED by omission or evidence presence. Exact matching validated ASSERTED/DERIVED or contract-permitted RETRIEVED state alone may satisfy its dependency."
+  },
+  "mandatory_future_regression_gates": [
+    "all Step 9.33/9.33a tests pass",
+    "all Step 9.41 synthetic safety tests pass",
+    "necessary ASK preservation passes",
+    "low-value ASK suppression remains valid",
+    "resource dependency acquisition remains valid independent of unrelated missing personal facts",
+    "no fabricated personalization",
+    "no infinite ASK/retrieve loops"
+  ],
+  "future_treatment_v2_freeze": "After implementation and full regression only, create a new treatment-v2 identity and freeze. Preserve baseline freeze, treatment-v1 freeze, and Step 9.39 results unchanged; treatment-v1 remains historical evidence.",
+  "future_evaluation_stages": {
+    "v4": "A separately authorized V4 regression-only confirmation may test repair of known critical regressions. V4 remains development/regression evidence, not unseen evaluation. Reuse is not automatic and requires a new protocol/authorization decision.",
+    "v5": "Only after successful repair/regression/freeze and a separate authorization, create/access a sealed unseen V5 for new generalization claims. V5 is not part of this design step."
+  },
+  "claim_gate": "RESUME_DESCRIPTIVE_MATCHED_COMPARATIVE_CLAIM_ELIGIBLE remains NO until a future treatment-v2 evaluation has critical failures no greater than baseline AND previous primary gains are not materially destroyed; existing claim policy is unchanged.",
+  "boundaries": {"agent_modified":false,"v4_rerun":false,"v5_created":false,"v5_accessed":false,"claim_policy_modified":false,"benchmark_rubric_metrics_adjudication_modified":false},
+  "ready_for_step9_42_critical_repair_implementation": true
+}

@@ -1,0 +1,28 @@
+{
+  "step": "9.63c-r5c10f",
+  "timestamp_utc": "2026-10-08T19:40:31Z",
+  "status": "PASS_READ_ONLY_DESIGN_WITH_SCOPE_CONFLICT",
+  "root_cause_confirmed": true,
+  "r11_construction_supported_currently": false,
+  "historical_r10_freeze_path": "evaluation/v1_2_3/step9_63c_r5c5b_runner_freeze_r10.json",
+  "historical_r10_freeze_sha256": "d24244235e51e7bf6c8567880c654fe3fd73b87fa1bfe1ab0f10dfdc94db2693",
+  "historical_r10_freeze_preserved": true,
+  "r10_member_count": 20,
+  "current_r10_member_deltas": [{"path": "scripts/v3_execution_transaction.py", "r10_sha256": "f1a253730953abf51307f4e9404bf59d7856c15d2367b7a62d6809dbb64b2797", "current_sha256": "f0e74a49d152053b5455951c507edb8f7849a9e4708835711e5975a82e690e91"}],
+  "r11_formal_freeze_exists": false,
+  "evidence": [
+    {"path": "scripts/build_step9_63c_r5c4_runner_freeze.py", "lines": "12-37, 138-175, 176-226", "finding": "The sole Step 9.63c builder has an r10 output constant, r9 parent constant, r10 status metadata, fixed 20-member inventory, raw-file SHA, sorted path/hash aggregate, and exclusive/fsync persistence."},
+    {"path": "scripts/v3_runner_identity.py", "lines": "11, 26-71", "finding": "The identity resolver has one hardcoded pointer path; it binds pointer revision/path and pointer SHA to the manifest, then verifies each member and aggregate."},
+    {"path": "evaluation/v1_2_3/step9_63c_r5c4_current_runner_identity.json", "lines": "1-9", "finding": "The frozen current pointer names r10, not r11."},
+    {"path": "scripts/run_step9_53_v3_identity_adapter.py", "lines": "23-27, 286-314, 390-405, 649-685", "finding": "Import-time current identity and authorization validator bind revision, freeze-file SHA and critical member hashes before delegation."},
+    {"path": "scripts/run_step9_63_v3_formal_execution.py", "lines": "46-103, 155-199", "finding": "Formal entry binds current freeze SHA, authorization, exact preflight path/ID/SHA and safety evidence before adapter execution."},
+    {"path": "scripts/preflight_step9_63c_current_mac_local.py", "lines": "30-83, 86-143", "finding": "Preflight producer resolves current freeze and binds authorization revision/path/SHA into the produced evidence."},
+    {"path": "scripts/authorization_lifecycle.py", "lines": "276-315, 354-470", "finding": "Current executable authorization enumeration is revision-gated; non-consuming retirement is a separate predicate-checked append-only operation."}
+  ],
+  "hard_constraint_conflict": "Keeping exactly 20 r11 members is feasible, but with the current resolver an executable r11 cannot both preserve the r10 pointer/builder bytes and change only the scanner member. A safe versioned bootstrap requires separately approved infrastructure-member path/content changes.",
+  "design_implementation_permission": false,
+  "new_freeze_created": false,
+  "new_authorization_issued": false,
+  "authorization_consumed_by_this_step": false,
+  "formal_v4_cases_executed_by_this_step": 0
+}

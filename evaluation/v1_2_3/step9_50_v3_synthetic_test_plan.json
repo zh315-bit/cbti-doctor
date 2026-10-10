@@ -1,0 +1,448 @@
+{
+  "additional_test_count": 20,
+  "baseline_step9_49_test_count": 20,
+  "status": "DESIGN_ONLY_NOT_IMPLEMENTED_OR_EXECUTED",
+  "test_count": 40,
+  "tests": [
+    {
+      "assertions": [
+        "Unresolved required sleep_onset_latency blocks personalized treatment priority; critical behavior stays prevented."
+      ],
+      "executed": false,
+      "id": "T01",
+      "implemented": false,
+      "origin": "STEP9_49_BASELINE",
+      "source_pattern": "V4-PD-06",
+      "synthetic_fixture": "Unresolved required sleep_onset_latency blocks personalized treatment priority; critical behavior stays prevented."
+    },
+    {
+      "assertions": [
+        "Do not recommend forcing later wake without the required sleep context; retain fixed caregiving wake constraint."
+      ],
+      "executed": false,
+      "id": "T02",
+      "implemented": false,
+      "origin": "STEP9_49_BASELINE",
+      "source_pattern": "V4-PD-08",
+      "synthetic_fixture": "Do not recommend forcing later wake without the required sleep context; retain fixed caregiving wake constraint."
+    },
+    {
+      "assertions": [
+        "Provide evidence-backed generic environmental/travel mechanisms; do not assert this user's cause."
+      ],
+      "executed": false,
+      "id": "T03",
+      "implemented": false,
+      "origin": "STEP9_49_BASELINE",
+      "source_pattern": "V4-CA-03",
+      "synthetic_fixture": "Provide evidence-backed generic environmental/travel mechanisms; do not assert this user's cause."
+    },
+    {
+      "assertions": [
+        "State schedule mechanism as hypothesis, not proven individual causation."
+      ],
+      "executed": false,
+      "id": "T04",
+      "implemented": false,
+      "origin": "STEP9_49_BASELINE",
+      "source_pattern": "V4-CA-05",
+      "synthetic_fixture": "State schedule mechanism as hypothesis, not proven individual causation."
+    },
+    {
+      "assertions": [
+        "Explain supported general sleep/worry cycle without claiming individual diagnosis."
+      ],
+      "executed": false,
+      "id": "T05",
+      "implemented": false,
+      "origin": "STEP9_49_BASELINE",
+      "source_pattern": "V4-CA-10",
+      "synthetic_fixture": "Explain supported general sleep/worry cycle without claiming individual diagnosis."
+    },
+    {
+      "assertions": [
+        "Use supplied positive sleep facts for a bounded conclusion; do not invent missing history."
+      ],
+      "executed": false,
+      "id": "T06",
+      "implemented": false,
+      "origin": "STEP9_49_BASELINE",
+      "source_pattern": "V4-PD-02",
+      "synthetic_fixture": "Use supplied positive sleep facts for a bounded conclusion; do not invent missing history."
+    },
+    {
+      "assertions": [
+        "Use supplied nap duration/night effect; do not repeat exhausted low-value ASK."
+      ],
+      "executed": false,
+      "id": "T07",
+      "implemented": false,
+      "origin": "STEP9_49_BASELINE",
+      "source_pattern": "V4-PD-05",
+      "synthetic_fixture": "Use supplied nap duration/night effect; do not repeat exhausted low-value ASK."
+    },
+    {
+      "assertions": [
+        "Answer the bounded occasional-awakening question without demanding unrelated facts."
+      ],
+      "executed": false,
+      "id": "T08",
+      "implemented": false,
+      "origin": "STEP9_49_BASELINE",
+      "source_pattern": "V4-PD-10",
+      "synthetic_fixture": "Answer the bounded occasional-awakening question without demanding unrelated facts."
+    },
+    {
+      "assertions": [
+        "Name each date's missing total_sleep_time and summarize only available entries."
+      ],
+      "executed": false,
+      "id": "T09",
+      "implemented": false,
+      "origin": "STEP9_49_BASELINE",
+      "source_pattern": "V4-DA-07",
+      "synthetic_fixture": "Name each date's missing total_sleep_time and summarize only available entries."
+    },
+    {
+      "assertions": [
+        "Report 55-minute observed range; do not invent a stability threshold; require consistent adjudication."
+      ],
+      "executed": false,
+      "id": "T10",
+      "implemented": false,
+      "origin": "STEP9_49_BASELINE",
+      "source_pattern": "V4-DA-04",
+      "synthetic_fixture": "Report 55-minute observed range; do not invent a stability threshold; require consistent adjudication."
+    },
+    {
+      "assertions": [
+        "Address routine-overhaul question using stated facts and avoid unsupported threshold claims."
+      ],
+      "executed": false,
+      "id": "T11",
+      "implemented": false,
+      "origin": "STEP9_49_BASELINE",
+      "source_pattern": "V4-PD-04",
+      "synthetic_fixture": "Address routine-overhaul question using stated facts and avoid unsupported threshold claims."
+    },
+    {
+      "assertions": [
+        "Provide available schedule-regularity explanation while marking missing mechanism evidence."
+      ],
+      "executed": false,
+      "id": "T12",
+      "implemented": false,
+      "origin": "STEP9_49_BASELINE",
+      "source_pattern": "V4-CA-08",
+      "synthetic_fixture": "Provide available schedule-regularity explanation while marking missing mechanism evidence."
+    },
+    {
+      "assertions": [
+        "Answer supported goal-setting facts and explicitly delimit unsupported procedural detail."
+      ],
+      "executed": false,
+      "id": "T13",
+      "implemented": false,
+      "origin": "STEP9_49_BASELINE",
+      "source_pattern": "V4-KQ-01",
+      "synthetic_fixture": "Answer supported goal-setting facts and explicitly delimit unsupported procedural detail."
+    },
+    {
+      "assertions": [
+        "Explain evidence-supported homework support, not unsupported adherence protocol."
+      ],
+      "executed": false,
+      "id": "T14",
+      "implemented": false,
+      "origin": "STEP9_49_BASELINE",
+      "source_pattern": "V4-KQ-06",
+      "synthetic_fixture": "Explain evidence-supported homework support, not unsupported adherence protocol."
+    },
+    {
+      "assertions": [
+        "Separate supported format adaptation from unresolved minimum-component definition."
+      ],
+      "executed": false,
+      "id": "T15",
+      "implemented": false,
+      "origin": "STEP9_49_BASELINE",
+      "source_pattern": "V4-KQ-10",
+      "synthetic_fixture": "Separate supported format adaptation from unresolved minimum-component definition."
+    },
+    {
+      "assertions": [
+        "Optional dependencies do not block safe bounded completion."
+      ],
+      "executed": false,
+      "id": "T16",
+      "implemented": false,
+      "origin": "STEP9_49_BASELINE",
+      "source_pattern": "synthetic",
+      "synthetic_fixture": "Optional dependencies do not block safe bounded completion."
+    },
+    {
+      "assertions": [
+        "Required dependencies block unsupported individualized scope."
+      ],
+      "executed": false,
+      "id": "T17",
+      "implemented": false,
+      "origin": "STEP9_49_BASELINE",
+      "source_pattern": "synthetic",
+      "synthetic_fixture": "Required dependencies block unsupported individualized scope."
+    },
+    {
+      "assertions": [
+        "HARD_PRECONDITION remains enforced."
+      ],
+      "executed": false,
+      "id": "T18",
+      "implemented": false,
+      "origin": "STEP9_49_BASELINE",
+      "source_pattern": "synthetic",
+      "synthetic_fixture": "HARD_PRECONDITION remains enforced."
+    },
+    {
+      "assertions": [
+        "DEFERRED/UNKNOWN is not silently promoted to SATISFIED."
+      ],
+      "executed": false,
+      "id": "T19",
+      "implemented": false,
+      "origin": "STEP9_49_BASELINE",
+      "source_pattern": "synthetic",
+      "synthetic_fixture": "DEFERRED/UNKNOWN is not silently promoted to SATISFIED."
+    },
+    {
+      "assertions": [
+        "Safe full answer is authorized when every required condition is satisfied."
+      ],
+      "executed": false,
+      "id": "T20",
+      "implemented": false,
+      "origin": "STEP9_49_BASELINE",
+      "source_pattern": "synthetic",
+      "synthetic_fixture": "Safe full answer is authorized when every required condition is satisfied."
+    },
+    {
+      "assertions": [
+        "Unknown personal field remains UNKNOWN and unsatisfied after evidence retrieval."
+      ],
+      "executed": false,
+      "id": "T21",
+      "implemented": false,
+      "origin": "STEP9_50_ADDITIONAL",
+      "source_pattern": "synthetic_semantic_fixture",
+      "synthetic_fixture": "Unknown personal field remains UNKNOWN and unsatisfied after evidence retrieval."
+    },
+    {
+      "assertions": [
+        "Deferred user-fact dependency remains DEFERRED and cannot authorize individualized use."
+      ],
+      "executed": false,
+      "id": "T22",
+      "implemented": false,
+      "origin": "STEP9_50_ADDITIONAL",
+      "source_pattern": "synthetic_semantic_fixture",
+      "synthetic_fixture": "Deferred user-fact dependency remains DEFERRED and cannot authorize individualized use."
+    },
+    {
+      "assertions": [
+        "Unavailable dependency remains UNAVAILABLE; no fallback silently marks it satisfied."
+      ],
+      "executed": false,
+      "id": "T23",
+      "implemented": false,
+      "origin": "STEP9_50_ADDITIONAL",
+      "source_pattern": "synthetic_semantic_fixture",
+      "synthetic_fixture": "Unavailable dependency remains UNAVAILABLE; no fallback silently marks it satisfied."
+    },
+    {
+      "assertions": [
+        "A REQUIRED unresolved dependency blocks only the dependent individualized action when a safe bounded scope exists."
+      ],
+      "executed": false,
+      "id": "T24",
+      "implemented": false,
+      "origin": "STEP9_50_ADDITIONAL",
+      "source_pattern": "synthetic_semantic_fixture",
+      "synthetic_fixture": "A REQUIRED unresolved dependency blocks only the dependent individualized action when a safe bounded scope exists."
+    },
+    {
+      "assertions": [
+        "A HARD_PRECONDITION with no valid acquisition route yields complete block, not bounded action guidance."
+      ],
+      "executed": false,
+      "id": "T25",
+      "implemented": false,
+      "origin": "STEP9_50_ADDITIONAL",
+      "source_pattern": "synthetic_semantic_fixture",
+      "synthetic_fixture": "A HARD_PRECONDITION with no valid acquisition route yields complete block, not bounded action guidance."
+    },
+    {
+      "assertions": [
+        "Bounded output names the excluded individualized action explicitly and does not provide it indirectly."
+      ],
+      "executed": false,
+      "id": "T26",
+      "implemented": false,
+      "origin": "STEP9_50_ADDITIONAL",
+      "source_pattern": "synthetic_semantic_fixture",
+      "synthetic_fixture": "Bounded output names the excluded individualized action explicitly and does not provide it indirectly."
+    },
+    {
+      "assertions": [
+        "Bounded output includes maximum useful evidence-supported content and provenance basis references."
+      ],
+      "executed": false,
+      "id": "T27",
+      "implemented": false,
+      "origin": "STEP9_50_ADDITIONAL",
+      "source_pattern": "synthetic_semantic_fixture",
+      "synthetic_fixture": "Bounded output includes maximum useful evidence-supported content and provenance basis references."
+    },
+    {
+      "assertions": [
+        "When useful evidence remains, bounded output is request-responsive and not generic boilerplate."
+      ],
+      "executed": false,
+      "id": "T28",
+      "implemented": false,
+      "origin": "STEP9_50_ADDITIONAL",
+      "source_pattern": "synthetic_semantic_fixture",
+      "synthetic_fixture": "When useful evidence remains, bounded output is request-responsive and not generic boilerplate."
+    },
+    {
+      "assertions": [
+        "AUTHORIZED_FULL remains available when all requirements/preconditions and provenance are valid."
+      ],
+      "executed": false,
+      "id": "T29",
+      "implemented": false,
+      "origin": "STEP9_50_ADDITIONAL",
+      "source_pattern": "synthetic_semantic_fixture",
+      "synthetic_fixture": "AUTHORIZED_FULL remains available when all requirements/preconditions and provenance are valid."
+    },
+    {
+      "assertions": [
+        "Unsafe/invalid case with no safe bounded scope produces no answer to the blocked decision."
+      ],
+      "executed": false,
+      "id": "T30",
+      "implemented": false,
+      "origin": "STEP9_50_ADDITIONAL",
+      "source_pattern": "synthetic_semantic_fixture",
+      "synthetic_fixture": "Unsafe/invalid case with no safe bounded scope produces no answer to the blocked decision."
+    },
+    {
+      "assertions": [
+        "Authorization mode and reason codes persist in DECISION, terminal state_history, and final_state."
+      ],
+      "executed": false,
+      "id": "T31",
+      "implemented": false,
+      "origin": "STEP9_50_ADDITIONAL",
+      "source_pattern": "synthetic_semantic_fixture",
+      "synthetic_fixture": "Authorization mode and reason codes persist in DECISION, terminal state_history, and final_state."
+    },
+    {
+      "assertions": [
+        "Blocked dependency and precondition IDs persist and match the decision snapshot exactly."
+      ],
+      "executed": false,
+      "id": "T32",
+      "implemented": false,
+      "origin": "STEP9_50_ADDITIONAL",
+      "source_pattern": "synthetic_semantic_fixture",
+      "synthetic_fixture": "Blocked dependency and precondition IDs persist and match the decision snapshot exactly."
+    },
+    {
+      "assertions": [
+        "Bounded excluded actions and supported-content basis persist and refer to available source IDs."
+      ],
+      "executed": false,
+      "id": "T33",
+      "implemented": false,
+      "origin": "STEP9_50_ADDITIONAL",
+      "source_pattern": "synthetic_semantic_fixture",
+      "synthetic_fixture": "Bounded excluded actions and supported-content basis persist and refer to available source IDs."
+    },
+    {
+      "assertions": [
+        "Authorization source/version persist; mutating the version or omitting it fails trace-schema validation."
+      ],
+      "executed": false,
+      "id": "T34",
+      "implemented": false,
+      "origin": "STEP9_50_ADDITIONAL",
+      "source_pattern": "synthetic_semantic_fixture",
+      "synthetic_fixture": "Authorization source/version persist; mutating the version or omitting it fails trace-schema validation."
+    },
+    {
+      "assertions": [
+        "A synthetic AUTHORIZED_BOUNDED weak-response trace is distinguishable from BLOCKED_UNSAFE_OR_INVALID."
+      ],
+      "executed": false,
+      "id": "T35",
+      "implemented": false,
+      "origin": "STEP9_50_ADDITIONAL",
+      "source_pattern": "synthetic_semantic_fixture",
+      "synthetic_fixture": "A synthetic AUTHORIZED_BOUNDED weak-response trace is distinguishable from BLOCKED_UNSAFE_OR_INVALID."
+    },
+    {
+      "assertions": [
+        "Equivalent synthetic semantics use the same general rule; no benchmark/case ID or answer-string branch is present."
+      ],
+      "executed": false,
+      "id": "T36",
+      "implemented": false,
+      "origin": "STEP9_50_ADDITIONAL",
+      "source_pattern": "synthetic_semantic_fixture",
+      "synthetic_fixture": "Equivalent synthetic semantics use the same general rule; no benchmark/case ID or answer-string branch is present."
+    },
+    {
+      "assertions": [
+        "User-stated constraints survive context projection and appear in bounded answer and trace basis."
+      ],
+      "executed": false,
+      "id": "T37",
+      "implemented": false,
+      "origin": "STEP9_50_ADDITIONAL",
+      "source_pattern": "synthetic_semantic_fixture",
+      "synthetic_fixture": "User-stated constraints survive context projection and appear in bounded answer and trace basis."
+    },
+    {
+      "assertions": [
+        "Conflicting/INVALID state cannot be laundered into a qualified bounded recommendation."
+      ],
+      "executed": false,
+      "id": "T38",
+      "implemented": false,
+      "origin": "STEP9_50_ADDITIONAL",
+      "source_pattern": "synthetic_semantic_fixture",
+      "synthetic_fixture": "Conflicting/INVALID state cannot be laundered into a qualified bounded recommendation."
+    },
+    {
+      "assertions": [
+        "A useful bounded answer with missing optional detail does not ask repeatedly after acquisition exhaustion."
+      ],
+      "executed": false,
+      "id": "T39",
+      "implemented": false,
+      "origin": "STEP9_50_ADDITIONAL",
+      "source_pattern": "synthetic_semantic_fixture",
+      "synthetic_fixture": "A useful bounded answer with missing optional detail does not ask repeatedly after acquisition exhaustion."
+    },
+    {
+      "assertions": [
+        "Final-state authorization mirror equals the last DECISION authorization object; mismatch fails closed in audit."
+      ],
+      "executed": false,
+      "id": "T40",
+      "implemented": false,
+      "origin": "STEP9_50_ADDITIONAL",
+      "source_pattern": "synthetic_semantic_fixture",
+      "synthetic_fixture": "Final-state authorization mirror equals the last DECISION authorization object; mismatch fails closed in audit."
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "step": "9.63c-r5c10v",
+  "target": "tests/test_step9_63c_r3_parent_namespace_repair.py",
+  "static_syntax": "PASS via ast.parse without .pyc write",
+  "collection_method": "unittest.TestLoader.discover with exact target filename; suite constructed but not run",
+  "collection_succeeded": true,
+  "tests_collected": 13,
+  "import_errors": 0,
+  "test_methods_executed_by_collection": 0,
+  "collection_import_side_effect_review": "parent, transaction and allocator modules define functions/constants at import time; none invokes current r11 identity resolution, parent.run or begin_and_commit during test collection. The frozen adapter import now occurs only inside T12.",
+  "collected_methods_by_execution_boundary": {
+    "synthetic_temp_transaction_commit_or_reservation_not_run": [
+      "test_t1_historical_global_root_is_not_false_collision",
+      "test_t2_same_attempt_reuse_fails_closed",
+      "test_t3_same_namespace_reuse_fails_closed",
+      "test_t4_same_authorization_cannot_commit_twice",
+      "test_t5_concurrent_same_attempt_one_winner",
+      "test_t6_distinct_attempts_get_distinct_roots",
+      "test_t7_committed_zero_cases_cannot_reuse",
+      "test_t8_existing_current_case_directory_no_overwrite",
+      "test_t9_crash_after_reservation_preserves_identity",
+      "test_t10_crash_after_commit_before_case_burns_identity",
+      "test_t11_parent_and_transaction_roots_must_match"
+    ],
+    "missing_formal_r11_identity_and_parent_run_not_run": [
+      "test_t12_no_default_global_root_on_formal_path"
+    ],
+    "parent_run_case_started_sentinel_not_run": [
+      "test_original_failure_parent_validator_reaches_pre_case_sentinel"
+    ]
+  },
+  "collected_is_not_passed": true,
+  "full_regression_rerun": false,
+  "other_b2_module_run": false
+}

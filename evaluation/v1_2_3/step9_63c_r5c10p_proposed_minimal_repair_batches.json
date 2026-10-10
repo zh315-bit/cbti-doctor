@@ -1,0 +1,99 @@
+{
+  "step": "9.63c-r5c10p",
+  "status": "PROPOSAL_ONLY_NO_IMPLEMENTATION_APPROVAL",
+  "batch_count": 6,
+  "common_stop_conditions": [
+    "Any protected historical trace or authorization/ledger byte change",
+    "Any r10 frozen-member change without separate approval",
+    "Any production identity, lifecycle, Registry, Consumer Provenance Guard or one-shot relaxation",
+    "Any new failure or test write outside a synthetic temporary root"
+  ],
+  "batches": [
+    {
+      "id": "B1",
+      "cluster": "C1",
+      "order": 2,
+      "candidate_files": ["tests/test_step9_35a_treatment_runner.py"],
+      "purpose": "Separate synthetic positive/targeted-negative lifecycle fixture from real current authorization state; retain explicit lifecycle rejection tests.",
+      "frozen_member_change": false,
+      "production_semantics_change": false,
+      "repair_confidence": "SUSPECTED_TEST_ONLY_NOT_VALIDATED",
+      "required_targeted_tests": ["all tests in tests/test_step9_35a_treatment_runner.py", "explicit absent/retired/consumed synthetic authorization negatives", "existing 78-test r11 infrastructure/transaction/Registry group"],
+      "evidence_protection": "Temporary synthetic ledger and output root only; compare historical trace, r10 member and real lifecycle ledger hashes before/after.",
+      "stop_condition": "Fixture must not assert a real authorization is executable or bypass assert_executable_authorization.",
+      "separate_human_approval_required": true
+    },
+    {
+      "id": "B2",
+      "cluster": "C2",
+      "order": 1,
+      "candidate_test_files": ["tests/test_step9_53_v3_identity_adapter.py", "tests/test_step9_55a_namespace_lifecycle.py", "tests/test_step9_58a_r1_namespace_allocator.py", "tests/test_step9_59a_auth_identity_binding.py", "tests/test_step9_63a_r1_production_integration.py", "tests/test_step9_63a_r2_retirement_eligibility.py", "tests/test_step9_63a_r3_authorization_issuance.py", "tests/test_step9_63b_mac_local_preflight.py", "tests/test_step9_63c_r3_parent_namespace_repair.py", "tests/test_step9_63c_r5_mac_local_preflight.py", "tests/test_step9_63c_r5b_preflight_lifecycle.py", "tests/test_step9_63c_r5c7b_diagnostics.py"],
+      "conditionally_blocked_frozen_file": "scripts/run_step9_53_v3_identity_adapter.py",
+      "purpose": "Prove whether pre-import historical fixture isolation can collect all 12 modules without fabricating a formal r11 pointer. If not, stop and seek a separate frozen-member/identity-contract design approval.",
+      "frozen_member_change": "NOT_APPROVED; POSSIBLE_ONLY_AFTER_SEPARATE_REVIEW",
+      "production_semantics_change": "NOT_APPROVED",
+      "repair_confidence": "ROOT_CAUSE_CONFIRMED_FIX_ROUTE_UNVERIFIED",
+      "required_targeted_tests": ["all 12 modules actually collected, with method counts and failures reported", "missing/invalid r11 pointer rejection before authorization consumption/transaction/adapter.run", "r10 artifact and authorization replay rejection", "Consumer provenance negative tests"],
+      "evidence_protection": "Only temporary test roots and archived reference bytes; no real identity pointer, authorization file, registry or lifecycle event write.",
+      "stop_condition": "Any need to alter the frozen adapter or official r11 pointer ends this test-only batch; no fallback or fake formal freeze.",
+      "separate_human_approval_required": true
+    },
+    {
+      "id": "B3",
+      "cluster": "C3",
+      "order": 3,
+      "candidate_files": ["tests/test_step9_63c_r5c4_bootstrap_repair.py"],
+      "purpose": "Scope r9 bootstrap assertions to verified archived-r9 fixture semantics while independently preserving strict current r11 resolution.",
+      "frozen_member_change": false,
+      "production_semantics_change": false,
+      "repair_confidence": "SUSPECTED_TEST_ONLY_NOT_VALIDATED",
+      "required_targeted_tests": ["all tests in tests/test_step9_63c_r5c4_bootstrap_repair.py", "r11 missing/mismatched pointer fail-closed tests"],
+      "evidence_protection": "Synthetic temporary r9 fixture only; no write to real pointer, freeze or traces.",
+      "stop_condition": "Current r11 resolver begins accepting an r9/r10 pointer or a historical assertion is removed.",
+      "separate_human_approval_required": true
+    },
+    {
+      "id": "B4",
+      "cluster": "C4",
+      "order": 4,
+      "candidate_files": ["tests/test_step9_63c_r5c7d_import_context.py", "tests/test_step9_63c_r5c7e_preparation.py"],
+      "purpose": "Separate archived r10 import-context proof from live current-r11 executability; establish a faithful archival fixture before changing assertions.",
+      "frozen_member_change": false,
+      "production_semantics_change": false,
+      "repair_confidence": "ARCHIVAL_FIXTURE_FIDELITY_UNVERIFIED",
+      "required_targeted_tests": ["both import-context tests", "r10 preparation snapshot tests", "current missing-r11-pointer rejection"],
+      "evidence_protection": "Archived bytes read-only; synthetic subprocess root; real r10 authorization and trace files unchanged.",
+      "stop_condition": "No trustworthy archival fixture or proposal would falsely claim a currently executable r10 authorization.",
+      "separate_human_approval_required": true
+    },
+    {
+      "id": "B5",
+      "cluster": "C5",
+      "order": 5,
+      "candidate_files": ["tests/test_step9_43a_treatment_identity.py"],
+      "purpose": "Test archived V2 identity using independently pinned historical parent bytes while separately retaining current-parent drift rejection.",
+      "frozen_member_change": false,
+      "production_semantics_change": false,
+      "repair_confidence": "SUSPECTED_TEST_ONLY_IF_ARCHIVED_PARENT_AVAILABLE",
+      "required_targeted_tests": ["all tests in tests/test_step9_43a_treatment_identity.py", "negative current-parent SHA drift check"],
+      "evidence_protection": "No overwrite of V2 freeze, r10 parent runner or historical artifacts.",
+      "stop_condition": "Archived parent bytes cannot be independently verified or production hash gate must be relaxed.",
+      "separate_human_approval_required": true
+    },
+    {
+      "id": "B6",
+      "cluster": "C6",
+      "order": 6,
+      "candidate_test_file": "tests/test_step9_51a_validation_boundary.py",
+      "conditionally_blocked_contract_files": ["scripts/validate_step9_51a_test_boundary.py", "evaluation/v1_2_3/step9_51a_safe_test_manifest.json"],
+      "purpose": "Separate historical pinned inventory at Step 9.51a from current expanded test tree; never silently update the historical allowlist.",
+      "frozen_member_change": false,
+      "production_semantics_change": "NO_FORMAL_EXECUTION_CHANGE; HISTORICAL_TEST_SELECTOR_CONTRACT_REVIEW_REQUIRED",
+      "repair_confidence": "ROOT_CAUSE_CONFIRMED_FIX_BOUNDARY_UNVERIFIED",
+      "required_targeted_tests": ["all tests in tests/test_step9_51a_validation_boundary.py", "negative risky-metadata and unexpected-module rejection"],
+      "evidence_protection": "Historical safe-test manifest remains immutable unless independently approved; no test skipped or removed.",
+      "stop_condition": "Fix requires in-place modification of the historical manifest or weakens fail-closed selector behavior.",
+      "separate_human_approval_required": true
+    }
+  ]
+}

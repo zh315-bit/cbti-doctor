@@ -1,0 +1,96 @@
+--- a/scripts/run_step9_63_v3_formal_execution.py
++++ b/scripts/run_step9_63_v3_formal_execution.py
+@@ -38,6 +38,9 @@
+ LEDGER_PREFIX_LENGTH = 1161
+ LEDGER_PREFIX_SHA256 = "ca168f6939c4697a7a7bccc0b365b414d9a0e632f40de4242eb0a47e2d985285"
+ HISTORICAL_PIN_COUNT = 55
++# Step 9.63c-r5c10ag (D13-4): the ledger must hold exactly one issuance event for the authorization.
++ISSUED_EVENT_TYPE = "AUTHORIZATION_ISSUED"
++ISSUANCE_KEY = "authorization_issuance_event_recorded"
+ ATOMIC_COMMIT_BINDING_FIELDS = (
+     "transaction_id", "authorization_id", "attempt_id", "namespace_id", "runner_sha256",
+     "agent_sha256", "evaluation_identity_sha256", "case_set_sha256",
+@@ -305,8 +308,57 @@
+         rows.append({"authorization_id": aid, "revision": manifest.get("runner_freeze_revision"),
+                      "derived_state": result["derived_state"], "executable": result["executable"]})
+     return rows
++
++
++def verify_issuance_event(root: Path, authorization: dict[str, Any],
++                          authorization_file: Path) -> tuple[bool, str]:
++    """Cross-check the append-only ledger against the manifest on disk.
++
++    Exactly one AUTHORIZATION_ISSUED event must exist for this authorization, no other
++    issuance event may reuse its attempt identity, and the event must agree with the
++    manifest bytes on disk. A missing, duplicated or inconsistent event is a plain
++    False (with a reason); an unreadable ledger raises and is recorded as not executed.
++    """
++    from scripts import authorization_lifecycle as lifecycle
++
++    issued = [event for event in lifecycle._events(root / LIFECYCLE_LEDGER_PATH)
++              if event.get("event_type") == ISSUED_EVENT_TYPE]
++    authorization_id = authorization.get("authorization_id")
++    mine = [event for event in issued if event.get("authorization_id") == authorization_id]
++    if not mine:
++        return False, "no AUTHORIZATION_ISSUED event for this authorization"
++    if len(mine) != 1:
++        return False, f"{len(mine)} AUTHORIZATION_ISSUED events for this authorization"
++    event = mine[0]
++    if any(other is not event and other.get("attempt_id") == authorization.get("attempt_id")
++           for other in issued):
++        return False, "another AUTHORIZATION_ISSUED event reuses this attempt identity"
++    try:
++        manifest_path = authorization_file.resolve().relative_to(root.resolve()).as_posix()
++    except ValueError:
++        return False, "authorization manifest is outside the repository root"
++    expected = {
++        "authorization_id": authorization_id,
++        "attempt_id": authorization.get("attempt_id"),
++        "evaluation_id": authorization.get("evaluation_id"),
++        "authorization_manifest_path": manifest_path,
++        "authorization_manifest_sha256": sha256(authorization_file),
++        "runner_freeze_revision": authorization.get("runner_freeze_revision"),
++        "runner_freeze_sha256": authorization.get("runner_freeze_sha256"),
++        "authorization_consumed": False,
++        "authorization_consumption_count": 0,
++    }
++    differing = sorted(key for key, value in expected.items() if event.get(key) != value)
++    if differing:
++        return False, "issuance event differs from the manifest on disk: " + ", ".join(differing)
++    return True, "ok"
+ 
+ 
++def validate_issuance_cross_check(state: dict[str, Any]) -> list[str]:
++    """Failure list for the issuance cross-check; absent or non-True fails."""
++    return [] if state.get(ISSUANCE_KEY) is True else [ISSUANCE_KEY]
++
++
+ def collect_r11_precommit_state(*, args: argparse.Namespace, authorization: dict[str, Any],
+                                 preflight: dict[str, Any], freeze: dict[str, Any],
+                                 freeze_path: Path, identity: dict[str, str],
+@@ -423,6 +475,13 @@
+     check("provenance_gap_preserved", lambda: state["step9_58_provenance_gap"] == HISTORICAL_GAP)
+     check("fresh_connectivity_pass", lambda: preflight_validated is True and all(
+         preflight.get(key) is True for key in ("dns_ready", "tcp_ready", "tls_ready")))
++
++    def issuance_recorded() -> bool:
++        recorded, detail = verify_issuance_event(root, authorization, args.authorization_file)
++        state["authorization_issuance_event_detail"] = detail
++        return recorded
++
++    check(ISSUANCE_KEY, issuance_recorded)
+     return state
+ 
+ 
+@@ -468,8 +527,9 @@
+     state = collect_r11_precommit_state(
+         args=args, authorization=authorization, preflight=preflight, freeze=freeze,
+         freeze_path=freeze_path, identity=identity, preflight_validated=True)
+-    return {"state": state, "precommit_failures": validate_precommit(state, R11_PRECOMMIT_KEYS),
+-            "supplied": supplied}
++    failures = validate_precommit(state, R11_PRECOMMIT_KEYS)
++    failures += [name for name in validate_issuance_cross_check(state) if name not in failures]
++    return {"state": state, "precommit_failures": failures, "supplied": supplied}
+ 
+ 
+ def execute_formal(args: argparse.Namespace) -> None:

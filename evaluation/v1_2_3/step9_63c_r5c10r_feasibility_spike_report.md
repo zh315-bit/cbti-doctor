@@ -1,0 +1,11 @@
+# Step 9.63c-r5c10r — Minimal collection feasibility spike
+
+Status: `PASS_ONE_FILE_COLLECTION_SPIKE_B2_EXPANSION_REVIEW_ONLY`.
+
+Selected `tests/test_step9_58a_r1_namespace_allocator.py`, a non-frozen test file with 9 methods. Its sole module-scope frozen-adapter import caused the documented r11-pointer import blocker. Eight methods use only `v3_namespace_allocator` with method-local temporary roots; the ninth requires the adapter's current formal identity. The patch relocates the exact adapter import into that ninth method and changes no assertions, production files, identity rules or other tests. The test file was already untracked in Git before this step, so the before/after SHA-256 and exact import relocation, rather than an empty `git diff`, define this step's change.
+
+Collection-only `unittest.TestLoader.discover` found 9 methods with 0 import errors. This did not run the methods. The 8 statically safe allocator-only methods then ran and passed (8/8; 0 failed/errors/skipped). The ninth was deliberately not executed: it requires the missing formal r11 pointer. Three separate negative checks showed `load_identity_config`, `resolve_current_freeze`, and frozen-adapter import all reject the missing pointer with `RuntimeError`. Thus collection compatibility improved without bypassing formal identity validation.
+
+Before/after protection: the r10 manifest, current 20-member hash aggregate, and production Python source aggregate were unchanged. This is **not** a claim that the already-modified r11-candidate working tree matches historical r10. The two historical Trace files retained exact SHA-256, size and mtime; the 110-file protected-directory hash inventory was unchanged. Their original pre-r5c10l content integrity remains `CONTENT_INTEGRITY_UNPROVEN`. No formal r11 pointer/freeze, authorization, consumption, real preflight, attempt, production namespace, transaction, model call or V4 case was created or run.
+
+The [hash/diff audit](step9_63c_r5c10r_exact_one_file_diff_hash_audit.json), [collection result](step9_63c_r5c10r_collection_only_results.json), [safe/negative results](step9_63c_r5c10r_safe_execution_negative_results.json) and [expansion recommendation](step9_63c_r5c10r_b2_expansion_recommendation.md) are separate. Full regression and the remaining 11 B2 modules were not touched. Stop here for human review.

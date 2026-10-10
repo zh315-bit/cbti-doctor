@@ -1,0 +1,128 @@
+{
+  "artifact_type": "STEP9_63C_R5C10B_TRANSACTION_SCANNER_REPAIR_DESIGN_ONLY",
+  "step": "9.63c-r5c10b",
+  "status": "PASS_DESIGN_ONLY_READY_FOR_REPAIR_IMPLEMENTATION",
+  "timestamp_utc": "2026-10-08T19:12:15Z",
+  "root_cause": {
+    "confirmed": true,
+    "class": "A_TRANSACTION_SCANNER_READS_NON_EVENT_BINARY_FILE",
+    "confidence": "HIGH",
+    "source_forensics_path": "evaluation/v1_2_3/step9_63c_r5c10a_post_failure_transaction_forensics.json",
+    "source_forensics_sha256": "0ab8285bb59626e0cbec4afa7d2155c8285d9d389da012ed5614173f5c223f00",
+    "failing_function": "scripts/v3_execution_transaction.py::_find_identity",
+    "failing_enumeration": "transaction_root.glob('*.jsonl') then read_events(path) for every match",
+    "failed_mac_metadata_path": "evaluation/v4_runs/.execution_transactions/._auth-step9_63a_r3-d53bbaa35b1e4522bc4a5f57d42c8ef7.jsonl",
+    "failure_before_prepared": true,
+    "authoritative_commit_point_reached": false
+  },
+  "authoritative_event_file_contract": {
+    "location": "direct regular-file child of evaluation/v4_runs/.execution_transactions",
+    "basename": "<authorization_id>.jsonl",
+    "authorization_id_grammar": "scripts/v3_execution_transaction.py::SAFE_ID, including an alphanumeric first character",
+    "content": "nonempty UTF-8 JSONL event objects accepted by read_events/_validate_events; first event authorization_id must equal the filename stem",
+    "identity": "transaction_id, authorization_id, attempt_id, namespace_id, runner_sha256, agent_sha256, evaluation_identity_sha256, case_set_sha256 remain consistent across events",
+    "commit_authority": "only a valid COMMITTED event after file and parent-directory fsync; metadata file names or extensions never create authority",
+    "noncanonical_unrelated_files": "Files without a .jsonl suffix, including .DS_Store and unrelated binary files, do not participate in journal identity scanning",
+    "canonical_named_binary": "A binary file with a canonical authorization-id .jsonl basename is a suspicious/corrupt journal and must fail closed, not be skipped",
+    "appledouble": "A ._ companion is never a journal because its stem fails SAFE_ID; skip only after verifying regular non-symlink file, AppleDouble magic 00051607, and an existing canonical regular non-symlink companion journal. Otherwise fail closed.",
+    "other_noncanonical_jsonl": "Unknown .jsonl names, symlinks, directories, orphan or malformed sidecars fail closed rather than being silently ignored",
+    "root": "The transaction root must be a real directory, not a symlink or non-directory; all enumeration is direct-child and under the existing transaction lock"
+  },
+  "proposed_minimal_repair": {
+    "primary_change_target": "scripts/v3_execution_transaction.py",
+    "change_kind": "Add one strict journal-path classifier used by _find_identity before read_events; preserve read_events event validation and begin_and_commit append/lock/fsync ordering",
+    "algorithm": [
+      "Under the existing transaction lock, verify transaction_root is a real directory; enumerate direct children deterministically (sorted names).",
+      "Ignore unrelated names without .jsonl suffix; do not parse their bytes.",
+      "For ._*.jsonl, verify non-symlink regular AppleDouble magic and a real canonical companion; skip only that verified sidecar, otherwise fail closed.",
+      "For any other *.jsonl, require non-symlink regular file and exact SAFE_ID stem; unknown or unsafe journal-looking entries fail closed.",
+      "Call the existing read_events for each canonical candidate; reject empty events and require first event authorization_id equals its filename stem; propagate encoding/JSON/sequence/identity corruption as fail-closed.",
+      "Compare the validated event identity against requested authorization_id, attempt_id and namespace_id, preserving existing collision rejection."
+    ],
+    "not_proposed": [
+      "Catch-and-ignore UnicodeDecodeError or JSONDecodeError",
+      "Delete or rename AppleDouble sidecars",
+      "Change PREPARED/COMMITTING/COMMITTED order, commit point, fsync or transaction lock",
+      "Change authorization lifecycle or one-shot policy",
+      "Modify V3 Agent, benchmark, scoring, rubric, metrics or case execution"
+    ],
+    "other_scanners": [
+      {
+        "path": "scripts/preflight_step9_63c_r5c7_mac_local.py::_assert_no_transaction_identity_collision",
+        "finding": "Independent scanner already checks ._ magic and companion before skip, then read_events for other *.jsonl; future repair tests should require parity with the authoritative predicate. This non-frozen producer is not the failing production transaction path."
+      },
+      {
+        "path": "scripts/preflight_step9_63b_mac_local.py",
+        "finding": "Calls _find_identity and would inherit the corrected classifier; do not run real preflight during this design step."
+      },
+      {
+        "path": "scripts/authorization_lifecycle.py",
+        "finding": "Uses exact authorization journal path and read_events, not broad *.jsonl enumeration; keep lifecycle interpretation unchanged."
+      },
+      {
+        "path": "scripts/v3_execution_transaction.py::require_committed/assert_no_transaction/claim_attempt/reconcile_journal",
+        "finding": "Use exact _journal_path; no broad identity scan. Preserve semantics."
+      }
+    ]
+  },
+  "freeze_boundary": {
+    "current_revision": "r10",
+    "current_freeze_path": "evaluation/v1_2_3/step9_63c_r5c5b_runner_freeze_r10.json",
+    "current_freeze_sha256": "d24244235e51e7bf6c8567880c654fe3fd73b87fa1bfe1ab0f10dfdc94db2693",
+    "frozen_member_count": 20,
+    "transaction_module_is_member": true,
+    "frozen_transaction_module_sha256": "f1a253730953abf51307f4e9404bf59d7856c15d2367b7a62d6809dbb64b2797",
+    "frozen_member_change_required": true,
+    "new_runner_freeze_required": true,
+    "old_r10_freeze_must_remain_immutable": true,
+    "new_identity_pointer_and_dependent_bindings_required": true,
+    "implementation_must_fail_closed_if_revised_freeze_cannot_be_constructed_without_changing_evaluation_semantics": true
+  },
+  "recovery_protocol_design": {
+    "old_authorization_id": "auth-step9_63c_r5c6-aff5c4b96bb74278a14d3fd08bf8a84e",
+    "old_prebound_attempt_id": "attempt-step9_63c_r5c6-3401b701486c4fdeb4019b461d024bd4",
+    "old_authorization_consumed": false,
+    "old_consumption_count": 0,
+    "old_authorization_derived_state_at_forensics": "ISSUED_EXECUTABLE",
+    "old_formal_command_reusable": false,
+    "old_attempt_created": false,
+    "old_failed_invocation_evidence_to_preserve": "User-reported single command/traceback, Step 9.63c-r5c10a audit and report, old authorization/preflight/registry/freeze, AppleDouble file and all historical journals; do not fabricate an attempt ledger",
+    "scanner_repair": "Separate implementation-only step after human design approval; no frozen member may be silently changed under r10",
+    "repair_verification": "Offline synthetic fixture tests, freeze/member/hash checks, and a separate no-network non-consuming identity/preflight compatibility audit before any authorization",
+    "old_authorization_terminalization": "Before fresh issuance, create a separate exact-ID pinned non-reuse determination and, only if every frozen retirement predicate still holds, append RETIRED_UNCONSUMED_NON_REUSABLE through the existing lifecycle reducer/retirement path under its lock. Never mark consumed or rewrite the manifest. If retirement predicates cannot be proved, fail closed.",
+    "new_runner_freeze": "Create a new revision with updated transaction module hash and all dependent runner/identity bindings; preserve r10 and previous authorizations. Check producer compatibility with new revision before any Mac preflight.",
+    "new_authorization_required": true,
+    "new_attempt_id_required": true,
+    "fresh_namespace_id_required": true,
+    "new_preflight_required": true,
+    "new_preflight_reason": "Frozen formal consumer binds preflight to exact authorization manifest hash, authorization ID, attempt ID, namespace ID and runner freeze revision/SHA; the old r10 preflight cannot authorize a fresh runner/identity. A new Mac-local non-consuming preflight must occur only in a separately authorized later step.",
+    "fresh_issuance_prerequisites": "Retirement or other contract-proven terminal handling of old issuance, new frozen runner, unchanged evaluation identity, globally new authorization/attempt/namespace IDs, no prior transaction or collision, compatible fresh preflight contract and independent authorization audit",
+    "no_reuse_of_old_authorization_attempt_preflight_or_formal_command": true,
+    "no_formal_execution_in_this_step": true
+  },
+  "status_fields": {
+    "ROOT_CAUSE_CONFIRMED": "YES",
+    "AUTHORITATIVE_EVENT_FILE_CONTRACT": "DIRECT_CHILD_CANONICAL_AUTHORIZATION_ID_JSONL_WITH_STRICT_EVENT_VALIDATION",
+    "PROPOSED_MINIMAL_REPAIR": "STRICT_JOURNAL_PATH_CLASSIFIER_BEFORE_READ_EVENTS",
+    "FROZEN_MEMBER_CHANGE_REQUIRED": "YES",
+    "NEW_RUNNER_FREEZE_REQUIRED": "YES",
+    "NEW_AUTHORIZATION_REQUIRED": "YES",
+    "NEW_ATTEMPT_ID_REQUIRED": "YES",
+    "NEW_PREFLIGHT_REQUIRED": "YES",
+    "HISTORICAL_EVIDENCE_PRESERVED": "YES",
+    "SAFE_TO_RERUN_OLD_FORMAL_COMMAND": "NO",
+    "READY_FOR_REPAIR_IMPLEMENTATION": "YES_AFTER_HUMAN_REVIEW"
+  },
+  "activity_boundary": {
+    "production_code_modified": false,
+    "frozen_file_modified": false,
+    "transaction_journal_modified": false,
+    "historical_artifact_modified": false,
+    "appledouble_file_deleted_or_renamed": false,
+    "authorization_issued_or_consumed": false,
+    "attempt_namespace_transaction_created": false,
+    "preflight_or_formal_command_run": false,
+    "v4_case_executed": 0,
+    "model_agent_rag_or_http_called": false
+  }
+}

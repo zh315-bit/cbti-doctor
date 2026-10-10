@@ -1,0 +1,34 @@
+{
+  "step": "9.63c-r5c10n",
+  "baseline_type": "CURRENT_OBSERVED_BYTES_ONLY_NOT_ORIGINAL_PRE_RUN_BASELINE",
+  "historical_trace_content_integrity": "CONTENT_INTEGRITY_UNPROVEN",
+  "protected_directory_roots": [
+    "/Volumes/Elements/cbti-doctor-main/evaluation/v1_2",
+    "/Volumes/Elements/cbti-doctor-main/evaluation/v1_2_1"
+  ],
+  "mandatory_byte_pins_for_future_test_isolation": [
+    {
+      "absolute_path": "/Volumes/Elements/cbti-doctor-main/evaluation/v1_2/step8_3_mechanism_traces.jsonl",
+      "current_size_bytes": 64294,
+      "current_sha256": "e09321c89b75a4330799e4a4c286652cee82ed0e0d4fa1b8478c970dd7f6d8e5",
+      "current_mtime_local": "2026-10-09T11:37:42-0400",
+      "git_status": "UNTRACKED",
+      "trusted_original_hash": null
+    },
+    {
+      "absolute_path": "/Volumes/Elements/cbti-doctor-main/evaluation/v1_2_1/step8_7_mechanism_traces.jsonl",
+      "current_size_bytes": 33014,
+      "current_sha256": "5518eb4b0b7e8880c5f84e59ba0264013bed99e25edb8da93dca558304d4f084",
+      "current_mtime_local": "2026-10-09T11:37:42-0400",
+      "git_status": "UNTRACKED",
+      "trusted_original_hash": null
+    }
+  ],
+  "future_before_after_policy": [
+    "Before approved tests, record byte hashes, sizes and relative-path inventory of all regular files under both protected roots; reject symlink or unexpected path escape.",
+    "After approved tests, compare the complete inventories and hashes, and explicitly compare the two mandatory trace pins. Added, removed or changed protected files fail the isolation acceptance gate.",
+    "Check temporary output path is outside repository root before writing; test failure must not alter protected roots.",
+    "The current SHA values may serve as preservation pins from this point onward, never as proof of pre-r5c10l content."
+  ],
+  "historical_files_modified_or_restored_in_this_step": false
+}

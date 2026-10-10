@@ -1,0 +1,34 @@
+{
+  "artifact_type": "STEP9_63C_R5C8D_OFFLINE_TEST_MATRIX",
+  "step": "9.63c-r5c8d",
+  "command": ".venv/bin/python -m unittest tests.test_step9_63c_r5c8b_preflight_contract tests.test_step9_63c_r5c7_preflight",
+  "total": 31,
+  "failures": 0,
+  "errors": 0,
+  "status": "PASS",
+  "network_requests_sent": false,
+  "producer_main_invoked": false,
+  "coverage": [
+    {
+      "assertion": "runtime-generated UUID4 identity and derived authorization scoped target pass the frozen validator",
+      "tests": ["test_02_generated_preflight_id_matches_frozen_format", "test_01_producer_generated_fixture_passes_frozen_validator"]
+    },
+    {
+      "assertion": "same ID implies same target and existing target cannot be overwritten",
+      "tests": ["test_instance_scoped_target_is_unique_and_not_legacy_fixed_path", "test_exclusive_persistence_refuses_overwrite"]
+    },
+    {
+      "assertion": "wrong authorization, attempt, namespace, freeze, Agent or authorization manifest binding is rejected",
+      "tests": ["test_16_wrong_authorization_id_is_rejected", "test_17_wrong_attempt_id_is_rejected", "test_18_wrong_namespace_id_is_rejected", "test_19_wrong_runner_binding_is_rejected", "test_20_wrong_agent_binding_is_rejected", "test_21_wrong_authorization_manifest_sha_is_rejected"]
+    },
+    {
+      "assertion": "old r5c7e artifact remains unchanged and rejected by the frozen identity contract",
+      "tests": ["test_24_old_r5c7e_artifact_remains_rejected_and_unchanged"]
+    },
+    {
+      "assertion": "offline fixture construction does not call transport connectivity",
+      "tests": ["test_25_offline_fixture_build_does_not_probe_network"]
+    }
+  ],
+  "limits": "The suite proves existing target collision and frozen contract checks. UUID4 uniqueness is probabilistic; failed invocations without an artifact have no persistent ID ledger."
+}

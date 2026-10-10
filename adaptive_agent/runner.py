@@ -7,7 +7,10 @@ from copy import deepcopy
 from typing import Any, Protocol
 
 from .candidates import generate_candidates
-from .answer_generation import authorize_final_answer, bounded_authorization_response
+from .answer_generation import (
+    authorize_final_answer, bounded_authorization_response, bounded_generation_limitation,
+    validate_bounded_response,
+)
 from .acquisition_gate import gate_acquisition_candidates
 from .input_understanding import InputUnderstander, Understanding, apply_understanding
 from .policy import HeuristicDecisionPolicy
@@ -128,12 +131,37 @@ class AdaptiveAgentLoop:
             if candidate.action == "ANSWER":
                 transitions.append(StateTransition(step, "ANSWER", candidate.rationale))
                 limitation = candidate.rationale if candidate.expected_benefit == "MEDIUM" else None
-                if answer_authorization and answer_authorization["status"] in {
-                    "AUTHORIZED_BOUNDED", "BLOCKED_UNSAFE_OR_INVALID"
-                }:
+                if answer_authorization and answer_authorization["status"] == "AUTHORIZED_BOUNDED":
+                    state.answer_context_audit["final_answer_authorization"] = deepcopy(answer_authorization)
+                    raw_response = self.answer_generator.answer(
+                        state, bounded_generation_limitation(answer_authorization))
+                    response = validate_bounded_response(raw_response, state, answer_authorization)
+                    if response is None:
+                        response = "当前可核验的信息不足以生成符合授权范围的有用回答；未提供未获支持的个性化行动。"
+                        state.answer_context_audit["answer_generation_outcome"] = "REJECTED_OUT_OF_SCOPE_OR_UNGROUNDED"
+                        state.answer_context_audit["bounded_contract_validation"] = "FAIL_CLOSED"
+                    else:
+                        state.answer_context_audit["answer_generation_outcome"] = "GENERATED_BOUNDED"
+                        state.answer_context_audit["bounded_contract_validation"] = "PASS"
+                    state.answer_context_audit["generated_content_basis_ids"] = list(
+                        answer_authorization["bounded_supported_content_basis"])
+                    state.answer_context_audit["terminal_response_kind"] = (
+                        "BOUNDED_ANSWER" if state.answer_context_audit["bounded_contract_validation"] == "PASS"
+                        else "REFUSAL")
+                elif answer_authorization and answer_authorization["status"] == "BLOCKED_UNSAFE_OR_INVALID":
                     response = bounded_authorization_response(answer_authorization)
+                    state.answer_context_audit["answer_generation_outcome"] = "NOT_GENERATED_BLOCKED"
+                    state.answer_context_audit["bounded_contract_validation"] = "NOT_APPLICABLE"
+                    state.answer_context_audit["terminal_response_kind"] = "REFUSAL"
                 else:
                     response = self.answer_generator.answer(state, limitation)
+                    state.answer_context_audit["answer_generation_outcome"] = "GENERATED_FULL"
+                    state.answer_context_audit["bounded_contract_validation"] = "NOT_APPLICABLE"
+                    state.answer_context_audit["terminal_response_kind"] = "FULL_ANSWER"
+                if answer_authorization:
+                    # Generator context construction may refresh its audit; the
+                    # DECISION object remains authoritative and is mirrored only.
+                    state.answer_context_audit["final_answer_authorization"] = deepcopy(answer_authorization)
                 state_history.append(self._snapshot(state, "ANSWER"))
                 return LoopResult(state, "ANSWER", response, step, transitions, state_history)
             if candidate.action == "RETRIEVE":
@@ -160,13 +188,30 @@ class AdaptiveAgentLoop:
 
         final_requirements = self._refresh(state, requirements)
         authorization = authorize_final_answer(state, final_requirements)
-        state.answer_context_audit["final_answer_authorization"] = authorization
+        state.answer_context_audit["final_answer_authorization"] = deepcopy(authorization)
         max_steps_snapshot = self._snapshot(state, "MAX_STEPS")
         max_steps_snapshot["answer_authorization"] = authorization
         state_history.append(max_steps_snapshot)
-        response = (bounded_authorization_response(authorization)
-                    if authorization["status"] != "AUTHORIZED_FULL"
-                    else self.answer_generator.answer(state, "已达到本轮行动上限"))
+        if authorization["status"] == "AUTHORIZED_FULL":
+            response = self.answer_generator.answer(state, "已达到本轮行动上限")
+            outcome = "GENERATED_FULL"
+        elif authorization["status"] == "AUTHORIZED_BOUNDED":
+            raw_response = self.answer_generator.answer(state, bounded_generation_limitation(authorization))
+            response = validate_bounded_response(raw_response, state, authorization)
+            outcome = "GENERATED_BOUNDED" if response is not None else "REJECTED_OUT_OF_SCOPE_OR_UNGROUNDED"
+            if response is None:
+                response = "当前可核验的信息不足以生成符合授权范围的有用回答；未提供未获支持的个性化行动。"
+        elif authorization["status"] == "BLOCKED_NEEDS_INFORMATION":
+            response = "仍缺少作出该项个性化判断所需的资料；请先补充相关信息。"
+            outcome = "NOT_GENERATED_NEEDS_INFORMATION"
+        else:
+            response = bounded_authorization_response(authorization)
+            outcome = "NOT_GENERATED_BLOCKED"
+        state.answer_context_audit["final_answer_authorization"] = deepcopy(authorization)
+        state.answer_context_audit["answer_generation_outcome"] = outcome
+        state.answer_context_audit["terminal_response_kind"] = "BOUNDED_ANSWER" if outcome == "GENERATED_BOUNDED" else "REFUSAL"
+        state_history[-1] = self._snapshot(state, "MAX_STEPS")
+        state_history[-1]["answer_authorization"] = deepcopy(authorization)
         return LoopResult(state, "MAX_STEPS", response, self.max_steps, transitions, state_history)
 
     def _refresh(self, state: AdaptiveAgentState, requirements: RequirementSet) -> RequirementSet:
@@ -185,7 +230,7 @@ class AdaptiveAgentLoop:
 
     @staticmethod
     def _snapshot(state: AdaptiveAgentState, event: str) -> dict[str, Any]:
-        return {
+        snapshot = {
             "event": event,
             "goal": state.goal,
             "goal_id": state.goal_id,
@@ -229,3 +274,7 @@ class AdaptiveAgentLoop:
             "answer_scope": state.answer_scope,
             "turn_index": state.turn_index,
         }
+        authorization = state.answer_context_audit.get("final_answer_authorization")
+        if isinstance(authorization, dict):
+            snapshot["answer_authorization"] = deepcopy(authorization)
+        return snapshot

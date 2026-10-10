@@ -1,0 +1,69 @@
+{
+  "artifact_type": "V3_AUTHORIZATION_LIFECYCLE_CONTRACT",
+  "step": "9.61a",
+  "contract_version": "1",
+  "status": "FROZEN_CONTRACT_R6",
+  "created_at_utc": "2026-10-02T16:30:00Z",
+  "lifecycle_authority": "append-only event ledger; original authorization manifests remain immutable evidence of issuance",
+  "states": {
+    "ISSUED_NOT_CONSUMED": "Manifest says issued/not executed, consumed=false, count=0, and no terminal lifecycle event exists.",
+    "CONSUMED": "An exact attempt ledger contains AUTHORIZATION_CONSUMED for this authorization identity. Consumption is terminal.",
+    "RETIRED_UNCONSUMED_NON_REUSABLE": "An exact, predicate-validated retirement event exists. Consumption remains false and count remains 0. Retirement is terminal."
+  },
+  "allowed_transitions": [
+    {"from": "ISSUED_NOT_CONSUMED", "to": "CONSUMED", "trigger": "formal attempt's durable AUTHORIZATION_CONSUMED event"},
+    {"from": "ISSUED_NOT_CONSUMED", "to": "RETIRED_UNCONSUMED_NON_REUSABLE", "trigger": "append-only retirement event after all retirement predicates pass"}
+  ],
+  "forbidden_transitions": [
+    {"from": "CONSUMED", "to": "ISSUED_NOT_CONSUMED"},
+    {"from": "CONSUMED", "to": "RETIRED_UNCONSUMED_NON_REUSABLE"},
+    {"from": "RETIRED_UNCONSUMED_NON_REUSABLE", "to": "ISSUED_NOT_CONSUMED"},
+    {"from": "RETIRED_UNCONSUMED_NON_REUSABLE", "to": "CONSUMED"},
+    {"from": "RETIRED_UNCONSUMED_NON_REUSABLE", "to": "any executable state"}
+  ],
+  "retirement_predicate": {
+    "authorization_manifest_status": "ISSUED_NOT_EXECUTED",
+    "authorization_status": "ISSUED_NOT_CONSUMED",
+    "consumed": false,
+    "consumed_at_utc": null,
+    "authorization_consumption_count": 0,
+    "attempt_id_status": "PREBOUND_IDENTITY_ONLY_NOT_CREATED",
+    "attempt_created": false,
+    "derived_namespace_absent": true,
+    "matching_attempt_ledger_events": 0,
+    "cases_started": 0,
+    "cases_completed": 0,
+    "non_reuse_determination": "PROVEN_NON_REUSABLE_BY_FROZEN_CONTRACT",
+    "determination_must_be_artifact_pinned_and_bind_exact_authorization_id": true,
+    "all_checks_and_event_append_serialized_with_namespace_allocator_lock": true
+  },
+  "retirement_event": {
+    "ledger_path": "evaluation/v1_2_3/authorization_lifecycle_events.jsonl",
+    "event_type": "AUTHORIZATION_RETIRED_UNCONSUMED_NON_REUSABLE",
+    "append_only": true,
+    "fsync_file_and_parent_directory": true,
+    "original_manifest_mutated": false,
+    "consumed": false,
+    "consumption_count": 0,
+    "attempt_created": false,
+    "namespace_created": false,
+    "cases_started": 0
+  },
+  "validator_requirements": {
+    "parent_validate_authorization_rejects_retired_id": true,
+    "v3_pre_attempt_guard_rejects_retired_id": true,
+    "namespace_allocator_rejects_retired_id_under_shared_lock": true,
+    "malformed_lifecycle_ledger_fails_closed": true,
+    "retired_identity_cannot_be_unretired_or_rebound": true,
+    "fresh_issuance_must_use_globally_new_authorization_attempt_and_namespace_ids": true
+  },
+  "exactly_once_invariants": {
+    "retirement_does_not_consume": true,
+    "retirement_does_not_create_attempt_or_namespace": true,
+    "retirement_does_not_access_cases_or_call_model_agent_rag": true,
+    "no_automatic_retry_or_resume": true,
+    "retired_authorization_never_executable": true
+  },
+  "shared_lock_path": "evaluation/v4_runs/.namespace-allocation.lock",
+  "runtime_scope": "infrastructure-only; no V4 execution authority"
+}

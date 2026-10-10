@@ -1,0 +1,86 @@
+{
+  "evaluation": "step7.4_frozen_v1_vs_v1.1",
+  "benchmark_version": "2.0-evaluation-set",
+  "cases": 40,
+  "v1": {
+    "overall_score": 63.85,
+    "historical_metrics": {
+      "run_status": "completed",
+      "benchmark_version": "2.0-evaluation-set",
+      "baseline_name": "adaptive-agent-v1-baseline",
+      "completed_cases": 40,
+      "overall_score": 63.85,
+      "dimension_means": {
+        "goal_alignment": 18.02,
+        "facts_state_integrity": 13.1,
+        "action_resource_selection": 10.9,
+        "evidence_answer_scope": 13.1,
+        "interaction_efficiency": 8.72
+      },
+      "critical_failures": 2,
+      "action_means": {
+        "ASK_per_case": 2.775,
+        "RETRIEVE_per_case": 0.325,
+        "READ_DIARY_per_case": 0.175,
+        "tool_calls_per_case": 0.5,
+        "turns_per_case": 3.45,
+        "steps_per_case": 3.95,
+        "latency_ms_per_case": 8551.2
+      },
+      "ask_quality": {
+        "total_asks": 111,
+        "necessary_or_useful": 19,
+        "redundant": 80,
+        "irrelevant": 12,
+        "valuable_ask_rate": 0.1712,
+        "redundant_ask_rate": 0.7207,
+        "irrelevant_ask_rate": 0.1081
+      },
+      "telemetry": {
+        "token_usage": "not_available",
+        "LLM_calls": "not_available",
+        "LLM_latency": "not_available",
+        "retrieval_latency": "not_available",
+        "tool_latency": "not_available"
+      }
+    }
+  },
+  "v1_1": {
+    "overall_score": 65.03,
+    "dimension_means": {
+      "goal_alignment": 17.77,
+      "facts_state_integrity": 15.5,
+      "action_resource_selection": 10.68,
+      "evidence_answer_scope": 12.95,
+      "interaction_efficiency": 8.12
+    },
+    "ASK_per_case": 2.8,
+    "necessary_ask_rate": 0.1875,
+    "useful_optional_ask_rate": 0.0804,
+    "redundant_ask_rate": 0.3482,
+    "irrelevant_ask_rate": 0.3839,
+    "turns_per_case": 3.525,
+    "steps_per_case": 4.05,
+    "RETRIEVE_per_case": 0.325,
+    "READ_DIARY_per_case": 0.2,
+    "six_ASK_limit_cases": 11,
+    "critical_failures": 0,
+    "ask_counts": {
+      "necessary": 21,
+      "useful_but_optional": 9,
+      "redundant": 39,
+      "irrelevant": 43
+    },
+    "telemetry": {
+      "token_usage": "not_available",
+      "LLM_calls": "not_available",
+      "latency": "observed but not interpreted as quality"
+    }
+  },
+  "paired_counts": {
+    "improved": 11,
+    "unchanged": 17,
+    "regressed": 12
+  },
+  "v1_1_score_source": "trace-only first-pass adjudication against frozen rubric; not a modified rubric"
+}

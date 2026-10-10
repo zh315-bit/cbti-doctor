@@ -1,0 +1,96 @@
+{
+  "contamination_boundary": "From this postmortem onward V4 is DEVELOPMENT / POSTMORTEM EVIDENCE. Any Agent changes informed by Step 9.31 make V4 non-unseen for that Agent. V4 may be used for regression/paired mechanism analysis; generalization claims for a new Agent require a newly sealed V5.",
+  "paired_evaluation_hypotheses": [
+    {
+      "guardrail": "necessary-ASK preservation must not decrease; separately report ASK count and event denominator.",
+      "hypothesis": "New version reduces redundant-or-irrelevant ASK events per all ASK events under the same frozen annotation protocol.",
+      "id": "H1"
+    },
+    {
+      "hypothesis": "New version improves task completion, especially in CA and PD strata, without using ANSWER terminal status as a completion proxy.",
+      "id": "H2"
+    },
+    {
+      "hypothesis": "New version reduces harmful-failure count and the evidence/information-omission mechanisms identified here.",
+      "id": "H3"
+    },
+    {
+      "hypothesis": "Necessary ASK target acquisition is non-inferior and critical failure count does not increase.",
+      "id": "H4"
+    },
+    {
+      "hypothesis": "Where personal facts are incomplete but a general evidence dependency exists, independent retrieval and evidence-to-answer lineage increase without reducing factual boundedness.",
+      "id": "H5"
+    },
+    {
+      "hypothesis": "Explicit-fact recall improves and repeated acquisition after unknown/unavailable responses decreases.",
+      "id": "H6"
+    },
+    {
+      "hypothesis": "After successful diary/tool projection, completion of the requested analytic operation improves while unsupported calculations remain absent.",
+      "id": "H7"
+    }
+  ],
+  "ranked_repair_candidates": [
+    {
+      "ask_failure_count_affected": 0,
+      "case_count_affected": 15,
+      "expected_behavior_change": "When a task has a meaningful evidence requirement, retrieve general evidence even if personal facts remain incomplete, then answer within the evidence and personalization boundary.",
+      "harmful_failure_count_affected": 15,
+      "how_to_test_without_v4": "Structured unit tests for mixed independent dependencies; synthetic production-path cases with partial facts; measure retrieval precision, evidence-to-claim lineage, boundedness, and completion; no V4 fixtures/wording.",
+      "mechanism_hypothesis": "Represent user-fact dependencies and external-evidence dependencies independently; missing personal facts should bound personalization but must not suppress useful general evidence acquisition.",
+      "observed_failures_addressed": [
+        "required evidence omitted while facts are incomplete",
+        "premature bounded answer"
+      ],
+      "regression_risk": "May increase unnecessary/irrelevant retrieval or evidence-led overreach; require retrieval appropriateness and claim-grounding checks.",
+      "repair_id": "R1_EVIDENCE_PATH_INDEPENDENT_OF_PERSONAL_FACT_COMPLETENESS",
+      "target_layer": "Requirements / dependency formation → Candidate generation"
+    },
+    {
+      "ask_failure_count_affected": 5,
+      "case_count_affected": 5,
+      "expected_behavior_change": "Suppress irrelevant forced ASK while preserving genuinely necessary acquisition and its safety boundary.",
+      "harmful_failure_count_affected": 3,
+      "how_to_test_without_v4": "Counterfactual matrix with necessary, useful, irrelevant, refused, and unknown fields; adversarially vary answer direction; assert necessary-ASK preservation and no decision without critical data.",
+      "mechanism_hypothesis": "A hard precondition should force ASK only when no safe fallback exists and plausible answers can change direction, next action, or necessary answer scope; otherwise keep a bounded path and evaluate independent resources.",
+      "observed_failures_addressed": [
+        "hard precondition forces low-value ASK",
+        "ASK prevents immediate bounded answer or evidence path"
+      ],
+      "regression_risk": "Could suppress a genuinely necessary clarification or cause unsupported personalization if the counterfactual gate is too permissive.",
+      "repair_id": "R2_VALUE_GATED_PRECONDITION_AND_SAFE_FALLBACK",
+      "target_layer": "Dependency formation / Information value / Decision policy"
+    },
+    {
+      "ask_failure_count_affected": 4,
+      "case_count_affected": 2,
+      "expected_behavior_change": "Use facts already in the conversation, avoid repeat acquisition after unknown/refusal, and proceed with bounded answer or another independent useful action.",
+      "harmful_failure_count_affected": 2,
+      "how_to_test_without_v4": "Synthetic paraphrase and contradiction suite; multi-turn unknown/refusal tests; inspect provenance and ask-target state transitions; no V4 examples.",
+      "mechanism_hypothesis": "State projection should retain semantically asserted facts with source/confidence, and represent asked/unknown/declined/unavailable targets so the acquisition loop does not re-ask or substitute equivalent low-value targets without new rationale.",
+      "observed_failures_addressed": [
+        "explicit user facts omitted from state",
+        "same or adjacent optional questions repeated after unknown response"
+      ],
+      "regression_risk": "False fact extraction, overgeneralized equivalence among distinct targets, or prematurely treating an unknown as permanently declined.",
+      "repair_id": "R3_ASSERTED_FACT_AND_UNAVAILABLE_TARGET_STATE",
+      "target_layer": "Input Understanding / State / interaction loop"
+    },
+    {
+      "ask_failure_count_affected": 0,
+      "case_count_affected": 6,
+      "expected_behavior_change": "Complete supported calculations/comparisons and state limitations only for genuinely unavailable portions.",
+      "harmful_failure_count_affected": 0,
+      "how_to_test_without_v4": "Synthetic arithmetic and evidence-synthesis tasks with known tool outputs; assert requested fields, provenance, and abstention only on unavailable items.",
+      "mechanism_hypothesis": "Carry an explicit task/output contract through tool projection and validate that the answer performs the requested operation using available tool results before stopping.",
+      "observed_failures_addressed": [
+        "diary data read but requested operation omitted",
+        "evidence retrieved but scope/coverage not synthesized"
+      ],
+      "regression_risk": "Could fabricate missing data or overstate answers if validation rewards completion without evidence constraints.",
+      "repair_id": "R4_ANSWER_TASK_CONTRACT_AFTER_TOOL_PROJECTION",
+      "target_layer": "Tool Result Projection → Answer Context → Answer Generation"
+    }
+  ]
+}

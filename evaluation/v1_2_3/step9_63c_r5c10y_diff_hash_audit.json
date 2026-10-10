@@ -1,0 +1,25 @@
+{
+  "step": "9.63c-r5c10y",
+  "target_file": "tests/test_step9_63b_mac_local_preflight.py",
+  "git_tracking_state_before": "UNTRACKED_PREEXISTING",
+  "ordinary_git_diff_before": "EMPTY_BECAUSE_UNTRACKED",
+  "ordinary_git_diff_after": "EMPTY_BECAUSE_UNTRACKED",
+  "comparison_method": "Pre-edit file bytes retained in shell memory; git diff --no-index compared that baseline through /dev/fd/3 with the edited target. The pseudo-file mode line is an fd artifact, not evidence of a target mode change.",
+  "sha256_before": "0a81c59db2969fc6b4fb7f09a5b4ed04b24422dd5f633620f49a4d61934ef191",
+  "sha256_after": "bcf9b8289336d575a184bf3dfb4cd2b6583f05a2f7d205ed4c6d852c06784052",
+  "content_diff_summary": [
+    "Removed the sole module-level import of scripts.preflight_step9_63b_mac_local as preflight.",
+    "Added that same import at the start of each of the eight test methods using preflight.",
+    "No assertions, expected results, fixtures, test data, method names or production calls changed."
+  ],
+  "static_ast_review": {
+    "syntax": "PASS",
+    "test_methods": 8,
+    "method_local_transport_imports": 8,
+    "top_level_scripts_imports": 0
+  },
+  "patched_code_file_count": 1,
+  "other_code_files_modified_by_this_step": 0,
+  "r10_freeze_member": false,
+  "note": "The file is untracked in the current Git index; its before/after content is pinned by SHA-256 and the no-index diff, not by an ordinary tracked-file git diff."
+}

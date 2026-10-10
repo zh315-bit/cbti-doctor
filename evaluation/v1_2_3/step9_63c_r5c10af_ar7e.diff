@@ -1,0 +1,2342 @@
+--- /dev/null
++++ b/scripts/validate_step9_63c_r5c10ae_test_boundary.py
+@@ -0,0 +1,87 @@
++#!/usr/bin/env python3
++"""Step 9.63c-r5c10ae versioned test boundary manifest: builder and fail-closed auditor.
++
++Version pinning (Step 9.63c-r5c10af decision): this module names ONE manifest by
++constant path and constant version id. It never searches for, sorts or selects
++"the latest" manifest. A new test module therefore requires a new version of this
++file and of its manifest; the previous manifest stays byte-identical and is pinned
++here by SHA-256.
++
++The classification rules are those of ``validate_step9_63c_test_boundary`` (r5c10ad):
++the Step 9.51a decisions are carried verbatim, the pinned allowlist is never widened,
++and every other module is classified mechanically from its source.
++"""
++from __future__ import annotations
++
++import argparse
++import hashlib
++import json
++from pathlib import Path
++
++from scripts import validate_step9_63c_test_boundary as base
++
++ROOT = base.ROOT
++TEST_DIR = base.TEST_DIR
++MANIFEST_VERSION = "r5c10ae"
++MANIFEST = ROOT / "evaluation/v1_2_3/step9_63c_r5c10ae_test_boundary_manifest.json"
++PREVIOUS_MANIFEST = base.MANIFEST
++PREVIOUS_MANIFEST_VERSION = "r5c10ad"
++PREVIOUS_MANIFEST_SHA256 = "acf0b42973083f51c19273c5b9504e5b78491431a6f230df6fd4f8d37728f200"
++# Decision fields of a carried-over module that must never change between versions.
++CARRIED_FIELDS = ("allowed", "reason", "identity_scope", "origin", "purpose")
++
++
++def sha256_file(path: Path) -> str:
++    return hashlib.sha256(path.read_bytes()).hexdigest()
++
++
++def build_manifest() -> dict:
++    data = base.build_manifest()
++    previous = json.loads(PREVIOUS_MANIFEST.read_text(encoding="utf-8"))
++    recorded = {row["module"] for row in previous["modules"]}
++    data.update({
++        "version": 2, "version_id": MANIFEST_VERSION, "step": "9.63c-r5c10ae",
++        "previous_version": {"version_id": PREVIOUS_MANIFEST_VERSION,
++                             "path": str(PREVIOUS_MANIFEST.relative_to(ROOT)),
++                             "sha256": PREVIOUS_MANIFEST_SHA256, "preserved_unchanged": True},
++        "added_since_previous": sorted(row["module"] for row in data["modules"] if row["module"] not in recorded),
++        "selection_rule": "constant path and version id; no discovery of other manifests",
++    })
++    return data
++
++
++def audit_manifest(data: dict) -> list[str]:
++    errors = list(base.audit_manifest(data))
++    if data.get("version_id") != MANIFEST_VERSION:
++        errors.append(f"manifest version_id is {data.get('version_id')!r}, expected {MANIFEST_VERSION!r}")
++    if sha256_file(PREVIOUS_MANIFEST) != PREVIOUS_MANIFEST_SHA256:
++        errors.append("previous (r5c10ad) manifest bytes changed")
++    previous = (data.get("previous_version") or {})
++    if previous.get("sha256") != PREVIOUS_MANIFEST_SHA256 or previous.get("version_id") != PREVIOUS_MANIFEST_VERSION:
++        errors.append("manifest does not reference the pinned previous version")
++    old_rows = {row["module"]: row for row in json.loads(PREVIOUS_MANIFEST.read_text(encoding="utf-8"))["modules"]}
++    new_rows = {row.get("module"): row for row in data.get("modules", []) if isinstance(row, dict)}
++    for name, old in old_rows.items():
++        if name in new_rows and any(new_rows[name].get(field) != old.get(field) for field in CARRIED_FIELDS):
++            errors.append(f"{name}: decision fields differ from the r5c10ad manifest")
++    added = sorted(set(new_rows) - set(old_rows))
++    if data.get("added_since_previous") != added:
++        errors.append("added_since_previous does not match the inventory difference")
++    return errors
++
++
++def main(argv: list[str] | None = None) -> int:
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument("--create", action="store_true", help="write the manifest if it does not exist")
++    args = parser.parse_args(argv)
++    if args.create:
++        if MANIFEST.exists():
++            raise SystemExit(f"refusing to overwrite existing manifest: {MANIFEST}")
++        MANIFEST.write_text(json.dumps(build_manifest(), indent=1) + "\n", encoding="utf-8")
++    errors = audit_manifest(json.loads(MANIFEST.read_text(encoding="utf-8")))
++    print(json.dumps({"manifest": str(MANIFEST.relative_to(ROOT)), "errors": errors}, indent=1))
++    return 1 if errors else 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+--- /dev/null
++++ b/evaluation/v1_2_3/step9_63c_r5c10ae_test_boundary_manifest.json
+@@ -0,0 +1,2119 @@
++{
++ "artifact_type": "STEP9_63C_TEST_BOUNDARY_MANIFEST",
++ "version": 2,
++ "step": "9.63c-r5c10ae",
++ "module_pattern": "tests/test_*.py",
++ "supersedes_inventory_of": {
++  "path": "evaluation/v1_2_3/step9_51a_safe_test_manifest.json",
++  "sha256": "a639ab7e674227f5c676071da6a6186572138fc88d0c899a9cf3fbaa6a59169d",
++  "preserved_unchanged": true
++ },
++ "allowlist_source": "SAFE_ALLOWLIST pinned in scripts/validate_step9_51a_test_boundary.py (unchanged)",
++ "risk_rule": "HIGH: imports a formal identity/authorization/transaction/preflight/freeze module or uses subprocess; MEDIUM: imports other scripts modules or reads repository evaluation paths; LOW: otherwise.",
++ "modules": [
++  {
++   "module": "test_adaptive_foundations",
++   "path": "tests/test_adaptive_foundations.py",
++   "purpose": "Synthetic/unit regression; no formal benchmark result path.",
++   "allowed": true,
++   "reason": "Explicit non-benchmark allowlist; audited test inputs are synthetic, local, or temporary.",
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "identity_scope": "UNIT_ONLY",
++   "origin": "STEP9_51A_VERBATIM",
++   "risk_level": "LOW",
++   "risk_evidence": {
++    "high_risk_imports": [],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": false
++   }
++  },
++  {
++   "module": "test_adaptive_loop",
++   "path": "tests/test_adaptive_loop.py",
++   "purpose": "Synthetic/unit regression; no formal benchmark result path.",
++   "allowed": true,
++   "reason": "Explicit non-benchmark allowlist; audited test inputs are synthetic, local, or temporary.",
++   "may_execute_agent": true,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "identity_scope": "SYNTHETIC_ONLY",
++   "origin": "STEP9_51A_VERBATIM",
++   "risk_level": "LOW",
++   "risk_evidence": {
++    "high_risk_imports": [],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": false
++   }
++  },
++  {
++   "module": "test_adaptive_service",
++   "path": "tests/test_adaptive_service.py",
++   "purpose": "Synthetic/unit regression; no formal benchmark result path.",
++   "allowed": true,
++   "reason": "Explicit non-benchmark allowlist; audited test inputs are synthetic, local, or temporary.",
++   "may_execute_agent": true,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "identity_scope": "SYNTHETIC_ONLY",
++   "origin": "STEP9_51A_VERBATIM",
++   "risk_level": "LOW",
++   "risk_evidence": {
++    "high_risk_imports": [],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": false
++   }
++  },
++  {
++   "module": "test_answer_generation_grounding",
++   "path": "tests/test_answer_generation_grounding.py",
++   "purpose": "Answer-generation/grounding unit tests; local synthetic fixtures and mocked adapters.",
++   "allowed": true,
++   "reason": "Explicit non-benchmark allowlist; audited test inputs are synthetic, local, or temporary.",
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "identity_scope": "UNIT_ONLY",
++   "origin": "STEP9_51A_VERBATIM",
++   "risk_level": "LOW",
++   "risk_evidence": {
++    "high_risk_imports": [],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": false
++   }
++  },
++  {
++   "module": "test_chat_sessions",
++   "path": "tests/test_chat_sessions.py",
++   "purpose": "Synthetic/unit regression; no formal benchmark result path.",
++   "allowed": true,
++   "reason": "Explicit non-benchmark allowlist; audited test inputs are synthetic, local, or temporary.",
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "identity_scope": "UNIT_ONLY",
++   "origin": "STEP9_51A_VERBATIM",
++   "risk_level": "LOW",
++   "risk_evidence": {
++    "high_risk_imports": [],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": false
++   }
++  },
++  {
++   "module": "test_input_understanding_hardening",
++   "path": "tests/test_input_understanding_hardening.py",
++   "purpose": "Synthetic/unit regression; no formal benchmark result path.",
++   "allowed": true,
++   "reason": "Explicit non-benchmark allowlist; audited test inputs are synthetic, local, or temporary.",
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "identity_scope": "UNIT_ONLY",
++   "origin": "STEP9_51A_VERBATIM",
++   "risk_level": "LOW",
++   "risk_evidence": {
++    "high_risk_imports": [],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": false
++   }
++  },
++  {
++   "module": "test_model_configuration",
++   "path": "tests/test_model_configuration.py",
++   "purpose": "Synthetic/unit regression; no formal benchmark result path.",
++   "allowed": true,
++   "reason": "Explicit non-benchmark allowlist; audited test inputs are synthetic, local, or temporary.",
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "identity_scope": "UNIT_ONLY",
++   "origin": "STEP9_51A_VERBATIM",
++   "risk_level": "LOW",
++   "risk_evidence": {
++    "high_risk_imports": [],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": false
++   }
++  },
++  {
++   "module": "test_policy_refinement",
++   "path": "tests/test_policy_refinement.py",
++   "purpose": "Synthetic/unit regression; no formal benchmark result path.",
++   "allowed": true,
++   "reason": "Explicit non-benchmark allowlist; audited test inputs are synthetic, local, or temporary.",
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "identity_scope": "UNIT_ONLY",
++   "origin": "STEP9_51A_VERBATIM",
++   "risk_level": "LOW",
++   "risk_evidence": {
++    "high_risk_imports": [],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": false
++   }
++  },
++  {
++   "module": "test_step4_regressions",
++   "path": "tests/test_step4_regressions.py",
++   "purpose": "Synthetic/unit regression; no formal benchmark result path.",
++   "allowed": true,
++   "reason": "Explicit non-benchmark allowlist; audited test inputs are synthetic, local, or temporary.",
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "identity_scope": "UNIT_ONLY",
++   "origin": "STEP9_51A_VERBATIM",
++   "risk_level": "LOW",
++   "risk_evidence": {
++    "high_risk_imports": [],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": false
++   }
++  },
++  {
++   "module": "test_step9_10a_harness_fix",
++   "path": "tests/test_step9_10a_harness_fix.py",
++   "purpose": "Exactly-once/authorization guard tests use TemporaryDirectory fixtures only; no formal attempt is created.",
++   "allowed": true,
++   "reason": "Explicit non-benchmark allowlist; audited test inputs are synthetic, local, or temporary.",
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "identity_scope": "TEMPORARY_FIXTURES_ONLY",
++   "origin": "STEP9_51A_VERBATIM",
++   "risk_level": "MEDIUM",
++   "risk_evidence": {
++    "high_risk_imports": [],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": true
++   }
++  },
++  {
++   "module": "test_step9_12b_trace_observer",
++   "path": "tests/test_step9_12b_trace_observer.py",
++   "purpose": "Synthetic/unit regression; no formal benchmark result path.",
++   "allowed": true,
++   "reason": "Explicit non-benchmark allowlist; audited test inputs are synthetic, local, or temporary.",
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "identity_scope": "UNIT_ONLY",
++   "origin": "STEP9_51A_VERBATIM",
++   "risk_level": "HIGH",
++   "risk_evidence": {
++    "high_risk_imports": [
++     "scripts.preflight_step9_12_local",
++     "scripts.preflight_step9_12_local._lineage_validation"
++    ],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": false
++   }
++  },
++  {
++   "module": "test_step9_13a_authorization_infrastructure",
++   "path": "tests/test_step9_13a_authorization_infrastructure.py",
++   "purpose": "Excluded from Step 9.51a safe rerun.",
++   "allowed": false,
++   "reason": "Contains historical identity aggregation and a runner invocation; excluded as a whole.",
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": true,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": true,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "identity_scope": "PROHIBITED_OR_HISTORICAL",
++   "origin": "STEP9_51A_VERBATIM",
++   "risk_level": "HIGH",
++   "risk_evidence": {
++    "high_risk_imports": [
++     "scripts.preflight_step9_12_local",
++     "scripts.run_step9_12_frozen_evaluation"
++    ],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": false
++   }
++  },
++  {
++   "module": "test_step9_16_dependency_formation",
++   "path": "tests/test_step9_16_dependency_formation.py",
++   "purpose": "Synthetic/unit regression; no formal benchmark result path.",
++   "allowed": true,
++   "reason": "Explicit non-benchmark allowlist; audited test inputs are synthetic, local, or temporary.",
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "identity_scope": "UNIT_ONLY",
++   "origin": "STEP9_51A_VERBATIM",
++   "risk_level": "LOW",
++   "risk_evidence": {
++    "high_risk_imports": [],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": false
++   }
++  },
++  {
++   "module": "test_step9_17_tool_projection",
++   "path": "tests/test_step9_17_tool_projection.py",
++   "purpose": "Synthetic/unit regression; no formal benchmark result path.",
++   "allowed": true,
++   "reason": "Explicit non-benchmark allowlist; audited test inputs are synthetic, local, or temporary.",
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "identity_scope": "UNIT_ONLY",
++   "origin": "STEP9_51A_VERBATIM",
++   "risk_level": "LOW",
++   "risk_evidence": {
++    "high_risk_imports": [],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": false
++   }
++  },
++  {
++   "module": "test_step9_18_information_value_gate",
++   "path": "tests/test_step9_18_information_value_gate.py",
++   "purpose": "Synthetic/unit regression; no formal benchmark result path.",
++   "allowed": true,
++   "reason": "Explicit non-benchmark allowlist; audited test inputs are synthetic, local, or temporary.",
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "identity_scope": "UNIT_ONLY",
++   "origin": "STEP9_51A_VERBATIM",
++   "risk_level": "LOW",
++   "risk_evidence": {
++    "high_risk_imports": [],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": false
++   }
++  },
++  {
++   "module": "test_step9_20a_v3_runner",
++   "path": "tests/test_step9_20a_v3_runner.py",
++   "purpose": "Excluded from Step 9.51a safe rerun.",
++   "allowed": false,
++   "reason": "Exercises the held-out runner.run path, even though its cases are synthetic; runner execution is out of scope.",
++   "may_execute_agent": true,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": true,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "identity_scope": "PROHIBITED_OR_HISTORICAL",
++   "origin": "STEP9_51A_VERBATIM",
++   "risk_level": "HIGH",
++   "risk_evidence": {
++    "high_risk_imports": [
++     "scripts.preflight_step9_12_local"
++    ],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": false
++   }
++  },
++  {
++   "module": "test_step9_23_state_answer_integrity",
++   "path": "tests/test_step9_23_state_answer_integrity.py",
++   "purpose": "Synthetic/unit regression; no formal benchmark result path.",
++   "allowed": true,
++   "reason": "Explicit non-benchmark allowlist; audited test inputs are synthetic, local, or temporary.",
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "identity_scope": "UNIT_ONLY",
++   "origin": "STEP9_51A_VERBATIM",
++   "risk_level": "LOW",
++   "risk_evidence": {
++    "high_risk_imports": [],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": false
++   }
++  },
++  {
++   "module": "test_step9_24_information_value",
++   "path": "tests/test_step9_24_information_value.py",
++   "purpose": "Synthetic/unit regression; no formal benchmark result path.",
++   "allowed": true,
++   "reason": "Explicit non-benchmark allowlist; audited test inputs are synthetic, local, or temporary.",
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "identity_scope": "UNIT_ONLY",
++   "origin": "STEP9_51A_VERBATIM",
++   "risk_level": "LOW",
++   "risk_evidence": {
++    "high_risk_imports": [],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": false
++   }
++  },
++  {
++   "module": "test_step9_28_v4_runner",
++   "path": "tests/test_step9_28_v4_runner.py",
++   "purpose": "Excluded from Step 9.51a safe rerun.",
++   "allowed": false,
++   "reason": "V4 runner execution/authorization module; prohibited.",
++   "may_execute_agent": true,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": true,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": true,
++   "may_access_v5": false,
++   "may_create_formal_attempt": true,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "identity_scope": "PROHIBITED_OR_HISTORICAL",
++   "origin": "STEP9_51A_VERBATIM",
++   "risk_level": "HIGH",
++   "risk_evidence": {
++    "high_risk_imports": [
++     "scripts.preflight_step9_12_local",
++     "scripts.run_step9_28_v4_heldout"
++    ],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": false
++   }
++  },
++  {
++   "module": "test_step9_28a_v4_local_preflight",
++   "path": "tests/test_step9_28a_v4_local_preflight.py",
++   "purpose": "Excluded from Step 9.51a safe rerun.",
++   "allowed": false,
++   "reason": "V4-specific preflight module; excluded from non-benchmark rerun.",
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": true,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "identity_scope": "PROHIBITED_OR_HISTORICAL",
++   "origin": "STEP9_51A_VERBATIM",
++   "risk_level": "MEDIUM",
++   "risk_evidence": {
++    "high_risk_imports": [],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": false
++   }
++  },
++  {
++   "module": "test_step9_30a2_lineage_sidecar",
++   "path": "tests/test_step9_30a2_lineage_sidecar.py",
++   "purpose": "Excluded from Step 9.51a safe rerun.",
++   "allowed": false,
++   "reason": "Reads formal V4 lineage/adjudication artifacts; prohibited access boundary.",
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": true,
++   "may_aggregate": false,
++   "may_adjudicate": true,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "identity_scope": "PROHIBITED_OR_HISTORICAL",
++   "origin": "STEP9_51A_VERBATIM",
++   "risk_level": "MEDIUM",
++   "risk_evidence": {
++    "high_risk_imports": [],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": false
++   }
++  },
++  {
++   "module": "test_step9_30a_v4_adjudication",
++   "path": "tests/test_step9_30a_v4_adjudication.py",
++   "purpose": "Excluded from Step 9.51a safe rerun.",
++   "allowed": false,
++   "reason": "Contains V4 adjudication and aggregate_completed; prohibited.",
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": true,
++   "may_aggregate": true,
++   "may_adjudicate": true,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": true,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "identity_scope": "PROHIBITED_OR_HISTORICAL",
++   "origin": "STEP9_51A_VERBATIM",
++   "risk_level": "MEDIUM",
++   "risk_evidence": {
++    "high_risk_imports": [],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": false
++   }
++  },
++  {
++   "module": "test_step9_30c_v4_aggregation",
++   "path": "tests/test_step9_30c_v4_aggregation.py",
++   "purpose": "Excluded from Step 9.51a safe rerun.",
++   "allowed": false,
++   "reason": "Reads frozen V4 adjudication/sidecar and invokes aggregate_records; prohibited.",
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": true,
++   "may_aggregate": true,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": true,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "identity_scope": "PROHIBITED_OR_HISTORICAL",
++   "origin": "STEP9_51A_VERBATIM",
++   "risk_level": "MEDIUM",
++   "risk_evidence": {
++    "high_risk_imports": [],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": true
++   }
++  },
++  {
++   "module": "test_step9_33_r1_r2_r3_repairs",
++   "path": "tests/test_step9_33_r1_r2_r3_repairs.py",
++   "purpose": "Synthetic/unit regression; no formal benchmark result path.",
++   "allowed": true,
++   "reason": "Explicit non-benchmark allowlist; audited test inputs are synthetic, local, or temporary.",
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "identity_scope": "UNIT_ONLY",
++   "origin": "STEP9_51A_VERBATIM",
++   "risk_level": "LOW",
++   "risk_evidence": {
++    "high_risk_imports": [],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": false
++   }
++  },
++  {
++   "module": "test_step9_35a_treatment_runner",
++   "path": "tests/test_step9_35a_treatment_runner.py",
++   "purpose": "Exactly-once/authorization guard tests use TemporaryDirectory fixtures only; no formal attempt is created.",
++   "allowed": true,
++   "reason": "Explicit non-benchmark allowlist; audited test inputs are synthetic, local, or temporary.",
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "identity_scope": "TEMPORARY_FIXTURES_ONLY",
++   "origin": "STEP9_51A_VERBATIM",
++   "risk_level": "HIGH",
++   "risk_evidence": {
++    "high_risk_imports": [
++     "scripts.authorization_lifecycle",
++     "scripts.run_step9_35a_matched_treatment",
++     "scripts.v3_execution_transaction"
++    ],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": true
++   }
++  },
++  {
++   "module": "test_step9_42_answer_authorization",
++   "path": "tests/test_step9_42_answer_authorization.py",
++   "purpose": "Step 9.41/9.42 synthetic safety regression; mocked retrieval only.",
++   "allowed": true,
++   "reason": "Explicit non-benchmark allowlist; audited test inputs are synthetic, local, or temporary.",
++   "may_execute_agent": true,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "identity_scope": "SYNTHETIC_ONLY",
++   "origin": "STEP9_51A_VERBATIM",
++   "risk_level": "LOW",
++   "risk_evidence": {
++    "high_risk_imports": [],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": false
++   }
++  },
++  {
++   "module": "test_step9_43a_treatment_identity",
++   "path": "tests/test_step9_43a_treatment_identity.py",
++   "purpose": "Excluded from Step 9.51a safe rerun.",
++   "allowed": false,
++   "reason": "Contains test_01a_frozen_v2_identity_preflight_passes_without_case_execution, which requires current V3 tree == frozen V2; keep V2 identity archival, not a V3 gate.",
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "identity_scope": "PROHIBITED_OR_HISTORICAL",
++   "origin": "STEP9_51A_VERBATIM",
++   "risk_level": "HIGH",
++   "risk_evidence": {
++    "high_risk_imports": [
++     "scripts.run_step9_35a_matched_treatment",
++     "scripts.run_step9_35a_matched_treatment.validate_authorization",
++     "scripts.run_step9_43a_treatment_v2"
++    ],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": true
++   }
++  },
++  {
++   "module": "test_step9_4_integration_audit",
++   "path": "tests/test_step9_4_integration_audit.py",
++   "purpose": "Synthetic/unit regression; no formal benchmark result path.",
++   "allowed": true,
++   "reason": "Explicit non-benchmark allowlist; audited test inputs are synthetic, local, or temporary.",
++   "may_execute_agent": true,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "identity_scope": "SYNTHETIC_ONLY",
++   "origin": "STEP9_51A_VERBATIM",
++   "risk_level": "LOW",
++   "risk_evidence": {
++    "high_risk_imports": [],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": false
++   }
++  },
++  {
++   "module": "test_step9_50_bounded_answer_contract",
++   "path": "tests/test_step9_50_bounded_answer_contract.py",
++   "purpose": "Step 9.50 synthetic bounded-answer authorization contract (30 cases).",
++   "allowed": true,
++   "reason": "Explicit non-benchmark allowlist; audited test inputs are synthetic, local, or temporary.",
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "identity_scope": "V3_DEVELOPMENT_ONLY",
++   "origin": "STEP9_51A_VERBATIM",
++   "risk_level": "LOW",
++   "risk_evidence": {
++    "high_risk_imports": [],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": false
++   }
++  },
++  {
++   "module": "test_step9_50_traceability_contract",
++   "path": "tests/test_step9_50_traceability_contract.py",
++   "purpose": "Step 9.50 synthetic trace lineage and invariant contract.",
++   "allowed": true,
++   "reason": "Explicit non-benchmark allowlist; audited test inputs are synthetic, local, or temporary.",
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "identity_scope": "V3_DEVELOPMENT_ONLY",
++   "origin": "STEP9_51A_VERBATIM",
++   "risk_level": "MEDIUM",
++   "risk_evidence": {
++    "high_risk_imports": [],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": true
++   }
++  },
++  {
++   "module": "test_step9_51a_validation_boundary",
++   "path": "tests/test_step9_51a_validation_boundary.py",
++   "purpose": "Synthetic/unit regression; no formal benchmark result path.",
++   "allowed": true,
++   "reason": "Explicit non-benchmark allowlist; audited test inputs are synthetic, local, or temporary.",
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "identity_scope": "V3_DEVELOPMENT_ONLY",
++   "origin": "STEP9_51A_VERBATIM",
++   "risk_level": "MEDIUM",
++   "risk_evidence": {
++    "high_risk_imports": [],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": true
++   }
++  },
++  {
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": true,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "module": "test_step9_53_v3_identity_adapter",
++   "path": "tests/test_step9_53_v3_identity_adapter.py",
++   "allowed": false,
++   "purpose": "Added after Step 9.51a; outside the pinned safe allowlist.",
++   "reason": "Not in the pinned Step 9.51a allowlist; run only under the guarded Step 9.63c harness.",
++   "identity_scope": "PROHIBITED_OR_HISTORICAL",
++   "origin": "STEP9_63C_DERIVED",
++   "risk_level": "HIGH",
++   "risk_evidence": {
++    "high_risk_imports": [
++     "scripts.run_step9_53_v3_identity_adapter"
++    ],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": true
++   }
++  },
++  {
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "module": "test_step9_55a_namespace_lifecycle",
++   "path": "tests/test_step9_55a_namespace_lifecycle.py",
++   "allowed": false,
++   "purpose": "Added after Step 9.51a; outside the pinned safe allowlist.",
++   "reason": "Not in the pinned Step 9.51a allowlist; run only under the guarded Step 9.63c harness.",
++   "identity_scope": "PROHIBITED_OR_HISTORICAL",
++   "origin": "STEP9_63C_DERIVED",
++   "risk_level": "HIGH",
++   "risk_evidence": {
++    "high_risk_imports": [
++     "scripts.run_step9_35a_matched_treatment",
++     "scripts.run_step9_53_v3_identity_adapter",
++     "scripts.v3_execution_transaction"
++    ],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": true
++   }
++  },
++  {
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": true,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "module": "test_step9_58a_r1_namespace_allocator",
++   "path": "tests/test_step9_58a_r1_namespace_allocator.py",
++   "allowed": false,
++   "purpose": "Added after Step 9.51a; outside the pinned safe allowlist.",
++   "reason": "Not in the pinned Step 9.51a allowlist; run only under the guarded Step 9.63c harness.",
++   "identity_scope": "PROHIBITED_OR_HISTORICAL",
++   "origin": "STEP9_63C_DERIVED",
++   "risk_level": "HIGH",
++   "risk_evidence": {
++    "high_risk_imports": [
++     "scripts.run_step9_53_v3_identity_adapter",
++     "scripts.v3_namespace_allocator"
++    ],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": false
++   }
++  },
++  {
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "module": "test_step9_59a_auth_identity_binding",
++   "path": "tests/test_step9_59a_auth_identity_binding.py",
++   "allowed": false,
++   "purpose": "Added after Step 9.51a; outside the pinned safe allowlist.",
++   "reason": "Not in the pinned Step 9.51a allowlist; run only under the guarded Step 9.63c harness.",
++   "identity_scope": "PROHIBITED_OR_HISTORICAL",
++   "origin": "STEP9_63C_DERIVED",
++   "risk_level": "HIGH",
++   "risk_evidence": {
++    "high_risk_imports": [
++     "scripts.authorization_lifecycle",
++     "scripts.run_step9_35a_matched_treatment",
++     "scripts.run_step9_53_v3_identity_adapter"
++    ],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": false
++   }
++  },
++  {
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": true,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": true,
++   "may_create_authorization": true,
++   "may_mutate_historical_artifacts": false,
++   "module": "test_step9_61a_authorization_retirement",
++   "path": "tests/test_step9_61a_authorization_retirement.py",
++   "allowed": false,
++   "purpose": "Added after Step 9.51a; outside the pinned safe allowlist.",
++   "reason": "Not in the pinned Step 9.51a allowlist; run only under the guarded Step 9.63c harness.",
++   "identity_scope": "PROHIBITED_OR_HISTORICAL",
++   "origin": "STEP9_63C_DERIVED",
++   "risk_level": "HIGH",
++   "risk_evidence": {
++    "high_risk_imports": [
++     "scripts.authorization_lifecycle",
++     "scripts.v3_namespace_allocator"
++    ],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": true
++   }
++  },
++  {
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "module": "test_step9_62b_mac_local_preflight",
++   "path": "tests/test_step9_62b_mac_local_preflight.py",
++   "allowed": false,
++   "purpose": "Added after Step 9.51a; outside the pinned safe allowlist.",
++   "reason": "Not in the pinned Step 9.51a allowlist; run only under the guarded Step 9.63c harness.",
++   "identity_scope": "PROHIBITED_OR_HISTORICAL",
++   "origin": "STEP9_63C_DERIVED",
++   "risk_level": "HIGH",
++   "risk_evidence": {
++    "high_risk_imports": [
++     "scripts.preflight_step9_62b_mac_local"
++    ],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": false
++   }
++  },
++  {
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": true,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "module": "test_step9_63_v3_formal_execution",
++   "path": "tests/test_step9_63_v3_formal_execution.py",
++   "allowed": false,
++   "purpose": "Added after Step 9.51a; outside the pinned safe allowlist.",
++   "reason": "Not in the pinned Step 9.51a allowlist; run only under the guarded Step 9.63c harness.",
++   "identity_scope": "PROHIBITED_OR_HISTORICAL",
++   "origin": "STEP9_63C_DERIVED",
++   "risk_level": "HIGH",
++   "risk_evidence": {
++    "high_risk_imports": [
++     "scripts.run_step9_63_v3_formal_execution"
++    ],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": true
++   }
++  },
++  {
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": true,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "module": "test_step9_63a_r1_production_integration",
++   "path": "tests/test_step9_63a_r1_production_integration.py",
++   "allowed": false,
++   "purpose": "Added after Step 9.51a; outside the pinned safe allowlist.",
++   "reason": "Not in the pinned Step 9.51a allowlist; run only under the guarded Step 9.63c harness.",
++   "identity_scope": "PROHIBITED_OR_HISTORICAL",
++   "origin": "STEP9_63C_DERIVED",
++   "risk_level": "HIGH",
++   "risk_evidence": {
++    "high_risk_imports": [
++     "scripts.authorization_lifecycle",
++     "scripts.run_step9_35a_matched_treatment",
++     "scripts.run_step9_53_v3_identity_adapter",
++     "scripts.run_step9_63_v3_formal_execution",
++     "scripts.v3_execution_transaction",
++     "scripts.v3_namespace_allocator",
++     "scripts.v3_namespace_allocator.derive_namespace_id"
++    ],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": true
++   }
++  },
++  {
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": true,
++   "may_create_authorization": true,
++   "may_mutate_historical_artifacts": false,
++   "module": "test_step9_63a_r2_retirement_eligibility",
++   "path": "tests/test_step9_63a_r2_retirement_eligibility.py",
++   "allowed": false,
++   "purpose": "Added after Step 9.51a; outside the pinned safe allowlist.",
++   "reason": "Not in the pinned Step 9.51a allowlist; run only under the guarded Step 9.63c harness.",
++   "identity_scope": "PROHIBITED_OR_HISTORICAL",
++   "origin": "STEP9_63C_DERIVED",
++   "risk_level": "HIGH",
++   "risk_evidence": {
++    "high_risk_imports": [
++     "scripts.authorization_lifecycle",
++     "scripts.preflight_step9_62b_mac_local",
++     "scripts.run_step9_35a_matched_treatment",
++     "scripts.run_step9_53_v3_identity_adapter",
++     "scripts.v3_execution_transaction",
++     "scripts.v3_namespace_allocator"
++    ],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": true
++   }
++  },
++  {
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": true,
++   "may_mutate_historical_artifacts": false,
++   "module": "test_step9_63a_r3_authorization_issuance",
++   "path": "tests/test_step9_63a_r3_authorization_issuance.py",
++   "allowed": false,
++   "purpose": "Added after Step 9.51a; outside the pinned safe allowlist.",
++   "reason": "Not in the pinned Step 9.51a allowlist; run only under the guarded Step 9.63c harness.",
++   "identity_scope": "PROHIBITED_OR_HISTORICAL",
++   "origin": "STEP9_63C_DERIVED",
++   "risk_level": "HIGH",
++   "risk_evidence": {
++    "high_risk_imports": [
++     "scripts.issue_step9_63a_r3_authorization"
++    ],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": false
++   }
++  },
++  {
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": true,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "module": "test_step9_63b_mac_local_preflight",
++   "path": "tests/test_step9_63b_mac_local_preflight.py",
++   "allowed": false,
++   "purpose": "Added after Step 9.51a; outside the pinned safe allowlist.",
++   "reason": "Not in the pinned Step 9.51a allowlist; run only under the guarded Step 9.63c harness.",
++   "identity_scope": "PROHIBITED_OR_HISTORICAL",
++   "origin": "STEP9_63C_DERIVED",
++   "risk_level": "HIGH",
++   "risk_evidence": {
++    "high_risk_imports": [
++     "scripts.preflight_step9_63b_mac_local"
++    ],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": false
++   }
++  },
++  {
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": true,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "module": "test_step9_63c_r3_parent_namespace_repair",
++   "path": "tests/test_step9_63c_r3_parent_namespace_repair.py",
++   "allowed": false,
++   "purpose": "Added after Step 9.51a; outside the pinned safe allowlist.",
++   "reason": "Not in the pinned Step 9.51a allowlist; run only under the guarded Step 9.63c harness.",
++   "identity_scope": "PROHIBITED_OR_HISTORICAL",
++   "origin": "STEP9_63C_DERIVED",
++   "risk_level": "HIGH",
++   "risk_evidence": {
++    "high_risk_imports": [
++     "scripts.run_step9_35a_matched_treatment",
++     "scripts.run_step9_53_v3_identity_adapter",
++     "scripts.v3_execution_transaction",
++     "scripts.v3_namespace_allocator",
++     "scripts.v3_namespace_allocator.derive_namespace_id",
++     "scripts.v3_namespace_allocator.reserve_namespace"
++    ],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": false
++   }
++  },
++  {
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": true,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": true,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "module": "test_step9_63c_r5_mac_local_preflight",
++   "path": "tests/test_step9_63c_r5_mac_local_preflight.py",
++   "allowed": false,
++   "purpose": "Added after Step 9.51a; outside the pinned safe allowlist.",
++   "reason": "Not in the pinned Step 9.51a allowlist; run only under the guarded Step 9.63c harness.",
++   "identity_scope": "PROHIBITED_OR_HISTORICAL",
++   "origin": "STEP9_63C_DERIVED",
++   "risk_level": "HIGH",
++   "risk_evidence": {
++    "high_risk_imports": [
++     "scripts.preflight_step9_63b_mac_local",
++     "scripts.preflight_step9_63c_r5_mac_local"
++    ],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": true
++   }
++  },
++  {
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "module": "test_step9_63c_r5c10ad_r11_resolver_contract",
++   "path": "tests/test_step9_63c_r5c10ad_r11_resolver_contract.py",
++   "allowed": false,
++   "purpose": "Added after Step 9.51a; outside the pinned safe allowlist.",
++   "reason": "Not in the pinned Step 9.51a allowlist; run only under the guarded Step 9.63c harness.",
++   "identity_scope": "PROHIBITED_OR_HISTORICAL",
++   "origin": "STEP9_63C_DERIVED",
++   "risk_level": "HIGH",
++   "risk_evidence": {
++    "high_risk_imports": [
++     "scripts.v3_runner_identity"
++    ],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": true
++   }
++  },
++  {
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": true,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": true,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "module": "test_step9_63c_r5c10ad_r5_producer_equivalence",
++   "path": "tests/test_step9_63c_r5c10ad_r5_producer_equivalence.py",
++   "allowed": false,
++   "purpose": "Added after Step 9.51a; outside the pinned safe allowlist.",
++   "reason": "Not in the pinned Step 9.51a allowlist; run only under the guarded Step 9.63c harness.",
++   "identity_scope": "PROHIBITED_OR_HISTORICAL",
++   "origin": "STEP9_63C_DERIVED",
++   "risk_level": "HIGH",
++   "risk_evidence": {
++    "high_risk_imports": [
++     "scripts.preflight_step9_63c_r11_mac_local",
++     "scripts.run_step9_63_v3_formal_execution",
++     "scripts.v3_runner_identity"
++    ],
++    "uses_subprocess": true,
++    "reads_repository_evaluation": true
++   }
++  },
++  {
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "module": "test_step9_63c_r5c10ad_test_boundary_manifest",
++   "path": "tests/test_step9_63c_r5c10ad_test_boundary_manifest.py",
++   "allowed": false,
++   "purpose": "Added after Step 9.51a; outside the pinned safe allowlist.",
++   "reason": "Not in the pinned Step 9.51a allowlist; run only under the guarded Step 9.63c harness.",
++   "identity_scope": "PROHIBITED_OR_HISTORICAL",
++   "origin": "STEP9_63C_DERIVED",
++   "risk_level": "MEDIUM",
++   "risk_evidence": {
++    "high_risk_imports": [],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": true
++   }
++  },
++  {
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "module": "test_step9_63c_r5c10ad_v2_archival_replay",
++   "path": "tests/test_step9_63c_r5c10ad_v2_archival_replay.py",
++   "allowed": false,
++   "purpose": "Added after Step 9.51a; outside the pinned safe allowlist.",
++   "reason": "Not in the pinned Step 9.51a allowlist; run only under the guarded Step 9.63c harness.",
++   "identity_scope": "PROHIBITED_OR_HISTORICAL",
++   "origin": "STEP9_63C_DERIVED",
++   "risk_level": "HIGH",
++   "risk_evidence": {
++    "high_risk_imports": [],
++    "uses_subprocess": true,
++    "reads_repository_evaluation": true
++   }
++  },
++  {
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "module": "test_step9_63c_r5c10ae_builder_pins",
++   "path": "tests/test_step9_63c_r5c10ae_builder_pins.py",
++   "allowed": false,
++   "purpose": "Added after Step 9.51a; outside the pinned safe allowlist.",
++   "reason": "Not in the pinned Step 9.51a allowlist; run only under the guarded Step 9.63c harness.",
++   "identity_scope": "PROHIBITED_OR_HISTORICAL",
++   "origin": "STEP9_63C_DERIVED",
++   "risk_level": "HIGH",
++   "risk_evidence": {
++    "high_risk_imports": [
++     "scripts.build_step9_63c_r11_runner_freeze",
++     "scripts.build_step9_63c_r5c4_runner_freeze"
++    ],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": false
++   }
++  },
++  {
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": true,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": true,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "module": "test_step9_63c_r5c10ae_consumer_precommit_gate",
++   "path": "tests/test_step9_63c_r5c10ae_consumer_precommit_gate.py",
++   "allowed": false,
++   "purpose": "Added after Step 9.51a; outside the pinned safe allowlist.",
++   "reason": "Not in the pinned Step 9.51a allowlist; run only under the guarded Step 9.63c harness.",
++   "identity_scope": "PROHIBITED_OR_HISTORICAL",
++   "origin": "STEP9_63C_DERIVED",
++   "risk_level": "HIGH",
++   "risk_evidence": {
++    "high_risk_imports": [
++     "scripts.preflight_step9_62b_mac_local",
++     "scripts.preflight_step9_62b_mac_local.SUPPLEMENTAL_HISTORICAL_PINS",
++     "scripts.run_step9_35a_matched_treatment",
++     "scripts.run_step9_35a_matched_treatment.supplied_hash_keys",
++     "scripts.run_step9_63_v3_formal_execution",
++     "scripts.v3_namespace_allocator",
++     "scripts.v3_namespace_allocator.derive_namespace_id",
++     "scripts.v3_runner_identity"
++    ],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": true
++   }
++  },
++  {
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "module": "test_step9_63c_r5c10ae_test_boundary_manifest",
++   "path": "tests/test_step9_63c_r5c10ae_test_boundary_manifest.py",
++   "allowed": false,
++   "purpose": "Added after Step 9.51a; outside the pinned safe allowlist.",
++   "reason": "Not in the pinned Step 9.51a allowlist; run only under the guarded Step 9.63c harness.",
++   "identity_scope": "PROHIBITED_OR_HISTORICAL",
++   "origin": "STEP9_63C_DERIVED",
++   "risk_level": "MEDIUM",
++   "risk_evidence": {
++    "high_risk_imports": [],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": true
++   }
++  },
++  {
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "module": "test_step9_63c_r5c10af_guard_negative",
++   "path": "tests/test_step9_63c_r5c10af_guard_negative.py",
++   "allowed": false,
++   "purpose": "Added after Step 9.51a; outside the pinned safe allowlist.",
++   "reason": "Not in the pinned Step 9.51a allowlist; run only under the guarded Step 9.63c harness.",
++   "identity_scope": "PROHIBITED_OR_HISTORICAL",
++   "origin": "STEP9_63C_DERIVED",
++   "risk_level": "MEDIUM",
++   "risk_evidence": {
++    "high_risk_imports": [],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": true
++   }
++  },
++  {
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": true,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "module": "test_step9_63c_r5c10c_transaction_scanner",
++   "path": "tests/test_step9_63c_r5c10c_transaction_scanner.py",
++   "allowed": false,
++   "purpose": "Added after Step 9.51a; outside the pinned safe allowlist.",
++   "reason": "Not in the pinned Step 9.51a allowlist; run only under the guarded Step 9.63c harness.",
++   "identity_scope": "PROHIBITED_OR_HISTORICAL",
++   "origin": "STEP9_63C_DERIVED",
++   "risk_level": "HIGH",
++   "risk_evidence": {
++    "high_risk_imports": [
++     "scripts.authorization_lifecycle",
++     "scripts.authorization_lifecycle.BURNED_PRE_CASE",
++     "scripts.authorization_lifecycle.reduce_authorization_lifecycle",
++     "scripts.preflight_step9_63c_r5c7_mac_local",
++     "scripts.v3_execution_transaction"
++    ],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": false
++   }
++  },
++  {
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": true,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": true,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "module": "test_step9_63c_r5c10j_r11_infrastructure",
++   "path": "tests/test_step9_63c_r5c10j_r11_infrastructure.py",
++   "allowed": false,
++   "purpose": "Added after Step 9.51a; outside the pinned safe allowlist.",
++   "reason": "Not in the pinned Step 9.51a allowlist; run only under the guarded Step 9.63c harness.",
++   "identity_scope": "PROHIBITED_OR_HISTORICAL",
++   "origin": "STEP9_63C_DERIVED",
++   "risk_level": "HIGH",
++   "risk_evidence": {
++    "high_risk_imports": [
++     "scripts.build_step9_63c_r11_runner_freeze",
++     "scripts.preflight_step9_63c_r11_mac_local",
++     "scripts.run_step9_63_v3_formal_execution",
++     "scripts.v3_runner_identity",
++     "scripts.v3_runner_identity.resolve_current_freeze"
++    ],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": true
++   }
++  },
++  {
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": true,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "module": "test_step9_63c_r5c4_bootstrap_repair",
++   "path": "tests/test_step9_63c_r5c4_bootstrap_repair.py",
++   "allowed": false,
++   "purpose": "Added after Step 9.51a; outside the pinned safe allowlist.",
++   "reason": "Not in the pinned Step 9.51a allowlist; run only under the guarded Step 9.63c harness.",
++   "identity_scope": "PROHIBITED_OR_HISTORICAL",
++   "origin": "STEP9_63C_DERIVED",
++   "risk_level": "HIGH",
++   "risk_evidence": {
++    "high_risk_imports": [
++     "scripts.authorization_lifecycle",
++     "scripts.preflight_step9_63c_current_mac_local",
++     "scripts.v3_runner_identity"
++    ],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": true
++   }
++  },
++  {
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": true,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "module": "test_step9_63c_r5c5b_lifecycle_reducer",
++   "path": "tests/test_step9_63c_r5c5b_lifecycle_reducer.py",
++   "allowed": false,
++   "purpose": "Added after Step 9.51a; outside the pinned safe allowlist.",
++   "reason": "Not in the pinned Step 9.51a allowlist; run only under the guarded Step 9.63c harness.",
++   "identity_scope": "PROHIBITED_OR_HISTORICAL",
++   "origin": "STEP9_63C_DERIVED",
++   "risk_level": "HIGH",
++   "risk_evidence": {
++    "high_risk_imports": [
++     "scripts.authorization_lifecycle",
++     "scripts.preflight_step9_62b_mac_local"
++    ],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": true
++   }
++  },
++  {
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": true,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "module": "test_step9_63c_r5c7_preflight",
++   "path": "tests/test_step9_63c_r5c7_preflight.py",
++   "allowed": false,
++   "purpose": "Added after Step 9.51a; outside the pinned safe allowlist.",
++   "reason": "Not in the pinned Step 9.51a allowlist; run only under the guarded Step 9.63c harness.",
++   "identity_scope": "PROHIBITED_OR_HISTORICAL",
++   "origin": "STEP9_63C_DERIVED",
++   "risk_level": "HIGH",
++   "risk_evidence": {
++    "high_risk_imports": [
++     "scripts.preflight_step9_63c_r5c7_mac_local"
++    ],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": false
++   }
++  },
++  {
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "module": "test_step9_63c_r5c7b_diagnostics",
++   "path": "tests/test_step9_63c_r5c7b_diagnostics.py",
++   "allowed": false,
++   "purpose": "Added after Step 9.51a; outside the pinned safe allowlist.",
++   "reason": "Not in the pinned Step 9.51a allowlist; run only under the guarded Step 9.63c harness.",
++   "identity_scope": "PROHIBITED_OR_HISTORICAL",
++   "origin": "STEP9_63C_DERIVED",
++   "risk_level": "HIGH",
++   "risk_evidence": {
++    "high_risk_imports": [
++     "scripts.preflight_step9_63b_mac_local",
++     "scripts.preflight_step9_63c_r5c7_mac_local"
++    ],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": false
++   }
++  },
++  {
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "module": "test_step9_63c_r5c7d_import_context",
++   "path": "tests/test_step9_63c_r5c7d_import_context.py",
++   "allowed": false,
++   "purpose": "Added after Step 9.51a; outside the pinned safe allowlist.",
++   "reason": "Not in the pinned Step 9.51a allowlist; run only under the guarded Step 9.63c harness.",
++   "identity_scope": "PROHIBITED_OR_HISTORICAL",
++   "origin": "STEP9_63C_DERIVED",
++   "risk_level": "HIGH",
++   "risk_evidence": {
++    "high_risk_imports": [],
++    "uses_subprocess": true,
++    "reads_repository_evaluation": true
++   }
++  },
++  {
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "module": "test_step9_63c_r5c7e_preparation",
++   "path": "tests/test_step9_63c_r5c7e_preparation.py",
++   "allowed": false,
++   "purpose": "Added after Step 9.51a; outside the pinned safe allowlist.",
++   "reason": "Not in the pinned Step 9.51a allowlist; run only under the guarded Step 9.63c harness.",
++   "identity_scope": "PROHIBITED_OR_HISTORICAL",
++   "origin": "STEP9_63C_DERIVED",
++   "risk_level": "HIGH",
++   "risk_evidence": {
++    "high_risk_imports": [
++     "scripts.preflight_step9_63c_r5c7_mac_local"
++    ],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": true
++   }
++  },
++  {
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "module": "test_step9_63c_r5c8b_preflight_contract",
++   "path": "tests/test_step9_63c_r5c8b_preflight_contract.py",
++   "allowed": false,
++   "purpose": "Added after Step 9.51a; outside the pinned safe allowlist.",
++   "reason": "Not in the pinned Step 9.51a allowlist; run only under the guarded Step 9.63c harness.",
++   "identity_scope": "PROHIBITED_OR_HISTORICAL",
++   "origin": "STEP9_63C_DERIVED",
++   "risk_level": "HIGH",
++   "risk_evidence": {
++    "high_risk_imports": [
++     "scripts.preflight_step9_63c_r5c7_mac_local",
++     "scripts.run_step9_63_v3_formal_execution"
++    ],
++    "uses_subprocess": true,
++    "reads_repository_evaluation": true
++   }
++  },
++  {
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": true,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "module": "test_step9_63c_r5c8f_invocation_registry",
++   "path": "tests/test_step9_63c_r5c8f_invocation_registry.py",
++   "allowed": false,
++   "purpose": "Added after Step 9.51a; outside the pinned safe allowlist.",
++   "reason": "Not in the pinned Step 9.51a allowlist; run only under the guarded Step 9.63c harness.",
++   "identity_scope": "PROHIBITED_OR_HISTORICAL",
++   "origin": "STEP9_63C_DERIVED",
++   "risk_level": "HIGH",
++   "risk_evidence": {
++    "high_risk_imports": [
++     "scripts.preflight_step9_63c_r5c7_mac_local"
++    ],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": true
++   }
++  },
++  {
++   "module": "test_step9_6_effective_requirements_lineage",
++   "path": "tests/test_step9_6_effective_requirements_lineage.py",
++   "purpose": "Synthetic/unit regression; no formal benchmark result path.",
++   "allowed": true,
++   "reason": "Explicit non-benchmark allowlist; audited test inputs are synthetic, local, or temporary.",
++   "may_execute_agent": true,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "identity_scope": "SYNTHETIC_ONLY",
++   "origin": "STEP9_51A_VERBATIM",
++   "risk_level": "LOW",
++   "risk_evidence": {
++    "high_risk_imports": [],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": false
++   }
++  },
++  {
++   "module": "test_step9_8f_frozen_run_guard",
++   "path": "tests/test_step9_8f_frozen_run_guard.py",
++   "purpose": "Exactly-once/authorization guard tests use TemporaryDirectory fixtures only; no formal attempt is created.",
++   "allowed": true,
++   "reason": "Explicit non-benchmark allowlist; audited test inputs are synthetic, local, or temporary.",
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "identity_scope": "TEMPORARY_FIXTURES_ONLY",
++   "origin": "STEP9_51A_VERBATIM",
++   "risk_level": "MEDIUM",
++   "risk_evidence": {
++    "high_risk_imports": [],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": false
++   }
++  },
++  {
++   "module": "test_v1_1_answer_tool_grounding",
++   "path": "tests/test_v1_1_answer_tool_grounding.py",
++   "purpose": "Answer-generation/grounding unit tests; local synthetic fixtures and mocked adapters.",
++   "allowed": true,
++   "reason": "Explicit non-benchmark allowlist; audited test inputs are synthetic, local, or temporary.",
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "identity_scope": "UNIT_ONLY",
++   "origin": "STEP9_51A_VERBATIM",
++   "risk_level": "LOW",
++   "risk_evidence": {
++    "high_risk_imports": [],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": false
++   }
++  },
++  {
++   "module": "test_v1_1_input_state",
++   "path": "tests/test_v1_1_input_state.py",
++   "purpose": "Synthetic/unit regression; no formal benchmark result path.",
++   "allowed": true,
++   "reason": "Explicit non-benchmark allowlist; audited test inputs are synthetic, local, or temporary.",
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "identity_scope": "UNIT_ONLY",
++   "origin": "STEP9_51A_VERBATIM",
++   "risk_level": "LOW",
++   "risk_evidence": {
++    "high_risk_imports": [],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": false
++   }
++  },
++  {
++   "module": "test_v1_1_sufficiency_ask",
++   "path": "tests/test_v1_1_sufficiency_ask.py",
++   "purpose": "Synthetic/unit regression; no formal benchmark result path.",
++   "allowed": true,
++   "reason": "Explicit non-benchmark allowlist; audited test inputs are synthetic, local, or temporary.",
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "identity_scope": "UNIT_ONLY",
++   "origin": "STEP9_51A_VERBATIM",
++   "risk_level": "LOW",
++   "risk_evidence": {
++    "high_risk_imports": [],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": false
++   }
++  },
++  {
++   "module": "test_v1_2_1_mechanism_validation",
++   "path": "tests/test_v1_2_1_mechanism_validation.py",
++   "purpose": "Excluded from Step 9.51a safe rerun.",
++   "allowed": false,
++   "reason": "Writes the historical evaluation/v1_2_1 trace artifact.",
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": true,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": true,
++   "identity_scope": "PROHIBITED_OR_HISTORICAL",
++   "origin": "STEP9_51A_VERBATIM",
++   "risk_level": "MEDIUM",
++   "risk_evidence": {
++    "high_risk_imports": [],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": true
++   }
++  },
++  {
++   "module": "test_v1_2_1_preconditions",
++   "path": "tests/test_v1_2_1_preconditions.py",
++   "purpose": "Synthetic/unit regression; no formal benchmark result path.",
++   "allowed": true,
++   "reason": "Explicit non-benchmark allowlist; audited test inputs are synthetic, local, or temporary.",
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "identity_scope": "UNIT_ONLY",
++   "origin": "STEP9_51A_VERBATIM",
++   "risk_level": "LOW",
++   "risk_evidence": {
++    "high_risk_imports": [],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": false
++   }
++  },
++  {
++   "module": "test_v1_2_2_dependency_contract",
++   "path": "tests/test_v1_2_2_dependency_contract.py",
++   "purpose": "Synthetic/unit regression; no formal benchmark result path.",
++   "allowed": true,
++   "reason": "Explicit non-benchmark allowlist; audited test inputs are synthetic, local, or temporary.",
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "identity_scope": "UNIT_ONLY",
++   "origin": "STEP9_51A_VERBATIM",
++   "risk_level": "LOW",
++   "risk_evidence": {
++    "high_risk_imports": [],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": false
++   }
++  },
++  {
++   "module": "test_v1_2_information_value",
++   "path": "tests/test_v1_2_information_value.py",
++   "purpose": "Synthetic/unit regression; no formal benchmark result path.",
++   "allowed": true,
++   "reason": "Explicit non-benchmark allowlist; audited test inputs are synthetic, local, or temporary.",
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "identity_scope": "UNIT_ONLY",
++   "origin": "STEP9_51A_VERBATIM",
++   "risk_level": "LOW",
++   "risk_evidence": {
++    "high_risk_imports": [],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": false
++   }
++  },
++  {
++   "module": "test_v1_2_mechanism_validation",
++   "path": "tests/test_v1_2_mechanism_validation.py",
++   "purpose": "Excluded from Step 9.51a safe rerun.",
++   "allowed": false,
++   "reason": "Writes the historical evaluation/v1_2 trace artifact.",
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": true,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": false,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": true,
++   "identity_scope": "PROHIBITED_OR_HISTORICAL",
++   "origin": "STEP9_51A_VERBATIM",
++   "risk_level": "MEDIUM",
++   "risk_evidence": {
++    "high_risk_imports": [],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": true
++   }
++  },
++  {
++   "may_execute_agent": false,
++   "may_execute_rag": false,
++   "may_execute_model": false,
++   "may_access_v4": false,
++   "may_aggregate": false,
++   "may_adjudicate": false,
++   "may_write_formal_artifacts": false,
++   "may_execute_formal_v4": false,
++   "may_access_v5": false,
++   "may_create_formal_attempt": true,
++   "may_create_authorization": false,
++   "may_mutate_historical_artifacts": false,
++   "module": "test_v3_execution_transaction",
++   "path": "tests/test_v3_execution_transaction.py",
++   "allowed": false,
++   "purpose": "Added after Step 9.51a; outside the pinned safe allowlist.",
++   "reason": "Not in the pinned Step 9.51a allowlist; run only under the guarded Step 9.63c harness.",
++   "identity_scope": "PROHIBITED_OR_HISTORICAL",
++   "origin": "STEP9_63C_DERIVED",
++   "risk_level": "HIGH",
++   "risk_evidence": {
++    "high_risk_imports": [
++     "scripts.v3_execution_transaction"
++    ],
++    "uses_subprocess": false,
++    "reads_repository_evaluation": false
++   }
++  }
++ ],
++ "version_id": "r5c10ae",
++ "previous_version": {
++  "version_id": "r5c10ad",
++  "path": "evaluation/v1_2_3/step9_63c_r5c10ad_test_boundary_manifest.json",
++  "sha256": "acf0b42973083f51c19273c5b9504e5b78491431a6f230df6fd4f8d37728f200",
++  "preserved_unchanged": true
++ },
++ "added_since_previous": [
++  "test_step9_63c_r5c10ae_builder_pins",
++  "test_step9_63c_r5c10ae_consumer_precommit_gate",
++  "test_step9_63c_r5c10ae_test_boundary_manifest",
++  "test_step9_63c_r5c10af_guard_negative"
++ ],
++ "selection_rule": "constant path and version id; no discovery of other manifests"
++}
+--- /dev/null
++++ b/tests/test_step9_63c_r5c10ae_test_boundary_manifest.py
+@@ -0,0 +1,127 @@
++"""Step 9.63c-r5c10af (AR-7 follow-up): the r5c10ae versioned test boundary manifest.
++
++It covers every current ``tests/test_*.py`` module. The r5c10ad manifest stays
++byte-identical (pinned by SHA-256); the validator names the r5c10ae manifest by
++constant and never selects "the latest". Any new test module needs a new version.
++"""
++from __future__ import annotations
++
++import ast
++import copy
++import hashlib
++import json
++import unittest
++from pathlib import Path
++
++from scripts import validate_step9_63c_r5c10ae_test_boundary as boundary
++from scripts import validate_step9_63c_test_boundary as previous
++
++ROOT = Path(__file__).resolve().parents[1]
++STEP9_51A_PINS = {
++    "evaluation/v1_2_3/step9_51a_safe_test_manifest.json":
++        "a639ab7e674227f5c676071da6a6186572138fc88d0c899a9cf3fbaa6a59169d",
++    "scripts/validate_step9_51a_test_boundary.py":
++        "312f3ca29670c7b092851a37f161aa3cb2e0af17d275c38ca924a3987d7fc9fe",
++    "tests/test_step9_51a_validation_boundary.py":
++        "127751fe917bca0c6992a2c722d6f7a70c32c34603e444292e5a8a097685573e",
++}
++
++
++class Step963cR5c10aeManifestTests(unittest.TestCase):
++    def setUp(self):
++        self.data = json.loads(boundary.MANIFEST.read_text(encoding="utf-8"))
++
++    def test_manifest_covers_current_inventory_and_passes_audit(self):
++        self.assertEqual(boundary.audit_manifest(self.data), [])
++        self.assertEqual({row["module"] for row in self.data["modules"]},
++                         {p.stem for p in (ROOT / "tests").glob("test_*.py")})
++        self.assertTrue(all(row["risk_level"] in previous.RISK_LEVELS for row in self.data["modules"]))
++
++    def test_manifest_is_reproducible_from_sources(self):
++        self.assertEqual(boundary.build_manifest(), self.data)
++
++    def test_version_is_pinned_by_constants_never_discovered(self):
++        self.assertEqual(boundary.MANIFEST_VERSION, "r5c10ae")
++        self.assertEqual(boundary.MANIFEST.relative_to(ROOT).as_posix(),
++                         "evaluation/v1_2_3/step9_63c_r5c10ae_test_boundary_manifest.json")
++        self.assertEqual(self.data["version_id"], "r5c10ae")
++        tree = ast.parse(Path(boundary.__file__).read_text(encoding="utf-8"))
++        calls = {node.func.attr if isinstance(node.func, ast.Attribute) else getattr(node.func, "id", "")
++                 for node in ast.walk(tree) if isinstance(node, ast.Call)}
++        self.assertFalse(calls & {"glob", "rglob", "iterdir", "listdir", "scandir", "walk"}, calls)
++        # A "newer" manifest next to it must not be picked up: the path is the constant.
++        decoy = ROOT / "evaluation/v1_2_3/step9_63c_r5c10zz_test_boundary_manifest.json"
++        self.assertFalse(decoy.exists())
++        self.assertEqual(boundary.MANIFEST.name, "step9_63c_r5c10ae_test_boundary_manifest.json")
++
++    def test_previous_version_is_preserved_and_referenced(self):
++        self.assertEqual(hashlib.sha256(boundary.PREVIOUS_MANIFEST.read_bytes()).hexdigest(),
++                         boundary.PREVIOUS_MANIFEST_SHA256)
++        self.assertEqual(boundary.PREVIOUS_MANIFEST.name, "step9_63c_r5c10ad_test_boundary_manifest.json")
++        self.assertEqual(self.data["previous_version"]["sha256"], boundary.PREVIOUS_MANIFEST_SHA256)
++
++    def test_decisions_carried_over_and_new_modules_are_not_allowlisted(self):
++        old = {row["module"]: row for row in json.loads(boundary.PREVIOUS_MANIFEST.read_text(encoding="utf-8"))["modules"]}
++        new = {row["module"]: row for row in self.data["modules"]}
++        self.assertTrue(set(old) <= set(new))
++        for name, row in old.items():
++            for field in boundary.CARRIED_FIELDS:
++                self.assertEqual(new[name][field], row[field], f"{name}.{field}")
++        added = sorted(set(new) - set(old))
++        self.assertEqual(self.data["added_since_previous"], added)
++        self.assertGreaterEqual(len(added), 4)
++        for name in added:
++            self.assertIs(new[name]["allowed"], False)
++            self.assertEqual(new[name]["origin"], "STEP9_63C_DERIVED")
++        self.assertEqual({n for n, r in new.items() if r["allowed"]}, previous.SAFE_ALLOWLIST & set(new))
++
++    def test_step9_51a_artifacts_remain_byte_identical(self):
++        for path, digest in STEP9_51A_PINS.items():
++            with self.subTest(path=path):
++                self.assertEqual(hashlib.sha256((ROOT / path).read_bytes()).hexdigest(), digest)
++
++    def test_missing_or_extra_module_is_rejected(self):
++        missing = copy.deepcopy(self.data)
++        missing["modules"].pop()
++        extra = copy.deepcopy(self.data)
++        extra["modules"].append({**extra["modules"][0], "module": "test_not_present", "path": "tests/test_not_present.py"})
++        for case in (missing, extra):
++            self.assertTrue(any("inventory differs" in e for e in boundary.audit_manifest(case)))
++
++    def test_allowlist_cannot_be_widened(self):
++        data = copy.deepcopy(self.data)
++        next(r for r in data["modules"] if r["origin"] == "STEP9_63C_DERIVED")["allowed"] = True
++        self.assertTrue(any("allowlist" in e or "decision fields" in e for e in boundary.audit_manifest(data)))
++
++    def test_risk_level_and_carried_decision_tampering_is_rejected(self):
++        data = copy.deepcopy(self.data)
++        next(r for r in data["modules"] if r["risk_level"] == "HIGH")["risk_level"] = "LOW"
++        self.assertTrue(any("mechanical derivation" in e for e in boundary.audit_manifest(data)))
++        data = copy.deepcopy(self.data)
++        row = next(r for r in data["modules"] if r["origin"] == "STEP9_51A_VERBATIM")
++        row["may_access_v5"] = not row["may_access_v5"]
++        self.assertTrue(any("verbatim" in e for e in boundary.audit_manifest(data)))
++        data = copy.deepcopy(self.data)
++        data["modules"][0]["reason"] = "changed after the fact"
++        self.assertTrue(any("decision fields differ" in e or "verbatim" in e for e in boundary.audit_manifest(data)))
++
++    def test_decision_of_a_row_carried_from_r5c10ad_cannot_change(self):
++        # A mechanically derived row: only the carry-over check (not the 9.51a verbatim check)
++        # can notice a changed decision.
++        old_names = {row["module"] for row in json.loads(boundary.PREVIOUS_MANIFEST.read_text(encoding="utf-8"))["modules"]}
++        for field in boundary.CARRIED_FIELDS:
++            with self.subTest(field=field):
++                data = copy.deepcopy(self.data)
++                row = next(r for r in data["modules"] if r["origin"] == "STEP9_63C_DERIVED" and r["module"] in old_names)
++                row[field] = (not row[field]) if isinstance(row[field], bool) else row[field] + " (edited)"
++                self.assertTrue(any(f"{row['module']}: decision fields differ" in e for e in boundary.audit_manifest(data)))
++
++    def test_wrong_version_or_previous_reference_is_rejected(self):
++        wrong_version = {**self.data, "version_id": "r5c10zz"}
++        wrong_previous = {**self.data, "previous_version": {**self.data["previous_version"], "sha256": "0" * 64}}
++        self.assertTrue(any("version_id" in e for e in boundary.audit_manifest(wrong_version)))
++        self.assertTrue(any("pinned previous version" in e for e in boundary.audit_manifest(wrong_previous)))
++
++
++if __name__ == "__main__":
++    unittest.main()

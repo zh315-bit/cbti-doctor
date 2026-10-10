@@ -1,0 +1,79 @@
+{
+  "artifact_type": "STEP9_55B_V3_RUNNER_FREEZE_AND_NONCONSUMING_PRECLEARANCE_AUDIT",
+  "step": "9.55b",
+  "created_at_utc": "2026-09-30T20:45:51Z",
+  "status": "PASS_NON_CONSUMING_PRECLEARANCE",
+  "runner_freeze_revision": "r3",
+  "runner_path": "scripts/run_step9_53_v3_identity_adapter.py",
+  "runner_sha256": "ace3d58005a5c4ce01aeeb17ac54a437c64e4023f7c870e12964a1a5d72b0b7e",
+  "runner_sha_match": true,
+  "v3_agent_sha256": "085d338ed95bbef7370c41cf97ca0d6653ffdfd2f1c924eef4b7123dfdea4607",
+  "current_agent_matches_v3_freeze": true,
+  "frozen_identities_match": true,
+  "namespace_lifecycle_contract_pass": true,
+  "pre_attempt_guard_pass": true,
+  "post_attempt_creation_pre_first_case_guard_pass": true,
+  "callback_phase_order_pass": true,
+  "exactly_once_guard_pass": true,
+  "namespace_collision_guard_pass": true,
+  "old_authorization_reusable": false,
+  "old_attempt_reusable": false,
+  "old_failed_attempt_preserved": true,
+  "old_failed_attempt_ledger_sha256": "57967d950a3a4c700f3187e3d495ca39b4e01d5700ef31a9ebe36c3380450de6",
+  "historical_integrity": {
+    "step9_53_r2_freeze_unchanged": true,
+    "step9_54_authorization_artifacts_unchanged": true,
+    "step9_55_failed_ledger_unchanged": true,
+    "step9_55a_artifacts_unchanged": true,
+    "historical_v1_v2_v3_evaluation_artifacts_checked": 43,
+    "historical_v1_v2_v3_evaluation_artifacts_matched": 43,
+    "historical_artifact_mismatches": 0,
+    "expected_source_revision_exception": {
+      "path": "evaluation/recorder.py",
+      "current_sha256": "0d631d2d8a1bf4678e542a97b4ecf2f377380c1ebe2c7df2694bd823f9627e7b",
+      "classification_source": "evaluation/v1_2_3/step9_52_v3_historical_integrity_audit.json",
+      "classification": "EXPECTED_IMPLEMENTATION_SOURCE_CHANGE; not a historical result artifact"
+    }
+  },
+  "case_specific_agent_logic_found": false,
+  "case_specific_runner_logic_found": false,
+  "evaluation_semantics_changed": false,
+  "safe_test_manifest_path": "evaluation/v1_2_3/step9_55b_safe_test_manifest.json",
+  "safe_test_manifest_sha256": "751a4202b6859441c5de26080779b645944feb2182911f12e9864cb4be62e7ce",
+  "safe_test_count": 97,
+  "safe_test_failures": 0,
+  "safe_test_errors": 0,
+  "formal_boundary": {
+    "new_authorization_issued": false,
+    "new_attempt_created": false,
+    "authorization_consumed": false,
+    "formal_v4_case_executed": 0,
+    "model_called_for_case_execution": false,
+    "agent_called_for_case_execution": false,
+    "rag_called_for_case_execution": false,
+    "adjudication_executed": false,
+    "aggregation_executed": false,
+    "comparison_executed": false,
+    "v5_created": false,
+    "v5_accessed": false
+  },
+  "artifacts": {
+    "runner_freeze_r3": {
+      "path": "evaluation/v1_2_3/step9_55b_v3_runner_freeze_r3.json",
+      "sha256": "581edb8e0091c3dd060735435091be0c5d826b6244a562fa1bfb21a0b3d850fc"
+    },
+    "preclearance_json": {
+      "path": "evaluation/v1_2_3/step9_55b_v3_runner_preclearance.json",
+      "sha256": "a2aa8ba41c73ee2f8f76ec1ba2020c4b4449458dd78f1d63e708bb5adec37309"
+    },
+    "preclearance_markdown": {
+      "path": "evaluation/v1_2_3/step9_55b_v3_runner_preclearance.md",
+      "sha256": "626e84d6e111882f789c99ae689e416f87d83b97e39a9f8f2ef33a58cfa273c7"
+    },
+    "safe_test_manifest": {
+      "path": "evaluation/v1_2_3/step9_55b_safe_test_manifest.json",
+      "sha256": "751a4202b6859441c5de26080779b645944feb2182911f12e9864cb4be62e7ce"
+    }
+  },
+  "ready_for_fresh_v3_authorization": true
+}

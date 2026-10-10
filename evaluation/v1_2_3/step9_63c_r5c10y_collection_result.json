@@ -1,0 +1,21 @@
+{
+  "step": "9.63c-r5c10y",
+  "requested_scope": "pytest --collect-only for tests/test_step9_63b_mac_local_preflight.py; no test-method execution",
+  "command_attempted": "PYTHONDONTWRITEBYTECODE=1 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 .venv/bin/python -m pytest --collect-only -q -p no:cacheprovider tests/test_step9_63b_mac_local_preflight.py",
+  "exit_code": 1,
+  "failure_stage": "PYTEST_MODULE_LOAD_BEFORE_TEST_MODULE_COLLECTION",
+  "stderr": "/Volumes/Elements/cbti-doctor-main/.venv/bin/python: No module named pytest",
+  "additional_read_only_environment_checks": [
+    "python3 -m pytest --version: No module named pytest",
+    "Bundled Codex Python -m pytest --version: No module named pytest"
+  ],
+  "collection_succeeded": false,
+  "tests_collected": "NOT_MEASURED",
+  "static_ast_test_method_count_not_collection": 8,
+  "import_errors": "NOT_MEASURED_TEST_MODULE_NOT_IMPORTED",
+  "new_collection_exceptions": "NOT_MEASURED_TEST_MODULE_NOT_IMPORTED",
+  "test_methods_executed": 0,
+  "test_methods_passed": 0,
+  "dependency_install_or_network_attempted": false,
+  "status": "FAIL_CLOSED_COLLECTION_UNVERIFIED_PYTEST_UNAVAILABLE"
+}

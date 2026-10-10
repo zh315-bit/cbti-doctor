@@ -1,0 +1,245 @@
+{
+  "candidate_file_assessment": [
+    {
+      "change_required": "YES",
+      "file": "adaptive_agent/answer_generation.py",
+      "functions": [
+        "authorize_final_answer",
+        "bounded_authorization_response",
+        "build_answer_context",
+        "LLMAnswerGenerator.answer"
+      ],
+      "priority": "MUST_CHANGE",
+      "regression_cases_addressed": [
+        "V4-KQ-01",
+        "V4-KQ-06",
+        "V4-KQ-10",
+        "V4-CA-03",
+        "V4-CA-05",
+        "V4-CA-08",
+        "V4-CA-10",
+        "V4-PD-02",
+        "V4-PD-05",
+        "V4-PD-10",
+        "V4-DA-07"
+      ],
+      "safety_risk": "HIGH if excluded individualized action leaks; mitigate with explicit scope projection, content-basis refs, output validation, and PD06/PD08 tests.",
+      "why": "Replace the generic one-sentence bounded fallback with a supported-content bounded generation contract and validate excluded scope; keep the current dependency decision semantics."
+    },
+    {
+      "change_required": "YES",
+      "file": "adaptive_agent/runner.py",
+      "functions": [
+        "AdaptiveAgentLoop.run_turn",
+        "AdaptiveAgentLoop._snapshot"
+      ],
+      "priority": "MUST_CHANGE",
+      "regression_cases_addressed": [
+        "V4-KQ-01",
+        "V4-KQ-06",
+        "V4-KQ-10",
+        "V4-CA-03",
+        "V4-CA-05",
+        "V4-CA-08",
+        "V4-CA-10",
+        "V4-PD-02",
+        "V4-PD-05",
+        "V4-PD-10",
+        "V4-DA-07"
+      ],
+      "safety_risk": "HIGH if mode routing bypasses authorization; keep one gate before every answer path and do not change dependency classes.",
+      "why": "Dispatch the four explicit modes, preserve mode/exclusion/basis through terminal snapshots, and fail closed if bounded mode has empty basis or a hard precondition."
+    },
+    {
+      "change_required": "YES",
+      "file": "evaluation/recorder.py",
+      "functions": [
+        "serialize_state",
+        "EvaluationRecorder.record"
+      ],
+      "priority": "MUST_CHANGE",
+      "regression_cases_addressed": [
+        "V4-KQ-01",
+        "V4-KQ-06",
+        "V4-KQ-10",
+        "V4-CA-03",
+        "V4-CA-05",
+        "V4-CA-08",
+        "V4-CA-10",
+        "V4-PD-02",
+        "V4-PD-05",
+        "V4-PD-10",
+        "V4-DA-07"
+      ],
+      "safety_risk": "LOW semantic risk; persistence-only. Schema omission/conflict must fail trace validation.",
+      "why": "Mirror structured answer_authorization into final_state while preserving existing state_history in persisted formal trace; verify exact equality."
+    },
+    {
+      "change_required": "YES",
+      "file": "new V3 identity-bound runner/trace adapter",
+      "functions": [
+        "formal case trace projection"
+      ],
+      "priority": "MUST_CHANGE",
+      "regression_cases_addressed": [
+        "V4-KQ-01",
+        "V4-KQ-06",
+        "V4-KQ-10",
+        "V4-CA-03",
+        "V4-CA-05",
+        "V4-CA-08",
+        "V4-CA-10",
+        "V4-PD-02",
+        "V4-PD-05",
+        "V4-PD-10",
+        "V4-DA-07"
+      ],
+      "safety_risk": "HIGH identity/one-shot risk; inherit protocol mechanics, new freeze and identity, no V2 runner mutation.",
+      "why": "V2 runner is frozen; V3 needs a new identity and a trace projection that carries DECISION/terminal snapshots and final_state fields without changing case behavior outside the V3 Agent."
+    },
+    {
+      "change_required": "NO",
+      "file": "adaptive_agent/dependency_resolver.py",
+      "functions": [
+        "DependencyResolver.resolve",
+        "validity_critical_fields"
+      ],
+      "priority": "DO_NOT_CHANGE",
+      "regression_cases_addressed": [],
+      "safety_risk": "Very high if semantics are relaxed.",
+      "why": "Step 9.49 evidence supports answer-content underproduction; no optional-to-required misclassification is established. Preserve UNKNOWN/DEFERRED/UNAVAILABLE and typed dependencies."
+    },
+    {
+      "change_required": "NO",
+      "file": "adaptive_agent/preconditions.py",
+      "functions": [
+        "evaluate_preconditions",
+        "classify_validity_critical"
+      ],
+      "priority": "DO_NOT_CHANGE",
+      "regression_cases_addressed": [],
+      "safety_risk": "Very high if softening required or hard preconditions.",
+      "why": "No precondition defect is evidenced in the 11 answer-generation cases; keep PD06 required validity handling and PD08 personalization protection."
+    },
+    {
+      "change_required": "NO",
+      "file": "scripts/run_step9_35a_matched_treatment.py / scripts/run_step9_43a_treatment_v2.py",
+      "functions": [
+        "frozen V2 execution adapter"
+      ],
+      "priority": "DO_NOT_CHANGE",
+      "regression_cases_addressed": [],
+      "safety_risk": "High one-shot/freeze integrity risk.",
+      "why": "These identities are historical/frozen. Do not mutate them; create a new V3 identity-bound adapter/freeze when implementation is authorized."
+    },
+    {
+      "change_required": "YES",
+      "file": "tests/test_step9_50_bounded_answer_contract.py and tests/test_step9_50_traceability_contract.py",
+      "functions": [
+        "synthetic mode/content/safety and persistence tests"
+      ],
+      "priority": "MUST_CHANGE",
+      "regression_cases_addressed": [
+        "V4-KQ-01",
+        "V4-KQ-06",
+        "V4-KQ-10",
+        "V4-CA-03",
+        "V4-CA-05",
+        "V4-CA-08",
+        "V4-CA-10",
+        "V4-PD-02",
+        "V4-PD-05",
+        "V4-PD-10",
+        "V4-DA-07"
+      ],
+      "safety_risk": "Insufficient coverage could allow unsafe bounded leakage or generic fallback recurrence.",
+      "why": "Implement the 40-case synthetic plan before any formal V4 access."
+    }
+  ],
+  "do_not_change": [
+    "adaptive_agent/dependency_resolver.py",
+    "adaptive_agent/preconditions.py",
+    "scripts/run_step9_35a_matched_treatment.py / scripts/run_step9_43a_treatment_v2.py"
+  ],
+  "must_change": [
+    "adaptive_agent/answer_generation.py",
+    "adaptive_agent/runner.py",
+    "evaluation/recorder.py",
+    "new V3 identity-bound runner/trace adapter",
+    "tests/test_step9_50_bounded_answer_contract.py and tests/test_step9_50_traceability_contract.py"
+  ],
+  "no_dependency_or_precondition_relaxation": true,
+  "ordered_steps": [
+    {
+      "current_behavior": "AUTHORIZED_BOUNDED is served by a deterministic generic limitation template even when supported content exists.",
+      "files": [
+        "adaptive_agent/answer_generation.py"
+      ],
+      "invariant": "Unsatisfied required dependencies and hard preconditions remain unsatisfied and excluded.",
+      "proposed_behavior": "Build authorized bounded context from supported basis and excluded scope; generate/validate materially responsive bounded content; empty basis is not answered.",
+      "step": 1,
+      "tests": [
+        "T03-T15",
+        "T21-T30"
+      ]
+    },
+    {
+      "current_behavior": "Gate runs before answer, but mode routing uses generic response for bounded and blocked outcomes and final mode is not mirrored in terminal final_state.",
+      "files": [
+        "adaptive_agent/runner.py"
+      ],
+      "invariant": "Every answer path consults the same gate; no mode bypass.",
+      "proposed_behavior": "Explicit mode dispatch, same authorization decision object persisted before and after generation; block modes do not emit answer to blocked decision.",
+      "step": 2,
+      "tests": [
+        "T01-T02",
+        "T16-T20",
+        "T24-T35"
+      ]
+    },
+    {
+      "current_behavior": "state_history has decision authorization, but final_state serializer omits answer_context_audit; V2 trace wrapper is frozen.",
+      "files": [
+        "evaluation/recorder.py",
+        "new V3 identity-bound runner/trace adapter"
+      ],
+      "invariant": "Observational persistence only; no execution-semantic changes from tracing.",
+      "proposed_behavior": "Mirror explicit contract fields in final_state and formal trace; audit equality of DECISION, terminal, and final-state representations.",
+      "step": 3,
+      "tests": [
+        "T31-T35",
+        "T40"
+      ]
+    },
+    {
+      "current_behavior": "Step 9.49 has 20 proposed tests, none run.",
+      "files": [
+        "tests/test_step9_50_bounded_answer_contract.py",
+        "tests/test_step9_50_traceability_contract.py"
+      ],
+      "invariant": "PD06, PD08, status epistemics, and hard preconditions remain enforced.",
+      "proposed_behavior": "Implement all 40 synthetic tests with case-derived but anonymized semantic fixtures; no benchmark payload/answer branches.",
+      "step": 4,
+      "tests": [
+        "T01-T40"
+      ]
+    },
+    {
+      "current_behavior": "Only V2 identity exists; no V3 implementation or evaluation authority.",
+      "files": [
+        "V3 freeze/identity artifacts and one-shot runner contract"
+      ],
+      "invariant": "No V4 access before new freeze and independent authorization.",
+      "proposed_behavior": "After implementation and offline regression pass, create new V3 Agent/runner/trace/schema identity and freeze; separately seek any future authorization.",
+      "step": 5,
+      "tests": [
+        "identity-contract",
+        "exactly-once",
+        "output-namespace",
+        "trace-schema"
+      ]
+    }
+  ],
+  "should_change": [],
+  "status": "DESIGN_ONLY_NOT_IMPLEMENTED"
+}

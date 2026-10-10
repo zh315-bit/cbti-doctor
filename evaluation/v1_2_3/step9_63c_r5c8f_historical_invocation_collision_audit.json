@@ -1,0 +1,112 @@
+{
+  "artifact_type": "STEP9_63C_R5C8F_HISTORICAL_INVOCATION_COLLISION_AUDIT",
+  "step": "9.63c-r5c8f",
+  "timestamp_utc": "2026-10-07T18:20:25Z",
+  "status": "PASS_HISTORICAL_INVOCATION_COLLISION_PROOF_OFFLINE_VALIDATED",
+  "root_cause": "No existing authoritative preflight invocation history covers a generated ID whose producer invocation fails before writing its target artifact. Target nonexistence proves only path availability.",
+  "read_only_forensics": {
+    "authorization_lifecycle_ledger": "evaluation/v1_2_3/authorization_lifecycle_events.jsonl; tracks authorization lifecycle, not preflight IDs",
+    "transaction_journals": "evaluation/v4_runs/.execution_transactions; track authorization, attempt, namespace and transaction identities, not preflight IDs",
+    "attempt_ledgers_and_namespace_markers": "evaluation/v4_runs; track formal attempts and namespace claims, not preflight IDs",
+    "preflight_artifacts": "Only cover invocations that produced a target file; cannot cover a failure before artifact write",
+    "evaluation_audits_and_record": "May mention selected invocation IDs, but are not a complete durable claim record for every producer invocation",
+    "existing_authoritative_source_found": false,
+    "existing_source_covers_failed_invocation_without_artifact": false,
+    "prior_collision_proof_scope": "Existing target path collision only; no historical ID claim proof",
+    "prior_real_invocation_ids_use_incompatible_prefix": true,
+    "current_id_format": "preflight-step9_63c_r5-r5c8b-<32 lowercase hex>"
+  },
+  "repair": {
+    "new_invocation_registry_required": true,
+    "authoritative_historical_invocation_source": "NEW_MINIMAL_APPEND_ONLY_REGISTRY",
+    "registry_path": "evaluation/v1_2_3/step9_63c_r5c8f_preflight_invocations.jsonl",
+    "registry_initial_sha256": "ca76a6a95b870ff113cf3d1380a47aaa2f28c7c4a145af2f133d9e06575a67ae",
+    "registry_initial_claim_count": 0,
+    "schema": {
+      "genesis": ["event_type", "producer", "registry_version"],
+      "claim": ["event_type", "invocation_id", "created_at_utc", "producer"]
+    },
+    "modified_code": "scripts/preflight_step9_63c_r5c7_mac_local.py",
+    "producer_sha256_after": "49bffbf03b47a4455ba18f20544159115e72e1df71b5ea5545f0193ff8a9a920",
+    "historical_invocation_id_exists_helper": true,
+    "claim_order": [
+      "Open existing registry without following symlinks and take an exclusive file lock",
+      "Generate candidate UUID4 ID while locked",
+      "Strictly parse the append-only registry and reject malformed or duplicate records",
+      "Reject historical ID collision even when target is absent",
+      "Reject existing target path independently",
+      "Append claim event, flush and fsync before returning ID and target",
+      "Continue read-only eligibility, runtime connectivity and artifact write only after durable claim"
+    ],
+    "target_collision_check_separate_from_historical_id_check": true,
+    "historical_invocation_id_check": "PASS",
+    "target_collision_check": "PASS",
+    "failed_invocation_without_artifact_covered": true,
+    "crash_semantics": "A claim becomes part of the producer invocation lifecycle only after the claim event is fsynced. Crash after that point preserves non-reusability even without a preflight artifact. A torn partial row invalidates the registry and fails closed; a crash before claim durability returns no invocation ID.",
+    "missing_unreadable_malformed_duplicate_history": "FAIL_CLOSED",
+    "concurrent_same_id_claims": "EXACTLY_ONE_ACCEPTED",
+    "secret_values_recorded": false,
+    "authorization_lifecycle_semantics_changed": false,
+    "transaction_or_attempt_ledger_replaced": false
+  },
+  "freeze_impact": {
+    "runner_freeze_revision": "r10",
+    "runner_freeze_member_count": 20,
+    "changed_r10_freeze_member_count": 0,
+    "current_runner_matches_r10_freeze": true,
+    "new_runner_freeze_required": false,
+    "producer_is_r10_member": false,
+    "registry_is_r10_member": false,
+    "frozen_consumer_modified": false,
+    "frozen_consumer_sha256": "ce8363555b734e39802236eaa2ee31233359ee367acf1094630836f924256cf2"
+  },
+  "current_eligibility": {
+    "current_agent_matches_v3_freeze": true,
+    "v3_agent_sha256": "085d338ed95bbef7370c41cf97ca0d6653ffdfd2f1c924eef4b7123dfdea4607",
+    "frozen_evaluation_identities_match": true,
+    "case_count": 40,
+    "task_distribution": {
+      "KNOWLEDGE_QA": 10,
+      "CAUSE_ASSESSMENT": 10,
+      "PERSONALIZED_DECISION": 10,
+      "DATA_ANALYSIS": 10
+    },
+    "historical_pin_count": 55,
+    "historical_pin_mismatch_count": 0,
+    "step9_58_provenance_gap": "PRESENT_AND_DOCUMENTED",
+    "active_executable_authorization_count": 1,
+    "authorization_derived_state": "ISSUED_EXECUTABLE",
+    "authorization_consumed": false,
+    "authorization_consumption_count": 0,
+    "attempt_exists": false,
+    "namespace_exists": false,
+    "namespace_reserved": false,
+    "transaction_started": false,
+    "authorization_manifest_sha256": "beac52d1ed3bc11efa02b1a924a8abc7b210171bf5cc1b7910011a6ef9741241",
+    "old_r5c7e_preflight_sha256": "f07d8380e0d445938e0a4bd7b212380459a983ccfe8f04bc49ab2996b43cf4b7"
+  },
+  "offline_validation": {
+    "test_matrix_path": "evaluation/v1_2_3/step9_63c_r5c8f_test_matrix.json",
+    "new_registry_test_count": 16,
+    "focused_regression_test_count": 70,
+    "failures": 0,
+    "errors": 0,
+    "py_compile": "PASS",
+    "network_used": false
+  },
+  "hard_boundary": {
+    "real_mac_local_preflight_run": false,
+    "model_inference_executed": false,
+    "agent_evaluation_executed": false,
+    "rag_evaluation_executed": false,
+    "http_inference_request_sent": false,
+    "formal_v4_case_executed": 0,
+    "authorization_consumed": false,
+    "attempt_created": false,
+    "namespace_created_or_reserved": false,
+    "transaction_created": false,
+    "new_authorization_issued": false,
+    "terminal_command_generated": false
+  },
+  "ready_for_fresh_mac_local_preflight_preparation": true
+}

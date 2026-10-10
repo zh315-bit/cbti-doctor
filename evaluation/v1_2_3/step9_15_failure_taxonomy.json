@@ -1,0 +1,138 @@
+{
+  "step": "9.15",
+  "source_evaluation": "clean-evaluation-v1_2_3-20260922-01",
+  "constraints": {
+    "agent_modified": false,
+    "benchmark_v2_rerun": false,
+    "benchmark_v3_accessed": false
+  },
+  "observed_baseline": {
+    "cases": 40,
+    "overall": 68.275,
+    "ask_total": 55,
+    "ask_per_case": 1.375,
+    "pd_ask_per_case": 2.5,
+    "harmful_failures": 3,
+    "critical_failures": 0,
+    "ask_quality": {
+      "necessary": 8,
+      "useful_but_optional": 21,
+      "redundant": 14,
+      "irrelevant": 12,
+      "redundant_plus_irrelevant_rate": 0.4727
+    }
+  },
+  "failure_classes": [
+    {
+      "failure_class": "A_dependency_formation_failure",
+      "affected_cases": ["V2-KQ-02", "V2-KQ-05", "V2-DA-07", "V2-KQ-04", "V2-KQ-10"],
+      "primary_cases": ["V2-KQ-02", "V2-KQ-05", "V2-DA-07"],
+      "first_divergence_layer": "Goal -> Goal Semantics / Task Classification -> Dependency Formation",
+      "root_cause": "The runtime turns education-only knowledge goals into PERSONALIZED_DECISION and turns a diary-comparison goal into a generic personalized-data goal. Consequently the required EVIDENCE or RESOURCE(sleep_diary) dependency is absent before candidate generation. KQ-04/KQ-10 show the related inverse overreach: an education goal receives an unrelated diary resource dependency.",
+      "downstream_effects": [
+        "No RETRIEVE candidate for KQ-02/KQ-05",
+        "No READ_DIARY candidate for DA-07",
+        "Repeated acquisition of bedtime, wake_time and sleep_onset_latency",
+        "Answer scope becomes a safe limitation instead of the requested explanation or comparison",
+        "Harmful-failure count includes KQ-02, KQ-05 and DA-07"
+      ],
+      "evidence": {
+        "KQ-02_path": ["ASK", "ASK", "ASK", "ANSWER"],
+        "KQ-05_path": ["ASK", "ASK", "ASK", "ANSWER"],
+        "DA-07_path": ["ASK", "ASK", "ASK", "ASK", "ANSWER"],
+        "dependency_presence": "empty for all three primary cases",
+        "related_overreach": "KQ-04/KQ-10 retain EVIDENCE but add unavailable diary resource"
+      },
+      "architecture_level_or_case_specific": "architecture_level",
+      "repair_candidate": "Introduce a typed goal-semantics to dependency contract with mutually exclusive task intents where appropriate: education requires EVIDENCE, diary comparison requires RESOURCE(sleep_diary), and personalized decisions require only the minimum decision dependencies. Validate dependency completeness before ASK candidate generation.",
+      "expected_metric_impact": {
+        "safety": "reduce harmful goal/dependency misrepresentation",
+        "task_completion": "recover KQ explanations and DA-07 comparison",
+        "interaction_cost": "remove up to 10 directly downstream irrelevant ASK in the three primary cases",
+        "overall_score": "likely positive, magnitude not estimable from this trace-only analysis"
+      },
+      "regression_risk": "medium: overly strict intent exclusivity could suppress legitimate personalization or evidence needs; requires negative tests for mixed goals.",
+      "priority": "P1"
+    },
+    {
+      "failure_class": "B_tool_to_state_projection_failure",
+      "affected_cases": ["V2-DA-01", "V2-DA-02", "V2-DA-03", "V2-DA-04", "V2-DA-05", "V2-DA-08"],
+      "first_divergence_layer": "READ_DIARY -> Tool Result / Fixture Adapter -> State Projection",
+      "root_cause": "The diary tool/fixture emits summary-shaped payloads that do not satisfy the canonical Diary Contract V2. The validator correctly fails closed, but the payload does not expose source entry cardinality, dated entries, coverage, provenance, and aggregation semantics needed for projection.",
+      "downstream_effects": [
+        "projection_status=invalid",
+        "source_entry_count and projected_entry_count are null",
+        "source_dates and projected_dates are empty",
+        "no diary facts reach State, analysis, or answer context",
+        "bounded unavailability answer instead of requested analysis",
+        "no fabricated diary values and no safety-critical false claim"
+      ],
+      "evidence": {
+        "source_fixture_counts": {"DA-01": 7, "DA-02": 7, "DA-03": 14, "DA-04": 7, "DA-05": 14, "DA-08": 11},
+        "DA-08_expected_window_days": 14,
+        "DA-08_known_missing_entry_indices": [4, 9, 12],
+        "projection_metadata": "null/empty for all six cases",
+        "state_facts_written": false
+      },
+      "architecture_level_or_case_specific": "architecture_level",
+      "repair_candidate": "Define one canonical diary projection contract and adapter: preserve raw entries, source count, date coverage, missing-day information, field-level provenance, and aggregation inputs; validate at the tool boundary and emit a typed invalid/unavailable status only when the contract is genuinely unsatisfied.",
+      "expected_metric_impact": {
+        "safety": "preserve current fail-closed protection while preventing silent data loss",
+        "task_completion": "improve DA-01/02/03/04/05/08 analysis completion",
+        "interaction_cost": "little direct ASK effect; may reduce fallback questions in future runs",
+        "overall_score": "likely improve DATA_ANALYSIS and evidence/answer-scope dimensions"
+      },
+      "regression_risk": "medium-high: permissive adapters could reintroduce fabricated or misdated diary facts; contract tests and fail-closed validation are mandatory.",
+      "priority": "P1"
+    },
+    {
+      "failure_class": "C_low_value_information_acquisition",
+      "affected_cases": ["V2-KQ-02", "V2-KQ-05", "V2-CA-01", "V2-CA-05", "V2-CA-09", "V2-PD-01", "V2-PD-06", "V2-PD-09", "V2-PD-10", "V2-DA-07"],
+      "first_divergence_layer": "Usually effective-requirement generation and missing-information detection; in some cases Information Value Estimation / Candidate Ranking; only secondarily Decision Policy",
+      "root_cause": "Broad generic sleep requirements are materialized as optional acquisition for goals that need a narrower fact set. State omissions then make already-known or nonessential fields appear missing. The estimator frequently labels these candidates HIGH/decision_changing even when the frozen-goal review classifies them redundant or irrelevant. Candidate ranking and policy select the resulting candidates, but they are downstream of the overbroad requirement and missing-state representation.",
+      "downstream_effects": [
+        "55 total ASK; 26 redundant or irrelevant (47.27%)",
+        "10 directly irrelevant ASK are downstream of class A dependency errors",
+        "16 additional low-value ASK occur outside those three primary dependency cases",
+        "18 of the 26 low-value ASK have HIGH information_value or HIGH decision-impact metadata",
+        "PD remains the interaction bottleneck at 2.500 ASK/case"
+      ],
+      "evidence": {
+        "ask_counts": {"necessary": 8, "useful_but_optional": 21, "redundant": 14, "irrelevant": 12},
+        "outside_class_A_low_value_asks": 16,
+        "low_value_with_high_estimate": 18,
+        "low_value_with_requirement_link": 21,
+        "trace_pattern": "effective_requirements commonly contain 11 generic fields; dependencies_considered is empty in broad CA/PD/DA-07 paths"
+      },
+      "architecture_level_or_case_specific": "architecture_level_with_state-integrity_interaction",
+      "repair_candidate": "Add a typed requirement-to-value pipeline: distinguish hard preconditions from optional context, require a counterfactual decision impact for each ASK, treat provenance-backed approximate/range facts as available, and rank only after resource and semantic-equivalence checks. Preserve a conservative answer path when no high-value acquisition remains.",
+      "expected_metric_impact": {
+        "safety": "must not reduce necessary ASK or cause premature personalized answers",
+        "task_completion": "modest unless paired with class A; can improve scope and answer continuity",
+        "interaction_cost": "primary opportunity to reduce redundant/irrelevant ASK and PD ASK/case",
+        "overall_score": "likely improve interaction-efficiency dimension; exact delta not inferable"
+      },
+      "regression_risk": "high: under-asking, over-trusting approximate facts, and premature answers are plausible if thresholds are tightened without task-specific negative tests.",
+      "priority": "P2"
+    },
+    {
+      "failure_class": "D_retrieval_support_mismatch",
+      "affected_cases": ["V2-KQ-03", "V2-KQ-08", "V2-KQ-09"],
+      "first_divergence_layer": "Evidence retrieval coverage / answer-support alignment",
+      "root_cause": "A retrieval and evidence item exist, but the final answer does not use directly supporting evidence and falls back to limitation language.",
+      "downstream_effects": ["knowledge answer incompleteness", "reduced evidence-answer score"],
+      "architecture_level_or_case_specific": "likely architecture-level but underdetermined by current trace",
+      "repair_candidate": "Defer until dependency and projection classes are addressed; then audit evidence-to-claim binding with a separate trace study.",
+      "expected_metric_impact": "not estimated",
+      "regression_risk": "unknown",
+      "priority": "P3_defer"
+    }
+  ],
+  "not_now": [
+    "Do not tune Candidate Ranking or Decision Policy in isolation before fixing goal/dependency formation.",
+    "Do not loosen diary validation merely to increase DATA_ANALYSIS scores; current fail-closed behavior prevented fabricated facts.",
+    "Do not optimize ASK/case toward zero; necessary ASK were only 8/55 and under-asking is an explicit regression risk.",
+    "Do not repair retrieval-support mismatch from these traces alone.",
+    "Do not infer generalization, clinical effectiveness, or statistical significance from this 40-case development/regression set."
+  ]
+}

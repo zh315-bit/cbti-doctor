@@ -1,0 +1,69 @@
+{
+  "audit_id": "step9_29a-v4-preflight-contract-20260926-01",
+  "audit_type": "READ_ONLY_SEMANTIC_AUDIT_AND_CONTRACT_REPAIR",
+  "contract_mismatch_class": "NAMING_ONLY_CONTRACT_MISMATCH",
+  "semantic_equivalence_proven": true,
+  "canonical_ready_field": "ready_for_final_authorization",
+  "canonical_v4_access_field": "benchmark_v4_accessed_by_agent",
+  "producer_artifact_consumer_flow": {
+    "legacy_canonical_producer": {
+      "path": "scripts/run_step9_28_v4_heldout.py",
+      "writes": {
+        "ready_for_final_authorization": "all frozen/network/model/smoke/lineage/schema/no-prior-attempt gates",
+        "benchmark_v4_accessed_by_agent": "constant false in local preflight; no V4 case is sent to Agent"
+      }
+    },
+    "recovery_producer_before_repair": {
+      "path": "scripts/run_step9_28a_v4_local_preflight.py",
+      "writes": {
+        "ready_for_v4_final_authorization": "the same frozen/network/model/smoke/lineage/no-prior-attempt gate",
+        "benchmark_v4_accessed_for_evaluation": "constant false; no V4 case is used for evaluation"
+      }
+    },
+    "reconciled_producer": {
+      "path": "scripts/run_step9_28a_v4_local_preflight.py",
+      "sha256": "e45c5980715bac6a2e8a84f4785439eff98143415e1f6915a8bd0ee53aa6ac8a",
+      "writes": "Both canonical and alias fields from the same readiness boolean and the same access boolean."
+    },
+    "consumer": {
+      "path": "scripts/run_step9_28_v4_heldout.py",
+      "sha256": "fddaa09803dd1df27da81f3793929d15a3f6d5d29c1060842ecbf138a76b1d06",
+      "reads": "Either spelling for each safety fact, rejecting missing, non-boolean, or conflicting values; requires ready=true and accessed=false."
+    }
+  },
+  "safety_invariant_proof": {
+    "ready": "Both spellings represent eligibility for a later final authorization, not authorization issuance. They are derived from identical preflight gates.",
+    "access": "Both spellings represent that local preflight did not send V4 case input through the Agent or formal evaluation. The recovery producer has no V4 case read/execution path."
+  },
+  "changes": {
+    "agent_modified": false,
+    "benchmark_v4_modified": false,
+    "scoring_modified": false,
+    "metrics_modified": false,
+    "evaluation_semantics_modified": false,
+    "runner_modified": true,
+    "runner_refreeze_required": true,
+    "old_runner_freeze_superseded": "evaluation/v1_2_3/step9_28_v4_runner_freeze.json",
+    "new_runner_freeze": "evaluation/v1_2_3/step9_29a_v4_runner_freeze.json",
+    "new_runner_freeze_sha256": "bc87a277e7c155513570036f3138828f47291c0b826a44ff76c18c2bae9cc35b",
+    "new_evaluation_infrastructure_identity": "evaluation/v1_2_3/step9_29a_v4_evaluation_infrastructure_identity.json"
+  },
+  "deterministic_contract_tests": {
+    "canonical_only": "PASS",
+    "aliases_only": "PASS",
+    "canonical_and_matching_aliases": "PASS",
+    "canonical_and_conflicting_aliases": "FAIL_CLOSED_PASS",
+    "readiness_false": "FAIL_CLOSED_PASS",
+    "benchmark_accessed_true": "FAIL_CLOSED_PASS",
+    "missing_semantic_state": "FAIL_CLOSED_PASS",
+    "total": "7/7 PASS"
+  },
+  "focused_regression": "6/6 PASS: tests.test_step9_28_v4_runner and tests.test_step9_28a_v4_local_preflight",
+  "new_local_preflight_command": ".venv/bin/python scripts/run_step9_28a_v4_local_preflight.py",
+  "command_executed_in_step9_29a": false,
+  "authorization_issued": false,
+  "prior_v4_attempt": false,
+  "v4_case_executed": 0,
+  "v4_score_generated": false,
+  "ready_for_new_local_preflight": true
+}

@@ -23,6 +23,12 @@ if str(ROOT) not in sys.path:
 
 FREEZE_DIR = ROOT / "evaluation" / "v1_2_3"
 OUT_ROOT = ROOT / "evaluation" / "v4_runs"
+from scripts.v3_runner_identity import resolve_current_freeze
+
+CURRENT_V3_FREEZE_NAME = "step9_63c_r5c4_runner_freeze_r9.json"
+
+def current_v3_freeze() -> dict[str, Any]:
+    return resolve_current_freeze(ROOT)[0]
 TREATMENT_FREEZE = FREEZE_DIR / "step9_33a_treatment_freeze.json"
 BASELINE_FREEZE = FREEZE_DIR / "step9_26_final_candidate_freeze.json"
 HARNESS_FREEZE = FREEZE_DIR / "step9_13a_harness_freeze.json"
@@ -233,6 +239,33 @@ def _existing_identity_in_ledgers(run_root: Path, auth_id: str, attempt_id: str)
     return False
 
 
+def assert_transaction_execution_root(
+    run_root: Path | None, evaluation_id: str, authorization_id: str,
+    attempt_id: str, transaction_id: str,
+) -> Path:
+    """Bind the parent to the exact journal/allocator-owned attempt container."""
+    from scripts.v3_execution_transaction import RUN_ROOT as transaction_run_root
+    from scripts.v3_namespace_allocator import MARKER, derive_namespace_id
+
+    namespace_id = derive_namespace_id(evaluation_id, authorization_id, attempt_id)
+    expected_root = transaction_run_root / namespace_id
+    if (run_root is None or run_root != expected_root or run_root.is_symlink()
+            or not run_root.is_dir()):
+        raise RuntimeError("parent execution root differs from transaction-resolved root")
+    marker_path = run_root / MARKER
+    if marker_path.is_symlink() or not marker_path.is_file():
+        raise RuntimeError("transaction namespace reservation marker missing")
+    marker = read_json(marker_path)
+    if any(marker.get(key) != value for key, value in {
+        "evaluation_id": evaluation_id, "authorization_id": authorization_id,
+        "attempt_id": attempt_id, "namespace_id": namespace_id,
+        "transaction_id": transaction_id,
+        "status": "RESERVED_FAIL_CLOSED_ON_INTERRUPTION",
+    }.items()):
+        raise RuntimeError("transaction namespace reservation ownership mismatch")
+    return run_root
+
+
 def validate_authorization(
     auth_path: Path,
     evaluation_id: str,
@@ -240,13 +273,25 @@ def validate_authorization(
     attempt_id: str,
     supplied: dict[str, str],
     *,
-    run_root: Path = OUT_ROOT,
+    run_root: Path | None = None,
     frozen: dict[str, Any] | None = None,
+    transaction_id: str | None = None,
 ) -> tuple[dict, dict]:
     """Validate IDs, authorization, all pins, uniqueness and output isolation."""
     if not all(isinstance(value, str) and SAFE_ID.fullmatch(value)
                for value in (evaluation_id, authorization_id, attempt_id)):
         raise RuntimeError("invalid evaluation/authorization/attempt identity")
+    if transaction_id is not None:
+        run_root = assert_transaction_execution_root(
+            run_root, evaluation_id, authorization_id, attempt_id, transaction_id)
+    elif run_root is None:
+        run_root = OUT_ROOT
+    from scripts.authorization_lifecycle import assert_executable_authorization, assert_not_retired
+
+    if transaction_id is None:
+        assert_executable_authorization(authorization_id)
+    else:
+        assert_not_retired(authorization_id)
     pins = frozen if frozen is not None else current_frozen_bindings()
     if not pins.get("all_frozen_hashes_match"):
         raise RuntimeError("frozen artifact or treatment runner hash mismatch")
@@ -289,6 +334,27 @@ def validate_authorization(
             raise RuntimeError(f"authorization {key} mismatch")
     if auth.get("consumed") is not False or auth.get("consumed_at_utc") is not None:
         raise RuntimeError("authorization is consumed or consumption state is missing")
+    if auth.get("authorization_status") != "ISSUED_NOT_CONSUMED" or auth.get("authorization_consumption_count") != 0:
+        raise RuntimeError("authorization lifecycle shape mismatch")
+    if transaction_id is not None:
+        from scripts.v3_execution_transaction import TRANSACTION_ROOT, require_committed
+        from scripts.v3_namespace_allocator import derive_namespace_id
+
+        freeze = current_v3_freeze()
+        committed = require_committed(
+            transaction_root=TRANSACTION_ROOT, authorization_id=authorization_id,
+            attempt_id=attempt_id,
+            namespace_id=derive_namespace_id(evaluation_id, authorization_id, attempt_id),
+            expected_bindings={
+                "transaction_id": transaction_id,
+                "runner_sha256": pins["treatment_runner_sha256"],
+                "agent_sha256": pins["treatment_agent_sha256"],
+                "evaluation_identity_sha256": freeze["bound_identities_sha256"],
+                "case_set_sha256": pins["case_order_fingerprint_sha256"],
+            },
+        )
+        if committed.get("commit_point") is not True:
+            raise RuntimeError("transaction lacks durable commit marker")
     if not auth.get("authorized_by"):
         raise RuntimeError("authorization issuer is missing")
 
@@ -320,12 +386,51 @@ def run(
     attempt_id: str,
     authorization_file: Path,
     supplied: dict[str, str],
+    transaction_id: str | None = None,
+    execution_root: Path | None = None,
 ) -> None:
+    from scripts.authorization_lifecycle import lifecycle_lock
+
+    if transaction_id is None:
+        from scripts.authorization_lifecycle import assert_not_retired
+
+        assert_not_retired(authorization_id)
+        raise RuntimeError("formal parent runner requires committed transaction identity")
+    if execution_root is None:
+        raise RuntimeError("formal parent runner requires explicit transaction-resolved root")
+
+    # The journal claim is the one-time physical-attempt gate. It precedes
+    # mkdir and ledger creation; a crash after this point is not resumable.
     auth, pins = validate_authorization(authorization_file, evaluation_id, authorization_id,
-                                        attempt_id, supplied)
-    out = OUT_ROOT / evaluation_id
-    out.mkdir(mode=0o700, parents=False, exist_ok=False)
-    _fsync_directory(OUT_ROOT)
+                                        attempt_id, supplied, run_root=execution_root,
+                                        transaction_id=transaction_id)
+    from scripts.v3_execution_transaction import (
+        LOCK_PATH as TRANSACTION_LOCK_PATH, TRANSACTION_ROOT, claim_attempt,
+    )
+    from scripts.v3_namespace_allocator import derive_namespace_id
+
+    claim_attempt(
+        transaction_root=TRANSACTION_ROOT, lock_path=TRANSACTION_LOCK_PATH,
+        authorization_id=authorization_id, transaction_id=transaction_id,
+        expected_bindings={
+            "attempt_id": attempt_id,
+            "namespace_id": derive_namespace_id(evaluation_id, authorization_id, attempt_id),
+            "runner_sha256": pins["treatment_runner_sha256"],
+            "agent_sha256": pins["treatment_agent_sha256"],
+            "evaluation_identity_sha256": current_v3_freeze()["bound_identities_sha256"],
+            "case_set_sha256": pins["case_order_fingerprint_sha256"],
+        },
+    )
+
+    # Serialize the final retirement check and namespace creation with the
+    # lifecycle transition, so neither operation can race past the other.
+    with lifecycle_lock():
+        auth, pins = validate_authorization(authorization_file, evaluation_id, authorization_id,
+                                            attempt_id, supplied, run_root=execution_root,
+                                            transaction_id=transaction_id)
+        out = execution_root / evaluation_id
+        out.mkdir(mode=0o700, parents=False, exist_ok=False)
+        _fsync_directory(execution_root)
     ledger_path = out / "attempts.jsonl"
     try:
         fd = os.open(ledger_path, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
@@ -335,6 +440,7 @@ def run(
     started = completed = 0
     base_event = {"evaluation_id": evaluation_id, "authorization_id": authorization_id,
                   "attempt_id": attempt_id, "comparison_class": COMPARISON_CLASS,
+                  "transaction_id": transaction_id,
                   "treatment_agent_sha256": pins["treatment_agent_sha256"],
                   "runner_sha256": pins["treatment_runner_sha256"]}
     with os.fdopen(fd, "w", encoding="utf-8") as ledger:
@@ -373,6 +479,26 @@ def run(
             ):
                 raise RuntimeError("frozen identity changed before first treatment case")
 
+            from scripts.v3_execution_transaction import (
+                LOCK_PATH as TRANSACTION_LOCK_PATH, TRANSACTION_ROOT,
+                append_case_started, require_committed,
+            )
+            from scripts.v3_namespace_allocator import derive_namespace_id
+
+            transaction_bindings = {
+                "transaction_id": transaction_id,
+                "runner_sha256": pins["treatment_runner_sha256"],
+                "agent_sha256": pins["treatment_agent_sha256"],
+                "evaluation_identity_sha256": current_v3_freeze()["bound_identities_sha256"],
+                "case_set_sha256": pins["case_order_fingerprint_sha256"],
+            }
+            require_committed(
+                transaction_root=TRANSACTION_ROOT, authorization_id=authorization_id,
+                attempt_id=attempt_id,
+                namespace_id=derive_namespace_id(evaluation_id, authorization_id, attempt_id),
+                expected_bindings=transaction_bindings,
+            )
+
             from adaptive_agent.flask_app import _create_adaptive_chat_service, create_app
             from scripts import run_step9_28_v4_heldout as production_case_path
 
@@ -389,8 +515,14 @@ def run(
                 previous_evaluation_id = production_case_path.EVALUATION_ID
                 production_case_path.EVALUATION_ID = evaluation_id
                 try:
-                    for case in cases:
+                    for ordinal, case in enumerate(cases, 1):
                         started += 1
+                        append_case_started(
+                            transaction_root=TRANSACTION_ROOT, lock_path=TRANSACTION_LOCK_PATH,
+                            authorization_id=authorization_id, transaction_id=transaction_id,
+                            case_id=case["case_id"], ordinal=ordinal,
+                            expected_bindings=transaction_bindings,
+                        )
                         event("STARTED", scope="CASE", case_id=case["case_id"])
                         raw, result = production_case_path._case_result(case, service, app, capture)
                         _append(raw_stream, raw)
@@ -411,6 +543,7 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument("--evaluation-id", required=True)
     parser.add_argument("--authorization-id", required=True)
     parser.add_argument("--attempt-id", required=True)
+    parser.add_argument("--transaction-id", required=True)
     parser.add_argument("--authorization-file", required=True, type=Path)
     parser.add_argument("--treatment-agent-sha256", required=True)
     parser.add_argument("--benchmark-sha256", required=True)
@@ -430,7 +563,7 @@ def main(argv: list[str] | None = None) -> None:
         "matched_protocol_sha256": args.matched_protocol_sha256,
     }
     run(args.evaluation_id, args.authorization_id, args.attempt_id,
-        args.authorization_file, supplied)
+        args.authorization_file, supplied, transaction_id=args.transaction_id)
 
 
 def supplied_hash_keys() -> tuple[str, ...]:

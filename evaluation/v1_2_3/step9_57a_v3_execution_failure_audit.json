@@ -1,0 +1,51 @@
+{
+  "artifact_type": "STEP9_57A_V3_EXECUTION_FAILURE_AUDIT",
+  "step": "9.57a",
+  "status": "PASS_READ_ONLY_FORENSICS",
+  "created_at_utc": "2026-10-01T14:29:10Z",
+  "exclusive_create_targets_absent_before_write": true,
+  "checks": {
+    "step9_55_failed_ledger_hash_match": true,
+    "step9_57_ledger_hash_match": true,
+    "step9_57_empty_results_hash_match": true,
+    "step9_57_empty_traces_hash_match": true,
+    "step9_56_authorization_artifacts_hash_match": true,
+    "step9_55b_r3_freeze_and_audit_hash_match": true,
+    "v3_agent_hash_match": true,
+    "runner_hash_match": true,
+    "frozen_model_tool_rag_and_evaluation_bindings_match": true,
+    "runner_preserves_production_configuration": true,
+    "formal_attempt_history_preserved": true,
+    "no_production_model_agent_or_rag_calls_during_forensics": true,
+    "no_v4_case_rerun": true,
+    "no_new_authorization_or_attempt": true,
+    "no_scoring_adjudication_aggregation_or_comparison": true,
+    "no_v5_access": true,
+    "only_three_new_step9_57a_forensics_artifacts_created": true
+  },
+  "formal_boundary": {
+    "authorization_consumed_in_step9_57": true,
+    "cases_started": 1,
+    "cases_completed": 0,
+    "case_results_count": 0,
+    "raw_traces_count": 0,
+    "failed_case": "V4-KQ-01",
+    "failure_type": "APIConnectionError",
+    "failure_class": "A_DNS_LOCAL_NETWORK_ENVIRONMENT_FAILURE",
+    "v3_behavioral_failure_inferred": false
+  },
+  "current_dns_diagnostic": {
+    "performed": true,
+    "operation": "getaddrinfo only",
+    "hostname": "api.deepseek.com",
+    "result": "FAILED_GAIERROR",
+    "https_or_model_request_performed": false
+  },
+  "authorization_or_retry_issued": false,
+  "attempt_created_by_step9_57a": false,
+  "v4_case_executed_by_step9_57a": 0,
+  "model_agent_rag_called_by_step9_57a": false,
+  "historical_artifacts_modified": false,
+  "source_forensics": "evaluation/v1_2_3/step9_57a_v3_execution_failure_forensics.json",
+  "human_report": "evaluation/v1_2_3/step9_57a_v3_execution_failure_forensics.md"
+}

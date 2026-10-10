@@ -1,0 +1,116 @@
+{
+  "adjudication_readiness_class": "READY_FULL_40",
+  "agent_called": false,
+  "aggregate_generated": false,
+  "audit_type": "LINEAGE_SIDECAR_AND_ADJUDICATION_ELIGIBILITY",
+  "derived_lineage_repair_count": 7,
+  "derived_repair_case_ids": [
+    "V4-CA-02",
+    "V4-CA-04",
+    "V4-PD-03",
+    "V4-PD-04",
+    "V4-PD-05",
+    "V4-PD-06",
+    "V4-PD-10"
+  ],
+  "formal_lineage_ready_count": 28,
+  "formal_v4_artifacts_modified": false,
+  "frozen_identity_audit": {
+    "agent_expected_aggregate_sha256": "4e2bffea0d7eaa9299074a960df84a1806b3ae9d4930662929abc58ca5b2ae79",
+    "benchmark_v4_matches_sealed_manifest": true,
+    "benchmark_v4_sha256": "8b8c72092fcd7544e69d5d2ecd13610c7bb4c14210fca330698b3e5ab3f01d7f",
+    "current_agent_matches_final_freeze": true,
+    "final_candidate_manifest_sha256": "2de40b76bf0ad6d6c3be68294fb8b390d8c6e675c328ac59e22ec78ec010282e",
+    "metric_registry_expected_sha256": "de9f348cb1dff66410c03095abdaffcc256f53679718482870e4aa4d80c75056",
+    "metric_registry_matches_freeze": true,
+    "one_shot_rules_expected_sha256": "1c7ed4ef47865b117bc943f3e0ad9a859f4f74cfb4e8001f723ac5532af140d0",
+    "one_shot_rules_match_freeze": true,
+    "scoring_expected_aggregate_sha256": "f742a8f8af7c8747818dadad81621c15d12d74f50538019913dfe18ab53bf59b",
+    "scoring_rubric_matches_freeze": true
+  },
+  "full_adjudication_case_count": 40,
+  "input_manifest_sha256": "23594bd0d621a92bfcf7afd8649c869b905e186c4c4c61f1d839b556fd42d927",
+  "model_called": false,
+  "non_adjudicatable_case_count": 0,
+  "overall_generated": false,
+  "partial_adjudication_case_count": 0,
+  "protocol_compatibility": {
+    "case_exclusion_allowed": "NOT_SPECIFIED",
+    "denominator_adjustment_allowed": "NOT_SPECIFIED",
+    "evidence": [
+      "evaluation/v1_2_3/step9_26_v4_protocol.md",
+      "evaluation/benchmark_v1_1_scoring.md",
+      "evaluation/v1_2_3/step9_26_v4_metric_registry.json"
+    ],
+    "lineage_limited_scoring": "NOT_SPECIFIED",
+    "missing_dimension_policy": "NOT_SPECIFIED",
+    "partial_adjudication_allowed": "NOT_SPECIFIED"
+  },
+  "rag_called": false,
+  "reviewer_scores_populated": false,
+  "sidecar_case_count": 40,
+  "sidecar_complete_count": 35,
+  "sidecar_incomplete_count": 5,
+  "step": "9.30a.2",
+  "true_failure_dimension_audit": {
+    "V4-DA-01": {
+      "dimensions": {
+        "action_resource_selection": "SCORABLE_WITH_LINEAGE_LIMITATION",
+        "evidence_answer_scope": "SCORABLE_WITH_LINEAGE_LIMITATION",
+        "facts_state_integrity": "SCORABLE_WITH_LINEAGE_LIMITATION",
+        "goal_alignment": "SCORABLE",
+        "interaction_efficiency": "SCORABLE"
+      },
+      "eligibility": "FULL"
+    },
+    "V4-DA-03": {
+      "dimensions": {
+        "action_resource_selection": "SCORABLE_WITH_LINEAGE_LIMITATION",
+        "evidence_answer_scope": "SCORABLE_WITH_LINEAGE_LIMITATION",
+        "facts_state_integrity": "SCORABLE_WITH_LINEAGE_LIMITATION",
+        "goal_alignment": "SCORABLE",
+        "interaction_efficiency": "SCORABLE"
+      },
+      "eligibility": "FULL"
+    },
+    "V4-DA-06": {
+      "dimensions": {
+        "action_resource_selection": "SCORABLE_WITH_LINEAGE_LIMITATION",
+        "evidence_answer_scope": "SCORABLE_WITH_LINEAGE_LIMITATION",
+        "facts_state_integrity": "SCORABLE_WITH_LINEAGE_LIMITATION",
+        "goal_alignment": "SCORABLE",
+        "interaction_efficiency": "SCORABLE"
+      },
+      "eligibility": "FULL"
+    },
+    "V4-DA-09": {
+      "dimensions": {
+        "action_resource_selection": "SCORABLE_WITH_LINEAGE_LIMITATION",
+        "evidence_answer_scope": "SCORABLE_WITH_LINEAGE_LIMITATION",
+        "facts_state_integrity": "SCORABLE_WITH_LINEAGE_LIMITATION",
+        "goal_alignment": "SCORABLE",
+        "interaction_efficiency": "SCORABLE"
+      },
+      "eligibility": "FULL"
+    },
+    "V4-DA-10": {
+      "dimensions": {
+        "action_resource_selection": "SCORABLE_WITH_LINEAGE_LIMITATION",
+        "evidence_answer_scope": "SCORABLE_WITH_LINEAGE_LIMITATION",
+        "facts_state_integrity": "SCORABLE_WITH_LINEAGE_LIMITATION",
+        "goal_alignment": "SCORABLE",
+        "interaction_efficiency": "SCORABLE"
+      },
+      "eligibility": "FULL"
+    }
+  },
+  "true_lineage_failure_case_ids": [
+    "V4-DA-01",
+    "V4-DA-03",
+    "V4-DA-06",
+    "V4-DA-09",
+    "V4-DA-10"
+  ],
+  "true_lineage_failure_count": 5,
+  "v4_rerun": false
+}

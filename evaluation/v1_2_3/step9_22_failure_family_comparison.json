@@ -1,0 +1,68 @@
+{
+  "comparison_type": "failure-family only, not paired scoring or causal before/after comparison",
+  "v2_role": "development/diagnostic benchmark, 40 different cases",
+  "v3_role": "once-held-out formal set, 32 cases; now inspected and future development/regression only",
+  "families": [
+    {
+      "family": "Dependency Formation Failure",
+      "status": "REDUCED",
+      "v2_evidence": "V2-KQ-02 and KQ-05 formed no EVIDENCE dependency; V2-DA-07 missed an authorized diary RESOURCE dependency. V2-KQ-04/10 formed false diary dependencies.",
+      "v3_evidence": "All eight V3 knowledge cases formed/satisfied EVIDENCE and all eight DA cases READ_DIARY; however V3-DA-07 formed a diary dependency after direct numeric facts failed extraction, and V3-PD-04 formed a questionable VALIDITY_STATE dependency for latency.",
+      "limit": "Different goals/fixtures mean the exact V2 miss is not independently retested. This is evidence of wider coverage, not complete resolution."
+    },
+    {
+      "family": "Tool → State Projection Failure",
+      "status": "NOT_EVALUABLE",
+      "v2_evidence": "Six available V2 summary-shaped fixtures lacked cardinality/date/provenance and correctly failed closed, leaving analyses incomplete.",
+      "v3_evidence": "Six V3 available diaries were entry-shaped and projected 4/4, 6/6, 3/3, 5/5, 4/4, 5/5 with valid dates/provenance. No valid summary-shaped V3 fixture exercised the historical mismatch.",
+      "limit": "V3 supports entry-shaped integrity, not a claim that the V2 summary-shaped contract mismatch is resolved."
+    },
+    {
+      "family": "Explicit Fact Missing from State",
+      "status": "PERSISTENT",
+      "v2_evidence": "Step 9.14 reported 57 of 58 evaluator-labeled explicit query fact fields absent from first State across its V2 set.",
+      "v3_evidence": "Examples include V3-PD-05's three explicit clock values and V3-DA-07's 6/7/5-hour durations absent from State; CA/PD contextual facts were also frequently omitted.",
+      "limit": "The V2 57/58 denominator and V3 qualitative audit are not directly comparable rates."
+    },
+    {
+      "family": "Low-Value ASK",
+      "status": "PERSISTENT",
+      "v2_evidence": "Frozen V2 adjudication: 26/55 redundant or irrelevant ASK = 47.27%.",
+      "v3_evidence": "Frozen V3 adjudication: 19/39 redundant or irrelevant ASK = 48.72%, including 12 primary information-value overestimates and six explicit-fact misses.",
+      "limit": "Different case content, so the 1.45 percentage-point difference is descriptive, not a causal trend."
+    },
+    {
+      "family": "Evidence Retrieved but Unused",
+      "status": "PERSISTENT",
+      "v2_evidence": "V2-KQ-03/08/09 each had one retrieved item but the final answer did not give the requested supported explanation; Step 9.14 could not disambiguate retrieval coverage versus use.",
+      "v3_evidence": "Nine of 12 retrieved V3 cases stored evidence but the frozen lexical goal-term filter excluded it before the answer model; two materially used evidence and KQ-07 appropriately abstained on inadequate definitions.",
+      "limit": "Parent family persists, but the V3 submechanism is now localized to answer-context construction; do not retroactively assign V2 the same cause."
+    },
+    {
+      "family": "Answer-layer Semantic Distortion",
+      "status": "NEW",
+      "v2_evidence": "Step 9.14 observed zero contradiction of known State.",
+      "v3_evidence": "V3-DA-08 final text says the 2026-09-04 record is absent while a valid projected entry exists with only its duration unfilled; frozen critical type ANSWER_CONTRADICTS_KNOWN_STATE.",
+      "limit": "One observed case; no population rate or recurrence claim."
+    },
+    {
+      "family": "Resource Unavailable Handling",
+      "status": "NOT_EVALUABLE",
+      "v2_evidence": "Invalid summary-shaped payloads failed closed without fake diary data.",
+      "v3_evidence": "V3-DA-04 and DA-07 returned UNAVAILABLE and wrote no diary facts; neither repeated READ_DIARY.",
+      "limit": "No failure in this safety behavior in either set; it is a preserved guard, not a resolved failure family."
+    },
+    {
+      "family": "Bounded Answer Failure",
+      "status": "PERSISTENT",
+      "v2_evidence": "V2 had safe but incomplete diary answers and some knowledge answers stopping after insufficient evidence.",
+      "v3_evidence": "V3-KQ-01/03/04/06/08 and CA-04/06/PD-01 often over-bounded after evidence was filtered; V3-DA-01/02 also omitted requested descriptive comparisons despite valid data.",
+      "limit": "A safe refusal is not automatically a failure. These examples are failures because available relevant State evidence or valid data could have supported at least a partial goal-aligned answer."
+    }
+  ],
+  "persistent": ["Explicit Fact Missing from State", "Low-Value ASK", "Evidence Retrieved but Unused", "Bounded Answer Failure"],
+  "reduced": ["Dependency Formation Failure"],
+  "resolved": [],
+  "new": ["Answer-layer Semantic Distortion"],
+  "not_evaluable": ["Tool → State Projection Failure", "Resource Unavailable Handling"]
+}

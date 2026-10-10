@@ -1,0 +1,15 @@
+{
+  "step": "9.63c-r5c10r",
+  "target": "tests/test_step9_58a_r1_namespace_allocator.py",
+  "collection_method": "Python unittest.TestLoader.discover with exact target filename; suite built but not run",
+  "command": "PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -B -c 'import unittest; loader = unittest.TestLoader(); suite = loader.discover(\"tests\", pattern=\"test_step9_58a_r1_namespace_allocator.py\"); print(suite.countTestCases(), len(loader.errors))'",
+  "collection_succeeded": true,
+  "tests_collected": 9,
+  "collection_import_errors": 0,
+  "collected_is_not_passed": true,
+  "other_eleven_b2_modules_collected_in_this_step": false,
+  "full_regression_rerun": false,
+  "runtime_identity_dependent_test": "NamespaceAllocatorTests.test_reserved_fresh_namespace_requires_transaction_for_post_first_case_guard",
+  "runtime_identity_dependent_test_executed": false,
+  "runtime_blocker": "The real frozen adapter requires the absent formal r11 current-runner pointer; no synthetic formal pointer was created."
+}

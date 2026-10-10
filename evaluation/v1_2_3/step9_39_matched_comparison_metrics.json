@@ -1,0 +1,394 @@
+{
+  "absolute_deltas_treatment_minus_baseline": {
+    "ask_counts": {
+      "IRRELEVANT_ASK_COUNT": {
+        "absolute_delta": 0,
+        "baseline": 8,
+        "treatment": 8
+      },
+      "NECESSARY_ASK_COUNT": {
+        "absolute_delta": 1,
+        "baseline": 0,
+        "treatment": 1
+      },
+      "REDUNDANT_ASK_COUNT": {
+        "absolute_delta": -1,
+        "baseline": 1,
+        "treatment": 0
+      },
+      "TOTAL_ASK_COUNT": {
+        "absolute_delta": 4,
+        "baseline": 9,
+        "treatment": 13
+      },
+      "USEFUL_OPTIONAL_ASK_COUNT": {
+        "absolute_delta": 4,
+        "baseline": 0,
+        "treatment": 4
+      }
+    },
+    "critical_failures": {
+      "absolute_delta": 2,
+      "baseline": 0,
+      "relative_change": "NOT_APPLICABLE_ZERO_BASELINE",
+      "treatment": 2
+    },
+    "dimension_means": {
+      "action_resource_selection": {
+        "absolute_delta": 4.575,
+        "baseline": 13.9,
+        "treatment": 18.475
+      },
+      "evidence_answer_scope": {
+        "absolute_delta": 1.075,
+        "baseline": 15.5,
+        "treatment": 16.575
+      },
+      "facts_state_integrity": {
+        "absolute_delta": 1.225,
+        "baseline": 16.1,
+        "treatment": 17.325
+      },
+      "goal_alignment": {
+        "absolute_delta": 2.2,
+        "baseline": 13.675,
+        "treatment": 15.875
+      },
+      "interaction_efficiency": {
+        "absolute_delta": 0.05,
+        "baseline": 11.325,
+        "treatment": 11.375
+      }
+    },
+    "execution": {
+      "LATENCY_MEAN_MS": {
+        "absolute_delta": 3204.666,
+        "baseline": 6453.3615,
+        "treatment": 9658.0275
+      },
+      "READ_DIARY_PER_CASE": {
+        "absolute_delta": 0.0,
+        "baseline": 0.25,
+        "treatment": 0.25
+      },
+      "RETRIEVE_PER_CASE": {
+        "absolute_delta": 0.45,
+        "baseline": 0.325,
+        "treatment": 0.775
+      },
+      "STEPS_PER_CASE": {
+        "absolute_delta": 0.55,
+        "baseline": 1.8,
+        "treatment": 2.35
+      },
+      "TOOL_CALLS_PER_CASE": {
+        "absolute_delta": 0.45,
+        "baseline": 0.575,
+        "treatment": 1.025
+      },
+      "TURNS_PER_CASE": {
+        "absolute_delta": 0.1,
+        "baseline": 1.225,
+        "treatment": 1.325
+      }
+    },
+    "harmful_failures": {
+      "absolute_delta": -15,
+      "baseline": 16,
+      "relative_change": -0.9375,
+      "treatment": 1
+    },
+    "low_value_ask_rate": {
+      "absolute_delta": -0.3846,
+      "baseline": 1.0,
+      "percentage_point_delta": -38.46,
+      "relative_change": -0.3846,
+      "treatment": 0.6154
+    },
+    "necessary_ask_preservation_rate": {
+      "absolute_delta": 0.0,
+      "baseline": 0.25,
+      "percentage_point_delta": 0.0,
+      "treatment": 0.25
+    },
+    "overall": {
+      "absolute_delta": 9.125,
+      "baseline": 70.5,
+      "treatment": 79.625
+    },
+    "task_completion_count": {
+      "absolute_delta": 4,
+      "baseline": 16,
+      "treatment": 20
+    },
+    "task_completion_rate": {
+      "absolute_delta": 0.1,
+      "baseline": 0.4,
+      "percentage_point_delta": 10.0,
+      "treatment": 0.5
+    },
+    "task_means": {
+      "CAUSE_ASSESSMENT": {
+        "absolute_delta": 20.0,
+        "baseline": 59.1,
+        "treatment": 79.1
+      },
+      "DATA_ANALYSIS": {
+        "absolute_delta": 4.7,
+        "baseline": 78.1,
+        "treatment": 82.8
+      },
+      "KNOWLEDGE_QA": {
+        "absolute_delta": 0.0,
+        "baseline": 82.2,
+        "treatment": 82.2
+      },
+      "PERSONALIZED_DECISION": {
+        "absolute_delta": 11.8,
+        "baseline": 62.6,
+        "treatment": 74.4
+      }
+    },
+    "valid_case_count": {
+      "absolute_delta": 1,
+      "baseline": 37,
+      "treatment": 38
+    },
+    "validity_rate": {
+      "absolute_delta": 0.025,
+      "baseline": 0.925,
+      "percentage_point_delta": 2.5,
+      "treatment": 0.95
+    }
+  },
+  "case_count": 40,
+  "case_id_pair_key": "exact identical case_id",
+  "case_matched_comparison": true,
+  "case_order_fingerprint_sha256": "d930455e417935337a6e3459defbdc3ee3829b71786fbd8438ef092b62429e68",
+  "case_regression_ids": {
+    "completion": [
+      "V4-DA-08"
+    ],
+    "critical": [
+      "V4-PD-06",
+      "V4-PD-08"
+    ],
+    "harmful": [],
+    "low_value_ask": [
+      "V4-PD-05"
+    ],
+    "necessary_ask": [
+      "V4-PD-03"
+    ],
+    "validity": [
+      "V4-PD-06",
+      "V4-PD-08"
+    ]
+  },
+  "case_transition_counts": {
+    "completion": {
+      "FAIL_TO_FAIL": 19,
+      "FAIL_TO_PASS": 5,
+      "PASS_TO_FAIL": 1,
+      "PASS_TO_PASS": 15
+    },
+    "critical_failure": {
+      "NO_TO_YES": 2,
+      "SAME": 38
+    },
+    "harmful_failure": {
+      "SAME": 25,
+      "YES_TO_NO": 15
+    },
+    "low_value_ask_increased_cases": 1,
+    "validity": {
+      "INVALID_TO_VALID": 3,
+      "SAME": 35,
+      "VALID_TO_INVALID": 2
+    }
+  },
+  "claim_blocking_criteria": [
+    "Frozen claim policy M5: critical failures must not increase; baseline 0/40, treatment 2/40 (+2 cases, +5 percentage points)."
+  ],
+  "comparison_class": "POST_HOC_MATCHED_FROZEN_BASELINE",
+  "frozen_baseline_comparison": true,
+  "interpretation_boundary": {
+    "causal_effect": false,
+    "clinical_effectiveness": false,
+    "statistical_significance": false,
+    "unseen_generalization": false,
+    "v4_is_development_postmortem_evidence": true,
+    "v5_required_for_new_generalization_claims": true
+  },
+  "preregistered_randomized_comparison": false,
+  "primary_metrics": {
+    "M1_LOW_VALUE_ASK_RATE": {
+      "baseline": 1.0,
+      "delta": -0.3846,
+      "direction": "IMPROVED",
+      "percentage_point_delta": -38.46,
+      "treatment": 0.6154
+    },
+    "M2_TASK_COMPLETION": {
+      "baseline": 0.4,
+      "delta": 0.1,
+      "direction": "IMPROVED",
+      "percentage_point_delta": 10.0,
+      "treatment": 0.5
+    },
+    "M3_HARMFUL_FAILURES": {
+      "baseline": 16,
+      "baseline_rate": 0.4,
+      "delta": -15,
+      "direction": "IMPROVED",
+      "percentage_point_delta": -37.5,
+      "relative_change": -0.9375,
+      "treatment": 1,
+      "treatment_rate": 0.025
+    },
+    "M4_NECESSARY_ASK_PRESERVATION": {
+      "baseline": {
+        "denominator": 4,
+        "formula": "acquired oracle-required targets / all oracle-required targets",
+        "numerator": 1,
+        "source_case_ids": [
+          "V4-CA-01",
+          "V4-CA-02",
+          "V4-CA-03",
+          "V4-CA-04",
+          "V4-CA-05",
+          "V4-CA-06",
+          "V4-CA-07",
+          "V4-CA-08",
+          "V4-CA-09",
+          "V4-CA-10",
+          "V4-DA-01",
+          "V4-DA-02",
+          "V4-DA-03",
+          "V4-DA-04",
+          "V4-DA-05",
+          "V4-DA-06",
+          "V4-DA-07",
+          "V4-DA-08",
+          "V4-DA-09",
+          "V4-DA-10",
+          "V4-KQ-01",
+          "V4-KQ-02",
+          "V4-KQ-03",
+          "V4-KQ-04",
+          "V4-KQ-05",
+          "V4-KQ-06",
+          "V4-KQ-07",
+          "V4-KQ-08",
+          "V4-KQ-09",
+          "V4-KQ-10",
+          "V4-PD-01",
+          "V4-PD-02",
+          "V4-PD-03",
+          "V4-PD-04",
+          "V4-PD-05",
+          "V4-PD-06",
+          "V4-PD-07",
+          "V4-PD-08",
+          "V4-PD-09",
+          "V4-PD-10"
+        ],
+        "value": 0.25
+      },
+      "case_level_target_discordance": {
+        "gained_target_count": 1,
+        "lost_case_ids": [
+          "V4-PD-03"
+        ]
+      },
+      "direction": "UNCHANGED",
+      "treatment": {
+        "denominator": 4,
+        "formula": "acquired oracle-required targets / all oracle-required targets",
+        "numerator": 1,
+        "source_case_ids": [
+          "V4-CA-01",
+          "V4-CA-02",
+          "V4-CA-03",
+          "V4-CA-04",
+          "V4-CA-05",
+          "V4-CA-06",
+          "V4-CA-07",
+          "V4-CA-08",
+          "V4-CA-09",
+          "V4-CA-10",
+          "V4-DA-01",
+          "V4-DA-02",
+          "V4-DA-03",
+          "V4-DA-04",
+          "V4-DA-05",
+          "V4-DA-06",
+          "V4-DA-07",
+          "V4-DA-08",
+          "V4-DA-09",
+          "V4-DA-10",
+          "V4-KQ-01",
+          "V4-KQ-02",
+          "V4-KQ-03",
+          "V4-KQ-04",
+          "V4-KQ-05",
+          "V4-KQ-06",
+          "V4-KQ-07",
+          "V4-KQ-08",
+          "V4-KQ-09",
+          "V4-KQ-10",
+          "V4-PD-01",
+          "V4-PD-02",
+          "V4-PD-03",
+          "V4-PD-04",
+          "V4-PD-05",
+          "V4-PD-06",
+          "V4-PD-07",
+          "V4-PD-08",
+          "V4-PD-09",
+          "V4-PD-10"
+        ],
+        "value": 0.25
+      }
+    },
+    "M5_CRITICAL_FAILURES": {
+      "baseline": 0,
+      "baseline_rate": 0.0,
+      "delta": 2,
+      "direction": "REGRESSED",
+      "percentage_point_delta": 5.0,
+      "relative_change": "NOT_APPLICABLE_ZERO_BASELINE",
+      "treatment": 2,
+      "treatment_rate": 0.05
+    }
+  },
+  "randomized_paired_trial": false,
+  "recommended_next_path": "B_REPAIR_CRITICAL_FAILURE_REGRESSION_BEFORE_V5",
+  "resume_descriptive_matched_comparative_claim_eligible": false,
+  "source_hashes": {
+    "evaluation/benchmarks/benchmark_v4_cases.yaml": "8b8c72092fcd7544e69d5d2ecd13610c7bb4c14210fca330698b3e5ab3f01d7f",
+    "evaluation/benchmarks/benchmark_v4_manifest.json": "b5feb7832b6267d8cff9d25fb2d8cf0043829feb5fd04ec1bea77dba932a13db",
+    "evaluation/v1_2_3/step9_26_v4_metric_registry.json": "de9f348cb1dff66410c03095abdaffcc256f53679718482870e4aa4d80c75056",
+    "evaluation/v1_2_3/step9_30a_v4_run_input_freeze.json": "6b95f6b896da08767bb8861bad0ccf49dcfcc41cb7490e868ca077a83b2c581e",
+    "evaluation/v1_2_3/step9_30b_v4_human_adjudication.jsonl": "85d436955fe2b7ea2448bce94fcb4443d7004140c5b0c4090283f7a0907cd645",
+    "evaluation/v1_2_3/step9_30c_r1_v4_aggregation_audit.json": "1fcf30e863c16948df5aaff242ea84c65731127e48984a08cb5e533f65e997b2",
+    "evaluation/v1_2_3/step9_30c_v4_aggregate_metrics.json": "b8118fd180e434dbda0f8baf5ed5f45d06456a2346c39eec21365ef3f3c5f473",
+    "evaluation/v1_2_3/step9_30c_v4_case_level_summary.jsonl": "70f2a83b3f6ddd5e07161563d64125591e26ea10e7e3d8cb145312eebb411bcb",
+    "evaluation/v1_2_3/step9_34a_baseline_metric_lock.json": "63e33f8dd66109742fdbb2282be437a1af771f5aa1d600306f35916ed5d37203",
+    "evaluation/v1_2_3/step9_34a_claim_policy.json": "4c64896c141dc8feb3789939e1450bcb7bdeb878ed15b27558404c47421aea67",
+    "evaluation/v1_2_3/step9_34a_matched_comparison_protocol.json": "a71ba06090370b576fbba66bc4b005e519ddbabff3021a40c6546fc855f90265",
+    "evaluation/v1_2_3/step9_36_treatment_run_input_freeze.json": "fcda7bfb4b09321385593b583008edd3da2304778d0e72e26e6c843ba66d21cd",
+    "evaluation/v1_2_3/step9_37_treatment_adjudication.jsonl": "60b5c2847ffdb51c43e00351519cb910428a82eb981849dfebefb76112658047",
+    "evaluation/v1_2_3/step9_37_treatment_adjudication_freeze.json": "fe84e4ca0853de680d199807252daa6a2555b1951aa37505924cb15fcc087df5",
+    "evaluation/v1_2_3/step9_38_treatment_aggregate_freeze.json": "3f282aef1fdc3b97bba150f69f42b3814f802a102bb21d3029552c0055b2658c",
+    "evaluation/v1_2_3/step9_38_treatment_aggregate_metrics.json": "59e774679e41158269f7fd203589f44a5a5898f6edfdb4b61f129d420d1ef45f",
+    "evaluation/v1_2_3/step9_38_treatment_case_summary.jsonl": "e58fbe09dfc058acbcd57b0bd4d40b16af1480dc342abe56388f1048d642dd14",
+    "evaluation/v1_2_3/step9_38a_metric_registry_reconciliation_r4.json": "06587be92e733543ad0ce8eb5074a365f8a161d2569b24f21fc140e0873d4b29",
+    "evaluation/v4_runs/heldout-v4-step9_28-20260925-01/heldout-v4-step9_28-20260925-01-attempt-step9_29b-5370d36a64d84a3da4f2585e9b57055a_case_results.jsonl": "77042ae9f5a5a75f7f7efd068e3c182e5725fa709e4f68ae63e58f0bbad0d2ea",
+    "evaluation/v4_runs/heldout-v4-step9_28-20260925-01/heldout-v4-step9_28-20260925-01-attempt-step9_29b-5370d36a64d84a3da4f2585e9b57055a_raw_traces.jsonl": "e1aac03f4dbedf567c625694e084fa23155c8bfc2db1d43c4dffbce158734189",
+    "evaluation/v4_runs/heldout-v4-step9_34a-treatment-20260928-01/attempt-step9_35b-e469d82618d4c51d91d193bb439507e4_case_results.jsonl": "9c926a69f9a4dfd19c559be0cbe8a08abc0902d5728c6f0202ba048b9e67e561",
+    "evaluation/v4_runs/heldout-v4-step9_34a-treatment-20260928-01/attempt-step9_35b-e469d82618d4c51d91d193bb439507e4_raw_traces.jsonl": "0a8483e4125577e860eb0a7c72c399651800eb94d45eeb9481e6b21795302fdf"
+  },
+  "status": "PASS_DESCRIPTIVE_MATCHED_FROZEN_BASELINE_COMPARISON",
+  "step": "9.39"
+}

@@ -1,0 +1,102 @@
+{
+  "adjudication_inputs": [
+    {
+      "path": "evaluation/v1_2_3/step9_30a_v4_run_input_freeze.json",
+      "sha256": "6b95f6b896da08767bb8861bad0ccf49dcfcc41cb7490e868ca077a83b2c581e"
+    },
+    {
+      "path": "evaluation/v1_2_3/step9_30a1_v4_lineage_forensics.json",
+      "sha256": "9db6cc080feffa9688e90cfa60ffdf3c122897243345e31290b99fa507aa4b5f"
+    },
+    {
+      "path": "evaluation/v1_2_3/step9_30a1_v4_lineage_forensics.md",
+      "sha256": "52487d0228527ad773a2db15c64575cc301f04dfa9502597738511705304ffea"
+    },
+    {
+      "path": "evaluation/v1_2_3/step9_30a1_v4_lineage_case_matrix.jsonl",
+      "sha256": "9c3db4396a82e923a6759cfa3418cfb9136a641e1ed3fe4bb7d27f136333d36b"
+    },
+    {
+      "path": "evaluation/v1_2_3/step9_30a2_v4_input_manifest.json",
+      "sha256": "4bb909b00dc72e8a2e5c14496bbe5423cfedaf33c2199af0c513c5b97f991465"
+    },
+    {
+      "path": "evaluation/v1_2_3/step9_30a2_v4_lineage_sidecar.jsonl",
+      "sha256": "a7b39f70b8f2591982f19ae2ea6d66918b4bd4bba0e588300317ec14f0cfd447"
+    },
+    {
+      "path": "evaluation/v1_2_3/step9_30a2_v4_true_failure_adjudication_audit.json",
+      "sha256": "676c400283541a99ac3ff18d8d3b3d47d36da3b4818be1ee9d578725284a8d58"
+    },
+    {
+      "path": "evaluation/v1_2_3/step9_30a_v4_adjudication_template.jsonl",
+      "sha256": "3bec40f5a771497118a85b0e5db7b300f97e7a69408c5259cbba4238267d2c4d"
+    },
+    {
+      "path": "evaluation/v4_runs/heldout-v4-step9_28-20260925-01/attempts.jsonl",
+      "sha256": "5fe1b11cbe0c28ccdfd056e3141862748897dc3b419ff6f05eb3ad8cb847b59f"
+    },
+    {
+      "path": "evaluation/v4_runs/heldout-v4-step9_28-20260925-01/heldout-v4-step9_28-20260925-01-attempt-step9_29b-5370d36a64d84a3da4f2585e9b57055a_case_results.jsonl",
+      "sha256": "77042ae9f5a5a75f7f7efd068e3c182e5725fa709e4f68ae63e58f0bbad0d2ea"
+    },
+    {
+      "path": "evaluation/v4_runs/heldout-v4-step9_28-20260925-01/heldout-v4-step9_28-20260925-01-attempt-step9_29b-5370d36a64d84a3da4f2585e9b57055a_raw_traces.jsonl",
+      "sha256": "e1aac03f4dbedf567c625694e084fa23155c8bfc2db1d43c4dffbce158734189"
+    },
+    {
+      "path": "evaluation/benchmarks/benchmark_v4_manifest.json",
+      "sha256": "b5feb7832b6267d8cff9d25fb2d8cf0043829feb5fd04ec1bea77dba932a13db"
+    },
+    {
+      "path": "evaluation/benchmarks/benchmark_v4_cases.yaml",
+      "sha256": "8b8c72092fcd7544e69d5d2ecd13610c7bb4c14210fca330698b3e5ab3f01d7f"
+    },
+    {
+      "path": "evaluation/benchmark_v1_1_scoring.md",
+      "sha256": "a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899"
+    },
+    {
+      "path": "evaluation/v1_2_3/step9_26_v4_metric_registry.json",
+      "sha256": "de9f348cb1dff66410c03095abdaffcc256f53679718482870e4aa4d80c75056"
+    },
+    {
+      "path": "evaluation/v1_2_3/step9_26_v4_protocol.md",
+      "sha256": "3ef036ab9f24d659f8f057ce7e9039cd7d87f6b50ff0c1d5d34ff75eabc17fa1"
+    },
+    {
+      "path": "evaluation/v1_2_3/step9_28_v4_execution_protocol.md",
+      "sha256": "b8d53793622048da195960f80eb75df1d9983d64e82cf4506fa0b804fae64bec"
+    },
+    {
+      "path": "evaluation/v1_2_3/step9_26_v4_one_shot_rules.md",
+      "sha256": "1c7ed4ef47865b117bc943f3e0ad9a859f4f74cfb4e8001f723ac5532af140d0"
+    }
+  ],
+  "adjudication_path": "evaluation/v1_2_3/step9_30b_v4_human_adjudication.jsonl",
+  "adjudication_report_sha256": "751d355dfc598451cc5ab88513e558c27ab8874a039cdecb6d77441cf1c73721",
+  "adjudication_sha256": "85d436955fe2b7ea2448bce94fcb4443d7004140c5b0c4090283f7a0907cd645",
+  "aggregate_generated": false,
+  "attempt_id": "heldout-v4-step9_28-20260925-01-attempt-step9_29b-5370d36a64d84a3da4f2585e9b57055a",
+  "case_count": 40,
+  "case_results_sha256": "77042ae9f5a5a75f7f7efd068e3c182e5725fa709e4f68ae63e58f0bbad0d2ea",
+  "created_at_utc": "2026-09-27T04:00:56.624643+00:00",
+  "evaluation_id": "heldout-v4-step9_28-20260925-01",
+  "freeze_id": "step9_30b-v4-ai-adjudication-20260926-01",
+  "freeze_kind": "COMPLETED_SINGLE_AI_REVIEWER_ADJUDICATION_NOT_AGGREGATE",
+  "lineage_sidecar_sha256": "a7b39f70b8f2591982f19ae2ea6d66918b4bd4bba0e588300317ec14f0cfd447",
+  "metric_registry_sha256": "de9f348cb1dff66410c03095abdaffcc256f53679718482870e4aa4d80c75056",
+  "overall_generated": false,
+  "raw_traces_sha256": "e1aac03f4dbedf567c625694e084fa23155c8bfc2db1d43c4dffbce158734189",
+  "reviewer_fields_complete": true,
+  "reviewer_identity": "Codex AI reviewer (user-authorized single reviewer; not a human reviewer)",
+  "reviewer_type": "AI; not human",
+  "rubric_sha256": "a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899",
+  "task_type_counts": {
+    "CAUSE_ASSESSMENT": 10,
+    "DATA_ANALYSIS": 10,
+    "KNOWLEDGE_QA": 10,
+    "PERSONALIZED_DECISION": 10
+  },
+  "validation_status": "PASS"
+}

@@ -1,0 +1,49 @@
+{
+  "artifact_type": "STEP9_57B_V3_CONNECTIVITY_AUDIT",
+  "step": "9.57b",
+  "status": "FAIL_CLOSED_DNS",
+  "created_at_utc": "2026-10-01T14:38:07Z",
+  "preflight_artifact": "evaluation/v1_2_3/step9_57b_v3_connectivity_preclearance.json",
+  "preflight_artifact_sha256": "41338b5a87a94c046e53d072a9f8621f024a50908206caab5c3f11f1f07aaab9",
+  "preflight_report": "evaluation/v1_2_3/step9_57b_v3_connectivity_preclearance.md",
+  "exclusive_create_targets_absent_before_write": true,
+  "diagnostics": {
+    "configuration_preclearance": "PASS",
+    "dns_resolution_status": "FAIL",
+    "dns_address_count": 0,
+    "transport_preclearance": "NOT_PERFORMED",
+    "production_api_or_inference_called": false
+  },
+  "integrity": {
+    "historical_results_unchanged": true,
+    "historical_traces_unchanged": true,
+    "historical_ledger_unchanged": true,
+    "step9_56_authorization_artifacts_unchanged": true,
+    "step9_55b_freeze_unchanged": true,
+    "step9_57a_forensics_unchanged": true,
+    "runner_match": true,
+    "v3_agent_match": true,
+    "frozen_identities_match": true
+  },
+  "safe_tests": {
+    "modules": ["tests.test_step9_53_v3_identity_adapter", "tests.test_step9_55a_namespace_lifecycle"],
+    "count": 20,
+    "failures": 0,
+    "errors": 0
+  },
+  "old_authorization_reusable": false,
+  "old_attempt_reusable": false,
+  "new_authorization_issued": false,
+  "new_attempt_created": false,
+  "authorization_consumed_in_step9_57b": false,
+  "formal_v4_case_executed": 0,
+  "model_inference_executed": false,
+  "agent_evaluation_executed": false,
+  "rag_evaluation_executed": false,
+  "adjudication_executed": false,
+  "aggregation_executed": false,
+  "comparison_executed": false,
+  "v5_accessed": false,
+  "ready_for_fresh_v3_authorization": false,
+  "fail_closed_reason": "DNS resolution failed; no transport probe or authorization decision permitted."
+}

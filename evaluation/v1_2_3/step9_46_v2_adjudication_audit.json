@@ -1,0 +1,41 @@
+{
+  "adjudicated_case_count": 40,
+  "adjudication_sha256": "38e178b68d498ca8280901e071e84787342ba460b47ec3c7e9f55f76086eb0f0",
+  "agent_called": false,
+  "aggregation_generated": false,
+  "ask_classifications_complete": true,
+  "audit_type": "PER_CASE_ADJUDICATION_CONSISTENCY_AND_INPUT_INTEGRITY",
+  "comparison_generated": false,
+  "created_at_utc": "2026-09-29T19:49:20.755033+00:00",
+  "critical_failure_case_ids": [],
+  "critical_labels_valid": true,
+  "failure_labels_valid": true,
+  "harmful_failure_case_ids": [],
+  "human_adjudication": false,
+  "inter_rater_reliability": "NOT_MEASURED",
+  "lineage_status_counts_for_provenance_only": {
+    "COMPLETE_DERIVED": 8,
+    "COMPLETE_FORMAL": 27,
+    "INCOMPLETE_FORMAL": 5
+  },
+  "model_called_for_case_execution": false,
+  "no_synthetic_semantic_roots": true,
+  "overall_generated": false,
+  "rag_called": false,
+  "required_reviewer_fields_complete": true,
+  "reviewer_type": "SINGLE_AI_REVIEWER",
+  "same_step9_30b_contract": true,
+  "same_step9_37_dimensions_and_semantics": true,
+  "score_ranges_valid": true,
+  "source_inputs_unchanged_after_review": true,
+  "status": "PASS",
+  "step": "9.46",
+  "task_distribution": {
+    "CAUSE_ASSESSMENT": 10,
+    "DATA_ANALYSIS": 10,
+    "KNOWLEDGE_QA": 10,
+    "PERSONALIZED_DECISION": 10
+  },
+  "v2_rerun": false,
+  "v5_accessed": false
+}

@@ -1,0 +1,18 @@
+{
+  "identity_id": "step9_29a-v4-evaluation-infrastructure-20260926-01",
+  "identity_kind": "RUNNER_CONTRACT_RECONCILIATION_NOT_AUTHORIZATION",
+  "parent_runner_freeze": "evaluation/v1_2_3/step9_28_v4_runner_freeze.json",
+  "new_runner_freeze": "evaluation/v1_2_3/step9_29a_v4_runner_freeze.json",
+  "runner_sha256": "fddaa09803dd1df27da81f3793929d15a3f6d5d29c1060842ecbf138a76b1d06",
+  "preflight_producer": "scripts/run_step9_28a_v4_local_preflight.py",
+  "preflight_producer_sha256": "e45c5980715bac6a2e8a84f4785439eff98143415e1f6915a8bd0ee53aa6ac8a",
+  "change_scope": "Canonical/alias contract reconciliation only; both names are emitted from one readiness boolean and one V4-access boolean.",
+  "agent_modified": false,
+  "benchmark_v4_modified": false,
+  "harness_modified": true,
+  "scoring_modified": false,
+  "metrics_modified": false,
+  "evaluation_semantics_modified": false,
+  "authorization_issued": false,
+  "v4_formal_attempt_created": false
+}

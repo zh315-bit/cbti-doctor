@@ -1,0 +1,58 @@
+{
+  "step": "9.63c-r5c10w",
+  "current_step_tests_collected": 0,
+  "current_step_tests_executed": 0,
+  "current_step_test_failures": "NOT_MEASURED",
+  "historical_results_not_current": [
+    {
+      "source": "step9_63c_r5c10k",
+      "scope": "older full unittest discovery before later isolated test patches",
+      "actual_methods_collected": 603,
+      "passed": 577,
+      "failed": 20,
+      "runtime_errors": 6,
+      "import_error_placeholders": 12,
+      "caution": "Not a current regression result."
+    },
+    {
+      "source": "step9_63c_r5c10t",
+      "scope": "tests/test_step9_63c_r5c7b_diagnostics.py only",
+      "collected": 13,
+      "collection_import_errors": 0,
+      "safe_executed": 9,
+      "safe_passed": 9,
+      "identity_dependent_not_executed": 4,
+      "failed": 0
+    },
+    {
+      "source": "step9_63c_r5c10v",
+      "scope": "tests/test_step9_63c_r3_parent_namespace_repair.py only",
+      "collected": 13,
+      "collection_import_errors": 0,
+      "executed": 0,
+      "passed": 0,
+      "not_executed_due_transaction_or_parent_runner_boundary": 13,
+      "known_real_begin_and_commit_methods": 11,
+      "known_parent_run_methods": 2,
+      "failed": "NOT_MEASURED"
+    },
+    {
+      "source": "step9_63c_r5c10r",
+      "scope": "earlier single-file feasibility pilot",
+      "collected": 9,
+      "safe_executed": 8,
+      "safe_passed": 8,
+      "identity_dependent_not_executed": 1
+    }
+  ],
+  "remaining_nine_modules": {
+    "static_test_definitions": 148,
+    "fresh_collected": "NOT_MEASURED",
+    "fresh_passed": "NOT_MEASURED",
+    "fresh_failed": "NOT_MEASURED",
+    "runtime_identity_dependent_methods": "NOT_DETERMINED",
+    "transaction_side_effect_method_count": "NOT_DETERMINED",
+    "static_import_blocker_paths": 9
+  },
+  "interpretation": "Collection success is not execution pass, unexecuted is not failed, and the intentionally absent r11 formal identity is not a production defect."
+}

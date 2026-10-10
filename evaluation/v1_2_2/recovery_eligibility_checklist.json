@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0",
+  "purpose": "Design-time gate for a distinct Step 9.10 recovery evaluation",
+  "checks": [
+    {"id": "R1", "requirement": "Step 9.8 harness-failure audit is preserved", "required": true},
+    {"id": "R2", "requirement": "Benchmark V2 SHA-256 equals frozen hash", "required": true},
+    {"id": "R3", "requirement": "Scoring rubric SHA-256 equals frozen hash", "required": true},
+    {"id": "R4", "requirement": "Agent behavior source hashes are declared and unchanged or disclosed as confounds", "required": true},
+    {"id": "R5", "requirement": "Only evaluation-harness files intentionally changed", "required": true},
+    {"id": "R6", "requirement": "Harness focused recursion and wiring regression passes", "required": true},
+    {"id": "R7", "requirement": "Input/output and fixture equivalence audit passes", "required": true},
+    {"id": "R8", "requirement": "No case-specific branch or workaround", "required": true},
+    {"id": "R9", "requirement": "Benchmark V3 not accessed", "required": true},
+    {"id": "R10", "requirement": "New human authorization recorded after checks pass", "required": true}
+  ],
+  "failure_policy": "Any failed, missing, or unknown check blocks recovery execution."
+}

@@ -1,0 +1,353 @@
+{
+  "adjudication_eligibility_contract": "Same Step 9.30a.2 trace-evidence availability test; eligibility is not lineage completeness and is not an adjudication score. Frozen protocol does not specify exclusion/partial denominator rules.",
+  "agent_called": false,
+  "aggregate_generated": false,
+  "attempt_id": "attempt-step9_35b-e469d82618d4c51d91d193bb439507e4",
+  "attempt_status": "COMPLETED",
+  "authorization_id": "auth-step9_35b-19cb1db7c4b46f073df71237a8608fc2",
+  "baseline_compared": false,
+  "case_coverage_match": true,
+  "case_id_order_preserved": true,
+  "case_result_count": 40,
+  "comparison_class": "POST_HOC_MATCHED_FROZEN_BASELINE",
+  "derived_lineage_repair_count": 8,
+  "eligibility_dimensions": {
+    "V4-CA-01": {
+      "action_resource_selection": "SCORABLE",
+      "evidence_answer_scope": "SCORABLE",
+      "facts_state_integrity": "SCORABLE",
+      "goal_alignment": "SCORABLE",
+      "interaction_efficiency": "SCORABLE"
+    },
+    "V4-CA-02": {
+      "action_resource_selection": "SCORABLE",
+      "evidence_answer_scope": "SCORABLE",
+      "facts_state_integrity": "SCORABLE",
+      "goal_alignment": "SCORABLE",
+      "interaction_efficiency": "SCORABLE"
+    },
+    "V4-CA-03": {
+      "action_resource_selection": "SCORABLE",
+      "evidence_answer_scope": "SCORABLE",
+      "facts_state_integrity": "SCORABLE",
+      "goal_alignment": "SCORABLE",
+      "interaction_efficiency": "SCORABLE"
+    },
+    "V4-CA-04": {
+      "action_resource_selection": "SCORABLE",
+      "evidence_answer_scope": "SCORABLE",
+      "facts_state_integrity": "SCORABLE",
+      "goal_alignment": "SCORABLE",
+      "interaction_efficiency": "SCORABLE"
+    },
+    "V4-CA-05": {
+      "action_resource_selection": "SCORABLE",
+      "evidence_answer_scope": "SCORABLE",
+      "facts_state_integrity": "SCORABLE",
+      "goal_alignment": "SCORABLE",
+      "interaction_efficiency": "SCORABLE"
+    },
+    "V4-CA-06": {
+      "action_resource_selection": "SCORABLE",
+      "evidence_answer_scope": "SCORABLE",
+      "facts_state_integrity": "SCORABLE",
+      "goal_alignment": "SCORABLE",
+      "interaction_efficiency": "SCORABLE"
+    },
+    "V4-CA-07": {
+      "action_resource_selection": "SCORABLE",
+      "evidence_answer_scope": "SCORABLE",
+      "facts_state_integrity": "SCORABLE",
+      "goal_alignment": "SCORABLE",
+      "interaction_efficiency": "SCORABLE"
+    },
+    "V4-CA-08": {
+      "action_resource_selection": "SCORABLE",
+      "evidence_answer_scope": "SCORABLE",
+      "facts_state_integrity": "SCORABLE",
+      "goal_alignment": "SCORABLE",
+      "interaction_efficiency": "SCORABLE"
+    },
+    "V4-CA-09": {
+      "action_resource_selection": "SCORABLE",
+      "evidence_answer_scope": "SCORABLE",
+      "facts_state_integrity": "SCORABLE",
+      "goal_alignment": "SCORABLE",
+      "interaction_efficiency": "SCORABLE"
+    },
+    "V4-CA-10": {
+      "action_resource_selection": "SCORABLE",
+      "evidence_answer_scope": "SCORABLE",
+      "facts_state_integrity": "SCORABLE",
+      "goal_alignment": "SCORABLE",
+      "interaction_efficiency": "SCORABLE"
+    },
+    "V4-DA-01": {
+      "action_resource_selection": "SCORABLE_WITH_LINEAGE_LIMITATION",
+      "evidence_answer_scope": "SCORABLE_WITH_LINEAGE_LIMITATION",
+      "facts_state_integrity": "SCORABLE_WITH_LINEAGE_LIMITATION",
+      "goal_alignment": "SCORABLE",
+      "interaction_efficiency": "SCORABLE"
+    },
+    "V4-DA-02": {
+      "action_resource_selection": "SCORABLE",
+      "evidence_answer_scope": "SCORABLE",
+      "facts_state_integrity": "SCORABLE",
+      "goal_alignment": "SCORABLE",
+      "interaction_efficiency": "SCORABLE"
+    },
+    "V4-DA-03": {
+      "action_resource_selection": "SCORABLE_WITH_LINEAGE_LIMITATION",
+      "evidence_answer_scope": "SCORABLE_WITH_LINEAGE_LIMITATION",
+      "facts_state_integrity": "SCORABLE_WITH_LINEAGE_LIMITATION",
+      "goal_alignment": "SCORABLE",
+      "interaction_efficiency": "SCORABLE"
+    },
+    "V4-DA-04": {
+      "action_resource_selection": "SCORABLE",
+      "evidence_answer_scope": "SCORABLE",
+      "facts_state_integrity": "SCORABLE",
+      "goal_alignment": "SCORABLE",
+      "interaction_efficiency": "SCORABLE"
+    },
+    "V4-DA-05": {
+      "action_resource_selection": "SCORABLE",
+      "evidence_answer_scope": "SCORABLE",
+      "facts_state_integrity": "SCORABLE",
+      "goal_alignment": "SCORABLE",
+      "interaction_efficiency": "SCORABLE"
+    },
+    "V4-DA-06": {
+      "action_resource_selection": "SCORABLE_WITH_LINEAGE_LIMITATION",
+      "evidence_answer_scope": "SCORABLE_WITH_LINEAGE_LIMITATION",
+      "facts_state_integrity": "SCORABLE_WITH_LINEAGE_LIMITATION",
+      "goal_alignment": "SCORABLE",
+      "interaction_efficiency": "SCORABLE"
+    },
+    "V4-DA-07": {
+      "action_resource_selection": "SCORABLE",
+      "evidence_answer_scope": "SCORABLE",
+      "facts_state_integrity": "SCORABLE",
+      "goal_alignment": "SCORABLE",
+      "interaction_efficiency": "SCORABLE"
+    },
+    "V4-DA-08": {
+      "action_resource_selection": "SCORABLE",
+      "evidence_answer_scope": "SCORABLE",
+      "facts_state_integrity": "SCORABLE",
+      "goal_alignment": "SCORABLE",
+      "interaction_efficiency": "SCORABLE"
+    },
+    "V4-DA-09": {
+      "action_resource_selection": "SCORABLE_WITH_LINEAGE_LIMITATION",
+      "evidence_answer_scope": "SCORABLE_WITH_LINEAGE_LIMITATION",
+      "facts_state_integrity": "SCORABLE_WITH_LINEAGE_LIMITATION",
+      "goal_alignment": "SCORABLE",
+      "interaction_efficiency": "SCORABLE"
+    },
+    "V4-DA-10": {
+      "action_resource_selection": "SCORABLE_WITH_LINEAGE_LIMITATION",
+      "evidence_answer_scope": "SCORABLE_WITH_LINEAGE_LIMITATION",
+      "facts_state_integrity": "SCORABLE_WITH_LINEAGE_LIMITATION",
+      "goal_alignment": "SCORABLE",
+      "interaction_efficiency": "SCORABLE"
+    },
+    "V4-KQ-01": {
+      "action_resource_selection": "SCORABLE",
+      "evidence_answer_scope": "SCORABLE",
+      "facts_state_integrity": "SCORABLE",
+      "goal_alignment": "SCORABLE",
+      "interaction_efficiency": "SCORABLE"
+    },
+    "V4-KQ-02": {
+      "action_resource_selection": "SCORABLE",
+      "evidence_answer_scope": "SCORABLE",
+      "facts_state_integrity": "SCORABLE",
+      "goal_alignment": "SCORABLE",
+      "interaction_efficiency": "SCORABLE"
+    },
+    "V4-KQ-03": {
+      "action_resource_selection": "SCORABLE",
+      "evidence_answer_scope": "SCORABLE",
+      "facts_state_integrity": "SCORABLE",
+      "goal_alignment": "SCORABLE",
+      "interaction_efficiency": "SCORABLE"
+    },
+    "V4-KQ-04": {
+      "action_resource_selection": "SCORABLE",
+      "evidence_answer_scope": "SCORABLE",
+      "facts_state_integrity": "SCORABLE",
+      "goal_alignment": "SCORABLE",
+      "interaction_efficiency": "SCORABLE"
+    },
+    "V4-KQ-05": {
+      "action_resource_selection": "SCORABLE",
+      "evidence_answer_scope": "SCORABLE",
+      "facts_state_integrity": "SCORABLE",
+      "goal_alignment": "SCORABLE",
+      "interaction_efficiency": "SCORABLE"
+    },
+    "V4-KQ-06": {
+      "action_resource_selection": "SCORABLE",
+      "evidence_answer_scope": "SCORABLE",
+      "facts_state_integrity": "SCORABLE",
+      "goal_alignment": "SCORABLE",
+      "interaction_efficiency": "SCORABLE"
+    },
+    "V4-KQ-07": {
+      "action_resource_selection": "SCORABLE",
+      "evidence_answer_scope": "SCORABLE",
+      "facts_state_integrity": "SCORABLE",
+      "goal_alignment": "SCORABLE",
+      "interaction_efficiency": "SCORABLE"
+    },
+    "V4-KQ-08": {
+      "action_resource_selection": "SCORABLE",
+      "evidence_answer_scope": "SCORABLE",
+      "facts_state_integrity": "SCORABLE",
+      "goal_alignment": "SCORABLE",
+      "interaction_efficiency": "SCORABLE"
+    },
+    "V4-KQ-09": {
+      "action_resource_selection": "SCORABLE",
+      "evidence_answer_scope": "SCORABLE",
+      "facts_state_integrity": "SCORABLE",
+      "goal_alignment": "SCORABLE",
+      "interaction_efficiency": "SCORABLE"
+    },
+    "V4-KQ-10": {
+      "action_resource_selection": "SCORABLE",
+      "evidence_answer_scope": "SCORABLE",
+      "facts_state_integrity": "SCORABLE",
+      "goal_alignment": "SCORABLE",
+      "interaction_efficiency": "SCORABLE"
+    },
+    "V4-PD-01": {
+      "action_resource_selection": "SCORABLE",
+      "evidence_answer_scope": "SCORABLE",
+      "facts_state_integrity": "SCORABLE",
+      "goal_alignment": "SCORABLE",
+      "interaction_efficiency": "SCORABLE"
+    },
+    "V4-PD-02": {
+      "action_resource_selection": "SCORABLE",
+      "evidence_answer_scope": "SCORABLE",
+      "facts_state_integrity": "SCORABLE",
+      "goal_alignment": "SCORABLE",
+      "interaction_efficiency": "SCORABLE"
+    },
+    "V4-PD-03": {
+      "action_resource_selection": "SCORABLE",
+      "evidence_answer_scope": "SCORABLE",
+      "facts_state_integrity": "SCORABLE",
+      "goal_alignment": "SCORABLE",
+      "interaction_efficiency": "SCORABLE"
+    },
+    "V4-PD-04": {
+      "action_resource_selection": "SCORABLE",
+      "evidence_answer_scope": "SCORABLE",
+      "facts_state_integrity": "SCORABLE",
+      "goal_alignment": "SCORABLE",
+      "interaction_efficiency": "SCORABLE"
+    },
+    "V4-PD-05": {
+      "action_resource_selection": "SCORABLE",
+      "evidence_answer_scope": "SCORABLE",
+      "facts_state_integrity": "SCORABLE",
+      "goal_alignment": "SCORABLE",
+      "interaction_efficiency": "SCORABLE"
+    },
+    "V4-PD-06": {
+      "action_resource_selection": "SCORABLE",
+      "evidence_answer_scope": "SCORABLE",
+      "facts_state_integrity": "SCORABLE",
+      "goal_alignment": "SCORABLE",
+      "interaction_efficiency": "SCORABLE"
+    },
+    "V4-PD-07": {
+      "action_resource_selection": "SCORABLE",
+      "evidence_answer_scope": "SCORABLE",
+      "facts_state_integrity": "SCORABLE",
+      "goal_alignment": "SCORABLE",
+      "interaction_efficiency": "SCORABLE"
+    },
+    "V4-PD-08": {
+      "action_resource_selection": "SCORABLE",
+      "evidence_answer_scope": "SCORABLE",
+      "facts_state_integrity": "SCORABLE",
+      "goal_alignment": "SCORABLE",
+      "interaction_efficiency": "SCORABLE"
+    },
+    "V4-PD-09": {
+      "action_resource_selection": "SCORABLE",
+      "evidence_answer_scope": "SCORABLE",
+      "facts_state_integrity": "SCORABLE",
+      "goal_alignment": "SCORABLE",
+      "interaction_efficiency": "SCORABLE"
+    },
+    "V4-PD-10": {
+      "action_resource_selection": "SCORABLE",
+      "evidence_answer_scope": "SCORABLE",
+      "facts_state_integrity": "SCORABLE",
+      "goal_alignment": "SCORABLE",
+      "interaction_efficiency": "SCORABLE"
+    }
+  },
+  "evaluation_id": "heldout-v4-step9_34a-treatment-20260928-01",
+  "forensic_type": "READ_ONLY_MATCHED_TREATMENT_LINEAGE_FORENSICS",
+  "formal_artifacts_modified": false,
+  "formal_lineage_false_case_ids": [
+    "V4-CA-02",
+    "V4-CA-04",
+    "V4-PD-01",
+    "V4-PD-03",
+    "V4-PD-04",
+    "V4-PD-05",
+    "V4-PD-09",
+    "V4-PD-10",
+    "V4-DA-01",
+    "V4-DA-03",
+    "V4-DA-06",
+    "V4-DA-09",
+    "V4-DA-10"
+  ],
+  "formal_lineage_false_count": 13,
+  "formal_lineage_ready_count": 27,
+  "full_adjudication_case_count": 40,
+  "generated_at_utc": "2026-09-28T14:28:20.291427+00:00",
+  "input_freeze_sha256": "cfd44ccf112d7c6f0dd92a31c1a201aadd6fef71f02db71dfadde81ffbcbb80d",
+  "model_called": false,
+  "non_adjudicatable_case_count": 0,
+  "partial_adjudication_case_count": 0,
+  "rag_called": false,
+  "raw_execution_counts": {
+    "ASK_count": 13,
+    "READ_DIARY_count": 10,
+    "RETRIEVE_count": 31
+  },
+  "raw_trace_count": 40,
+  "ready_for_step9_37_treatment_adjudication": true,
+  "recomputed_status_counts": {
+    "COMPLETE": 35,
+    "INCOMPLETE": 5,
+    "INDETERMINATE": 0,
+    "NOT_APPLICABLE": 0
+  },
+  "root_cause_counts": {
+    "INDETERMINATE": 0,
+    "NOT_APPLICABLE_MISCLASSIFIED": 0,
+    "PERSISTENCE_BUG": 0,
+    "RUNNER_DERIVATION_BUG": 8,
+    "TRUE_LINEAGE_FAILURE": 5
+  },
+  "score_status_counts": {
+    "PENDING_FROZEN_RUBRIC_REVIEW": 40
+  },
+  "sidecar_complete_count": 35,
+  "sidecar_incomplete_count": 5,
+  "step": "9.36",
+  "trace_contract": "Same Step 9.30a.1/.2 rule: every recorded action must link to a persisted DECISION candidate; any source dependency must resolve; HARD_PRECONDITION must name a precondition; RETRIEVE/READ_DIARY need tool_result_id and state_update_id plus RAG/session_diary provenance; goal, semantic, and dependency roots must exist. No semantic IDs are synthesized.",
+  "treatment_rerun": false,
+  "v5_accessed": false,
+  "v5_created": false
+}

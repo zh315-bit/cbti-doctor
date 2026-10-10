@@ -1,0 +1,33 @@
+{
+  "step": "9.63c-r5c10t",
+  "r10_freeze_manifest": {
+    "path": "evaluation/v1_2_3/step9_63c_r5c5b_runner_freeze_r10.json",
+    "sha256_before_and_after": "d24244235e51e7bf6c8567880c654fe3fd73b87fa1bfe1ab0f10dfdc94db2693",
+    "historical_manifest_modified": false
+  },
+  "current_r10_member_path_hash_aggregate_before_and_after": "f6f20d9dad339ffef49a4e23179705c7857fe0ce0b882cb9a013d59c9e1b1197",
+  "aggregate_interpretation": "Current working-tree member bytes were unchanged during this step. Pre-existing r11-candidate edits mean the current tree is not asserted to match original r10 member bytes.",
+  "production_python_source_hash_aggregate_before_and_after": "bb5e9616afaaf3dc98f4b7514f66a2f67b683e91a0b4d269394159c945a6a2ad",
+  "historical_protected_directory_path_hash_aggregate_before_and_after": "5dcaa341ef35160f3840e244f0943b1620f4b4bfcf0b6241247a7a5274f83751",
+  "historical_traces": [
+    {
+      "path": "evaluation/v1_2/step8_3_mechanism_traces.jsonl",
+      "sha256_before_and_after": "e09321c89b75a4330799e4a4c286652cee82ed0e0d4fa1b8478c970dd7f6d8e5",
+      "size_bytes_before_and_after": 64294,
+      "mtime_before_and_after": "2026-10-09T11:37:42-0400"
+    },
+    {
+      "path": "evaluation/v1_2_1/step8_7_mechanism_traces.jsonl",
+      "sha256_before_and_after": "5518eb4b0b7e8880c5f84e59ba0264013bed99e25edb8da93dca558304d4f084",
+      "size_bytes_before_and_after": 33014,
+      "mtime_before_and_after": "2026-10-09T11:37:42-0400"
+    }
+  ],
+  "historical_trace_sha_changed": false,
+  "historical_trace_content_integrity": "CONTENT_INTEGRITY_UNPROVEN",
+  "formal_r11_pointer_created": false,
+  "formal_r11_freeze_created": false,
+  "authorization_issued_or_consumed": false,
+  "formal_v4_case_executed": 0,
+  "identity_guard_bypassed": false
+}

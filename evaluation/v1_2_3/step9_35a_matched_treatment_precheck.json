@@ -1,0 +1,68 @@
+{
+  "step": "9.35a",
+  "artifact_type": "MATCHED_TREATMENT_AUTHORIZATION_PRECHECK_RERUN",
+  "timestamp_utc": "2026-09-28T02:39:43Z",
+  "comparison_class": "POST_HOC_MATCHED_FROZEN_BASELINE",
+  "status": "PRECHECK_PASS_AUTHORIZATION_NOT_ISSUED",
+  "gates": {
+    "frozen_artifacts_verified": true,
+    "treatment_freeze_verified": true,
+    "baseline_immutability_verified": true,
+    "treatment_runner_ready": true,
+    "execution_configuration_match": true,
+    "case_set_match": true,
+    "case_order_match": true,
+    "adjudication_compatibility_ready": true,
+    "treatment_output_namespace_isolated": true,
+    "exactly_once_guard_ready": true,
+    "focused_tests_pass": true,
+    "regression_tests_pass": true
+  },
+  "identities": {
+    "baseline_agent_sha256": "4e2bffea0d7eaa9299074a960df84a1806b3ae9d4930662929abc58ca5b2ae79",
+    "treatment_agent_sha256": "e5e4841b51ecc6bced0f342a261a356756d07b39764670d774b910b86b8625a7",
+    "benchmark_sha256": "8b8c72092fcd7544e69d5d2ecd13610c7bb4c14210fca330698b3e5ab3f01d7f",
+    "harness_sha256": "8bc271bebc1c5da5351d517e2bb4a0d1a99fda3de1b713a6197b12f81fad70c7",
+    "scoring_sha256": "f742a8f8af7c8747818dadad81621c15d12d74f50538019913dfe18ab53bf59b",
+    "metric_registry_sha256": "de9f348cb1dff66410c03095abdaffcc256f53679718482870e4aa4d80c75056",
+    "one_shot_rules_sha256": "1c7ed4ef47865b117bc943f3e0ad9a859f4f74cfb4e8001f723ac5532af140d0",
+    "matched_protocol_sha256": "a71ba06090370b576fbba66bc4b005e519ddbabff3021a40c6546fc855f90265",
+    "treatment_runner_sha256": "920486b1d7984fae6ee77b5ac51af0d0a98caf42e445d1abcf7ff75b46038505",
+    "treatment_runner_freeze_sha256": "0c4e6ab752164bfe436d14b06d3bdc6d5cfc1506cbca92bc1bb9675c437aa7e9"
+  },
+  "case_matching": {
+    "case_count": 40,
+    "case_set_matches_baseline": true,
+    "case_order_matches_baseline": true,
+    "case_order_fingerprint_sha256": "d930455e417935337a6e3459defbdc3ee3829b71786fbd8438ef092b62429e68",
+    "order_effect_control": "MATCHED_ORDER_NOT_RANDOMIZED"
+  },
+  "tests": {
+    "focused_contract_tests": "21/21 PASS",
+    "existing_runner_authorization_regressions": "14/14 PASS",
+    "total": "35/35 PASS",
+    "python": "/Volumes/Elements/cbti-doctor-main/.venv/bin/python",
+    "pyyaml_version": "6.0.3",
+    "pytest_available": false,
+    "benchmark_cases_executed": 0
+  },
+  "authorization": {
+    "ready_for_matched_treatment_authorization": true,
+    "status": "NOT_ISSUED",
+    "authorization_id": null,
+    "attempt_id": null,
+    "authorized_command_generated": false,
+    "prior_treatment_authorization": false,
+    "prior_treatment_attempt": false
+  },
+  "execution_state": {
+    "treatment_namespace_exists": false,
+    "treatment_case_executed": 0,
+    "treatment_score_generated": false,
+    "baseline_v4_rerun": false,
+    "treatment_v4_executed": false,
+    "v5_created": false,
+    "v5_accessed": false,
+    "model_agent_rag_called_for_benchmark_cases": false
+  }
+}

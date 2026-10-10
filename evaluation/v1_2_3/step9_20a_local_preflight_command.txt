@@ -1,0 +1,1 @@
+cd /Volumes/Elements/cbti-doctor-main && .venv/bin/python -m scripts.run_step9_20_v3_heldout --evaluation-id heldout-v3-step9_20-20260923-01 --local-preflight --capture

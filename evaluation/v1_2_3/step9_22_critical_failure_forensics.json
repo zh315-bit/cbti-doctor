@@ -1,0 +1,54 @@
+{
+  "case_id": "V3-DA-08",
+  "frozen_critical_type": "ANSWER_CONTRADICTS_KNOWN_STATE",
+  "input": "我想算这份五日日记里有记录的平均睡眠时长；其中一天没填时长，别替我补。",
+  "action_path": ["READ_DIARY", "ANSWER"],
+  "tool": {
+    "tool_result_id": "tool_goal_t1_r1_1",
+    "source_type": "session_diary",
+    "raw_payload_logged_in_formal_trace": false,
+    "observable_receipt": {"payload_shape": "ENTRY_SHAPED", "received_entry_count": 5, "received_dates": ["2026-09-02", "2026-09-03", "2026-09-04", "2026-09-05", "2026-09-06"]},
+    "evidence_limit": "The full unprojected tool payload was not stored in the formal trace; receipt metadata and projected State are observable. No source fixture was reread in this audit."
+  },
+  "projection": {
+    "state_update_id": "upd_goal_t1_r2_1",
+    "projection_status": "valid",
+    "source_entry_count": 5,
+    "projected_entry_count": 5,
+    "source_dates_equal_projected_dates": true,
+    "provenance": {"source": "session_diary"},
+    "warnings": [],
+    "projected_entries": [
+      {"date": "2026-09-02", "total_sleep_time_minutes": 384},
+      {"date": "2026-09-03", "total_sleep_time_minutes": 360},
+      {"date": "2026-09-04", "total_sleep_time_minutes": null, "entry_exists": true},
+      {"date": "2026-09-05", "total_sleep_time_minutes": 408},
+      {"date": "2026-09-06", "total_sleep_time_minutes": 372}
+    ]
+  },
+  "state_semantics": {
+    "valid": "Five date-stamped diary entries passed contract validation; the 2026-09-04 entry exists.",
+    "invalid": "A projection whose source count, dates or provenance cannot be validated; not the status here.",
+    "missing": "The duration field is absent for one existing 2026-09-04 entry. This is not a missing diary entry or missing date.",
+    "deterministic_mean_minutes": 381,
+    "mean_denominator": 4,
+    "diary_day_count": 5
+  },
+  "answer_context": {
+    "exact_model_request_logged": false,
+    "reconstruction_basis": "Frozen answer_generation.py answer() passes _answer_facts(state), deterministic_claim_records, claim_provenance and answer_scope into the model context; projection was valid, so diary facts were not filtered.",
+    "observable_state_facts_available_to_construction": ["recent_sleep_pattern", "diary_derived"],
+    "observable_claims": ["日记中包含 5 天记录。", "日记中可用条目的平均总睡眠时间约为 381 分钟。", "日记覆盖 5 个日期。"],
+    "limitation": "Trace does not capture the exact human message sent to the model; prompt-body transmission is inferred from frozen code and final State, not directly observed."
+  },
+  "final_answer": {
+    "correct_deterministic_prefix": "日记中包含 5 天记录；可用条目平均约 381 分钟；覆盖 5 个日期。",
+    "contradictory_span": "其中 2026-09-04 的记录缺失。",
+    "contradiction": "State has a 2026-09-04 entry; only that entry's total_sleep_time is absent."
+  },
+  "first_divergence_point": "Answer Generation model continuation after correct deterministic prefix",
+  "primary_root_cause": "Answer Generation",
+  "excluded_primary_causes": ["Tool Contract", "Tool → State Projection", "State Semantics", "Answer Context Construction"],
+  "confidence": "moderate-to-high; exact model request not logged",
+  "supporting_trace": "evaluation/v3_runs/heldout-v3-step9_20-20260923-01/heldout-v3-step9_20-20260923-01-attempt-99b9eab89bfe4452997c23576f4617f0_raw_traces.jsonl#case_id=V3-DA-08/final_state/diary_projection,final_state/facts/recent_sleep_pattern,final_state/claim_provenance,final_answer"
+}

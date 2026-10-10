@@ -1,0 +1,50 @@
+{
+  "artifact_type": "STEP9_51_V3_SAFE_NON_BENCHMARK_TEST_REPORT",
+  "step": "9.51",
+  "status": "PASS",
+  "created_at_utc": "2026-09-30T17:03:16.706216+00:00",
+  "runner": "scripts/validate_step9_51a_test_boundary.py",
+  "manifest": "evaluation/v1_2_3/step9_51a_safe_test_manifest.json",
+  "environment": ".venv/bin/python",
+  "selection": {
+    "module_count": 31,
+    "excluded_module_count": 10,
+    "ast_case_count": 323,
+    "step9_30a_selected": false,
+    "step9_30c_selected": false,
+    "formal_v4_selected": false,
+    "aggregation_selected": false,
+    "adjudication_selected": false,
+    "v5_selected": false
+  },
+  "results": {
+    "total": 323,
+    "passed": 323,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "step9_50_synthetic": {"total": 40, "passed": 40},
+    "step9_41_42_safety": {"total": 16, "passed": 16}
+  },
+  "test_modules": [
+    "test_adaptive_foundations", "test_adaptive_loop", "test_adaptive_service",
+    "test_answer_generation_grounding", "test_chat_sessions", "test_input_understanding_hardening",
+    "test_model_configuration", "test_policy_refinement", "test_step4_regressions",
+    "test_step9_10a_harness_fix", "test_step9_12b_trace_observer",
+    "test_step9_16_dependency_formation", "test_step9_17_tool_projection",
+    "test_step9_18_information_value_gate", "test_step9_23_state_answer_integrity",
+    "test_step9_24_information_value", "test_step9_33_r1_r2_r3_repairs",
+    "test_step9_35a_treatment_runner", "test_step9_42_answer_authorization",
+    "test_step9_4_integration_audit", "test_step9_50_bounded_answer_contract",
+    "test_step9_50_traceability_contract", "test_step9_51a_validation_boundary",
+    "test_step9_6_effective_requirements_lineage", "test_step9_8f_frozen_run_guard",
+    "test_v1_1_answer_tool_grounding", "test_v1_1_input_state", "test_v1_1_sufficiency_ask",
+    "test_v1_2_1_preconditions", "test_v1_2_2_dependency_contract", "test_v1_2_information_value"
+  ],
+  "model_called": false,
+  "rag_called": false,
+  "formal_v4_case_executed": 0,
+  "formal_aggregate_executed": false,
+  "formal_adjudication_executed": false,
+  "v5_accessed": false
+}

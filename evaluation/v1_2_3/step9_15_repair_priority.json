@@ -1,0 +1,54 @@
+{
+  "step": "9.15",
+  "basis": "Safety + Task Completion + Interaction Cost + Architectural Generality + Regression Risk",
+  "priorities": [
+    {
+      "rank": 1,
+      "failure_class": "A_dependency_formation_failure",
+      "priority": "P1",
+      "safety": "high",
+      "task_completion": "high",
+      "interaction_cost": "high",
+      "architectural_generality": "high",
+      "regression_risk": "medium",
+      "why_now": "Three harmful cases share the same first divergence and the repair boundary is clear and upstream of policy."
+    },
+    {
+      "rank": 2,
+      "failure_class": "B_tool_to_state_projection_failure",
+      "priority": "P1",
+      "safety": "high",
+      "task_completion": "high",
+      "interaction_cost": "low_to_medium",
+      "architectural_generality": "high",
+      "regression_risk": "medium_high",
+      "why_now": "Six diary cases share one contract failure; repair can recover analysis without sacrificing the existing fail-closed safety property."
+    },
+    {
+      "rank": 3,
+      "failure_class": "C_low_value_information_acquisition",
+      "priority": "P2",
+      "safety": "medium",
+      "task_completion": "medium",
+      "interaction_cost": "high",
+      "architectural_generality": "high",
+      "regression_risk": "high",
+      "why_later": "It offers the largest interaction-cost opportunity, but its causes are mixed with state omissions and dependency errors; isolated tuning risks under-asking."
+    },
+    {
+      "rank": 4,
+      "failure_class": "D_retrieval_support_mismatch",
+      "priority": "P3_defer",
+      "safety": "medium",
+      "task_completion": "medium",
+      "interaction_cost": "low",
+      "architectural_generality": "uncertain",
+      "regression_risk": "unknown",
+      "why_defer": "Only three cases and current traces do not isolate retrieval from answer binding."
+    }
+  ],
+  "step9_16_recommendation": {
+    "failure_class": "A_dependency_formation_failure",
+    "reason": "It is the only class with three harmful cases sharing an identical upstream divergence, and fixing it should remove both missing-resource behavior and a substantial subset of irrelevant ASK without changing the scoring or answer policy. It has clearer scope and lower regression risk than broad ASK optimization, while preserving the diary fail-closed guard that should be repaired separately afterward."
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "step": "9.63c-r5c10s",
+  "audit_mode": "READ_ONLY_CURRENT_HASH_COMPARISON_NO_TEST_EXECUTION",
+  "r10_freeze_manifest": {
+    "path": "evaluation/v1_2_3/step9_63c_r5c5b_runner_freeze_r10.json",
+    "current_sha256": "d24244235e51e7bf6c8567880c654fe3fd73b87fa1bfe1ab0f10dfdc94db2693",
+    "matches_prior_recorded_sha256": true,
+    "member_count": 20
+  },
+  "current_r10_member_path_hash_aggregate": "f6f20d9dad339ffef49a4e23179705c7857fe0ce0b882cb9a013d59c9e1b1197",
+  "current_members_equal_original_r10_freeze": "NO: pre-existing approved r11-candidate infrastructure changes remain; this step changed no member",
+  "historical_authorization": {
+    "path": "evaluation/v1_2_3/step9_63c_r5c6_r10_v3_authorization_manifest.json",
+    "current_sha256": "beac52d1ed3bc11efa02b1a924a8abc7b210171bf5cc1b7910011a6ef9741241"
+  },
+  "append_only_lifecycle_ledger": {
+    "path": "evaluation/v1_2_3/authorization_lifecycle_events.jsonl",
+    "current_sha256": "aaa2e9898a8869db052a1248a0ca2b0574d9c36093aee608db59457f24c2a60e",
+    "note": "Whole-file hash is observational for a mutable append-only ledger; it matches the prior audit's current observation."
+  },
+  "historical_traces": [
+    {
+      "path": "evaluation/v1_2/step8_3_mechanism_traces.jsonl",
+      "current_sha256": "e09321c89b75a4330799e4a4c286652cee82ed0e0d4fa1b8478c970dd7f6d8e5",
+      "size_bytes": 64294,
+      "mtime_local": "2026-10-09T11:37:42-0400"
+    },
+    {
+      "path": "evaluation/v1_2_1/step8_7_mechanism_traces.jsonl",
+      "current_sha256": "5518eb4b0b7e8880c5f84e59ba0264013bed99e25edb8da93dca558304d4f084",
+      "size_bytes": 33014,
+      "mtime_local": "2026-10-09T11:37:42-0400"
+    }
+  ],
+  "historical_trace_content_integrity": "CONTENT_INTEGRITY_UNPROVEN",
+  "r11_formal_pointer_exists": false,
+  "r11_formal_freeze_exists": false,
+  "code_modified_in_this_step": false,
+  "historical_trace_modified_in_this_step": false,
+  "formal_authorization_issued_or_consumed_in_this_step": false,
+  "formal_v4_case_executed_in_this_step": 0
+}

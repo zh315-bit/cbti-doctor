@@ -1,0 +1,9 @@
+{
+  "artifact_type": "V3_CURRENT_RUNNER_IDENTITY_POINTER",
+  "step": "9.63c-r5c5b",
+  "status": "FROZEN_IDENTITY_POINTER_NOT_AUTHORIZATION",
+  "runner_freeze_revision": "r10",
+  "runner_freeze_path": "evaluation/v1_2_3/step9_63c_r5c5b_runner_freeze_r10.json",
+  "supersedes_for_new_authorization_only": "evaluation/v1_2_3/step9_63c_r5c4_runner_freeze_r9.json",
+  "execution_permission": false
+}

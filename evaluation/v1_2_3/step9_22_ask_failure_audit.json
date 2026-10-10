@@ -1,0 +1,2153 @@
+{
+  "evaluation_id": "heldout-v3-step9_20-20260923-01",
+  "scope": "19 frozen-labeled redundant/irrelevant ASK events only; no run or score modification",
+  "low_value_ask_total": 19,
+  "frozen_labels": {
+    "redundant": 6,
+    "irrelevant": 13
+  },
+  "primary_root_cause_counts": {
+    "INFORMATION_VALUE_OVERESTIMATED": 12,
+    "INPUT_UNDERSTANDING_MISS": 6,
+    "WRONG_DEPENDENCY": 1
+  },
+  "explicit_fact_already_said_but_not_in_state": 6,
+  "requirement_still_marked_useful_or_higher": 19,
+  "requirement_classification_breakdown": {"useful_optional": 17, "mandatory": 2},
+  "dependency_already_satisfied_but_ask": 0,
+  "information_value_gate_primary": 12,
+  "decision_policy_primary": 0,
+  "events": [
+    {
+      "case_id": "V3-CA-01",
+      "turn": 1,
+      "ask_question": "你通常几点上床？",
+      "target": "bedtime",
+      "frozen_label": "irrelevant",
+      "frozen_label_reason": "时间不决定工作压力与浅睡的受限讨论",
+      "state_before_ask": {
+        "goal": "判断晚上脑子还在转、睡得浅可能与什么有关",
+        "task_type": "CAUSE_ASSESSMENT",
+        "facts": {},
+        "decision_missing": [
+          "bedtime",
+          "sleep_time_or_sleep_onset_latency",
+          "wake_time",
+          "recent_sleep_pattern"
+        ],
+        "user_info_sufficiency": "LOW",
+        "evidence_sufficiency": "LOW"
+      },
+      "facts_already_known": {
+        "raw_user_and_session": [
+          "这周赶项目",
+          "晚上脑子仍在转",
+          "睡得浅"
+        ],
+        "state_facts": {}
+      },
+      "effective_requirements": {
+        "classification_for_target": "useful_optional",
+        "critical": [
+          "bedtime",
+          "sleep_time_or_sleep_onset_latency",
+          "wake_time",
+          "recent_sleep_pattern"
+        ],
+        "decision_fields": [
+          "bedtime",
+          "sleep_time_or_sleep_onset_latency",
+          "wake_time",
+          "recent_sleep_pattern"
+        ],
+        "secondary": [
+          "caffeine",
+          "nap",
+          "exercise",
+          "screen_before_bed",
+          "perceived_stress"
+        ],
+        "semantic_adjustments": []
+      },
+      "active_dependencies": [
+        {
+          "type": "USER_FACTS",
+          "status": "DEFERRED",
+          "requiredness": "optional",
+          "dependency_id": "dep_goal_t1_r1_user_facts_user_facts"
+        }
+      ],
+      "candidate_actions": [
+        {
+          "candidate_id": "cand_goal_t1_r1_1",
+          "action": "ASK",
+          "target": "bedtime",
+          "information_value": "HIGH",
+          "acquisition_value": "MEDIUM",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        },
+        {
+          "candidate_id": "cand_goal_t1_r1_2",
+          "action": "ASK",
+          "target": "sleep_time_or_sleep_onset_latency",
+          "information_value": "HIGH",
+          "acquisition_value": "MEDIUM",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        },
+        {
+          "candidate_id": "cand_goal_t1_r1_3",
+          "action": "ASK",
+          "target": "wake_time",
+          "information_value": "HIGH",
+          "acquisition_value": "MEDIUM",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        },
+        {
+          "candidate_id": "cand_goal_t1_r1_4",
+          "action": "ASK",
+          "target": "recent_sleep_pattern",
+          "information_value": "MEDIUM",
+          "acquisition_value": "LOW",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        }
+      ],
+      "selected_candidate": {
+        "candidate_id": "cand_goal_t1_r1_1",
+        "information_value": "HIGH",
+        "decision_impact": "HIGH",
+        "goal_relevance": "MEDIUM",
+        "redundancy": "LOW",
+        "acquisition_cost": "LOW",
+        "gate_decision": "ACCEPT",
+        "gate_reason": "bedtime passes the counterfactual test as decision_changing; plausible values may change the next action or answer scope.",
+        "origin": "OPTIONAL_ACQUISITION"
+      },
+      "selected_action": "ASK",
+      "primary_root_cause": "INFORMATION_VALUE_OVERESTIMATED",
+      "downstream_effects": [
+        "unnecessary_ASK",
+        "interaction_cost"
+      ],
+      "trace_pointer": "evaluation/v3_runs/heldout-v3-step9_20-20260923-01/heldout-v3-step9_20-20260923-01-attempt-99b9eab89bfe4452997c23576f4617f0_raw_traces.jsonl#case_id=V3-CA-01/turns/0/state_history"
+    },
+    {
+      "case_id": "V3-CA-01",
+      "turn": 3,
+      "ask_question": "你通常几点起床？",
+      "target": "wake_time",
+      "frozen_label": "irrelevant",
+      "frozen_label_reason": "与当前因果咨询无直接改变",
+      "state_before_ask": {
+        "goal": "判断晚上脑子还在转、睡得浅可能与什么有关",
+        "task_type": "CAUSE_ASSESSMENT",
+        "facts": {},
+        "decision_missing": [
+          "bedtime",
+          "sleep_time_or_sleep_onset_latency",
+          "wake_time",
+          "recent_sleep_pattern"
+        ],
+        "user_info_sufficiency": "LOW",
+        "evidence_sufficiency": "LOW"
+      },
+      "facts_already_known": {
+        "raw_user_and_session": [
+          "这周赶项目",
+          "晚上脑子仍在转",
+          "睡得浅"
+        ],
+        "state_facts": {}
+      },
+      "effective_requirements": {
+        "classification_for_target": "useful_optional",
+        "critical": [
+          "bedtime",
+          "sleep_time_or_sleep_onset_latency",
+          "wake_time",
+          "recent_sleep_pattern"
+        ],
+        "decision_fields": [
+          "bedtime",
+          "sleep_time_or_sleep_onset_latency",
+          "wake_time",
+          "recent_sleep_pattern"
+        ],
+        "secondary": [
+          "caffeine",
+          "nap",
+          "exercise",
+          "screen_before_bed",
+          "perceived_stress"
+        ],
+        "semantic_adjustments": []
+      },
+      "active_dependencies": [
+        {
+          "type": "USER_FACTS",
+          "status": "DEFERRED",
+          "requiredness": "optional",
+          "dependency_id": "dep_goal_t1_r3_user_facts_user_facts"
+        }
+      ],
+      "candidate_actions": [
+        {
+          "candidate_id": "cand_goal_t1_r3_1",
+          "action": "ASK",
+          "target": "wake_time",
+          "information_value": "HIGH",
+          "acquisition_value": "MEDIUM",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        }
+      ],
+      "selected_candidate": {
+        "candidate_id": "cand_goal_t1_r3_1",
+        "information_value": "HIGH",
+        "decision_impact": "HIGH",
+        "goal_relevance": "MEDIUM",
+        "redundancy": "LOW",
+        "acquisition_cost": "LOW",
+        "gate_decision": "ACCEPT",
+        "gate_reason": "wake_time passes the counterfactual test as decision_changing; plausible values may change the next action or answer scope.",
+        "origin": "OPTIONAL_ACQUISITION"
+      },
+      "selected_action": "ASK",
+      "primary_root_cause": "INFORMATION_VALUE_OVERESTIMATED",
+      "downstream_effects": [
+        "unnecessary_ASK",
+        "interaction_cost"
+      ],
+      "trace_pointer": "evaluation/v3_runs/heldout-v3-step9_20-20260923-01/heldout-v3-step9_20-20260923-01-attempt-99b9eab89bfe4452997c23576f4617f0_raw_traces.jsonl#case_id=V3-CA-01/turns/2/state_history"
+    },
+    {
+      "case_id": "V3-CA-03",
+      "turn": 1,
+      "ask_question": "你通常几点上床？",
+      "target": "bedtime",
+      "frozen_label": "irrelevant",
+      "frozen_label_reason": "光照/练习比较不取决于床时精度",
+      "state_before_ask": {
+        "goal": "判断近期夜间辗转难眠的原因究竟是白天更换到靠窗工位（光照变化）还是对睡眠的过度在意",
+        "task_type": "CAUSE_ASSESSMENT",
+        "facts": {},
+        "decision_missing": [
+          "bedtime",
+          "sleep_time_or_sleep_onset_latency",
+          "wake_time",
+          "recent_sleep_pattern"
+        ],
+        "user_info_sufficiency": "LOW",
+        "evidence_sufficiency": "LOW"
+      },
+      "facts_already_known": {
+        "raw_user_and_session": [
+          "新工位靠窗",
+          "夜间练呼吸",
+          "翻来覆去"
+        ],
+        "state_facts": {}
+      },
+      "effective_requirements": {
+        "classification_for_target": "useful_optional",
+        "critical": [
+          "bedtime",
+          "sleep_time_or_sleep_onset_latency",
+          "wake_time",
+          "recent_sleep_pattern"
+        ],
+        "decision_fields": [
+          "bedtime",
+          "sleep_time_or_sleep_onset_latency",
+          "wake_time",
+          "recent_sleep_pattern"
+        ],
+        "secondary": [
+          "caffeine",
+          "nap",
+          "exercise",
+          "screen_before_bed",
+          "perceived_stress"
+        ],
+        "semantic_adjustments": []
+      },
+      "active_dependencies": [
+        {
+          "type": "USER_FACTS",
+          "status": "DEFERRED",
+          "requiredness": "optional",
+          "dependency_id": "dep_goal_t1_r1_user_facts_user_facts"
+        }
+      ],
+      "candidate_actions": [
+        {
+          "candidate_id": "cand_goal_t1_r1_1",
+          "action": "ASK",
+          "target": "bedtime",
+          "information_value": "HIGH",
+          "acquisition_value": "MEDIUM",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        },
+        {
+          "candidate_id": "cand_goal_t1_r1_2",
+          "action": "ASK",
+          "target": "sleep_time_or_sleep_onset_latency",
+          "information_value": "HIGH",
+          "acquisition_value": "MEDIUM",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        },
+        {
+          "candidate_id": "cand_goal_t1_r1_3",
+          "action": "ASK",
+          "target": "wake_time",
+          "information_value": "HIGH",
+          "acquisition_value": "MEDIUM",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        },
+        {
+          "candidate_id": "cand_goal_t1_r1_4",
+          "action": "ASK",
+          "target": "recent_sleep_pattern",
+          "information_value": "MEDIUM",
+          "acquisition_value": "LOW",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        }
+      ],
+      "selected_candidate": {
+        "candidate_id": "cand_goal_t1_r1_1",
+        "information_value": "HIGH",
+        "decision_impact": "HIGH",
+        "goal_relevance": "MEDIUM",
+        "redundancy": "LOW",
+        "acquisition_cost": "LOW",
+        "gate_decision": "ACCEPT",
+        "gate_reason": "bedtime passes the counterfactual test as decision_changing; plausible values may change the next action or answer scope.",
+        "origin": "OPTIONAL_ACQUISITION"
+      },
+      "selected_action": "ASK",
+      "primary_root_cause": "INFORMATION_VALUE_OVERESTIMATED",
+      "downstream_effects": [
+        "unnecessary_ASK",
+        "interaction_cost"
+      ],
+      "trace_pointer": "evaluation/v3_runs/heldout-v3-step9_20-20260923-01/heldout-v3-step9_20-20260923-01-attempt-99b9eab89bfe4452997c23576f4617f0_raw_traces.jsonl#case_id=V3-CA-03/turns/0/state_history"
+    },
+    {
+      "case_id": "V3-CA-03",
+      "turn": 3,
+      "ask_question": "你通常几点起床？",
+      "target": "wake_time",
+      "frozen_label": "irrelevant",
+      "frozen_label_reason": "不改变受限比较",
+      "state_before_ask": {
+        "goal": "判断近期夜间辗转难眠的原因究竟是白天更换到靠窗工位（光照变化）还是对睡眠的过度在意",
+        "task_type": "CAUSE_ASSESSMENT",
+        "facts": {
+          "bedtime": "23:30"
+        },
+        "decision_missing": [
+          "sleep_time_or_sleep_onset_latency",
+          "wake_time",
+          "recent_sleep_pattern"
+        ],
+        "user_info_sufficiency": "MEDIUM",
+        "evidence_sufficiency": "LOW"
+      },
+      "facts_already_known": {
+        "raw_user_and_session": [
+          "新工位靠窗",
+          "夜间练呼吸",
+          "翻来覆去"
+        ],
+        "state_facts": {
+          "bedtime": "23:30"
+        }
+      },
+      "effective_requirements": {
+        "classification_for_target": "useful_optional",
+        "critical": [
+          "bedtime",
+          "sleep_time_or_sleep_onset_latency",
+          "wake_time",
+          "recent_sleep_pattern"
+        ],
+        "decision_fields": [
+          "bedtime",
+          "sleep_time_or_sleep_onset_latency",
+          "wake_time",
+          "recent_sleep_pattern"
+        ],
+        "secondary": [
+          "caffeine",
+          "nap",
+          "exercise",
+          "screen_before_bed",
+          "perceived_stress"
+        ],
+        "semantic_adjustments": []
+      },
+      "active_dependencies": [
+        {
+          "type": "USER_FACTS",
+          "status": "DEFERRED",
+          "requiredness": "optional",
+          "dependency_id": "dep_goal_t1_r3_user_facts_user_facts"
+        }
+      ],
+      "candidate_actions": [
+        {
+          "candidate_id": "cand_goal_t1_r3_1",
+          "action": "ASK",
+          "target": "wake_time",
+          "information_value": "HIGH",
+          "acquisition_value": "MEDIUM",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        }
+      ],
+      "selected_candidate": {
+        "candidate_id": "cand_goal_t1_r3_1",
+        "information_value": "HIGH",
+        "decision_impact": "HIGH",
+        "goal_relevance": "MEDIUM",
+        "redundancy": "LOW",
+        "acquisition_cost": "LOW",
+        "gate_decision": "ACCEPT",
+        "gate_reason": "wake_time passes the counterfactual test as decision_changing; plausible values may change the next action or answer scope.",
+        "origin": "OPTIONAL_ACQUISITION"
+      },
+      "selected_action": "ASK",
+      "primary_root_cause": "INFORMATION_VALUE_OVERESTIMATED",
+      "downstream_effects": [
+        "unnecessary_ASK",
+        "interaction_cost"
+      ],
+      "trace_pointer": "evaluation/v3_runs/heldout-v3-step9_20-20260923-01/heldout-v3-step9_20-20260923-01-attempt-99b9eab89bfe4452997c23576f4617f0_raw_traces.jsonl#case_id=V3-CA-03/turns/2/state_history"
+    },
+    {
+      "case_id": "V3-CA-05",
+      "turn": 3,
+      "ask_question": "你通常几点入睡，或大约需要多久才能睡着？",
+      "target": "sleep_time_or_sleep_onset_latency",
+      "frozen_label": "redundant",
+      "frozen_label_reason": "原始输入已说入睡不难",
+      "state_before_ask": {
+        "goal": "判断凌晨醒后持续想事情更像压力问题还是作息问题",
+        "task_type": "CAUSE_ASSESSMENT",
+        "facts": {},
+        "decision_missing": [
+          "bedtime",
+          "sleep_time_or_sleep_onset_latency",
+          "wake_time",
+          "recent_sleep_pattern",
+          "perceived_stress"
+        ],
+        "user_info_sufficiency": "LOW",
+        "evidence_sufficiency": "LOW"
+      },
+      "facts_already_known": {
+        "raw_user_and_session": [
+          "入睡不困难",
+          "凌晨醒后持续想事情"
+        ],
+        "state_facts": {}
+      },
+      "effective_requirements": {
+        "classification_for_target": "useful_optional",
+        "critical": [
+          "bedtime",
+          "sleep_time_or_sleep_onset_latency",
+          "wake_time",
+          "recent_sleep_pattern"
+        ],
+        "decision_fields": [
+          "bedtime",
+          "sleep_time_or_sleep_onset_latency",
+          "wake_time",
+          "recent_sleep_pattern",
+          "perceived_stress"
+        ],
+        "secondary": [
+          "caffeine",
+          "nap",
+          "exercise",
+          "screen_before_bed",
+          "perceived_stress"
+        ],
+        "semantic_adjustments": []
+      },
+      "active_dependencies": [
+        {
+          "type": "USER_FACTS",
+          "status": "DEFERRED",
+          "requiredness": "optional",
+          "dependency_id": "dep_goal_t1_r3_user_facts_user_facts"
+        }
+      ],
+      "candidate_actions": [
+        {
+          "candidate_id": "cand_goal_t1_r3_1",
+          "action": "ASK",
+          "target": "sleep_time_or_sleep_onset_latency",
+          "information_value": "HIGH",
+          "acquisition_value": "MEDIUM",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        },
+        {
+          "candidate_id": "cand_goal_t1_r3_2",
+          "action": "ASK",
+          "target": "wake_time",
+          "information_value": "HIGH",
+          "acquisition_value": "MEDIUM",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        }
+      ],
+      "selected_candidate": {
+        "candidate_id": "cand_goal_t1_r3_1",
+        "information_value": "HIGH",
+        "decision_impact": "HIGH",
+        "goal_relevance": "MEDIUM",
+        "redundancy": "LOW",
+        "acquisition_cost": "LOW",
+        "gate_decision": "ACCEPT",
+        "gate_reason": "sleep_time_or_sleep_onset_latency passes the counterfactual test as decision_changing; plausible values may change the next action or answer scope.",
+        "origin": "OPTIONAL_ACQUISITION"
+      },
+      "selected_action": "ASK",
+      "primary_root_cause": "INPUT_UNDERSTANDING_MISS",
+      "downstream_effects": [
+        "state_missing",
+        "unnecessary_ASK",
+        "interaction_cost"
+      ],
+      "trace_pointer": "evaluation/v3_runs/heldout-v3-step9_20-20260923-01/heldout-v3-step9_20-20260923-01-attempt-99b9eab89bfe4452997c23576f4617f0_raw_traces.jsonl#case_id=V3-CA-05/turns/2/state_history"
+    },
+    {
+      "case_id": "V3-CA-07",
+      "turn": 2,
+      "ask_question": "你通常几点入睡，或大约需要多久才能睡着？",
+      "target": "sleep_time_or_sleep_onset_latency",
+      "frozen_label": "redundant",
+      "frozen_label_reason": "原句已说明入睡很久",
+      "state_before_ask": {
+        "goal": "判断昨晚睡前吵架后长时间未入睡，是否能说明平时都因压力失眠",
+        "task_type": "CAUSE_ASSESSMENT",
+        "facts": {},
+        "decision_missing": [
+          "bedtime",
+          "sleep_time_or_sleep_onset_latency",
+          "wake_time",
+          "recent_sleep_pattern",
+          "perceived_stress"
+        ],
+        "user_info_sufficiency": "LOW",
+        "evidence_sufficiency": "LOW"
+      },
+      "facts_already_known": {
+        "raw_user_and_session": [
+          "睡前争吵",
+          "随后很久未睡着"
+        ],
+        "state_facts": {}
+      },
+      "effective_requirements": {
+        "classification_for_target": "useful_optional",
+        "critical": [
+          "bedtime",
+          "sleep_time_or_sleep_onset_latency",
+          "wake_time",
+          "recent_sleep_pattern"
+        ],
+        "decision_fields": [
+          "bedtime",
+          "sleep_time_or_sleep_onset_latency",
+          "wake_time",
+          "recent_sleep_pattern",
+          "perceived_stress"
+        ],
+        "secondary": [
+          "caffeine",
+          "nap",
+          "exercise",
+          "screen_before_bed",
+          "perceived_stress"
+        ],
+        "semantic_adjustments": []
+      },
+      "active_dependencies": [
+        {
+          "type": "USER_FACTS",
+          "status": "DEFERRED",
+          "requiredness": "optional",
+          "dependency_id": "dep_goal_t1_r2_user_facts_user_facts"
+        }
+      ],
+      "candidate_actions": [
+        {
+          "candidate_id": "cand_goal_t1_r2_1",
+          "action": "ASK",
+          "target": "bedtime",
+          "information_value": "HIGH",
+          "acquisition_value": "MEDIUM",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        },
+        {
+          "candidate_id": "cand_goal_t1_r2_2",
+          "action": "ASK",
+          "target": "sleep_time_or_sleep_onset_latency",
+          "information_value": "HIGH",
+          "acquisition_value": "HIGH",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        },
+        {
+          "candidate_id": "cand_goal_t1_r2_3",
+          "action": "ASK",
+          "target": "wake_time",
+          "information_value": "HIGH",
+          "acquisition_value": "MEDIUM",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        },
+        {
+          "candidate_id": "cand_goal_t1_r2_4",
+          "action": "ASK",
+          "target": "recent_sleep_pattern",
+          "information_value": "MEDIUM",
+          "acquisition_value": "LOW",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        }
+      ],
+      "selected_candidate": {
+        "candidate_id": "cand_goal_t1_r2_2",
+        "information_value": "HIGH",
+        "decision_impact": "HIGH",
+        "goal_relevance": "HIGH",
+        "redundancy": "LOW",
+        "acquisition_cost": "LOW",
+        "gate_decision": "ACCEPT",
+        "gate_reason": "sleep_time_or_sleep_onset_latency passes the counterfactual test as decision_changing; plausible values may change the next action or answer scope.",
+        "origin": "OPTIONAL_ACQUISITION"
+      },
+      "selected_action": "ASK",
+      "primary_root_cause": "INPUT_UNDERSTANDING_MISS",
+      "downstream_effects": [
+        "state_missing",
+        "unnecessary_ASK",
+        "interaction_cost"
+      ],
+      "trace_pointer": "evaluation/v3_runs/heldout-v3-step9_20-20260923-01/heldout-v3-step9_20-20260923-01-attempt-99b9eab89bfe4452997c23576f4617f0_raw_traces.jsonl#case_id=V3-CA-07/turns/1/state_history"
+    },
+    {
+      "case_id": "V3-CA-07",
+      "turn": 3,
+      "ask_question": "你通常几点上床？",
+      "target": "bedtime",
+      "frozen_label": "irrelevant",
+      "frozen_label_reason": "不能决定单次争吵是否证明长期病因",
+      "state_before_ask": {
+        "goal": "判断昨晚睡前吵架后长时间未入睡，是否能说明平时都因压力失眠",
+        "task_type": "CAUSE_ASSESSMENT",
+        "facts": {},
+        "decision_missing": [
+          "bedtime",
+          "sleep_time_or_sleep_onset_latency",
+          "wake_time",
+          "recent_sleep_pattern",
+          "perceived_stress"
+        ],
+        "user_info_sufficiency": "LOW",
+        "evidence_sufficiency": "LOW"
+      },
+      "facts_already_known": {
+        "raw_user_and_session": [
+          "睡前争吵",
+          "随后很久未睡着"
+        ],
+        "state_facts": {}
+      },
+      "effective_requirements": {
+        "classification_for_target": "useful_optional",
+        "critical": [
+          "bedtime",
+          "sleep_time_or_sleep_onset_latency",
+          "wake_time",
+          "recent_sleep_pattern"
+        ],
+        "decision_fields": [
+          "bedtime",
+          "sleep_time_or_sleep_onset_latency",
+          "wake_time",
+          "recent_sleep_pattern",
+          "perceived_stress"
+        ],
+        "secondary": [
+          "caffeine",
+          "nap",
+          "exercise",
+          "screen_before_bed",
+          "perceived_stress"
+        ],
+        "semantic_adjustments": []
+      },
+      "active_dependencies": [
+        {
+          "type": "USER_FACTS",
+          "status": "DEFERRED",
+          "requiredness": "optional",
+          "dependency_id": "dep_goal_t1_r3_user_facts_user_facts"
+        }
+      ],
+      "candidate_actions": [
+        {
+          "candidate_id": "cand_goal_t1_r3_1",
+          "action": "ASK",
+          "target": "bedtime",
+          "information_value": "HIGH",
+          "acquisition_value": "MEDIUM",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        },
+        {
+          "candidate_id": "cand_goal_t1_r3_2",
+          "action": "ASK",
+          "target": "wake_time",
+          "information_value": "HIGH",
+          "acquisition_value": "MEDIUM",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        }
+      ],
+      "selected_candidate": {
+        "candidate_id": "cand_goal_t1_r3_1",
+        "information_value": "HIGH",
+        "decision_impact": "HIGH",
+        "goal_relevance": "MEDIUM",
+        "redundancy": "LOW",
+        "acquisition_cost": "LOW",
+        "gate_decision": "ACCEPT",
+        "gate_reason": "bedtime passes the counterfactual test as decision_changing; plausible values may change the next action or answer scope.",
+        "origin": "OPTIONAL_ACQUISITION"
+      },
+      "selected_action": "ASK",
+      "primary_root_cause": "INFORMATION_VALUE_OVERESTIMATED",
+      "downstream_effects": [
+        "unnecessary_ASK",
+        "interaction_cost"
+      ],
+      "trace_pointer": "evaluation/v3_runs/heldout-v3-step9_20-20260923-01/heldout-v3-step9_20-20260923-01-attempt-99b9eab89bfe4452997c23576f4617f0_raw_traces.jsonl#case_id=V3-CA-07/turns/2/state_history"
+    },
+    {
+      "case_id": "V3-CA-07",
+      "turn": 4,
+      "ask_question": "你通常几点起床？",
+      "target": "wake_time",
+      "frozen_label": "irrelevant",
+      "frozen_label_reason": "同样不改变因果边界",
+      "state_before_ask": {
+        "goal": "判断昨晚睡前吵架后长时间未入睡，是否能说明平时都因压力失眠",
+        "task_type": "CAUSE_ASSESSMENT",
+        "facts": {},
+        "decision_missing": [
+          "bedtime",
+          "sleep_time_or_sleep_onset_latency",
+          "wake_time",
+          "recent_sleep_pattern",
+          "perceived_stress"
+        ],
+        "user_info_sufficiency": "LOW",
+        "evidence_sufficiency": "LOW"
+      },
+      "facts_already_known": {
+        "raw_user_and_session": [
+          "睡前争吵",
+          "随后很久未睡着"
+        ],
+        "state_facts": {}
+      },
+      "effective_requirements": {
+        "classification_for_target": "useful_optional",
+        "critical": [
+          "bedtime",
+          "sleep_time_or_sleep_onset_latency",
+          "wake_time",
+          "recent_sleep_pattern"
+        ],
+        "decision_fields": [
+          "bedtime",
+          "sleep_time_or_sleep_onset_latency",
+          "wake_time",
+          "recent_sleep_pattern",
+          "perceived_stress"
+        ],
+        "secondary": [
+          "caffeine",
+          "nap",
+          "exercise",
+          "screen_before_bed",
+          "perceived_stress"
+        ],
+        "semantic_adjustments": []
+      },
+      "active_dependencies": [
+        {
+          "type": "USER_FACTS",
+          "status": "DEFERRED",
+          "requiredness": "optional",
+          "dependency_id": "dep_goal_t1_r4_user_facts_user_facts"
+        }
+      ],
+      "candidate_actions": [
+        {
+          "candidate_id": "cand_goal_t1_r4_1",
+          "action": "ASK",
+          "target": "wake_time",
+          "information_value": "HIGH",
+          "acquisition_value": "MEDIUM",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        }
+      ],
+      "selected_candidate": {
+        "candidate_id": "cand_goal_t1_r4_1",
+        "information_value": "HIGH",
+        "decision_impact": "HIGH",
+        "goal_relevance": "MEDIUM",
+        "redundancy": "LOW",
+        "acquisition_cost": "LOW",
+        "gate_decision": "ACCEPT",
+        "gate_reason": "wake_time passes the counterfactual test as decision_changing; plausible values may change the next action or answer scope.",
+        "origin": "OPTIONAL_ACQUISITION"
+      },
+      "selected_action": "ASK",
+      "primary_root_cause": "INFORMATION_VALUE_OVERESTIMATED",
+      "downstream_effects": [
+        "unnecessary_ASK",
+        "interaction_cost"
+      ],
+      "trace_pointer": "evaluation/v3_runs/heldout-v3-step9_20-20260923-01/heldout-v3-step9_20-20260923-01-attempt-99b9eab89bfe4452997c23576f4617f0_raw_traces.jsonl#case_id=V3-CA-07/turns/3/state_history"
+    },
+    {
+      "case_id": "V3-PD-01",
+      "turn": 1,
+      "ask_question": "你通常几点上床？",
+      "target": "bedtime",
+      "frozen_label": "irrelevant",
+      "frozen_label_reason": "偶发一晚是否大幅调床时无需精确床时",
+      "state_before_ask": {
+        "goal": "判断偶尔一晚睡晚是否需要立即整体调整作息",
+        "task_type": "PERSONALIZED_DECISION",
+        "facts": {},
+        "decision_missing": [
+          "bedtime",
+          "sleep_onset_latency",
+          "wake_time",
+          "total_sleep_time",
+          "nighttime_awakenings",
+          "recent_sleep_pattern"
+        ],
+        "user_info_sufficiency": "LOW",
+        "evidence_sufficiency": "LOW"
+      },
+      "facts_already_known": {
+        "raw_user_and_session": [
+          "偶尔一晚睡晚"
+        ],
+        "state_facts": {}
+      },
+      "effective_requirements": {
+        "classification_for_target": "useful_optional",
+        "critical": [
+          "bedtime",
+          "sleep_onset_latency",
+          "wake_time",
+          "total_sleep_time",
+          "nighttime_awakenings",
+          "recent_sleep_pattern"
+        ],
+        "decision_fields": [
+          "bedtime",
+          "sleep_onset_latency",
+          "wake_time",
+          "total_sleep_time",
+          "nighttime_awakenings",
+          "recent_sleep_pattern"
+        ],
+        "secondary": [
+          "perceived_stress",
+          "nap",
+          "caffeine"
+        ],
+        "semantic_adjustments": []
+      },
+      "active_dependencies": [
+        {
+          "type": "USER_FACTS",
+          "status": "DEFERRED",
+          "requiredness": "optional",
+          "dependency_id": "dep_goal_t1_r1_user_facts_user_facts"
+        }
+      ],
+      "candidate_actions": [
+        {
+          "candidate_id": "cand_goal_t1_r1_1",
+          "action": "ASK",
+          "target": "bedtime",
+          "information_value": "HIGH",
+          "acquisition_value": "MEDIUM",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        },
+        {
+          "candidate_id": "cand_goal_t1_r1_2",
+          "action": "ASK",
+          "target": "sleep_onset_latency",
+          "information_value": "HIGH",
+          "acquisition_value": "MEDIUM",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        },
+        {
+          "candidate_id": "cand_goal_t1_r1_3",
+          "action": "ASK",
+          "target": "wake_time",
+          "information_value": "HIGH",
+          "acquisition_value": "MEDIUM",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        },
+        {
+          "candidate_id": "cand_goal_t1_r1_4",
+          "action": "ASK",
+          "target": "total_sleep_time",
+          "information_value": "MEDIUM",
+          "acquisition_value": "LOW",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        },
+        {
+          "candidate_id": "cand_goal_t1_r1_5",
+          "action": "ASK",
+          "target": "nighttime_awakenings",
+          "information_value": "MEDIUM",
+          "acquisition_value": "LOW",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        },
+        {
+          "candidate_id": "cand_goal_t1_r1_6",
+          "action": "ASK",
+          "target": "recent_sleep_pattern",
+          "information_value": "MEDIUM",
+          "acquisition_value": "LOW",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        }
+      ],
+      "selected_candidate": {
+        "candidate_id": "cand_goal_t1_r1_1",
+        "information_value": "HIGH",
+        "decision_impact": "HIGH",
+        "goal_relevance": "MEDIUM",
+        "redundancy": "LOW",
+        "acquisition_cost": "LOW",
+        "gate_decision": "ACCEPT",
+        "gate_reason": "bedtime passes the counterfactual test as decision_changing; plausible values may change the next action or answer scope.",
+        "origin": "OPTIONAL_ACQUISITION"
+      },
+      "selected_action": "ASK",
+      "primary_root_cause": "INFORMATION_VALUE_OVERESTIMATED",
+      "downstream_effects": [
+        "unnecessary_ASK",
+        "interaction_cost"
+      ],
+      "trace_pointer": "evaluation/v3_runs/heldout-v3-step9_20-20260923-01/heldout-v3-step9_20-20260923-01-attempt-99b9eab89bfe4452997c23576f4617f0_raw_traces.jsonl#case_id=V3-PD-01/turns/0/state_history"
+    },
+    {
+      "case_id": "V3-PD-01",
+      "turn": 2,
+      "ask_question": "你上床后通常需要多久才能睡着？",
+      "target": "sleep_onset_latency",
+      "frozen_label": "irrelevant",
+      "frozen_label_reason": "不改变偶发事件的受限建议",
+      "state_before_ask": {
+        "goal": "判断偶尔一晚睡晚是否需要立即整体调整作息",
+        "task_type": "PERSONALIZED_DECISION",
+        "facts": {},
+        "decision_missing": [
+          "bedtime",
+          "sleep_onset_latency",
+          "wake_time",
+          "total_sleep_time",
+          "nighttime_awakenings",
+          "recent_sleep_pattern"
+        ],
+        "user_info_sufficiency": "LOW",
+        "evidence_sufficiency": "LOW"
+      },
+      "facts_already_known": {
+        "raw_user_and_session": [
+          "偶尔一晚睡晚"
+        ],
+        "state_facts": {}
+      },
+      "effective_requirements": {
+        "classification_for_target": "useful_optional",
+        "critical": [
+          "bedtime",
+          "sleep_onset_latency",
+          "wake_time",
+          "total_sleep_time",
+          "nighttime_awakenings",
+          "recent_sleep_pattern"
+        ],
+        "decision_fields": [
+          "bedtime",
+          "sleep_onset_latency",
+          "wake_time",
+          "total_sleep_time",
+          "nighttime_awakenings",
+          "recent_sleep_pattern"
+        ],
+        "secondary": [
+          "perceived_stress",
+          "nap",
+          "caffeine"
+        ],
+        "semantic_adjustments": []
+      },
+      "active_dependencies": [
+        {
+          "type": "USER_FACTS",
+          "status": "DEFERRED",
+          "requiredness": "optional",
+          "dependency_id": "dep_goal_t1_r2_user_facts_user_facts"
+        }
+      ],
+      "candidate_actions": [
+        {
+          "candidate_id": "cand_goal_t1_r2_1",
+          "action": "ASK",
+          "target": "sleep_onset_latency",
+          "information_value": "HIGH",
+          "acquisition_value": "MEDIUM",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        },
+        {
+          "candidate_id": "cand_goal_t1_r2_2",
+          "action": "ASK",
+          "target": "wake_time",
+          "information_value": "HIGH",
+          "acquisition_value": "MEDIUM",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        },
+        {
+          "candidate_id": "cand_goal_t1_r2_3",
+          "action": "ASK",
+          "target": "total_sleep_time",
+          "information_value": "MEDIUM",
+          "acquisition_value": "LOW",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        },
+        {
+          "candidate_id": "cand_goal_t1_r2_4",
+          "action": "ASK",
+          "target": "nighttime_awakenings",
+          "information_value": "MEDIUM",
+          "acquisition_value": "LOW",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        },
+        {
+          "candidate_id": "cand_goal_t1_r2_5",
+          "action": "ASK",
+          "target": "recent_sleep_pattern",
+          "information_value": "MEDIUM",
+          "acquisition_value": "LOW",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        }
+      ],
+      "selected_candidate": {
+        "candidate_id": "cand_goal_t1_r2_1",
+        "information_value": "HIGH",
+        "decision_impact": "HIGH",
+        "goal_relevance": "MEDIUM",
+        "redundancy": "LOW",
+        "acquisition_cost": "LOW",
+        "gate_decision": "ACCEPT",
+        "gate_reason": "sleep_time_or_sleep_onset_latency passes the counterfactual test as decision_changing; plausible values may change the next action or answer scope.",
+        "origin": "OPTIONAL_ACQUISITION"
+      },
+      "selected_action": "ASK",
+      "primary_root_cause": "INFORMATION_VALUE_OVERESTIMATED",
+      "downstream_effects": [
+        "unnecessary_ASK",
+        "interaction_cost"
+      ],
+      "trace_pointer": "evaluation/v3_runs/heldout-v3-step9_20-20260923-01/heldout-v3-step9_20-20260923-01-attempt-99b9eab89bfe4452997c23576f4617f0_raw_traces.jsonl#case_id=V3-PD-01/turns/1/state_history"
+    },
+    {
+      "case_id": "V3-PD-03",
+      "turn": 3,
+      "ask_question": "你通常几点起床？",
+      "target": "wake_time",
+      "frozen_label": "redundant",
+      "frozen_label_reason": "用户已明确 07:15 起床",
+      "state_before_ask": {
+        "goal": "Decide whether to set an earlier alarm to fall asleep sooner, given a midnight sleepiness and 7:15 rise time.",
+        "task_type": "PERSONALIZED_DECISION",
+        "facts": {
+          "bedtime": "23:15"
+        },
+        "decision_missing": [
+          "sleep_onset_latency",
+          "wake_time",
+          "total_sleep_time",
+          "nighttime_awakenings",
+          "recent_sleep_pattern"
+        ],
+        "user_info_sufficiency": "MEDIUM",
+        "evidence_sufficiency": "LOW"
+      },
+      "facts_already_known": {
+        "raw_user_and_session": [
+          "午夜左右困倦",
+          "07:15起床"
+        ],
+        "state_facts": {
+          "bedtime": "23:15"
+        }
+      },
+      "effective_requirements": {
+        "classification_for_target": "useful_optional",
+        "critical": [
+          "bedtime",
+          "sleep_onset_latency",
+          "wake_time",
+          "total_sleep_time",
+          "nighttime_awakenings",
+          "recent_sleep_pattern"
+        ],
+        "decision_fields": [
+          "bedtime",
+          "sleep_onset_latency",
+          "wake_time",
+          "total_sleep_time",
+          "nighttime_awakenings",
+          "recent_sleep_pattern"
+        ],
+        "secondary": [
+          "perceived_stress",
+          "nap",
+          "caffeine"
+        ],
+        "semantic_adjustments": []
+      },
+      "active_dependencies": [
+        {
+          "type": "USER_FACTS",
+          "status": "DEFERRED",
+          "requiredness": "optional",
+          "dependency_id": "dep_goal_t1_r3_user_facts_user_facts"
+        }
+      ],
+      "candidate_actions": [
+        {
+          "candidate_id": "cand_goal_t1_r3_1",
+          "action": "ASK",
+          "target": "wake_time",
+          "information_value": "HIGH",
+          "acquisition_value": "MEDIUM",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        }
+      ],
+      "selected_candidate": {
+        "candidate_id": "cand_goal_t1_r3_1",
+        "information_value": "HIGH",
+        "decision_impact": "HIGH",
+        "goal_relevance": "MEDIUM",
+        "redundancy": "LOW",
+        "acquisition_cost": "LOW",
+        "gate_decision": "ACCEPT",
+        "gate_reason": "wake_time passes the counterfactual test as decision_changing; plausible values may change the next action or answer scope.",
+        "origin": "OPTIONAL_ACQUISITION"
+      },
+      "selected_action": "ASK",
+      "primary_root_cause": "INPUT_UNDERSTANDING_MISS",
+      "downstream_effects": [
+        "state_missing",
+        "unnecessary_ASK",
+        "interaction_cost"
+      ],
+      "trace_pointer": "evaluation/v3_runs/heldout-v3-step9_20-20260923-01/heldout-v3-step9_20-20260923-01-attempt-99b9eab89bfe4452997c23576f4617f0_raw_traces.jsonl#case_id=V3-PD-03/turns/2/state_history"
+    },
+    {
+      "case_id": "V3-PD-04",
+      "turn": 1,
+      "ask_question": "你上床后通常需要多久才能睡着？",
+      "target": "sleep_onset_latency",
+      "frozen_label": "irrelevant",
+      "frozen_label_reason": "晚归日与平日的双端点优先级不靠该值",
+      "state_before_ask": {
+        "goal": "确定在周二和周四下班很晚的情况下，先固定起床时间还是先固定上床时间",
+        "task_type": "PERSONALIZED_DECISION",
+        "facts": {},
+        "decision_missing": [
+          "bedtime",
+          "sleep_onset_latency",
+          "wake_time",
+          "total_sleep_time",
+          "nighttime_awakenings",
+          "recent_sleep_pattern"
+        ],
+        "user_info_sufficiency": "LOW",
+        "evidence_sufficiency": "LOW"
+      },
+      "facts_already_known": {
+        "raw_user_and_session": [
+          "周二周四晚归",
+          "其他日子正常"
+        ],
+        "state_facts": {}
+      },
+      "effective_requirements": {
+        "classification_for_target": "mandatory",
+        "critical": [
+          "bedtime",
+          "sleep_onset_latency",
+          "wake_time",
+          "total_sleep_time",
+          "nighttime_awakenings",
+          "recent_sleep_pattern"
+        ],
+        "decision_fields": [
+          "bedtime",
+          "sleep_onset_latency",
+          "wake_time",
+          "total_sleep_time",
+          "nighttime_awakenings",
+          "recent_sleep_pattern"
+        ],
+        "secondary": [
+          "perceived_stress",
+          "nap",
+          "caffeine"
+        ],
+        "semantic_adjustments": []
+      },
+      "active_dependencies": [
+        {
+          "type": "USER_FACTS",
+          "status": "DEFERRED",
+          "requiredness": "optional",
+          "dependency_id": "dep_goal_t1_r1_user_facts_user_facts"
+        },
+        {
+          "type": "VALIDITY_STATE",
+          "status": "REQUIRED",
+          "requiredness": "required",
+          "dependency_id": "dep_goal_t1_r1_validity_state_sleep_onset_latency"
+        }
+      ],
+      "candidate_actions": [
+        {
+          "candidate_id": "cand_goal_t1_r1_1",
+          "action": "ASK",
+          "target": "sleep_onset_latency",
+          "information_value": "HIGH",
+          "acquisition_value": "HIGH",
+          "gate_decision": "ACCEPT",
+          "origin": "HARD_PRECONDITION"
+        }
+      ],
+      "selected_candidate": {
+        "candidate_id": "cand_goal_t1_r1_1",
+        "information_value": "HIGH",
+        "decision_impact": "HIGH",
+        "goal_relevance": "MEDIUM",
+        "redundancy": "LOW",
+        "acquisition_cost": "LOW",
+        "gate_decision": "ACCEPT",
+        "gate_reason": "mandatory_dependency_precondition_cannot_be_overridden",
+        "origin": "HARD_PRECONDITION"
+      },
+      "selected_action": "ASK",
+      "primary_root_cause": "WRONG_DEPENDENCY",
+      "downstream_effects": [
+        "unnecessary_ASK",
+        "interaction_cost"
+      ],
+      "trace_pointer": "evaluation/v3_runs/heldout-v3-step9_20-20260923-01/heldout-v3-step9_20-20260923-01-attempt-99b9eab89bfe4452997c23576f4617f0_raw_traces.jsonl#case_id=V3-PD-04/turns/0/state_history"
+    },
+    {
+      "case_id": "V3-PD-05",
+      "turn": 1,
+      "ask_question": "你上床后通常需要多久才能睡着？",
+      "target": "sleep_onset_latency",
+      "frozen_label": "redundant",
+      "frozen_label_reason": "明示 22:30 上床、23:00 睡着可确定性得到",
+      "state_before_ask": {
+        "goal": "Decide whether to move bedtime from 10:30 PM to 9:00 PM tonight for 'healthier' sleep",
+        "task_type": "PERSONALIZED_DECISION",
+        "facts": {},
+        "decision_missing": [
+          "bedtime",
+          "sleep_onset_latency",
+          "wake_time",
+          "total_sleep_time",
+          "nighttime_awakenings",
+          "recent_sleep_pattern"
+        ],
+        "user_info_sufficiency": "LOW",
+        "evidence_sufficiency": "LOW"
+      },
+      "facts_already_known": {
+        "raw_user_and_session": [
+          "22:30上床",
+          "23:00左右睡着",
+          "06:30起床"
+        ],
+        "state_facts": {}
+      },
+      "effective_requirements": {
+        "classification_for_target": "mandatory",
+        "critical": [
+          "bedtime",
+          "sleep_onset_latency",
+          "wake_time",
+          "total_sleep_time",
+          "nighttime_awakenings",
+          "recent_sleep_pattern"
+        ],
+        "decision_fields": [
+          "bedtime",
+          "sleep_onset_latency",
+          "wake_time",
+          "total_sleep_time",
+          "nighttime_awakenings",
+          "recent_sleep_pattern"
+        ],
+        "secondary": [
+          "perceived_stress",
+          "nap",
+          "caffeine"
+        ],
+        "semantic_adjustments": []
+      },
+      "active_dependencies": [
+        {
+          "type": "USER_FACTS",
+          "status": "DEFERRED",
+          "requiredness": "optional",
+          "dependency_id": "dep_goal_t1_r1_user_facts_user_facts"
+        },
+        {
+          "type": "VALIDITY_STATE",
+          "status": "REQUIRED",
+          "requiredness": "required",
+          "dependency_id": "dep_goal_t1_r1_validity_state_sleep_onset_latency"
+        }
+      ],
+      "candidate_actions": [
+        {
+          "candidate_id": "cand_goal_t1_r1_1",
+          "action": "ASK",
+          "target": "sleep_onset_latency",
+          "information_value": "HIGH",
+          "acquisition_value": "HIGH",
+          "gate_decision": "ACCEPT",
+          "origin": "HARD_PRECONDITION"
+        }
+      ],
+      "selected_candidate": {
+        "candidate_id": "cand_goal_t1_r1_1",
+        "information_value": "HIGH",
+        "decision_impact": "HIGH",
+        "goal_relevance": "MEDIUM",
+        "redundancy": "LOW",
+        "acquisition_cost": "LOW",
+        "gate_decision": "ACCEPT",
+        "gate_reason": "mandatory_dependency_precondition_cannot_be_overridden",
+        "origin": "HARD_PRECONDITION"
+      },
+      "selected_action": "ASK",
+      "primary_root_cause": "INPUT_UNDERSTANDING_MISS",
+      "downstream_effects": [
+        "state_missing",
+        "unnecessary_ASK",
+        "interaction_cost"
+      ],
+      "trace_pointer": "evaluation/v3_runs/heldout-v3-step9_20-20260923-01/heldout-v3-step9_20-20260923-01-attempt-99b9eab89bfe4452997c23576f4617f0_raw_traces.jsonl#case_id=V3-PD-05/turns/0/state_history"
+    },
+    {
+      "case_id": "V3-PD-05",
+      "turn": 2,
+      "ask_question": "你通常几点上床？",
+      "target": "bedtime",
+      "frozen_label": "redundant",
+      "frozen_label_reason": "用户已明确 22:30",
+      "state_before_ask": {
+        "goal": "Decide whether to move bedtime from 10:30 PM to 9:00 PM tonight for 'healthier' sleep",
+        "task_type": "PERSONALIZED_DECISION",
+        "facts": {},
+        "decision_missing": [
+          "bedtime",
+          "sleep_onset_latency",
+          "wake_time",
+          "total_sleep_time",
+          "nighttime_awakenings",
+          "recent_sleep_pattern"
+        ],
+        "user_info_sufficiency": "LOW",
+        "evidence_sufficiency": "LOW"
+      },
+      "facts_already_known": {
+        "raw_user_and_session": [
+          "22:30上床",
+          "23:00左右睡着",
+          "06:30起床"
+        ],
+        "state_facts": {}
+      },
+      "effective_requirements": {
+        "classification_for_target": "useful_optional",
+        "critical": [
+          "bedtime",
+          "sleep_onset_latency",
+          "wake_time",
+          "total_sleep_time",
+          "nighttime_awakenings",
+          "recent_sleep_pattern"
+        ],
+        "decision_fields": [
+          "bedtime",
+          "sleep_onset_latency",
+          "wake_time",
+          "total_sleep_time",
+          "nighttime_awakenings",
+          "recent_sleep_pattern"
+        ],
+        "secondary": [
+          "perceived_stress",
+          "nap",
+          "caffeine"
+        ],
+        "semantic_adjustments": []
+      },
+      "active_dependencies": [
+        {
+          "type": "USER_FACTS",
+          "status": "DEFERRED",
+          "requiredness": "optional",
+          "dependency_id": "dep_goal_t1_r2_user_facts_user_facts"
+        },
+        {
+          "type": "VALIDITY_STATE",
+          "status": "REQUIRED",
+          "requiredness": "required",
+          "dependency_id": "dep_goal_t1_r2_validity_state_sleep_onset_latency"
+        }
+      ],
+      "candidate_actions": [
+        {
+          "candidate_id": "cand_goal_t1_r2_1",
+          "action": "ASK",
+          "target": "bedtime",
+          "information_value": "HIGH",
+          "acquisition_value": "HIGH",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        },
+        {
+          "candidate_id": "cand_goal_t1_r2_2",
+          "action": "ASK",
+          "target": "wake_time",
+          "information_value": "HIGH",
+          "acquisition_value": "MEDIUM",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        },
+        {
+          "candidate_id": "cand_goal_t1_r2_3",
+          "action": "ASK",
+          "target": "total_sleep_time",
+          "information_value": "MEDIUM",
+          "acquisition_value": "LOW",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        },
+        {
+          "candidate_id": "cand_goal_t1_r2_4",
+          "action": "ASK",
+          "target": "nighttime_awakenings",
+          "information_value": "MEDIUM",
+          "acquisition_value": "LOW",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        },
+        {
+          "candidate_id": "cand_goal_t1_r2_5",
+          "action": "ASK",
+          "target": "recent_sleep_pattern",
+          "information_value": "MEDIUM",
+          "acquisition_value": "LOW",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        }
+      ],
+      "selected_candidate": {
+        "candidate_id": "cand_goal_t1_r2_1",
+        "information_value": "HIGH",
+        "decision_impact": "HIGH",
+        "goal_relevance": "HIGH",
+        "redundancy": "LOW",
+        "acquisition_cost": "LOW",
+        "gate_decision": "ACCEPT",
+        "gate_reason": "bedtime passes the counterfactual test as decision_changing; plausible values may change the next action or answer scope.",
+        "origin": "OPTIONAL_ACQUISITION"
+      },
+      "selected_action": "ASK",
+      "primary_root_cause": "INPUT_UNDERSTANDING_MISS",
+      "downstream_effects": [
+        "state_missing",
+        "unnecessary_ASK",
+        "interaction_cost"
+      ],
+      "trace_pointer": "evaluation/v3_runs/heldout-v3-step9_20-20260923-01/heldout-v3-step9_20-20260923-01-attempt-99b9eab89bfe4452997c23576f4617f0_raw_traces.jsonl#case_id=V3-PD-05/turns/1/state_history"
+    },
+    {
+      "case_id": "V3-PD-05",
+      "turn": 3,
+      "ask_question": "你通常几点起床？",
+      "target": "wake_time",
+      "frozen_label": "redundant",
+      "frozen_label_reason": "用户已明确 06:30",
+      "state_before_ask": {
+        "goal": "Decide whether to move bedtime from 10:30 PM to 9:00 PM tonight for 'healthier' sleep",
+        "task_type": "PERSONALIZED_DECISION",
+        "facts": {},
+        "decision_missing": [
+          "bedtime",
+          "sleep_onset_latency",
+          "wake_time",
+          "total_sleep_time",
+          "nighttime_awakenings",
+          "recent_sleep_pattern"
+        ],
+        "user_info_sufficiency": "LOW",
+        "evidence_sufficiency": "LOW"
+      },
+      "facts_already_known": {
+        "raw_user_and_session": [
+          "22:30上床",
+          "23:00左右睡着",
+          "06:30起床"
+        ],
+        "state_facts": {}
+      },
+      "effective_requirements": {
+        "classification_for_target": "useful_optional",
+        "critical": [
+          "bedtime",
+          "sleep_onset_latency",
+          "wake_time",
+          "total_sleep_time",
+          "nighttime_awakenings",
+          "recent_sleep_pattern"
+        ],
+        "decision_fields": [
+          "bedtime",
+          "sleep_onset_latency",
+          "wake_time",
+          "total_sleep_time",
+          "nighttime_awakenings",
+          "recent_sleep_pattern"
+        ],
+        "secondary": [
+          "perceived_stress",
+          "nap",
+          "caffeine"
+        ],
+        "semantic_adjustments": []
+      },
+      "active_dependencies": [
+        {
+          "type": "USER_FACTS",
+          "status": "DEFERRED",
+          "requiredness": "optional",
+          "dependency_id": "dep_goal_t1_r3_user_facts_user_facts"
+        },
+        {
+          "type": "VALIDITY_STATE",
+          "status": "REQUIRED",
+          "requiredness": "required",
+          "dependency_id": "dep_goal_t1_r3_validity_state_sleep_onset_latency"
+        }
+      ],
+      "candidate_actions": [
+        {
+          "candidate_id": "cand_goal_t1_r3_1",
+          "action": "ASK",
+          "target": "wake_time",
+          "information_value": "HIGH",
+          "acquisition_value": "MEDIUM",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        }
+      ],
+      "selected_candidate": {
+        "candidate_id": "cand_goal_t1_r3_1",
+        "information_value": "HIGH",
+        "decision_impact": "HIGH",
+        "goal_relevance": "MEDIUM",
+        "redundancy": "LOW",
+        "acquisition_cost": "LOW",
+        "gate_decision": "ACCEPT",
+        "gate_reason": "wake_time passes the counterfactual test as decision_changing; plausible values may change the next action or answer scope.",
+        "origin": "OPTIONAL_ACQUISITION"
+      },
+      "selected_action": "ASK",
+      "primary_root_cause": "INPUT_UNDERSTANDING_MISS",
+      "downstream_effects": [
+        "state_missing",
+        "unnecessary_ASK",
+        "interaction_cost"
+      ],
+      "trace_pointer": "evaluation/v3_runs/heldout-v3-step9_20-20260923-01/heldout-v3-step9_20-20260923-01-attempt-99b9eab89bfe4452997c23576f4617f0_raw_traces.jsonl#case_id=V3-PD-05/turns/2/state_history"
+    },
+    {
+      "case_id": "V3-PD-07",
+      "turn": 1,
+      "ask_question": "你通常几点上床？",
+      "target": "bedtime",
+      "frozen_label": "irrelevant",
+      "frozen_label_reason": "单次漏闹钟的受限回答不需床时",
+      "state_before_ask": {
+        "goal": "Decide whether to shift all future morning alarms after missing one alarm",
+        "task_type": "PERSONALIZED_DECISION",
+        "facts": {
+          "wake_time": "07:00"
+        },
+        "decision_missing": [
+          "bedtime",
+          "sleep_onset_latency",
+          "total_sleep_time",
+          "nighttime_awakenings",
+          "recent_sleep_pattern"
+        ],
+        "user_info_sufficiency": "MEDIUM",
+        "evidence_sufficiency": "LOW"
+      },
+      "facts_already_known": {
+        "raw_user_and_session": [
+          "作息稳定",
+          "单次漏闹钟"
+        ],
+        "state_facts": {
+          "wake_time": "07:00"
+        }
+      },
+      "effective_requirements": {
+        "classification_for_target": "useful_optional",
+        "critical": [
+          "bedtime",
+          "sleep_onset_latency",
+          "wake_time",
+          "total_sleep_time",
+          "nighttime_awakenings",
+          "recent_sleep_pattern"
+        ],
+        "decision_fields": [
+          "bedtime",
+          "sleep_onset_latency",
+          "wake_time",
+          "total_sleep_time",
+          "nighttime_awakenings",
+          "recent_sleep_pattern"
+        ],
+        "secondary": [
+          "perceived_stress",
+          "nap",
+          "caffeine"
+        ],
+        "semantic_adjustments": []
+      },
+      "active_dependencies": [
+        {
+          "type": "USER_FACTS",
+          "status": "DEFERRED",
+          "requiredness": "optional",
+          "dependency_id": "dep_goal_t1_r1_user_facts_user_facts"
+        }
+      ],
+      "candidate_actions": [
+        {
+          "candidate_id": "cand_goal_t1_r1_1",
+          "action": "ASK",
+          "target": "bedtime",
+          "information_value": "HIGH",
+          "acquisition_value": "MEDIUM",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        },
+        {
+          "candidate_id": "cand_goal_t1_r1_2",
+          "action": "ASK",
+          "target": "sleep_onset_latency",
+          "information_value": "HIGH",
+          "acquisition_value": "MEDIUM",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        },
+        {
+          "candidate_id": "cand_goal_t1_r1_3",
+          "action": "ASK",
+          "target": "total_sleep_time",
+          "information_value": "MEDIUM",
+          "acquisition_value": "LOW",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        },
+        {
+          "candidate_id": "cand_goal_t1_r1_4",
+          "action": "ASK",
+          "target": "nighttime_awakenings",
+          "information_value": "MEDIUM",
+          "acquisition_value": "LOW",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        },
+        {
+          "candidate_id": "cand_goal_t1_r1_5",
+          "action": "ASK",
+          "target": "recent_sleep_pattern",
+          "information_value": "MEDIUM",
+          "acquisition_value": "LOW",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        }
+      ],
+      "selected_candidate": {
+        "candidate_id": "cand_goal_t1_r1_1",
+        "information_value": "HIGH",
+        "decision_impact": "HIGH",
+        "goal_relevance": "MEDIUM",
+        "redundancy": "LOW",
+        "acquisition_cost": "LOW",
+        "gate_decision": "ACCEPT",
+        "gate_reason": "bedtime passes the counterfactual test as decision_changing; plausible values may change the next action or answer scope.",
+        "origin": "OPTIONAL_ACQUISITION"
+      },
+      "selected_action": "ASK",
+      "primary_root_cause": "INFORMATION_VALUE_OVERESTIMATED",
+      "downstream_effects": [
+        "unnecessary_ASK",
+        "interaction_cost"
+      ],
+      "trace_pointer": "evaluation/v3_runs/heldout-v3-step9_20-20260923-01/heldout-v3-step9_20-20260923-01-attempt-99b9eab89bfe4452997c23576f4617f0_raw_traces.jsonl#case_id=V3-PD-07/turns/0/state_history"
+    },
+    {
+      "case_id": "V3-PD-07",
+      "turn": 2,
+      "ask_question": "你上床后通常需要多久才能睡着？",
+      "target": "sleep_onset_latency",
+      "frozen_label": "irrelevant",
+      "frozen_label_reason": "不改变当前决策",
+      "state_before_ask": {
+        "goal": "Decide whether to shift all future morning alarms after missing one alarm",
+        "task_type": "PERSONALIZED_DECISION",
+        "facts": {
+          "wake_time": "07:00"
+        },
+        "decision_missing": [
+          "bedtime",
+          "sleep_onset_latency",
+          "total_sleep_time",
+          "nighttime_awakenings",
+          "recent_sleep_pattern"
+        ],
+        "user_info_sufficiency": "MEDIUM",
+        "evidence_sufficiency": "LOW"
+      },
+      "facts_already_known": {
+        "raw_user_and_session": [
+          "作息稳定",
+          "单次漏闹钟"
+        ],
+        "state_facts": {
+          "wake_time": "07:00"
+        }
+      },
+      "effective_requirements": {
+        "classification_for_target": "useful_optional",
+        "critical": [
+          "bedtime",
+          "sleep_onset_latency",
+          "wake_time",
+          "total_sleep_time",
+          "nighttime_awakenings",
+          "recent_sleep_pattern"
+        ],
+        "decision_fields": [
+          "bedtime",
+          "sleep_onset_latency",
+          "wake_time",
+          "total_sleep_time",
+          "nighttime_awakenings",
+          "recent_sleep_pattern"
+        ],
+        "secondary": [
+          "perceived_stress",
+          "nap",
+          "caffeine"
+        ],
+        "semantic_adjustments": []
+      },
+      "active_dependencies": [
+        {
+          "type": "USER_FACTS",
+          "status": "DEFERRED",
+          "requiredness": "optional",
+          "dependency_id": "dep_goal_t1_r2_user_facts_user_facts"
+        }
+      ],
+      "candidate_actions": [
+        {
+          "candidate_id": "cand_goal_t1_r2_1",
+          "action": "ASK",
+          "target": "sleep_onset_latency",
+          "information_value": "HIGH",
+          "acquisition_value": "MEDIUM",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        },
+        {
+          "candidate_id": "cand_goal_t1_r2_2",
+          "action": "ASK",
+          "target": "total_sleep_time",
+          "information_value": "MEDIUM",
+          "acquisition_value": "LOW",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        },
+        {
+          "candidate_id": "cand_goal_t1_r2_3",
+          "action": "ASK",
+          "target": "nighttime_awakenings",
+          "information_value": "MEDIUM",
+          "acquisition_value": "LOW",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        },
+        {
+          "candidate_id": "cand_goal_t1_r2_4",
+          "action": "ASK",
+          "target": "recent_sleep_pattern",
+          "information_value": "MEDIUM",
+          "acquisition_value": "LOW",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        }
+      ],
+      "selected_candidate": {
+        "candidate_id": "cand_goal_t1_r2_1",
+        "information_value": "HIGH",
+        "decision_impact": "HIGH",
+        "goal_relevance": "MEDIUM",
+        "redundancy": "LOW",
+        "acquisition_cost": "LOW",
+        "gate_decision": "ACCEPT",
+        "gate_reason": "sleep_time_or_sleep_onset_latency passes the counterfactual test as decision_changing; plausible values may change the next action or answer scope.",
+        "origin": "OPTIONAL_ACQUISITION"
+      },
+      "selected_action": "ASK",
+      "primary_root_cause": "INFORMATION_VALUE_OVERESTIMATED",
+      "downstream_effects": [
+        "unnecessary_ASK",
+        "interaction_cost"
+      ],
+      "trace_pointer": "evaluation/v3_runs/heldout-v3-step9_20-20260923-01/heldout-v3-step9_20-20260923-01-attempt-99b9eab89bfe4452997c23576f4617f0_raw_traces.jsonl#case_id=V3-PD-07/turns/1/state_history"
+    },
+    {
+      "case_id": "V3-PD-08",
+      "turn": 1,
+      "ask_question": "你通常几点上床？",
+      "target": "bedtime",
+      "frozen_label": "irrelevant",
+      "frozen_label_reason": "两晚短睡和日困咨询不需床时精度",
+      "state_before_ask": {
+        "goal": "决定今晚是否取消闹钟来补觉",
+        "task_type": "PERSONALIZED_DECISION",
+        "facts": {},
+        "decision_missing": [
+          "bedtime",
+          "sleep_onset_latency",
+          "wake_time",
+          "total_sleep_time",
+          "nighttime_awakenings",
+          "recent_sleep_pattern"
+        ],
+        "user_info_sufficiency": "LOW",
+        "evidence_sufficiency": "LOW"
+      },
+      "facts_already_known": {
+        "raw_user_and_session": [
+          "前几天两晚睡短",
+          "白天想打盹"
+        ],
+        "state_facts": {}
+      },
+      "effective_requirements": {
+        "classification_for_target": "useful_optional",
+        "critical": [
+          "bedtime",
+          "sleep_onset_latency",
+          "wake_time",
+          "total_sleep_time",
+          "nighttime_awakenings",
+          "recent_sleep_pattern"
+        ],
+        "decision_fields": [
+          "bedtime",
+          "sleep_onset_latency",
+          "wake_time",
+          "total_sleep_time",
+          "nighttime_awakenings",
+          "recent_sleep_pattern"
+        ],
+        "secondary": [
+          "perceived_stress",
+          "nap",
+          "caffeine"
+        ],
+        "semantic_adjustments": []
+      },
+      "active_dependencies": [
+        {
+          "type": "USER_FACTS",
+          "status": "DEFERRED",
+          "requiredness": "optional",
+          "dependency_id": "dep_goal_t1_r1_user_facts_user_facts"
+        }
+      ],
+      "candidate_actions": [
+        {
+          "candidate_id": "cand_goal_t1_r1_1",
+          "action": "ASK",
+          "target": "bedtime",
+          "information_value": "HIGH",
+          "acquisition_value": "MEDIUM",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        },
+        {
+          "candidate_id": "cand_goal_t1_r1_2",
+          "action": "ASK",
+          "target": "sleep_onset_latency",
+          "information_value": "HIGH",
+          "acquisition_value": "MEDIUM",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        },
+        {
+          "candidate_id": "cand_goal_t1_r1_3",
+          "action": "ASK",
+          "target": "wake_time",
+          "information_value": "HIGH",
+          "acquisition_value": "MEDIUM",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        },
+        {
+          "candidate_id": "cand_goal_t1_r1_4",
+          "action": "ASK",
+          "target": "total_sleep_time",
+          "information_value": "MEDIUM",
+          "acquisition_value": "LOW",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        },
+        {
+          "candidate_id": "cand_goal_t1_r1_5",
+          "action": "ASK",
+          "target": "nighttime_awakenings",
+          "information_value": "MEDIUM",
+          "acquisition_value": "LOW",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        },
+        {
+          "candidate_id": "cand_goal_t1_r1_6",
+          "action": "ASK",
+          "target": "recent_sleep_pattern",
+          "information_value": "MEDIUM",
+          "acquisition_value": "LOW",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        }
+      ],
+      "selected_candidate": {
+        "candidate_id": "cand_goal_t1_r1_1",
+        "information_value": "HIGH",
+        "decision_impact": "HIGH",
+        "goal_relevance": "MEDIUM",
+        "redundancy": "LOW",
+        "acquisition_cost": "LOW",
+        "gate_decision": "ACCEPT",
+        "gate_reason": "bedtime passes the counterfactual test as decision_changing; plausible values may change the next action or answer scope.",
+        "origin": "OPTIONAL_ACQUISITION"
+      },
+      "selected_action": "ASK",
+      "primary_root_cause": "INFORMATION_VALUE_OVERESTIMATED",
+      "downstream_effects": [
+        "unnecessary_ASK",
+        "interaction_cost"
+      ],
+      "trace_pointer": "evaluation/v3_runs/heldout-v3-step9_20-20260923-01/heldout-v3-step9_20-20260923-01-attempt-99b9eab89bfe4452997c23576f4617f0_raw_traces.jsonl#case_id=V3-PD-08/turns/0/state_history"
+    },
+    {
+      "case_id": "V3-PD-08",
+      "turn": 2,
+      "ask_question": "你上床后通常需要多久才能睡着？",
+      "target": "sleep_onset_latency",
+      "frozen_label": "irrelevant",
+      "frozen_label_reason": "对当前受限回答收益很低",
+      "state_before_ask": {
+        "goal": "决定今晚是否取消闹钟来补觉",
+        "task_type": "PERSONALIZED_DECISION",
+        "facts": {},
+        "decision_missing": [
+          "bedtime",
+          "sleep_onset_latency",
+          "wake_time",
+          "total_sleep_time",
+          "nighttime_awakenings",
+          "recent_sleep_pattern"
+        ],
+        "user_info_sufficiency": "LOW",
+        "evidence_sufficiency": "LOW"
+      },
+      "facts_already_known": {
+        "raw_user_and_session": [
+          "前几天两晚睡短",
+          "白天想打盹"
+        ],
+        "state_facts": {}
+      },
+      "effective_requirements": {
+        "classification_for_target": "useful_optional",
+        "critical": [
+          "bedtime",
+          "sleep_onset_latency",
+          "wake_time",
+          "total_sleep_time",
+          "nighttime_awakenings",
+          "recent_sleep_pattern"
+        ],
+        "decision_fields": [
+          "bedtime",
+          "sleep_onset_latency",
+          "wake_time",
+          "total_sleep_time",
+          "nighttime_awakenings",
+          "recent_sleep_pattern"
+        ],
+        "secondary": [
+          "perceived_stress",
+          "nap",
+          "caffeine"
+        ],
+        "semantic_adjustments": []
+      },
+      "active_dependencies": [
+        {
+          "type": "USER_FACTS",
+          "status": "DEFERRED",
+          "requiredness": "optional",
+          "dependency_id": "dep_goal_t1_r2_user_facts_user_facts"
+        }
+      ],
+      "candidate_actions": [
+        {
+          "candidate_id": "cand_goal_t1_r2_1",
+          "action": "ASK",
+          "target": "sleep_onset_latency",
+          "information_value": "HIGH",
+          "acquisition_value": "MEDIUM",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        },
+        {
+          "candidate_id": "cand_goal_t1_r2_2",
+          "action": "ASK",
+          "target": "wake_time",
+          "information_value": "HIGH",
+          "acquisition_value": "MEDIUM",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        },
+        {
+          "candidate_id": "cand_goal_t1_r2_3",
+          "action": "ASK",
+          "target": "total_sleep_time",
+          "information_value": "MEDIUM",
+          "acquisition_value": "LOW",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        },
+        {
+          "candidate_id": "cand_goal_t1_r2_4",
+          "action": "ASK",
+          "target": "nighttime_awakenings",
+          "information_value": "MEDIUM",
+          "acquisition_value": "LOW",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        },
+        {
+          "candidate_id": "cand_goal_t1_r2_5",
+          "action": "ASK",
+          "target": "recent_sleep_pattern",
+          "information_value": "MEDIUM",
+          "acquisition_value": "LOW",
+          "gate_decision": "ACCEPT",
+          "origin": "OPTIONAL_ACQUISITION"
+        }
+      ],
+      "selected_candidate": {
+        "candidate_id": "cand_goal_t1_r2_1",
+        "information_value": "HIGH",
+        "decision_impact": "HIGH",
+        "goal_relevance": "MEDIUM",
+        "redundancy": "LOW",
+        "acquisition_cost": "LOW",
+        "gate_decision": "ACCEPT",
+        "gate_reason": "sleep_time_or_sleep_onset_latency passes the counterfactual test as decision_changing; plausible values may change the next action or answer scope.",
+        "origin": "OPTIONAL_ACQUISITION"
+      },
+      "selected_action": "ASK",
+      "primary_root_cause": "INFORMATION_VALUE_OVERESTIMATED",
+      "downstream_effects": [
+        "unnecessary_ASK",
+        "interaction_cost"
+      ],
+      "trace_pointer": "evaluation/v3_runs/heldout-v3-step9_20-20260923-01/heldout-v3-step9_20-20260923-01-attempt-99b9eab89bfe4452997c23576f4617f0_raw_traces.jsonl#case_id=V3-PD-08/turns/1/state_history"
+    }
+  ]
+}

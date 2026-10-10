@@ -1,0 +1,37 @@
+{
+  "step": "9.12b",
+  "purpose": "Observer-only validation of real action-specific lineage from LoopResult.state_history.",
+  "prohibited": [
+    "synthetic lineage IDs",
+    "Agent behavior changes",
+    "Benchmark V2 execution",
+    "Benchmark V3 access",
+    "external model calls"
+  ],
+  "root_requirements": ["goal_id", "semantic_id", "dependency_id", "action_id"],
+  "action_shapes": {
+    "POLICY_SELECTED_ACTION": {
+      "required": ["candidate_id", "action_id"],
+      "optional": ["precondition_id", "tool_result_id", "state_update_id"]
+    },
+    "PRECONDITION_FORCED_ACTION": {
+      "required": ["precondition_id", "candidate_id", "action_id"],
+      "optional": ["tool_result_id", "state_update_id"]
+    },
+    "TOOL_ACTION": {
+      "required": ["candidate_id", "action_id", "tool_result_id", "state_update_id"],
+      "conditional": "precondition_id is required only when origin is HARD_PRECONDITION"
+    },
+    "SATISFIED_ANSWER": {
+      "required": ["candidate_id", "action_id"],
+      "not_required": ["precondition_id", "tool_result_id", "state_update_id"]
+    }
+  },
+  "recovery_source": {
+    "candidate_to_action": "DECISION.chosen_action.candidate_id -> action_history.selected_candidate_id",
+    "precondition": "DECISION.chosen_action.source_precondition_id",
+    "tool_to_state": "lineage_events.source_action_id -> tool_result_id/state_update_id"
+  },
+  "failure_behavior": "fail_closed: preserve null and report missing_required_lineage; never generate an ID",
+  "expected_preflight_status_after_static_validation": "READY_FOR_LOCAL_PREFLIGHT_RECHECK"
+}

@@ -1,0 +1,49 @@
+{
+  "artifact_type": "STEP9_58A_R1_SYNTHETIC_NAMESPACE_TEST_REPORT",
+  "remediation_origin": "STEP9_58A_R1",
+  "created_at_utc": "2026-10-01T19:23:16Z",
+  "test_command": ".venv/bin/python -m unittest tests.test_step9_55a_namespace_lifecycle tests.test_step9_58a_r1_namespace_allocator -q",
+  "test_modules": [
+    "tests.test_step9_55a_namespace_lifecycle",
+    "tests.test_step9_58a_r1_namespace_allocator"
+  ],
+  "test_manifest": [
+    "tests.test_step9_55a_namespace_lifecycle.NamespaceLifecycleTests.test_completed_attempt_fails_closed",
+    "tests.test_step9_55a_namespace_lifecycle.NamespaceLifecycleTests.test_consumed_step954_authorization_cannot_be_reused",
+    "tests.test_step9_55a_namespace_lifecycle.NamespaceLifecycleTests.test_failed_step955_attempt_cannot_be_resumed",
+    "tests.test_step9_55a_namespace_lifecycle.NamespaceLifecycleTests.test_missing_authorization_semantic_state_fails_closed",
+    "tests.test_step9_55a_namespace_lifecycle.NamespaceLifecycleTests.test_namespace_absent_before_attempt_passes",
+    "tests.test_step9_55a_namespace_lifecycle.NamespaceLifecycleTests.test_namespace_for_different_attempt_or_authorization_fails_closed",
+    "tests.test_step9_55a_namespace_lifecycle.NamespaceLifecycleTests.test_new_future_authorization_and_attempt_pass_preflight",
+    "tests.test_step9_55a_namespace_lifecycle.NamespaceLifecycleTests.test_nonzero_started_counter_fails_closed",
+    "tests.test_step9_55a_namespace_lifecycle.NamespaceLifecycleTests.test_parent_callback_is_pre_then_post_create",
+    "tests.test_step9_55a_namespace_lifecycle.NamespaceLifecycleTests.test_parent_created_exact_attempt_before_case_passes",
+    "tests.test_step9_55a_namespace_lifecycle.NamespaceLifecycleTests.test_prior_case_result_or_raw_trace_fails_closed",
+    "tests.test_step9_55a_namespace_lifecycle.NamespaceLifecycleTests.test_unrelated_namespace_before_attempt_fails_closed",
+    "tests.test_step9_58a_r1_namespace_allocator.NamespaceAllocatorTests.test_allocation_marker_corruption_fails_closed",
+    "tests.test_step9_58a_r1_namespace_allocator.NamespaceAllocatorTests.test_authorization_cannot_be_rebound_to_another_attempt",
+    "tests.test_step9_58a_r1_namespace_allocator.NamespaceAllocatorTests.test_fresh_derived_namespace_is_absent_and_unique",
+    "tests.test_step9_58a_r1_namespace_allocator.NamespaceAllocatorTests.test_historical_ledger_identity_cannot_be_reallocated",
+    "tests.test_step9_58a_r1_namespace_allocator.NamespaceAllocatorTests.test_identity_cannot_reserve_a_second_namespace",
+    "tests.test_step9_58a_r1_namespace_allocator.NamespaceAllocatorTests.test_old_occupied_and_failed_namespaces_are_forbidden",
+    "tests.test_step9_58a_r1_namespace_allocator.NamespaceAllocatorTests.test_reserved_fresh_namespace_passes_pre_and_post_first_case_guards",
+    "tests.test_step9_58a_r1_namespace_allocator.NamespaceAllocatorTests.test_parallel_duplicate_allocation_has_one_winner",
+    "tests.test_step9_58a_r1_namespace_allocator.NamespaceAllocatorTests.test_nested_historical_ledger_without_marker_cannot_be_reallocated"
+  ],
+  "safe_test_count": 21,
+  "safe_test_failures": 0,
+  "safe_test_errors": 0,
+  "coverage": {
+    "pre_attempt_fresh_namespace": "PASS",
+    "post_attempt_creation_pre_first_case_lifecycle": "PASS_SYNTHETIC_PARENT_LIFECYCLE",
+    "occupied_namespace_collision": "PASS_FAIL_CLOSED",
+    "failed_namespace_reuse": "PASS_FAIL_CLOSED",
+    "authorization_attempt_exactly_once": "PASS",
+    "parallel_duplicate_allocation": "PASS_ONE_WINNER",
+    "historical_ledger_identity_reuse_including_nested_layout": "PASS_FAIL_CLOSED",
+    "corrupt_reservation_marker": "PASS_FAIL_CLOSED"
+  },
+  "production_case_executed": 0,
+  "model_agent_rag_called": false,
+  "v4_evaluation_executed": false
+}

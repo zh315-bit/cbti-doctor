@@ -1,0 +1,35 @@
+{
+  "artifact_type": "STEP9_62_V3_AUTHORIZATION_IDENTITY_AND_NAMESPACE_AUDIT",
+  "status": "PASS_FRESH_IDENTITY_PREBOUND_NAMESPACE_ABSENT",
+  "evaluation_id": "heldout-v4-step9_55a-treatment-v3-20260930-01",
+  "authorization_id": "auth-step9_62-e796755748e14418b9da641f5d6c15e2",
+  "attempt_id": "attempt-step9_62-6620ce3a79684874a15f5e35eac97938",
+  "historical_v3_authorization_manifest_count": 5,
+  "historical_authorization_id_count": 5,
+  "historical_attempt_id_count": 5,
+  "consumed_authorization_ids": [
+    "auth-step9_35b-19cb1db7c4b46f073df71237a8608fc2",
+    "auth-step9_44r1-ecce3f6d87e64ace822fc46c97c18f55",
+    "auth-step9_54r1-b43c3282fd9346f6a7c3548e376ec6d1",
+    "auth-step9_56-a754eddd5c8a4ffc9243a7f1644aa611"
+  ],
+  "retired_authorization_ids": [
+    "auth-step9_59b-0f63fb3bd6934e4b9a1c7e5808c24825"
+  ],
+  "active_executable_authorization_count_before_issue": 0,
+  "old_step9_59b_authorization_reusable": false,
+  "old_step9_59b_authorization_executable": false,
+  "authorization_id_globally_new": true,
+  "attempt_id_globally_new": true,
+  "fresh_authorization_identity_guard": "PASS_BEFORE_MANIFEST_CREATION",
+  "fresh_namespace_required": true,
+  "namespace_id": "heldout-v4-treatment-v3-run-52b2c0c8ebbb06258291",
+  "namespace_derivation": "SHA256(evaluation_id\\0authorization_id\\0attempt_id) first 20 hex characters",
+  "derived_namespace_collides_with_history": false,
+  "derived_namespace_path_existed_at_issuance": false,
+  "formal_namespace_created": false,
+  "reservation_marker_created": false,
+  "attempt_created": false,
+  "case_outputs_created": false,
+  "first_access_event_created": false
+}

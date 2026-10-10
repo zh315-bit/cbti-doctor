@@ -1,0 +1,42 @@
+{
+  "artifact_type": "STEP9_56_V3_AUTHORIZATION_FREEZE",
+  "step": "9.56",
+  "freeze_id": "step9_56-v3-authorization-20260930-01",
+  "status": "ISSUED_NOT_CONSUMED",
+  "created_at_utc": "2026-09-30T20:45:51Z",
+  "evaluation_id": "heldout-v4-step9_55a-treatment-v3-20260930-01",
+  "authorization_id": "auth-step9_56-a754eddd5c8a4ffc9243a7f1644aa611",
+  "attempt_id": "attempt-step9_56-93842f48f1554239ad14d2c11689635e",
+  "attempt_id_status": "PREBOUND_IDENTITY_ONLY_NOT_CREATED",
+  "authorization_manifest_path": "evaluation/v1_2_3/step9_56_v3_authorization_manifest.json",
+  "authorization_manifest_sha256": "c4baa12b60a2166c03d8d7c98d6aefe1897873141f5b9b18e6c8a4fb795dd606",
+  "runner_freeze_revision": "r3",
+  "runner_freeze_path": "evaluation/v1_2_3/step9_55b_v3_runner_freeze_r3.json",
+  "runner_freeze_sha256": "581edb8e0091c3dd060735435091be0c5d826b6244a562fa1bfb21a0b3d850fc",
+  "runner_path": "scripts/run_step9_53_v3_identity_adapter.py",
+  "runner_sha256": "ace3d58005a5c4ce01aeeb17ac54a437c64e4023f7c870e12964a1a5d72b0b7e",
+  "v3_agent_sha256": "085d338ed95bbef7370c41cf97ca0d6653ffdfd2f1c924eef4b7123dfdea4607",
+  "authorization_type": "ONE_SHOT_MATCHED_TREATMENT",
+  "claim_scope": "FROZEN_MATCHED_DEVELOPMENT_REGRESSION_ONLY",
+  "consumption_limit": 1,
+  "consumption_count_at_issue": 0,
+  "preclearance_path": "evaluation/v1_2_3/step9_55b_v3_runner_preclearance.json",
+  "preclearance_sha256": "a2aa8ba41c73ee2f8f76ec1ba2020c4b4449458dd78f1d63e708bb5adec37309",
+  "namespace_lifecycle_contract": {
+    "pre_attempt_namespace_absent": true,
+    "post_attempt_creation_pre_first_case_exact_identity_required": true,
+    "zero_case_counters_required": true,
+    "no_prior_results_or_traces_required": true,
+    "completed_stale_or_reused_attempt_fails_closed": true,
+    "old_authorization_id_forbidden": "auth-step9_54r1-b43c3282fd9344f6a7c3548e376ec6d1",
+    "old_attempt_id_forbidden": "attempt-step9_54r1-d2e272e499e24f5f82096a01b2bf9fe9"
+  },
+  "integrity": {
+    "parent_authorization_validator_passed_read_only": true,
+    "global_authorization_and_attempt_collision_scan_passed": true,
+    "future_attempt_namespace_absent": true
+  },
+  "formal_attempt_created": false,
+  "authorization_consumed": false,
+  "formal_v4_case_executed": 0
+}

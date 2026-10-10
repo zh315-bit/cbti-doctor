@@ -1,0 +1,16 @@
+{
+  "artifact_type": "STEP9_63A_TRANSACTION_PROTOCOL_PROTOTYPE_FREEZE",
+  "step": "9.63a",
+  "status": "FROZEN_PROTOTYPE_NOT_AUTHORIZED_OR_INTEGRATED",
+  "protocol_module_path": "scripts/v3_execution_transaction.py",
+  "protocol_module_sha256": "cac450075ced33ce7490577079a6604c1a749541eaa2c4302be065d408569251",
+  "synthetic_test_path": "tests/test_v3_execution_transaction.py",
+  "synthetic_test_sha256": "478528ceee6b3888ccc66534f3e2c45819c5d135124d7b58e51e7dc779cd73de",
+  "formal_runner_freeze_revision": "r6",
+  "formal_runner_modified": false,
+  "r6_freeze_sha256": "4e6c0bf9ed718546ea1efa12ae48324fd5438129ad3cd3860f93bd33037f1593",
+  "live_step9_62_authorization_compatible_with_prototype": false,
+  "execution_enabled": false,
+  "execution_semantics_changed": false,
+  "next_required_work": "integrate journal with authorization lifecycle, namespace allocator, attempt runner and case-start gate; create new runner freeze; issue no authorization in this step"
+}

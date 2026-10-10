@@ -1,0 +1,18 @@
+{
+  "artifact_type": "STEP9_63A_R3_NON_CONSUMING_TEST_MANIFEST",
+  "command": ".venv/bin/python -m unittest -q tests.test_step9_53_v3_identity_adapter tests.test_step9_58a_r1_namespace_allocator tests.test_step9_59a_auth_identity_binding tests.test_step9_61a_authorization_retirement tests.test_step9_62b_mac_local_preflight tests.test_step9_63_v3_formal_execution tests.test_v3_execution_transaction tests.test_step9_63a_r1_production_integration tests.test_step9_63a_r2_retirement_eligibility tests.test_step9_63a_r3_authorization_issuance",
+  "tests_run": 170,
+  "failures": 0,
+  "errors": 0,
+  "status": "PASS",
+  "python_compile_command": ".venv/bin/python -m py_compile scripts/issue_step9_63a_r3_authorization.py tests/test_step9_63a_r3_authorization_issuance.py",
+  "python_compile_status": "PASS",
+  "synthetic_issuance_contract_tests": 18,
+  "test_scope": "offline identity, lifecycle, transaction, exactly-once, collision, immutable binding, and non-consuming regression tests",
+  "real_authorization_consumed_by_tests": false,
+  "real_attempt_created_by_tests": false,
+  "real_namespace_reserved_by_tests": false,
+  "network_tested": false,
+  "model_agent_rag_called": false,
+  "v4_case_executed": false
+}

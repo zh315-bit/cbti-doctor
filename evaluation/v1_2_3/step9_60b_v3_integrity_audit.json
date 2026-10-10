@@ -1,0 +1,30 @@
+{
+  "artifact_type": "STEP9_60B_V3_HISTORICAL_INTEGRITY_AUDIT",
+  "step": "9.60b",
+  "created_at_utc": "2026-10-02T14:49:50Z",
+  "status": "PASS_EXTANT_PINNED_ARTIFACTS_WITH_DOCUMENTED_GAPS",
+  "step9_58_provenance_gap": "PRESENT_AND_DOCUMENTED",
+  "step9_60_failure": {
+    "status_preserved": "FAIL_CLOSED_BEFORE_AUTHORIZATION_CONSUMPTION_DNS_FAILURE",
+    "original_persisted_artifact": false,
+    "evidence_basis": "prior conversation/user-provided record; no original Step 9.60 artifact synthesized"
+  },
+  "step9_60a_artifacts": {
+    "connectivity_recovery_json": {"path": "evaluation/v1_2_3/step9_60a_v3_connectivity_recovery.json", "sha256": "1a5fc0baa1738fc2c389733027027a8441a854c0cff10ddf6538d3e71a9f3e29", "match": true},
+    "authorization_preservation_audit": {"path": "evaluation/v1_2_3/step9_60a_v3_authorization_preservation_audit.json", "sha256": "41ebbab4be93d1d856dd6af6ee6d24ef9e99dd190aab7c77fa2abe5a70ab568d", "match": true},
+    "historical_integrity_audit": {"path": "evaluation/v1_2_3/step9_60a_v3_historical_integrity_audit.json", "sha256": "786f1956f512cd97eb1af7f45d25d0ba760d9458bab191ba821ac89bd3e7b94e", "match": true},
+    "report": {"path": "evaluation/v1_2_3/step9_60a_v3_preclearance_report.md", "sha256": "844f72ac406dee49a989ee53c0f06a763febad012117e5b73ee164144c7cf054", "match": true}
+  },
+  "step9_60a_extant_historical_pins_checked": 34,
+  "step9_60a_pin_mismatches": 0,
+  "important_history": {
+    "step9_57": "failed attempt evidence and records remain hash-valid",
+    "step9_57a_b_c": "hash-valid",
+    "step9_58": "original artifacts remain missing; Step 9.58b post-hoc provenance gap remains documented",
+    "step9_58a_r1": "hash-valid",
+    "step9_59_59a_59b": "hash-valid",
+    "step9_60a": "hash-valid as listed above"
+  },
+  "historical_artifacts_modified": false,
+  "missing_original_artifacts_recreated": false
+}

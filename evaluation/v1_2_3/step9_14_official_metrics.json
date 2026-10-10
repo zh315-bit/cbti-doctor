@@ -1,0 +1,96 @@
+{
+  "evaluation_id": "clean-evaluation-v1_2_3-20260922-01",
+  "authorization_id": "clean-evaluation-v1_2_3-20260922-01-auth-step9_13b-22c60aff04df448ea142b2a788d53fbf",
+  "attempt_id": "attempt_f68c187816f84678b200ea85aa32eb3d",
+  "run_status": "COMPLETED",
+  "cases_started": 40,
+  "cases_completed": 40,
+  "case_final_statuses": {"ANSWER": 40},
+  "benchmark_sha256": "dfa9b9e5a12b0017fa68d344d01b313ebc29e583b933fbe1e93c125f55ecafd2",
+  "agent_freeze_hash": "ee914db7b8b5538c5607fdff34cff9083f6d069d50cf342964ae91c8a6446927",
+  "harness_freeze_hash": "8bc271bebc1c5da5351d517e2bb4a0d1a99fda3de1b713a6197b12f81fad70c7",
+  "scoring_hash": "a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899",
+  "scoring_method": "single-reviewer trace-only adjudication under frozen five-dimension rubric; per-case scores retained below",
+  "scores": {
+    "overall": 68.275,
+    "dimension_means": {
+      "goal_alignment_20": 17.425,
+      "facts_state_integrity_20": 13.925,
+      "action_resource_selection_20": 12.325,
+      "evidence_answer_scope_25": 14.65,
+      "interaction_efficiency_15": 9.95
+    },
+    "task_type_means": {
+      "KNOWLEDGE_QA": 71.5,
+      "CAUSE_ASSESSMENT": 67.4,
+      "PERSONALIZED_DECISION": 57.167,
+      "DATA_ANALYSIS": 82.0
+    },
+    "per_case": {
+      "V2-KQ-01": [20,20,20,22,15], "V2-KQ-02": [8,20,2,10,4], "V2-KQ-03": [20,20,18,5,12], "V2-KQ-04": [17,20,2,8,10], "V2-KQ-05": [7,20,2,9,4],
+      "V2-KQ-06": [20,20,20,23,15], "V2-KQ-07": [20,20,20,20,14], "V2-KQ-08": [18,20,16,8,12], "V2-KQ-09": [18,20,16,8,12], "V2-KQ-10": [20,20,2,8,10],
+      "V2-CA-01": [15,0,5,12,3], "V2-CA-02": [16,20,15,14,15], "V2-CA-03": [18,10,8,12,8], "V2-CA-04": [17,15,16,13,10], "V2-CA-05": [15,0,8,10,6],
+      "V2-CA-06": [16,12,12,15,9], "V2-CA-07": [17,13,8,14,10], "V2-CA-08": [20,20,18,19,14], "V2-CA-09": [17,20,15,21,11], "V2-CA-10": [20,20,18,20,14],
+      "V2-PD-01": [18,0,5,13,5], "V2-PD-02": [17,13,12,15,8], "V2-PD-03": [15,0,6,12,5], "V2-PD-04": [18,18,18,10,13], "V2-PD-05": [16,5,9,14,5],
+      "V2-PD-06": [19,20,18,21,11], "V2-PD-07": [17,0,5,12,4], "V2-PD-08": [16,10,7,13,5], "V2-PD-09": [16,0,7,15,4], "V2-PD-10": [18,0,9,15,5],
+      "V2-PD-11": [18,16,12,17,8], "V2-PD-12": [18,15,16,20,9],
+      "V2-DA-01": [20,15,18,18,15], "V2-DA-02": [20,15,18,18,15], "V2-DA-03": [20,20,18,15,15], "V2-DA-04": [20,20,18,15,15],
+      "V2-DA-05": [20,20,18,15,15], "V2-DA-06": [20,20,20,25,15], "V2-DA-07": [12,0,0,12,3], "V2-DA-08": [20,20,18,20,15]
+    },
+    "dimension_order": ["goal_alignment", "facts_state_integrity", "action_resource_selection", "evidence_answer_scope", "interaction_efficiency"]
+  },
+  "actions": {
+    "ASK_total": 55, "ASK_per_case": 1.375,
+    "PD_ASK_total": 30, "PD_ASK_per_case": 2.5,
+    "RETRIEVE_total": 14, "RETRIEVE_per_case": 0.35,
+    "READ_DIARY_total": 11, "READ_DIARY_per_case": 0.275,
+    "tool_calls_total": 25,
+    "turns_total": 95, "turns_per_case": 2.375,
+    "steps_total": 120, "steps_per_case": 3.0,
+    "six_ASK_limit_cases": 0,
+    "all_final_status_ANSWER": true
+  },
+  "ask_quality": {
+    "total": 55,
+    "necessary": 8,
+    "useful_but_optional": 21,
+    "redundant": 14,
+    "irrelevant": 12,
+    "valuable_rate": 0.5273,
+    "redundant_rate": 0.2545,
+    "irrelevant_rate": 0.2182,
+    "redundant_plus_irrelevant_rate": 0.4727,
+    "method_note": "Manual target-by-target review against each frozen case goal, State, and acceptable/unacceptable actions; single reviewer."
+  },
+  "failures": {
+    "critical_failure_cases": [],
+    "critical_failures": 0,
+    "harmful_interaction_or_dependency_cases": ["V2-KQ-02", "V2-KQ-05", "V2-DA-07"],
+    "harmful_failures_strict": 3,
+    "additional_safe_but_incomplete_available_diary_cases": ["V2-DA-01", "V2-DA-02", "V2-DA-03", "V2-DA-04", "V2-DA-05", "V2-DA-08"],
+    "newly_observed_wrong_resource_selection_cases": ["V2-KQ-04", "V2-KQ-10"],
+    "unsupported_quantitative_or_individualized_claims_observed": 0,
+    "fabricated_diary_facts_observed": 0,
+    "fabricated_user_facts_observed": 0
+  },
+  "latency": {
+    "observable": true,
+    "total_ms": 295611.84,
+    "mean_ms_per_case": 7390.296,
+    "median_ms_per_case": 6987.18,
+    "min_ms": 2250.65,
+    "max_ms": 35443.29
+  },
+  "telemetry": {
+    "token_usage": "NOT_MEASURED",
+    "exact_model_call_count": "NOT_AVAILABLE",
+    "llm_latency": "NOT_AVAILABLE",
+    "retrieval_latency": "NOT_AVAILABLE",
+    "tool_latency": "NOT_AVAILABLE"
+  },
+  "review_limitations": [
+    "The frozen rubric defines dimension weights and attribution rules but has no numeric anchor table; these are one reviewer's trace-based scores and should be treated as adjudicated estimates, not inter-rater-stable measurements.",
+    "No rubric/scoring code was modified or executed. The frozen V2 scorer contains a hard-coded score table tied to a previous trace run, so it was not reused for these new traces.",
+    "Benchmark V2 remains a development/regression set, not held-out evaluation."
+  ]
+}

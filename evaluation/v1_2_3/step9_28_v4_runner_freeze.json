@@ -1,0 +1,21 @@
+{
+  "freeze_id": "step9_28-v4-runner-20260925-01",
+  "freeze_kind": "PREPARED_EXECUTION_HARNESS_NOT_AUTHORIZATION",
+  "runner": "scripts/run_step9_28_v4_heldout.py",
+  "runner_sha256": "6102a03d21dab69294d7b827b40d308713ec30c7f1e507fbbbb72c95a01cd7cf",
+  "final_candidate_manifest": "evaluation/v1_2_3/step9_26_final_candidate_freeze.json",
+  "final_candidate_manifest_sha256": "2de40b76bf0ad6d6c3be68294fb8b390d8c6e675c328ac59e22ec78ec010282e",
+  "benchmark_manifest": "evaluation/benchmarks/benchmark_v4_manifest.json",
+  "benchmark_manifest_sha256": "b5feb7832b6267d8cff9d25fb2d8cf0043829feb5fd04ec1bea77dba932a13db",
+  "benchmark_v4_sha256": "8b8c72092fcd7544e69d5d2ecd13610c7bb4c14210fca330698b3e5ab3f01d7f",
+  "agent_aggregate_sha256": "4e2bffea0d7eaa9299074a960df84a1806b3ae9d4930662929abc58ca5b2ae79",
+  "harness_aggregate_sha256": "8bc271bebc1c5da5351d517e2bb4a0d1a99fda3de1b713a6197b12f81fad70c7",
+  "scoring_aggregate_sha256": "f742a8f8af7c8747818dadad81621c15d12d74f50538019913dfe18ab53bf59b",
+  "metric_registry_sha256": "de9f348cb1dff66410c03095abdaffcc256f53679718482870e4aa4d80c75056",
+  "one_shot_rules_sha256": "1c7ed4ef47865b117bc943f3e0ad9a859f4f74cfb4e8001f723ac5532af140d0",
+  "runner_is_case_generic": true,
+  "expected_action_lookup": false,
+  "benchmark_specific_policy": false,
+  "authorization_issued": false,
+  "benchmark_v4_accessed_by_agent": false
+}

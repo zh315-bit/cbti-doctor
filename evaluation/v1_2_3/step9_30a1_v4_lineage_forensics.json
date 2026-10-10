@@ -1,0 +1,52 @@
+{
+  "agent_called": false,
+  "benchmark_v4_accessed_for_evaluation": false,
+  "evaluation_id": "heldout-v4-step9_28-20260925-01",
+  "false_case_recomputed_counts": {
+    "COMPLETE": 7,
+    "INCOMPLETE": 5
+  },
+  "forensic_type": "READ_ONLY_V4_LINEAGE_FAILURE_FORENSICS",
+  "formal_artifacts_modified": false,
+  "formal_inputs": {
+    "evaluation/v4_runs/heldout-v4-step9_28-20260925-01/attempts.jsonl": "5fe1b11cbe0c28ccdfd056e3141862748897dc3b419ff6f05eb3ad8cb847b59f",
+    "evaluation/v4_runs/heldout-v4-step9_28-20260925-01/heldout-v4-step9_28-20260925-01-attempt-step9_29b-5370d36a64d84a3da4f2585e9b57055a_case_results.jsonl": "77042ae9f5a5a75f7f7efd068e3c182e5725fa709e4f68ae63e58f0bbad0d2ea",
+    "evaluation/v4_runs/heldout-v4-step9_28-20260925-01/heldout-v4-step9_28-20260925-01-attempt-step9_29b-5370d36a64d84a3da4f2585e9b57055a_raw_traces.jsonl": "e1aac03f4dbedf567c625694e084fa23155c8bfc2db1d43c4dffbce158734189"
+  },
+  "formal_inputs_reverified": true,
+  "generated_at_utc": "2026-09-27T03:38:27.726117+00:00",
+  "input_freeze_sha256": "6b95f6b896da08767bb8861bad0ccf49dcfcc41cb7490e868ca077a83b2c581e",
+  "lineage_ready_false_case_ids": [
+    "V4-CA-02",
+    "V4-CA-04",
+    "V4-DA-01",
+    "V4-DA-03",
+    "V4-DA-06",
+    "V4-DA-09",
+    "V4-DA-10",
+    "V4-PD-03",
+    "V4-PD-04",
+    "V4-PD-05",
+    "V4-PD-06",
+    "V4-PD-10"
+  ],
+  "model_called": false,
+  "recomputed_status_counts": {
+    "COMPLETE": 35,
+    "INCOMPLETE": 5
+  },
+  "remediation_class": "DERIVED_SIDECAR_REPAIR_POSSIBLE",
+  "root_cause_counts": {
+    "indeterminate": 0,
+    "not_applicable_misclassified": 0,
+    "persistence_bug": 0,
+    "runner_derivation_bug": 7,
+    "true_lineage_failure": 5
+  },
+  "runner_lineage_regression": "NO",
+  "step": "9.30a.1",
+  "v3_lineage_contract": "V3 runner uses scripts.preflight_step9_12_local._lineage_validation; accumulates state.action_history and compares it only with the current loop result.state_history DECISION snapshots, with goal/semantic/dependency roots required.",
+  "v4_case_executed": 0,
+  "v4_lineage_contract": "Same helper and conditions; V4 result lineage_ready is all per-turn lineage.ready. Per action: action_id; candidate_id linked to a DECISION snapshot; source dependency must exist in dependencies_considered; HARD_PRECONDITION requires precondition_id; RETRIEVE/READ_DIARY require tool_result_id and state_update_id; roots goal_id, semantic_id, dependency_id; at least one action record.",
+  "v4_score_generated": false
+}

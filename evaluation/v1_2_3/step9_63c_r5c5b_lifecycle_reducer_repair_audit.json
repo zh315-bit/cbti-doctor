@@ -1,0 +1,100 @@
+{
+  "artifact_type": "STEP9_63C_R5C5B_LIFECYCLE_REDUCER_REPAIR_AUDIT",
+  "step": "9.63c-r5c5b",
+  "status": "PASS_LIFECYCLE_REDUCER_REPAIR_OFFLINE_VALIDATED",
+  "root_cause_class": "LEGACY_ACTIVE_AUTH_ENUMERATOR_OMITS_AUTHORITATIVE_COMMITTED_TRANSACTION_BURN",
+  "single_authoritative_lifecycle_reducer": true,
+  "reducer_path": "scripts/authorization_lifecycle.py",
+  "reducer_sha256": "f0d8b7e04fa2710765b74f4f293436b051af005d11851bf9583da14ff6612744",
+  "migrated_consumers": [
+    "scripts/preflight_step9_62b_mac_local.py::active_authorizations",
+    "scripts/issue_step9_63a_r3_authorization.py via active_authorizations",
+    "scripts/preflight_step9_63c_current_mac_local.py::validate_authorization_state and active enumeration",
+    "scripts/run_step9_35a_matched_treatment.py::validate_authorization via assert_executable_authorization",
+    "scripts/run_step9_53_v3_identity_adapter.py::pre-transaction validation via assert_executable_authorization",
+    "scripts/run_step9_63_v3_formal_execution.py audit via shared active_authorizations"
+  ],
+  "non_migrated_consumers": [],
+  "derived_states": [
+    "ISSUED_EXECUTABLE",
+    "RETIRED_UNCONSUMED_NON_REUSABLE",
+    "COMMITTED_BURNED_PRE_CASE_NON_REUSABLE",
+    "CONSUMED_NON_REUSABLE",
+    "INCONSISTENT_FAIL_CLOSED"
+  ],
+  "target_r7": {
+    "authorization_id": "auth-step9_63a_r3-d53bbaa35b1e4522bc4a5f57d42c8ef7",
+    "derived_state": "COMMITTED_BURNED_PRE_CASE_NON_REUSABLE",
+    "executable": false,
+    "manifest_path": "evaluation/v1_2_3/step9_63a_r3_v3_authorization_manifest.json",
+    "manifest_sha256": "1514438d0afe23a39de2a696e9ea5bd97faac4dd546a88cdbd7b91f450046345",
+    "transaction_path": "evaluation/v4_runs/.execution_transactions/auth-step9_63a_r3-d53bbaa35b1e4522bc4a5f57d42c8ef7.jsonl",
+    "transaction_sha256": "76afd557e4559c50090e9e4939a2e52746cbaefff1d4d6bd886206798b2e96fa",
+    "transaction_state": "COMMITTED",
+    "authorization_irreversibly_burned": true,
+    "attempt_claimed": false,
+    "case_started": false
+  },
+  "target_r8": {
+    "authorization_id": "auth-step9_63c_r4-4b2749ce10014634ac6de155d37ec6a9",
+    "derived_state": "RETIRED_UNCONSUMED_NON_REUSABLE",
+    "executable": false,
+    "retirement_event_id": "retire-c1184275045745ce86c084f0106b4632"
+  },
+  "active_executable_authorization_count": 0,
+  "legacy_false_active_count": 0,
+  "r9_freeze": {
+    "revision": "r9",
+    "sha256": "4af44711fe984b69c81fc4730f0ca3f69058d1f69123b3b2bd7a570356166f97",
+    "superseded_for_new_authorization": true
+  },
+  "new_runner_freeze": {
+    "revision": "r10",
+    "path": "evaluation/v1_2_3/step9_63c_r5c5b_runner_freeze_r10.json",
+    "sha256": "d24244235e51e7bf6c8567880c654fe3fd73b87fa1bfe1ab0f10dfdc94db2693",
+    "member_count": 20,
+    "member_aggregate_sha256": "a1f3264b463c83d7411932a0cf84e6982f877084f8f7e4c64e3f1ab823aab50e",
+    "current_pointer_match": true,
+    "all_members_match": true
+  },
+  "historical_integrity": {
+    "pin_model": "PREFIX_LENGTH_PLUS_PREFIX_SHA256",
+    "pin_count": 55,
+    "pin_mismatch_count": 0,
+    "lifecycle_prefix_length_bytes": 1161,
+    "lifecycle_prefix_sha256": "ca168f6939c4697a7a7bccc0b365b414d9a0e632f40de4242eb0a47e2d985285",
+    "step9_58_provenance_gap": "PRESENT_AND_DOCUMENTED"
+  },
+  "evaluation_identity": {
+    "v3_agent_modified": false,
+    "benchmark_v4_modified": false,
+    "harness_scoring_metrics_modified": false,
+    "evaluation_semantics_changed": false,
+    "case_specific_agent_logic_found": false,
+    "case_specific_runner_logic_found": false
+  },
+  "offline_validation": {
+    "commands": [
+      ".venv/bin/python -m unittest tests.test_step9_63c_r5c5b_lifecycle_reducer tests.test_step9_63a_r3_authorization_issuance tests.test_step9_62b_mac_local_preflight tests.test_step9_63_v3_formal_execution -v",
+      ".venv/bin/python -m py_compile scripts/authorization_lifecycle.py scripts/preflight_step9_62b_mac_local.py scripts/preflight_step9_63c_current_mac_local.py scripts/build_step9_63c_r5c4_runner_freeze.py tests/test_step9_63c_r5c5b_lifecycle_reducer.py"
+    ],
+    "test_count": 68,
+    "failures": 0,
+    "errors": 0,
+    "new_synthetic_test_count": 21
+  },
+  "prohibited_activity": {
+    "new_authorization_issued": false,
+    "attempt_created": false,
+    "namespace_created_or_reserved": false,
+    "formal_v4_case_executed": 0,
+    "model_inference_executed": false,
+    "agent_evaluation_executed": false,
+    "rag_evaluation_executed": false,
+    "http_request_sent": false,
+    "preflight_run": false,
+    "adjudication_aggregation_comparison_executed": false,
+    "v5_accessed": false
+  },
+  "ready_for_fresh_authorization_lifecycle": true
+}

@@ -1,0 +1,1273 @@
+{
+  "contains_v4_case_input": false,
+  "evaluation_id": "heldout-v4-step9_28-20260925-01",
+  "http_status": 200,
+  "latency_ms": 38361.76,
+  "lineage": {
+    "actions": [
+      {
+        "action": "RETRIEVE",
+        "action_id": "act_goal_t1_r1_1",
+        "candidate_history_found": true,
+        "candidate_id": "cand_goal_t1_r1_1",
+        "lineage_shape": "PRECONDITION_FORCED_ACTION",
+        "origin": "HARD_PRECONDITION",
+        "precondition_id": "pre_goal_t1_r1_1",
+        "source_dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+        "state_update_ids": [
+          "upd_goal_t1_r2_1"
+        ],
+        "tool_result_ids": [
+          "tool_goal_t1_r1_1"
+        ]
+      },
+      {
+        "action": "ANSWER",
+        "action_id": "act_goal_t1_r2_2",
+        "candidate_history_found": true,
+        "candidate_id": "cand_goal_t1_r2_1",
+        "lineage_shape": "POLICY_SELECTED_ACTION",
+        "origin": "OPTIONAL_ACQUISITION",
+        "precondition_id": null,
+        "source_dependency_id": null,
+        "state_update_ids": [],
+        "tool_result_ids": []
+      }
+    ],
+    "candidate_lineage_missing": false,
+    "fake_lineage_ids_created": false,
+    "missing_required_lineage": [],
+    "missing_root_lineage": [],
+    "ready": true,
+    "root_ids": {
+      "dependency_ids": [
+        "dep_goal_t1_r1_evidence_external_evidence",
+        "dep_goal_t1_r2_evidence_external_evidence"
+      ],
+      "goal_id": "goal_t1",
+      "semantic_id": "sem_goal_t1_r2_1"
+    }
+  },
+  "response": {
+    "assistant": "感谢您的提问。关于“固定的起床时间如何支持睡眠规律”，我查阅了现有资料，但目前没有找到能直接解释这一问题的内容。\n\n现有资料主要涉及睡眠限制疗法、睡眠压缩法、放松技术和睡眠卫生教育等主题，但没有明确的论述来说明“一致起床时间”与昼夜节律或睡眠规律之间的关系。因此，在现有证据范围内，我暂时无法对此给出有依据的解释。\n\n如果您愿意，我可以：\n- 换用其他关键词（如“睡眠卫生”“昼夜节律”“CBT-I”）再检索；\n- 或聚焦到资料确实覆盖的主题（如睡眠限制与睡眠压缩的原理）来提供解释。\n\n请告诉我您希望如何继续。",
+    "session_id": "step9_28a_synthetic_preflight",
+    "status": "ANSWER",
+    "steps": 2,
+    "tools_used": [
+      "retrieval_augmentation_generation"
+    ]
+  },
+  "session_id": "step9_28a_synthetic_preflight",
+  "state": {
+    "action_history": [
+      {
+        "action": "RETRIEVE",
+        "action_id": "act_goal_t1_r1_1",
+        "query": "Explain in general terms why a consistent wake time can support sleep routines.",
+        "result": "project_rag",
+        "selected_candidate_id": "cand_goal_t1_r1_1",
+        "target": null
+      },
+      {
+        "action": "ANSWER",
+        "action_id": "act_goal_t1_r2_2",
+        "query": null,
+        "selected_candidate_id": "cand_goal_t1_r2_1",
+        "target": null
+      }
+    ],
+    "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+    "base_requirements": {
+      "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+      "classifications": {},
+      "critical": [],
+      "decision_fields": [],
+      "diary_preferred": false,
+      "evidence_required": true,
+      "is_effective": false,
+      "requirement_ids": {},
+      "resources": [],
+      "secondary": [],
+      "semantic_adjustments": []
+    },
+    "candidate_actions": [
+      {
+        "acquisition_cost": "",
+        "acquisition_value": "",
+        "action": "ANSWER",
+        "candidate_id": "cand_goal_t1_r2_1",
+        "cost": "LOW",
+        "decision_impact": "MEDIUM",
+        "expected_benefit": "HIGH",
+        "expected_information_gain": "",
+        "gate_decision": "",
+        "gate_reason": "",
+        "goal_relevance": "MEDIUM",
+        "information_value": "",
+        "origin": "OPTIONAL_ACQUISITION",
+        "query": null,
+        "question": null,
+        "rationale": "当前目标所需的用户信息和证据均已充分。",
+        "redundancy": "LOW",
+        "source_dependency_id": null,
+        "source_precondition_id": null,
+        "source_requirement_id": null,
+        "target": null
+      }
+    ],
+    "claim_provenance": [
+      {
+        "certainty": "exact",
+        "claim": "根据现有资料，我无法对\"固定的起床时间如何支持睡眠规律\"这一具体问题给出直接相关的解释。检索到的内容主要涉及睡眠限制疗法、睡眠压缩法、放松技术以及睡眠卫生教育等主题[睡眠资料]，但没有找到针对\"一致起床时间\"与昼夜节律或睡眠规律之间关系的明确论述。\n\n因此，在不杜撰资料的前提下，我无法基于所提供文件对此问题作出有依据的回答。如果您希望，我可以：\n\n- 尝试用其他相关关键词（如\"睡眠卫生\"\"昼夜节律\"\"CBT-I\"）再次检索；\n- 或把问题聚焦到资料中确实覆盖的主题（如睡眠限制与睡眠压缩的原理）上，我可以就此提供基于资料的解释。\n\n请告诉我您希望如何继续。",
+        "claim_type": "evidence-grounded",
+        "derived_from": [],
+        "source": "evidence:0",
+        "source_field": null,
+        "state_update_id": "upd_goal_t1_r2_1",
+        "tool_result_id": "tool_goal_t1_r1_1"
+      }
+    ],
+    "considered_information": [],
+    "critical_missing": [],
+    "decision_missing": [],
+    "decision_relevant_missing": [],
+    "dependencies_considered": [
+      {
+        "dependency_class": "EXTERNAL_EVIDENCE",
+        "dependency_id": "dep_goal_t1_r2_evidence_external_evidence",
+        "dependency_reason": "current answer scope includes external CBT-I knowledge",
+        "dependency_source": [
+          "goal_semantics",
+          "requirements",
+          "task_type_signal"
+        ],
+        "dependency_type": "EVIDENCE",
+        "fallback": null,
+        "provenance": {
+          "evidence_count": 1
+        },
+        "reason": "current answer scope includes external CBT-I knowledge",
+        "required_for_goal": "Explain in general terms why a consistent wake time can support sleep routines.",
+        "requiredness": "required",
+        "satisfiable_by": [
+          "RETRIEVE"
+        ],
+        "satisfied_by": [
+          "RETRIEVE"
+        ],
+        "semantic_ids": [
+          "sem_goal_t1_r2_1"
+        ],
+        "source": [
+          "goal_semantics",
+          "requirements",
+          "task_type_signal"
+        ],
+        "status": "SATISFIED",
+        "supersedes_dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+        "target": "external_evidence"
+      }
+    ],
+    "dependencies_required": [],
+    "dependencies_satisfied": [
+      {
+        "dependency_class": "EXTERNAL_EVIDENCE",
+        "dependency_id": "dep_goal_t1_r2_evidence_external_evidence",
+        "dependency_reason": "current answer scope includes external CBT-I knowledge",
+        "dependency_source": [
+          "goal_semantics",
+          "requirements",
+          "task_type_signal"
+        ],
+        "dependency_type": "EVIDENCE",
+        "fallback": null,
+        "provenance": {
+          "evidence_count": 1
+        },
+        "reason": "current answer scope includes external CBT-I knowledge",
+        "required_for_goal": "Explain in general terms why a consistent wake time can support sleep routines.",
+        "requiredness": "required",
+        "satisfiable_by": [
+          "RETRIEVE"
+        ],
+        "satisfied_by": [
+          "RETRIEVE"
+        ],
+        "semantic_ids": [
+          "sem_goal_t1_r2_1"
+        ],
+        "source": [
+          "goal_semantics",
+          "requirements",
+          "task_type_signal"
+        ],
+        "status": "SATISFIED",
+        "supersedes_dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+        "target": "external_evidence"
+      }
+    ],
+    "dependencies_unavailable": [],
+    "diary_projection": {},
+    "effective_requirements": {
+      "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+      "classifications": {},
+      "critical": [],
+      "decision_fields": [],
+      "diary_preferred": false,
+      "evidence_required": true,
+      "is_effective": true,
+      "requirement_ids": {},
+      "resources": [],
+      "secondary": [],
+      "semantic_adjustments": []
+    },
+    "evidence": [
+      "根据现有资料，我无法对\"固定的起床时间如何支持睡眠规律\"这一具体问题给出直接相关的解释。检索到的内容主要涉及睡眠限制疗法、睡眠压缩法、放松技术以及睡眠卫生教育等主题[睡眠资料]，但没有找到针对\"一致起床时间\"与昼夜节律或睡眠规律之间关系的明确论述。\n\n因此，在不杜撰资料的前提下，我无法基于所提供文件对此问题作出有依据的回答。如果您希望，我可以：\n\n- 尝试用其他相关关键词（如\"睡眠卫生\"\"昼夜节律\"\"CBT-I\"）再次检索；\n- 或把问题聚焦到资料中确实覆盖的主题（如睡眠限制与睡眠压缩的原理）上，我可以就此提供基于资料的解释。\n\n请告诉我您希望如何继续。"
+    ],
+    "evidence_sufficiency": "HIGH",
+    "fact_sources": {},
+    "facts": {},
+    "goal": "Explain in general terms why a consistent wake time can support sleep routines.",
+    "goal_id": "goal_t1",
+    "information_estimates": {},
+    "lineage_events": [
+      {
+        "available": true,
+        "date_coverage": null,
+        "payload_shape": "EVIDENCE_LIST",
+        "projected_entry_count": 1,
+        "projection_status": "valid",
+        "projection_warnings": [],
+        "provenance": {
+          "adapter": "project_rag"
+        },
+        "source_action_id": "act_goal_t1_r1_1",
+        "source_entry_count": 1,
+        "source_tool_result_id": "tool_goal_t1_r1_1",
+        "source_type": "RAG",
+        "state_update_id": "upd_goal_t1_r2_1",
+        "tool": "RETRIEVE",
+        "tool_result_id": "tool_goal_t1_r1_1"
+      }
+    ],
+    "preconditions_considered": [],
+    "rejected_information": [],
+    "required_missing": [],
+    "required_resources": [],
+    "resource_status": {},
+    "secondary_missing": [],
+    "semantic_provenance": [
+      {
+        "certainty": "HIGH",
+        "match_method": "deterministic_rule",
+        "matched_text": "why ",
+        "semantic_id": "sem_goal_t1_r2_1",
+        "semantic_reason": "goal requests general external CBT-I knowledge",
+        "semantic_rule_id": "KNOWLEDGE_EVIDENCE_REQUIRED"
+      }
+    ],
+    "state_revision": 2,
+    "stop_reason": "",
+    "task_type": "KNOWLEDGE_QA",
+    "user_info_sufficiency": "HIGH",
+    "validity_critical_missing": []
+  },
+  "state_history": [
+    {
+      "acquisition_decisions": [],
+      "answer_context_audit": {},
+      "answer_scope": "",
+      "available_diary": false,
+      "base_requirements": {},
+      "candidate_actions": [],
+      "claim_provenance": [],
+      "considered_information": [],
+      "critical_missing": [],
+      "decision_missing": [],
+      "decision_relevant_missing": [],
+      "dependencies_considered": [],
+      "dependencies_required": [],
+      "dependencies_satisfied": [],
+      "dependencies_unavailable": [],
+      "diary_projection": {},
+      "effective_requirements": {},
+      "event": "INPUT_UNDERSTANDING",
+      "evidence": [],
+      "evidence_sufficiency": "LOW",
+      "fact_sources": {},
+      "facts": {},
+      "goal": "Explain in general terms why a consistent wake time can support sleep routines.",
+      "goal_id": "goal_t1",
+      "information_estimates": {},
+      "lineage_events": [],
+      "preconditions_considered": [],
+      "rejected_information": [],
+      "required_missing": [],
+      "required_resources": [],
+      "resource_status": {},
+      "secondary_missing": [],
+      "semantic_provenance": [],
+      "state_revision": 1,
+      "stop_reason": "",
+      "task_type": "KNOWLEDGE_QA",
+      "turn_index": 1,
+      "user_info_sufficiency": "LOW",
+      "validity_critical_missing": []
+    },
+    {
+      "acquisition_decisions": [
+        {
+          "accepted": true,
+          "acquisition_value": "HIGH",
+          "action": "RETRIEVE",
+          "candidate_id": "cand_goal_t1_r1_1",
+          "counterfactual_candidate": null,
+          "counterfactual_outcomes": [
+            "dependency unsatisfied"
+          ],
+          "decision_impact": "HIGH",
+          "decision_relevant": true,
+          "dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+          "estimated_cost": "MEDIUM",
+          "expected_information_gain": "HIGH",
+          "gate_decision": "ACCEPT",
+          "goal_relevance": "HIGH",
+          "heuristic_not_calibrated_probability": true,
+          "impact_dimensions": [
+            "evidence_dependency"
+          ],
+          "lineage_complete": true,
+          "missing_criticality": "SECONDARY_OR_UNSCOPED",
+          "reason": "mandatory_dependency_precondition_cannot_be_overridden",
+          "redundancy": "LOW",
+          "resource_dependency": {
+            "dependency_class": "EXTERNAL_EVIDENCE",
+            "dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+            "dependency_reason": "current answer scope includes external CBT-I knowledge",
+            "dependency_source": [
+              "goal_semantics",
+              "requirements",
+              "task_type_signal"
+            ],
+            "dependency_type": "EVIDENCE",
+            "fallback": "state evidence limitation",
+            "provenance": {
+              "evidence_count": 0
+            },
+            "reason": "current answer scope includes external CBT-I knowledge",
+            "required_for_goal": "Explain in general terms why a consistent wake time can support sleep routines.",
+            "requiredness": "required",
+            "satisfiable_by": [
+              "RETRIEVE"
+            ],
+            "satisfied_by": [],
+            "semantic_ids": [
+              "sem_goal_t1_r1_1"
+            ],
+            "source": [
+              "goal_semantics",
+              "requirements",
+              "task_type_signal"
+            ],
+            "status": "REQUIRED",
+            "supersedes_dependency_id": null,
+            "target": "external_evidence"
+          },
+          "target": "Explain in general terms why a consistent wake time can support sleep routines."
+        }
+      ],
+      "answer_context_audit": {},
+      "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+      "available_diary": false,
+      "base_requirements": {
+        "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+        "classifications": {},
+        "critical": [],
+        "decision_fields": [],
+        "diary_preferred": false,
+        "evidence_required": true,
+        "is_effective": false,
+        "requirement_ids": {},
+        "resources": [],
+        "secondary": [],
+        "semantic_adjustments": []
+      },
+      "candidate_actions": [
+        {
+          "acquisition_cost": "MEDIUM",
+          "acquisition_value": "HIGH",
+          "action": "RETRIEVE",
+          "candidate_id": "cand_goal_t1_r1_1",
+          "cost": "MEDIUM",
+          "decision_impact": "HIGH",
+          "expected_benefit": "HIGH",
+          "expected_information_gain": "HIGH",
+          "gate_decision": "ACCEPT",
+          "gate_reason": "mandatory_dependency_precondition_cannot_be_overridden",
+          "goal_relevance": "HIGH",
+          "information_value": "HIGH",
+          "origin": "HARD_PRECONDITION",
+          "query": "Explain in general terms why a consistent wake time can support sleep routines.",
+          "question": null,
+          "rationale": "满足证据硬前置条件。",
+          "redundancy": "LOW",
+          "source_dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+          "source_precondition_id": "pre_goal_t1_r1_1",
+          "source_requirement_id": null,
+          "target": null
+        }
+      ],
+      "chosen_action": {
+        "acquisition_cost": "MEDIUM",
+        "acquisition_value": "HIGH",
+        "action": "RETRIEVE",
+        "candidate_id": "cand_goal_t1_r1_1",
+        "cost": "MEDIUM",
+        "decision_impact": "HIGH",
+        "expected_benefit": "HIGH",
+        "expected_information_gain": "HIGH",
+        "gate_decision": "ACCEPT",
+        "gate_reason": "mandatory_dependency_precondition_cannot_be_overridden",
+        "goal_relevance": "HIGH",
+        "information_value": "HIGH",
+        "origin": "HARD_PRECONDITION",
+        "query": "Explain in general terms why a consistent wake time can support sleep routines.",
+        "question": null,
+        "rationale": "满足证据硬前置条件。",
+        "redundancy": "LOW",
+        "source_dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+        "source_precondition_id": "pre_goal_t1_r1_1",
+        "source_requirement_id": null,
+        "target": null
+      },
+      "claim_provenance": [],
+      "considered_information": [
+        {
+          "accepted": true,
+          "candidate_action": "RETRIEVE",
+          "precondition": true,
+          "rationale": "满足证据硬前置条件。",
+          "target": "Explain in general terms why a consistent wake time can support sleep routines.",
+          "value_level": "HIGH"
+        }
+      ],
+      "critical_missing": [],
+      "decision_missing": [],
+      "decision_relevant_missing": [],
+      "dependencies_considered": [
+        {
+          "dependency_class": "EXTERNAL_EVIDENCE",
+          "dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+          "dependency_reason": "current answer scope includes external CBT-I knowledge",
+          "dependency_source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "dependency_type": "EVIDENCE",
+          "fallback": "state evidence limitation",
+          "provenance": {
+            "evidence_count": 0
+          },
+          "reason": "current answer scope includes external CBT-I knowledge",
+          "required_for_goal": "Explain in general terms why a consistent wake time can support sleep routines.",
+          "requiredness": "required",
+          "satisfiable_by": [
+            "RETRIEVE"
+          ],
+          "satisfied_by": [],
+          "semantic_ids": [
+            "sem_goal_t1_r1_1"
+          ],
+          "source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "status": "REQUIRED",
+          "supersedes_dependency_id": null,
+          "target": "external_evidence"
+        }
+      ],
+      "dependencies_required": [
+        {
+          "dependency_class": "EXTERNAL_EVIDENCE",
+          "dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+          "dependency_reason": "current answer scope includes external CBT-I knowledge",
+          "dependency_source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "dependency_type": "EVIDENCE",
+          "fallback": "state evidence limitation",
+          "provenance": {
+            "evidence_count": 0
+          },
+          "reason": "current answer scope includes external CBT-I knowledge",
+          "required_for_goal": "Explain in general terms why a consistent wake time can support sleep routines.",
+          "requiredness": "required",
+          "satisfiable_by": [
+            "RETRIEVE"
+          ],
+          "satisfied_by": [],
+          "semantic_ids": [
+            "sem_goal_t1_r1_1"
+          ],
+          "source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "status": "REQUIRED",
+          "supersedes_dependency_id": null,
+          "target": "external_evidence"
+        }
+      ],
+      "dependencies_satisfied": [],
+      "dependencies_unavailable": [],
+      "diary_projection": {},
+      "effective_requirements": {
+        "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+        "classifications": {},
+        "critical": [],
+        "decision_fields": [],
+        "diary_preferred": false,
+        "evidence_required": true,
+        "is_effective": true,
+        "requirement_ids": {},
+        "resources": [],
+        "secondary": [],
+        "semantic_adjustments": []
+      },
+      "event": "DECISION",
+      "evidence": [],
+      "evidence_sufficiency": "LOW",
+      "fact_sources": {},
+      "facts": {},
+      "goal": "Explain in general terms why a consistent wake time can support sleep routines.",
+      "goal_id": "goal_t1",
+      "information_estimates": {},
+      "lineage_events": [],
+      "preconditions_considered": [
+        {
+          "counterfactual_action": "not_available",
+          "counterfactual_candidate": null,
+          "counterfactual_stop_reason": "not_available",
+          "dependency_source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "precondition_forced_action": true,
+          "precondition_id": "pre_goal_t1_r1_1",
+          "reason": "current answer scope includes external CBT-I knowledge",
+          "required_action": "RETRIEVE",
+          "required_for": "Explain in general terms why a consistent wake time can support sleep routines.",
+          "satisfaction_source": null,
+          "satisfiers_considered": [
+            "RETRIEVE"
+          ],
+          "selected_satisfier": "RETRIEVE",
+          "semantic_ids": [
+            "sem_goal_t1_r1_1"
+          ],
+          "source_dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+          "status": "unsatisfied",
+          "target": "external_evidence",
+          "type": "EVIDENCE"
+        }
+      ],
+      "rejected_information": [],
+      "required_missing": [],
+      "required_resources": [],
+      "requirements": {
+        "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+        "classifications": {},
+        "critical": [],
+        "decision_fields": [],
+        "diary_preferred": false,
+        "evidence_required": true,
+        "is_effective": true,
+        "requirement_ids": {},
+        "resources": [],
+        "secondary": [],
+        "semantic_adjustments": []
+      },
+      "resource_status": {},
+      "secondary_missing": [],
+      "semantic_provenance": [
+        {
+          "certainty": "HIGH",
+          "match_method": "deterministic_rule",
+          "matched_text": "why ",
+          "semantic_id": "sem_goal_t1_r1_1",
+          "semantic_reason": "goal requests general external CBT-I knowledge",
+          "semantic_rule_id": "KNOWLEDGE_EVIDENCE_REQUIRED"
+        }
+      ],
+      "state_revision": 1,
+      "step": 1,
+      "stop_reason": "",
+      "task_type": "KNOWLEDGE_QA",
+      "turn_index": 1,
+      "user_info_sufficiency": "HIGH",
+      "validity_critical_missing": []
+    },
+    {
+      "acquisition_decisions": [],
+      "answer_context_audit": {},
+      "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+      "available_diary": false,
+      "base_requirements": {
+        "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+        "classifications": {},
+        "critical": [],
+        "decision_fields": [],
+        "diary_preferred": false,
+        "evidence_required": true,
+        "is_effective": false,
+        "requirement_ids": {},
+        "resources": [],
+        "secondary": [],
+        "semantic_adjustments": []
+      },
+      "candidate_actions": [
+        {
+          "acquisition_cost": "",
+          "acquisition_value": "",
+          "action": "ANSWER",
+          "candidate_id": "cand_goal_t1_r2_1",
+          "cost": "LOW",
+          "decision_impact": "MEDIUM",
+          "expected_benefit": "HIGH",
+          "expected_information_gain": "",
+          "gate_decision": "",
+          "gate_reason": "",
+          "goal_relevance": "MEDIUM",
+          "information_value": "",
+          "origin": "OPTIONAL_ACQUISITION",
+          "query": null,
+          "question": null,
+          "rationale": "当前目标所需的用户信息和证据均已充分。",
+          "redundancy": "LOW",
+          "source_dependency_id": null,
+          "source_precondition_id": null,
+          "source_requirement_id": null,
+          "target": null
+        }
+      ],
+      "claim_provenance": [],
+      "considered_information": [],
+      "critical_missing": [],
+      "decision_missing": [],
+      "decision_relevant_missing": [],
+      "dependencies_considered": [
+        {
+          "dependency_class": "EXTERNAL_EVIDENCE",
+          "dependency_id": "dep_goal_t1_r2_evidence_external_evidence",
+          "dependency_reason": "current answer scope includes external CBT-I knowledge",
+          "dependency_source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "dependency_type": "EVIDENCE",
+          "fallback": null,
+          "provenance": {
+            "evidence_count": 1
+          },
+          "reason": "current answer scope includes external CBT-I knowledge",
+          "required_for_goal": "Explain in general terms why a consistent wake time can support sleep routines.",
+          "requiredness": "required",
+          "satisfiable_by": [
+            "RETRIEVE"
+          ],
+          "satisfied_by": [
+            "RETRIEVE"
+          ],
+          "semantic_ids": [
+            "sem_goal_t1_r2_1"
+          ],
+          "source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "status": "SATISFIED",
+          "supersedes_dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+          "target": "external_evidence"
+        }
+      ],
+      "dependencies_required": [],
+      "dependencies_satisfied": [
+        {
+          "dependency_class": "EXTERNAL_EVIDENCE",
+          "dependency_id": "dep_goal_t1_r2_evidence_external_evidence",
+          "dependency_reason": "current answer scope includes external CBT-I knowledge",
+          "dependency_source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "dependency_type": "EVIDENCE",
+          "fallback": null,
+          "provenance": {
+            "evidence_count": 1
+          },
+          "reason": "current answer scope includes external CBT-I knowledge",
+          "required_for_goal": "Explain in general terms why a consistent wake time can support sleep routines.",
+          "requiredness": "required",
+          "satisfiable_by": [
+            "RETRIEVE"
+          ],
+          "satisfied_by": [
+            "RETRIEVE"
+          ],
+          "semantic_ids": [
+            "sem_goal_t1_r2_1"
+          ],
+          "source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "status": "SATISFIED",
+          "supersedes_dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+          "target": "external_evidence"
+        }
+      ],
+      "dependencies_unavailable": [],
+      "diary_projection": {},
+      "effective_requirements": {
+        "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+        "classifications": {},
+        "critical": [],
+        "decision_fields": [],
+        "diary_preferred": false,
+        "evidence_required": true,
+        "is_effective": true,
+        "requirement_ids": {},
+        "resources": [],
+        "secondary": [],
+        "semantic_adjustments": []
+      },
+      "event": "RETRIEVE",
+      "evidence": [
+        "根据现有资料，我无法对\"固定的起床时间如何支持睡眠规律\"这一具体问题给出直接相关的解释。检索到的内容主要涉及睡眠限制疗法、睡眠压缩法、放松技术以及睡眠卫生教育等主题[睡眠资料]，但没有找到针对\"一致起床时间\"与昼夜节律或睡眠规律之间关系的明确论述。\n\n因此，在不杜撰资料的前提下，我无法基于所提供文件对此问题作出有依据的回答。如果您希望，我可以：\n\n- 尝试用其他相关关键词（如\"睡眠卫生\"\"昼夜节律\"\"CBT-I\"）再次检索；\n- 或把问题聚焦到资料中确实覆盖的主题（如睡眠限制与睡眠压缩的原理）上，我可以就此提供基于资料的解释。\n\n请告诉我您希望如何继续。"
+      ],
+      "evidence_sufficiency": "HIGH",
+      "fact_sources": {},
+      "facts": {},
+      "goal": "Explain in general terms why a consistent wake time can support sleep routines.",
+      "goal_id": "goal_t1",
+      "information_estimates": {},
+      "lineage_events": [
+        {
+          "available": true,
+          "date_coverage": null,
+          "payload_shape": "EVIDENCE_LIST",
+          "projected_entry_count": 1,
+          "projection_status": "valid",
+          "projection_warnings": [],
+          "provenance": {
+            "adapter": "project_rag"
+          },
+          "source_action_id": "act_goal_t1_r1_1",
+          "source_entry_count": 1,
+          "source_tool_result_id": "tool_goal_t1_r1_1",
+          "source_type": "RAG",
+          "state_update_id": "upd_goal_t1_r2_1",
+          "tool": "RETRIEVE",
+          "tool_result_id": "tool_goal_t1_r1_1"
+        }
+      ],
+      "preconditions_considered": [],
+      "rejected_information": [],
+      "required_missing": [],
+      "required_resources": [],
+      "resource_status": {},
+      "secondary_missing": [],
+      "semantic_provenance": [
+        {
+          "certainty": "HIGH",
+          "match_method": "deterministic_rule",
+          "matched_text": "why ",
+          "semantic_id": "sem_goal_t1_r2_1",
+          "semantic_reason": "goal requests general external CBT-I knowledge",
+          "semantic_rule_id": "KNOWLEDGE_EVIDENCE_REQUIRED"
+        }
+      ],
+      "state_revision": 2,
+      "step": 1,
+      "stop_reason": "",
+      "task_type": "KNOWLEDGE_QA",
+      "tool_result": {
+        "available": true,
+        "detail": "project_rag",
+        "evidence": [
+          "根据现有资料，我无法对\"固定的起床时间如何支持睡眠规律\"这一具体问题给出直接相关的解释。检索到的内容主要涉及睡眠限制疗法、睡眠压缩法、放松技术以及睡眠卫生教育等主题[睡眠资料]，但没有找到针对\"一致起床时间\"与昼夜节律或睡眠规律之间关系的明确论述。\n\n因此，在不杜撰资料的前提下，我无法基于所提供文件对此问题作出有依据的回答。如果您希望，我可以：\n\n- 尝试用其他相关关键词（如\"睡眠卫生\"\"昼夜节律\"\"CBT-I\"）再次检索；\n- 或把问题聚焦到资料中确实覆盖的主题（如睡眠限制与睡眠压缩的原理）上，我可以就此提供基于资料的解释。\n\n请告诉我您希望如何继续。"
+        ]
+      },
+      "turn_index": 1,
+      "user_info_sufficiency": "HIGH",
+      "validity_critical_missing": []
+    },
+    {
+      "acquisition_decisions": [],
+      "answer_context_audit": {},
+      "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+      "available_diary": false,
+      "base_requirements": {
+        "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+        "classifications": {},
+        "critical": [],
+        "decision_fields": [],
+        "diary_preferred": false,
+        "evidence_required": true,
+        "is_effective": false,
+        "requirement_ids": {},
+        "resources": [],
+        "secondary": [],
+        "semantic_adjustments": []
+      },
+      "candidate_actions": [
+        {
+          "acquisition_cost": "",
+          "acquisition_value": "",
+          "action": "ANSWER",
+          "candidate_id": "cand_goal_t1_r2_1",
+          "cost": "LOW",
+          "decision_impact": "MEDIUM",
+          "expected_benefit": "HIGH",
+          "expected_information_gain": "",
+          "gate_decision": "",
+          "gate_reason": "",
+          "goal_relevance": "MEDIUM",
+          "information_value": "",
+          "origin": "OPTIONAL_ACQUISITION",
+          "query": null,
+          "question": null,
+          "rationale": "当前目标所需的用户信息和证据均已充分。",
+          "redundancy": "LOW",
+          "source_dependency_id": null,
+          "source_precondition_id": null,
+          "source_requirement_id": null,
+          "target": null
+        }
+      ],
+      "chosen_action": {
+        "acquisition_cost": "",
+        "acquisition_value": "",
+        "action": "ANSWER",
+        "candidate_id": "cand_goal_t1_r2_1",
+        "cost": "LOW",
+        "decision_impact": "MEDIUM",
+        "expected_benefit": "HIGH",
+        "expected_information_gain": "",
+        "gate_decision": "",
+        "gate_reason": "",
+        "goal_relevance": "MEDIUM",
+        "information_value": "",
+        "origin": "OPTIONAL_ACQUISITION",
+        "query": null,
+        "question": null,
+        "rationale": "当前目标所需的用户信息和证据均已充分。",
+        "redundancy": "LOW",
+        "source_dependency_id": null,
+        "source_precondition_id": null,
+        "source_requirement_id": null,
+        "target": null
+      },
+      "claim_provenance": [],
+      "considered_information": [],
+      "critical_missing": [],
+      "decision_missing": [],
+      "decision_relevant_missing": [],
+      "dependencies_considered": [
+        {
+          "dependency_class": "EXTERNAL_EVIDENCE",
+          "dependency_id": "dep_goal_t1_r2_evidence_external_evidence",
+          "dependency_reason": "current answer scope includes external CBT-I knowledge",
+          "dependency_source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "dependency_type": "EVIDENCE",
+          "fallback": null,
+          "provenance": {
+            "evidence_count": 1
+          },
+          "reason": "current answer scope includes external CBT-I knowledge",
+          "required_for_goal": "Explain in general terms why a consistent wake time can support sleep routines.",
+          "requiredness": "required",
+          "satisfiable_by": [
+            "RETRIEVE"
+          ],
+          "satisfied_by": [
+            "RETRIEVE"
+          ],
+          "semantic_ids": [
+            "sem_goal_t1_r2_1"
+          ],
+          "source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "status": "SATISFIED",
+          "supersedes_dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+          "target": "external_evidence"
+        }
+      ],
+      "dependencies_required": [],
+      "dependencies_satisfied": [
+        {
+          "dependency_class": "EXTERNAL_EVIDENCE",
+          "dependency_id": "dep_goal_t1_r2_evidence_external_evidence",
+          "dependency_reason": "current answer scope includes external CBT-I knowledge",
+          "dependency_source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "dependency_type": "EVIDENCE",
+          "fallback": null,
+          "provenance": {
+            "evidence_count": 1
+          },
+          "reason": "current answer scope includes external CBT-I knowledge",
+          "required_for_goal": "Explain in general terms why a consistent wake time can support sleep routines.",
+          "requiredness": "required",
+          "satisfiable_by": [
+            "RETRIEVE"
+          ],
+          "satisfied_by": [
+            "RETRIEVE"
+          ],
+          "semantic_ids": [
+            "sem_goal_t1_r2_1"
+          ],
+          "source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "status": "SATISFIED",
+          "supersedes_dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+          "target": "external_evidence"
+        }
+      ],
+      "dependencies_unavailable": [],
+      "diary_projection": {},
+      "effective_requirements": {
+        "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+        "classifications": {},
+        "critical": [],
+        "decision_fields": [],
+        "diary_preferred": false,
+        "evidence_required": true,
+        "is_effective": true,
+        "requirement_ids": {},
+        "resources": [],
+        "secondary": [],
+        "semantic_adjustments": []
+      },
+      "event": "DECISION",
+      "evidence": [
+        "根据现有资料，我无法对\"固定的起床时间如何支持睡眠规律\"这一具体问题给出直接相关的解释。检索到的内容主要涉及睡眠限制疗法、睡眠压缩法、放松技术以及睡眠卫生教育等主题[睡眠资料]，但没有找到针对\"一致起床时间\"与昼夜节律或睡眠规律之间关系的明确论述。\n\n因此，在不杜撰资料的前提下，我无法基于所提供文件对此问题作出有依据的回答。如果您希望，我可以：\n\n- 尝试用其他相关关键词（如\"睡眠卫生\"\"昼夜节律\"\"CBT-I\"）再次检索；\n- 或把问题聚焦到资料中确实覆盖的主题（如睡眠限制与睡眠压缩的原理）上，我可以就此提供基于资料的解释。\n\n请告诉我您希望如何继续。"
+      ],
+      "evidence_sufficiency": "HIGH",
+      "fact_sources": {},
+      "facts": {},
+      "goal": "Explain in general terms why a consistent wake time can support sleep routines.",
+      "goal_id": "goal_t1",
+      "information_estimates": {},
+      "lineage_events": [
+        {
+          "available": true,
+          "date_coverage": null,
+          "payload_shape": "EVIDENCE_LIST",
+          "projected_entry_count": 1,
+          "projection_status": "valid",
+          "projection_warnings": [],
+          "provenance": {
+            "adapter": "project_rag"
+          },
+          "source_action_id": "act_goal_t1_r1_1",
+          "source_entry_count": 1,
+          "source_tool_result_id": "tool_goal_t1_r1_1",
+          "source_type": "RAG",
+          "state_update_id": "upd_goal_t1_r2_1",
+          "tool": "RETRIEVE",
+          "tool_result_id": "tool_goal_t1_r1_1"
+        }
+      ],
+      "preconditions_considered": [],
+      "rejected_information": [],
+      "required_missing": [],
+      "required_resources": [],
+      "requirements": {
+        "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+        "classifications": {},
+        "critical": [],
+        "decision_fields": [],
+        "diary_preferred": false,
+        "evidence_required": true,
+        "is_effective": true,
+        "requirement_ids": {},
+        "resources": [],
+        "secondary": [],
+        "semantic_adjustments": []
+      },
+      "resource_status": {},
+      "secondary_missing": [],
+      "semantic_provenance": [
+        {
+          "certainty": "HIGH",
+          "match_method": "deterministic_rule",
+          "matched_text": "why ",
+          "semantic_id": "sem_goal_t1_r2_1",
+          "semantic_reason": "goal requests general external CBT-I knowledge",
+          "semantic_rule_id": "KNOWLEDGE_EVIDENCE_REQUIRED"
+        }
+      ],
+      "state_revision": 2,
+      "step": 2,
+      "stop_reason": "",
+      "task_type": "KNOWLEDGE_QA",
+      "turn_index": 1,
+      "user_info_sufficiency": "HIGH",
+      "validity_critical_missing": []
+    },
+    {
+      "acquisition_decisions": [],
+      "answer_context_audit": {
+        "diary_fact_fields": [],
+        "evidence_projection": [
+          {
+            "content": "根据现有资料，我无法对\"固定的起床时间如何支持睡眠规律\"这一具体问题给出直接相关的解释。检索到的内容主要涉及睡眠限制疗法、睡眠压缩法、放松技术以及睡眠卫生教育等主题[睡眠资料]，但没有找到针对\"一致起床时间\"与昼夜节律或睡眠规律之间关系的明确论述。\n\n因此，在不杜撰资料的前提下，我无法基于所提供文件对此问题作出有依据的回答。如果您希望，我可以：\n\n- 尝试用其他相关关键词（如\"睡眠卫生\"\"昼夜节律\"\"CBT-I\"）再次检索；\n- 或把问题聚焦到资料中确实覆盖的主题（如睡眠限制与睡眠压缩的原理）上，我可以就此提供基于资料的解释。\n\n请告诉我您希望如何继续。",
+            "dependency_id": "dep_goal_t1_r2_evidence_external_evidence",
+            "exclusion_reason": null,
+            "included": true,
+            "index": 0,
+            "source": {
+              "evidence": "根据现有资料，我无法对\"固定的起床时间如何支持睡眠规律\"这一具体问题给出直接相关的解释。检索到的内容主要涉及睡眠限制疗法、睡眠压缩法、放松技术以及睡眠卫生教育等主题[睡眠资料]，但没有找到针对\"一致起床时间\"与昼夜节律或睡眠规律之间关系的明确论述。\n\n因此，在不杜撰资料的前提下，我无法基于所提供文件对此问题作出有依据的回答。如果您希望，我可以：\n\n- 尝试用其他相关关键词（如\"睡眠卫生\"\"昼夜节律\"\"CBT-I\"）再次检索；\n- 或把问题聚焦到资料中确实覆盖的主题（如睡眠限制与睡眠压缩的原理）上，我可以就此提供基于资料的解释。\n\n请告诉我您希望如何继续。",
+              "goal_id": "goal_t1",
+              "retrieval_query": "Explain in general terms why a consistent wake time can support sleep routines.",
+              "source_type": "RAG",
+              "state_update_id": "upd_goal_t1_r2_1",
+              "tool_result_id": "tool_goal_t1_r1_1"
+            }
+          }
+        ],
+        "semantic_status": {
+          "record_absence": "NOT_ESTABLISHED",
+          "records": [],
+          "resource": "UNKNOWN"
+        },
+        "user_fact_fields": []
+      },
+      "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+      "available_diary": false,
+      "base_requirements": {
+        "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+        "classifications": {},
+        "critical": [],
+        "decision_fields": [],
+        "diary_preferred": false,
+        "evidence_required": true,
+        "is_effective": false,
+        "requirement_ids": {},
+        "resources": [],
+        "secondary": [],
+        "semantic_adjustments": []
+      },
+      "candidate_actions": [
+        {
+          "acquisition_cost": "",
+          "acquisition_value": "",
+          "action": "ANSWER",
+          "candidate_id": "cand_goal_t1_r2_1",
+          "cost": "LOW",
+          "decision_impact": "MEDIUM",
+          "expected_benefit": "HIGH",
+          "expected_information_gain": "",
+          "gate_decision": "",
+          "gate_reason": "",
+          "goal_relevance": "MEDIUM",
+          "information_value": "",
+          "origin": "OPTIONAL_ACQUISITION",
+          "query": null,
+          "question": null,
+          "rationale": "当前目标所需的用户信息和证据均已充分。",
+          "redundancy": "LOW",
+          "source_dependency_id": null,
+          "source_precondition_id": null,
+          "source_requirement_id": null,
+          "target": null
+        }
+      ],
+      "claim_provenance": [
+        {
+          "certainty": "exact",
+          "claim": "根据现有资料，我无法对\"固定的起床时间如何支持睡眠规律\"这一具体问题给出直接相关的解释。检索到的内容主要涉及睡眠限制疗法、睡眠压缩法、放松技术以及睡眠卫生教育等主题[睡眠资料]，但没有找到针对\"一致起床时间\"与昼夜节律或睡眠规律之间关系的明确论述。\n\n因此，在不杜撰资料的前提下，我无法基于所提供文件对此问题作出有依据的回答。如果您希望，我可以：\n\n- 尝试用其他相关关键词（如\"睡眠卫生\"\"昼夜节律\"\"CBT-I\"）再次检索；\n- 或把问题聚焦到资料中确实覆盖的主题（如睡眠限制与睡眠压缩的原理）上，我可以就此提供基于资料的解释。\n\n请告诉我您希望如何继续。",
+          "claim_type": "evidence-grounded",
+          "derived_from": [],
+          "source": "evidence:0",
+          "source_field": null,
+          "state_update_id": "upd_goal_t1_r2_1",
+          "tool_result_id": "tool_goal_t1_r1_1"
+        }
+      ],
+      "considered_information": [],
+      "critical_missing": [],
+      "decision_missing": [],
+      "decision_relevant_missing": [],
+      "dependencies_considered": [
+        {
+          "dependency_class": "EXTERNAL_EVIDENCE",
+          "dependency_id": "dep_goal_t1_r2_evidence_external_evidence",
+          "dependency_reason": "current answer scope includes external CBT-I knowledge",
+          "dependency_source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "dependency_type": "EVIDENCE",
+          "fallback": null,
+          "provenance": {
+            "evidence_count": 1
+          },
+          "reason": "current answer scope includes external CBT-I knowledge",
+          "required_for_goal": "Explain in general terms why a consistent wake time can support sleep routines.",
+          "requiredness": "required",
+          "satisfiable_by": [
+            "RETRIEVE"
+          ],
+          "satisfied_by": [
+            "RETRIEVE"
+          ],
+          "semantic_ids": [
+            "sem_goal_t1_r2_1"
+          ],
+          "source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "status": "SATISFIED",
+          "supersedes_dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+          "target": "external_evidence"
+        }
+      ],
+      "dependencies_required": [],
+      "dependencies_satisfied": [
+        {
+          "dependency_class": "EXTERNAL_EVIDENCE",
+          "dependency_id": "dep_goal_t1_r2_evidence_external_evidence",
+          "dependency_reason": "current answer scope includes external CBT-I knowledge",
+          "dependency_source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "dependency_type": "EVIDENCE",
+          "fallback": null,
+          "provenance": {
+            "evidence_count": 1
+          },
+          "reason": "current answer scope includes external CBT-I knowledge",
+          "required_for_goal": "Explain in general terms why a consistent wake time can support sleep routines.",
+          "requiredness": "required",
+          "satisfiable_by": [
+            "RETRIEVE"
+          ],
+          "satisfied_by": [
+            "RETRIEVE"
+          ],
+          "semantic_ids": [
+            "sem_goal_t1_r2_1"
+          ],
+          "source": [
+            "goal_semantics",
+            "requirements",
+            "task_type_signal"
+          ],
+          "status": "SATISFIED",
+          "supersedes_dependency_id": "dep_goal_t1_r1_evidence_external_evidence",
+          "target": "external_evidence"
+        }
+      ],
+      "dependencies_unavailable": [],
+      "diary_projection": {},
+      "effective_requirements": {
+        "answer_scope": "仅在已知事实和证据范围内回答；不得推断未知事实。",
+        "classifications": {},
+        "critical": [],
+        "decision_fields": [],
+        "diary_preferred": false,
+        "evidence_required": true,
+        "is_effective": true,
+        "requirement_ids": {},
+        "resources": [],
+        "secondary": [],
+        "semantic_adjustments": []
+      },
+      "event": "ANSWER",
+      "evidence": [
+        "根据现有资料，我无法对\"固定的起床时间如何支持睡眠规律\"这一具体问题给出直接相关的解释。检索到的内容主要涉及睡眠限制疗法、睡眠压缩法、放松技术以及睡眠卫生教育等主题[睡眠资料]，但没有找到针对\"一致起床时间\"与昼夜节律或睡眠规律之间关系的明确论述。\n\n因此，在不杜撰资料的前提下，我无法基于所提供文件对此问题作出有依据的回答。如果您希望，我可以：\n\n- 尝试用其他相关关键词（如\"睡眠卫生\"\"昼夜节律\"\"CBT-I\"）再次检索；\n- 或把问题聚焦到资料中确实覆盖的主题（如睡眠限制与睡眠压缩的原理）上，我可以就此提供基于资料的解释。\n\n请告诉我您希望如何继续。"
+      ],
+      "evidence_sufficiency": "HIGH",
+      "fact_sources": {},
+      "facts": {},
+      "goal": "Explain in general terms why a consistent wake time can support sleep routines.",
+      "goal_id": "goal_t1",
+      "information_estimates": {},
+      "lineage_events": [
+        {
+          "available": true,
+          "date_coverage": null,
+          "payload_shape": "EVIDENCE_LIST",
+          "projected_entry_count": 1,
+          "projection_status": "valid",
+          "projection_warnings": [],
+          "provenance": {
+            "adapter": "project_rag"
+          },
+          "source_action_id": "act_goal_t1_r1_1",
+          "source_entry_count": 1,
+          "source_tool_result_id": "tool_goal_t1_r1_1",
+          "source_type": "RAG",
+          "state_update_id": "upd_goal_t1_r2_1",
+          "tool": "RETRIEVE",
+          "tool_result_id": "tool_goal_t1_r1_1"
+        }
+      ],
+      "preconditions_considered": [],
+      "rejected_information": [],
+      "required_missing": [],
+      "required_resources": [],
+      "resource_status": {},
+      "secondary_missing": [],
+      "semantic_provenance": [
+        {
+          "certainty": "HIGH",
+          "match_method": "deterministic_rule",
+          "matched_text": "why ",
+          "semantic_id": "sem_goal_t1_r2_1",
+          "semantic_reason": "goal requests general external CBT-I knowledge",
+          "semantic_rule_id": "KNOWLEDGE_EVIDENCE_REQUIRED"
+        }
+      ],
+      "state_revision": 2,
+      "stop_reason": "",
+      "task_type": "KNOWLEDGE_QA",
+      "turn_index": 1,
+      "user_info_sufficiency": "HIGH",
+      "validity_critical_missing": []
+    }
+  ],
+  "trace_type": "STEP9_28A_SYNTHETIC_PRODUCTION_PREFLIGHT"
+}

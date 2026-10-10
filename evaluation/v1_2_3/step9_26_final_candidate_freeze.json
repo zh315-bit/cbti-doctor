@@ -1,0 +1,89 @@
+{
+  "freeze_id": "post-step9_24-final-candidate-for-v4-protocol-20260924-01",
+  "created_at_utc": "2026-09-25T01:18:47Z",
+  "freeze_kind": "FINAL_CANDIDATE_PRE_V4_CONSTRUCTION_NOT_AUTHORIZATION",
+  "parent_candidate_freeze": "evaluation/v1_2_3/step9_24_candidate_freeze.json",
+  "parent_candidate_freeze_sha256": "a1ee19d1a9f20d5f2bc4192885c0d049eb557f5d8a1a1eda087be6618bf87440",
+  "parent_candidate_id": "post-step9_24-candidate-20260924-01",
+  "authorized_change_chain": ["Step 9.16", "Step 9.17", "Step 9.18", "Step 9.23", "Step 9.24"],
+  "agent_file_inventory_source": "Step 9.18 full inventory + Step 9.23a changed production files + Step 9.24 changed production files",
+  "agent_file_count": 26,
+  "agent_aggregate_sha256": "4e2bffea0d7eaa9299074a960df84a1806b3ae9d4930662929abc58ca5b2ae79",
+  "agent_behavior_files": [
+    ["adaptive_agent/acquisition_gate.py", "c5e7912105a9218dec0a3618c4c46f506190d14458f93936e56868f7ade50725"],
+    ["adaptive_agent/answer_generation.py", "0cc8b831d88972ded0f8ee6538e2298ef03e807a693b022cbb6f3dbcdcde40cb"],
+    ["adaptive_agent/candidates.py", "946d4f3daf471885a7f402ec7cbe29b75f7b9922864636ae9f32e6b32dfe9200"],
+    ["adaptive_agent/dependency_resolver.py", "3fbf055d799e5ca6a8ebadd5b0f6e632a7592002558156a20d76d0d73ddb382d"],
+    ["adaptive_agent/facts.py", "fa2553a0d2e67cfc38f66b554c81d4ce4f66d925d83cce367652bc35bdc42a0a"],
+    ["adaptive_agent/flask_app.py", "82ab75eb1055b16c7e2fd4b039ff00d626c583fba1c755dbdbd6867e1bd81c7c"],
+    ["adaptive_agent/information_value.py", "38de50261bb2c6ee09abf5344f13c9e53837642681ae6028c6d4dd67308c2f6c"],
+    ["adaptive_agent/input_understanding.py", "47cad895b795d799521cec29dd7bca8e497349dfab655d314ef039e4602e5129"],
+    ["adaptive_agent/policy.py", "a86fe826cb5309e3c8ddd2152b75679dac1da3adaf105dd1cc5d63e4f14a3c34"],
+    ["adaptive_agent/preconditions.py", "891a416846262e8d5c27bffb603ba51d89aa4a5b1eebdf75bf99519b15beccbe"],
+    ["adaptive_agent/requirements.py", "9809f419dce17db702e2b847fcf007f5a1614467e493ef2ccce16c14fd247163"],
+    ["adaptive_agent/runner.py", "a91a576dca6febbeb06fab4717dbe705447520daf6e6376512a39f2f4fa0d0ef"],
+    ["adaptive_agent/service.py", "07e2819af3ca6bfab511a7f5e5efa2634537ea5468cf92bbc253f94f543031ff"],
+    ["adaptive_agent/state.py", "1d96470d4774cf40836c2fb0d8389ba75545defad3266b308f2608d5c2981ed4"],
+    ["adaptive_agent/state_update.py", "0d7ba355795060939fa35265a9fcdf2171f3bcd8b2731a1791be692d79c60ad2"],
+    ["adaptive_agent/sufficiency.py", "e76b221c94c5018f6b3653027b1d3d89d1f931311572d838c619c575a87d729d"],
+    ["adaptive_agent/tools.py", "65223ad962417d68d16326c2431a205f1bdc953a0f64c5585ff38e4017a1c084"],
+    ["configs/requirements.yaml", "f61d5055114c7186373cb8a079b73ecdbe1d7e37217d12c97a4e6e56539bb40b"],
+    ["evaluation/recorder.py", "ca0bc7488f5af7d117298f817ccfd7f3b814bb80f60b114d1f9750c939877d9d"],
+    ["local_embeddings.py", "f5aa8745407582c4dbb8caa470f110238e820f00be54a86444367815be83905f"],
+    ["model_config.py", "566a6b5c3d69636c270434f3daf6e8d05dd403f8de67e92107a2efcc6d7cc34a"],
+    ["rag_client.py", "6b6858af5eb4c5e07a29ca41723ea4de9c2a7087947ca7b877eeff4070bb590a"],
+    ["rag_lib/.rag_db/bge-small-zh-v1.5-ch400-v1/index.faiss", "8c6d6b6ba0c8461a3c12b4182887c01fa34ebdc7d3ae654f38ed827e15c2be89"],
+    ["rag_lib/.rag_db/bge-small-zh-v1.5-ch400-v1/index.pkl", "e1acd20fe2c16649f2bbce93ff5210b58104a50500cab530df08ba8fc2fbb4a1"],
+    ["rag_lib/pdfs/", "01645761780c7d2cb1864cb26732334791c7cfd2984f5419dbf54c31a74b027d"],
+    ["runtime:deepseek_nonsecret_configuration", "d0802478a59e6b2021b0476490149d7fec672fab5bda5cc45f55241268f1a7e0"]
+  ],
+  "harness": {
+    "freeze_path": "evaluation/v1_2_3/step9_13a_harness_freeze.json",
+    "freeze_sha256": "eced6e71f78ea6be8b137e076cdb3673c868e2a30f00fb13d47212623b7c5200",
+    "aggregate_sha256": "8bc271bebc1c5da5351d517e2bb4a0d1a99fda3de1b713a6197b12f81fad70c7",
+    "future_v4_runner": "NOT_PREPARED; must receive separate freeze before authorization"
+  },
+  "scoring": {
+    "aggregate_sha256": "f742a8f8af7c8747818dadad81621c15d12d74f50538019913dfe18ab53bf59b",
+    "rubric_path": "evaluation/benchmark_v1_1_scoring.md",
+    "rubric_sha256": "a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899"
+  },
+  "preregistered_metric_registry": {
+    "path": "evaluation/v1_2_3/step9_26_v4_metric_registry.json",
+    "sha256": "de9f348cb1dff66410c03095abdaffcc256f53679718482870e4aa4d80c75056"
+  },
+  "protocol": {
+    "path": "evaluation/v1_2_3/step9_26_v4_protocol.md",
+    "sha256": "3ef036ab9f24d659f8f057ce7e9039cd7d87f6b50ff0c1d5d34ff75eabc17fa1"
+  },
+  "one_shot_rules": {
+    "path": "evaluation/v1_2_3/step9_26_v4_one_shot_rules.md",
+    "sha256": "1c7ed4ef47865b117bc943f3e0ad9a859f4f74cfb4e8001f723ac5532af140d0"
+  },
+  "mechanism_validation": {
+    "source": "evaluation/v1_2_3/step9_25_mechanism_validation_report.md",
+    "status": "PASS_WITH_LIMITATION",
+    "scenarios": "12/12",
+    "focused_regression": "76/76 PASS",
+    "pre_p2_ablation": "NOT_MEASURED"
+  },
+  "regression": {
+    "full_non_benchmark": "Step 9.24 inherited: 244 passed / 0 failed / 0 skipped; tests.test_model_configuration NOT_VERIFIED",
+    "step9_25_focused": "76 passed / 0 failed"
+  },
+  "historical_benchmark_status": {
+    "V2": "development_regression_only; not rerun",
+    "V3": "consumed_historical_heldout; historical Overall 60.91; not rerun or rescored; not reusable for current candidate"
+  },
+  "v4_status": {
+    "protocol_preregistered": true,
+    "benchmark_created": false,
+    "benchmark_accessed": false,
+    "agent_executed": false,
+    "model_called": false,
+    "authorization_issued": false
+  },
+  "case_specific_logic_present": false,
+  "agent_modified_in_step9_26": false,
+  "notes": "New Step 9.26 final candidate freeze based on Step 9.24 identity. It does not rewrite any historical freeze, does not create V4 data, and does not authorize execution."
+}

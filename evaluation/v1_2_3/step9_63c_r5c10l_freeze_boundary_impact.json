@@ -1,0 +1,31 @@
+{
+  "step": "9.63c-r5c10l",
+  "status": "READ_ONLY_IMPACT_ASSESSMENT_WITH_HISTORICAL_TRACE_INTEGRITY_INCIDENT",
+  "r10_immutable_hash_checks": {
+    "freeze_manifest_sha256": "d24244235e51e7bf6c8567880c654fe3fd73b87fa1bfe1ab0f10dfdc94db2693",
+    "pointer_sha256": "0f908fb566ad69f52246bf3c762d46d476c1bad40b0be300c152a576a64df412",
+    "unchanged_identity_adapter_sha256": "3a4ec3e526bde19e318e271a24569223087c8a6aadc77fd144b061825c0da282",
+    "unchanged_lifecycle_sha256": "f0d8b7e04fa2710765b74f4f293436b051af005d11851bf9583da14ff6612744",
+    "checked_files_match_recorded_identity": true
+  },
+  "r11": {"formal_freeze_created":false,"formal_pointer_created":false,"real_registry_created":false,"synthetic_20_member_validation_from_prior_focused_tests":"PASS"},
+  "candidate_frozen_member_scope": {
+    "adapter": "scripts/run_step9_53_v3_identity_adapter.py is an unchanged r10 member in the proposed r11 matrix; lazy import-time resolution here would require explicit new approval and a revised r11 member matrix, not an in-place r10 rewrite",
+    "lifecycle": "scripts/authorization_lifecycle.py is unchanged and must not be weakened to make synthetic historical authorization executable",
+    "resolver": "scripts/v3_runner_identity.py is already an approved changed r11 candidate member; its r11-only pointer requirement is behaving as designed",
+    "historical_test_selector": "evaluation/v1_2_3/step9_51a_safe_test_manifest.json is an archival test-boundary contract; modifying it to list later r11 tests requires separate provenance/version review"
+  },
+  "historical_trace_integrity_incident": {
+    "discovered_during_review": true,
+    "cause": "the full unittest suite includes two older tests that write fixed evaluation trace paths instead of temporary fixtures; the diagnostic re-run executed them",
+    "paths": [
+      {"path":"evaluation/v1_2/step8_3_mechanism_traces.jsonl","current_sha256":"e09321c89b75a4330799e4a4c286652cee82ed0e0d4fa1b8478c970dd7f6d8e5","observed_mtime_local":"2026-10-09T11:37:42-0400"},
+      {"path":"evaluation/v1_2_1/step8_7_mechanism_traces.jsonl","current_sha256":"5518eb4b0b7e8880c5f84e59ba0264013bed99e25edb8da93dca558304d4f084","observed_mtime_local":"2026-10-09T11:37:42-0400"}
+    ],
+    "pre_run_byte_hash_available": false,
+    "content_unchanged_proven": false,
+    "remediation_performed": false,
+    "instruction": "Do not rewrite, delete, or claim restoration of these untracked historical trace files without an independent baseline/provenance review."
+  },
+  "freeze_or_authorization_eligible_now": false
+}

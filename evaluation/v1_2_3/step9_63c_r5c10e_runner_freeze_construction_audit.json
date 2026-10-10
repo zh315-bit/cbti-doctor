@@ -1,0 +1,60 @@
+{
+  "step": "9.63c-r5c10e",
+  "timestamp_utc": "2026-10-08T19:34:44Z",
+  "status": "FAIL_CLOSED_EXISTING_FREEZE_CONSTRUCTION_CONTRACT_R10_ONLY",
+  "scope": "Read-only construction qualification; no r11 freeze or execution state created",
+  "historical_r10_freeze": {
+    "path": "evaluation/v1_2_3/step9_63c_r5c5b_runner_freeze_r10.json",
+    "sha256": "d24244235e51e7bf6c8567880c654fe3fd73b87fa1bfe1ab0f10dfdc94db2693",
+    "member_count": 20,
+    "preserved": true
+  },
+  "working_copy_member_comparison": {
+    "matched_r10_members": 19,
+    "changed_r10_members": 1,
+    "missing_r10_members": 0,
+    "only_changed_member": {
+      "path": "scripts/v3_execution_transaction.py",
+      "r10_sha256": "f1a253730953abf51307f4e9404bf59d7856c15d2367b7a62d6809dbb64b2797",
+      "current_sha256": "f0e74a49d152053b5455951c507edb8f7849a9e4708835711e5975a82e690e91"
+    }
+  },
+  "approved_design_and_review_sources": [
+    "evaluation/v1_2_3/step9_63c_r5c10b_transaction_scanner_repair_design.json",
+    "evaluation/v1_2_3/step9_63c_r5c10c_scanner_repair_audit.json",
+    "evaluation/v1_2_3/step9_63c_r5c10d_runner_freeze_review_audit.json",
+    "evaluation/v1_2_3/step9_63c_r5c10d_candidate_freeze_manifest.json"
+  ],
+  "construction_blockers": [
+    {
+      "code": "BUILDER_TARGET_AND_PARENT_HARDCODED_TO_R10_R9",
+      "evidence": "scripts/build_step9_63c_r5c4_runner_freeze.py:14-15, 154-159, 216-218",
+      "detail": "The only Step 9.63c freeze builder targets the existing r10 manifest, requires r9 as parent, and exclusively creates the r10 path. It cannot safely construct r11."
+    },
+    {
+      "code": "CURRENT_POINTER_IS_FROZEN_R10_MEMBER",
+      "evidence": "scripts/v3_runner_identity.py:11, 27-38, 42-52; evaluation/v1_2_3/step9_63c_r5c4_current_runner_identity.json",
+      "detail": "The current pointer names r10 and is itself one of the 20 r10 frozen members. Rebinding it in place would make a second r10 member differ and destroy current-file agreement with the historical inventory."
+    },
+    {
+      "code": "DRAFT_NOT_EXECUTABLE_R11_IDENTITY",
+      "evidence": "evaluation/v1_2_3/step9_63c_r5c10d_candidate_freeze_manifest.json",
+      "detail": "The reviewed 20-member draft retains the r10 pointer; its draft SHA is not a final r11 freeze SHA."
+    }
+  ],
+  "r11_revision_unused_at_review": true,
+  "r11_freeze_created": false,
+  "r11_freeze_sha256": null,
+  "current_runner_matches_r11_freeze": false,
+  "scanner_repair_validated": "PRIOR_STEP9_63C_R5C10D_OFFLINE_EVIDENCE_ONLY",
+  "transaction_semantics_preserved": "PRIOR_STEP9_63C_R5C10D_OFFLINE_EVIDENCE_ONLY",
+  "authorization_lifecycle_preserved": "PRIOR_STEP9_63C_R5C10D_OFFLINE_EVIDENCE_ONLY",
+  "one_shot_rules_preserved": "PRIOR_STEP9_63C_R5C10D_OFFLINE_EVIDENCE_ONLY",
+  "offline_tests_run_this_step": 0,
+  "offline_test_failures_this_step": 0,
+  "authorization_issued": false,
+  "authorization_consumed_by_this_step": false,
+  "formal_v4_cases_executed_by_this_step": 0,
+  "ready_for_new_authorization_review": false,
+  "next_required_decision": "Separately review and authorize a compatible r11 freeze-bootstrap/identity-pointer and dependent preflight-binding design before construction; do not promote the draft or reuse the r10 command."
+}

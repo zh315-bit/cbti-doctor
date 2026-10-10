@@ -1,0 +1,51 @@
+{
+  "artifact_type": "STEP9_59B_V3_ONE_SHOT_AUTHORIZATION_FREEZE",
+  "step": "9.59b",
+  "status": "FROZEN_AUTHORIZATION_ISSUED_NOT_CONSUMED",
+  "created_at_utc": "2026-10-01T20:06:07Z",
+  "evaluation_id": "heldout-v4-step9_55a-treatment-v3-20260930-01",
+  "authorization_id": "auth-step9_59b-0f63fb3bd6934e4b9a1c7e5808c24825",
+  "attempt_id": "attempt-step9_59b-f3a11b5d44914eb9b335ccec4f1bcf86",
+  "attempt_id_status": "PREBOUND_IDENTITY_ONLY_NOT_CREATED",
+  "authorization_status": "ISSUED_NOT_CONSUMED",
+  "authorization_consumption_count": 0,
+  "runner_freeze_revision": "r5",
+  "runner_freeze_path": "evaluation/v1_2_3/step9_59a_v3_runner_freeze_r5.json",
+  "runner_freeze_sha256": "1007fde3dbfc604383a592523f100dc050fa21c93f23d8c88e9835e29f868314",
+  "runner_path": "scripts/run_step9_53_v3_identity_adapter.py",
+  "runner_sha256": "7e75a80ad529c3df67a775287ca0aa9ada4f5ae7b18d1a0b85e593006362fe12",
+  "agent_sha256": "085d338ed95bbef7370c41cf97ca0d6653ffdfd2f1c924eef4b7123dfdea4607",
+  "benchmark_path": "evaluation/benchmarks/benchmark_v4_cases.yaml",
+  "benchmark_sha256": "8b8c72092fcd7544e69d5d2ecd13610c7bb4c14210fca330698b3e5ab3f01d7f",
+  "case_count": 40,
+  "case_order_fingerprint_sha256": "d930455e417935337a6e3459defbdc3ee3829b71786fbd8438ef092b62429e68",
+  "connectivity_recovery_path": "evaluation/v1_2_3/step9_57c_v3_connectivity_recovery.json",
+  "connectivity_recovery_sha256": "40dfee10d891d0ecfcd9a4cee6c40702877a6ff7f358b9c78266b7b6ff73cd14",
+  "namespace_id": "heldout-v4-treatment-v3-run-442d8ee058d32e6ffe21",
+  "artifacts": {
+    "manifest_path": "evaluation/v1_2_3/step9_59b_v3_authorization_manifest.json",
+    "manifest_sha256": "163dc22d36dc97f2159f59f6dfcef9f1497c538149949a94683d00bf84420f44",
+    "audit_path": "evaluation/v1_2_3/step9_59b_v3_authorization_audit.json",
+    "audit_sha256": "8835e2cde24399fb19f37a41071b76d867630a5f0978c4564deffc2daa02640b",
+    "report_path": "evaluation/v1_2_3/step9_59b_v3_authorization_report.md",
+    "report_sha256": "163297659ec7505e8d943af2c16a48700aebf08504510f1f51c0184db9597584"
+  },
+  "one_shot_semantics": {
+    "authorization_exactly_once": true,
+    "attempt_identity_exactly_once": true,
+    "prebound_attempt_only": true,
+    "fresh_derived_physical_namespace_required": true,
+    "historical_and_burned_namespace_reuse_forbidden": true,
+    "collision_or_identity_mismatch": "FAIL_CLOSED",
+    "automatic_retry_or_resume": false
+  },
+  "execution_boundary": {
+    "formal_attempt_created": false,
+    "authorization_consumed": false,
+    "formal_v4_case_executed": 0,
+    "model_agent_rag_case_execution": false,
+    "adjudication_aggregation_comparison": false,
+    "v5_created_or_accessed": false,
+    "step9_60_executed": false
+  }
+}

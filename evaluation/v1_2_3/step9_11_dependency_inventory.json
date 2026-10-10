@@ -1,0 +1,47 @@
+{
+  "step": "9.11",
+  "entrypoint": "/api/chat",
+  "closure_method": "Static import/path audit from adaptive_agent.flask_app.create_app through production service/loop/tools plus lazy RAG and recorder; non-file runtime configuration is represented by a redacted semantic fingerprint.",
+  "domains": {
+    "AGENT_BEHAVIOR": [
+      {"path":"adaptive_agent/flask_app.py","role":"Flask factory and /api/chat route","dependency_source":"production entry","imported_by":["main_flask.py"],"behavior_affecting":true,"sha256":"82ab75eb1055b16c7e2fd4b039ff00d626c583fba1c755dbdbd6867e1bd81c7c"},
+      {"path":"adaptive_agent/service.py","role":"session lifecycle and loop API orchestration","dependency_source":"flask_app import","imported_by":["adaptive_agent.flask_app"],"behavior_affecting":true,"sha256":"07e2819af3ca6bfab511a7f5e5efa2634537ea5468cf92bbc253f94f543031ff"},
+      {"path":"adaptive_agent/runner.py","role":"Adaptive Agent loop","dependency_source":"service import","imported_by":["adaptive_agent.service"],"behavior_affecting":true,"sha256":"de315f14b9b84f8d6c0f52714490191ba06541d19709b0d3df35bf69eb3869b6"},
+      {"path":"adaptive_agent/input_understanding.py","role":"input, goal and task understanding","dependency_source":"runner/flask factory import","imported_by":["adaptive_agent.runner","adaptive_agent.flask_app"],"behavior_affecting":true,"sha256":"47cad895b795d799521cec29dd7bca8e497349dfab655d314ef039e4602e5129"},
+      {"path":"adaptive_agent/facts.py","role":"deterministic fact derivation","dependency_source":"answer generation import","imported_by":["adaptive_agent.answer_generation"],"behavior_affecting":true,"sha256":"fa2553a0d2e67cfc38f66b554c81d4ce4f66d925d83cce367652bc35bdc42a0a"},
+      {"path":"adaptive_agent/requirements.py","role":"base/effective requirements and YAML loading","dependency_source":"runner import","imported_by":["adaptive_agent.runner","adaptive_agent.candidates","adaptive_agent.sufficiency"],"behavior_affecting":true,"sha256":"9809f419dce17db702e2b847fcf007f5a1614467e493ef2ccce16c14fd247163"},
+      {"path":"configs/requirements.yaml","role":"task requirements configuration","dependency_source":"requirements.load_requirements","imported_by":["adaptive_agent.requirements"],"behavior_affecting":true,"sha256":"f61d5055114c7186373cb8a079b73ecdbe1d7e37217d12c97a4e6e56539bb40b"},
+      {"path":"adaptive_agent/dependency_resolver.py","role":"goal semantics and dependency formation","dependency_source":"runner/preconditions import","imported_by":["adaptive_agent.runner","adaptive_agent.preconditions"],"behavior_affecting":true,"sha256":"1018d4470a74b67eac546817d4a7cfa55a9327bc04d46734a64d0c7dad108218"},
+      {"path":"adaptive_agent/sufficiency.py","role":"sufficiency/missing estimation","dependency_source":"runner import","imported_by":["adaptive_agent.runner"],"behavior_affecting":true,"sha256":"e76b221c94c5018f6b3653027b1d3d89d1f931311572d838c619c575a87d729d"},
+      {"path":"adaptive_agent/preconditions.py","role":"hard-precondition formation","dependency_source":"candidate/sufficiency import","imported_by":["adaptive_agent.candidates","adaptive_agent.sufficiency"],"behavior_affecting":true,"sha256":"891a416846262e8d5c27bffb603ba51d89aa4a5b1eebdf75bf99519b15beccbe"},
+      {"path":"adaptive_agent/candidates.py","role":"candidate generation","dependency_source":"runner import","imported_by":["adaptive_agent.runner"],"behavior_affecting":true,"sha256":"aae1b91d1b7d96d3907739eb1761f4f04ecf084f674208af86dec382ad7baa17"},
+      {"path":"adaptive_agent/information_value.py","role":"information value/cost/diminishing return","dependency_source":"candidates import","imported_by":["adaptive_agent.candidates"],"behavior_affecting":true,"sha256":"82526b66ec8a748ead77fbd8566f0088f85d6ce363bd3192f8de1a0150b44557"},
+      {"path":"adaptive_agent/policy.py","role":"action selection","dependency_source":"runner import","imported_by":["adaptive_agent.runner"],"behavior_affecting":true,"sha256":"a86fe826cb5309e3c8ddd2152b75679dac1da3adaf105dd1cc5d63e4f14a3c34"},
+      {"path":"adaptive_agent/state.py","role":"state schema","dependency_source":"all adaptive components","imported_by":["adaptive_agent.*"],"behavior_affecting":true,"sha256":"e98f86818adfbfee579c357ca33f59bbfddacdcadb051117a2a1fcfd93c37481"},
+      {"path":"adaptive_agent/state_update.py","role":"tool-to-State update and projection","dependency_source":"runner import","imported_by":["adaptive_agent.runner"],"behavior_affecting":true,"sha256":"20e0ad8b95858aa6b37c21ad1814b42860f1f0a074c04f8f5ef8d4b091c999e1"},
+      {"path":"adaptive_agent/tools.py","role":"RAG and diary adapters/contracts","dependency_source":"runner/flask factory import","imported_by":["adaptive_agent.runner","adaptive_agent.flask_app"],"behavior_affecting":true,"sha256":"9befaf89198a150022b65884af5280688faf1aef59e496ceab5010cc221e08e1"},
+      {"path":"adaptive_agent/answer_generation.py","role":"grounded answer generation","dependency_source":"flask factory import","imported_by":["adaptive_agent.flask_app"],"behavior_affecting":true,"sha256":"f7f46eb7438b9c77cdb29fb738e70a924c9300f45e7a84c7ea78ef15922caec4"},
+      {"path":"evaluation/recorder.py","role":"API-turn serialization/recording","dependency_source":"service import","imported_by":["adaptive_agent.service"],"behavior_affecting":true,"sha256":"ca0bc7488f5af7d117298f817ccfd7f3b814bb80f60b114d1f9750c939877d9d"},
+      {"path":"model_config.py","role":"provider/model factory and non-secret settings","dependency_source":"flask factory/RAG imports","imported_by":["adaptive_agent.flask_app","rag_client.py","local_embeddings.py"],"behavior_affecting":true,"sha256":"566a6b5c3d69636c270434f3daf6e8d05dd403f8de67e92107a2efcc6d7cc34a"},
+      {"path":"rag_client.py","role":"lazy RAG retrieval and retrieval-time model invocation","dependency_source":"RagRetrievalTool lazy import","imported_by":["adaptive_agent.tools"],"behavior_affecting":true,"sha256":"6b6858af5eb4c5e07a29ca41723ea4de9c2a7087947ca7b877eeff4070bb590a"},
+      {"path":"local_embeddings.py","role":"local embedding implementation","dependency_source":"rag_client import","imported_by":["rag_client.py"],"behavior_affecting":true,"sha256":"f5aa8745407582c4dbb8caa470f110238e820f00be54a86444367815be83905f"},
+      {"path":"rag_lib/.rag_db/bge-small-zh-v1.5-ch400-v1/index.faiss","role":"RAG vector index","dependency_source":"rag_client.get_vector_store","imported_by":["rag_client.py"],"behavior_affecting":true,"sha256":"8c6d6b6ba0c8461a3c12b4182887c01fa34ebdc7d3ae654f38ed827e15c2be89"},
+      {"path":"rag_lib/.rag_db/bge-small-zh-v1.5-ch400-v1/index.pkl","role":"RAG vector-store metadata","dependency_source":"rag_client.get_vector_store","imported_by":["rag_client.py"],"behavior_affecting":true,"sha256":"e1acd20fe2c16649f2bbce93ff5210b58104a50500cab530df08ba8fc2fbb4a1"},
+      {"path":"rag_lib/pdfs/","role":"fallback RAG source corpus","dependency_source":"rag_client.load_pdfs","imported_by":["rag_client.py"],"behavior_affecting":true,"sha256":"01645761780c7d2cb1864cb26732334791c7cfd2984f5419dbf54c31a74b027d","hash_method":"SHA-256 of sorted per-file SHA-256 lines; 72 PDFs"},
+      {"path":"runtime:deepseek_nonsecret_configuration","role":"runtime provider/model/base-url semantic settings","dependency_source":"model_config.create_chat_model and .env/environment","imported_by":["model_config.py"],"behavior_affecting":true,"sha256":"d0802478a59e6b2021b0476490149d7fec672fab5bda5cc45f55241268f1a7e0","hash_method":"canonical JSON excluding credential value; credential material never recorded","limitations":"credential identity is intentionally not frozen"}
+    ],
+    "EVALUATION_HARNESS": [
+      {"path":"scripts/preflight_step9_12_local.py","role":"read-only local connectivity and synthetic production-smoke preflight","sha256":"b7da10fccb83d4f15b8534469265adbf853ebb96578d413746f43a8ee5ad8f86"},
+      {"path":"scripts/run_step9_8_frozen_evaluation.py","role":"existing frozen-run wrapper/trace augmentation","sha256":"7866cde09895f7d9f71a016f10c64740f1df257cb83a20d8ace621c20c1e0485"},
+      {"path":"scripts/run_step8_9_v1_2_1.py","role":"production Flask test-client evaluation loop","sha256":"183aace522fdf720308897c7c8f8620bc5947b7c287388c6083020eb2df2672c"},
+      {"path":"scripts/run_step9_12_frozen_evaluation.py","role":"new-identity one-shot authorized runner","sha256":"18017771df952b6bec374015bfa5e8a92bd3ff6ce57d3bebf8785d09e835d638"},
+      {"path":"scripts/frozen_run_guard.py","role":"append-only attempt guard","sha256":"e403e78094c25c9632588f0865b297454f4a044557a8a38541e617bd8b2b2b64"}
+    ],
+    "BENCHMARK_AND_SCORING": [
+      {"path":"evaluation/benchmarks/benchmark_v2_cases.yaml","role":"Benchmark V2 cases","sha256":"dfa9b9e5a12b0017fa68d344d01b313ebc29e583b933fbe1e93c125f55ecafd2"},
+      {"path":"evaluation/benchmark_v1_1_scoring.md","role":"frozen scoring rubric","sha256":"a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899"},
+      {"path":"scripts/score_step6_1_v2.py","role":"V2 scoring implementation","sha256":"ee1eabf52c4276878bb10e671d3466e2029c09b49d3c38a53cf9dd5a82fcf6f0"}
+    ]
+  },
+  "excluded_nonbehavior_file": {"path":"adaptive_agent/__init__.py","reason":"package exports only; no executed Agent semantics"}
+}

@@ -1,0 +1,25 @@
+{
+  "step": "9.63c-r5c10v",
+  "historical_protected_directory_path_hash_aggregate_before_and_after": "5dcaa341ef35160f3840e244f0943b1620f4b4bfcf0b6241247a7a5274f83751",
+  "historical_traces": [
+    {
+      "path": "evaluation/v1_2/step8_3_mechanism_traces.jsonl",
+      "sha256_before_and_after": "e09321c89b75a4330799e4a4c286652cee82ed0e0d4fa1b8478c970dd7f6d8e5",
+      "size_bytes_before_and_after": 64294,
+      "mtime_before_and_after": "2026-10-09T11:37:42-0400"
+    },
+    {
+      "path": "evaluation/v1_2_1/step8_7_mechanism_traces.jsonl",
+      "sha256_before_and_after": "5518eb4b0b7e8880c5f84e59ba0264013bed99e25edb8da93dca558304d4f084",
+      "size_bytes_before_and_after": 33014,
+      "mtime_before_and_after": "2026-10-09T11:37:42-0400"
+    }
+  ],
+  "historical_trace_sha_changed": false,
+  "historical_trace_original_content_integrity": "CONTENT_INTEGRITY_UNPROVEN",
+  "historical_artifact_write_by_test_method": false,
+  "test_methods_executed": 0,
+  "authorization_issued_or_consumed": false,
+  "formal_transaction_created": false,
+  "formal_v4_case_executed": 0
+}

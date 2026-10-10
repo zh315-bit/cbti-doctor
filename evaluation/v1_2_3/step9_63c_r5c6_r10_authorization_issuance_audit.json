@@ -1,0 +1,94 @@
+{
+  "artifact_type": "STEP9_63C_R5C6_R10_AUTHORIZATION_ISSUANCE_AUDIT",
+  "step": "9.63c-r5c6",
+  "status": "PASS_FRESH_R10_AUTHORIZATION_ISSUED_NOT_CONSUMED",
+  "runner_freeze_revision": "r10",
+  "runner_freeze_path": "evaluation/v1_2_3/step9_63c_r5c5b_runner_freeze_r10.json",
+  "runner_freeze_sha256": "d24244235e51e7bf6c8567880c654fe3fd73b87fa1bfe1ab0f10dfdc94db2693",
+  "runner_freeze_member_count": 20,
+  "runner_freeze_hash_mismatch_count": 0,
+  "current_agent_matches_v3_freeze": true,
+  "v3_agent_sha256": "085d338ed95bbef7370c41cf97ca0d6653ffdfd2f1c924eef4b7123dfdea4607",
+  "frozen_evaluation_identities_match": true,
+  "authorization_validator_binding_match": true,
+  "case_count": 40,
+  "case_set_match": true,
+  "case_order_match": true,
+  "task_distribution": {
+    "KNOWLEDGE_QA": 10,
+    "CAUSE_ASSESSMENT": 10,
+    "PERSONALIZED_DECISION": 10,
+    "DATA_ANALYSIS": 10
+  },
+  "active_executable_authorization_count_before": 0,
+  "r7": {
+    "authorization_id": "auth-step9_63a_r3-d53bbaa35b1e4522bc4a5f57d42c8ef7",
+    "derived_state": "COMMITTED_BURNED_PRE_CASE_NON_REUSABLE",
+    "executable": false,
+    "reusable": false
+  },
+  "r8": {
+    "authorization_id": "auth-step9_63c_r4-4b2749ce10014634ac6de155d37ec6a9",
+    "derived_state": "RETIRED_UNCONSUMED_NON_REUSABLE",
+    "executable": false,
+    "reusable": false
+  },
+  "new_authorization": {
+    "path": "evaluation/v1_2_3/step9_63c_r5c6_r10_v3_authorization_manifest.json",
+    "sha256": "beac52d1ed3bc11efa02b1a924a8abc7b210171bf5cc1b7910011a6ef9741241",
+    "authorization_id": "auth-step9_63c_r5c6-aff5c4b96bb74278a14d3fd08bf8a84e",
+    "attempt_id": "attempt-step9_63c_r5c6-3401b701486c4fdeb4019b461d024bd4",
+    "namespace_id": "heldout-v4-treatment-v3-run-8e4bd0fd803f31b9e0da",
+    "authorization_id_collision": false,
+    "attempt_id_collision": false,
+    "namespace_id_collision": false,
+    "authorization_status": "ISSUED_NOT_CONSUMED",
+    "manifest_status": "ISSUED_NOT_EXECUTED",
+    "consumed": false,
+    "consumption_count": 0,
+    "derived_state": "ISSUED_EXECUTABLE",
+    "executable": true,
+    "reusable": true,
+    "reusable_field_interpretation": "Authoritative reducer result: unused and eligible as an ISSUED_EXECUTABLE one-shot authorization; it does not permit a second consumption, replay, or identity reuse."
+  },
+  "active_executable_authorization_count_after": 1,
+  "historical_integrity": {
+    "pin_model": "PREFIX_LENGTH_PLUS_PREFIX_SHA256",
+    "pin_count": 55,
+    "pin_mismatch_count": 0,
+    "step9_58_provenance_gap": "PRESENT_AND_DOCUMENTED"
+  },
+  "offline_validation": {
+    "manifest_schema_validation": "PASS",
+    "parent_authorization_validator": "PASS",
+    "adapter_identity_validator": "PASS_NON_CONSUMING",
+    "lifecycle_reducer": "PASS",
+    "active_enumeration": "PASS_COUNT_1",
+    "identity_collision_guards": "PASS_NO_COLLISIONS",
+    "historical_prefix_pins": "PASS_55_OF_55",
+    "post_issue_regressions": {
+      "count": 67,
+      "failures": 0,
+      "errors": 0
+    },
+    "pre_issue_only_test_excluded": "LifecycleReducerTests.test_18_active_count_is_zero; post-issuance expected count is separately verified as 1",
+    "initial_full_suite_attempt": {
+      "count": 68,
+      "failure_count": 1,
+      "failure": "test_18_active_count_is_zero expected the pre-issuance value 0 after the authorized issuance; this state-dependent assertion is inapplicable after issuance"
+    }
+  },
+  "execution_state": {
+    "attempt_created": false,
+    "namespace_created": false,
+    "namespace_reserved": false,
+    "transaction_started": false,
+    "formal_v4_case_executed": 0,
+    "model_inference_executed": false,
+    "agent_evaluation_executed": false,
+    "rag_evaluation_executed": false,
+    "http_request_sent": false,
+    "mac_local_connectivity_preflight_run": false
+  },
+  "ready_for_r10_mac_local_final_preclearance": true
+}

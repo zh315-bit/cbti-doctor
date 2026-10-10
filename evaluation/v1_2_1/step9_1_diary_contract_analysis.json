@@ -1,0 +1,10 @@
+{
+  "contract_shapes":{"entry_shaped":"entries plus source_entry_count/source_dates permit cardinality/date/provenance validation","summary_shaped":"aggregate or grouped textual summaries require an explicit summary schema and coverage/provenance fields; they are not entry lists","unavailable":"must not write diary facts","invalid":"must fail closed and write no diary-derived facts"},
+  "observed_summary_cases":[
+    {"case_id":"V2-DA-03","raw_shape":"[14 evaluator-held entries ...]","source_cardinality":null,"source_dates":[],"projected_cardinality":null,"projected_dates":[],"status":"valid","warnings":[],"facts_written":"recent_sleep_pattern summary list","answer_claim":"1 day"},
+    {"case_id":"V2-DA-04","raw_shape":"[weekday ... x5, weekend ... x2]","source_cardinality":null,"source_dates":[],"projected_cardinality":null,"projected_dates":[],"status":"valid","warnings":[],"facts_written":"two summary groups","answer_claim":"2 days"},
+    {"case_id":"V2-DA-05","raw_shape":"[14 entries: latency range; awakenings range]","source_cardinality":null,"source_dates":[],"projected_cardinality":null,"projected_dates":[],"status":"valid","warnings":[],"facts_written":"recent_sleep_pattern summary list","answer_claim":"1 day"},
+    {"case_id":"V2-DA-08","raw_shape":"[11 available entries over 14 days; missing nights ...]","source_cardinality":null,"source_dates":[],"projected_cardinality":null,"projected_dates":[],"status":"valid","warnings":[],"facts_written":"recent_sleep_pattern summary list","answer_claim":"1 day"}
+  ],
+  "localization":"The current projection layer does not fail because entry-shaped validation rejected data. It never receives source truth for these summary-shaped fixtures, so its entry-count/date invariants are inapplicable and it accepts them as valid."
+}

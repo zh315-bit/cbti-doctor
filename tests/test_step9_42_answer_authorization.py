@@ -29,6 +29,11 @@ def _authorize(*, status=None, estimate=None, fields=("choice_factor",), fallbac
         information_estimates={} if estimate is None else {fields[0]: estimate},
         dependencies_considered=[],
     )
+    # Step 9.50 bounded mode requires actual supported content, not only a
+    # fallback label. Keep these authorization fixtures representative by
+    # supplying independent synthetic evidence while preserving every expected
+    # authorization outcome below.
+    state.evidence = ["General synthetic information about a personalized choice supports a bounded explanation."]
     if fact_value is not None and status == "ASSERTED":
         state.fact_sources[fields[0]] = {"source_type": "user_explicit"}
     state.dependencies_considered.append({

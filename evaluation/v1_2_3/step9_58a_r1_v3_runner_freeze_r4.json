@@ -1,0 +1,86 @@
+{
+  "artifact_type": "STEP9_58A_R1_V3_RUNNER_FREEZE_REVISION_NOT_AUTHORIZATION",
+  "step": "9.58a-r1",
+  "runner_freeze_revision": "r4",
+  "freeze_id": "step9_58a-r1-v3-namespace-runner-20261001-r4",
+  "status": "FROZEN_NOT_AUTHORIZED",
+  "created_at_utc": "2026-10-01T19:00:00Z",
+  "supersedes_for_future_authorization_only": "evaluation/v1_2_3/step9_55b_v3_runner_freeze_r3.json",
+  "r3_freeze_sha256": "581edb8e0091c3dd060735435091be0c5d826b6244a562fa1bfb21a0b3d850fc",
+  "runner_path": "scripts/run_step9_53_v3_identity_adapter.py",
+  "runner_sha256": "5c64ad7918703e9f2364d832963f39fbcd8bd45a7519a1771515b5d62bca4c87",
+  "identity_adapter_sha256": "5c64ad7918703e9f2364d832963f39fbcd8bd45a7519a1771515b5d62bca4c87",
+  "namespace_allocator_path": "scripts/v3_namespace_allocator.py",
+  "namespace_allocator_sha256": "e9ec6e25cf9d8f4899176ae7795445911e4b77c42048f8eb3ed515189a7b1288",
+  "identity_contract_path": "evaluation/v1_2_3/step9_58a_r1_v3_identity_contract.json",
+  "identity_contract_sha256": "16b6cd71cd75ea231ed3a10d3f43546e31cded9d1be120ce5d16c000391ae95f",
+  "parent_runner": {
+    "path": "scripts/run_step9_35a_matched_treatment.py",
+    "sha256": "920486b1d7984fae6ee77b5ac51af0d0a98caf42e445d1abcf7ff75b46038505",
+    "freeze_path": "evaluation/v1_2_3/step9_35a_treatment_runner_freeze.json",
+    "freeze_sha256": "0c4e6ab752164bfe436d14b06d3bdc6d5cfc1506cbca92bc1bb9675c437aa7e9"
+  },
+  "v3_agent_sha256": "085d338ed95bbef7370c41cf97ca0d6653ffdfd2f1c924eef4b7123dfdea4607",
+  "development_freeze_path": "evaluation/v1_2_3/step9_51_v3_development_freeze_r1.json",
+  "development_freeze_sha256": "106e18707aa66806c3953c8d5f38484f534d78e4fd230cbd6c491304aaf8cd27",
+  "step9_52_validation_sha256": "7f2a5e43f4131feec1fed51121e0a398a9c9ca0ab1679073be8a91c19c4940d3",
+  "bound_identities_sha256": "fc9745a44cfaa94cded49ce8907e8c4aa98cfff932e59fddc7aaa1519415f864",
+  "frozen_evaluation_identity": {
+    "benchmark_path": "evaluation/benchmarks/benchmark_v4_cases.yaml",
+    "benchmark_sha256": "8b8c72092fcd7544e69d5d2ecd13610c7bb4c14210fca330698b3e5ab3f01d7f",
+    "benchmark_manifest_sha256": "b5feb7832b6267d8cff9d25fb2d8cf0043829feb5fd04ec1bea77dba932a13db",
+    "case_count": 40,
+    "case_order_fingerprint_sha256": "d930455e417935337a6e3459defbdc3ee3829b71786fbd8438ef092b62429e68",
+    "task_distribution": {
+      "KNOWLEDGE_QA": 10,
+      "CAUSE_ASSESSMENT": 10,
+      "PERSONALIZED_DECISION": 10,
+      "DATA_ANALYSIS": 10
+    },
+    "harness_sha256": "8bc271bebc1c5da5351d517e2bb4a0d1a99fda3de1b713a6197b12f81fad70c7",
+    "scoring_sha256": "f742a8f8af7c8747818dadad81621c15d12d74f50538019913dfe18ab53bf59b",
+    "scoring_rubric_sha256": "a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899",
+    "metric_registry_sha256": "de9f348cb1dff66410c03095abdaffcc256f53679718482870e4aa4d80c75056",
+    "one_shot_rules_sha256": "1c7ed4ef47865b117bc943f3e0ad9a859f4f74cfb4e8001f723ac5532af140d0",
+    "matched_protocol_sha256": "a71ba06090370b576fbba66bc4b005e519ddbabff3021a40c6546fc855f90265",
+    "model_configuration_fingerprint_sha256": "d0802478a59e6b2021b0476490149d7fec672fab5bda5cc45f55241268f1a7e0",
+    "tool_adapter_sha256": "65223ad962417d68d16326c2431a205f1bdc953a0f64c5585ff38e4017a1c084",
+    "rag_configuration_fingerprint_sha256": "58467abc2abafce62e8d71713684802f64a35946accf35c08007e67b0edd60a5",
+    "dependency_lock_sha256": "4e7ec8e873364b418536494b049d09e37e957a824a1989072cdc5a62f8af72b0",
+    "all_frozen_identities_match": true
+  },
+  "namespace_allocation_contract": {
+    "derivation": "SHA256(evaluation_id, authorization_id, attempt_id) first 20 hex chars",
+    "physical_layout": "evaluation/v4_runs/<derived_namespace_id>/<frozen_evaluation_id>/",
+    "exclusive_reservation_marker": ".namespace_allocation.json",
+    "global_historical_ledger_and_reservation_scan": true,
+    "collision_or_interruption": "FAIL_CLOSED_NO_REUSE",
+    "legacy_occupied_namespace_reusable": false,
+    "failed_step9_57_namespace_reusable": false,
+    "case_specific_logic": false
+  },
+  "lifecycle_contract": {
+    "pre_attempt": "Derived container and frozen evaluation child are absent; all history scanned before reservation.",
+    "authorization_validation_precedes_reservation": true,
+    "post_reservation_attempt_namespace_created_exclusively_by_parent": true,
+    "post_attempt_creation_pre_first_case_requires_exact_ids_zero_cases_no_outputs": true,
+    "parent_callback_phase_order_preserved": [
+      "PRE_ATTEMPT",
+      "PRE_ATTEMPT",
+      "POST_ATTEMPT_CREATION_PRE_FIRST_CASE"
+    ],
+    "automatic_resume": false
+  },
+  "boundary": {
+    "agent_modified": false,
+    "benchmark_modified": false,
+    "evaluation_semantics_changed": false,
+    "authorization_issued": false,
+    "attempt_created": false,
+    "authorization_consumed": false,
+    "formal_v4_case_executed": 0,
+    "model_agent_rag_called_for_evaluation": false,
+    "original_step9_58_artifacts_complete": false,
+    "step9_58_historical_provenance_gap": "PRESENT_AND_DOCUMENTED"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "step": "9.33",
+  "audit_status": "PASS_WITH_REGRESSION_BLOCK",
+  "baseline_agent_sha256": "4e2bffea0d7eaa9299074a960df84a1806b3ae9d4930662929abc58ca5b2ae79",
+  "baseline_match_before_changes": true,
+  "case_specific_logic_added": false,
+  "source_scan": {
+    "scope": [
+      "adaptive_agent/input_understanding.py",
+      "adaptive_agent/state.py",
+      "adaptive_agent/requirements.py",
+      "adaptive_agent/dependency_resolver.py",
+      "adaptive_agent/preconditions.py",
+      "adaptive_agent/information_value.py",
+      "adaptive_agent/candidates.py",
+      "adaptive_agent/acquisition_gate.py",
+      "adaptive_agent/policy.py",
+      "adaptive_agent/state_update.py",
+      "adaptive_agent/runner.py",
+      "adaptive_agent/answer_generation.py"
+    ],
+    "search_patterns": ["V4 case IDs", "benchmark fixture names", "expected action paths", "hard-coded task-to-action shortcuts"],
+    "matches": [],
+    "method": "rg source scan over scoped Agent modules; no V4 case contents opened"
+  },
+  "step9_32_integrity": {
+    "repair_design_sha256": "675b09ada62f1988f6a759cd832ab2ab7752febabc1604e3bd3514ec80bb4be4",
+    "paired_preregistration_sha256": "eae334625468d9a844273a3771767a2a733e240ba2eecc9abe19df30f6100e99",
+    "synthetic_test_plan_sha256": "e5b82c6b39bbcaf2a5a6bbb91aaa520c108bc69c026e22c2ab9f8979420ad03d",
+    "baseline_freeze_sha256": "5fd2894fe35dc452fff5d6c58127a3731760d15b19acf8b5a0b4e47ce649ef2f",
+    "pair_protocol_modified": false,
+    "hypotheses_modified": false,
+    "baseline_freeze_modified": false
+  },
+  "prohibited_activity": {
+    "v4_rerun": false,
+    "v4_cases_executed": 0,
+    "v5_created": false,
+    "v5_accessed": false,
+    "model_called_for_benchmark": false,
+    "agent_called_for_benchmark": false,
+    "rag_called_for_benchmark": false
+  },
+  "full_nonbenchmark_regression": {
+    "tests_run": 288,
+    "failures": 21,
+    "errors": 1,
+    "status": "FAIL"
+  },
+  "comparative_claim_eligible": false,
+  "step9_34_precheck_ready": false
+}

@@ -1,0 +1,28 @@
+{
+  "step": "9.63c-r5c10e",
+  "status": "NOT_RUN_CONSTRUCTION_PRECONDITION_FAILED",
+  "tests_run_this_step": 0,
+  "passed_this_step": 0,
+  "failed_this_step": 0,
+  "reason": "The existing freeze construction mechanism is r10-only; fail closed before construction or post-construction tests.",
+  "prior_synthetic_evidence": [
+    {
+      "source": "evaluation/v1_2_3/step9_63c_r5c10c_test_matrix.json",
+      "reported_passed": 64,
+      "credited_to_this_step": false
+    },
+    {
+      "source": "evaluation/v1_2_3/step9_63c_r5c10d_runner_freeze_review_audit.json",
+      "reported_passed": 64,
+      "credited_to_this_step": false
+    }
+  ],
+  "deferred_until_safe_r11_construction": [
+    "20-member r11 hash integrity",
+    "runner-to-r11 identity resolution",
+    "transaction scanner and AppleDouble synthetic cases",
+    "corrupt canonical journal fail-closed cases",
+    "authorization lifecycle and one-shot compatibility",
+    "r10 historical hash preservation"
+  ]
+}

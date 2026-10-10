@@ -1,0 +1,16 @@
+{
+  "artifact_type": "STEP9_63A_R1_STATIC_BYPASS_PATH_AUDIT",
+  "timestamp_utc": "2026-10-05T21:24:33Z",
+  "scope": "current Treatment-V3 r7 production chain",
+  "searched_transitions": ["AUTHORIZATION_CONSUMED", "attempts.jsonl", "reserve_namespace", "STARTED", "_case_result", "_create_adaptive_chat_service", "Flask /api/chat"],
+  "entry_paths": [
+    {"path": "Step9.63 formal CLI", "guard": "r7 freeze and authorization/preflight check, then adapter transaction commit", "unguarded": false},
+    {"path": "V3 adapter direct CLI/function", "guard": "adapter.run commits before allocator/parent; preflight read-only", "unguarded": false},
+    {"path": "Step9.35a parent direct CLI/function", "guard": "transaction_id mandatory; exact committed binding and one-time attempt claim before ledger; historical direct authorization cannot pass", "unguarded": false},
+    {"path": "V3 allocator direct function", "guard": "real evaluation/v4_runs root requires exact committed transaction; synthetic temp roots are test-only", "unguarded": false},
+    {"path": "production case-start loop", "guard": "journal CASE_STARTED requires COMMITTED + ATTEMPT_CLAIMED and exact frozen bindings before /api/chat", "unguarded": false},
+    {"path": "historical baseline/V1/V2 entrypoints", "guard": "separate frozen protocols, not V3 r7 dispatch paths", "unguarded": false}
+  ],
+  "unguarded_production_execution_path_count": 0,
+  "caveat": "Static code-path audit is scoped to current V3 execution entrypoints, not arbitrary Python monkeypatching or historical independent protocols."
+}

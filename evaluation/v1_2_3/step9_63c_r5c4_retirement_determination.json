@@ -1,0 +1,23 @@
+{
+  "artifact_type": "V3_SUPERSEDED_AUTHORIZATION_NONREUSE_DETERMINATION",
+  "step": "9.63c-r5c4",
+  "created_at_utc": "2026-10-06T19:39:17Z",
+  "old_authorization_id": "auth-step9_63c_r4-4b2749ce10014634ac6de155d37ec6a9",
+  "old_authorization_reuse_status": "PROVEN_NON_REUSABLE_BY_FROZEN_CONTRACT",
+  "retirement_reason": "SUPERSEDED_RUNNER_FREEZE",
+  "old_authorization_manifest_path": "evaluation/v1_2_3/step9_63c_r4_r8_authorization_manifest.json",
+  "old_authorization_manifest_sha256": "f02cec713ce0a8aebc109ff898450f0365cf4f8b91b5330e08fae556cc83cc2a",
+  "old_runner_freeze_path": "evaluation/v1_2_3/step9_63c_r3_runner_freeze.json",
+  "old_runner_freeze_revision": "r8",
+  "old_runner_freeze_sha256": "86be96061d8c1cfbf769e21aac388cf2a308f53f6380f67c401d4c64b0bf4e6b",
+  "current_runner_freeze_path": "evaluation/v1_2_3/step9_63c_r5c4_runner_freeze_r9.json",
+  "current_runner_freeze_revision": "r9",
+  "current_runner_freeze_sha256": "4af44711fe984b69c81fc4730f0ca3f69058d1f69123b3b2bd7a570356166f97",
+  "historical_binding_proof": "The old manifest SHA and its embedded r8 path/revision/freeze SHA were verified against the immutable r8 freeze artifact. Retirement is based on that issuance-time identity, not equality with current r9 production bytes.",
+  "authorization_consumed": false,
+  "authorization_consumption_count": 0,
+  "attempt_or_transaction_exists": false,
+  "namespace_or_reservation_exists": false,
+  "case_results_or_traces_exist": false,
+  "current_runner_equality_required": false
+}

@@ -1,0 +1,67 @@
+{
+  "artifact_type": "STEP9_63C_R5C10C_OFFLINE_TEST_MATRIX",
+  "step": "9.63c-r5c10c",
+  "status": "PASS_OFFLINE_ONLY",
+  "test_scope": "Temporary synthetic transaction/namespace roots only. No formal preflight, production transaction journal, V4 case, model, Agent, RAG or network access.",
+  "total_tests_run": 64,
+  "total_passed": 64,
+  "total_failed": 0,
+  "total_errors": 0,
+  "total_skipped": 0,
+  "suites": [
+    {
+      "file": "tests/test_step9_63c_r5c10c_transaction_scanner.py",
+      "sha256": "9e080ad16bf7cfbbbeff5a90e3b820e33e0c20ec713edcc1a80ee8bab90a8135",
+      "command": ".venv/bin/python -m unittest discover -s tests -p 'test_step9_63c_r5c10c_transaction_scanner.py'",
+      "run": 18,
+      "passed": 18,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        "T01 valid canonical JSONL and unchanged read_events result",
+        "T02 verified AppleDouble companion excluded",
+        "T03 unrelated binary and Finder metadata excluded",
+        "T04 canonical invalid UTF-8 fails closed",
+        "T05 invalid JSON and illegal sequence fail closed",
+        "T06 duplicate authorization, attempt, namespace and same transaction binding rejected",
+        "T07 historical committed journal preserved",
+        "T08 burned authorization reducer remains terminal",
+        "T09 later corruption cannot be hidden by earlier identity match",
+        "T10 orphan, wrong-magic and symlink sidecars fail closed",
+        "T11 canonical directory/symlink fail closed",
+        "T12 symlink and non-directory transaction root fail closed",
+        "T13 unsafe filename and filename/identity mismatch fail closed",
+        "T14 canonical binary and empty journal fail closed",
+        "T15 macOS metadata and Unicode filename boundary",
+        "T15b case-insensitive alias collision on supported temporary filesystem",
+        "T16 existing crash-state classifications unchanged",
+        "T17 non-frozen preflight scanner sidecar parity"
+      ]
+    },
+    {
+      "file": "tests/test_v3_execution_transaction.py",
+      "sha256": "8903d698d83e47049554ea746db80d5337cbb6d0cc6b4becc0b35301a2e7fe47",
+      "command": ".venv/bin/python -m unittest discover -s tests -p 'test_v3_execution_transaction.py' -v",
+      "run": 32,
+      "passed": 32,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "case_ids": "test_01 through test_32, all using tempfile transaction roots"
+    },
+    {
+      "file": "tests/test_step9_63c_r5c5b_lifecycle_reducer.py",
+      "sha256": "7b51470cbf5714d6dae967f7d4ed413d57a86b6acfe18ce9437cde9b17018f94",
+      "selection": "LifecycleReducerTests.test_01 through test_14 only",
+      "run": 14,
+      "passed": 14,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "exclusion_reason": "Remaining tests inspect real historical production transaction artifacts or stale active-authorization assumptions; prohibited by this step's offline test boundary."
+    }
+  ],
+  "formal_execution_or_preflight_run": false,
+  "production_transaction_journal_read_or_modified_by_tests": false
+}

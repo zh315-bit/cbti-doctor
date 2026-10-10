@@ -1,0 +1,98 @@
+{
+  "artifact_type": "STEP9_55A_V3_NAMESPACE_LIFECYCLE_REPAIR_AUDIT",
+  "step": "9.55a",
+  "created_at_utc": "2026-09-30T20:11:40Z",
+  "status": "PASS_INFRASTRUCTURE_REPAIR_ONLY",
+  "root_cause_confirmed": true,
+  "call_order": [
+    {"ordinal": 1, "component": "scripts/run_step9_35a_matched_treatment.py::run", "event": "validate_authorization calls current_frozen_bindings", "namespace_state": "ABSENT"},
+    {"ordinal": 2, "component": "scripts/run_step9_35a_matched_treatment.py::run", "event": "mkdir(exist_ok=False), exclusive attempts.jsonl, fsynced PREPARED/AUTHORIZATION_CONSUMED/FIRST_EVALUATION_ACCESS", "namespace_state": "CURRENT_ATTEMPT_CREATED"},
+    {"ordinal": 3, "component": "scripts/run_step9_35a_matched_treatment.py::run", "event": "dataset schema and exact case set/order verified; CASE_SET_AND_ORDER_VERIFIED persisted", "namespace_state": "CURRENT_ATTEMPT_CREATED_NO_CASE_STARTED"},
+    {"ordinal": 4, "component": "scripts/run_step9_35a_matched_treatment.py::run", "event": "current_frozen_bindings callback", "namespace_state": "CURRENT_ATTEMPT_CREATED_NO_CASE_STARTED"}
+  ],
+  "old_guard_purpose": "Reject namespace collisions before a one-shot attempt and prevent identity reuse.",
+  "old_guard_failure": "V3 adapter applied the pre-attempt namespace-absence invariant again at the parent's post-create/pre-first-case callback.",
+  "repaired_invariant": "Phase-aware: absent namespace before attempt; after parent creation require exact current evaluation/authorization/attempt identity, exact parent ledger prefix, no case outputs, zero counters, no completion, and no duplicate identity in other ledgers.",
+  "modified_files": [
+    "scripts/run_step9_53_v3_identity_adapter.py",
+    "tests/test_step9_55a_namespace_lifecycle.py",
+    "evaluation/v1_2_3/step9_55a_v3_identity_contract.json",
+    "evaluation/v1_2_3/step9_55a_v3_runner_freeze.json",
+    "evaluation/v1_2_3/step9_55a_v3_namespace_lifecycle_audit.json",
+    "evaluation/v1_2_3/step9_55a_v3_namespace_lifecycle_audit.md",
+    "evaluation/v1_2_3/step9_55a_v3_namespace_lifecycle_test_report.json",
+    "record.md"
+  ],
+  "historical_step9_55": {
+    "evaluation_id": "heldout-v4-step9_53-treatment-v3-20260930-01",
+    "authorization_id": "auth-step9_54r1-b43c3282fd9344f6a7c3548e376ec6d1",
+    "attempt_id": "attempt-step9_54r1-d2e272e499e24f5f82096a01b2bf9fe9",
+    "ledger_path": "evaluation/v4_runs/heldout-v4-step9_53-treatment-v3-20260930-01/attempts.jsonl",
+    "ledger_sha256": "57967d950a3a4c700f3187e3d495ca39b4e01d5700ef31a9ebe36c3380450de6",
+    "cases_started": 0,
+    "cases_completed": 0,
+    "case_results_count": 0,
+    "raw_traces_count": 0,
+    "completed_event_count": 0,
+    "preserved_unchanged": true
+  },
+  "old_authorization_artifact_sha256": {
+    "manifest": "0b416035d9cf2b0ef5b71a306b1edd9fda42ffaa1e17f2605dd217db9c8f4b4d",
+    "audit": "3a88081ce66f4c8fb4d790cbcd0dcce4dd32798a5d27a81004dd7443b816bc06",
+    "report": "751d7bdca668279ddb54ae880ba45a3220344e1b7a320bf8aa3f9f793641b13b",
+    "freeze": "59bdcdbffe06be1b017d8d62c673fc3c35d0810e972ec30f25c873c98ccf05cc"
+  },
+  "v3_agent": {
+    "modified": false,
+    "sha256_before": "085d338ed95bbef7370c41cf97ca0d6653ffdfd2f1c924eef4b7123dfdea4607",
+    "sha256_after": "085d338ed95bbef7370c41cf97ca0d6653ffdfd2f1c924eef4b7123dfdea4607"
+  },
+  "semantics_and_frozen_inputs": {
+    "evaluation_semantics_changed": false,
+    "benchmark_modified": false,
+    "harness_modified": false,
+    "scoring_modified": false,
+    "rubric_modified": false,
+    "metric_registry_modified": false,
+    "one_shot_rules_modified": false,
+    "parent_runner_modified": false,
+    "old_step9_53_freeze_modified": false,
+    "exactly_once_guard_preserved": true,
+    "namespace_collision_guard_preserved": true
+  },
+  "new_runner_identity": {
+    "identity_contract_path": "evaluation/v1_2_3/step9_55a_v3_identity_contract.json",
+    "identity_contract_sha256": "a8f6e54f78d0f7d3f2722390da4779d87f68838c76fe17ccc2f5930adb1d68c0",
+    "runner_freeze_path": "evaluation/v1_2_3/step9_55a_v3_runner_freeze.json",
+    "runner_freeze_sha256": "745ea26d044909e398eccdfd41da2f9f58b138612d28af57ed7a507fca2acc14",
+    "runner_sha256": "ace3d58005a5c4ce01aeeb17ac54a437c64e4023f7c870e12964a1a5d72b0b7e",
+    "runner_test_sha256": "526b3a1f3e75a582b7cb3bdb3ff3904d157d6afe5653d08f5186021142fd038b",
+    "bound_identities_sha256": "fc9745a44cfaa94cded49ce8907e8c4aa98cfff932e59fddc7aaa1519415f864",
+    "frozen_status": "FROZEN_NOT_AUTHORIZED",
+    "old_r2_freeze_superseded_for_future_identity_only": true
+  },
+  "testing": {
+    "synthetic_lifecycle_conditions_covered": 12,
+    "synthetic_lifecycle_tests_passed": true,
+    "callback_phase_sequence_test": "PASS_PRE_ATTEMPT_THEN_POST_CREATE_PRE_FIRST_CASE",
+    "focused_regression_tests_run": 51,
+    "focused_regression_tests_passed": 51,
+    "focused_regression_failures": 0,
+    "model_agent_rag_case_execution": false
+  },
+  "identity_only_preflight": {
+    "all_frozen_hashes_match": true,
+    "exactly_once_guard_ready": true,
+    "namespace_isolated": true,
+    "authorization_status": "NOT_ISSUED",
+    "formal_attempt_created": false,
+    "v4_case_executed": 0,
+    "v4_score_generated": false,
+    "v5_accessed": false
+  },
+  "readiness": {
+    "ready_for_new_v3_authorization": true,
+    "authorization_issued": false,
+    "new_attempt_created": false
+  }
+}

@@ -1,0 +1,230 @@
+{
+ "step": "9.63c-r5c10ab",
+ "status": "MEASURED_UNITTEST_FULL_REGRESSION_GUARDED",
+ "interpreter": ".venv/bin/python (Python 3.12.14)",
+ "framework": "unittest (stdlib); pytest NOT used, NOT installed",
+ "command": "evaluation/v1_2_3/step9_63c_r5c10ab_test_harness/run_all.sh <OUTPUT_DIR outside repo>",
+ "runs": {
+  "L5_full_initial_guard_v2": "648 collected / 594 pass / 20 fail / 34 error (14 were guard false positives on repo->tmp copies) / 8 import blockers",
+  "L5_rerun_after_guard_fix_two_modules": "33/33 pass, 0 guard events",
+  "L5_final_after_C1_fix": "650 / 628 / 4 / 18 / 8",
+  "L5_reproduction_from_repo_harness": "650 / 628 / 4 / 18 / 8"
+ },
+ "totals": {
+  "collected_methods": 650,
+  "PASS": 628,
+  "ERROR": 18,
+  "FAIL": 4,
+  "import_blocked_modules": 8,
+  "all_module_process_exit_codes": "66 x 0"
+ },
+ "non_pass_by_cluster": {
+  "C5_ARCHIVAL_V2_PARENT_RUNNER_SHA_DRIFT": 1,
+  "C6_STEP9_51A_PINNED_TEST_INVENTORY_DRIFT": 1,
+  "C2R_RUNTIME_MISSING_FORMAL_R11_POINTER": 14,
+  "C3_R9_BOOTSTRAP_TEST_VS_R11_ONLY_RESOLVER": 3,
+  "C4_ARCHIVAL_R10_LIVE_SNAPSHOT_EXPECTATION": 3
+ },
+ "non_pass_items": [
+  {
+   "test_id": "test_step9_58a_r1_namespace_allocator.NamespaceAllocatorTests.test_reserved_fresh_namespace_requires_transaction_for_post_first_case_guard",
+   "result": "ERROR",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe",
+   "cluster": "C2R_RUNTIME_MISSING_FORMAL_R11_POINTER"
+  },
+  {
+   "test_id": "test_step9_63b_mac_local_preflight.MacLocalPreflightTests.test_attestation_exclusive_create",
+   "result": "ERROR",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe",
+   "cluster": "C2R_RUNTIME_MISSING_FORMAL_R11_POINTER"
+  },
+  {
+   "test_id": "test_step9_63b_mac_local_preflight.MacLocalPreflightTests.test_dns_parser_accepts_only_public_ip_addresses",
+   "result": "ERROR",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe",
+   "cluster": "C2R_RUNTIME_MISSING_FORMAL_R11_POINTER"
+  },
+  {
+   "test_id": "test_step9_63b_mac_local_preflight.MacLocalPreflightTests.test_existing_attestation_fails_before_network",
+   "result": "ERROR",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe",
+   "cluster": "C2R_RUNTIME_MISSING_FORMAL_R11_POINTER"
+  },
+  {
+   "test_id": "test_step9_63b_mac_local_preflight.MacLocalPreflightTests.test_failed_dns_never_opens_transport",
+   "result": "ERROR",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe",
+   "cluster": "C2R_RUNTIME_MISSING_FORMAL_R11_POINTER"
+  },
+  {
+   "test_id": "test_step9_63b_mac_local_preflight.MacLocalPreflightTests.test_failure_prints_no_exception_or_secret",
+   "result": "ERROR",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe",
+   "cluster": "C2R_RUNTIME_MISSING_FORMAL_R11_POINTER"
+  },
+  {
+   "test_id": "test_step9_63b_mac_local_preflight.MacLocalPreflightTests.test_preflight_rechecks_execution_state_after_transport",
+   "result": "ERROR",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe",
+   "cluster": "C2R_RUNTIME_MISSING_FORMAL_R11_POINTER"
+  },
+  {
+   "test_id": "test_step9_63b_mac_local_preflight.MacLocalPreflightTests.test_real_script_has_no_formal_execution_entrypoint",
+   "result": "ERROR",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe",
+   "cluster": "C2R_RUNTIME_MISSING_FORMAL_R11_POINTER"
+  },
+  {
+   "test_id": "test_step9_63b_mac_local_preflight.MacLocalPreflightTests.test_state_change_fails_closed",
+   "result": "ERROR",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe",
+   "cluster": "C2R_RUNTIME_MISSING_FORMAL_R11_POINTER"
+  },
+  {
+   "test_id": "test_step9_63c_r3_parent_namespace_repair.NamespaceBoundaryTests.test_t12_no_default_global_root_on_formal_path",
+   "result": "ERROR",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe",
+   "cluster": "C2R_RUNTIME_MISSING_FORMAL_R11_POINTER"
+  },
+  {
+   "test_id": "test_step9_63c_r5c7b_diagnostics.Step963cR5c7bDiagnosticsTests.test_certificate_validation_stage",
+   "result": "ERROR",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe",
+   "cluster": "C2R_RUNTIME_MISSING_FORMAL_R11_POINTER"
+  },
+  {
+   "test_id": "test_step9_63c_r5c7b_diagnostics.Step963cR5c7bDiagnosticsTests.test_dns_exception_reports_system_dns_stage",
+   "result": "ERROR",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe",
+   "cluster": "C2R_RUNTIME_MISSING_FORMAL_R11_POINTER"
+  },
+  {
+   "test_id": "test_step9_63c_r5c7b_diagnostics.Step963cR5c7bDiagnosticsTests.test_tcp_exception_reports_tcp_stage",
+   "result": "ERROR",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe",
+   "cluster": "C2R_RUNTIME_MISSING_FORMAL_R11_POINTER"
+  },
+  {
+   "test_id": "test_step9_63c_r5c7b_diagnostics.Step963cR5c7bDiagnosticsTests.test_tls_exception_reports_tls_stage",
+   "result": "ERROR",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe",
+   "cluster": "C2R_RUNTIME_MISSING_FORMAL_R11_POINTER"
+  },
+  {
+   "test_id": "test_step9_63c_r5c4_bootstrap_repair.BootstrapRepairTests.test_09_pointer_resolves_only_exact_freeze",
+   "result": "ERROR",
+   "last_line": "RuntimeError: current runner identity pointer is invalid",
+   "cluster": "C3_R9_BOOTSTRAP_TEST_VS_R11_ONLY_RESOLVER"
+  },
+  {
+   "test_id": "test_step9_63c_r5c4_bootstrap_repair.BootstrapRepairTests.test_10_pointer_freeze_hash_mismatch_fails",
+   "result": "FAIL",
+   "last_line": "AssertionError: \"does not match\" does not match \"current runner identity pointer is invalid\"",
+   "cluster": "C3_R9_BOOTSTRAP_TEST_VS_R11_ONLY_RESOLVER"
+  },
+  {
+   "test_id": "test_step9_63c_r5c4_bootstrap_repair.BootstrapRepairTests.test_18_old_r8_authorization_is_not_a_current_freeze_binding",
+   "result": "ERROR",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe",
+   "cluster": "C3_R9_BOOTSTRAP_TEST_VS_R11_ONLY_RESOLVER"
+  },
+  {
+   "test_id": "test_step9_63c_r5c7d_import_context.Step963cR5c7dImportContextTests.test_direct_script_import_context_bootstraps_root_and_enters_r10_validation",
+   "result": "FAIL",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe",
+   "cluster": "C4_ARCHIVAL_R10_LIVE_SNAPSHOT_EXPECTATION"
+  },
+  {
+   "test_id": "test_step9_63c_r5c7d_import_context.Step963cR5c7dImportContextTests.test_module_context_and_direct_bootstrap_resolve_same_identity",
+   "result": "FAIL",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe",
+   "cluster": "C4_ARCHIVAL_R10_LIVE_SNAPSHOT_EXPECTATION"
+  },
+  {
+   "test_id": "test_step9_63c_r5c7e_preparation.Step963cR5c7ePreparationTests.test_read_only_snapshot_confirms_eligible_unconsumed_authorization",
+   "result": "ERROR",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe",
+   "cluster": "C4_ARCHIVAL_R10_LIVE_SNAPSHOT_EXPECTATION"
+  },
+  {
+   "test_id": "test_step9_43a_treatment_identity.TreatmentIdentityContractTests.test_01a_frozen_v2_identity_preflight_passes_without_case_execution",
+   "result": "ERROR",
+   "last_line": "RuntimeError: parent Step 9.35a runner identity mismatch",
+   "cluster": "C5_ARCHIVAL_V2_PARENT_RUNNER_SHA_DRIFT"
+  },
+  {
+   "test_id": "test_step9_51a_validation_boundary.ValidationBoundaryTests.test_current_manifest_passes_pinned_allowlist",
+   "result": "FAIL",
+   "last_line": "AssertionError: ['manifest module inventory does not exactly match tests/test_*.py'] is not false",
+   "cluster": "C6_STEP9_51A_PINNED_TEST_INVENTORY_DRIFT"
+  }
+ ],
+ "import_blockers": [
+  {
+   "module": "test_step9_53_v3_identity_adapter",
+   "result": "IMPORT_BLOCKED",
+   "exception": "RuntimeError: current runner identity pointer is missing or unsafe",
+   "cluster": "C2_FROZEN_ADAPTER_IMPORT_TIME_R11_POINTER_READ"
+  },
+  {
+   "module": "test_step9_55a_namespace_lifecycle",
+   "result": "IMPORT_BLOCKED",
+   "exception": "RuntimeError: current runner identity pointer is missing or unsafe",
+   "cluster": "C2_FROZEN_ADAPTER_IMPORT_TIME_R11_POINTER_READ"
+  },
+  {
+   "module": "test_step9_59a_auth_identity_binding",
+   "result": "IMPORT_BLOCKED",
+   "exception": "RuntimeError: current runner identity pointer is missing or unsafe",
+   "cluster": "C2_FROZEN_ADAPTER_IMPORT_TIME_R11_POINTER_READ"
+  },
+  {
+   "module": "test_step9_63a_r1_production_integration",
+   "result": "IMPORT_BLOCKED",
+   "exception": "RuntimeError: current runner identity pointer is missing or unsafe",
+   "cluster": "C2_FROZEN_ADAPTER_IMPORT_TIME_R11_POINTER_READ"
+  },
+  {
+   "module": "test_step9_63a_r2_retirement_eligibility",
+   "result": "IMPORT_BLOCKED",
+   "exception": "RuntimeError: current runner identity pointer is missing or unsafe",
+   "cluster": "C2_FROZEN_ADAPTER_IMPORT_TIME_R11_POINTER_READ"
+  },
+  {
+   "module": "test_step9_63a_r3_authorization_issuance",
+   "result": "IMPORT_BLOCKED",
+   "exception": "RuntimeError: current runner identity pointer is missing or unsafe",
+   "cluster": "C2_FROZEN_ADAPTER_IMPORT_TIME_R11_POINTER_READ"
+  },
+  {
+   "module": "test_step9_63c_r5_mac_local_preflight",
+   "result": "IMPORT_BLOCKED",
+   "exception": "RuntimeError: current runner identity pointer is missing or unsafe",
+   "cluster": "C2_FROZEN_ADAPTER_IMPORT_TIME_R11_POINTER_READ"
+  },
+  {
+   "module": "test_step9_63c_r5b_preflight_lifecycle",
+   "result": "IMPORT_BLOCKED",
+   "exception": "RuntimeError: current runner identity pointer is missing or unsafe",
+   "cluster": "C2_FROZEN_ADAPTER_IMPORT_TIME_R11_POINTER_READ"
+  }
+ ],
+ "guard_events": [
+  {
+   "event": "subprocess.Popen",
+   "blocked": false,
+   "test": "test_step9_63c_r5c7d_import_context.Step963cR5c7dImportContextTests.test_direct_script_import_context_bootstraps_root_and_enters_r10_validation"
+  },
+  {
+   "event": "subprocess.Popen",
+   "blocked": false,
+   "test": "test_step9_63c_r5c7d_import_context.Step963cR5c7dImportContextTests.test_module_context_and_direct_bootstrap_resolve_same_identity"
+  }
+ ],
+ "repository_snapshot": {
+  "files": 2333,
+  "baseline_vs_final": "only tests/test_step9_35a_treatment_runner.py and its exFAT AppleDouble companion tests/._test_step9_35a_treatment_runner.py changed (intentional edit)",
+  "after_collection": "0 changes",
+  "after_first_full_regression": "0 changes (content and mtime)"
+ }
+}

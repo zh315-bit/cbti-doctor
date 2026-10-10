@@ -1,0 +1,12 @@
+{
+  "step": "9.33",
+  "artifact_type": "treatment_agent_identity_assessment",
+  "freeze_status": "NOT_FROZEN_REGRESSION_BLOCKED",
+  "reason": "The Step 9.33 condition requires all regression tests to pass before treatment freeze; full non-benchmark regression has 21 failures and 1 error.",
+  "treatment_candidate_sha256_diagnostic_only": "710860b0af6c313b5cf49939f41446144641d3076afdd47000c7d1e612817ebb",
+  "baseline_agent_sha256": "4e2bffea0d7eaa9299074a960df84a1806b3ae9d4930662929abc58ca5b2ae79",
+  "baseline_freeze_modified": false,
+  "agent_inventory_file_count": 26,
+  "changed_agent_inventory_count": 10,
+  "note": "Diagnostic aggregate is computed with the Step 9.26 frozen candidate inventory algorithm and is not an authorization, freeze, or paired-evaluation identity."
+}

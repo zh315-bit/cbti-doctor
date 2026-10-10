@@ -1,0 +1,22 @@
+{
+  "evaluation_id": "clean-evaluation-v1_2_3-20260922-01",
+  "harness_freeze_id": "step9_13a_authorization_infrastructure",
+  "change_class": "AUTHORIZATION_INFRASTRUCTURE_ONLY",
+  "parent_manifest": "evaluation/v1_2_3/step9_11_clean_freeze_manifest.json",
+  "parent_harness_freeze": "evaluation/v1_2_3/step9_12b_harness_freeze.json",
+  "parent_harness_freeze_sha256": "cfa24d3baeb2dc9ae4addc5c9892c465229414a602f029c69bb9c7c51d4c63ab",
+  "parent_harness_aggregate_hash": "56df7699114ff8f09ad7ace091fd4fc3224ff69880b3b84bf37591c5f2ad20cf",
+  "new_harness_files": [
+    ["scripts/frozen_run_guard.py", "e403e78094c25c9632588f0865b297454f4a044557a8a38541e617bd8b2b2b64"],
+    ["scripts/preflight_step9_12_local.py", "0e624362e39639a35cde3381257f8f843c0bcd39949183ef69493daf97c1838e"],
+    ["scripts/run_step8_9_v1_2_1.py", "183aace522fdf720308897c7c8f8620bc5947b7c287388c6083020eb2df2672c"],
+    ["scripts/run_step9_12_frozen_evaluation.py", "0c3a362b49f7b5b7361e7853b9fbee8e14a9499b0fe1be4214517190d38937c6"],
+    ["scripts/run_step9_8_frozen_evaluation.py", "7866cde09895f7d9f71a016f10c64740f1df257cb83a20d8ace621c20c1e0485"]
+  ],
+  "new_harness_aggregate_hash": "8bc271bebc1c5da5351d517e2bb4a0d1a99fda3de1b713a6197b12f81fad70c7",
+  "agent_behavior_aggregate_hash": "ee914db7b8b5538c5607fdff34cff9083f6d069d50cf342964ae91c8a6446927",
+  "benchmark_v2_sha256": "dfa9b9e5a12b0017fa68d344d01b313ebc29e583b933fbe1e93c125f55ecafd2",
+  "scoring_aggregate_hash": "f742a8f8af7c8747818dadad81621c15d12d74f50538019913dfe18ab53bf59b",
+  "authorization_id_issued": false,
+  "benchmark_v2_executed": false
+}

@@ -1,0 +1,26 @@
+--- a/tests/test_step9_63a_r2_retirement_eligibility.py
++++ b/tests/test_step9_63a_r2_retirement_eligibility.py
+@@ -1,4 +1,14 @@
+-"""Offline, synthetic superseded-authorization retirement checks."""
++"""Offline, synthetic superseded-authorization retirement checks.
++
++Step 9.63c-r5c10ad (AR-1): the synthetic authorization fixture previously
++declared ``runner_freeze_revision`` twice ("r8", then "r6"); Python kept only
++the last value, so the fixture claimed r6 while being bound to the r8 freeze
++``step9_63c_r3_runner_freeze.json``. The retirement predicate correctly rejects
++such a self-inconsistent binding. The approved resolution keeps "r8" because
++the bound freeze path, its SHA-256 and ``runner_sha256`` are all read from that
++r8 freeze; only the stray "r6" key was removed. The determination's
++``old_runner_revision`` ("r6") and the real r6/r7 manifest checks are unchanged.
++"""
+ from __future__ import annotations
+ 
+ import hashlib
+@@ -42,7 +52,6 @@
+                 lifecycle.ROOT / "evaluation/v1_2_3/step9_63c_r3_runner_freeze.json"
+             )["runner_sha256"],
+             "attempt_id_status": "PREBOUND_IDENTITY_ONLY_NOT_CREATED",
+-            "runner_freeze_revision": "r6",
+         }
+         self.auth_path.write_text(json.dumps(self.auth))
+         self.determination = {

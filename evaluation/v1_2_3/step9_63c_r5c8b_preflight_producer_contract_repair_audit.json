@@ -1,0 +1,105 @@
+{
+  "artifact_type": "STEP9_63C_R5C8B_PREFLIGHT_PRODUCER_CONTRACT_REPAIR_AUDIT",
+  "step": "9.63c-r5c8b",
+  "status": "PASS_PREFLIGHT_PRODUCER_CONTRACT_REPAIR_OFFLINE_VALIDATED",
+  "completed_at_utc": "2026-10-07T17:54:12Z",
+  "contract_authority_class": "A",
+  "consumer_required_field_count": 41,
+  "consumer_field_count_definition": "Unique JSON top-level fields required across execute_formal pre-guard (10), validate_preflight_evidence expected-map fields (21), connectivity status/certificate fields (9), and timestamp freshness (1); CLI identity/file/SHA arguments are not JSON fields.",
+  "contract_mismatch_count_before": 13,
+  "contract_mismatch_count_after": 0,
+  "mismatch_after_scope": "fresh producer-generated fixture; historical r5c7e artifact remains contract-incompatible and unchanged",
+  "producer_file": "scripts/preflight_step9_63c_r5c7_mac_local.py",
+  "producer_sha256_after": "e3f33f5c00641cbd4bb338d2bab28187df806cbb6ed6314010bd6076f93ccdfa",
+  "producer_modified": true,
+  "producer_changes": [
+    "Generate a new UUID4 preflight ID per invocation in frozen r5 format.",
+    "Derive authorization-scoped instance target path required by frozen consumer.",
+    "Build the frozen uppercase evidence fields and the lower-case fields required by execute_formal's earlier guard from the same validated identity/state.",
+    "Derive dns_ready, tcp_ready, and tls_ready cumulatively from all DNS probes, TCP, TLS, certificate-present, and certificate-verified evidence.",
+    "Write producer_contract_target as non-semantic audit metadata; no schema_version field introduced."
+  ],
+  "producer_schema_version": "UNDECLARED; frozen consumer does not define schema_version",
+  "producer_contract_target": "FROZEN_R10_FORMAL_PREFLIGHT_CONTRACT",
+  "frozen_consumer": {
+    "file": "scripts/run_step9_63_v3_formal_execution.py",
+    "sha256": "ce8363555b734e39802236eaa2ee31233359ee367acf1094630836f924256cf2",
+    "modified": false,
+    "r10_freeze_member": true
+  },
+  "r10_freeze": {
+    "path": "evaluation/v1_2_3/step9_63c_r5c5b_runner_freeze_r10.json",
+    "sha256": "d24244235e51e7bf6c8567880c654fe3fd73b87fa1bfe1ab0f10dfdc94db2693",
+    "revision": "r10",
+    "member_count": 20,
+    "member_mismatch_count": 0,
+    "changed_r10_freeze_member_count": 0,
+    "runner_execution_identity_changed": false,
+    "new_runner_freeze_required": false,
+    "current_runner_matches_r10_freeze": true,
+    "producer_in_freeze": false
+  },
+  "fresh_identity_contract": {
+    "format": "preflight-step9_63c_r5-r5c8b-<32 lowercase UUID4 hex>",
+    "target_template": "evaluation/v1_2_3/step9_63c_r5_<authorization_id>_<preflight_id>_mac_local_preclearance.json",
+    "generated_at_each_main_invocation": true,
+    "exclusive_create": true,
+    "failed_prior_ids_reused": false,
+    "real_preflight_artifact_created_by_repair": false
+  },
+  "connectivity_mapping": {
+    "dns_ready": "all five DNS statuses equal PASS",
+    "tcp_ready": "dns_ready and TCP_CONNECTION equals PASS",
+    "tls_ready": "tcp_ready and TLS_CONNECTION equals PASS and certificate present and verified are both true",
+    "failed_dependency_propagates_false": true
+  },
+  "old_r5c7e_artifact": {
+    "path": "evaluation/v1_2_3/step9_63c_r5c7e_preflight-step9_63c-r10-7decee88a4c8439fb3f30ffb68240b31_mac_local_final_preclearance.json",
+    "sha256_before": "f07d8380e0d445938e0a4bd7b212380459a983ccfe8f04bc49ab2996b43cf4b7",
+    "sha256_after": "f07d8380e0d445938e0a4bd7b212380459a983ccfe8f04bc49ab2996b43cf4b7",
+    "mutated": false,
+    "classification": "HISTORICAL_SUCCESSFUL_CONNECTIVITY_EVIDENCE_BUT_CONTRACT_INCOMPATIBLE_FOR_FORMAL_EXECUTION"
+  },
+  "contract_tests": {
+    "test_module": "tests/test_step9_63c_r5c8b_preflight_contract.py",
+    "count": 25,
+    "failures": 0,
+    "errors": 0,
+    "frozen_validator_called_directly": true,
+    "network_used": false,
+    "full_focused_offline_regression_count": 48,
+    "full_focused_offline_regression_failures": 0,
+    "py_compile": "PASS",
+    "legacy_r5b_suite_observation": "17 setup errors from pre-existing AttributeError: legacy preflight module has no AUTH_ID; not changed or counted in passing focused suite"
+  },
+  "authorization_lifecycle": {
+    "authorization_id": "auth-step9_63c_r5c6-aff5c4b96bb74278a14d3fd08bf8a84e",
+    "derived_state": "ISSUED_EXECUTABLE",
+    "consumed": false,
+    "consumption_count": 0,
+    "active_executable_authorization_count": 1,
+    "r7_state": "COMMITTED_BURNED_PRE_CASE_NON_REUSABLE",
+    "r8_state": "RETIRED_UNCONSUMED_NON_REUSABLE",
+    "attempt_exists": false,
+    "namespace_exists": false,
+    "namespace_reserved": false,
+    "transaction_started": false
+  },
+  "historical_integrity": {
+    "pin_model": "PREFIX_LENGTH_PLUS_PREFIX_SHA256",
+    "pin_count": 55,
+    "pin_mismatch_count": 0,
+    "step9_58_provenance_gap": "PRESENT_AND_DOCUMENTED"
+  },
+  "formal_v4_case_executed": 0,
+  "model_inference_executed": false,
+  "agent_evaluation_executed": false,
+  "rag_evaluation_executed": false,
+  "http_inference_request_sent": false,
+  "authorization_consumed": false,
+  "attempt_created": false,
+  "namespace_created_or_reserved": false,
+  "transaction_created": false,
+  "real_mac_local_preflight_run": false,
+  "ready_for_fresh_contract_compatible_preflight_preparation": true
+}

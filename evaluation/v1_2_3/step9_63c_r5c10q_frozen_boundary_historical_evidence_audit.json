@@ -1,0 +1,31 @@
+{
+  "step": "9.63c-r5c10q",
+  "mode": "READ_ONLY_DESIGN_NO_TESTS_OR_CODE_EDITS",
+  "r10_freeze_manifest_path": "evaluation/v1_2_3/step9_63c_r5c5b_runner_freeze_r10.json",
+  "r10_freeze_manifest_sha256": "d24244235e51e7bf6c8567880c654fe3fd73b87fa1bfe1ab0f10dfdc94db2693",
+  "r10_member_count": 20,
+  "b2_test_module_count": 12,
+  "b2_test_modules_in_r10_freeze": 0,
+  "frozen_or_formal_modules_on_b2_paths": [
+    {"path":"scripts/run_step9_53_v3_identity_adapter.py","r10_frozen_member":true,"current_sha256":"3a4ec3e526bde19e318e271a24569223087c8a6aadc77fd144b061825c0da282","change_approved":false},
+    {"path":"scripts/v3_runner_identity.py","r10_frozen_member":true,"current_sha256":"a0f5670d3834d5f91391b41a33fbac669d6162587bc620e9bd3acf202aa3c6a5","note":"Current r11-candidate bytes are not the historical r10 member bytes.","change_approved":false},
+    {"path":"scripts/issue_step9_63a_r3_authorization.py","r10_frozen_member":true,"current_sha256":"115c6efb072061b9349ba58fe2ac1affb5a12ea217dbc39b6d0129cfec113c89","change_approved":false},
+    {"path":"scripts/preflight_step9_63b_mac_local.py","r10_frozen_member":false,"current_sha256":"bea6ab3de9816f38e508807862d5b4ff1fa75dffff21c01b6c54ed3b5e427c71","note":"Non-frozen infrastructure, but still outside test-only edit approval.","change_approved":false}
+  ],
+  "formal_r11_pointer_exists": false,
+  "formal_r11_freeze_exists": false,
+  "historical_traces": [
+    {"path":"evaluation/v1_2/step8_3_mechanism_traces.jsonl","current_sha256":"e09321c89b75a4330799e4a4c286652cee82ed0e0d4fa1b8478c970dd7f6d8e5","original_content_integrity":"CONTENT_INTEGRITY_UNPROVEN","modified_in_this_step":false},
+    {"path":"evaluation/v1_2_1/step8_7_mechanism_traces.jsonl","current_sha256":"5518eb4b0b7e8880c5f84e59ba0264013bed99e25edb8da93dca558304d4f084","original_content_integrity":"CONTENT_INTEGRITY_UNPROVEN","modified_in_this_step":false}
+  ],
+  "historical_authorization_and_lifecycle_evidence": [
+    {"path":"evaluation/v1_2_3/step9_63c_r5c6_r10_v3_authorization_manifest.json","current_sha256":"beac52d1ed3bc11efa02b1a924a8abc7b210171bf5cc1b7910011a6ef9741241","modified_in_this_step":false},
+    {"path":"evaluation/v1_2_3/authorization_lifecycle_events.jsonl","current_sha256":"aaa2e9898a8869db052a1248a0ca2b0574d9c36093aee608db59457f24c2a60e","modified_in_this_step":false}
+  ],
+  "frozen_member_change_required_for_full_b2_test_pass": "NOT_DETERMINED",
+  "production_semantics_change_required_for_full_b2_test_pass": "NOT_DETERMINED",
+  "frozen_member_changed_in_this_step": false,
+  "historical_trace_modified_in_this_step": false,
+  "new_authorization_issued": false,
+  "formal_v4_case_executed": 0
+}

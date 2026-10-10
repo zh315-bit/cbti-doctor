@@ -1,0 +1,76 @@
+{
+  "artifact_type": "STEP9_63C_R5C7D_IMPORT_CONTEXT_REPAIR_AUDIT",
+  "step": "9.63c-r5c7d",
+  "status": "PASS_IMPORT_CONTEXT_REPAIR_OFFLINE_VALIDATED",
+  "completed_at_utc": "2026-10-07T16:09:43+00:00",
+  "previous_preflight": {
+    "preflight_id": "preflight-step9_63c-r10-c0f9957584c9443fa8ef5a70b3712bed",
+    "status": "FAIL_CLOSED_PREFLIGHT_ERROR",
+    "failure_stage": "R10_FREEZE_VALIDATION",
+    "exception_type": "ModuleNotFoundError",
+    "message": "No module named 'scripts'",
+    "authorization_consumed": false,
+    "identity_reuse_forbidden": true
+  },
+  "root_cause_confirmed": true,
+  "failing_import": "from scripts import authorization_lifecycle as lifecycle",
+  "failing_import_file": "scripts/preflight_step9_63c_r5c7_mac_local.py",
+  "failing_import_line_at_failed_invocation": 198,
+  "failing_import_line_after_repair": 200,
+  "direct_script_sys_path_zero": "<repository-root>/scripts",
+  "repository_root_on_sys_path_before_repair": false,
+  "reason": "Direct execution places the script directory at sys.path[0]. The top-level namespace package `scripts` is resolved only when its parent repository root is on sys.path; that parent was absent. The script performed `from scripts ...` inside _snapshot without first bootstrapping its root.",
+  "scripts_directory_has_init_py": false,
+  "current_canonical_script_invocation": ".venv/bin/python scripts/<entrypoint>.py with deterministic in-file repository-root bootstrap",
+  "convention_evidence": [
+    "scripts/run_step9_63_v3_formal_execution.py derives ROOT from __file__ and inserts ROOT into sys.path before importing scripts modules",
+    "scripts/run_step9_53_v3_identity_adapter.py and scripts/preflight_step9_63b_mac_local.py use the same bootstrap convention",
+    "historical Step 9.63c preparation commands use direct script execution"
+  ],
+  "recommended_import_context_fix": "Immediately after ROOT = Path(__file__).resolve().parents[1], insert ROOT into sys.path if absent; retain the existing direct-script command convention.",
+  "rationale": "This matches the frozen formal runner and historical script convention. `python -m` from repository root would supply the root implicitly, but changing to that convention is unnecessary and inconsistent with established direct-script entrypoints.",
+  "changed_files": [
+    {
+      "path": "scripts/preflight_step9_63c_r5c7_mac_local.py",
+      "sha256": "be3059425b4eb9401568859db2d846aaf7564e4d09c7400ac861e79780eb3650",
+      "change": "deterministic __file__-based repository root bootstrap"
+    },
+    {
+      "path": "tests/test_step9_63c_r5c7d_import_context.py",
+      "sha256": "b18233ed02c0c939028c33ca8f1e1abd78467fc3b2420b4a4d042e8dd76a5f84",
+      "change": "offline direct-script import-context simulation and module/direct identity equivalence test"
+    }
+  ],
+  "changed_file_count": 2,
+  "runner_freeze_revision": "r10",
+  "runner_freeze_path": "evaluation/v1_2_3/step9_63c_r5c5b_runner_freeze_r10.json",
+  "runner_freeze_sha256": "d24244235e51e7bf6c8567880c654fe3fd73b87fa1bfe1ab0f10dfdc94db2693",
+  "runner_freeze_member_count": 20,
+  "changed_r10_freeze_member_count": 0,
+  "current_runner_matches_r10_freeze": true,
+  "runner_execution_identity_changed": false,
+  "new_runner_freeze_required": false,
+  "focused_test_count": 2,
+  "focused_test_failures": 0,
+  "focused_test_coverage": [
+    "direct script context starts with scripts directory at sys.path[0] and lacks repository root",
+    "root bootstrap makes repository root and scripts helpers importable",
+    "read-only R10 freeze validation is entered",
+    "module context and direct bootstrap produce identical read-only identity snapshots",
+    "no main entrypoint, network, HTTP, inference, authorization consumption, attempt/namespace creation, or V4 execution"
+  ],
+  "related_offline_regression_test_count": 18,
+  "related_offline_regression_failures": 0,
+  "py_compile": "PASS",
+  "ready_for_single_atomic_formal_execution": false,
+  "authorization_consumed": false,
+  "attempt_created": false,
+  "namespace_created": false,
+  "formal_v4_case_executed": 0,
+  "model_inference_executed": false,
+  "agent_evaluation_executed": false,
+  "rag_evaluation_executed": false,
+  "http_inference_request_sent": false,
+  "ready_for_new_preflight_preparation": true,
+  "next_preflight_must_use_new_identity": true
+}

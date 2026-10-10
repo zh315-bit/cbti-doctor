@@ -1,0 +1,53 @@
+{
+  "step": "9.43",
+  "artifact_type": "TREATMENT_V2_RUNNER_COMPATIBILITY_AUDIT",
+  "created_at_utc": "2026-09-28T21:30:21Z",
+  "status": "BLOCKED_FAIL_CLOSED_TREATMENT_IDENTITY_SOURCE",
+  "runner": {
+    "path": "scripts/run_step9_35a_matched_treatment.py",
+    "sha256": "920486b1d7984fae6ee77b5ac51af0d0a98caf42e445d1abcf7ff75b46038505",
+    "freeze_path": "evaluation/v1_2_3/step9_35a_treatment_runner_freeze.json",
+    "freeze_sha256": "0c4e6ab752164bfe436d14b06d3bdc6d5cfc1506cbca92bc1bb9675c437aa7e9",
+    "freeze_matches_runner": true,
+    "production_case_path_runner_sha256": "fddaa09803dd1df27da81f3793929d15a3f6d5d29c1060842ecbf138a76b1d06"
+  },
+  "producer_to_consumer": [
+    {"stage": "treatment-v2 identity producer", "path": "evaluation/v1_2_3/step9_42_treatment_v2_freeze.json", "agent_sha256": "b9e891e7cd077dd5b3c6fa72b71faad978a24226c2b5e89e0b06aabde93b51d6"},
+    {"stage": "runner identity loader", "path": "scripts/run_step9_35a_matched_treatment.py:current_frozen_bindings", "behavior": "hardcodes TREATMENT_FREEZE=step9_33a_treatment_freeze.json and reads step9_34a_treatment_authorization_template.json"},
+    {"stage": "runner freeze consumer", "path": "evaluation/v1_2_3/step9_35a_treatment_runner_freeze.json", "behavior": "pins v1 Agent aggregate and v1 evaluation_id"},
+    {"stage": "authorization consumer", "path": "scripts/run_step9_35a_matched_treatment.py:validate_authorization", "behavior": "requires loaded treatment hash/evaluation_id and every infra/protocol pin to match before output namespace creation"}
+  ],
+  "live_identity_checks": {
+    "treatment_v2_inventory_match": true,
+    "benchmark": true,
+    "benchmark_manifest": true,
+    "case_count_and_order": true,
+    "harness": true,
+    "scoring_and_rubric": true,
+    "metric_registry": true,
+    "one_shot_rules": true,
+    "model_configuration": true,
+    "tool_configuration": true,
+    "rag_configuration": true,
+    "execution_limits": true,
+    "protocol_and_claim_policy": true,
+    "runner_self_freeze": true,
+    "treatment_agent_check_under_current_v1_loader": false
+  },
+  "one_shot_code_audit": {
+    "authorization_required_and_hash_bound": true,
+    "authorization_and_attempt_reuse_rejected": true,
+    "output_namespace_exclusive": true,
+    "first_access_event_fsynced_before_benchmark_read": true,
+    "case_order_verified_before_agent_call": true,
+    "per_case_started_fsynced_before_agent_call": true,
+    "raw_trace_and_case_result_created_exclusively": true,
+    "per_case_ledger_records_fsynced": true,
+    "interruption_preserves_attempt_and_auto_resume_forbidden": true,
+    "mechanics_unit_tests_passed": true,
+    "live_v2_binding_verified": false
+  },
+  "focused_test_result": {"command": ".venv/bin/python -m unittest tests.test_step9_35a_treatment_runner tests.test_step9_42_answer_authorization -v", "passed": 37, "failed": 0, "errors": 0, "additional_synthetic_v2_identity_checks": {"v2_hash_accepted": "PASS", "v1_hash_rejected_under_v2_pins": "PASS", "baseline_hash_rejected": "PASS"}},
+  "required_followup": "Create a separately frozen treatment-v2 runner identity/adapter that accepts only the v2 freeze and a fresh disabled v2 contract; retain all current pins/one-shot checks and output isolation. Refreeze and rerun focused tests before Step 9.44 authorization audit.",
+  "no_evaluation_activity": {"v4_cases_executed": 0, "formal_attempt_created": false, "authorization_issued": false, "model_called": false, "agent_called_for_evaluation": false, "rag_called_for_evaluation": false, "v5_created": false, "v5_accessed": false}
+}

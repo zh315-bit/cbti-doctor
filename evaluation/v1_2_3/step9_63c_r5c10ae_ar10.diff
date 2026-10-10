@@ -1,0 +1,136 @@
+--- a/scripts/build_step9_63c_r11_runner_freeze.py
++++ b/scripts/build_step9_63c_r11_runner_freeze.py
+@@ -15,6 +15,9 @@
+ PARENT_PATH = "evaluation/v1_2_3/step9_63c_r5c5b_runner_freeze_r10.json"
+ PARENT_SHA256 = "d24244235e51e7bf6c8567880c654fe3fd73b87fa1bfe1ab0f10dfdc94db2693"
+ SCANNER_SHA256 = "f0e74a49d152053b5455951c507edb8f7849a9e4708835711e5975a82e690e91"
++# Step 9.63c-r5c10ae AR-10: reviewed bytes of the other two changed members.
++RESOLVER_SHA256 = "a0f5670d3834d5f91391b41a33fbac669d6162587bc620e9bd3acf202aa3c6a5"
++CONSUMER_SHA256 = "297558393e56c645fb02b4ec45d4af41486b504034bdd717237b7738a21f4879"
+ BUILDER_PATH = "scripts/build_step9_63c_r11_runner_freeze.py"
+ PRODUCER_PATH = "scripts/preflight_step9_63c_r11_mac_local.py"
+ MEMBER_PATHS = (
+@@ -49,6 +52,11 @@
+     "scripts/v3_runner_identity.py",
+     "scripts/run_step9_63_v3_formal_execution.py",
+ }
++CHANGED_SHA256 = {
++    "scripts/v3_execution_transaction.py": SCANNER_SHA256,
++    "scripts/v3_runner_identity.py": RESOLVER_SHA256,
++    "scripts/run_step9_63_v3_formal_execution.py": CONSUMER_SHA256,
++}
+ 
+ 
+ def sha256_file(path: Path) -> str:
+@@ -62,6 +70,8 @@
+ 
+ def assemble_candidate(root: Path, *, created_at_utc: str | None = None) -> dict[str, Any]:
+     """Pure file-snapshot assembly; does not persist a freeze or read a case."""
++    if set(CHANGED_SHA256) != CHANGED:
++        raise RuntimeError("every changed r11 member requires exactly one reviewed SHA pin")
+     if len(MEMBER_PATHS) != 20 or len(set(MEMBER_PATHS)) != 20:
+         raise RuntimeError("r11 member inventory is not exactly 20 unique paths")
+     output = root / EXPECTED_FREEZE_PATH
+@@ -86,10 +96,10 @@
+         digest = sha256_file(path)
+         if relpath in old and relpath not in CHANGED and digest != old[relpath]:
+             raise RuntimeError(f"unapproved r11 member drift: {relpath}")
+-        if relpath in CHANGED and relpath != "scripts/v3_execution_transaction.py" and digest == old[relpath]:
+-            raise RuntimeError(f"r11 infrastructure change absent: {relpath}")
+-        if relpath == "scripts/v3_execution_transaction.py" and digest != SCANNER_SHA256:
+-            raise RuntimeError("approved scanner SHA mismatch")
++        # Every changed member must equal its reviewed SHA exactly; merely differing
++        # from r10 is never sufficient.
++        if relpath in CHANGED and digest != CHANGED_SHA256[relpath]:
++            raise RuntimeError(f"approved r11 member SHA mismatch: {relpath}")
+         members.append({"path": relpath, "sha256": digest})
+     identities = parent["bound_identities"]
+     if canonical_sha256(identities) != parent["bound_identities_sha256"]:
+--- /dev/null
++++ b/tests/test_step9_63c_r5c10ae_builder_pins.py
+@@ -0,0 +1,85 @@
++"""Step 9.63c-r5c10ae AR-10 / AR-11: r11 builder SHA pins and inlined frozen-input check.
++
++All builder runs use temporary roots holding byte copies of the r11 member inventory
++and a synthetic r11 pointer; no repository pointer or freeze is created.
++"""
++from __future__ import annotations
++
++import hashlib
++import json
++import shutil
++import tempfile
++import unittest
++from contextlib import contextmanager
++from pathlib import Path
++from unittest.mock import patch
++
++from scripts import build_step9_63c_r11_runner_freeze as builder
++
++REPO = Path(__file__).resolve().parents[1]
++CONSUMER = "scripts/run_step9_63_v3_formal_execution.py"
++RESOLVER = "scripts/v3_runner_identity.py"
++SCANNER = "scripts/v3_execution_transaction.py"
++
++
++def digest(path: Path) -> str:
++    return hashlib.sha256(path.read_bytes()).hexdigest()
++
++
++@contextmanager
++def synthetic_root():
++    with tempfile.TemporaryDirectory(prefix="r11-pins-") as directory:
++        root = Path(directory)
++        for relpath in (set(builder.MEMBER_PATHS) - {builder.IDENTITY_CONFIG_PATH}) | {builder.PARENT_PATH}:
++            (root / relpath).parent.mkdir(parents=True, exist_ok=True)
++            shutil.copyfile(REPO / relpath, root / relpath)
++        (root / builder.IDENTITY_CONFIG_PATH).write_text(json.dumps({
++            "artifact_type": "V3_CURRENT_RUNNER_IDENTITY_POINTER",
++            "status": "FROZEN_IDENTITY_POINTER_NOT_AUTHORIZATION",
++            "runner_freeze_revision": "r11", "runner_freeze_path": builder.EXPECTED_FREEZE_PATH,
++            "execution_permission": False}, sort_keys=True) + "\n", encoding="utf-8")
++        yield root
++
++
++class BuilderPinTests(unittest.TestCase):
++    def test_pins_equal_reviewed_constants_and_current_bytes(self):
++        self.assertEqual(builder.CHANGED_SHA256, {
++            SCANNER: "f0e74a49d152053b5455951c507edb8f7849a9e4708835711e5975a82e690e91",
++            RESOLVER: "a0f5670d3834d5f91391b41a33fbac669d6162587bc620e9bd3acf202aa3c6a5",
++            CONSUMER: "297558393e56c645fb02b4ec45d4af41486b504034bdd717237b7738a21f4879",
++        })
++        self.assertEqual(set(builder.CHANGED_SHA256), builder.CHANGED)
++        for relpath, pin in builder.CHANGED_SHA256.items():
++            with self.subTest(relpath=relpath):
++                self.assertEqual(digest(REPO / relpath), pin)
++
++    def test_exact_inventory_assembles(self):
++        with synthetic_root() as root:
++            candidate = builder.assemble_candidate(root, created_at_utc="2026-10-09T00:00:00+00:00")
++        members = {m["path"]: m["sha256"] for m in candidate["members"]}
++        self.assertEqual(len(members), 20)
++        for relpath, pin in builder.CHANGED_SHA256.items():
++            self.assertEqual(members[relpath], pin)
++        self.assertEqual(candidate["formal_entry_runner_sha256"], builder.CONSUMER_SHA256)
++
++    def test_unreviewed_change_to_any_changed_member_is_rejected(self):
++        for relpath in (CONSUMER, RESOLVER, SCANNER):
++            with self.subTest(relpath=relpath), synthetic_root() as root:
++                path = root / relpath
++                path.write_bytes(path.read_bytes() + b"\n# unreviewed edit\n")
++                parent = json.loads((root / builder.PARENT_PATH).read_text(encoding="utf-8"))
++                r10 = {m["path"]: m["sha256"] for m in parent["members"]}
++                self.assertNotEqual(digest(path), r10[relpath])  # differs from r10, yet must fail
++                with self.assertRaisesRegex(RuntimeError, f"approved r11 member SHA mismatch: {relpath}"):
++                    builder.assemble_candidate(root)
++
++    def test_pin_table_must_cover_every_changed_member(self):
++        with synthetic_root() as root, \
++             patch.dict(builder.CHANGED_SHA256, clear=False) as pins:
++            pins.pop(CONSUMER)
++            with self.assertRaisesRegex(RuntimeError, "exactly one reviewed SHA pin"):
++                builder.assemble_candidate(root)
++
++
++if __name__ == "__main__":
++    unittest.main()

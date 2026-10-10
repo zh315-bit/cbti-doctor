@@ -1,0 +1,221 @@
+[
+ {
+  "mutant": "historical_pins_check",
+  "function": "collect_r11_precommit_state",
+  "tests": [
+   "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_historical_pin_mismatch_rejected"
+  ],
+  "result": "KILLED",
+  "evidence": "TEST_FAILED"
+ },
+ {
+  "mutant": "ledger_prefix_check",
+  "function": "verify_historical_pins",
+  "tests": [
+   "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_ledger_prefix_tamper_rejected"
+  ],
+  "result": "KILLED",
+  "evidence": "TEST_FAILED"
+ },
+ {
+  "mutant": "exactly_one_active",
+  "function": "collect_r11_precommit_state",
+  "tests": [
+   "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_second_active_authorization_rejected"
+  ],
+  "result": "KILLED",
+  "evidence": "TEST_FAILED"
+ },
+ {
+  "mutant": "active_is_bound_id",
+  "function": "collect_r11_precommit_state",
+  "tests": [
+   "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_second_active_authorization_rejected"
+  ],
+  "result": "KILLED",
+  "evidence": "TEST_FAILED"
+ },
+ {
+  "mutant": "old_authorization_retired",
+  "function": "collect_r11_precommit_state",
+  "tests": [
+   "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_executable_superseded_authorization_rejected"
+  ],
+  "result": "KILLED",
+  "evidence": "TEST_FAILED"
+ },
+ {
+  "mutant": "old_authorization_non_executable",
+  "function": "collect_r11_precommit_state",
+  "tests": [
+   "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_executable_superseded_authorization_rejected"
+  ],
+  "result": "KILLED",
+  "evidence": "TEST_FAILED"
+ },
+ {
+  "mutant": "lifecycle_executable",
+  "function": "collect_r11_precommit_state",
+  "tests": [
+   "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_retired_bound_authorization_rejected"
+  ],
+  "result": "KILLED",
+  "evidence": "TEST_FAILED"
+ },
+ {
+  "mutant": "agent_match",
+  "function": "collect_r11_precommit_state",
+  "tests": [
+   "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_agent_mismatch_rejected"
+  ],
+  "result": "KILLED",
+  "evidence": "TEST_FAILED"
+ },
+ {
+  "mutant": "frozen_identities",
+  "function": "collect_r11_precommit_state",
+  "tests": [
+   "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_frozen_identity_mismatch_rejected"
+  ],
+  "result": "KILLED",
+  "evidence": "TEST_FAILED"
+ },
+ {
+  "mutant": "status_unconsumed",
+  "function": "collect_r11_precommit_state",
+  "tests": [
+   "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_consumed_or_counted_authorization_rejected"
+  ],
+  "result": "KILLED",
+  "evidence": "TEST_FAILED"
+ },
+ {
+  "mutant": "attempt_absent",
+  "function": "collect_r11_precommit_state",
+  "tests": [
+   "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_existing_attempt_rejected"
+  ],
+  "result": "KILLED",
+  "evidence": "TEST_FAILED"
+ },
+ {
+  "mutant": "namespace_absent",
+  "function": "collect_r11_precommit_state",
+  "tests": [
+   "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_existing_namespace_rejected"
+  ],
+  "result": "KILLED",
+  "evidence": "TEST_FAILED"
+ },
+ {
+  "mutant": "namespace_id_match",
+  "function": "collect_r11_precommit_state",
+  "tests": [
+   "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_namespace_binding_mismatch_rejected"
+  ],
+  "result": "KILLED",
+  "evidence": "TEST_FAILED"
+ },
+ {
+  "mutant": "case_order_match",
+  "function": "collect_r11_precommit_state",
+  "tests": [
+   "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_case_and_evaluation_identity_mismatch_rejected"
+  ],
+  "result": "KILLED",
+  "evidence": "TEST_FAILED"
+ },
+ {
+  "mutant": "evaluation_identity",
+  "function": "collect_r11_precommit_state",
+  "tests": [
+   "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_case_and_evaluation_identity_mismatch_rejected"
+  ],
+  "result": "KILLED",
+  "evidence": "TEST_FAILED"
+ },
+ {
+  "mutant": "runner_freeze_match",
+  "function": "collect_r11_precommit_state",
+  "tests": [
+   "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_formal_entry_or_freeze_binding_mismatch_rejected"
+  ],
+  "result": "KILLED",
+  "evidence": "TEST_FAILED"
+ },
+ {
+  "mutant": "lifecycle_contract_match",
+  "function": "collect_r11_precommit_state",
+  "tests": [
+   "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_lifecycle_contract_tamper_rejected"
+  ],
+  "result": "KILLED",
+  "evidence": "TEST_FAILED"
+ },
+ {
+  "mutant": "atomic_commit_protocol",
+  "function": "collect_r11_precommit_state",
+  "tests": [
+   "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_atomic_commit_contract_tamper_rejected"
+  ],
+  "result": "KILLED",
+  "evidence": "TEST_FAILED"
+ },
+ {
+  "mutant": "fresh_connectivity",
+  "function": "collect_r11_precommit_state",
+  "tests": [
+   "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_unvalidated_preflight_rejected"
+  ],
+  "result": "KILLED",
+  "evidence": "TEST_FAILED"
+ },
+ {
+  "mutant": "project_root",
+  "function": "collect_r11_precommit_state",
+  "tests": [
+   "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_wrong_project_root_or_runtime_rejected"
+  ],
+  "result": "KILLED",
+  "evidence": "TEST_FAILED"
+ },
+ {
+  "mutant": "unexecuted_check_counts_as_failure",
+  "function": "validate_precommit",
+  "tests": [
+   "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_unavailable_identity_adapter_fails_closed",
+   "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_missing_key_or_unexecuted_check_fails"
+  ],
+  "result": "KILLED",
+  "evidence": "TEST_FAILED"
+ },
+ {
+  "mutant": "execute_formal_ignores_gate",
+  "function": "execute_formal",
+  "tests": [
+   "test_step9_63c_r5c10ae_consumer_precommit_gate.ExecuteFormalOrderingTests.test_precommit_failure_raises_before_adapter",
+   "test_step9_63c_r5c10ae_consumer_precommit_gate.ExecuteFormalOrderingTests.test_prepare_formal_gates_reports_real_precommit_failures"
+  ],
+  "result": "KILLED",
+  "evidence": "TEST_FAILED"
+ },
+ {
+  "mutant": "gate_not_wired",
+  "function": "prepare_formal_gates",
+  "tests": [
+   "test_step9_63c_r5c10ae_consumer_precommit_gate.ExecuteFormalOrderingTests.test_prepare_formal_gates_reports_real_precommit_failures"
+  ],
+  "result": "KILLED",
+  "evidence": "TEST_FAILED"
+ },
+ {
+  "mutant": "main_hardcodes_failures",
+  "function": "main",
+  "tests": [
+   "test_step9_63c_r5c10ae_consumer_precommit_gate.ExecuteFormalOrderingTests.test_main_audit_reports_real_precommit_result"
+  ],
+  "result": "KILLED",
+  "evidence": "TEST_FAILED"
+ }
+]
+KILLED 24 of 24

@@ -1,0 +1,80 @@
+{
+  "artifact_type": "STEP9_63C_R5C8C_FRESH_PREFLIGHT_PREPARATION_AUDIT",
+  "step": "9.63c-r5c8c",
+  "completed_at_utc": "2026-10-07T17:59:05Z",
+  "status": "FAIL_CLOSED_NO_CLI_IDENTITY_BINDING",
+  "read_only_identity_checks": {
+    "runner_freeze_revision": "r10",
+    "runner_freeze_path": "evaluation/v1_2_3/step9_63c_r5c5b_runner_freeze_r10.json",
+    "runner_freeze_sha256": "d24244235e51e7bf6c8567880c654fe3fd73b87fa1bfe1ab0f10dfdc94db2693",
+    "freeze_member_count": 20,
+    "changed_r10_freeze_member_count": 0,
+    "current_runner_matches_r10_freeze": true,
+    "current_agent_matches_v3_freeze": true,
+    "v3_agent_sha256": "085d338ed95bbef7370c41cf97ca0d6653ffdfd2f1c924eef4b7123dfdea4607",
+    "frozen_evaluation_identities_match": true,
+    "case_count": 40,
+    "case_set_match": true,
+    "case_order_match": true,
+    "task_distribution": {
+      "KNOWLEDGE_QA": 10,
+      "CAUSE_ASSESSMENT": 10,
+      "PERSONALIZED_DECISION": 10,
+      "DATA_ANALYSIS": 10
+    },
+    "historical_pin_count": 55,
+    "historical_pin_mismatch_count": 0,
+    "step9_58_provenance_gap": "PRESENT_AND_DOCUMENTED"
+  },
+  "authorization_lifecycle": {
+    "active_executable_authorization_count": 1,
+    "authorization_id": "auth-step9_63c_r5c6-aff5c4b96bb74278a14d3fd08bf8a84e",
+    "derived_state": "ISSUED_EXECUTABLE",
+    "consumed": false,
+    "consumption_count": 0,
+    "attempt_exists": false,
+    "namespace_exists": false,
+    "namespace_reserved": false,
+    "transaction_started": false,
+    "bound_to_r10_v3_and_frozen_40_case_identity": true
+  },
+  "producer_contract": {
+    "path": "scripts/preflight_step9_63c_r5c7_mac_local.py",
+    "sha256": "e3f33f5c00641cbd4bb338d2bab28187df806cbb6ed6314010bd6076f93ccdfa",
+    "contract_mismatch_count": 0,
+    "offline_producer_fixture_to_frozen_consumer_validator": "PASS",
+    "offline_contract_test_count": 25,
+    "offline_contract_test_failures": 0,
+    "producer_main_invoked": false
+  },
+  "fresh_preflight_identity": {
+    "preflight_id": "preflight-step9_63c_r5-r5c8b-46ff20fd22b349c19d359d7903b35c70",
+    "target_path": "evaluation/v1_2_3/step9_63c_r5_auth-step9_63c_r5c6-aff5c4b96bb74278a14d3fd08bf8a84e_preflight-step9_63c_r5-r5c8b-46ff20fd22b349c19d359d7903b35c70_mac_local_preclearance.json",
+    "target_exists": false,
+    "id_collision_count": 0,
+    "identity_generation": "pure UUID4 helper only; no producer invocation"
+  },
+  "cli_interface_audit": {
+    "argparse_or_cli_identity_options_present": false,
+    "main_generates_identity_internally": true,
+    "identity_and_target_can_be_bound_by_manual_command": false,
+    "blocker": "The producer has no CLI parameters for PREFLIGHT_ID or target; main() generates both internally. A command cannot bind the prepared identity without changing the producer or inventing an unsupported interface.",
+    "producer_modified_in_this_step": false,
+    "formal_command_generated": false
+  },
+  "prohibited_activity": {
+    "mac_local_preflight_executed_by_work": false,
+    "network_requests_sent": false,
+    "credential_value_read": false,
+    "http_inference_request_sent": false,
+    "model_inference_executed": false,
+    "agent_evaluation_executed": false,
+    "rag_evaluation_executed": false,
+    "authorization_consumed": false,
+    "attempt_created": false,
+    "namespace_created": false,
+    "transaction_started": false,
+    "formal_v4_case_executed": 0
+  },
+  "ready_for_user_mac_local_preflight": false
+}

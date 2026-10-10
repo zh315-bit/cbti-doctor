@@ -1,0 +1,21 @@
+{
+  "audit_step": "9.23a",
+  "historical_freezes_modified": false,
+  "step9_11_freeze_sha256": "ab1720e0f481c301a2436786d8e2390df2ebfd885ff2b60b5df8f64c17c1aa5c",
+  "step9_18_candidate_agent_aggregate": "0dfdbac361d68dfeb577433107395b50f4c2fa8ca59f3e1d226fbd9271a839a7",
+  "step9_19_final_manifest_sha256": "21e325516f955986497b69e18eebca1d0a0658a24c4293fe75853dd464c901f5",
+  "v3_evaluated_agent_aggregate": "0dfdbac361d68dfeb577433107395b50f4c2fa8ca59f3e1d226fbd9271a839a7",
+  "authorized_divergence": "Step 9.23 P1 State-to-Answer Integrity Repair",
+  "authorized_agent_changes": [
+    {"path": "adaptive_agent/answer_generation.py", "parent_sha256": "ee7be19f4adcf6500b706f8721b3caf836c3983059a278edaacd9a67d5d874f9", "current_sha256": "0cc8b831d88972ded0f8ee6538e2298ef03e807a693b022cbb6f3dbcdcde40cb", "scope": "Answer Context, evidence projection, semantic status, final claim guard"},
+    {"path": "adaptive_agent/state.py", "parent_sha256": "ca3a8f0538a067e8508ce2b2991b1299c529cfae75b151b7cf51f82b66dd146f", "current_sha256": "1d96470d4774cf40836c2fb0d8389ba75545defad3266b308f2608d5c2981ed4", "scope": "answer context audit field"},
+    {"path": "adaptive_agent/state_update.py", "parent_sha256": "3c69d6eaf4d70703853ade79eb4913344a96d74ffd722a612e0b6e537c2f4c50", "current_sha256": "0d7ba355795060939fa35265a9fcdf2171f3bcd8b2731a1791be692d79c60ad2", "scope": "retrieval evidence query/goal provenance"},
+    {"path": "adaptive_agent/runner.py", "parent_sha256": "9a71cf69d6661aac19015935df247057c769491162a1ceca716dca31a4b33957", "current_sha256": "a91a576dca6febbeb06fab4717dbe705447520daf6e6376512a39f2f4fa0d0ef", "scope": "persist answer context audit in state snapshots"}
+  ],
+  "unauthorized_agent_changes_found": false,
+  "v3_runner_identity_changed": false,
+  "v3_results_modified": false,
+  "benchmark_v2_formal_rerun": false,
+  "benchmark_v3_rerun": false,
+  "model_called": false
+}

@@ -1,0 +1,14 @@
+{
+  "artifact_type": "STEP9_63A_HISTORICAL_INTEGRITY_AUDIT",
+  "step": "9.63a",
+  "status": "PASS_55_FROZEN_PINS_AND_AUTHORIZATION_HASHES_UNCHANGED",
+  "before_and_after_check": "The 55 current historical pins were verified before edits and again after offline tests against their frozen expected hashes; all match. Step authorization manifests/freezes and r6 freeze hashes were captured before and rechecked after; maps are identical.",
+  "historical_pin_count": 55,
+  "historical_pin_mismatch_count": 0,
+  "step9_58_provenance_gap": "PRESENT_AND_DOCUMENTED",
+  "historical_files_modified": false,
+  "historical_records_rewritten": false,
+  "live_authorization_manifest_sha256_before": "7f97f9e42b8711a6ae745e4626d81fa8787a162bbfa8fdad6fe53c9fd4b975c8",
+  "live_authorization_manifest_sha256_after": "7f97f9e42b8711a6ae745e4626d81fa8787a162bbfa8fdad6fe53c9fd4b975c8",
+  "r6_runner_freeze_sha256_before_after": "4e6c0bf9ed718546ea1efa12ae48324fd5438129ad3cd3860f93bd33037f1593"
+}

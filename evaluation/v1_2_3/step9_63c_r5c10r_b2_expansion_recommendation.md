@@ -1,0 +1,7 @@
+# Step 9.63c-r5c10r — B2 expansion feasibility recommendation
+
+The one-file pilot establishes a narrow result: moving the frozen adapter import from module scope into the one method that uses it permits collection of all 9 methods, and the 8 allocator-only methods pass offline. It does **not** establish that the ninth method passes, that any of the other 11 blocked modules collect, or that full B2 can be repaired with test-only changes.
+
+The ninth method still requires an actual r11 identity at execution time. The current formal r11 pointer/freeze are absent; the real resolver and frozen adapter reject them, and this is the intended fail-closed result. No fake production pointer, r10 fallback or authorization was used. Future work would need separate per-module static write/network review and explicit human scope approval. Transitive frozen-issuer and transport imports, module-global adapter constants, and methods that call formal execution need independent designs. Do not extrapolate the 8/8 result or rerun a historical formal command.
+
+Recommendation: `READY_FOR_B2_EXPANSION_REVIEW = YES` means only that this constrained pilot can be reviewed as evidence for deciding a next scope. It is **not** approval to patch the remaining 11 modules, not full-regression readiness, and not formal r11 freeze readiness. Historical Trace original content remains `CONTENT_INTEGRITY_UNPROVEN` despite unchanged forward-protection hashes.

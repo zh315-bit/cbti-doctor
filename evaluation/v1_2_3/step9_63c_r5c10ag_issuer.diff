@@ -1,0 +1,472 @@
+--- /dev/null
++++ b/scripts/issue_step9_63c_r11_authorization.py
+@@ -0,0 +1,469 @@
++#!/usr/bin/env python3
++"""Step 9.63c-r11 authorization issuer (member 7 of the r11 freeze).
++
++Issues exactly one one-shot authorization for the reviewed r11 freeze and records the
++issuance as an append-only ledger event. Read-only modes: --plan, --status, --verify.
++Write modes (--issue, --complete-record) refuse unless they run in an interactive
++terminal and a person types the confirmation token. Nothing here executes or consumes
++an authorization, and nothing here retires one (that is AR-14, a separate step).
++
++Design: evaluation/v1_2_3/step9_63c_r5c10af_ar13_authorization_issuer_design.md
++"""
++from __future__ import annotations
++
++import argparse
++import getpass
++import json
++import os
++import shutil
++import sys
++import tempfile
++import uuid
++from datetime import datetime, timezone
++from pathlib import Path
++from typing import Any, Callable
++
++from scripts import authorization_lifecycle as lifecycle
++from scripts import build_step9_63c_r11_runner_freeze as builder
++from scripts import run_step9_63_v3_formal_execution as formal
++from scripts.v3_namespace_allocator import derive_namespace_id
++from scripts.v3_runner_identity import EXPECTED_REVISION, ROOT, resolve_current_freeze
++
++ISSUER_PATH = builder.ISSUER_PATH
++MANIFEST_RELATIVE = builder.AUTHORIZATION_MANIFEST_PATH
++LEDGER_RELATIVE = builder.LEDGER_PATH
++ISSUED_EVENT = formal.ISSUED_EVENT_TYPE  # one definition of the event name, owned by the consumer
++TEMPLATE_RELATIVE = builder.R10_AUTHORIZATION_PATH
++TEMPLATE_SHA256 = builder.R10_AUTHORIZATION_SHA256
++# Values taken straight from the freeze's bound evaluation identities.
++BOUND_KEYS = (
++    "agent_loop_max_steps", "baseline_agent_sha256", "baseline_metric_lock_sha256", "benchmark_manifest_sha256",
++    "benchmark_path", "benchmark_sha256", "case_count", "case_order_fingerprint_sha256", "claim_policy_sha256",
++    "comparison_class", "dependency_lock_sha256", "fresh_session_per_case", "harness_sha256",
++    "matched_protocol_sha256", "max_runner_turns", "metric_registry_sha256", "model_configuration_fingerprint_sha256",
++    "one_shot_rules_sha256", "production_case_path_runner_sha256", "rag_configuration_fingerprint_sha256",
++    "scoring_rubric_sha256", "scoring_sha256", "task_distribution", "tool_adapter_sha256", "treatment_agent_sha256",
++)
++# Non-identity keys copied from the pinned (retired) r10 manifest; nothing else is copied.
++TEMPLATE_KEYS = (
++    "attempt_id_status", "authoritative_commit_point", "authorization_boundary", "authorization_type", "claim_scope",
++    "connectivity_evidence", "consumption_limit", "execution_environment", "execution_limits", "execution_namespace",
++    "formal_execution_status", "max_formal_attempts", "one_shot_semantics", "project_root", "python_executable",
++    "treatment", "status", "authorization_status", "consumed", "consumed_at_utc", "authorization_consumption_count",
++)
++
++
++def sha256_file(path: Path) -> str:
++    return builder.sha256_file(path)
++
++
++def utc_now() -> str:
++    return datetime.now(timezone.utc).isoformat()
++
++
++def _check(conditions: list[dict[str, Any]], name: str, function: Callable[[], Any]) -> bool:
++    try:
++        value = function()
++        ok, detail = value if isinstance(value, tuple) else (bool(value), "")
++    except Exception as error:  # a condition that cannot be evaluated is a failed condition
++        ok, detail = False, f"{type(error).__name__}: {error}"
++    conditions.append({"name": name, "ok": bool(ok), "detail": str(detail)})
++    return bool(ok)
++
++
++def _parse(timestamp: Any) -> datetime:
++    value = datetime.fromisoformat(timestamp)
++    if value.tzinfo is None:
++        raise ValueError("timestamp without time zone")
++    return value
++
++
++def last_ledger_timestamp(ledger: Path) -> datetime | None:
++    stamps = [_parse(e["timestamp_utc"]) for e in lifecycle._events(ledger) if e.get("timestamp_utc")]
++    return max(stamps) if stamps else None
++
++
++def issued_events(root: Path) -> list[dict[str, Any]]:
++    return [e for e in lifecycle._events(Path(root) / LEDGER_RELATIVE) if e.get("event_type") == ISSUED_EVENT]
++
++
++def build_manifest(*, root: Path, approval: dict[str, Any], freeze: dict[str, Any], freeze_path: Path,
++                   identity: dict[str, str], issued_at_utc: str) -> dict[str, Any]:
++    """Identity from the freeze, non-identity keys from the pinned template, nothing else."""
++    root = Path(root)
++    template_path = root / TEMPLATE_RELATIVE
++    if sha256_file(template_path) != TEMPLATE_SHA256:
++        raise RuntimeError("authorization template (r10 manifest) differs from its pinned SHA-256")
++    template = json.loads(template_path.read_text(encoding="utf-8"))
++    bound = freeze["bound_identities"]
++    issuance = approval["issuance"]
++    if issuance["evaluation_id"] != template["evaluation_id"]:
++        raise RuntimeError("approved evaluation id differs from the pinned template")
++    namespace = derive_namespace_id(issuance["evaluation_id"], issuance["authorization_id"], issuance["attempt_id"])
++    if issuance.get("namespace_id") != namespace:
++        raise RuntimeError("approved namespace id is not the derived namespace id")
++    manifest: dict[str, Any] = {key: bound[key] for key in BOUND_KEYS}
++    manifest.update({key: json.loads(json.dumps(template[key])) for key in TEMPLATE_KEYS})
++    manifest["execution_namespace"]["namespace_id"] = namespace
++    approval_sha = sha256_file(Path(root) / builder.APPROVAL_PATH)
++    manifest.update({
++        "artifact_type": "TREATMENT_V3_FRESH_R11_ONE_SHOT_V4_AUTHORIZATION",
++        "step": "9.63c-r11",
++        "authorized_by": f"User-signed Step 9.63c-r11 activation approval (SHA-256 {approval_sha})",
++        "authorization_id": issuance["authorization_id"], "attempt_id": issuance["attempt_id"],
++        "evaluation_id": issuance["evaluation_id"], "issued_at_utc": issued_at_utc,
++        "runner_freeze_revision": EXPECTED_REVISION,
++        "runner_freeze_path": identity["runner_freeze_path"], "runner_freeze_sha256": sha256_file(freeze_path),
++        "runner_path": freeze["runner_path"], "runner_sha256": freeze["runner_sha256"],
++        "treatment_runner_sha256": freeze["runner_sha256"],
++        "parent_runner_path": freeze["parent_runner"]["path"], "parent_runner_sha256": freeze["parent_runner"]["sha256"],
++        "namespace_allocator_path": freeze["namespace_allocator_path"], "namespace_allocator_sha256": freeze["namespace_allocator_sha256"],
++        "authorization_lifecycle_module_path": freeze["authorization_lifecycle_module_path"],
++        "authorization_lifecycle_module_sha256": freeze["authorization_lifecycle_module_sha256"],
++        "authorization_lifecycle_contract_path": freeze["authorization_lifecycle_contract_path"],
++        "authorization_lifecycle_contract_sha256": freeze["authorization_lifecycle_contract_sha256"],
++        "transaction_module_path": freeze["transaction_module_path"], "transaction_module_sha256": freeze["transaction_module_sha256"],
++        "transaction_contract_path": freeze["transaction_contract_path"], "transaction_contract_sha256": freeze["transaction_contract_sha256"],
++        "authoritative_commit_point_contract_sha256": freeze["transaction_contract_sha256"],
++        "transaction_commit_semantics": freeze["transaction_commit_semantics"],
++        "formal_entry_runner_path": freeze["formal_entry_runner_path"], "formal_entry_runner_sha256": freeze["formal_entry_runner_sha256"],
++        "frozen_evaluation_identity_sha256": freeze["bound_identities_sha256"],
++        "case_set_fingerprint_sha256": bound["case_order_fingerprint_sha256"],
++        "prerequisite_audits": [{"path": builder.APPROVAL_PATH, "sha256": approval_sha}],
++    })
++    if set(manifest) != set(template):
++        raise RuntimeError("generated manifest keys differ from the template key set: "
++                           + ", ".join(sorted(set(manifest) ^ set(template))))
++    limits = {"max_runner_turns": bound["max_runner_turns"], "agent_loop_max_steps": bound["agent_loop_max_steps"],
++              "fresh_session_per_case": bound["fresh_session_per_case"]}
++    if manifest["execution_limits"] != limits:
++        raise RuntimeError("template execution limits disagree with the freeze")
++    return manifest
++
++
++def manifest_bytes(manifest: dict[str, Any]) -> bytes:
++    return (json.dumps(manifest, indent=2, ensure_ascii=False) + "\n").encode("utf-8")
++
++
++def issue_token(authorization_id: str, freeze_sha256: str, approval_sha256: str) -> str:
++    """Derived from values fixed by the signed approval, so the token shown by --plan is the one --issue demands
++    (the manifest SHA cannot be used: it contains the issuance time)."""
++    digest = builder.sha256_bytes(f"{authorization_id}|{freeze_sha256}|{approval_sha256}".encode())
++    return f"ISSUE-R11-AUTH-{digest[:12]}"
++
++
++def complete_token(manifest_sha256: str) -> str:
++    return f"COMPLETE-R11-ISSUANCE-RECORD-{manifest_sha256[:12]}"
++
++
++def issuance_conditions(root: Path, approval: dict[str, Any] | None, *, issued_at_utc: str,
++                        resume: bool = False) -> tuple[list[dict[str, Any]], dict[str, Any]]:
++    """I1-I13 of the AR-13 design. Read-only. Returns (conditions, context)."""
++    root = Path(root)
++    conditions: list[dict[str, Any]] = []
++    context: dict[str, Any] = {}
++    pointer, record = root / builder.IDENTITY_CONFIG_PATH, root / builder.POINTER_CREATION_RECORD_PATH
++    approval_file = root / builder.APPROVAL_PATH
++    ledger = root / LEDGER_RELATIVE
++    run_root = root / "evaluation/v4_runs"
++
++    _check(conditions, "I0 approval record signed and its pins match the current bytes", lambda: (
++        (lambda problems: (not problems, "; ".join(problems)))(builder.verify_approval(root, approval, check_aggregate=False))
++        if approval is not None else (False, "no approval record")))
++    _check(conditions, "I1 pointer has the canonical bytes and a creation record binds it to this approval", lambda: (
++        pointer.is_file() and not pointer.is_symlink() and pointer.read_bytes() == builder.canonical_pointer_bytes()
++        and sha256_file(pointer) == (approval or {}).get("pointer", {}).get("canonical_sha256")
++        and (lambda rec: rec.get("pointer_sha256") == builder.POINTER_SHA256
++             and rec.get("approval_record_sha256") == sha256_file(approval_file))(builder.read_json_file(record)), ""))
++
++    def resolved() -> tuple[bool, str]:
++        freeze, freeze_path, identity = resolve_current_freeze(root)
++        context.update(freeze=freeze, freeze_path=freeze_path, identity=identity)
++        return True, "pointer, freeze, 20 member files and aggregate resolve"
++    resolution_ok = _check(conditions, "I2 resolve_current_freeze succeeds", resolved)
++    _check(conditions, "I3 freeze SHA equals the value pinned in the approval record", lambda: (
++        resolution_ok and sha256_file(context["freeze_path"]) == approval["freeze"]["predicted_sha256"], ""))
++    _check(conditions, "I4 the persisted freeze reassembles byte for byte", lambda: (
++        lambda r: (r["ok"], r["reason"]))(builder.verify_persisted_candidate(root)))
++
++    def pins() -> tuple[bool, str]:
++        for path, sha in builder.CHANGED_SHA256.items():
++            if sha256_file(root / path) != sha:
++                return False, f"changed member differs from its pin: {path}"
++        if sha256_file(root / ISSUER_PATH) != builder.ISSUER_SHA256 or sha256_file(Path(__file__)) != builder.ISSUER_SHA256:
++            return False, "issuer bytes differ from the builder's ISSUER_SHA256"
++        return True, "scanner, resolver, consumer and issuer match their pins"
++    _check(conditions, "I5 changed members and the issuer equal the reviewed pins", pins)
++    _check(conditions, "I6 every non-current V3 authorization is non-executable", lambda: (
++        lambda rows: (all(r["executable"] is False for r in rows), f"{len(rows)} superseded authorizations checked"))(
++            formal._superseded_v3_authorizations(root, EXPECTED_REVISION)))
++
++    def active_count() -> tuple[bool, str]:
++        active = lifecycle.active_authorizations(root)
++        context["active_before"] = active
++        issuance_id = (approval or {}).get("issuance", {}).get("authorization_id")
++        if resume:
++            return active == [issuance_id], f"active={active}"
++        return active == [], f"active={active} (must be empty before issuance)"
++    _check(conditions, "I7 current-revision active authorizations are exactly the expected set", active_count)
++    _check(conditions, "I8 the 55 historical pins verify", lambda: formal.verify_historical_pins(root) == formal.HISTORICAL_PIN_COUNT)
++
++    def fresh_identity() -> tuple[bool, str]:
++        issuance = approval["issuance"]
++        manifest_root = root / "evaluation/v1_2_3"
++        scratch = None
++        if resume:
++            # Record completion: the frozen uniqueness helper would flag the manifest being completed
++            # as a reuse of its own identity, so it scans a scratch copy of every OTHER manifest.
++            scratch = Path(tempfile.mkdtemp(prefix="r11-fresh-"))
++            for other in manifest_root.glob("step*_v3_authorization_manifest.json"):
++                if other.name != Path(MANIFEST_RELATIVE).name:
++                    shutil.copyfile(other, scratch / other.name)
++            manifest_root = scratch
++        try:
++            lifecycle.assert_fresh_authorization_identity(
++                authorization_id=issuance["authorization_id"], attempt_id=issuance["attempt_id"],
++                evaluation_id=issuance["evaluation_id"], run_root=run_root, ledger_path=ledger,
++                manifest_root=manifest_root)
++        finally:
++            if scratch is not None:
++                shutil.rmtree(scratch, ignore_errors=True)
++        tokens = tuple(json.dumps(issuance[k]).encode() for k in ("authorization_id", "attempt_id", "namespace_id"))
++        # The approval record is the one place where these identities are legitimately registered.
++        registered = {Path(builder.APPROVAL_PATH).name, Path(builder.APPROVAL_DRAFT_PATH).name}
++        for candidate in (root / "evaluation/v1_2_3").glob("*.json*"):
++            if candidate.name.startswith("._") or candidate.name in registered or (
++                    resume and candidate.name == Path(MANIFEST_RELATIVE).name):
++                continue
++            data = candidate.read_bytes()
++            if any(token in data for token in tokens):
++                return False, f"identity already appears in {candidate.name}"
++        namespace = run_root / issuance["namespace_id"]
++        if namespace.exists() or namespace.is_symlink():
++            return False, "namespace directory already exists"
++        return True, "authorization, attempt and namespace identities are globally unique"
++    _check(conditions, "I9 identities are fresh and globally unique", fresh_identity if approval else (lambda: (False, "no approval")))
++    target = root / MANIFEST_RELATIVE
++    if resume:
++        _check(conditions, "I10 the manifest exists (record completion)", lambda: target.is_file() and not target.is_symlink())
++    else:
++        _check(conditions, "I10 the manifest target does not exist", lambda: not (target.exists() or target.is_symlink()))
++
++    def chronology() -> tuple[bool, str]:
++        issued = _parse(issued_at_utc)
++        created = _parse(context["freeze"]["created_at_utc"])
++        last = last_ledger_timestamp(ledger)
++        ok = issued > created and (last is None or issued > last)
++        return ok, f"issued {issued.isoformat()} vs freeze {created.isoformat()} vs last ledger event {last.isoformat() if last else None}"
++    _check(conditions, "I12 issuance time is later than the freeze and the last ledger event", chronology)
++    if resume:
++        _check(conditions, "I13 exactly one issuance is possible: no issuance event exists yet", lambda: not issued_events(root))
++    else:
++        _check(conditions, "I13 one authorization per revision: no issuance event and no r11 registry exists", lambda: (
++            not issued_events(root) and not (root / builder.REGISTRY_PATH).exists(), ""))
++    _check(conditions, "IX1 environment", lambda: (
++        (lambda ok: (ok, "production root" if builder.is_production_root(root) else "synthetic root"))(
++            builder.is_production_root(root) or os.environ.get(builder.SYNTHETIC_ROOT_ENV) == "1")))
++    return conditions, context
++
++
++def _canonical_approval_only(approval_path: Path | None) -> None:
++    if approval_path is not None:
++        raise RuntimeError("the issuer reads the approval record only from its canonical path " + builder.APPROVAL_PATH)
++
++
++def plan_issuance(root: Path, approval_path: Path | None = None, *, clock: Callable[[], str] = utc_now) -> dict[str, Any]:
++    root = Path(root)
++    _canonical_approval_only(approval_path)
++    try:
++        approval = builder.load_approval(root)
++        error = None
++    except (RuntimeError, ValueError, OSError) as exc:
++        approval, error = None, f"{type(exc).__name__}: {exc}"
++    issued_at = clock()
++    conditions, context = issuance_conditions(root, approval, issued_at_utc=issued_at)
++    if error:
++        conditions.insert(0, {"name": "approval record readable", "ok": False, "detail": error})
++    preview = None
++    if approval is not None and "freeze" in context:
++        try:
++            preview = build_manifest(root=root, approval=approval, freeze=context["freeze"], freeze_path=context["freeze_path"],
++                                     identity=context["identity"], issued_at_utc=issued_at)
++        except Exception as exc:
++            conditions.append({"name": "manifest can be generated", "ok": False, "detail": f"{type(exc).__name__}: {exc}"})
++    manifest_sha = builder.sha256_bytes(manifest_bytes(preview)) if preview else None
++    token = (issue_token(preview["authorization_id"], preview["runner_freeze_sha256"], sha256_file(root / builder.APPROVAL_PATH))
++             if preview else None)
++    return {"mode": "plan", "writes_nothing": True, "target": MANIFEST_RELATIVE, "conditions": conditions,
++            "ready": all(c["ok"] for c in conditions) and preview is not None,
++            "manifest_sha256": manifest_sha, "confirmation_token": token,
++            "manifest_preview": preview, "status": issuance_status(root)}
++
++
++def issuance_status(root: Path) -> dict[str, Any]:
++    root = Path(root)
++    manifest = root / MANIFEST_RELATIVE
++    present = manifest.exists() or manifest.is_symlink()
++    try:
++        events = issued_events(root)
++    except Exception as exc:
++        return {"state": "ANOMALY_LEDGER_UNREADABLE", "detail": f"{type(exc).__name__}: {exc}"}
++    if not present and not events:
++        return {"state": "NOT_ISSUED", "events": 0}
++    if not present:
++        return {"state": "ANOMALY_EVENT_WITHOUT_MANIFEST", "events": len(events)}
++    if len(events) > 1:
++        return {"state": "ANOMALY_DUPLICATE_EVENT", "events": len(events)}
++    if manifest.is_symlink() or not manifest.is_file():
++        return {"state": "ANOMALY_MANIFEST_NOT_A_REGULAR_FILE", "events": len(events)}
++    if not events:
++        return {"state": "ISSUED_UNRECORDED", "events": 0, "manifest_sha256": sha256_file(manifest)}
++    authorization = json.loads(manifest.read_text(encoding="utf-8"))
++    recorded, detail = formal.verify_issuance_event(root, authorization, manifest)
++    return {"state": "ISSUED_RECORDED" if recorded else "ANOMALY_EVENT_MISMATCH", "events": 1,
++            "manifest_sha256": sha256_file(manifest), "detail": detail}
++
++
++def verify_issuance(root: Path) -> dict[str, Any]:
++    """Read-only post-issuance verification (H4)."""
++    root = Path(root)
++    checks: list[dict[str, Any]] = []
++    manifest_path = root / MANIFEST_RELATIVE
++    status = issuance_status(root)
++    _check(checks, "V1 manifest and exactly one matching ledger event", lambda: (status["state"] == "ISSUED_RECORDED", status["state"]))
++
++    def reducer() -> tuple[bool, str]:
++        authorization = json.loads(manifest_path.read_text(encoding="utf-8"))
++        result = lifecycle.reduce_authorization_lifecycle(
++            authorization_id=authorization["authorization_id"], manifest=authorization, manifest_path=manifest_path,
++            ledger_path=root / LEDGER_RELATIVE, run_root=root / "evaluation/v4_runs",
++            transaction_root=root / builder.TRANSACTION_RELATIVE)
++        return result["derived_state"] == lifecycle.ISSUED_EXECUTABLE and result["executable"] is True, result["derived_state"]
++    _check(checks, "V2 reducer state is ISSUED_EXECUTABLE", reducer)
++    _check(checks, "V3 exactly one active authorization, and it is this one", lambda: (
++        lifecycle.active_authorizations(root) == [json.loads(manifest_path.read_text(encoding="utf-8"))["authorization_id"]], ""))
++    _check(checks, "V4 manifest key set equals the template key set", lambda: (
++        set(json.loads(manifest_path.read_text(encoding="utf-8"))) == set(json.loads((root / TEMPLATE_RELATIVE).read_text(encoding="utf-8")))))
++    _check(checks, "V5 unconsumed, no attempt, no namespace", lambda: (
++        lambda a: (a["consumed"] is False and a["authorization_consumption_count"] == 0
++                   and not (root / "evaluation/v4_runs" / a["execution_namespace"]["namespace_id"]).exists(), ""))(
++            json.loads(manifest_path.read_text(encoding="utf-8"))))
++    return {"mode": "verify", "writes_nothing": True, "status": status, "checks": checks, "ok": all(c["ok"] for c in checks)}
++
++
++def _append_event(ledger: Path, event: dict[str, Any]) -> None:
++    ledger.parent.mkdir(parents=True, exist_ok=True)
++    fd = os.open(ledger, os.O_CREAT | os.O_APPEND | os.O_WRONLY | getattr(os, "O_NOFOLLOW", 0), 0o600)
++    with os.fdopen(fd, "w", encoding="utf-8") as stream:
++        stream.write(json.dumps(event, ensure_ascii=False, sort_keys=True) + "\n")
++        stream.flush()
++        os.fsync(stream.fileno())
++    builder._fsync_dir(ledger.parent)
++
++
++def build_event(*, root: Path, approval: dict[str, Any], manifest: dict[str, Any], manifest_sha256: str,
++                active_before: list[str], active_after: list[str]) -> dict[str, Any]:
++    root = Path(root)
++    return {
++        "artifact_type": "AUTHORIZATION_LIFECYCLE_EVENT", "event_type": ISSUED_EVENT,
++        "lifecycle_event_id": f"issued-{uuid.uuid4().hex}", "timestamp_utc": utc_now(),
++        "authorization_id": manifest["authorization_id"], "attempt_id": manifest["attempt_id"],
++        "evaluation_id": manifest["evaluation_id"], "namespace_id": manifest["execution_namespace"]["namespace_id"],
++        "authorization_manifest_path": MANIFEST_RELATIVE, "authorization_manifest_sha256": manifest_sha256,
++        "runner_freeze_revision": manifest["runner_freeze_revision"], "runner_freeze_path": manifest["runner_freeze_path"],
++        "runner_freeze_sha256": manifest["runner_freeze_sha256"],
++        "identity_pointer_sha256": sha256_file(root / builder.IDENTITY_CONFIG_PATH),
++        "approval_record_sha256": sha256_file(root / builder.APPROVAL_PATH), "issuer_sha256": sha256_file(Path(__file__)),
++        "active_authorizations_before": active_before, "active_authorizations_after": active_after,
++        "authorization_consumed": False, "authorization_consumption_count": 0, "terminal": False,
++    }
++
++
++def issue_authorization(root: Path, approval_path: Path | None = None, *, clock: Callable[[], str] = utc_now) -> dict[str, Any]:
++    """THE issuing write entry. Interactive terminal and typed token required; never overwrites."""
++    root = Path(root)
++    _canonical_approval_only(approval_path)
++    builder.require_write_environment(root, "issue the r11 authorization")  # gate before any work
++    plan = plan_issuance(root, clock=clock)
++    if not plan["ready"]:
++        raise RuntimeError("issuance refused; failed conditions: " + "; ".join(c["name"] for c in plan["conditions"] if not c["ok"]))
++    manifest = plan["manifest_preview"]
++    data = manifest_bytes(manifest)
++    manifest_sha = builder.sha256_bytes(data)
++    builder.confirm_with_token(plan["confirmation_token"], "issue the r11 authorization\nmanifest SHA-256 " + manifest_sha + "\n" + json.dumps(manifest, indent=2)[:6000])
++    approval = builder.load_approval(root)
++    target = root / MANIFEST_RELATIVE
++    with lifecycle.lifecycle_lock(root / builder.LOCK_RELATIVE):
++        conditions, context = issuance_conditions(root, approval, issued_at_utc=manifest["issued_at_utc"])  # same preview time
++        if not all(c["ok"] for c in conditions):
++            raise RuntimeError("issuance refused after taking the lock; failed conditions: "
++                               + "; ".join(c["name"] for c in conditions if not c["ok"]))
++        builder._write_exclusive(target, data)
++        if target.read_bytes() != data:
++            raise RuntimeError("MANIFEST_READBACK_MISMATCH: nothing was deleted automatically; follow recovery R-1")
++        active_after = lifecycle.active_authorizations(root)
++        if active_after != [manifest["authorization_id"]]:
++            raise RuntimeError(f"POSTCONDITION_FAILED: active authorizations are {active_after}; the ledger event was NOT written; "
++                               "the consumer gate will refuse execution until this is resolved by a person")
++        _append_event(root / LEDGER_RELATIVE, build_event(root=root, approval=approval, manifest=manifest, manifest_sha256=manifest_sha,
++                                                         active_before=context["active_before"], active_after=active_after))
++    return {"result": "ISSUED", "authorization_id": manifest["authorization_id"], "manifest_sha256": manifest_sha,
++            "state": issuance_status(root)["state"]}
++
++
++def complete_issuance_record(root: Path, approval_path: Path | None = None, *, clock: Callable[[], str] = utc_now) -> dict[str, Any]:
++    """Recovery for ISSUED_UNRECORDED: append the missing event after re-verifying the manifest."""
++    root = Path(root)
++    _canonical_approval_only(approval_path)
++    builder.require_write_environment(root, "complete the r11 issuance record")
++    if issuance_status(root)["state"] != "ISSUED_UNRECORDED":
++        raise RuntimeError("nothing to complete: state is " + issuance_status(root)["state"])
++    approval = builder.load_approval(root)
++    conditions, context = issuance_conditions(root, approval, issued_at_utc=clock(), resume=True)
++    if not all(c["ok"] for c in conditions):
++        raise RuntimeError("record completion refused; failed conditions: " + "; ".join(c["name"] for c in conditions if not c["ok"]))
++    target = root / MANIFEST_RELATIVE
++    manifest = json.loads(target.read_text(encoding="utf-8"))
++    if (manifest["authorization_id"], manifest["attempt_id"]) != (approval["issuance"]["authorization_id"], approval["issuance"]["attempt_id"]):
++        raise RuntimeError("manifest identities differ from the approved issuance")
++    manifest_sha = sha256_file(target)
++    builder.confirm_with_token(complete_token(manifest_sha), "complete the r11 issuance record")
++    with lifecycle.lifecycle_lock(root / builder.LOCK_RELATIVE):
++        if issuance_status(root)["state"] != "ISSUED_UNRECORDED":
++            raise RuntimeError("state changed while waiting for confirmation")
++        _append_event(root / LEDGER_RELATIVE, build_event(root=root, approval=approval, manifest=manifest, manifest_sha256=manifest_sha,
++                                                         active_before=[], active_after=lifecycle.active_authorizations(root)))
++    return {"result": "RECORD_COMPLETED", "state": issuance_status(root)["state"]}
++
++
++def main(argv: list[str] | None = None) -> int:
++    parser = argparse.ArgumentParser(description="r11 authorization issuer: plan/status/verify (read-only), --issue and --complete-record (gated writes)")
++    parser.add_argument("--root", type=Path, default=ROOT)
++    mode = parser.add_mutually_exclusive_group()
++    mode.add_argument("--plan", action="store_true", help="read-only (default)")
++    mode.add_argument("--status", action="store_true", help="read-only")
++    mode.add_argument("--verify", action="store_true", help="read-only")
++    mode.add_argument("--issue", action="store_true", help="WRITE: interactive terminal and typed token required")
++    mode.add_argument("--complete-record", action="store_true", help="WRITE (recovery): interactive terminal and typed token required")
++    args = parser.parse_args(argv)
++    try:
++        if args.status:
++            out = issuance_status(args.root)
++        elif args.verify:
++            out = verify_issuance(args.root)
++        elif args.issue:
++            out = issue_authorization(args.root)
++        elif args.complete_record:
++            out = complete_issuance_record(args.root)
++        else:
++            out = plan_issuance(args.root)
++    except (PermissionError, RuntimeError) as error:
++        print(json.dumps({"result": "REFUSED", "reason": str(error)}, indent=2))
++        return 2
++    print(json.dumps(out, indent=2, sort_keys=True, default=str))
++    ok = out["ok"] if "ok" in out else out["ready"] if "ready" in out else True
++    return 0 if ok else 1
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())

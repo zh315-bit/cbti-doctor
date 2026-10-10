@@ -1,0 +1,31 @@
+{
+  "evaluation_id": "clean-evaluation-v1_2_3-20260922-01",
+  "attempt_id": "attempt_f68c187816f84678b200ea85aa32eb3d",
+  "total_asks": 55,
+  "counts": {"necessary": 8, "useful_but_optional": 21, "redundant": 14, "irrelevant": 12},
+  "rates": {"necessary": 0.1455, "useful_but_optional": 0.3818, "valuable": 0.5273, "redundant": 0.2545, "irrelevant": 0.2182, "redundant_plus_irrelevant": 0.4727},
+  "ask_targets_by_case": {
+    "V2-KQ-02": [["wake_time","irrelevant"],["bedtime","irrelevant"],["sleep_onset_latency","irrelevant"]],
+    "V2-KQ-05": [["bedtime","irrelevant"],["sleep_onset_latency","irrelevant"],["wake_time","irrelevant"]],
+    "V2-CA-01": [["caffeine","redundant"],["sleep_onset_latency","redundant"],["bedtime","redundant"],["wake_time","redundant"]],
+    "V2-CA-03": [["bedtime","useful_but_optional"],["sleep_time_or_sleep_onset_latency","necessary"],["wake_time","useful_but_optional"]],
+    "V2-CA-04": [["bedtime","useful_but_optional"]],
+    "V2-CA-05": [["exercise","redundant"],["bedtime","useful_but_optional"]],
+    "V2-CA-06": [["bedtime","useful_but_optional"],["sleep_time_or_sleep_onset_latency","useful_but_optional"],["wake_time","useful_but_optional"]],
+    "V2-CA-07": [["bedtime","useful_but_optional"]],
+    "V2-CA-09": [["sleep_time_or_sleep_onset_latency","irrelevant"]],
+    "V2-PD-01": [["sleep_onset_latency","redundant"],["bedtime","redundant"],["wake_time","redundant"]],
+    "V2-PD-02": [["bedtime","necessary"],["sleep_onset_latency","useful_but_optional"],["wake_time","useful_but_optional"]],
+    "V2-PD-03": [["sleep_onset_latency","redundant"],["bedtime","necessary"],["wake_time","useful_but_optional"]],
+    "V2-PD-05": [["wake_time","redundant"],["bedtime","necessary"],["sleep_onset_latency","useful_but_optional"]],
+    "V2-PD-06": [["sleep_onset_latency","irrelevant"]],
+    "V2-PD-07": [["sleep_time_or_sleep_onset_latency","useful_but_optional"],["bedtime","necessary"],["caffeine","redundant"],["wake_time","useful_but_optional"]],
+    "V2-PD-08": [["bedtime","necessary"],["sleep_onset_latency","useful_but_optional"],["wake_time","useful_but_optional"]],
+    "V2-PD-09": [["sleep_onset_latency","necessary"],["bedtime","redundant"],["wake_time","redundant"]],
+    "V2-PD-10": [["sleep_onset_latency","redundant"],["bedtime","necessary"],["wake_time","useful_but_optional"]],
+    "V2-PD-11": [["bedtime","useful_but_optional"],["sleep_onset_latency","useful_but_optional"],["wake_time","useful_but_optional"]],
+    "V2-PD-12": [["bedtime","useful_but_optional"]],
+    "V2-DA-07": [["nighttime_awakenings","irrelevant"],["bedtime","irrelevant"],["sleep_onset_latency","irrelevant"],["wake_time","irrelevant"]]
+  },
+  "review_note": "Single-reviewer manual classification against frozen case goal and trace State. Unknown or explicit facts are considered only when present in the literal user turn or previous user reply; hidden diary fixture contents are not treated as agent-visible before READ_DIARY."
+}

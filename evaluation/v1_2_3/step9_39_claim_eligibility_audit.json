@@ -1,0 +1,84 @@
+{
+  "checks": {
+    "baseline_aggregate_and_audit_hashes": "PASS",
+    "benchmark_harness_scoring_registry_one_shot_match": "PASS",
+    "case_ids_exactly_matched": "PASS_40_OF_40",
+    "claim_policy_and_protocol_frozen": "PASS",
+    "execution_case_order_match": "PASS",
+    "model_tool_rag_configuration_match": "PASS",
+    "no_cherry_picking": "PASS_ALL_FROZEN_PRIMARY_AND_REQUESTED_COMPARABLE_METRICS_REPORTED",
+    "r4_registry_semantic_bridge": "PASS",
+    "task_strata_match": "PASS",
+    "treatment_aggregate_freeze_and_hashes": "PASS"
+  },
+  "claim_blocking_criteria": [
+    "Frozen claim policy M5: critical failures must not increase; baseline 0/40, treatment 2/40 (+2 cases, +5 percentage points)."
+  ],
+  "comparison_integrity": "PASS",
+  "created_at_utc": "2026-09-28T16:56:51.899988+00:00",
+  "outputs": {
+    "metrics": {
+      "path": "evaluation/v1_2_3/step9_39_matched_comparison_metrics.json",
+      "sha256": "fd1e16d36862d3a27f8268d80099609162c663328480d3e0a9e50aed95162286"
+    },
+    "report": {
+      "path": "evaluation/v1_2_3/step9_39_matched_comparison_report.md",
+      "sha256": "e6b15e93e6e98b39bdee4288bc65e897892695859289390fc49555edd7dd06ec"
+    },
+    "transitions": {
+      "path": "evaluation/v1_2_3/step9_39_case_transition_matrix.jsonl",
+      "rows": 40,
+      "sha256": "d958487e1922fec8577322122892a5b35a79d59fc735adf162be6a7796069f29"
+    }
+  },
+  "per_case_regression_ids": {
+    "completion": [
+      "V4-DA-08"
+    ],
+    "critical": [
+      "V4-PD-06",
+      "V4-PD-08"
+    ],
+    "harmful": [],
+    "low_value_ask": [
+      "V4-PD-05"
+    ],
+    "necessary_ask": [
+      "V4-PD-03"
+    ],
+    "validity": [
+      "V4-PD-06",
+      "V4-PD-08"
+    ]
+  },
+  "recommended_next_path": "B_REPAIR_CRITICAL_FAILURE_REGRESSION_BEFORE_V5",
+  "resume_descriptive_matched_comparative_claim_eligible": false,
+  "source_hashes": {
+    "evaluation/benchmarks/benchmark_v4_cases.yaml": "8b8c72092fcd7544e69d5d2ecd13610c7bb4c14210fca330698b3e5ab3f01d7f",
+    "evaluation/benchmarks/benchmark_v4_manifest.json": "b5feb7832b6267d8cff9d25fb2d8cf0043829feb5fd04ec1bea77dba932a13db",
+    "evaluation/v1_2_3/step9_26_v4_metric_registry.json": "de9f348cb1dff66410c03095abdaffcc256f53679718482870e4aa4d80c75056",
+    "evaluation/v1_2_3/step9_30a_v4_run_input_freeze.json": "6b95f6b896da08767bb8861bad0ccf49dcfcc41cb7490e868ca077a83b2c581e",
+    "evaluation/v1_2_3/step9_30b_v4_human_adjudication.jsonl": "85d436955fe2b7ea2448bce94fcb4443d7004140c5b0c4090283f7a0907cd645",
+    "evaluation/v1_2_3/step9_30c_r1_v4_aggregation_audit.json": "1fcf30e863c16948df5aaff242ea84c65731127e48984a08cb5e533f65e997b2",
+    "evaluation/v1_2_3/step9_30c_v4_aggregate_metrics.json": "b8118fd180e434dbda0f8baf5ed5f45d06456a2346c39eec21365ef3f3c5f473",
+    "evaluation/v1_2_3/step9_30c_v4_case_level_summary.jsonl": "70f2a83b3f6ddd5e07161563d64125591e26ea10e7e3d8cb145312eebb411bcb",
+    "evaluation/v1_2_3/step9_34a_baseline_metric_lock.json": "63e33f8dd66109742fdbb2282be437a1af771f5aa1d600306f35916ed5d37203",
+    "evaluation/v1_2_3/step9_34a_claim_policy.json": "4c64896c141dc8feb3789939e1450bcb7bdeb878ed15b27558404c47421aea67",
+    "evaluation/v1_2_3/step9_34a_matched_comparison_protocol.json": "a71ba06090370b576fbba66bc4b005e519ddbabff3021a40c6546fc855f90265",
+    "evaluation/v1_2_3/step9_36_treatment_run_input_freeze.json": "fcda7bfb4b09321385593b583008edd3da2304778d0e72e26e6c843ba66d21cd",
+    "evaluation/v1_2_3/step9_37_treatment_adjudication.jsonl": "60b5c2847ffdb51c43e00351519cb910428a82eb981849dfebefb76112658047",
+    "evaluation/v1_2_3/step9_37_treatment_adjudication_freeze.json": "fe84e4ca0853de680d199807252daa6a2555b1951aa37505924cb15fcc087df5",
+    "evaluation/v1_2_3/step9_38_treatment_aggregate_freeze.json": "3f282aef1fdc3b97bba150f69f42b3814f802a102bb21d3029552c0055b2658c",
+    "evaluation/v1_2_3/step9_38_treatment_aggregate_metrics.json": "59e774679e41158269f7fd203589f44a5a5898f6edfdb4b61f129d420d1ef45f",
+    "evaluation/v1_2_3/step9_38_treatment_case_summary.jsonl": "e58fbe09dfc058acbcd57b0bd4d40b16af1480dc342abe56388f1048d642dd14",
+    "evaluation/v1_2_3/step9_38a_metric_registry_reconciliation_r4.json": "06587be92e733543ad0ce8eb5074a365f8a161d2569b24f21fc140e0873d4b29",
+    "evaluation/v4_runs/heldout-v4-step9_28-20260925-01/heldout-v4-step9_28-20260925-01-attempt-step9_29b-5370d36a64d84a3da4f2585e9b57055a_case_results.jsonl": "77042ae9f5a5a75f7f7efd068e3c182e5725fa709e4f68ae63e58f0bbad0d2ea",
+    "evaluation/v4_runs/heldout-v4-step9_28-20260925-01/heldout-v4-step9_28-20260925-01-attempt-step9_29b-5370d36a64d84a3da4f2585e9b57055a_raw_traces.jsonl": "e1aac03f4dbedf567c625694e084fa23155c8bfc2db1d43c4dffbce158734189",
+    "evaluation/v4_runs/heldout-v4-step9_34a-treatment-20260928-01/attempt-step9_35b-e469d82618d4c51d91d193bb439507e4_case_results.jsonl": "9c926a69f9a4dfd19c559be0cbe8a08abc0902d5728c6f0202ba048b9e67e561",
+    "evaluation/v4_runs/heldout-v4-step9_34a-treatment-20260928-01/attempt-step9_35b-e469d82618d4c51d91d193bb439507e4_raw_traces.jsonl": "0a8483e4125577e860eb0a7c72c399651800eb94d45eeb9481e6b21795302fdf"
+  },
+  "status": "PASS_COMPARISON_INTEGRITY_CLAIM_NOT_ELIGIBLE",
+  "step": "9.39",
+  "v4_generalization_claim_allowed": false,
+  "v5_required": true
+}

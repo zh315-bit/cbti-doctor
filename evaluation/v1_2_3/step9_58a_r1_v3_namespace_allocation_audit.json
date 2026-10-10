@@ -1,0 +1,42 @@
+{
+  "artifact_type": "STEP9_58A_R1_NAMESPACE_ALLOCATION_AUDIT",
+  "remediation_origin": "STEP9_58A_R1",
+  "created_at_utc": "2026-10-01T19:23:16Z",
+  "old_namespace": "evaluation/v4_runs/heldout-v4-step9_55a-treatment-v3-20260930-01",
+  "old_namespace_exists": true,
+  "old_namespace_preserved": true,
+  "old_namespace_reusable": false,
+  "old_ledger_sha256": "10d3577bd59f886e5b5b79f23c8e911e117bfc52004eb234034f9314c2c5728e",
+  "old_results_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "old_raw_traces_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "allocation": {
+    "implementation_path": "scripts/v3_namespace_allocator.py",
+    "implementation_sha256": "e9ec6e25cf9d8f4899176ae7795445911e4b77c42048f8eb3ed515189a7b1288",
+    "namespace_derivation": "heldout-v4-treatment-v3-run-<sha256(evaluation_id\\0authorization_id\\0attempt_id)[:20]>",
+    "physical_layout": "evaluation/v4_runs/<derived_namespace_id>/<frozen_evaluation_id>/",
+    "reservation_marker": ".namespace_allocation.json",
+    "reservation_atomic": true,
+    "reservation_and_parent_creation_fsync": true,
+    "recursive_global_ledger_and_reservation_identity_scan": true,
+    "parallel_allocation_lock": "fcntl exclusive lock on evaluation/v4_runs/.namespace-allocation.lock",
+    "interruption_policy": "reservation persists; no automatic reuse or resume"
+  },
+  "lifecycle": {
+    "pre_attempt_child_absent": true,
+    "fresh_derived_container_absent_before_reservation": true,
+    "authorization_validation_precedes_reservation": true,
+    "parent_creates_attempt_child_exclusively": true,
+    "post_creation_requires_exact_authorization_and_attempt": true,
+    "post_creation_requires_no_results_or_traces_and_zero_counters": true,
+    "callback_phase_order_preserved": true,
+    "old_namespace_collision": "FAIL_CLOSED",
+    "step9_57_failed_namespace_reuse": "FAIL_CLOSED",
+    "exactly_once_same_identity": "SECOND_RESERVATION_FAIL_CLOSED",
+    "parallel_same_identity": "EXACTLY_ONE_ALLOCATION_WINS",
+    "case_specific_namespace_logic_found": false,
+    "case_specific_runner_logic_found": false
+  },
+  "authorization_issued": false,
+  "attempt_created": false,
+  "formal_case_executed": 0
+}

@@ -1,0 +1,37 @@
+{
+  "step": "9.63c-r5c10i",
+  "status": "DESIGN_ONLY_NOT_RUN",
+  "execution_boundary": "All tests use temporary synthetic roots/registries/artifacts and never access real credentials, network, model, Agent, RAG, production journals or V4 cases.",
+  "existing_tests_to_reuse_after_separate_approval": [
+    {"path": "tests/test_step9_63c_r5c8f_invocation_registry.py", "focus": "r10 claim-before-work, duplicate/corrupt history and exclusive target behavior; historical baseline only"},
+    {"path": "tests/test_step9_63c_r5c10c_transaction_scanner.py", "focus": "AppleDouble-safe transaction scanner and corrupt canonical journal fail-closed"},
+    {"path": "tests/test_v3_execution_transaction.py", "focus": "transaction event and commit-point regression"},
+    {"path": "tests/test_step9_63c_r5_mac_local_preflight.py", "focus": "existing formal preflight identity/safety/freshness guard"},
+    {"path": "tests/test_step9_63c_r5c5b_lifecycle_reducer.py", "focus": "authorization state and exact-once reducer"},
+    {"path": "tests/test_step9_61a_authorization_retirement.py", "focus": "non-consuming predicate-checked retirement"},
+    {"path": "tests/test_step9_63c_r5c4_bootstrap_repair.py", "focus": "pointer/member verification behavior; stale revision assumptions must be updated only in new tests, not historical tests"}
+  ],
+  "new_synthetic_tests_required": [
+    {"id": "N01", "case": "valid v2 genesis + one claim + one persisted event + matching artifact", "expect": "PASS consumer provenance guard before adapter"},
+    {"id": "N02", "case": "genesis only or artifact without real claim", "expect": "FAIL_CLOSED; initialization is not a claim"},
+    {"id": "N03", "case": "same invocation ID claimed twice or in two concurrent claimers", "expect": "one atomic winner at most; duplicate history FAIL_CLOSED"},
+    {"id": "N04", "case": "claim uses wrong producer path/SHA or on-disk producer bytes drift from r11 member", "expect": "FAIL_CLOSED before transport/formal adapter"},
+    {"id": "N05", "case": "claim or artifact uses wrong r11 freeze SHA, authorization, attempt, evaluation, benchmark or order", "expect": "FAIL_CLOSED before transaction"},
+    {"id": "N06", "case": "artifact forged with plausible fields but no persistence event or mismatched raw SHA", "expect": "FAIL_CLOSED; explicit CLI SHA alone is insufficient"},
+    {"id": "N07", "case": "corrupt UTF-8/JSON, duplicate JSON key, truncated final line, unknown field/event, illegal order, later invalid suffix", "expect": "FAIL_CLOSED; no skipping damaged canonical registry"},
+    {"id": "N08", "case": "AppleDouble ._* companion and unrelated non-JSONL file beside exact registry", "expect": "not parsed or deleted; canonical registry still validated; missing canonical file FAIL_CLOSED"},
+    {"id": "N09", "case": "registry or producer symlink/directory, wrong target path or altered claim prefix", "expect": "FAIL_CLOSED before adapter"},
+    {"id": "N10", "case": "r10 authorization/preflight/producer/registry replay under r11", "expect": "FAIL_CLOSED with no r10 fallback"},
+    {"id": "N11", "case": "claim fsynced, then synthetic transport/artifact failure or crash before persistence", "expect": "ID remains used; authorization unconsumed, no attempt or transaction; old command not automatically retried"},
+    {"id": "N12", "case": "artifact fsynced then crash before persistence event", "expect": "stranded artifact not accepted; claim remains used"},
+    {"id": "N13", "case": "valid later append after claimed prefix and duplicate/altered suffix variants", "expect": "valid later claim allowed; original prefix preserved and full log parsed; duplicate/corruption FAIL_CLOSED"},
+    {"id": "N14", "case": "producer ID/path plus all frozen consumer required upper/lowercase fields", "expect": "valid synthetic r11 payload accepted; any alias mismatch or missing safety/TLS field FAIL_CLOSED"},
+    {"id": "N15", "case": "instrumented formal entry rejects provenance error before adapter.run/begin_and_commit/consumption", "expect": "zero adapter/transaction/model calls and no attempt/namespace"},
+    {"id": "N16", "case": "20-row r11 member mapping and historical r10 hashes", "expect": "14 unchanged + 3 changed + 3 replaced, no extra member, r10 raw SHA unchanged"}
+  ],
+  "not_provable_offline": ["actual Mac-local DNS/TCP/TLS readiness", "model endpoint response or inference", "cryptographic origin against an actor with unrestricted local write access", "future r11 issuer/retirement eligibility without separately approved determination", "formal V4 answer/score behavior"],
+  "acceptance_gate": "All new and focused existing synthetic tests PASS, no changed Agent/evaluation identities, no new member beyond exact 20, strict pre-adapter guard proven. Any failure stops before freeze or authorization.",
+  "tests_executed_this_step": 0,
+  "new_r11_freeze_created": false,
+  "formal_v4_executed": false
+}

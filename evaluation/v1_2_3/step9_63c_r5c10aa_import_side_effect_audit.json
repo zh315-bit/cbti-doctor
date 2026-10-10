@@ -1,0 +1,32 @@
+{
+  "step": "9.63c-r5c10aa",
+  "audit_method": "source_only_no_module_import_or_test_collection",
+  "module_path": "tests/test_step9_63b_mac_local_preflight.py",
+  "module_sha256": "bcf9b8289336d575a184bf3dfb4cd2b6583f05a2f7d205ed4c6d852c06784052",
+  "test_structure": {
+    "test_case_class": "MacLocalPreflightTests(unittest.TestCase)",
+    "test_method_count_static": 8,
+    "custom_init_or_setup_class_or_load_tests_hook_found": false,
+    "unittest_main_guarded_by_main_check": true,
+    "top_level_imports": ["contextlib", "io", "json", "tempfile", "unittest", "pathlib.Path", "unittest.mock.patch"],
+    "production_transport_imports": "Eight identical imports, each inside a test method; none at module top level."
+  },
+  "import_time_scoped_effects": {
+    "formal_r11_identity_read_visible": false,
+    "historical_trace_or_other_file_write_visible": false,
+    "real_transaction_invocation_visible": false,
+    "parent_run_invocation_visible": false,
+    "authorization_issue_or_consumption_visible": false,
+    "network_or_model_call_visible": false,
+    "caution": "These are static source findings; the proposed module import/TestLoader call was not executed in this step."
+  },
+  "method_body_effects_not_permitted_by_collection_approval": [
+    "run_preflight() calls in several methods",
+    "connectivity() invocation in a method",
+    "temporary attestation file writes",
+    "method-local transport import reaching frozen issuer/adapter and absent r11 pointer"
+  ],
+  "standard_library_loader_semantics": "TestLoader may import the module and construct TestCase instances, but without suite.run/TextTestRunner it does not invoke test methods or setUp/tearDown. This class declares no custom constructor or class/module setup hook.",
+  "module_import_safe_for_proposed_collection": "YES_BY_STATIC_SOURCE_REVIEW_NOT_EXECUTED",
+  "test_methods_executed": 0
+}

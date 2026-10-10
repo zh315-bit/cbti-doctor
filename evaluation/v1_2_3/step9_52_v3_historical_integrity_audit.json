@@ -1,0 +1,13 @@
+{
+  "artifact_type": "STEP9_52_V3_HISTORICAL_INTEGRITY_AUDIT",
+  "step": "9.52",
+  "created_at_utc": "2026-09-30T18:40:19Z",
+  "status": "PASS",
+  "historical_step9_51a_audit": {"path": "evaluation/v1_2_3/step9_51a_validation_boundary_audit_r1.json", "sha256": "4d85318500115b4e7cb148089a9c08211d2a9bac3450f6a1d6ba7005664a5ce7", "pre_test_hashes_checked": 183, "pre_test_mismatches": 0, "post_test_output_hashes_checked": 40, "post_test_mismatches": 0, "historical_artifact_write_or_overwrite": false},
+  "independent_pinned_artifact_recheck": {"source": "Step 9.50 design freeze input_hashes, evaluation paths only", "historical_evaluation_artifact_pins": 43, "matched": 43, "missing": 0, "mismatched": 0, "case_payloads_opened_or_printed": false},
+  "expected_source_revision": {"path": "evaluation/recorder.py", "design_stage_sha256": "ca0bc7488f5af7d117298f817ccfd7f3b814bb80f60b114d1f9750c939877d9d", "current_v3_sha256": "0d631d2d8a1bf4678e542a97b4ecf2f377380c1ebe2c7df2694bd823f9627e7b", "classification": "EXPECTED_IMPLEMENTATION_SOURCE_CHANGE; matches Step 9.51-r1 freeze; not a historical result artifact"},
+  "protected_artifact_classes": ["Treatment V1/V2", "formal V4 results and traces", "Step 9.37 adjudication", "Step 9.38 aggregate", "Step 9.39 comparison", "Step 9.45a lineage", "Step 9.46 adjudication", "Step 9.47 aggregate", "Step 9.48 comparison", "Step 9.49 postmortem", "Step 9.50 design"],
+  "step9_52_writes_to_historical_artifacts": false,
+  "aggregation_code_executed": false,
+  "adjudication_code_executed": false
+}

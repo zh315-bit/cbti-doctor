@@ -1,0 +1,31 @@
+{
+  "step": "9.63c-r5c10j",
+  "focused_result": {"passed": 78, "failed": 0, "errors": 0},
+  "focused_modules": [
+    "tests.test_step9_63c_r5c10j_r11_infrastructure",
+    "tests.test_step9_63c_r5c10c_transaction_scanner",
+    "tests.test_v3_execution_transaction",
+    "tests.test_step9_63c_r5c8f_invocation_registry"
+  ],
+  "coverage": [
+    "synthetic r11 20-member freeze construction and strict pointer resolution",
+    "r10 parent hash and unchanged-member integrity",
+    "missing/corrupt r11 pointer and member drift rejection",
+    "registry genesis, durable unique claim, persisted artifact and consumer acceptance",
+    "failed claim cannot reuse ID even without artifact",
+    "concurrent same-ID claim has exactly one winner",
+    "missing/duplicate persistence and duplicate/tampered claim rejection",
+    "AppleDouble/unrelated binary ignored by exact registry path while corrupt registry bytes fail closed",
+    "producer/artifact/case/freeze mismatch and r10 replay rejected",
+    "scanner legal/corrupt journal, transaction semantics and historical registry regression"
+  ],
+  "legacy_regression_attempt": {
+    "modules": ["tests.test_step9_63c_r5c8b_preflight_contract", "tests.test_step9_63c_r5c5b_lifecycle_reducer"],
+    "errors": 2,
+    "reason": "adapter module import requires current identity pointer, deliberately absent before formal r11 freeze construction",
+    "counted_as_pass": false,
+    "waived": false
+  },
+  "runtime": "offline temporary roots; no real credential, network, preflight, transaction journal or V4 case",
+  "acceptance": "FOCUSED_PASS_WITH_UNRESOLVED_LEGACY_IMPORT_BLOCKER"
+}

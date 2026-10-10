@@ -1,0 +1,31 @@
+{
+  "step": "9.63c-r5c10f",
+  "status": "PROPOSED_ONLY_NO_CODE_CHANGE",
+  "must_change_after_separate_approval": [
+    {"file": "scripts/v3_runner_identity.py", "role": "Explicitly select the r11 pointer; preserve strict resolver/member checks and reject fallback", "r10_member": true},
+    {"file": "proposed new scripts/build_step9_63c_r11_runner_freeze.py", "role": "Versioned builder using current hash/exclusive-create contract but r10 as parent and new r11 output", "r10_member": false, "r11_member_replaces": "scripts/build_step9_63c_r5c4_runner_freeze.py"},
+    {"file": "proposed new evaluation/v1_2_3/step9_63c_r11_current_runner_identity.json", "role": "Immutable r11 pointer with revision and path but not future manifest SHA", "r10_member": false, "r11_member_replaces": "evaluation/v1_2_3/step9_63c_r5c4_current_runner_identity.json"}
+  ],
+  "conditional_change_after_contract_tests": [
+    {"file": "scripts/run_step9_53_v3_identity_adapter.py", "role": "Prefer no change; test import-time pointer and authorization checks against r11. Any needed edit requires new review."},
+    {"file": "scripts/preflight_step9_63c_current_mac_local.py", "role": "Prefer no change; it already emits revision/path/SHA dynamically. Test producer-to-consumer exact binding."},
+    {"file": "scripts/run_step9_63_v3_formal_execution.py", "role": "Prefer no change; test validator/CLI compatibility. Any needed edit requires new review."},
+    {"file": "future authorization issuer", "role": "Separate authorization phase must bind r11, not old r7-only issuer; no issuance in this design step."}
+  ],
+  "must_not_modify": [
+    "evaluation/v1_2_3/step9_63c_r5c5b_runner_freeze_r10.json",
+    "evaluation/v1_2_3/step9_63c_r5c4_current_runner_identity.json",
+    "scripts/build_step9_63c_r5c4_runner_freeze.py",
+    "all historical authorization manifests and lifecycle events",
+    "all historical transaction journals, attempts, traces, preflights and audit records",
+    "Agent, benchmark, harness, scoring, rubric, metric registry and one-shot rules"
+  ],
+  "risks": [
+    "Scanner-only member delta is incompatible with functional r11; additional bootstrap member deltas need explicit approval.",
+    "Pointer containing manifest SHA while manifest includes pointer SHA creates a digest cycle; keep pointer path/revision-only and bind raw manifest SHA downstream.",
+    "Import-time adapter identity may be cached in a long-lived process; require a fresh process for approved r11 audit and no fallback.",
+    "Existing r10 authorization is historically unconsumed but its formal command was invoked and is non-reusable; retirement requires a separate frozen-contract determination.",
+    "A new builder or pointer left outside the r11 20-member inventory weakens construction lineage."
+  ],
+  "rollback": "Before publishing a freeze, abandon only new drafts without changing history. After publication, never edit/delete r11; fail closed and supersede with a separately approved later revision. If authorization has issued, use frozen lifecycle rules rather than resetting state."
+}

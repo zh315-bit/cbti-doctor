@@ -1,0 +1,41 @@
+{
+  "freeze_id": "post-step9_17-candidate-20260923-01",
+  "created_at": "2026-09-23T17:45:56Z",
+  "freeze_kind": "DEVELOPMENT_CANDIDATE_NOT_BENCHMARK_AUTHORIZATION",
+  "parent_historical_freeze": "evaluation/v1_2_3/step9_11_clean_freeze_manifest.json",
+  "parent_historical_manifest_sha256": "ab1720e0f481c301a2436786d8e2390df2ebfd885ff2b60b5df8f64c17c1aa5c",
+  "parent_historical_agent_aggregate_hash": "ee914db7b8b5538c5607fdff34cff9083f6d069d50cf342964ae91c8a6446927",
+  "authorized_change_chain": [
+    {
+      "step": "9.16",
+      "record": "record.md#第-9.16-步",
+      "report": "evaluation/v1_2_3/step9_16_dependency_repair_report.md",
+      "authorized_agent_paths": ["adaptive_agent/dependency_resolver.py", "adaptive_agent/candidates.py"]
+    },
+    {
+      "step": "9.17",
+      "record": "record.md#第-9.17-步",
+      "report": "evaluation/v1_2_3/step9_17_projection_repair_report.md",
+      "authorized_agent_paths": ["adaptive_agent/answer_generation.py", "adaptive_agent/state.py", "adaptive_agent/state_update.py", "adaptive_agent/tools.py"]
+    }
+  ],
+  "effective_inventory_source": "parent agent_behavior_files with changed_agent_files replacing same paths",
+  "effective_agent_file_count": 25,
+  "inherited_unchanged_count": 19,
+  "changed_agent_files": [
+    ["adaptive_agent/answer_generation.py", "ee7be19f4adcf6500b706f8721b3caf836c3983059a278edaacd9a67d5d874f9"],
+    ["adaptive_agent/candidates.py", "477201bd911c7fc8ce27ad4aed163c1c3c8b67a681c39256becb2e2c9da0fd08"],
+    ["adaptive_agent/dependency_resolver.py", "3fbf055d799e5ca6a8ebadd5b0f6e632a7592002558156a20d76d0d73ddb382d"],
+    ["adaptive_agent/state.py", "c9d35ac0f10d067d7826891943e7612a07cb27db2ba6b4f2345535903381ec5d"],
+    ["adaptive_agent/state_update.py", "3c69d6eaf4d70703853ade79eb4913344a96d74ffd722a612e0b6e537c2f4c50"],
+    ["adaptive_agent/tools.py", "65223ad962417d68d16326c2431a205f1bdc953a0f64c5585ff38e4017a1c084"]
+  ],
+  "current_agent_aggregate_hash": "5e0ef0441dfb8cd4a5ec882f89af32ddbab38b51c66a0526960baa530f9db94c",
+  "historical_freeze_mutated": false,
+  "benchmark_modified": false,
+  "scoring_modified": false,
+  "benchmark_run_authorized": false,
+  "benchmark_v2_rerun": false,
+  "benchmark_v3_accessed": false,
+  "notes": "Candidate identity for development/regression only. This record does not replace Step 9.11 and does not authorize any Benchmark execution."
+}

@@ -1,0 +1,32 @@
+{
+  "step": "9.35",
+  "artifact_type": "TREATMENT_RUNNER_COMPATIBILITY_AUDIT",
+  "timestamp_utc": "2026-09-28T02:17:43Z",
+  "audited_runner_path": "scripts/run_step9_28_v4_heldout.py",
+  "audited_runner_sha256": "fddaa09803dd1df27da81f3793929d15a3f6d5d29c1060842ecbf138a76b1d06",
+  "runner_freeze_path": "evaluation/v1_2_3/step9_29a_v4_runner_freeze.json",
+  "runner_freeze_sha256": "bc87a277e7c155513570036f3138828f47291c0b826a44ff76c18c2bae9cc35b",
+  "bound_agent_identity": "4e2bffea0d7eaa9299074a960df84a1806b3ae9d4930662929abc58ca5b2ae79",
+  "required_treatment_agent_identity": "e5e4841b51ecc6bced0f342a261a356756d07b39764670d774b910b86b8625a7",
+  "runner_can_accept_treatment_identity": false,
+  "evaluation_id_is_parameterized_for_treatment_namespace": false,
+  "matched_protocol_sha256_is_bound": false,
+  "case_order_fingerprint_is_checked": false,
+  "obsolete_randomized_preregistration_is_required": false,
+  "one_shot_infrastructure_observations": {
+    "exclusive_attempt_ledger_creation": true,
+    "append_only_fsync_ledger_events": true,
+    "first_access_event_before_case_read": true,
+    "per_case_started_event": true,
+    "raw_trace_and_case_result_persistence": true,
+    "interruption_preserved_no_retry": true
+  },
+  "compatibility_decision": "FAIL_CLOSED_NOT_TREATMENT_READY",
+  "why_existing_one_shot_features_do_not_suffice": "The runner's entry-point identity, Agent pin, candidate manifest pin, and authorization validator are coupled to the historical baseline evaluation. Its one-shot persistence controls do not authorize or verify the matched-treatment identity/protocol.",
+  "runner_modified": false,
+  "superseded_runner_identity": null,
+  "new_runner_freeze_created": false,
+  "authorization_issued": false,
+  "attempt_id_created": false,
+  "command_generated": false
+}

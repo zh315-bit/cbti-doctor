@@ -1,0 +1,29 @@
+{
+  "step": "9.63c-r5c10f",
+  "status": "DESIGN_ONLY_CONDITIONAL_SCOPE_APPROVAL_REQUIRED",
+  "recommended_option": "VERSIONED_BOOTSTRAP_POINTER_AND_BUILDER",
+  "alternatives": [
+    {"name": "Mutate existing r10 pointer and builder in place", "assessment": "REJECT", "reason": "Their paths are r10 members; modifying them destroys current-file agreement with historical r10 and creates unapproved member deltas."},
+    {"name": "Copy the 20-row draft to a formal r11 file", "assessment": "REJECT", "reason": "The draft still hashes the r10 pointer and builder; current resolver selects r10 and r11 is not executable."},
+    {"name": "Versioned r11 pointer and builder plus explicit resolver switch", "assessment": "RECOMMEND_FOR_SEPARATE_APPROVAL", "reason": "Preserves r10 artifacts byte-for-byte, provides a strict r11 build DAG and 20-member r11 inventory, but requires controlled additional infrastructure-member changes."}
+  ],
+  "proposed_sequence_not_executed": [
+    "Record immutable r10 manifest and old pointer raw hashes; verify the approved scanner repair and all future infrastructure changes before building.",
+    "Add an independent r11 identity-pointer artifact with revision r11 and exact future r11 freeze path; omit a freeze-file SHA to avoid a hash cycle.",
+    "Add an r11-specific builder based on the r10 mechanism: parent is immutable r10, output is a new exclusive-create r11 path, member count exactly 20; no r10 file is overwritten.",
+    "Update the current identity resolver to select only the explicitly pinned r11 pointer and fail closed on missing/malformed state; do not auto-discover or silently fall back to r10.",
+    "Use 20 r11 member rows: 16 unchanged r10 paths, the approved scanner path with new SHA, the resolver path with reviewed new SHA, and r11-specific builder and pointer paths replacing the old two paths.",
+    "Finalize builder and resolver bytes first, then pointer bytes, then hash all actual member bytes and construct r11 manifest. Verify raw manifest SHA independently; never reuse the draft SHA.",
+    "Only after separate freeze acceptance and authorization approval, resolve old invoked r10 authorization under the frozen lifecycle contract, issue fresh authorization/attempt/namespace bindings to exact r11 path and raw SHA, and require a fresh non-consuming Mac-local preflight before any execution."
+  ],
+  "hash_dependency_dag": [
+    "finalized builder/resolver/other member bytes -> member SHA-256 list",
+    "versioned r11 pointer containing revision and freeze path but not freeze SHA -> pointer SHA-256 member",
+    "member list + frozen evaluation identities + parent r10 SHA -> r11 manifest bytes -> raw r11 SHA-256",
+    "raw r11 SHA-256 -> future authorization manifest -> authorization SHA-256 -> future preflight artifact -> explicit preflight SHA-256 -> formal consumer"
+  ],
+  "no_hash_cycle_if_pointer_omits_manifest_digest": true,
+  "scope_exception_required": "The current 'only scanner member differs from r10' condition cannot coexist with an executable r11 under the existing single-pointer resolver. Separate approval is required for resolver content change and r11 builder/pointer member substitutions; these must be proven infrastructure-only.",
+  "authorization_binding": "Future issuer must resolve and verify r11, pin revision/path/raw manifest SHA, existing frozen evaluation hashes, fresh authorization/attempt/derived physical namespace IDs; current adapter/formal/preflight guards must all compare against the same current r11 identity. Old r10 authorization and preflight are never transplanted.",
+  "historical_preservation": "Never rewrite r10 manifest, old r10 pointer artifact, historical authorization/lifecycle ledger, transaction journal, preflight, attempt or provenance artifacts. Preserve raw hashes and append-only lineage."
+}

@@ -1,0 +1,340 @@
+--- a/tests/test_step9_63c_r5c4_bootstrap_repair.py
++++ b/tests/test_step9_63c_r5c4_bootstrap_repair.py
+@@ -1,4 +1,10 @@
+-"""Offline-only bootstrap tests; never call models, Agent, RAG, HTTP, or V4."""
++"""Offline-only bootstrap tests; never call models, Agent, RAG, HTTP, or V4.
++
++Step 9.63c-r5c10ad AR-4: test_09, test_10 and test_18 asserted the superseded r9
++resolver contract; they are archived verbatim in
++tests/retired/test_step9_63c_r5c4_bootstrap_repair.py.retired and rewritten against the
++r11 contract in tests/test_step9_63c_r5c10ad_r11_resolver_contract.py.
++"""
+ from __future__ import annotations
+ 
+ import hashlib
+@@ -52,38 +58,6 @@
+     def test_08_duplicate_retirement_is_terminally_rejected(self):
+         self.assertIn("already has a terminal retirement event", Path(lifecycle.__file__).read_text())
+ 
+-    def test_09_pointer_resolves_only_exact_freeze(self):
+-        with tempfile.TemporaryDirectory() as temp:
+-            root = Path(temp); (root / "evaluation/v1_2_3").mkdir(parents=True)
+-            module_path = root / identity.IDENTITY_CONFIG_PATH
+-            config = {"artifact_type": "V3_CURRENT_RUNNER_IDENTITY_POINTER",
+-                      "status": "FROZEN_IDENTITY_POINTER_NOT_AUTHORIZATION",
+-                      "runner_freeze_revision": "r9",
+-                      "runner_freeze_path": "evaluation/v1_2_3/freeze.json"}
+-            module_path.write_text(json.dumps(config))
+-            member = root / "runner.py"; member.write_text("runner bytes")
+-            digest = hashlib.sha256(member.read_bytes()).hexdigest()
+-            rows = f"runner.py\t{digest}\n"
+-            freeze = {"runner_freeze_revision": "r9", "status": "FROZEN_NOT_AUTHORIZED",
+-                      "identity_config_path": identity.IDENTITY_CONFIG_PATH,
+-                      "identity_config_sha256": hashlib.sha256(module_path.read_bytes()).hexdigest(),
+-                      "members": [{"path": "runner.py", "sha256": digest}], "member_count": 1,
+-                      "member_aggregate_sha256": hashlib.sha256(rows.encode()).hexdigest()}
+-            (root / config["runner_freeze_path"]).write_text(json.dumps(freeze))
+-            got, _, _ = identity.resolve_current_freeze(root)
+-            self.assertEqual(got["runner_freeze_revision"], "r9")
+-
+-    def test_10_pointer_freeze_hash_mismatch_fails(self):
+-        with tempfile.TemporaryDirectory() as temp:
+-            root = Path(temp); (root / "evaluation/v1_2_3").mkdir(parents=True)
+-            (root / identity.IDENTITY_CONFIG_PATH).write_text(json.dumps({
+-                "artifact_type": "V3_CURRENT_RUNNER_IDENTITY_POINTER",
+-                "status": "FROZEN_IDENTITY_POINTER_NOT_AUTHORIZATION",
+-                "runner_freeze_revision": "r9", "runner_freeze_path": "evaluation/v1_2_3/freeze.json"}))
+-            (root / "evaluation/v1_2_3/freeze.json").write_text("{}")
+-            with self.assertRaisesRegex(RuntimeError, "does not match"):
+-                identity.resolve_current_freeze(root)
+-
+     def test_11_member_hash_drift_fails_closed(self):
+         self.assertIn("current runner freeze member mismatch", Path(identity.__file__).read_text())
+ 
+@@ -116,11 +90,6 @@
+         self.assertIn("E_STILL_UNPROVEN", Path(
+             "evaluation/v1_2_3/step9_63c_r5b_preflight_provenance_resolution.json").read_text())
+ 
+-    def test_18_old_r8_authorization_is_not_a_current_freeze_binding(self):
+-        config = identity.load_identity_config()
+-        self.assertEqual(config["runner_freeze_revision"], "r9")
+-        self.assertNotEqual(config["runner_freeze_path"], "evaluation/v1_2_3/step9_63c_r3_runner_freeze.json")
+-
+     def test_19_namespace_source_is_transaction_derived(self):
+         source = Path("scripts/run_step9_35a_matched_treatment.py").read_text()
+         self.assertIn("assert_transaction_execution_root", source)
+--- /dev/null
++++ b/tests/retired/test_step9_63c_r5c4_bootstrap_repair.py.retired
+@@ -0,0 +1,146 @@
++"""Offline-only bootstrap tests; never call models, Agent, RAG, HTTP, or V4."""
++from __future__ import annotations
++
++import hashlib
++import json
++import tempfile
++import unittest
++from pathlib import Path
++
++from scripts import authorization_lifecycle as lifecycle
++from scripts.append_only_ledger import prefix_matches
++from scripts import preflight_step9_63c_current_mac_local as preflight
++from scripts import v3_runner_identity as identity
++
++
++class BootstrapRepairTests(unittest.TestCase):
++    def test_01_frozen_prefix_exact_match(self):
++        data = b"prefix bytes\n"
++        self.assertTrue(prefix_matches(data, len(data), hashlib.sha256(data).hexdigest()))
++
++    def test_02_legal_append_preserves_frozen_prefix(self):
++        prefix = b"immutable event\n"
++        self.assertTrue(prefix_matches(prefix + b"new event\n", len(prefix),
++                                                        hashlib.sha256(prefix).hexdigest()))
++
++    def test_03_prefix_byte_mutation_rejected(self):
++        prefix = b"immutable event\n"
++        self.assertFalse(prefix_matches(b"Immutable event\n", len(prefix),
++                                                         hashlib.sha256(prefix).hexdigest()))
++
++    def test_04_prefix_truncation_rejected(self):
++        prefix = b"immutable event\n"
++        self.assertFalse(prefix_matches(prefix[:-1], len(prefix),
++                                                         hashlib.sha256(prefix).hexdigest()))
++
++    def test_05_whitespace_rewrite_rejected(self):
++        prefix = b'{"x":1}\n'
++        self.assertFalse(prefix_matches(b'{ "x": 1 }\n', len(prefix),
++                                                         hashlib.sha256(prefix).hexdigest()))
++
++    def test_06_current_runner_change_does_not_invalidate_historical_freeze_proof(self):
++        freeze = lifecycle.read_json(lifecycle.ROOT / "evaluation/v1_2_3/step9_63c_r3_runner_freeze.json")
++        self.assertEqual(freeze["runner_freeze_revision"], "r8")
++        self.assertNotEqual(hashlib.sha256((lifecycle.ROOT / freeze["formal_entry_runner_path"]).read_bytes()).hexdigest(),
++                            freeze["formal_entry_runner_sha256"])
++        self.assertEqual(hashlib.sha256((lifecycle.ROOT / "evaluation/v1_2_3/step9_63c_r3_runner_freeze.json").read_bytes()).hexdigest(),
++                         "86be96061d8c1cfbf769e21aac388cf2a308f53f6380f67c401d4c64b0bf4e6b")
++
++    def test_07_consumed_authorization_is_not_retired(self):
++        self.assertIn('consumed") is not False', Path(lifecycle.__file__).read_text())
++
++    def test_08_duplicate_retirement_is_terminally_rejected(self):
++        self.assertIn("already has a terminal retirement event", Path(lifecycle.__file__).read_text())
++
++    def test_09_pointer_resolves_only_exact_freeze(self):
++        with tempfile.TemporaryDirectory() as temp:
++            root = Path(temp); (root / "evaluation/v1_2_3").mkdir(parents=True)
++            module_path = root / identity.IDENTITY_CONFIG_PATH
++            config = {"artifact_type": "V3_CURRENT_RUNNER_IDENTITY_POINTER",
++                      "status": "FROZEN_IDENTITY_POINTER_NOT_AUTHORIZATION",
++                      "runner_freeze_revision": "r9",
++                      "runner_freeze_path": "evaluation/v1_2_3/freeze.json"}
++            module_path.write_text(json.dumps(config))
++            member = root / "runner.py"; member.write_text("runner bytes")
++            digest = hashlib.sha256(member.read_bytes()).hexdigest()
++            rows = f"runner.py\t{digest}\n"
++            freeze = {"runner_freeze_revision": "r9", "status": "FROZEN_NOT_AUTHORIZED",
++                      "identity_config_path": identity.IDENTITY_CONFIG_PATH,
++                      "identity_config_sha256": hashlib.sha256(module_path.read_bytes()).hexdigest(),
++                      "members": [{"path": "runner.py", "sha256": digest}], "member_count": 1,
++                      "member_aggregate_sha256": hashlib.sha256(rows.encode()).hexdigest()}
++            (root / config["runner_freeze_path"]).write_text(json.dumps(freeze))
++            got, _, _ = identity.resolve_current_freeze(root)
++            self.assertEqual(got["runner_freeze_revision"], "r9")
++
++    def test_10_pointer_freeze_hash_mismatch_fails(self):
++        with tempfile.TemporaryDirectory() as temp:
++            root = Path(temp); (root / "evaluation/v1_2_3").mkdir(parents=True)
++            (root / identity.IDENTITY_CONFIG_PATH).write_text(json.dumps({
++                "artifact_type": "V3_CURRENT_RUNNER_IDENTITY_POINTER",
++                "status": "FROZEN_IDENTITY_POINTER_NOT_AUTHORIZATION",
++                "runner_freeze_revision": "r9", "runner_freeze_path": "evaluation/v1_2_3/freeze.json"}))
++            (root / "evaluation/v1_2_3/freeze.json").write_text("{}")
++            with self.assertRaisesRegex(RuntimeError, "does not match"):
++                identity.resolve_current_freeze(root)
++
++    def test_11_member_hash_drift_fails_closed(self):
++        self.assertIn("current runner freeze member mismatch", Path(identity.__file__).read_text())
++
++    def test_12_member_aggregate_is_order_independent(self):
++        rows1 = "a\t" + "1" * 64 + "\nb\t" + "2" * 64 + "\n"
++        rows2 = "b\t" + "2" * 64 + "\na\t" + "1" * 64 + "\n"
++        self.assertEqual(hashlib.sha256("".join(sorted(rows1.splitlines(keepends=True))).encode()).hexdigest(),
++                         hashlib.sha256("".join(sorted(rows2.splitlines(keepends=True))).encode()).hexdigest())
++
++    def test_13_preflight_ids_are_distinct_instances(self):
++        self.assertNotEqual(preflight.new_preflight_id(), preflight.new_preflight_id())
++
++    def test_14_preflight_path_is_authorization_scoped(self):
++        path = preflight.artifact_path("auth-synthetic", preflight.new_preflight_id(), Path("/tmp"))
++        self.assertIn("auth-synthetic", path.name)
++
++    def test_15_failed_preflight_cannot_persist(self):
++        with tempfile.TemporaryDirectory() as temp:
++            with self.assertRaisesRegex(RuntimeError, "PREFLIGHT_NOT_PASSED"):
++                preflight.write_preflight({"authorization_id": "auth-synthetic",
++                                           "preflight_id": preflight.new_preflight_id()},
++                                          artifact_dir=Path(temp))
++            self.assertEqual(list(Path(temp).iterdir()), [])
++
++    def test_16_import_and_preparation_do_not_create_artifacts(self):
++        target = preflight.artifact_path("auth-synthetic", preflight.new_preflight_id(), Path(tempfile.gettempdir()))
++        self.assertFalse(target.exists())
++
++    def test_17_old_unknown_provenance_artifact_stays_unaccepted(self):
++        self.assertIn("E_STILL_UNPROVEN", Path(
++            "evaluation/v1_2_3/step9_63c_r5b_preflight_provenance_resolution.json").read_text())
++
++    def test_18_old_r8_authorization_is_not_a_current_freeze_binding(self):
++        config = identity.load_identity_config()
++        self.assertEqual(config["runner_freeze_revision"], "r9")
++        self.assertNotEqual(config["runner_freeze_path"], "evaluation/v1_2_3/step9_63c_r3_runner_freeze.json")
++
++    def test_19_namespace_source_is_transaction_derived(self):
++        source = Path("scripts/run_step9_35a_matched_treatment.py").read_text()
++        self.assertIn("assert_transaction_execution_root", source)
++        self.assertIn("derive_namespace_id(evaluation_id, authorization_id, attempt_id)", source)
++
++    def test_20_no_global_evaluation_root_collision_in_parent(self):
++        source = Path("scripts/run_step9_35a_matched_treatment.py").read_text()
++        self.assertIn("out = execution_root / evaluation_id", source)
++        self.assertNotIn("out = OUT_ROOT / evaluation_id", source)
++
++    def test_21_preflight_source_has_no_execution_path(self):
++        source = Path(preflight.__file__).read_text()
++        for forbidden in ("adapter.run(", "begin_and_commit(", "reserve_namespace(", "_case_result(", "/chat/completions"):
++            self.assertNotIn(forbidden, source)
++
++    def test_22_old_authorization_is_bound_to_exact_r8_artifact(self):
++        auth = json.loads(Path("evaluation/v1_2_3/step9_63c_r4_r8_authorization_manifest.json").read_text())
++        self.assertEqual(auth["runner_freeze_revision"], "r8")
++        self.assertEqual(auth["runner_freeze_sha256"], "86be96061d8c1cfbf769e21aac388cf2a308f53f6380f67c401d4c64b0bf4e6b")
++
++
++if __name__ == "__main__":
++    unittest.main()
+--- a/tests/retired/RETIRED_INDEX.json
++++ b/tests/retired/RETIRED_INDEX.json
+@@ -62,6 +62,26 @@
+     "test_preissue_timestamp_rejected"
+    ],
+    "coverage_mapping": "evaluation/v1_2_3/step9_63c_r5c10ad_r5_coverage_mapping.json"
++  },
++  {
++   "step": "9.63c-r5c10ad AR-4",
++   "archive": "tests/retired/test_step9_63c_r5c4_bootstrap_repair.py.retired",
++   "original_path": "tests/test_step9_63c_r5c4_bootstrap_repair.py",
++   "archive_sha256": "0a7472d0c0ba3ef6aec4d5fdc7a84af27789473f7c7169330f6af36e477ad566",
++   "original_sha256_at_archive": "0a7472d0c0ba3ef6aec4d5fdc7a84af27789473f7c7169330f6af36e477ad566",
++   "disposition": "PARTIAL: three r9-contract methods removed; 19 methods stay active",
++   "retired_covered_methods": [],
++   "rewritten_methods": [
++    "test_09_pointer_resolves_only_exact_freeze",
++    "test_10_pointer_freeze_hash_mismatch_fails",
++    "test_18_old_r8_authorization_is_not_a_current_freeze_binding"
++   ],
++   "rewritten_in": "tests/test_step9_63c_r5c10ad_r11_resolver_contract.py",
++   "r5c10j_coverage_check": {
++    "test_09": "implicit only (consumer acceptance needs a successful resolve); rewritten explicitly",
++    "test_10": "not covered (r5c10j corrupts freeze bytes, not the pointer/freeze identity binding)",
++    "test_18": "not covered (r5c10j rejects an r10 pointer, not a pointer naming the r8 freeze)"
++   }
+   }
+  ]
+ }
+--- /dev/null
++++ b/tests/test_step9_63c_r5c10ad_r11_resolver_contract.py
+@@ -0,0 +1,94 @@
++"""Step 9.63c-r5c10ad AR-4: r11-contract rewrites of retired r9 bootstrap resolver tests.
++
++The historical ``test_09``/``test_10``/``test_18`` in
++``tests/test_step9_63c_r5c4_bootstrap_repair.py`` asserted the r9 resolver contract
++(r9 pointer, one-member freeze, live pointer equal to r9). The resolver is now
++deliberately r11-only, so those assertions can never hold again. The same properties
++are re-expressed here against the r11 contract using a temporary-root synthetic r11
++identity; the repository pointer is never created, read as authority, or faked.
++Originals are archived in ``tests/retired/test_step9_63c_r5c4_bootstrap_repair.py.retired``.
++"""
++from __future__ import annotations
++
++import hashlib
++import json
++import tempfile
++import unittest
++from pathlib import Path
++
++from scripts import v3_runner_identity as identity
++
++HISTORICAL_R8_FREEZE = "evaluation/v1_2_3/step9_63c_r3_runner_freeze.json"
++
++
++def sha256(path: Path) -> str:
++    return hashlib.sha256(path.read_bytes()).hexdigest()
++
++
++class R11ResolverContractTests(unittest.TestCase):
++    def setUp(self):
++        self.temp = tempfile.TemporaryDirectory()
++        self.addCleanup(self.temp.cleanup)
++        self.root = Path(self.temp.name)
++        self.pointer = self.root / identity.IDENTITY_CONFIG_PATH
++        self.freeze_path = self.root / identity.EXPECTED_FREEZE_PATH
++        self.pointer.parent.mkdir(parents=True)
++        self.write_pointer(identity.EXPECTED_REVISION, identity.EXPECTED_FREEZE_PATH)
++        self.write_freeze()
++
++    def write_pointer(self, revision: str, freeze_path: str) -> None:
++        self.pointer.write_text(json.dumps({
++            "artifact_type": "V3_CURRENT_RUNNER_IDENTITY_POINTER",
++            "status": "FROZEN_IDENTITY_POINTER_NOT_AUTHORIZATION",
++            "runner_freeze_revision": revision, "runner_freeze_path": freeze_path}), encoding="utf-8")
++
++    def write_freeze(self, **overrides) -> None:
++        members = []
++        for index in range(20):
++            member = self.root / "members" / f"member_{index:02d}.txt"
++            member.parent.mkdir(exist_ok=True)
++            member.write_text(f"synthetic member {index}\n", encoding="utf-8")
++            members.append({"path": member.relative_to(self.root).as_posix(), "sha256": sha256(member)})
++        rows = "".join(sorted(f"{m['path']}\t{m['sha256']}\n" for m in members))
++        freeze = {"runner_freeze_revision": identity.EXPECTED_REVISION, "status": "FROZEN_NOT_AUTHORIZED",
++                  "identity_config_path": identity.IDENTITY_CONFIG_PATH,
++                  "identity_config_sha256": sha256(self.pointer), "members": members,
++                  "member_count": 20, "member_aggregate_sha256": hashlib.sha256(rows.encode()).hexdigest()}
++        freeze.update(overrides)
++        self.freeze_path.write_text(json.dumps(freeze), encoding="utf-8")
++
++    def test_09_pointer_resolves_only_exact_freeze(self):
++        freeze, freeze_file, resolved = identity.resolve_current_freeze(self.root)
++        self.assertEqual(freeze["runner_freeze_revision"], "r11")
++        self.assertEqual(freeze_file, self.freeze_path)
++        self.assertEqual(resolved["identity_config_sha256"], sha256(self.pointer))
++        # "Only exact": a pointer naming any other freeze path or revision is rejected.
++        for revision, path in (("r11", "evaluation/v1_2_3/other_freeze.json"),
++                               ("r10", identity.EXPECTED_FREEZE_PATH)):
++            with self.subTest(revision=revision, path=path):
++                self.write_pointer(revision, path)
++                with self.assertRaisesRegex(RuntimeError, "identity pointer is invalid"):
++                    identity.resolve_current_freeze(self.root)
++
++    def test_10_pointer_freeze_hash_mismatch_fails(self):
++        self.write_freeze(identity_config_sha256="0" * 64)
++        with self.assertRaisesRegex(RuntimeError, "does not match the identity pointer"):
++            identity.resolve_current_freeze(self.root)
++        # Editing the pointer after freezing breaks the same binding.
++        self.write_freeze()
++        self.pointer.write_text(self.pointer.read_text(encoding="utf-8") + "\n", encoding="utf-8")
++        with self.assertRaisesRegex(RuntimeError, "does not match the identity pointer"):
++            identity.resolve_current_freeze(self.root)
++
++    def test_18_old_r8_freeze_is_not_a_current_freeze_binding(self):
++        self.assertEqual(identity.EXPECTED_REVISION, "r11")
++        self.assertNotEqual(identity.EXPECTED_FREEZE_PATH, HISTORICAL_R8_FREEZE)
++        for revision in ("r8", "r11"):
++            with self.subTest(revision=revision):
++                self.write_pointer(revision, HISTORICAL_R8_FREEZE)
++                with self.assertRaisesRegex(RuntimeError, "identity pointer is invalid"):
++                    identity.load_identity_config(self.root)
++
++
++if __name__ == "__main__":
++    unittest.main()

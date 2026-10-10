@@ -1,0 +1,209 @@
+{
+  "ask_failure_count_by_architecture_layer": {
+    "DEPENDENCY_FORMATION": 5,
+    "INPUT_UNDERSTANDING_STATE": 4
+  },
+  "ask_root_cause_counts": {
+    "HARD_PRECONDITION_OVERRIDES_INFORMATION_VALUE": 5,
+    "INPUT_FACT_AND_UNANSWERABLE_TARGET_STATE_NOT_REPRESENTED": 3,
+    "INPUT_FACT_NOT_PROJECTED_TO_STATE": 1
+  },
+  "completion_vs_validity": {
+    "completion_loss_primary_causes": {
+      "ACTION_SELECTION": 1,
+      "CONDITIONAL_EVIDENCE_NOT_RETRIEVED": 1,
+      "EVIDENCE_COVERAGE_LIMITATION": 2,
+      "REPEATED_IRRELEVANT_ACQUISITION": 1,
+      "REQUIRED_INFORMATION_ACQUISITION_OMISSION": 1,
+      "REQUIRED_INFORMATION_AND_RESOURCE_OMISSION": 1,
+      "REQUIRED_RESOURCE_OMISSION": 13,
+      "TASK_EXECUTION_OMISSION": 4
+    },
+    "completion_rate": 0.4,
+    "interpretation": "Validity primarily captures bounded/non-overclaiming behavior; completion requires performing the requested information acquisition, evidence retrieval, or analysis. The 21 valid-but-incomplete answers stayed within safety bounds but stopped short of the task; 3 incomplete DA cases were also invalid.",
+    "invalid_and_incomplete": 3,
+    "invalid_but_complete": 0,
+    "valid_and_complete": 16,
+    "valid_but_incomplete": 21,
+    "validity_rate": 0.925
+  },
+  "contamination_boundary": "From this postmortem onward V4 is DEVELOPMENT / POSTMORTEM EVIDENCE. Any Agent changes informed by Step 9.31 make V4 non-unseen for that Agent. V4 may be used for regression/paired mechanism analysis; generalization claims for a new Agent require a newly sealed V5.",
+  "failure_count_by_architecture_layer_for_incomplete_cases": {
+    "ANSWER_GENERATION_EVIDENCE_SYNTHESIS": 2,
+    "ANSWER_GENERATION_TASK_EXECUTION": 4,
+    "CANDIDATE_GENERATION_DECISION_POLICY": 9,
+    "DECISION_POLICY_INFORMATION_VALUE": 1,
+    "DEPENDENCY_FORMATION": 3,
+    "INPUT_UNDERSTANDING_STATE": 1,
+    "INPUT_UNDERSTANDING_STATE_AND_ACQUISITION_LOOP": 1,
+    "REQUIREMENTS_DEPENDENCY_FORMATION": 3
+  },
+  "failure_taxonomy": {
+    "answer_generation": "four DA task-execution omissions occur after READ_DIARY; KQ has two coverage-limited partial cases",
+    "architecture_level": "dependency/state separation and state projection recurrently fail before action selection; answer-task-contract gaps are a separate downstream class",
+    "evaluation_reviewer_artifact": "labels and scores are single-AI-reviewer descriptive judgments, with no IIR; frozen low-value denominator is all 9 observed ASK events, while Step 9.25 optional-ASK controlled gate denominator was 3 candidates entering that gate. Step 9.25 local mechanism tests do not cover natural-language extraction/state projection, production mult-turn path, or end-to-end evidence selection. Thus 0/3 in the isolated gate and 9/9 in V4 are different populations, not contradictory replications.",
+    "evidence_grounding": "CA/PD harmed traces show no RETRIEVE; the result is evidence omission, not evidence misuse in those cases",
+    "policy_decision": "forced hard-precondition ASK overrides low information value; candidate gate may require high user-info sufficiency before retrieval"
+  },
+  "harmful_failure_count_by_architecture_layer": {
+    "CANDIDATE_GENERATION_DECISION_POLICY": 8,
+    "DEPENDENCY_FORMATION": 3,
+    "INPUT_UNDERSTANDING_STATE": 1,
+    "INPUT_UNDERSTANDING_STATE_AND_ACQUISITION_LOOP": 1,
+    "REQUIREMENTS_DEPENDENCY_FORMATION": 3
+  },
+  "limitations": [
+    "The Step 9.30b reviewer was a single AI reviewer; inter-rater reliability was not measured.",
+    "Architecture first-divergence layer assignments and repair estimates are postmortem inferences over frozen traces, not independently adjudicated labels.",
+    "No pass threshold is defined; historical comparison is NOT_COMPARABLE.",
+    "No V4 execution, model/Agent/RAG invocation, or rescoring occurred in Step 9.31."
+  ],
+  "paired_evaluation_hypotheses": [
+    {
+      "guardrail": "necessary-ASK preservation must not decrease; separately report ASK count and event denominator.",
+      "hypothesis": "New version reduces redundant-or-irrelevant ASK events per all ASK events under the same frozen annotation protocol.",
+      "id": "H1"
+    },
+    {
+      "hypothesis": "New version improves task completion, especially in CA and PD strata, without using ANSWER terminal status as a completion proxy.",
+      "id": "H2"
+    },
+    {
+      "hypothesis": "New version reduces harmful-failure count and the evidence/information-omission mechanisms identified here.",
+      "id": "H3"
+    },
+    {
+      "hypothesis": "Necessary ASK target acquisition is non-inferior and critical failure count does not increase.",
+      "id": "H4"
+    },
+    {
+      "hypothesis": "Where personal facts are incomplete but a general evidence dependency exists, independent retrieval and evidence-to-answer lineage increase without reducing factual boundedness.",
+      "id": "H5"
+    },
+    {
+      "hypothesis": "Explicit-fact recall improves and repeated acquisition after unknown/unavailable responses decreases.",
+      "id": "H6"
+    },
+    {
+      "hypothesis": "After successful diary/tool projection, completion of the requested analytic operation improves while unsupported calculations remain absent.",
+      "id": "H7"
+    }
+  ],
+  "repair_candidates_ranked": [
+    {
+      "ask_failure_count_affected": 0,
+      "case_count_affected": 15,
+      "expected_behavior_change": "When a task has a meaningful evidence requirement, retrieve general evidence even if personal facts remain incomplete, then answer within the evidence and personalization boundary.",
+      "harmful_failure_count_affected": 15,
+      "how_to_test_without_v4": "Structured unit tests for mixed independent dependencies; synthetic production-path cases with partial facts; measure retrieval precision, evidence-to-claim lineage, boundedness, and completion; no V4 fixtures/wording.",
+      "mechanism_hypothesis": "Represent user-fact dependencies and external-evidence dependencies independently; missing personal facts should bound personalization but must not suppress useful general evidence acquisition.",
+      "observed_failures_addressed": [
+        "required evidence omitted while facts are incomplete",
+        "premature bounded answer"
+      ],
+      "regression_risk": "May increase unnecessary/irrelevant retrieval or evidence-led overreach; require retrieval appropriateness and claim-grounding checks.",
+      "repair_id": "R1_EVIDENCE_PATH_INDEPENDENT_OF_PERSONAL_FACT_COMPLETENESS",
+      "target_layer": "Requirements / dependency formation → Candidate generation"
+    },
+    {
+      "ask_failure_count_affected": 5,
+      "case_count_affected": 5,
+      "expected_behavior_change": "Suppress irrelevant forced ASK while preserving genuinely necessary acquisition and its safety boundary.",
+      "harmful_failure_count_affected": 3,
+      "how_to_test_without_v4": "Counterfactual matrix with necessary, useful, irrelevant, refused, and unknown fields; adversarially vary answer direction; assert necessary-ASK preservation and no decision without critical data.",
+      "mechanism_hypothesis": "A hard precondition should force ASK only when no safe fallback exists and plausible answers can change direction, next action, or necessary answer scope; otherwise keep a bounded path and evaluate independent resources.",
+      "observed_failures_addressed": [
+        "hard precondition forces low-value ASK",
+        "ASK prevents immediate bounded answer or evidence path"
+      ],
+      "regression_risk": "Could suppress a genuinely necessary clarification or cause unsupported personalization if the counterfactual gate is too permissive.",
+      "repair_id": "R2_VALUE_GATED_PRECONDITION_AND_SAFE_FALLBACK",
+      "target_layer": "Dependency formation / Information value / Decision policy"
+    },
+    {
+      "ask_failure_count_affected": 4,
+      "case_count_affected": 2,
+      "expected_behavior_change": "Use facts already in the conversation, avoid repeat acquisition after unknown/refusal, and proceed with bounded answer or another independent useful action.",
+      "harmful_failure_count_affected": 2,
+      "how_to_test_without_v4": "Synthetic paraphrase and contradiction suite; multi-turn unknown/refusal tests; inspect provenance and ask-target state transitions; no V4 examples.",
+      "mechanism_hypothesis": "State projection should retain semantically asserted facts with source/confidence, and represent asked/unknown/declined/unavailable targets so the acquisition loop does not re-ask or substitute equivalent low-value targets without new rationale.",
+      "observed_failures_addressed": [
+        "explicit user facts omitted from state",
+        "same or adjacent optional questions repeated after unknown response"
+      ],
+      "regression_risk": "False fact extraction, overgeneralized equivalence among distinct targets, or prematurely treating an unknown as permanently declined.",
+      "repair_id": "R3_ASSERTED_FACT_AND_UNAVAILABLE_TARGET_STATE",
+      "target_layer": "Input Understanding / State / interaction loop"
+    },
+    {
+      "ask_failure_count_affected": 0,
+      "case_count_affected": 6,
+      "expected_behavior_change": "Complete supported calculations/comparisons and state limitations only for genuinely unavailable portions.",
+      "harmful_failure_count_affected": 0,
+      "how_to_test_without_v4": "Synthetic arithmetic and evidence-synthesis tasks with known tool outputs; assert requested fields, provenance, and abstention only on unavailable items.",
+      "mechanism_hypothesis": "Carry an explicit task/output contract through tool projection and validate that the answer performs the requested operation using available tool results before stopping.",
+      "observed_failures_addressed": [
+        "diary data read but requested operation omitted",
+        "evidence retrieved but scope/coverage not synthesized"
+      ],
+      "regression_risk": "Could fabricate missing data or overstate answers if validation rewards completion without evidence constraints.",
+      "repair_id": "R4_ANSWER_TASK_CONTRACT_AFTER_TOOL_PROJECTION",
+      "target_layer": "Tool Result Projection → Answer Context → Answer Generation"
+    }
+  ],
+  "schema_version": "step9_31_architecture_failure_map.v1",
+  "source": "frozen V4 trace + frozen Step 9.30b single-AI-reviewer labels; postmortem layer mappings are analyst inferences",
+  "task_type_summary": {
+    "CAUSE_ASSESSMENT": {
+      "complete": 1,
+      "harmful": 8,
+      "incomplete": 9,
+      "mean": 59.1,
+      "primary_pattern": "eight harmful omissions (information/evidence), plus one action-selection miss; generic evidence path commonly absent; forced ASK can be a competing first action"
+    },
+    "DATA_ANALYSIS": {
+      "complete": 5,
+      "harmful": 0,
+      "incomplete": 5,
+      "mean": 78.1,
+      "primary_pattern": "READ_DIARY works, but four requested task operations are omitted after projection; one conditional evidence action is missing"
+    },
+    "KNOWLEDGE_QA": {
+      "complete": 8,
+      "incomplete": 2,
+      "mean": 82.2,
+      "primary_pattern": "retrieval generally succeeds; two evidence-scope/coverage-limited partial answers; not enough evidence for causal inference"
+    },
+    "PERSONALIZED_DECISION": {
+      "complete": 2,
+      "harmful": 8,
+      "incomplete": 8,
+      "mean": 62.6,
+      "primary_pattern": "personal facts are selectively not projected or are treated as globally required; evidence and fact acquisition are not planned independently; one repeated-ASK loop"
+    }
+  },
+  "task_type_x_frozen_primary_cause_counts": {
+    "CAUSE_ASSESSMENT": {
+      "ACTION_SELECTION": 1,
+      "REQUIRED_INFORMATION_ACQUISITION_OMISSION": 1,
+      "REQUIRED_RESOURCE_OMISSION": 7
+    },
+    "DATA_ANALYSIS": {
+      "CONDITIONAL_EVIDENCE_NOT_RETRIEVED": 1,
+      "TASK_EXECUTION_OMISSION": 4
+    },
+    "KNOWLEDGE_QA": {
+      "EVIDENCE_COVERAGE_LIMITATION": 2
+    },
+    "PERSONALIZED_DECISION": {
+      "REPEATED_IRRELEVANT_ACQUISITION": 1,
+      "REQUIRED_INFORMATION_AND_RESOURCE_OMISSION": 1,
+      "REQUIRED_RESOURCE_OMISSION": 6
+    }
+  },
+  "top_repair_targets": [
+    "R1_EVIDENCE_PATH_INDEPENDENT_OF_PERSONAL_FACT_COMPLETENESS",
+    "R2_VALUE_GATED_PRECONDITION_AND_SAFE_FALLBACK",
+    "R3_ASSERTED_FACT_AND_UNAVAILABLE_TARGET_STATE"
+  ]
+}

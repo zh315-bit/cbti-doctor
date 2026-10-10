@@ -1,0 +1,126 @@
+{
+  "artifact_type": "STEP9_63C_R5C8D_INVOCATION_IDENTITY_OWNERSHIP_AUDIT",
+  "step": "9.63c-r5c8d",
+  "timestamp_utc": "2026-10-07T18:02:13Z",
+  "status": "PASS_INVOCATION_IDENTITY_OWNERSHIP_RESOLVED",
+  "selected_design": "OPTION_A_PRODUCER_OWNED",
+  "authoritative_preflight_id_owner": "PRODUCER",
+  "authoritative_target_owner": "PRODUCER",
+  "contract_answers": {
+    "pre_execution_id_knowledge_required": false,
+    "formal_runner_only_reads_embedded_preflight_id": false,
+    "formal_runner_requires_explicit_preflight_file_id_and_sha256_after_preflight": true,
+    "preflight_id_part_of_consumer_contract": true,
+    "artifact_filename_part_of_consumer_contract": true,
+    "target_path_part_of_consumer_contract": true,
+    "preflight_id_prebound_to_authorization_attempt_or_namespace": false,
+    "post_production_identity_evidence_bound_to_authorization_attempt_and_namespace": true,
+    "preparation_generated_id_required": false,
+    "producer_runtime_generated_id_satisfies_frozen_regex": true
+  },
+  "code_evidence": [
+    {
+      "path": "scripts/preflight_step9_63c_r5c7_mac_local.py",
+      "lines": "106-112,123-136,340-417,425-450",
+      "finding": "main generates UUID4 identity, derives authorization scoped target, verifies absence, writes with O_EXCL and fsync, then prints ID/path/SHA256. Payload includes authorization, attempt, namespace, freeze and Agent bindings."
+    },
+    {
+      "path": "scripts/run_step9_63_v3_formal_execution.py",
+      "lines": "46-103,165-195,372-400",
+      "finding": "At formal execution the consumer requires explicit --preflight-file, --preflight-id and --preflight-sha256; it checks ID regex, exact authorization scoped path, actual SHA256, embedded ID and frozen bindings. No pre-preflight reservation or issuance check exists."
+    },
+    {
+      "path": "evaluation/v1_2_3/step9_63c_r5c6_r10_v3_authorization_manifest.json",
+      "lines": "9-15,61-92",
+      "finding": "Authorization prebinds attempt and execution namespace, and requires a fresh non-consuming preflight; it contains no prebound preflight ID."
+    },
+    {
+      "path": "scripts/v3_namespace_allocator.py",
+      "lines": "17-22,61-86",
+      "finding": "Execution namespace derives from evaluation, authorization and attempt IDs only; preflight ID is not an input."
+    },
+    {
+      "path": "evaluation/v1_2_3/step9_63c_r5c5b_runner_freeze_r10.json",
+      "lines": "58-141",
+      "finding": "Frozen formal consumer is an r10 member; current r5c7 producer is not."
+    }
+  ],
+  "option_comparison": {
+    "option_a_producer_owned": {
+      "frozen_consumer_satisfied": true,
+      "producer_change_required": false,
+      "orchestration": [
+        "Read-only preparation validates eligibility, without allocating a preflight ID.",
+        "User runs current producer in Mac Terminal; producer creates a fresh ID and target and prints ID/path/SHA256.",
+        "A later read-only audit reopens that exact artifact, recomputes SHA256, checks current lifecycle and invokes the frozen validator.",
+        "Only a later separately authorized step may prepare formal execution arguments."
+      ]
+    },
+    "option_b_externally_bound": {
+      "required_by_frozen_consumer": false,
+      "additional_producer_cli_and_validation_needed": true,
+      "selected": false
+    }
+  },
+  "freshness_and_collision": {
+    "preflight_id_freshness_enforced": true,
+    "freshness_mechanism": "UUID4 generated per main invocation; old r5c7/r5c7c/r5c7e IDs have a different, frozen-validator-incompatible format; validator also requires artifact timestamp after authorization issuance. Random generation is not a durable failed-invocation ledger.",
+    "preflight_id_collision_fail_closed": true,
+    "target_collision_fail_closed": true,
+    "collision_scope": "The same ID derives the same authorization scoped target; both the precheck and O_CREAT|O_EXCL reject an existing file, including race-time collisions. No absolute guarantee is claimed for a failed invocation that left no artifact.",
+    "old_r5c7e_artifact_path": "evaluation/v1_2_3/step9_63c_r5c7e_preflight-step9_63c-r10-7decee88a4c8439fb3f30ffb68240b31_mac_local_final_preclearance.json",
+    "old_r5c7e_artifact_sha256": "f07d8380e0d445938e0a4bd7b212380459a983ccfe8f04bc49ab2996b43cf4b7",
+    "old_r5c7e_artifact_mutated": false
+  },
+  "freeze_and_lifecycle": {
+    "runner_freeze_revision": "r10",
+    "runner_freeze_sha256": "d24244235e51e7bf6c8567880c654fe3fd73b87fa1bfe1ab0f10dfdc94db2693",
+    "runner_freeze_member_count": 20,
+    "changed_r10_freeze_member_count": 0,
+    "current_runner_matches_r10_freeze": true,
+    "new_runner_freeze_required": false,
+    "frozen_consumer_sha256": "ce8363555b734e39802236eaa2ee31233359ee367acf1094630836f924256cf2",
+    "frozen_consumer_modified": false,
+    "producer_sha256": "e3f33f5c00641cbd4bb338d2bab28187df806cbb6ed6314010bd6076f93ccdfa",
+    "producer_modified": false,
+    "v3_agent_sha256": "085d338ed95bbef7370c41cf97ca0d6653ffdfd2f1c924eef4b7123dfdea4607",
+    "frozen_evaluation_identities_match": true,
+    "case_count": 40,
+    "case_set_match": true,
+    "case_order_match": true,
+    "task_distribution": {
+      "KNOWLEDGE_QA": 10,
+      "CAUSE_ASSESSMENT": 10,
+      "PERSONALIZED_DECISION": 10,
+      "DATA_ANALYSIS": 10
+    },
+    "historical_pin_count": 55,
+    "historical_pin_mismatch_count": 0,
+    "step9_58_provenance_gap": "PRESENT_AND_DOCUMENTED",
+    "active_executable_authorization_count": 1,
+    "authorization_derived_state": "ISSUED_EXECUTABLE",
+    "authorization_consumed": false,
+    "authorization_consumption_count": 0,
+    "attempt_exists": false,
+    "namespace_exists": false,
+    "namespace_reserved": false,
+    "transaction_started": false
+  },
+  "offline_validation": {
+    "test_matrix_path": "evaluation/v1_2_3/step9_63c_r5c8d_test_matrix.json",
+    "focused_tests_passed": 31,
+    "failures": 0,
+    "errors": 0,
+    "producer_generated_fixture_accepted_by_frozen_validator": true,
+    "network_used": false
+  },
+  "historical_r5c8c_fail_closed_record_modified": false,
+  "real_mac_local_preflight_run": false,
+  "http_request_sent": false,
+  "model_inference_executed": false,
+  "agent_evaluation_executed": false,
+  "rag_evaluation_executed": false,
+  "formal_v4_case_executed": 0,
+  "formal_execution_command_generated": false,
+  "ready_for_fresh_mac_local_preflight_preparation": true
+}

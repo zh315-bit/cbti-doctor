@@ -1,0 +1,19 @@
+# Step 9.63c-r5c10q — B2 test-only collection feasibility review
+
+Status: `PASS_READ_ONLY_B2_REVIEW_FULL_TEST_ONLY_REPAIR_NOT_PROVEN`. This is a contract analysis, not a repair or collection result. Historical Step r5c10k recorded 12 import-error placeholders; none of their methods was collected. Static source inspection finds 183 `def test_` definitions across those 12 modules, **not** 183 collected or passed tests. Their [exact file/dependency matrix](step9_63c_r5c10q_b2_file_dependency_matrix.json) records paths, current hashes, import routes and runtime coupling.
+
+## Causal chain and contract boundary
+
+Seven tests import `scripts.run_step9_53_v3_identity_adapter` directly at module scope. One imports frozen `scripts.issue_step9_63a_r3_authorization`, which imports the adapter. Four import non-frozen `scripts.preflight_step9_63b_mac_local`, which imports the adapter; some also import historical frozen preflight/formal modules. The common path is:
+
+`test module import → adapter module import → adapter._CURRENT_IDENTITY = load_identity_config(ROOT)` (`scripts/run_step9_53_v3_identity_adapter.py:23–27`) `→ exact r11 pointer check` (`scripts/v3_runner_identity.py:11–13,27–39`) `→ missing pointer RuntimeError before test collection`.
+
+The formal r11 pointer and freeze do not exist. The resolver's `ROOT` comes from `__file__`; no environment variable selects a fallback version. Thus the earliest old-run cause is a confirmed **module import side effect plus historical test-fixture coupling**. A distinct DNS/credential/environment cause is not evidenced at this stage, and failures inside the uncollected methods are unknown. Import-time identity loading is unnecessary to *discover method names*, but formal identity checks are still mandatory at the point of authorization/preflight/execution. Moving a test import to `setUp()` might permit collection while merely converting the import error into a runtime error. It does not prove an executable synthetic test fixture, much less a passing test.
+
+`tests/test_step9_53_v3_identity_adapter.py:11–12` also reads adapter constants at module scope; multiple other modules use adapter globals or `adapter.run()` at runtime. The frozen issuer's transitive import cannot be solved by changing only an adapter reference in the test body. Import mocking or a synthetic pointer leaked into `sys.modules` could falsely satisfy a production guard, so it is **not** an accepted blanket design. A clearly labeled synthetic identity in a temporary, isolated test process may be explored only if every invocation still exercises real identity and negative checks and cannot be mistaken for a formal r11 artifact. That end-to-end proof is absent.
+
+## Decision
+
+Collection-only lazy fixture design is plausible, but full 12-module **test-only repair is not proven**. This review does not approve moving frozen adapter/resolver reads, altering the frozen issuer, creating a formal r11 pointer/freeze, or weakening Consumer Provenance Guard or authorization lifecycle. The [patch design](step9_63c_r5c10q_proposed_test_only_patch_design.md) separates a potential collection pilot from a future runtime-identity design. The [acceptance plan](step9_63c_r5c10q_collection_negative_acceptance_plan.json) requires actual collected counts and subsequent method results to be reported separately, with fail-closed negatives before any formal commit point.
+
+Recommendation: **do not approve an all-12 B2 implementation yet**. If the user wants the next bounded experiment, first approve a test-only collection pilot in the direct-import test modules with no assertions removed and no real identity artifact created. Stop if it would need a frozen-member or formal-contract change. Historical evidence protection is detailed in the [boundary audit](step9_63c_r5c10q_frozen_boundary_historical_evidence_audit.json).

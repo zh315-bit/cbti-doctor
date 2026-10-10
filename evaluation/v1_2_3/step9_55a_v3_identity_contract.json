@@ -1,0 +1,17 @@
+{
+  "artifact_type": "TREATMENT_V3_IDENTITY_CONTRACT_NOT_AUTHORIZATION",
+  "step": "9.55a",
+  "status": "FROZEN_IDENTITY_CONTRACT_NOT_AUTHORIZATION",
+  "identity_kind": "TREATMENT_V3",
+  "evaluation_id": "heldout-v4-step9_55a-treatment-v3-20260930-01",
+  "authorization_id": null,
+  "attempt_id": null,
+  "inherited_identity_contract_path": "evaluation/v1_2_3/step9_53_v3_identity_contract.json",
+  "inherited_identity_contract_sha256": "fc73e402e5bb59866f5f83b61b8ac642e0aec601612a2d81423971072dbdadfa",
+  "supersedes_for_future_identity_only": "evaluation/v1_2_3/step9_53_v3_identity_contract.json",
+  "repair_scope": "NAMESPACE_LIFECYCLE_CONTRACT_ONLY",
+  "evaluation_semantics_changed": false,
+  "agent_modified": false,
+  "benchmark_modified": false,
+  "harness_scoring_metrics_or_one_shot_rules_modified": false
+}

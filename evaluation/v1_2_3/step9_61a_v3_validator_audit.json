@@ -1,0 +1,34 @@
+{
+  "artifact_type": "STEP9_61A_V3_AUTHORIZATION_VALIDATOR_AUDIT",
+  "step": "9.61a",
+  "status": "PASS_RETIRED_AUTHORIZATION_FAILS_CLOSED",
+  "runner_freeze_revision": "r6",
+  "runner_freeze_path": "evaluation/v1_2_3/step9_61a_v3_runner_freeze_r6.json",
+  "runner_freeze_sha256": "4e6c0bf9ed718546ea1efa12ae48324fd5438129ad3cd3860f93bd33037f1593",
+  "runner_adapter_path": "scripts/run_step9_53_v3_identity_adapter.py",
+  "runner_adapter_sha256": "4c53963466592203d4ad923cb09bf405629c47a44a8963e84bd0a459e0568317",
+  "parent_runner_path": "scripts/run_step9_35a_matched_treatment.py",
+  "parent_runner_sha256": "ed3cd89a6074b571c308b448718f3606c69308232d53f25a2cc2303ed924c589",
+  "lifecycle_module_path": "scripts/authorization_lifecycle.py",
+  "lifecycle_module_sha256": "73e26fea3773e55c66b23199052ba32612b950e8fa071ab2de344d20bc11b005",
+  "namespace_allocator_sha256": "8bcd8c82506e97b8ae06ba817cdcb36938a39e96bf3a7a2aa59897a075c14ca0",
+  "lifecycle_contract_sha256": "addb3880e7141ca14d7b3011cadb439ac83076fa6b7c2b9f28f3b024d3fd1174",
+  "all_frozen_hashes_match": true,
+  "authorization_validator_binding_match": true,
+  "identity_preflight": {
+    "status": "PASS",
+    "all_frozen_hashes_match": true,
+    "authorization_validator_binding_match": true,
+    "namespace_lifecycle_phase": "PRE_ATTEMPT",
+    "exactly_once_guard_ready": true,
+    "output_namespace_isolated": true,
+    "v4_case_executed": 0
+  },
+  "retired_authorization_rejected_by": [
+    "scripts/run_step9_35a_matched_treatment.py::validate_authorization",
+    "scripts/v3_namespace_allocator.py::_identity_seen",
+    "scripts/run_step9_53_v3_identity_adapter.py::_validate_namespace_lifecycle"
+  ],
+  "concurrency_contract": "retirement and exact namespace reservation use the same exclusive lock; parent authorization validation and output namespace creation are serialized with retirement",
+  "evaluation_semantics_changed": false
+}

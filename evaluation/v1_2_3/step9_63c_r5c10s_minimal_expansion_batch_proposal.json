@@ -1,0 +1,58 @@
+{
+  "step": "9.63c-r5c10s",
+  "proposal_only": true,
+  "recommended_batch_size": 1,
+  "proposed_next_batch_files": ["tests/test_step9_63c_r5c7b_diagnostics.py"],
+  "selected_category": "A",
+  "candidate_sha256_now": "68657dc4d9d1cc6220811c227361fa4067f2226390002de5f1e77e426c05e345",
+  "candidate_is_r10_frozen_member": false,
+  "reason": "One top-level non-frozen transport import blocks collection. The independently importable diagnostic preflight supplies nine pure or temporary-root methods; no direct adapter.run or formal consumer call appears in this test module.",
+  "exact_future_patch_scope": [
+    "Remove only the module-level transport import at line 11.",
+    "Import transport locally in test_dns_exception_reports_system_dns_stage.",
+    "Make _mock_dns_success import and return transport; bind that return locally in the TCP, TLS and certificate tests that use it.",
+    "Do not change the frozen issuer, adapter, current producer, identity resolver, test assertions, skip/xfail status or source under scripts/."
+  ],
+  "expected_collection_only_result_if_approved": "13 collected methods, 0 import errors; this is a prediction requiring measurement, not a current result",
+  "future_safe_execution_boundary": {
+    "eligible_for_separate_static_confirmation_then_execution": [
+      "test_config_exception_stage",
+      "test_authorization_exception_stage",
+      "test_artifact_serialization_exception_stage",
+      "test_artifact_write_exception_stage",
+      "test_secret_assignments_and_bearer_are_redacted",
+      "test_bearer_token_is_redacted",
+      "test_complete_request_headers_are_redacted",
+      "test_generic_failure_is_fail_closed_and_preserves_lifecycle_flags",
+      "test_unknown_stage_fails_closed_as_unknown"
+    ],
+    "identity_dependent_blocked_until_separately_reviewed": [
+      "test_dns_exception_reports_system_dns_stage",
+      "test_tcp_exception_reports_tcp_stage",
+      "test_tls_exception_reports_tls_stage",
+      "test_certificate_validation_stage"
+    ],
+    "formal_execution": "FORBIDDEN"
+  },
+  "future_negative_tests": [
+    "Real v3_runner_identity.load_identity_config(ROOT) rejects missing formal r11 pointer.",
+    "Frozen adapter import still rejects missing pointer; no mock, fake pointer or r10 fallback persists.",
+    "Collection and nine selected safe methods leave historical traces, r10 members and authorization/lifecycle evidence unchanged."
+  ],
+  "future_before_after_pins": [
+    "selected test-file SHA-256 and exact diff",
+    "r10 manifest SHA-256 plus current 20-member path/hash aggregate",
+    "two historical Trace SHA-256, sizes, mtimes and protected directory inventory",
+    "current formal r11 pointer/freeze absence and production source aggregate"
+  ],
+  "rollback": "If separately approved and implemented, reverse only the exact future test-file import relocation via reviewed patch; preserve pre-step SHA, post-step SHA, failed test logs and append-only audit. Never reset the worktree or restore historical evidence.",
+  "stop_conditions": [
+    "Any second test file, frozen member or production code change is needed.",
+    "Collection produces fewer/more than 13 methods or import errors remain.",
+    "A selected safe method attempts network, real preflight, authorization/transaction state, historical evidence write, model/Agent/RAG or formal V4.",
+    "Any protected hash/path changes, identity guard accepts absent pointer, or negative test fails."
+  ],
+  "human_approval_required_before_patch": true,
+  "alternate_later_category_a_file": "tests/test_step9_63c_r3_parent_namespace_repair.py; not in the proposed next batch because parent.run/CASE_STARTED synthetic paths require stricter execution isolation",
+  "no_safe_expansion_candidate": false
+}

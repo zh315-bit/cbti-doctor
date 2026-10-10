@@ -1,0 +1,116 @@
+{
+  "artifact_type": "STEP9_63C_R5C10D_NEW_RUNNER_FREEZE_ELIGIBILITY_REVIEW_AUDIT",
+  "step": "9.63c-r5c10d",
+  "timestamp_utc": "2026-10-08T19:30:17Z",
+  "status": "PASS_REVIEW_DRAFT_ONLY_NO_FREEZE_CREATED",
+  "review_scope": "Read-only qualification and draft candidate only; no formal runner freeze, authorization, preflight or V4 execution",
+  "source_artifacts": [
+    {"path": "evaluation/v1_2_3/step9_63c_r5c5b_runner_freeze_r10.json", "sha256": "d24244235e51e7bf6c8567880c654fe3fd73b87fa1bfe1ab0f10dfdc94db2693"},
+    {"path": "evaluation/v1_2_3/step9_63c_r5c10b_transaction_scanner_repair_design.json", "sha256": "a33280aba4f21b7430a1c2a6b35a0dbaba056da64261d0fa3077b719bc52e204"},
+    {"path": "evaluation/v1_2_3/step9_63c_r5c10c_scanner_repair_audit.json", "sha256": "f325179ce39c6a8ee8fc0ff6b848927b7f4d607fce77e2b17cfd13d0db18a0a0"},
+    {"path": "evaluation/v1_2_3/step9_63c_r5c10c_scanner_repair_report.md", "sha256": "7c38230eb3a03aa5b3de41e3f833db7a4fac086a10001fe64e7b74fa3b5a6fb7"},
+    {"path": "evaluation/v1_2_3/step9_63c_r5c10c_test_matrix.json", "sha256": "6944f4e5db81f3b938ba5b5189ccbac342abca572ee9266dbe63a6fc872222a4"}
+  ],
+  "r10_history": {
+    "freeze_preserved": true,
+    "revision": "r10",
+    "member_count": 20,
+    "historical_member_sha256_records_modified": false,
+    "historical_pin_match_count": 55,
+    "historical_pin_mismatch_count": 0,
+    "old_authorization_manifest_sha256": "beac52d1ed3bc11efa02b1a924a8abc7b210171bf5cc1b7910011a6ef9741241",
+    "old_committed_transaction_journal_sha256": "76afd557e4559c50090e9e4939a2e52746cbaefff1d4d6bd886206798b2e96fa",
+    "appledouble_metadata_sha256": "b3f6f26076673352c35b796cdea465d173ef353978b1e6d5ae1417ee2cc25574",
+    "old_preflight_artifact_sha256": "fbb2f3dfe964bbe500459c4ba58e016f7318bd2ca61c439d902030fd3cb2f35a",
+    "invocation_registry_sha256": "01de3e5f9bced87785e851c4071b9eb2f320b43d2a36b1fcf9390b7e9c0ab377",
+    "step9_58_provenance_gap": "PRESENT_AND_DOCUMENTED"
+  },
+  "member_comparison": {
+    "r10_member_count": 20,
+    "unchanged_member_count": 19,
+    "changed_member_count": 1,
+    "changed_members": [
+      {
+        "path": "scripts/v3_execution_transaction.py",
+        "r10_sha256": "f1a253730953abf51307f4e9404bf59d7856c15d2367b7a62d6809dbb64b2797",
+        "current_sha256": "f0e74a49d152053b5455951c507edb8f7849a9e4708835711e5975a82e690e91",
+        "classification": "APPROVED_SCANNER_JOURNAL_PATH_CLASSIFICATION_REPAIR"
+      }
+    ],
+    "unexpected_changed_member_count": 0,
+    "current_runner_matches_r10_freeze": false
+  },
+  "nonmember_frozen_identity_checks": {
+    "v3_agent_matches_r10_bound_identity": true,
+    "v3_agent_sha256": "085d338ed95bbef7370c41cf97ca0d6653ffdfd2f1c924eef4b7123dfdea4607",
+    "benchmark_matches_r10": true,
+    "benchmark_manifest_matches_r10": true,
+    "harness_file_rows_and_aggregate_match_r10": true,
+    "scoring_file_rows_and_aggregate_match_r10": true,
+    "rubric_matches_r10": true,
+    "metric_registry_matches_r10": true,
+    "one_shot_rules_match_r10": true,
+    "tool_adapter_matches_r10": true,
+    "dependency_lock_matches_r10": true,
+    "credential_value_read": false
+  },
+  "scanner_repair_review": {
+    "scope_verified": true,
+    "appledouble_companion_not_parsed_as_journal": true,
+    "valid_journal_event_parser_unchanged": true,
+    "canonical_corruption_fails_closed": true,
+    "duplicate_authorization_attempt_namespace_collision_rejected": true,
+    "independent_transaction_id_uniqueness_extended": false,
+    "duplicate_consumption_rejected_by_existing_guard": true,
+    "illegal_event_sequence_rejected": true,
+    "all_candidates_scanned_before_collision_result": true,
+    "commit_point_preserved": true,
+    "authorization_lifecycle_preserved": true,
+    "one_shot_rules_preserved": true,
+    "production_journal_cleaned_or_overwritten": false,
+    "historical_authorization_reinterpreted": false,
+    "offline_tests_rerun": 64,
+    "offline_test_failures": 0,
+    "offline_test_errors": 0,
+    "offline_tests_used_only_temporary_roots": true
+  },
+  "candidate": {
+    "path": "evaluation/v1_2_3/step9_63c_r5c10d_candidate_freeze_manifest.json",
+    "artifact_sha256": "d00126ea3616bd1a51b0a8a33dc49a93bd7a142fdd46c98d8a1041069ccd04bc",
+    "hash_scope": "RAW_SHA256_OF_DRAFT_ARTIFACT_NOT_A_FINAL_RUNNER_FREEZE_HASH",
+    "status": "DRAFT_NOT_FROZEN_NOT_AUTHORIZED",
+    "proposed_revision": "r11",
+    "revision_inventory": "Existing r3-r10 freeze revisions found; no r11 freeze or r11 revision reference found at review time",
+    "snapshot_member_count": 20,
+    "snapshot_member_hash_mismatch_count": 0,
+    "snapshot_member_aggregate_sha256": "024727dce3e0dfd8d939eaadfb2f4ead0cf396c4f55dddf80b929c8cafffefbb",
+    "final_r11_freeze_sha256": "NOT_DETERMINED",
+    "unresolved_identity_pointer": "The draft still contains the historical r10 identity pointer; a new r11 pointer and final member inventory must be built and audited separately",
+    "new_runner_freeze_created": false
+  },
+  "dependency_order_for_future_separately_approved_steps": [
+    "Preserve r10 and the failed-invocation evidence; resolve exact old authorization non-reuse determination and retirement only if the frozen predicate passes.",
+    "Construct and verify a new r11 identity pointer, runner freeze and dependent transaction/validator bindings; prove preflight producer compatibility with the new revision.",
+    "Independently audit and issue globally new authorization, attempt and derived namespace identities only after old authorization terminal handling and new freeze validation.",
+    "Run a fresh authorization- and runner-bound Mac-local non-consuming preflight only in a later approved step.",
+    "Consider formal execution only after a separate final authorization/one-shot gate; never rerun the old r10 formal command."
+  ],
+  "old_authorization": {
+    "id": "auth-step9_63c_r5c6-aff5c4b96bb74278a14d3fd08bf8a84e",
+    "derived_state_at_review": "ISSUED_EXECUTABLE",
+    "consumed": false,
+    "consumption_count": 0,
+    "old_formal_command_reusable": false,
+    "incompatible_with_future_runner": "Bound to exact r10 freeze SHA, r10 transaction module SHA and r10 preflight/attempt/namespace identities"
+  },
+  "boundary": {
+    "new_runner_freeze_created": false,
+    "new_authorization_issued": false,
+    "authorization_consumed_by_step": false,
+    "attempt_namespace_transaction_created": false,
+    "mac_local_preflight_run": false,
+    "formal_v4_case_executed": 0,
+    "network_model_agent_rag_http_used": false,
+    "ready_for_new_runner_freeze_approval": "YES_FOR_SEPARATE_FREEZE_CONSTRUCTION_ONLY"
+  }
+}

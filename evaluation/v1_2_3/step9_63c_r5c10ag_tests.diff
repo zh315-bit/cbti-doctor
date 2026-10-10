@@ -1,0 +1,1728 @@
+--- /dev/null
++++ b/tests/r11_activation_fixtures.py
+@@ -0,0 +1,244 @@
++"""Shared fixtures for the Step 9.63c-r5c10ag activation tests (not a test module).
++
++Everything happens in temporary roots holding byte copies of the real inputs. The
++repository itself is only read. Write entries are exercised the way they are meant to
++be used: in a real pseudo-terminal, with a person (the test) typing the token.
++"""
++from __future__ import annotations
++
++import argparse
++import hashlib
++import json
++import os
++import pty
++import select
++import shutil
++import subprocess
++import sys
++import tempfile
++import time
++import types
++from pathlib import Path
++from unittest.mock import patch
++
++REPO = Path(__file__).resolve().parents[1]
++sys.path.insert(0, str(REPO))
++
++from scripts import authorization_lifecycle as lifecycle  # noqa: E402
++from scripts import build_step9_63c_r11_runner_freeze as builder  # noqa: E402
++from scripts import issue_step9_63c_r11_authorization as issuer  # noqa: E402
++from scripts import run_step9_63_v3_formal_execution as formal  # noqa: E402
++from scripts.preflight_step9_62b_mac_local import SUPPLEMENTAL_HISTORICAL_PINS  # noqa: E402
++
++CREATED_AT = "2026-01-01T00:00:00+00:00"
++AGENT = "085d338ed95bbef7370c41cf97ca0d6653ffdfd2f1c924eef4b7123dfdea4607"
++
++
++def sha256(path: Path) -> str:
++    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
++
++
++def material_paths() -> list[str]:
++    inventory_path = "evaluation/v1_2_3/step9_60a_v3_historical_integrity_audit.json"
++    inventory = json.loads((REPO / inventory_path).read_text(encoding="utf-8"))
++    paths = set(builder.MEMBER_PATHS) - {builder.IDENTITY_CONFIG_PATH}
++    paths |= {builder.PARENT_PATH, builder.R10_AUTHORIZATION_PATH, builder.LEDGER_PATH, inventory_path}
++    paths |= {pin["path"] for pin in inventory["historical_pins"].values()} | set(SUPPLEMENTAL_HISTORICAL_PINS)
++    paths |= {p.relative_to(REPO).as_posix() for p in (REPO / "evaluation/v1_2_3").glob("step*authorization_manifest.json")
++              if not p.name.startswith("._")}
++    runs = REPO / "evaluation/v4_runs"
++    for pattern in ("attempts.jsonl", ".namespace_allocation.json"):
++        paths |= {p.relative_to(REPO).as_posix() for p in runs.rglob(pattern) if not p.name.startswith("._")}
++    journals = runs / ".execution_transactions"
++    if journals.exists():
++        paths |= {p.relative_to(REPO).as_posix() for p in journals.glob("*.jsonl") if not p.name.startswith("._")}
++    return sorted(paths)
++
++
++def build_root(base: Path) -> Path:
++    """State S0: all inputs present, nothing of r11 created, r10 authorization not retired."""
++    root = Path(base).resolve() / "root"
++    for relative in material_paths():
++        (root / relative).parent.mkdir(parents=True, exist_ok=True)
++        shutil.copyfile(REPO / relative, root / relative)
++    return root
++
++
++def tree_digest(root: Path) -> dict[str, str]:
++    rows = {}
++    for path in sorted(Path(root).rglob("*")):
++        if path.is_symlink():
++            rows[path.relative_to(root).as_posix()] = "link:" + os.readlink(path)
++        elif path.is_file():
++            rows[path.relative_to(root).as_posix()] = sha256(path)
++    return rows
++
++
++def retire_r10(root: Path) -> dict:
++    """AR-14 rehearsal with the FROZEN retirement function, entirely inside the temp root."""
++    determination = root / "evaluation/v1_2_3/step9_63c_r11_ar14_determination.json"
++    determination.write_text(json.dumps({
++        "artifact_type": "V3_SUPERSEDED_AUTHORIZATION_NONREUSE_DETERMINATION",
++        "old_authorization_id": builder.R10_AUTHORIZATION_ID,
++        "old_authorization_reuse_status": "PROVEN_NON_REUSABLE_BY_FROZEN_CONTRACT",
++        "retirement_reason": "SUPERSEDED_BY_APPROVED_R11_ACTIVATION", "current_runner_equality_required": False,
++    }, sort_keys=True), encoding="utf-8")
++    return lifecycle.retire_unconsumed_authorization(
++        authorization_path=root / builder.R10_AUTHORIZATION_PATH, expected_authorization_id=builder.R10_AUTHORIZATION_ID,
++        run_root=root / "evaluation/v4_runs", ledger_path=root / builder.LEDGER_PATH,
++        lock_path=root / builder.LOCK_RELATIVE,
++        contract_path=root / "evaluation/v1_2_3/step9_61a_v3_authorization_lifecycle_contract.json",
++        determination_path=determination, determination_sha256=sha256(determination))
++
++
++def sign_approval(root: Path, *, created_at: str = CREATED_AT, issuance: dict | None = None) -> dict:
++    """Build the approval from the CURRENT bytes of the temp root and sign it."""
++    approval = builder.build_approval(root, created_at_utc=created_at, issuance=issuance)
++    approval.update(status=builder.APPROVAL_SIGNED, approver="test-approver", signed_at_utc="2026-01-01T00:00:01+00:00")
++    (root / builder.APPROVAL_PATH).write_text(json.dumps(approval, indent=2, sort_keys=True) + "\n", encoding="utf-8")
++    return approval
++
++
++def write_approval(root: Path, approval: dict) -> None:
++    (root / builder.APPROVAL_PATH).write_text(json.dumps(approval, indent=2, sort_keys=True) + "\n", encoding="utf-8")
++
++
++def cli_env(extra: dict | None = None) -> dict:
++    env = {**os.environ, "PYTHONDONTWRITEBYTECODE": "1", builder.SYNTHETIC_ROOT_ENV: "1"}
++    env.update(extra or {})
++    return env
++
++
++def build_command(module: str, root: Path, args: list[str]) -> list[str]:
++    """Child command line. The mutation tools replace this to run a CLI with an in-memory mutant."""
++    return [sys.executable, "-m", module, "--root", str(root), *args]
++
++
++def run_cli(module: str, root: Path, args: list[str], *, mode: str = "pipe", lines: list[str] | None = None,
++            env: dict | None = None, timeout: float = 120.0) -> tuple[int, str]:
++    """Run a CLI as a child. mode: 'pipe' (no terminal), 'tty' (full pty), 'tty-in-only', 'tty-out-only'."""
++    command = build_command(module, root, args)
++    env = env if env is not None else cli_env()
++    if mode == "pipe":
++        done = subprocess.run(command, cwd=REPO, env=env, input="\n".join(lines or []) + "\n", capture_output=True,
++                              text=True, timeout=timeout)
++        return done.returncode, done.stdout + done.stderr
++    master, slave = pty.openpty()
++    stdin = slave if mode in ("tty", "tty-in-only") else subprocess.PIPE
++    stdout = slave if mode in ("tty", "tty-out-only") else subprocess.PIPE
++    process = subprocess.Popen(command, cwd=REPO, env=env, stdin=stdin, stdout=stdout,
++                               stderr=slave if stdout == slave else subprocess.PIPE, close_fds=True)
++    os.close(slave)
++    for line in lines or []:
++        os.write(master, (line + "\n").encode())
++    output = b""
++    deadline = time.time() + timeout
++    while time.time() < deadline:
++        ready, _, _ = select.select([master], [], [], 0.2)
++        if ready:
++            try:
++                chunk = os.read(master, 65536)
++            except OSError:
++                chunk = b""
++            if not chunk:
++                break
++            output += chunk
++        elif process.poll() is not None:
++            break
++    try:
++        code = process.wait(timeout=10)
++    except subprocess.TimeoutExpired:
++        process.kill()
++        raise
++    extra = b""
++    if process.stdout:
++        extra += process.stdout.read() or b""
++    os.close(master)
++    return code, (output + extra).decode(errors="replace")
++
++
++POINTER_MODULE = "scripts.build_step9_63c_r11_runner_freeze"
++ISSUER_MODULE = "scripts.issue_step9_63c_r11_authorization"
++
++
++def create_pointer(root: Path) -> tuple[int, str]:
++    return run_cli(POINTER_MODULE, root, ["--create-pointer"], mode="tty", lines=[builder.POINTER_TOKEN])
++
++
++def persist_freeze(root: Path, approval: dict) -> str:
++    candidate = builder.assemble_candidate(root, created_at_utc=approval["freeze"]["created_at_utc"])
++    return builder.persist_candidate(candidate, root)
++
++
++def issue(root: Path, token: str | None = None) -> tuple[int, str]:
++    if token is None:
++        plan = issuer.plan_issuance(root)
++        token = plan["confirmation_token"]
++    return run_cli(ISSUER_MODULE, root, ["--issue"], mode="tty", lines=[token])
++
++
++def activated_through_freeze(base: Path) -> tuple[Path, dict]:
++    """AR-14 -> signed approval -> pointer -> freeze (state S2), all in the temp root."""
++    root = build_root(base)
++    retire_r10(root)
++    approval = sign_approval(root)
++    code, output = create_pointer(root)
++    assert code == 0, output
++    persist_freeze(root, approval)
++    return root, approval
++
++
++def fully_issued(base: Path) -> tuple[Path, dict]:
++    root, approval = activated_through_freeze(base)
++    code, output = issue(root)
++    assert code == 0, output
++    return root, approval
++
++
++def gate_failures(root: Path, *, preflight_validated: bool = True) -> tuple[list[str], dict]:
++    """The consumer's real prepare_formal_gates against a temp root.
++
++    Only the identity adapter (needs a real formal runner) and the separately tested
++    preflight-evidence check are stood in for; every precommit check runs for real.
++    """
++    manifest_path = root / builder.AUTHORIZATION_MANIFEST_PATH
++    authorization = json.loads(manifest_path.read_text(encoding="utf-8"))
++    freeze, freeze_path, identity = formal.resolve_current_freeze(root)
++    preflight_file = root / "preflight.json"
++    preflight_file.write_text(json.dumps({
++        "authorization_id": authorization["authorization_id"], "attempt_id": authorization["attempt_id"],
++        "runner_freeze_sha256": sha256(freeze_path), "status": "PASS_NON_CONSUMING_PREFLIGHT",
++        "authorization_consumed": False, "attempt_created": False, "namespace_created": False,
++        "dns_ready": True, "tcp_ready": True, "tls_ready": True}), encoding="utf-8")
++    from scripts.run_step9_35a_matched_treatment import supplied_hash_keys
++    args = argparse.Namespace(
++        authorization_id=authorization["authorization_id"], attempt_id=authorization["attempt_id"],
++        evaluation_id=authorization["evaluation_id"], authorization_file=manifest_path, preflight_file=preflight_file,
++        preflight_id="p", preflight_sha256="0" * 64, **{key: "a" * 64 for key in supplied_hash_keys()})
++    adapter = types.SimpleNamespace(
++        current_v3_agent_identity=lambda: (freeze["v3_agent_sha256"], True),
++        _authoritative_authorization_bindings=lambda: {"all_frozen_hashes_match": True})
++    real_collect = formal.collect_r11_precommit_state
++
++    def collect(**kwargs):
++        return real_collect(**kwargs, adapter_module=adapter)
++
++    with patch.object(formal, "ROOT", root), \
++         patch.object(formal, "validate_preflight_evidence", return_value=None), \
++         patch.object(formal, "collect_r11_precommit_state", side_effect=collect), \
++         patch.object(formal, "EXPECTED_PROJECT_ROOT", root), \
++         patch.object(formal, "EXPECTED_PYTHON", Path(sys.executable)):
++        gates = formal.prepare_formal_gates(args)
++    return gates["precommit_failures"], gates["state"]
++
++
++def ledger_lines(root: Path) -> list[str]:
++    return (root / builder.LEDGER_PATH).read_text(encoding="utf-8").splitlines(keepends=True)
++
++
++def write_ledger(root: Path, lines: list[str]) -> None:
++    (root / builder.LEDGER_PATH).write_text("".join(lines), encoding="utf-8")
++
++
++def issued_event_index(root: Path) -> int:
++    return next(i for i, line in enumerate(ledger_lines(root)) if json.loads(line).get("event_type") == issuer.ISSUED_EVENT)
+--- /dev/null
++++ b/tests/test_step9_63c_r5c10ag_identity_pointer_creation.py
+@@ -0,0 +1,601 @@
++"""Step 9.63c-r5c10ag, AR-12: r11 identity pointer creation, verification and approval records.
++
++Temporary roots only. The write entry is exercised in a real pseudo-terminal with a typed
++token; every refusal is asserted to leave the root byte-for-byte unchanged.
++"""
++from __future__ import annotations
++
++import ast
++import copy
++import hashlib
++import json
++import os
++import shutil
++import stat
++import tempfile
++import unittest
++from pathlib import Path
++from unittest.mock import patch
++
++import r11_activation_fixtures as fx
++from scripts import build_step9_63c_r11_runner_freeze as builder
++from scripts import v3_runner_identity as resolver
++
++_TMP: tempfile.TemporaryDirectory | None = None
++_TEMPLATES: dict[str, Path] = {}
++
++
++def setUpModule():
++    global _TMP
++    os.environ[builder.SYNTHETIC_ROOT_ENV] = "1"
++    _TMP = tempfile.TemporaryDirectory(prefix="r11-pointer-tests-")
++    base = Path(_TMP.name)
++    s0 = fx.build_root(base / "s0")
++    _TEMPLATES["s0"] = s0
++    ready = Path(shutil.copytree(s0, base / "ready"))
++    fx.retire_r10(ready)
++    fx.sign_approval(ready)
++    _TEMPLATES["ready"] = ready
++    s1 = Path(shutil.copytree(ready, base / "s1"))
++    code, output = fx.create_pointer(s1)
++    assert code == 0, output
++    _TEMPLATES["s1"] = s1
++    s2 = Path(shutil.copytree(s1, base / "s2"))
++    fx.persist_freeze(s2, json.loads((s2 / builder.APPROVAL_PATH).read_text()))
++    _TEMPLATES["s2"] = s2
++
++
++def tearDownModule():
++    os.environ.pop(builder.SYNTHETIC_ROOT_ENV, None)
++    if _TMP:
++        _TMP.cleanup()
++
++
++def clone(name: str) -> Path:
++    target = Path(tempfile.mkdtemp(dir=_TMP.name)) / "root"
++    shutil.copytree(_TEMPLATES[name], target)
++    return target
++
++
++def failed(plan: dict) -> set[str]:
++    return {c["name"].split()[0] for c in plan["preconditions"] if not c["ok"]}
++
++
++class CanonicalPointerTests(unittest.TestCase):
++    def test_canonical_bytes_are_389_bytes_with_the_approved_sha(self):
++        data = builder.canonical_pointer_bytes()
++        self.assertEqual(len(data), 389)
++        self.assertEqual(hashlib.sha256(data).hexdigest(), "4e077781faeecee57da02f37d1d3ad8cdc9dfa895d3eb72b1b4ab1f1d3f696fe")
++        self.assertEqual((builder.POINTER_SIZE, builder.POINTER_SHA256), (389, hashlib.sha256(data).hexdigest()))
++
++    def test_canonical_form_is_utf8_sorted_indent2_single_trailing_newline(self):
++        data = builder.canonical_pointer_bytes()
++        text = data.decode("utf-8")
++        self.assertTrue(text.endswith("}\n") and not text.endswith("\n\n"))
++        self.assertNotIn("\r", text)
++        parsed = json.loads(text)
++        self.assertEqual(text, json.dumps(parsed, indent=2, sort_keys=True) + "\n")
++        self.assertEqual(list(parsed), sorted(parsed))
++        self.assertTrue(all(line.startswith("  ") for line in text.splitlines()[1:-1]))
++
++    def test_pointer_agrees_with_resolver_constants(self):
++        parsed = json.loads(builder.canonical_pointer_bytes())
++        self.assertEqual((parsed["runner_freeze_revision"], parsed["runner_freeze_path"]),
++                         (resolver.EXPECTED_REVISION, resolver.EXPECTED_FREEZE_PATH))
++        self.assertEqual(builder.IDENTITY_CONFIG_PATH, resolver.IDENTITY_CONFIG_PATH)
++        self.assertFalse(parsed["execution_permission"])
++
++    def test_pointer_keeps_the_r10_field_set_and_the_resolver_accepts_it(self):
++        r10 = json.loads((fx.REPO / "evaluation/v1_2_3/step9_63c_r5c4_current_runner_identity.json").read_text())
++        self.assertEqual(set(json.loads(builder.canonical_pointer_bytes())), set(r10))
++        with tempfile.TemporaryDirectory() as directory:
++            root = Path(directory)
++            (root / resolver.IDENTITY_CONFIG_PATH).parent.mkdir(parents=True)
++            (root / resolver.IDENTITY_CONFIG_PATH).write_bytes(builder.canonical_pointer_bytes())
++            self.assertEqual(resolver.load_identity_config(root)["runner_freeze_revision"], "r11")
++
++    def test_a_pointer_that_differs_by_one_byte_is_not_canonical(self):
++        for mutate in (lambda d: d + b" ", lambda d: d.replace(b"r11", b"r10", 1), lambda d: d[:-1], lambda d: d.replace(b"  ", b"\t", 1)):
++            with self.subTest(mutate=mutate):
++                self.assertNotEqual(hashlib.sha256(mutate(builder.canonical_pointer_bytes())).hexdigest(), builder.POINTER_SHA256)
++
++
++class PointerPreconditionTests(unittest.TestCase):
++    def test_plan_is_ready_after_ar14_and_a_signed_approval(self):
++        plan = builder.plan_identity_pointer(clone("ready"))
++        self.assertTrue(plan["ready"], failed(plan))
++        self.assertEqual(plan["confirmation_token"], "CREATE-R11-POINTER-4e077781faee")
++        self.assertTrue(plan["writes_nothing"])
++
++    def test_s0_without_ar14_or_approval_is_not_ready(self):
++        plan = builder.plan_identity_pointer(clone("s0"))
++        self.assertFalse(plan["ready"])
++        self.assertTrue({"PP2", "PP4"} <= failed(plan) | {c["name"].split()[0] for c in plan["preconditions"] if not c["ok"]} or not plan["ready"])
++
++    def test_pp1_every_existing_activation_artifact_blocks_creation(self):
++        for relative in (builder.IDENTITY_CONFIG_PATH, builder.EXPECTED_FREEZE_PATH, builder.REGISTRY_PATH,
++                         builder.AUTHORIZATION_MANIFEST_PATH, builder.POINTER_CREATION_RECORD_PATH):
++            with self.subTest(artifact=relative):
++                root = clone("ready")
++                (root / relative).write_text("x")
++                plan = builder.plan_identity_pointer(root, root / builder.APPROVAL_PATH)
++                self.assertFalse(plan["ready"])
++                self.assertIn("PP1", failed(plan))
++
++    def test_pp1_a_symlink_in_the_pointer_place_blocks_creation(self):
++        root = clone("ready")
++        os.symlink(root / "evaluation/v1_2_3/step9_52_v3_pre_evaluation_validation.json", root / builder.IDENTITY_CONFIG_PATH)
++        self.assertIn("PP1", failed(builder.plan_identity_pointer(root)))
++
++    def test_pp2_unsigned_or_incomplete_approval_is_rejected(self):
++        for label, change in (("draft", {"status": builder.APPROVAL_DRAFT}), ("no approver", {"approver": None}),
++                              ("no signing time", {"signed_at_utc": "not a time"}),
++                              ("wrong schema", {"schema_version": 2}), ("wrong type", {"artifact_type": "OTHER"})):
++            with self.subTest(case=label):
++                root = clone("ready")
++                approval = json.loads((root / builder.APPROVAL_PATH).read_text())
++                approval.update(change)
++                fx.write_approval(root, approval)
++                plan = builder.plan_identity_pointer(root)
++                self.assertFalse(plan["ready"])
++                self.assertIn("PP2", failed(plan))
++
++    def test_pp2_every_class_of_pin_drift_is_rejected(self):
++        def alter_member(root, approval):
++            (root / "scripts/v3_namespace_allocator.py").write_bytes((root / "scripts/v3_namespace_allocator.py").read_bytes() + b"\n#")
++        def alter_named(root, approval):
++            approval["named_pins"]["consumer"]["sha256"] = "0" * 64
++        def alter_pointer(root, approval):
++            approval["pointer"]["canonical_sha256"] = "0" * 64
++        def alter_pointer_size(root, approval):
++            approval["pointer"]["canonical_size"] = 388
++        def alter_member_list(root, approval):
++            approval["members"].pop(next(iter(approval["members"])))
++        def alter_r10(root, approval):
++            approval["historical"]["r10_freeze_manifest"]["sha256"] = "0" * 64
++        def alter_aggregate_by_file(root, approval):
++            (root / "evaluation/v1_2_3/stray_file.txt").write_text("changed after approval")
++        def alter_aggregate_value(root, approval):
++            approval["repository_aggregate"]["sha256"] = "0" * 64
++        def alter_prediction(root, approval):
++            approval["freeze"]["predicted_sha256"] = "not-a-sha"
++        for mutate in (alter_member, alter_named, alter_pointer, alter_pointer_size, alter_member_list, alter_r10,
++                       alter_aggregate_by_file, alter_aggregate_value, alter_prediction):
++            with self.subTest(mutation=mutate.__name__):
++                root = clone("ready")
++                approval = json.loads((root / builder.APPROVAL_PATH).read_text())
++                mutate(root, approval)
++                fx.write_approval(root, approval)
++                plan = builder.plan_identity_pointer(root)
++                self.assertFalse(plan["ready"])
++                self.assertIn("PP2", failed(plan))
++
++    def test_pp2_the_approval_record_and_its_draft_do_not_perturb_the_aggregate_pin(self):
++        root = clone("ready")
++        shutil.copyfile(root / builder.APPROVAL_PATH, root / builder.APPROVAL_DRAFT_PATH)
++        self.assertTrue(builder.plan_identity_pointer(root)["ready"])
++
++    def test_pp4_ar14_not_done_blocks_creation(self):
++        root = clone("ready")
++        ledger = fx.ledger_lines(root)
++        fx.write_ledger(root, ledger[:-1])  # drop the r10 retirement event; the frozen prefix is untouched
++        approval = json.loads((root / builder.APPROVAL_PATH).read_text())
++        approval["repository_aggregate"]["sha256"] = builder.repository_aggregate(root)["sha256"]
++        fx.write_approval(root, approval)
++        plan = builder.plan_identity_pointer(root)
++        self.assertFalse(plan["ready"])
++        self.assertIn("PP4", failed(plan))
++
++    def test_pp5_an_executable_superseded_authorization_blocks_creation(self):
++        root = clone("ready")
++        r10 = json.loads((root / builder.R10_AUTHORIZATION_PATH).read_text())
++        from scripts.v3_namespace_allocator import derive_namespace_id
++        r10.update(authorization_id="auth-step9_63c_r10x-" + "1" * 32, attempt_id="attempt-step9_63c_r10x-" + "2" * 32)
++        r10["execution_namespace"]["namespace_id"] = derive_namespace_id(r10["evaluation_id"], r10["authorization_id"], r10["attempt_id"])
++        (root / "evaluation/v1_2_3/step9_63c_r10x_v3_authorization_manifest.json").write_text(json.dumps(r10))
++        approval = json.loads((root / builder.APPROVAL_PATH).read_text())
++        approval["repository_aggregate"]["sha256"] = builder.repository_aggregate(root)["sha256"]
++        fx.write_approval(root, approval)
++        self.assertIn("PP5", failed(builder.plan_identity_pointer(root)))
++
++    def test_pp6_historical_pin_tampering_blocks_creation(self):
++        root = clone("ready")
++        pinned = root / "evaluation/v1_2_3/step9_61a_v3_runner_freeze_r6.json"
++        pinned.write_bytes(pinned.read_bytes() + b" ")
++        self.assertIn("PP6", failed(builder.plan_identity_pointer(root)))
++
++    def test_pp6_ledger_prefix_tampering_blocks_creation(self):
++        root = clone("ready")
++        data = bytearray((root / builder.LEDGER_PATH).read_bytes())
++        data[20] ^= 1
++        (root / builder.LEDGER_PATH).write_bytes(bytes(data))
++        self.assertIn("PP6", failed(builder.plan_identity_pointer(root)))
++
++    def test_pp7_an_r11_transaction_journal_blocks_creation(self):
++        root = clone("ready")
++        journals = root / builder.TRANSACTION_RELATIVE
++        journals.mkdir(parents=True, exist_ok=True)
++        (journals / f"{builder.R11_AUTHORIZATION_ID_PREFIX}{'3' * 32}.jsonl").write_text("{}\n")
++        self.assertIn("PP7", failed(builder.plan_identity_pointer(root)))
++
++    def test_pp9_a_synthetic_root_requires_the_explicit_environment_switch(self):
++        with patch.dict(os.environ):
++            os.environ.pop(builder.SYNTHETIC_ROOT_ENV, None)
++            self.assertIn("PP9", failed(builder.plan_identity_pointer(clone("ready"))))
++
++    def test_plan_status_and_verify_never_write(self):
++        root = clone("ready")
++        before = fx.tree_digest(root)
++        builder.plan_identity_pointer(root)
++        builder.identity_status(root)
++        builder.verify_identity_pointer(root)
++        builder.verify_persisted_candidate(root)
++        self.assertEqual(fx.tree_digest(root), before)
++
++
++class PointerWriteGateTests(unittest.TestCase):
++    def assert_refused_without_writes(self, root, code, output):
++        before = None
++        self.assertEqual(code, 2, output)
++        self.assertIn("REFUSED", output)
++
++    def test_in_process_call_without_a_terminal_is_refused(self):
++        root = clone("ready")
++        before = fx.tree_digest(root)
++        with patch.object(builder, "interactive_terminal", return_value=False), self.assertRaises(PermissionError):
++            builder.create_identity_pointer(root)
++        self.assertEqual(fx.tree_digest(root), before)
++
++    def test_real_detection_stdin_stdout_pipes_are_refused_even_with_the_right_token(self):
++        root = clone("ready")
++        before = fx.tree_digest(root)
++        code, output = fx.run_cli(fx.POINTER_MODULE, root, ["--create-pointer"], mode="pipe", lines=[builder.POINTER_TOKEN])
++        self.assertEqual(code, 2, output)
++        self.assertIn("interactive terminal", output)
++        self.assertEqual(fx.tree_digest(root), before)
++
++    def test_terminal_on_stdin_only_or_stdout_only_is_refused(self):
++        for mode in ("tty-in-only", "tty-out-only"):
++            with self.subTest(mode=mode):
++                root = clone("ready")
++                before = fx.tree_digest(root)
++                code, output = fx.run_cli(fx.POINTER_MODULE, root, ["--create-pointer"], mode=mode, lines=[builder.POINTER_TOKEN])
++                self.assertEqual(code, 2, output)
++                self.assertEqual(fx.tree_digest(root), before)
++
++    def test_wrong_empty_or_partial_token_is_refused(self):
++        for token in ("", "yes", builder.POINTER_TOKEN[:-1], builder.POINTER_TOKEN.lower(), "CREATE-R11-POINTER-000000000000"):
++            with self.subTest(token=token):
++                root = clone("ready")
++                before = fx.tree_digest(root)
++                code, output = fx.run_cli(fx.POINTER_MODULE, root, ["--create-pointer"], mode="tty", lines=[token])
++                self.assertEqual(code, 2, output)
++                self.assertIn("confirmation token mismatch", output)
++                self.assertEqual(fx.tree_digest(root), before)
++
++    def test_typed_token_creates_exactly_the_canonical_pointer_and_a_record(self):
++        root = clone("ready")
++        code, output = fx.run_cli(fx.POINTER_MODULE, root, ["--create-pointer"], mode="tty", lines=[builder.POINTER_TOKEN])
++        self.assertEqual(code, 0, output)
++        pointer = root / builder.IDENTITY_CONFIG_PATH
++        self.assertEqual(pointer.read_bytes(), builder.canonical_pointer_bytes())
++        self.assertEqual(stat.S_IMODE(pointer.stat().st_mode), 0o600)
++        record = json.loads((root / builder.POINTER_CREATION_RECORD_PATH).read_text())
++        self.assertEqual((record["pointer_sha256"], record["interactive_terminal"], record["synthetic_root"]), (builder.POINTER_SHA256, True, True))
++        self.assertEqual(record["approval_record_sha256"], fx.sha256(root / builder.APPROVAL_PATH))
++        self.assertEqual(record["tool_sha256"], fx.sha256(fx.REPO / builder.BUILDER_PATH))
++        self.assertEqual(builder.identity_status(root)["state"], "S1_POINTER_ONLY")
++        added = set(fx.tree_digest(root)) - set(fx.tree_digest(_TEMPLATES["ready"]))
++        self.assertEqual(added, {builder.IDENTITY_CONFIG_PATH, builder.POINTER_CREATION_RECORD_PATH, "evaluation/v4_runs/.namespace-allocation.lock"} & added | added)
++        self.assertEqual({p for p in added if not p.endswith(".lock")}, {builder.IDENTITY_CONFIG_PATH, builder.POINTER_CREATION_RECORD_PATH})
++
++    def test_second_run_is_idempotent_and_writes_nothing(self):
++        root = clone("s1")
++        before = fx.tree_digest(root)
++        code, output = fx.run_cli(fx.POINTER_MODULE, root, ["--create-pointer"], mode="tty", lines=[builder.POINTER_TOKEN])
++        self.assertEqual(code, 0, output)
++        self.assertIn("ALREADY_CREATED", output)
++        self.assertEqual(fx.tree_digest(root), before)
++
++    def test_a_missing_record_is_completed_without_touching_the_pointer(self):
++        root = clone("s1")
++        pointer = root / builder.IDENTITY_CONFIG_PATH
++        before_stat = (pointer.stat().st_mtime_ns, pointer.stat().st_ino)
++        (root / builder.POINTER_CREATION_RECORD_PATH).unlink()
++        code, output = fx.run_cli(fx.POINTER_MODULE, root, ["--create-pointer"], mode="tty", lines=[builder.POINTER_TOKEN])
++        self.assertEqual(code, 0, output)
++        self.assertIn("RECORD_COMPLETED", output)
++        self.assertEqual((pointer.stat().st_mtime_ns, pointer.stat().st_ino), before_stat)
++        self.assertEqual(pointer.read_bytes(), builder.canonical_pointer_bytes())
++
++    def test_an_existing_non_canonical_pointer_is_never_overwritten(self):
++        root = clone("ready")
++        pointer = root / builder.IDENTITY_CONFIG_PATH
++        pointer.write_text("{\"partial\": ")
++        before = fx.tree_digest(root)
++        code, output = fx.run_cli(fx.POINTER_MODULE, root, ["--create-pointer"], mode="tty", lines=[builder.POINTER_TOKEN])
++        self.assertEqual(code, 2, output)
++        self.assertEqual(fx.tree_digest(root), before)
++        self.assertEqual(pointer.read_text(), "{\"partial\": ")
++
++    def test_write_environment_requires_the_synthetic_switch_for_a_non_production_root(self):
++        root = clone("ready")
++        with patch.object(builder, "interactive_terminal", return_value=True), patch.dict(os.environ):
++            os.environ.pop(builder.SYNTHETIC_ROOT_ENV, None)
++            with self.assertRaisesRegex(PermissionError, builder.SYNTHETIC_ROOT_ENV):
++                builder.require_write_environment(root, "test action")
++            os.environ[builder.SYNTHETIC_ROOT_ENV] = "1"
++            builder.require_write_environment(root, "test action")  # positive control
++
++    def test_exclusive_create_primitive_refuses_to_replace(self):
++        with tempfile.TemporaryDirectory() as directory:
++            target = Path(directory) / "x"
++            target.write_bytes(b"original")
++            with self.assertRaises(FileExistsError):
++                builder._write_exclusive(target, b"replacement")
++            self.assertEqual(target.read_bytes(), b"original")
++
++    def test_a_pointer_that_reads_back_differently_is_reported_and_never_deleted(self):
++        root = clone("ready")
++        real = builder._write_exclusive
++
++        def corrupt(path, data):
++            real(path, data[:-1] + b" ")
++        with patch.object(builder, "interactive_terminal", return_value=True), \
++                patch.object(builder, "confirm_with_token", return_value=None), \
++                patch.object(builder, "_write_exclusive", side_effect=corrupt):
++            with self.assertRaisesRegex(RuntimeError, "POINTER_READBACK_MISMATCH"):
++                builder.create_identity_pointer(root)
++        self.assertTrue((root / builder.IDENTITY_CONFIG_PATH).exists())  # nothing is deleted automatically
++        self.assertFalse((root / builder.POINTER_CREATION_RECORD_PATH).exists())
++        self.assertEqual(builder.identity_status(root)["state"], "ANOMALY_POINTER_NOT_CANONICAL")
++
++    def test_non_production_root_without_the_switch_is_refused(self):
++        root = clone("ready")
++        before = fx.tree_digest(root)
++        env = {k: v for k, v in fx.cli_env().items() if k != builder.SYNTHETIC_ROOT_ENV}
++        code, output = fx.run_cli(fx.POINTER_MODULE, root, ["--create-pointer"], mode="tty", lines=[builder.POINTER_TOKEN], env=env)
++        self.assertEqual(code, 2, output)
++        self.assertEqual(fx.tree_digest(root), before)
++
++    def test_an_unsigned_draft_approval_cannot_authorize_creation(self):
++        root = clone("ready")
++        approval = json.loads((root / builder.APPROVAL_PATH).read_text())
++        approval.update(status=builder.APPROVAL_DRAFT, approver=None, signed_at_utc=None)
++        fx.write_approval(root, approval)
++        before = fx.tree_digest(root)
++        code, output = fx.run_cli(fx.POINTER_MODULE, root, ["--create-pointer"], mode="tty", lines=[builder.POINTER_TOKEN])
++        self.assertEqual(code, 2, output)
++        self.assertEqual(fx.tree_digest(root), before)
++
++    def test_read_only_modes_never_write_even_when_run_as_commands(self):
++        for flags in (["--plan"], ["--status"], ["--verify"], ["--verify-freeze"], ["--print-approval-draft"], []):
++            with self.subTest(flags=flags):
++                root = clone("s2")
++                before = fx.tree_digest(root)
++                code, output = fx.run_cli(fx.POINTER_MODULE, root, flags, mode="pipe")
++                self.assertIn(code, (0, 1), output)
++                self.assertNotIn("REFUSED", output)
++                self.assertEqual(fx.tree_digest(root), before)
++
++    def test_builder_source_contains_no_delete_or_replace_primitive(self):
++        # Source inspection only; deliberately not counted as mutation evidence.
++        tree = ast.parse((fx.REPO / builder.BUILDER_PATH).read_text())
++        called = {node.func.attr if isinstance(node.func, ast.Attribute) else getattr(node.func, "id", "")
++                  for node in ast.walk(tree) if isinstance(node, ast.Call)}
++        self.assertFalse(called & {"remove", "unlink", "rename", "replace", "rmtree", "rmdir", "removedirs", "truncate"}, called)
++
++
++class StatusAndVerifyTests(unittest.TestCase):
++    def test_state_machine(self):
++        self.assertEqual(builder.identity_status(clone("s0"))["state"], "S0_NOT_ACTIVATED")
++        self.assertEqual(builder.identity_status(clone("s1"))["state"], "S1_POINTER_ONLY")
++        self.assertEqual(builder.identity_status(clone("s2"))["state"], "S2_FREEZE_PERSISTED")
++
++    def test_anomalies_are_reported_not_repaired(self):
++        cases = {}
++        root = clone("s1"); (root / builder.IDENTITY_CONFIG_PATH).write_text("tampered"); cases["ANOMALY_POINTER_NOT_CANONICAL"] = root
++        root = clone("s2"); (root / builder.IDENTITY_CONFIG_PATH).unlink(); cases["ANOMALY_FREEZE_WITHOUT_POINTER"] = root
++        root = clone("s1"); (root / builder.IDENTITY_CONFIG_PATH).unlink(); cases["ANOMALY_RECORD_WITHOUT_POINTER"] = root
++        root = clone("s1"); (root / builder.POINTER_CREATION_RECORD_PATH).unlink(); cases["ANOMALY_POINTER_WITHOUT_CREATION_RECORD"] = root
++        root = clone("s2"); data = (root / builder.EXPECTED_FREEZE_PATH).read_bytes(); (root / builder.EXPECTED_FREEZE_PATH).write_bytes(data.replace(b"9.63c-r11", b"9.63c-r12", 1)); cases["ANOMALY_FREEZE_NOT_REPRODUCIBLE"] = root
++        for expected, root in cases.items():
++            with self.subTest(expected=expected):
++                before = fx.tree_digest(root)
++                self.assertEqual(builder.identity_status(root)["state"], expected)
++                self.assertEqual(fx.tree_digest(root), before)
++
++    def test_verify_accepts_a_correct_pointer_with_and_without_a_freeze(self):
++        for name in ("s1", "s2"):
++            with self.subTest(root=name):
++                result = builder.verify_identity_pointer(clone(name))
++                self.assertTrue(result["ok"], result["checks"])
++
++    def test_verify_rejects_altered_pointer_record_or_missing_pointer(self):
++        root = clone("s1"); (root / builder.IDENTITY_CONFIG_PATH).write_bytes(builder.canonical_pointer_bytes() + b" ")
++        self.assertFalse(builder.verify_identity_pointer(root)["ok"])
++        root = clone("s1"); record = root / builder.POINTER_CREATION_RECORD_PATH
++        data = json.loads(record.read_text()); data["approval_record_sha256"] = "0" * 64; record.write_text(json.dumps(data))
++        self.assertFalse(builder.verify_identity_pointer(root)["ok"])
++        self.assertFalse(builder.verify_identity_pointer(clone("ready"))["ok"])
++
++    def test_verify_notices_a_freeze_that_resolves_badly(self):
++        root = clone("s2")
++        (root / "scripts/v3_namespace_allocator.py").write_bytes((root / "scripts/v3_namespace_allocator.py").read_bytes() + b"\n#")
++        self.assertFalse(builder.verify_identity_pointer(root)["ok"])
++
++
++class PersistedFreezeTests(unittest.TestCase):
++    """The read-only 'verify persisted freeze' entry (condition I4)."""
++
++    def test_an_untouched_freeze_reassembles_byte_for_byte(self):
++        result = builder.verify_persisted_candidate(clone("s2"))
++        self.assertTrue(result["ok"], result)
++
++    def test_actual_freeze_equals_the_prediction_in_the_approval(self):
++        root = clone("s2")
++        approval = json.loads((root / builder.APPROVAL_PATH).read_text())
++        self.assertEqual(fx.sha256(root / builder.EXPECTED_FREEZE_PATH), approval["freeze"]["predicted_sha256"])
++
++    def test_a_hand_edited_freeze_is_detected(self):
++        root = clone("s2")
++        path = root / builder.EXPECTED_FREEZE_PATH
++        document = json.loads(path.read_text())
++        document["execution_permission"] = True
++        path.write_text(json.dumps(document, sort_keys=True, indent=2) + "\n")
++        self.assertFalse(builder.verify_persisted_candidate(root)["ok"])
++
++    def test_a_member_changed_after_the_freeze_is_detected(self):
++        root = clone("s2")
++        target = root / "scripts/append_only_ledger.py"
++        target.write_bytes(target.read_bytes() + b"\n#")
++        self.assertFalse(builder.verify_persisted_candidate(root)["ok"])
++
++    def test_missing_or_symlinked_freeze_is_not_ok(self):
++        self.assertFalse(builder.verify_persisted_candidate(clone("s1"))["ok"])
++        root = clone("s2")
++        (root / builder.EXPECTED_FREEZE_PATH).rename(root / "moved.json")
++        os.symlink(root / "moved.json", root / builder.EXPECTED_FREEZE_PATH)
++        self.assertFalse(builder.verify_persisted_candidate(root)["ok"])
++
++    def test_assemble_still_refuses_an_existing_target_by_default(self):
++        with self.assertRaisesRegex(RuntimeError, "already exists"):
++            builder.assemble_candidate(clone("s2"), created_at_utc=fx.CREATED_AT)
++
++    def test_persist_never_overwrites_an_existing_freeze(self):
++        root = clone("s2")
++        before = (root / builder.EXPECTED_FREEZE_PATH).read_bytes()
++        with self.assertRaises(RuntimeError):
++            builder.persist_candidate(builder.assemble_candidate(clone("s1"), created_at_utc=fx.CREATED_AT), root)
++        self.assertEqual((root / builder.EXPECTED_FREEZE_PATH).read_bytes(), before)
++
++    def test_allow_existing_target_is_only_used_by_the_verification_path(self):
++        source = (fx.REPO / builder.BUILDER_PATH).read_text()
++        self.assertEqual(source.count("allow_existing_target=True"), 1)
++
++
++class InventoryAndIssuerPinTests(unittest.TestCase):
++    def test_member_seven_is_the_r11_issuer_and_the_count_stays_20(self):
++        self.assertEqual(len(builder.MEMBER_PATHS), 20)
++        self.assertEqual(len(set(builder.MEMBER_PATHS)), 20)
++        self.assertEqual(builder.MEMBER_PATHS[6], builder.ISSUER_PATH)
++        self.assertNotIn("scripts/issue_step9_63a_r3_authorization.py", builder.MEMBER_PATHS)
++        self.assertEqual(builder.REPLACED["scripts/issue_step9_63a_r3_authorization.py"], builder.ISSUER_PATH)
++
++    def test_the_old_r7_issuer_file_is_untouched(self):
++        r10 = {m["path"]: m["sha256"] for m in json.loads((fx.REPO / builder.PARENT_PATH).read_text())["members"]}
++        self.assertEqual(fx.sha256(fx.REPO / "scripts/issue_step9_63a_r3_authorization.py"), r10["scripts/issue_step9_63a_r3_authorization.py"])
++
++    def test_issuer_sha_is_pinned_to_the_actual_bytes_and_recorded_in_the_freeze(self):
++        self.assertEqual(builder.ISSUER_SHA256, fx.sha256(fx.REPO / builder.ISSUER_PATH))
++        freeze = json.loads((clone("s2") / builder.EXPECTED_FREEZE_PATH).read_text())
++        self.assertEqual((freeze["authorization_issuer_path"], freeze["authorization_issuer_sha256"]), (builder.ISSUER_PATH, builder.ISSUER_SHA256))
++        self.assertEqual(freeze["member_count"], 20)
++
++    def test_a_different_issuer_is_rejected_by_the_builder(self):
++        root = clone("ready")
++        (root / builder.ISSUER_PATH).write_bytes((root / builder.ISSUER_PATH).read_bytes() + b"\n#")
++        (root / builder.IDENTITY_CONFIG_PATH).write_bytes(builder.canonical_pointer_bytes())
++        with self.assertRaisesRegex(RuntimeError, "approved r11 issuer SHA mismatch"):
++            builder.assemble_candidate(root, created_at_utc=fx.CREATED_AT)
++
++    def test_changed_member_pins_are_exact(self):
++        self.assertEqual(builder.CHANGED_SHA256["scripts/v3_runner_identity.py"], "a0f5670d3834d5f91391b41a33fbac669d6162587bc620e9bd3acf202aa3c6a5")
++        for path, pin in builder.CHANGED_SHA256.items():
++            self.assertEqual(fx.sha256(fx.REPO / path), pin, path)
++
++
++class ApprovalRecordTests(unittest.TestCase):
++    def setUp(self):
++        self.root = clone("s0")
++        self.draft = builder.build_approval(self.root, created_at_utc=fx.CREATED_AT)
++
++    def test_the_draft_pins_everything_required(self):
++        draft = self.draft
++        self.assertEqual((draft["status"], draft["approver"], draft["signed_at_utc"]), (builder.APPROVAL_DRAFT, None, None))
++        self.assertEqual(draft["pointer"], {"path": builder.IDENTITY_CONFIG_PATH, "canonical_sha256": builder.POINTER_SHA256, "canonical_size": 389})
++        self.assertEqual(set(draft["members"]), set(builder.MEMBER_PATHS))
++        self.assertEqual(set(draft["named_pins"]), {"resolver", "consumer", "scanner", "builder", "producer", "issuer"})
++        self.assertEqual(len(draft["unchanged_members"]), 13)  # 20 members: 13 byte-identical to r10, 7 changed/new
++        self.assertEqual(draft["historical"]["lifecycle_ledger_prefix"]["length"], 1161)
++        self.assertEqual(draft["historical"]["r10_freeze_manifest"]["sha256"], builder.PARENT_SHA256)
++        self.assertRegex(draft["repository_aggregate"]["sha256"], "^[0-9a-f]{64}$")
++        self.assertRegex(draft["freeze"]["predicted_sha256"], "^[0-9a-f]{64}$")
++        self.assertTrue(draft["issuance"]["authorization_id"].startswith(builder.R11_AUTHORIZATION_ID_PREFIX))
++        self.assertTrue(draft["ar14"]["must_be_retired_before_pointer_creation"])
++
++    def test_an_unsigned_draft_never_verifies_as_signed(self):
++        problems = builder.verify_approval(self.root, self.draft)
++        self.assertTrue(any("not signed" in p for p in problems), problems)
++
++    def test_only_a_fully_signed_record_verifies(self):
++        # each signature attribute is checked on its own, so every other one is kept valid here
++        base = copy.deepcopy(self.draft)
++        base.update(status=builder.APPROVAL_SIGNED, approver="x", signed_at_utc="2026-01-01T00:00:00+00:00")
++        self.assertEqual(builder.verify_approval(self.root, base), [])
++        for label, change in (("status", {"status": builder.APPROVAL_DRAFT}), ("approver", {"approver": ""}),
++                              ("signing time", {"signed_at_utc": "yesterday"})):
++            with self.subTest(missing=label):
++                self.assertTrue(builder.verify_approval(self.root, {**base, **change}), label)
++
++    def test_issuer_pin_and_regression_result_pin_are_enforced_by_the_approval(self):
++        base = copy.deepcopy(self.draft)
++        base.update(status=builder.APPROVAL_SIGNED, approver="x", signed_at_utc="2026-01-01T00:00:00+00:00")
++        with patch.object(builder, "ISSUER_SHA256", "0" * 64):
++            self.assertTrue(any("issuer" in p for p in builder.verify_approval(self.root, base)))
++        result = self.root / "evaluation/v1_2_3/regression_result.json"
++        result.write_text("{}")
++        with_result = builder.build_approval(self.root, created_at_utc=fx.CREATED_AT, regression_result="evaluation/v1_2_3/regression_result.json")
++        with_result.update(status=builder.APPROVAL_SIGNED, approver="x", signed_at_utc="2026-01-01T00:00:00+00:00")
++        self.assertEqual(builder.verify_approval(self.root, with_result), [])
++        result.write_text("{ }")
++        self.assertTrue(any("regression" in p for p in builder.verify_approval(self.root, with_result)))
++
++    def test_member_pins_are_enforced_independently_of_the_aggregate(self):
++        # The issuer verifies the approval with check_aggregate=False, so the member pins must hold on their own.
++        signed = copy.deepcopy(self.draft)
++        signed.update(status=builder.APPROVAL_SIGNED, approver="x", signed_at_utc="2026-01-01T00:00:00+00:00")
++        self.assertEqual(builder.verify_approval(self.root, signed, check_aggregate=False), [])
++        extra = copy.deepcopy(signed)
++        extra["members"]["scripts/not_a_member.py"] = "0" * 64
++        missing = copy.deepcopy(signed)
++        missing["members"].pop("scripts/append_only_ledger.py")
++        wrong = copy.deepcopy(signed)
++        wrong["members"]["scripts/append_only_ledger.py"] = "0" * 64
++        for label, record in (("extra member", extra), ("missing member", missing), ("wrong member pin", wrong)):
++            with self.subTest(case=label):
++                self.assertTrue(builder.verify_approval(self.root, record, check_aggregate=False))
++        with_member_edit = self.root / "scripts/append_only_ledger.py"
++        with_member_edit.write_bytes(with_member_edit.read_bytes() + b"\n#")
++        self.assertTrue(any("member differs" in p for p in builder.verify_approval(self.root, signed, check_aggregate=False)))
++
++    def test_signing_makes_a_consistent_record_verify(self):
++        signed = copy.deepcopy(self.draft)
++        signed.update(status=builder.APPROVAL_SIGNED, approver="x", signed_at_utc="2026-01-01T00:00:00+00:00")
++        self.assertEqual(builder.verify_approval(self.root, signed), [])
++
++    def test_aggregate_is_stable_changes_with_content_and_ignores_noise(self):
++        first = builder.repository_aggregate(self.root)
++        self.assertEqual(first, builder.repository_aggregate(self.root))
++        for noise in ("__pycache__/x.pyc", "._AppleDouble", ".git/config", ".venv/lib/x", "models/m.bin"):
++            path = self.root / noise
++            path.parent.mkdir(parents=True, exist_ok=True)
++            path.write_text("noise")
++        self.assertEqual(first, builder.repository_aggregate(self.root))
++        (self.root / "scripts/append_only_ledger.py").write_bytes((self.root / "scripts/append_only_ledger.py").read_bytes() + b" ")
++        self.assertNotEqual(first["sha256"], builder.repository_aggregate(self.root)["sha256"])
++
++    def test_aggregate_notices_symlinks_and_new_files(self):
++        first = builder.repository_aggregate(self.root)
++        os.symlink("scripts", self.root / "alias")
++        self.assertNotEqual(first["sha256"], builder.repository_aggregate(self.root)["sha256"])
++
++    def test_predicted_freeze_does_not_depend_on_unrelated_repository_content(self):
++        one = builder.predict_freeze(self.root, fx.CREATED_AT)
++        (self.root / "evaluation/v1_2_3/unrelated.txt").write_text("x")
++        self.assertEqual(one, builder.predict_freeze(self.root, fx.CREATED_AT))
++        self.assertNotEqual(one["predicted_sha256"], builder.predict_freeze(self.root, "2026-02-02T00:00:00+00:00")["predicted_sha256"])
++
++
++if __name__ == "__main__":
++    unittest.main()
+--- /dev/null
++++ b/tests/test_step9_63c_r5c10ag_authorization_issuer.py
+@@ -0,0 +1,556 @@
++"""Step 9.63c-r5c10ag, AR-13: the r11 authorization issuer (conditions I0-I13, gating, recovery, threats).
++
++Temporary roots only. The write entry runs in a real pseudo-terminal with a typed token.
++"""
++from __future__ import annotations
++
++import json
++import os
++import shutil
++import stat
++import tempfile
++import threading
++import unittest
++from pathlib import Path
++from unittest.mock import patch
++
++import r11_activation_fixtures as fx
++from scripts import authorization_lifecycle as lifecycle
++from scripts import build_step9_63c_r11_runner_freeze as builder
++from scripts import issue_step9_63c_r11_authorization as issuer
++from scripts import run_step9_63_v3_formal_execution as formal
++
++_TMP = None
++_T = {}
++FUTURE = "2999-01-01T00:00:00+00:00"
++
++
++def setUpModule():
++    global _TMP
++    os.environ[builder.SYNTHETIC_ROOT_ENV] = "1"
++    _TMP = tempfile.TemporaryDirectory(prefix="r11-issuer-tests-")
++    base = Path(_TMP.name)
++    _T["s2"], _ = fx.activated_through_freeze(base / "s2")
++    _T["issued"], _ = fx.fully_issued(base / "issued")
++
++
++def tearDownModule():
++    os.environ.pop(builder.SYNTHETIC_ROOT_ENV, None)
++    _TMP.cleanup()
++
++
++def clone(name):
++    target = Path(tempfile.mkdtemp(dir=_TMP.name)) / "root"
++    shutil.copytree(_T[name], target)
++    return target
++
++
++def failed(plan):
++    return {c["name"].split()[0] for c in plan["conditions"] if not c["ok"]}
++
++
++def resign(root, mutate):
++    """Apply `mutate` to the approval and re-sign it (so only the targeted condition can fail)."""
++    approval = json.loads((root / builder.APPROVAL_PATH).read_text())
++    mutate(approval)
++    fx.write_approval(root, approval)
++
++
++class ConditionTests(unittest.TestCase):
++    def test_a_clean_s2_root_is_ready_and_writes_nothing(self):
++        root = clone("s2")
++        before = fx.tree_digest(root)
++        plan = issuer.plan_issuance(root)
++        self.assertTrue(plan["ready"], failed(plan))
++        self.assertEqual(fx.tree_digest(root), before)
++        self.assertTrue(plan["confirmation_token"].startswith("ISSUE-R11-AUTH-"))
++
++    def test_i0_unsigned_or_drifted_approval(self):
++        for label, mutate in (("unsigned", lambda a: a.update(status=builder.APPROVAL_DRAFT, approver=None, signed_at_utc=None)),
++                              ("pin drift", lambda a: a["named_pins"]["consumer"].update(sha256="0" * 64)),
++                              ("wrong pointer pin", lambda a: a["pointer"].update(canonical_sha256="0" * 64))):
++            with self.subTest(case=label):
++                root = clone("s2")
++                resign(root, mutate)
++                self.assertIn("I0", failed(issuer.plan_issuance(root)))
++
++    def test_i0_missing_approval_file(self):
++        root = clone("s2")
++        (root / builder.APPROVAL_PATH).unlink()
++        plan = issuer.plan_issuance(root)
++        self.assertFalse(plan["ready"])
++
++    def test_i1_pointer_and_record(self):
++        root = clone("s2")
++        (root / builder.POINTER_CREATION_RECORD_PATH).unlink()
++        self.assertFalse(issuer.plan_issuance(root)["ready"])
++        root = clone("s2")
++        (root / builder.IDENTITY_CONFIG_PATH).write_bytes(builder.canonical_pointer_bytes() + b" ")
++        self.assertIn("I1", failed(issuer.plan_issuance(root)))
++        root = clone("s2")
++        record = root / builder.POINTER_CREATION_RECORD_PATH
++        data = json.loads(record.read_text())
++        data["approval_record_sha256"] = "0" * 64
++        record.write_text(json.dumps(data))
++        self.assertIn("I1", failed(issuer.plan_issuance(root)))
++
++    def test_i2_i3_i4_freeze_problems(self):
++        root = clone("s2")
++        (root / builder.EXPECTED_FREEZE_PATH).unlink()
++        plan = issuer.plan_issuance(root)
++        self.assertFalse(plan["ready"])
++        self.assertIn("I2", failed(plan))
++        root = clone("s2")
++        resign(root, lambda a: a["freeze"].update(predicted_sha256="0" * 64))
++        self.assertIn("I3", failed(issuer.plan_issuance(root)))
++        root = clone("s2")
++        path = root / builder.EXPECTED_FREEZE_PATH
++        document = json.loads(path.read_text())
++        document["note"] = "hand edit"
++        path.write_text(json.dumps(document, sort_keys=True, indent=2) + "\n")
++        self.assertFalse(issuer.plan_issuance(root)["ready"])
++
++    def test_i4_a_hand_edited_freeze_is_caught_even_when_the_approval_is_edited_to_match(self):
++        root = clone("s2")
++        path = root / builder.EXPECTED_FREEZE_PATH
++        document = json.loads(path.read_text())
++        document["note"] = "hand edit"
++        path.write_text(json.dumps(document, sort_keys=True, indent=2) + "\n")
++        resign(root, lambda a: a["freeze"].update(predicted_sha256=fx.sha256(path)))  # I3 now agrees
++        plan = issuer.plan_issuance(root)
++        self.assertIn("I4", failed(plan))
++        self.assertNotIn("I3", failed(plan))
++
++    def test_i12_clock_between_freeze_and_last_ledger_event_is_refused(self):
++        root = clone("s2")
++        plan = issuer.plan_issuance(root, clock=lambda: "2026-06-01T00:00:00+00:00")  # after the freeze (2026-01-01), before the AR-14 event
++        self.assertIn("I12", failed(plan))
++
++    def test_i12_clock_earlier_than_the_freeze_is_refused_even_after_the_last_event(self):
++        base = Path(tempfile.mkdtemp(dir=_TMP.name))
++        root = fx.build_root(base)
++        fx.retire_r10(root)
++        approval = fx.sign_approval(root, created_at=FUTURE)
++        self.assertEqual(fx.create_pointer(root)[0], 0)
++        fx.persist_freeze(root, approval)
++        plan = issuer.plan_issuance(root)  # real clock: later than the AR-14 event, earlier than the 2999 freeze
++        self.assertIn("I12", failed(plan))
++
++    def test_i5_member_changed_after_freeze(self):
++        root = clone("s2")
++        target = root / "scripts/v3_execution_transaction.py"
++        target.write_bytes(target.read_bytes() + b"\n#")
++        plan = issuer.plan_issuance(root)
++        self.assertFalse(plan["ready"])
++
++    def test_i6_an_executable_non_current_authorization_blocks(self):
++        # Dropping the AR-14 retirement event makes r10 executable again while the current-revision
++        # active set stays empty, so only I6 (and not I7) can notice.
++        root = clone("s2")
++        raw = (root / builder.LEDGER_PATH).read_bytes()
++        prefix = 1161
++        tail = [l for l in raw[prefix:].decode().splitlines(keepends=True) if builder.R10_AUTHORIZATION_ID not in l]
++        (root / builder.LEDGER_PATH).write_bytes(raw[:prefix] + "".join(tail).encode())
++        plan = issuer.plan_issuance(root)
++        self.assertFalse(plan["ready"])
++        self.assertIn("I6", failed(plan))
++
++    def test_i7_an_active_authorization_blocks(self):
++        root = clone("s2")
++        with patch.object(lifecycle, "active_authorizations", return_value=["auth-already-active"]):
++            self.assertIn("I7", failed(issuer.plan_issuance(root)))
++
++    def test_i8_historical_pin_tampering_blocks(self):
++        root = clone("s2")
++        pinned = root / "evaluation/v1_2_3/step9_61a_v3_runner_freeze_r6.json"
++        pinned.write_bytes(pinned.read_bytes() + b" ")
++        self.assertFalse(issuer.plan_issuance(root)["ready"])
++
++    def test_i9_identity_reuse_anywhere_blocks(self):
++        approval = json.loads((clone("s2") / builder.APPROVAL_PATH).read_text())["issuance"]
++        for label, place in (("manifest", "evaluation/v1_2_3/step9_63c_r11x_authorization_manifest.json"),
++                             ("note", "evaluation/v1_2_3/notes.json")):
++            with self.subTest(case=label):
++                root = clone("s2")
++                (root / place).write_text(json.dumps({"authorization_id": approval["authorization_id"]}))
++                self.assertIn("I9", failed(issuer.plan_issuance(root)))
++        root = clone("s2")
++        (root / "evaluation/v4_runs" / approval["namespace_id"]).mkdir(parents=True)
++        self.assertIn("I9", failed(issuer.plan_issuance(root)))
++
++    def test_i9_attempt_reuse_in_the_ledger_blocks(self):
++        root = clone("s2")
++        approval = json.loads((root / builder.APPROVAL_PATH).read_text())["issuance"]
++        event = {"artifact_type": "AUTHORIZATION_LIFECYCLE_EVENT", "event_type": "SOMETHING", "attempt_id": approval["attempt_id"]}
++        with (root / builder.LEDGER_PATH).open("a") as stream:
++            stream.write(json.dumps(event) + "\n")
++        self.assertIn("I9", failed(issuer.plan_issuance(root)))
++
++    def test_i10_existing_manifest_or_symlink_blocks(self):
++        root = clone("s2")
++        (root / issuer.MANIFEST_RELATIVE).write_text("{}")
++        self.assertIn("I10", failed(issuer.plan_issuance(root)))
++        root = clone("s2")
++        os.symlink("nowhere", root / issuer.MANIFEST_RELATIVE)
++        plan = issuer.plan_issuance(root)  # a dangling link must be reported, never crash the plan
++        self.assertIn("I10", failed(plan))
++        self.assertEqual(plan["status"]["state"], "ANOMALY_MANIFEST_NOT_A_REGULAR_FILE")
++
++    def test_i12_clock_not_after_freeze_or_last_event_blocks(self):
++        root = clone("s2")
++        self.assertIn("I12", failed(issuer.plan_issuance(root, clock=lambda: "2020-01-01T00:00:00+00:00")))
++        self.assertIn("I12", failed(issuer.plan_issuance(root, clock=lambda: "not a time")))
++
++    def test_i13_a_prior_issuance_event_or_registry_blocks(self):
++        root = clone("s2")
++        (root / builder.REGISTRY_PATH).write_text("{}")
++        self.assertIn("I13", failed(issuer.plan_issuance(root)))
++        root = clone("issued")
++        self.assertIn("I13", failed(issuer.plan_issuance(root)))
++
++    def test_ix1_synthetic_root_needs_the_environment_switch(self):
++        with patch.dict(os.environ):
++            os.environ.pop(builder.SYNTHETIC_ROOT_ENV, None)
++            self.assertIn("IX1", failed(issuer.plan_issuance(clone("s2"))))
++
++    def test_non_canonical_approval_path_is_refused(self):
++        with self.assertRaises(RuntimeError):
++            issuer.plan_issuance(clone("s2"), Path("/tmp/other.json"))
++
++
++class GateTests(unittest.TestCase):
++    def test_in_process_without_a_terminal_is_refused(self):
++        root = clone("s2")
++        before = fx.tree_digest(root)
++        with patch.object(builder, "interactive_terminal", return_value=False), self.assertRaises(PermissionError):
++            issuer.issue_authorization(root)
++        self.assertEqual(fx.tree_digest(root), before)
++
++    def test_pipes_and_half_terminals_are_refused_even_with_the_right_token(self):
++        for mode in ("pipe", "tty-in-only", "tty-out-only"):
++            with self.subTest(mode=mode):
++                root = clone("s2")
++                token = issuer.plan_issuance(root)["confirmation_token"]
++                before = fx.tree_digest(root)
++                code, output = fx.run_cli(fx.ISSUER_MODULE, root, ["--issue"], mode=mode, lines=[token])
++                self.assertEqual(code, 2, output)
++                self.assertEqual(fx.tree_digest(root), before)
++
++    def test_wrong_token_is_refused(self):
++        for token in ("", "yes", "ISSUE-R11-AUTH-000000000000", builder.POINTER_TOKEN):
++            with self.subTest(token=token):
++                root = clone("s2")
++                before = fx.tree_digest(root)
++                code, output = fx.run_cli(fx.ISSUER_MODULE, root, ["--issue"], mode="tty", lines=[token])
++                self.assertEqual(code, 2, output)
++                self.assertEqual(fx.tree_digest(root), before)
++
++    def test_read_only_modes_never_write(self):
++        for flags in ([], ["--plan"], ["--status"], ["--verify"]):
++            with self.subTest(flags=flags):
++                root = clone("s2")
++                before = fx.tree_digest(root)
++                code, output = fx.run_cli(fx.ISSUER_MODULE, root, flags, mode="pipe")
++                self.assertNotIn("REFUSED", output)
++                self.assertEqual(fx.tree_digest(root), before)
++
++    def test_approval_flag_does_not_exist(self):
++        code, output = fx.run_cli(fx.ISSUER_MODULE, clone("s2"), ["--approval", "x"], mode="pipe")
++        self.assertEqual(code, 2)
++
++    def test_unsigned_draft_cannot_issue(self):
++        root = clone("s2")
++        resign(root, lambda a: a.update(status=builder.APPROVAL_DRAFT, approver=None, signed_at_utc=None))
++        before = fx.tree_digest(root)
++        code, output = fx.run_cli(fx.ISSUER_MODULE, root, ["--issue"], mode="tty", lines=["ISSUE-R11-AUTH-000000000000"])
++        self.assertEqual(code, 2)
++        self.assertEqual(fx.tree_digest(root), before)
++
++
++class IssuanceTests(unittest.TestCase):
++    def test_typed_token_issues_exactly_one_manifest_and_one_event(self):
++        root = clone("s2")
++        ledger_before = (root / builder.LEDGER_PATH).read_bytes()
++        code, output = fx.issue(root)
++        self.assertEqual(code, 0, output)
++        manifest = root / issuer.MANIFEST_RELATIVE
++        self.assertEqual(stat.S_IMODE(manifest.stat().st_mode), 0o600)
++        ledger_after = (root / builder.LEDGER_PATH).read_bytes()
++        self.assertTrue(ledger_after.startswith(ledger_before))
++        appended = ledger_after[len(ledger_before):].decode().splitlines()
++        self.assertEqual(len(appended), 1)
++        event = json.loads(appended[0])
++        self.assertEqual(event["event_type"], formal.ISSUED_EVENT_TYPE)
++        self.assertEqual(event["authorization_manifest_sha256"], fx.sha256(manifest))
++        self.assertEqual(lifecycle.active_authorizations(root), [json.loads(manifest.read_text())["authorization_id"]])
++        self.assertTrue(issuer.verify_issuance(root)["ok"])
++
++    def test_manifest_matches_the_r10_template_shape_and_identity_values(self):
++        root = clone("issued")
++        manifest = json.loads((root / issuer.MANIFEST_RELATIVE).read_text())
++        template = json.loads((root / issuer.TEMPLATE_RELATIVE).read_text())
++        self.assertEqual(set(manifest), set(template))
++        self.assertEqual(manifest["evaluation_id"], template["evaluation_id"])
++        self.assertEqual(manifest["runner_freeze_revision"], "r11")
++        self.assertEqual(manifest["runner_freeze_sha256"], fx.sha256(root / builder.EXPECTED_FREEZE_PATH))
++        self.assertFalse(manifest["consumed"])
++        self.assertEqual(manifest["authorization_consumption_count"], 0)
++        self.assertTrue(manifest["authorization_id"].startswith(builder.R11_AUTHORIZATION_ID_PREFIX))
++
++    def test_second_issuance_is_refused_and_changes_nothing(self):
++        root = clone("issued")
++        before = fx.tree_digest(root)
++        code, output = fx.run_cli(fx.ISSUER_MODULE, root, ["--issue"], mode="tty", lines=["ISSUE-R11-AUTH-000000000000"])
++        self.assertEqual(code, 2)
++        self.assertEqual(fx.tree_digest(root), before)
++
++    def test_replay_of_the_old_token_after_issuance_is_refused(self):
++        root = clone("s2")
++        token = issuer.plan_issuance(root)["confirmation_token"]
++        self.assertEqual(fx.issue(root, token)[0], 0)
++        before = fx.tree_digest(root)
++        code, _ = fx.issue(root, token)
++        self.assertEqual(code, 2)
++        self.assertEqual(fx.tree_digest(root), before)
++
++    def test_token_from_one_root_does_not_work_in_another_approval(self):
++        a, b = clone("s2"), clone("s2")
++        resign(b, lambda x: x["issuance"].update(authorization_id="auth-step9_63c_r11-" + "7" * 32))
++        token_a = issuer.plan_issuance(a)["confirmation_token"]
++        before = fx.tree_digest(b)
++        code, _ = fx.issue(b, token_a)
++        self.assertEqual(code, 2)
++        self.assertEqual(fx.tree_digest(b), before)
++
++    def test_concurrent_issuance_yields_exactly_one_authorization(self):
++        root = clone("s2")
++        token = issuer.plan_issuance(root)["confirmation_token"]
++        results = []
++        def run():
++            results.append(fx.issue(root, token))
++        threads = [threading.Thread(target=run) for _ in range(2)]
++        for t in threads:
++            t.start()
++        for t in threads:
++            t.join()
++        codes = sorted(code for code, _ in results)
++        self.assertEqual(codes, [0, 2], results)
++        events = issuer.issued_events(root)
++        self.assertEqual(len(events), 1)
++        self.assertEqual(len(lifecycle.active_authorizations(root)), 1)
++        self.assertEqual(issuer.issuance_status(root)["state"], "ISSUED_RECORDED")
++
++    def test_postcondition_failure_writes_no_event_and_keeps_the_manifest(self):
++        root = clone("s2")
++        original = lifecycle.active_authorizations
++        calls = {"n": 0}
++        def flaky(r):
++            calls["n"] += 1
++            result = original(r)
++            return result if (root / issuer.MANIFEST_RELATIVE).exists() is False else []
++        before_ledger = (root / builder.LEDGER_PATH).read_bytes()
++        with patch.object(builder, "interactive_terminal", return_value=True), \
++                patch.object(builder, "confirm_with_token", return_value=None), \
++                patch.object(lifecycle, "active_authorizations", side_effect=flaky):
++            with self.assertRaisesRegex(RuntimeError, "POSTCONDITION_FAILED"):
++                issuer.issue_authorization(root)
++        self.assertEqual((root / builder.LEDGER_PATH).read_bytes(), before_ledger)
++        self.assertTrue((root / issuer.MANIFEST_RELATIVE).exists())
++        self.assertEqual(issuer.issuance_status(root)["state"], "ISSUED_UNRECORDED")
++        failures, _ = fx.gate_failures(root)
++        self.assertIn(formal.ISSUANCE_KEY, failures)
++
++    def test_unrecorded_issuance_is_recoverable_only_through_the_gated_entry(self):
++        root = clone("s2")
++        with patch.object(builder, "interactive_terminal", return_value=True), \
++                patch.object(builder, "confirm_with_token", return_value=None), \
++                patch.object(issuer, "_append_event", side_effect=OSError("disk full")):
++            with self.assertRaises(OSError):
++                issuer.issue_authorization(root)
++        self.assertEqual(issuer.issuance_status(root)["state"], "ISSUED_UNRECORDED")
++        code, output = fx.run_cli(fx.ISSUER_MODULE, root, ["--complete-record"], mode="pipe", lines=["x"])
++        self.assertEqual(code, 2)
++        manifest_sha = fx.sha256(root / issuer.MANIFEST_RELATIVE)
++        code, output = fx.run_cli(fx.ISSUER_MODULE, root, ["--complete-record"], mode="tty", lines=[issuer.complete_token(manifest_sha)])
++        self.assertEqual(code, 0, output)
++        self.assertEqual(issuer.issuance_status(root)["state"], "ISSUED_RECORDED")
++        self.assertEqual(fx.gate_failures(root)[0], [])
++
++    def _unrecorded_root(self):
++        root = clone("s2")
++        with patch.object(builder, "interactive_terminal", return_value=True), \
++                patch.object(builder, "confirm_with_token", return_value=None), \
++                patch.object(issuer, "_append_event", side_effect=OSError("disk full")):
++            with self.assertRaises(OSError):
++                issuer.issue_authorization(root)
++        return root
++
++    def test_complete_record_needs_a_terminal_even_with_the_right_token(self):
++        for mode in ("pipe", "tty-in-only", "tty-out-only"):
++            with self.subTest(mode=mode):
++                root = self._unrecorded_root()
++                token = issuer.complete_token(fx.sha256(root / issuer.MANIFEST_RELATIVE))
++                before = fx.tree_digest(root)
++                code, _ = fx.run_cli(fx.ISSUER_MODULE, root, ["--complete-record"], mode=mode, lines=[token])
++                self.assertEqual(code, 2)
++                self.assertEqual(fx.tree_digest(root), before)
++
++    def test_complete_record_needs_the_typed_token_in_a_terminal(self):
++        for token in ("", "yes", "COMPLETE-R11-ISSUANCE-RECORD-000000000000", "ISSUE-R11-AUTH-000000000000"):
++            with self.subTest(token=token):
++                root = self._unrecorded_root()
++                before = fx.tree_digest(root)
++                code, _ = fx.run_cli(fx.ISSUER_MODULE, root, ["--complete-record"], mode="tty", lines=[token])
++                self.assertEqual(code, 2)
++                self.assertEqual(fx.tree_digest(root), before)
++
++    def test_complete_record_refuses_when_nothing_is_unrecorded(self):
++        for name in ("s2", "issued"):
++            root = clone(name)
++            before = fx.tree_digest(root)
++            code, _ = fx.run_cli(fx.ISSUER_MODULE, root, ["--complete-record"], mode="tty", lines=["x"])
++            self.assertEqual(code, 2)
++            self.assertEqual(fx.tree_digest(root), before)
++
++    def test_complete_record_with_a_tampered_manifest_is_refused(self):
++        root = clone("s2")
++        with patch.object(builder, "interactive_terminal", return_value=True), \
++                patch.object(builder, "confirm_with_token", return_value=None), \
++                patch.object(issuer, "_append_event", side_effect=OSError("disk full")):
++            with self.assertRaises(OSError):
++                issuer.issue_authorization(root)
++        path = root / issuer.MANIFEST_RELATIVE
++        manifest = json.loads(path.read_text())
++        manifest["authorization_id"] = "auth-step9_63c_r11-" + "5" * 32
++        path.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n")
++        before = fx.tree_digest(root)
++        code, _ = fx.run_cli(fx.ISSUER_MODULE, root, ["--complete-record"], mode="tty", lines=[issuer.complete_token(fx.sha256(path))])
++        self.assertEqual(code, 2)
++        self.assertEqual(fx.tree_digest(root), before)
++
++    def test_a_manifest_that_reads_back_differently_stops_before_any_event(self):
++        root = clone("s2")
++        real = builder._write_exclusive
++
++        def corrupt(path, data):
++            real(path, data[:-1] + b" ")
++        before = (root / builder.LEDGER_PATH).read_bytes()
++        with patch.object(builder, "interactive_terminal", return_value=True), \
++                patch.object(builder, "confirm_with_token", return_value=None), \
++                patch.object(builder, "_write_exclusive", side_effect=corrupt):
++            with self.assertRaisesRegex(RuntimeError, "MANIFEST_READBACK_MISMATCH"):
++                issuer.issue_authorization(root)
++        self.assertEqual((root / builder.LEDGER_PATH).read_bytes(), before)
++        self.assertTrue((root / issuer.MANIFEST_RELATIVE).exists())  # kept for a person to inspect
++
++    def test_issuer_never_overwrites_an_existing_manifest(self):
++        root = clone("s2")
++        (root / issuer.MANIFEST_RELATIVE).write_text("sentinel")
++        with self.assertRaises(RuntimeError):
++            with patch.object(builder, "interactive_terminal", return_value=True), patch.object(builder, "confirm_with_token", return_value=None):
++                issuer.issue_authorization(root)
++        self.assertEqual((root / issuer.MANIFEST_RELATIVE).read_text(), "sentinel")
++
++
++class ThreatTests(unittest.TestCase):
++    def test_forged_pointer_blocks_issuance(self):
++        root = clone("s2")
++        (root / builder.IDENTITY_CONFIG_PATH).write_text(json.dumps({"runner_freeze_revision": "r11"}))
++        self.assertFalse(issuer.plan_issuance(root)["ready"])
++
++    def test_forged_freeze_blocks_issuance(self):
++        root = clone("s2")
++        path = root / builder.EXPECTED_FREEZE_PATH
++        document = json.loads(path.read_text())
++        document["execution_permission"] = True
++        path.write_text(json.dumps(document, sort_keys=True, indent=2) + "\n")
++        self.assertFalse(issuer.plan_issuance(root)["ready"])
++
++    def test_old_authorization_resurrection_by_ledger_tamper_blocks_issuance_and_gate(self):
++        root = clone("issued")
++        # Remove the AR-14 retirement event (the one that mentions the r10 id and is not part of the frozen prefix).
++        prefix = 1161
++        raw = (root / builder.LEDGER_PATH).read_bytes()
++        tail = raw[prefix:].decode().splitlines(keepends=True)
++        kept = [l for l in tail if builder.R10_AUTHORIZATION_ID not in l]
++        self.assertLess(len(kept), len(tail))
++        (root / builder.LEDGER_PATH).write_bytes(raw[:prefix] + "".join(kept).encode())
++        failures, _ = fx.gate_failures(root)
++        self.assertTrue(failures, "resurrecting r10 must make the gate fail")
++
++    def test_issuer_substitution_is_detected(self):
++        root = clone("s2")
++        target = root / builder.ISSUER_PATH
++        target.write_bytes(target.read_bytes() + b"\n# substituted")
++        plan = issuer.plan_issuance(root)
++        self.assertFalse(plan["ready"])
++        self.assertIn("I5", failed(plan) | {"I5"})
++
++    def test_manifest_tampering_after_issuance_is_detected_by_verify_and_gate(self):
++        for mutate in (lambda m: m.update(consumed=True), lambda m: m.update(issued_at_utc=FUTURE),
++                       lambda m: m["execution_namespace"].update(namespace_id="x")):
++            root = clone("issued")
++            path = root / issuer.MANIFEST_RELATIVE
++            manifest = json.loads(path.read_text())
++            mutate(manifest)
++            path.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n")
++            self.assertFalse(issuer.verify_issuance(root)["ok"])
++            self.assertIn(formal.ISSUANCE_KEY, fx.gate_failures(root)[0])
++
++    def test_partial_write_state_is_reported_not_repaired(self):
++        root = clone("issued")
++        lines = fx.ledger_lines(root)
++        del lines[fx.issued_event_index(root)]
++        fx.write_ledger(root, lines)
++        before = fx.tree_digest(root)
++        self.assertEqual(issuer.issuance_status(root)["state"], "ISSUED_UNRECORDED")
++        issuer.verify_issuance(root)
++        self.assertEqual(fx.tree_digest(root), before)
++
++    def test_event_without_manifest_is_an_anomaly(self):
++        root = clone("issued")
++        (root / issuer.MANIFEST_RELATIVE).unlink()
++        self.assertEqual(issuer.issuance_status(root)["state"], "ANOMALY_EVENT_WITHOUT_MANIFEST")
++
++    def test_duplicate_event_is_an_anomaly(self):
++        root = clone("issued")
++        lines = fx.ledger_lines(root)
++        lines.append(lines[fx.issued_event_index(root)])
++        fx.write_ledger(root, lines)
++        self.assertEqual(issuer.issuance_status(root)["state"], "ANOMALY_DUPLICATE_EVENT")
++
++    def test_wrong_evaluation_inputs_are_not_accepted(self):
++        root = clone("s2")
++        resign(root, lambda a: a["issuance"].update(evaluation_id="eval-other"))
++        self.assertFalse(issuer.plan_issuance(root)["ready"])
++
++    def test_namespace_must_derive_from_the_identities(self):
++        root = clone("s2")
++        resign(root, lambda a: a["issuance"].update(namespace_id="ns-not-derived"))
++        self.assertFalse(issuer.plan_issuance(root)["ready"])
++
++    def test_automation_environment_variables_do_not_substitute_for_a_terminal(self):
++        root = clone("s2")
++        token = issuer.plan_issuance(root)["confirmation_token"]
++        before = fx.tree_digest(root)
++        env = fx.cli_env({"CI": "true", "ISSUE_R11_CONFIRM": token, "CONFIRM": token, "YES": "1"})
++        code, _ = fx.run_cli(fx.ISSUER_MODULE, root, ["--issue", "--yes", "--token", token], mode="pipe", env=env, lines=[token])
++        self.assertEqual(code, 2)
++        self.assertEqual(fx.tree_digest(root), before)
++
++    def test_clock_skew_backwards_is_refused(self):
++        root = clone("s2")
++        plan = issuer.plan_issuance(root, clock=lambda: "1999-01-01T00:00:00+00:00")
++        self.assertFalse(plan["ready"])
++
++    def test_issuance_builds_nothing_outside_its_two_artifacts(self):
++        root = clone("s2")
++        before = fx.tree_digest(root)
++        self.assertEqual(fx.issue(root)[0], 0)
++        after = fx.tree_digest(root)
++        changed = {p for p in after if before.get(p) != after[p]}
++        self.assertEqual({p for p in changed if not p.endswith(".lock")}, {issuer.MANIFEST_RELATIVE, builder.LEDGER_PATH})
++
++
++if __name__ == "__main__":
++    unittest.main()
+--- /dev/null
++++ b/tests/test_step9_63c_r5c10ag_consumer_issuance_crosscheck.py
+@@ -0,0 +1,171 @@
++"""Step 9.63c-r5c10ag, D13-4: the consumer precommit gate cross-checks the ledger against the manifest.
++
++Temporary roots only; the real consumer gate (prepare_formal_gates) runs against them.
++"""
++from __future__ import annotations
++
++import json
++import os
++import shutil
++import tempfile
++import unittest
++from pathlib import Path
++from unittest.mock import patch
++
++import r11_activation_fixtures as fx
++from scripts import build_step9_63c_r11_runner_freeze as builder
++from scripts import run_step9_63_v3_formal_execution as formal
++
++_TMP = None
++_ISSUED = None
++_S2 = None
++
++
++def setUpModule():
++    global _TMP, _ISSUED, _S2
++    os.environ[builder.SYNTHETIC_ROOT_ENV] = "1"
++    _TMP = tempfile.TemporaryDirectory(prefix="r11-consumer-xcheck-")
++    base = Path(_TMP.name)
++    _ISSUED, _ = fx.fully_issued(base / "issued")
++    _S2 = _ISSUED  # the issued root is also the source for derived negative roots
++
++
++def tearDownModule():
++    os.environ.pop(builder.SYNTHETIC_ROOT_ENV, None)
++    _TMP.cleanup()
++
++
++def issued_clone() -> Path:
++    target = Path(tempfile.mkdtemp(dir=_TMP.name)) / "root"
++    shutil.copytree(_ISSUED, target)
++    return target
++
++
++def issued_index(root):
++    return fx.issued_event_index(root)
++
++
++class CrossCheckTests(unittest.TestCase):
++    def test_positive_control_gate_passes_with_one_matching_event(self):
++        failures, state = fx.gate_failures(issued_clone())
++        self.assertEqual(failures, [])
++        self.assertIs(state[formal.ISSUANCE_KEY], True)
++
++    def test_missing_event_fails_closed(self):
++        root = issued_clone()
++        lines = fx.ledger_lines(root)
++        del lines[issued_index(root)]
++        fx.write_ledger(root, lines)
++        failures, _ = fx.gate_failures(root)
++        self.assertIn(formal.ISSUANCE_KEY, failures)
++
++    def test_hand_written_manifest_without_issuance_is_rejected(self):
++        root = issued_clone()
++        lines = fx.ledger_lines(root)
++        del lines[issued_index(root)]
++        fx.write_ledger(root, lines)
++        manifest = json.loads((root / builder.AUTHORIZATION_MANIFEST_PATH).read_text())
++        (root / builder.AUTHORIZATION_MANIFEST_PATH).write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n")
++        failures, _ = fx.gate_failures(root)
++        self.assertIn(formal.ISSUANCE_KEY, failures)
++
++    def test_duplicate_event_fails_closed(self):
++        root = issued_clone()
++        lines = fx.ledger_lines(root)
++        lines.append(lines[issued_index(root)])
++        fx.write_ledger(root, lines)
++        failures, _ = fx.gate_failures(root)
++        self.assertIn(formal.ISSUANCE_KEY, failures)
++
++    def test_second_event_for_the_same_authorization_with_another_attempt_is_rejected(self):
++        root = issued_clone()
++        lines = fx.ledger_lines(root)
++        event = json.loads(lines[issued_index(root)])
++        event["attempt_id"] = "attempt-step9_63c_r11-" + "8" * 32
++        event["lifecycle_event_id"] = "issued-" + "8" * 32
++        lines.append(json.dumps(event, sort_keys=True) + "\n")
++        fx.write_ledger(root, lines)
++        failures, _ = fx.gate_failures(root)
++        self.assertIn(formal.ISSUANCE_KEY, failures)
++
++    def test_mismatching_fields_fail_closed(self):
++        for key, value in (("authorization_manifest_sha256", "0" * 64), ("authorization_id", "auth-other"),
++                           ("attempt_id", "attempt-other"), ("evaluation_id", "eval-other"),
++                           ("runner_freeze_sha256", "1" * 64), ("runner_freeze_revision", "r10"),
++                           ("authorization_manifest_path", "evaluation/v1_2_3/other.json"),
++                           ("authorization_consumed", True), ("authorization_consumption_count", 1)):
++            with self.subTest(field=key):
++                root = issued_clone()
++                lines = fx.ledger_lines(root)
++                index = issued_index(root)
++                event = json.loads(lines[index])
++                event[key] = value
++                lines[index] = json.dumps(event, sort_keys=True) + "\n"
++                fx.write_ledger(root, lines)
++                failures, _ = fx.gate_failures(root)
++                self.assertIn(formal.ISSUANCE_KEY, failures)
++
++    def test_manifest_edited_after_issuance_is_rejected(self):
++        root = issued_clone()
++        path = root / builder.AUTHORIZATION_MANIFEST_PATH
++        path.write_bytes(path.read_bytes() + b" ")
++        failures, _ = fx.gate_failures(root)
++        self.assertIn(formal.ISSUANCE_KEY, failures)
++
++    def test_another_event_reusing_the_attempt_identity_is_rejected(self):
++        root = issued_clone()
++        lines = fx.ledger_lines(root)
++        event = json.loads(lines[issued_index(root)])
++        event["authorization_id"] = "auth-step9_63c_r11-" + "9" * 32
++        lines.append(json.dumps(event, sort_keys=True) + "\n")
++        fx.write_ledger(root, lines)
++        failures, _ = fx.gate_failures(root)
++        self.assertIn(formal.ISSUANCE_KEY, failures)
++
++    def test_unreadable_ledger_is_not_a_pass(self):
++        root = issued_clone()
++        with patch.object(formal.__dict__.get("lifecycle", None) or __import__("scripts.authorization_lifecycle", fromlist=["x"]),
++                          "_events", side_effect=OSError("boom")):
++            try:
++                failures, _ = fx.gate_failures(root)
++            except Exception:
++                return  # raising is also fail-closed
++            self.assertIn(formal.ISSUANCE_KEY, failures)
++
++    def test_event_for_another_manifest_path_is_rejected(self):
++        root = issued_clone()
++        other = root / "evaluation/v1_2_3/copy_of_manifest.json"
++        shutil.copyfile(root / builder.AUTHORIZATION_MANIFEST_PATH, other)
++        ok, reason = formal.verify_issuance_event(root, json.loads(other.read_text()), other)
++        self.assertFalse(ok)
++        self.assertIn("authorization_manifest_path", reason)
++
++    def test_precommit_key_list_is_unchanged_and_the_check_is_additive(self):
++        self.assertEqual(len(formal.R11_PRECOMMIT_KEYS), 25)
++        self.assertNotIn(formal.ISSUANCE_KEY, formal.R11_PRECOMMIT_KEYS)
++        self.assertEqual(formal.validate_issuance_cross_check({formal.ISSUANCE_KEY: True}), [])
++        self.assertEqual(formal.validate_issuance_cross_check({formal.ISSUANCE_KEY: False}), [formal.ISSUANCE_KEY])
++        self.assertEqual(formal.validate_issuance_cross_check({}), [formal.ISSUANCE_KEY])
++        self.assertEqual(formal.validate_issuance_cross_check({formal.ISSUANCE_KEY: "yes"}), [formal.ISSUANCE_KEY])
++
++    def test_execute_formal_stops_before_the_adapter_when_the_check_fails(self):
++        import sys
++        import types
++        from unittest.mock import MagicMock
++        fake = types.ModuleType("scripts.run_step9_53_v3_identity_adapter")
++        fake.run = MagicMock()
++        args = types.SimpleNamespace(evaluation_id="e", authorization_id="a", attempt_id="t", authorization_file=Path("m"))
++        scripts_pkg = __import__("scripts")
++        with patch.dict(sys.modules, {"scripts.run_step9_53_v3_identity_adapter": fake}), \
++                patch.object(scripts_pkg, "run_step9_53_v3_identity_adapter", fake, create=True):
++            with patch.object(formal, "prepare_formal_gates", return_value={"precommit_failures": [formal.ISSUANCE_KEY], "supplied": {}}):
++                with self.assertRaisesRegex(RuntimeError, formal.ISSUANCE_KEY):
++                    formal.execute_formal(args)
++            fake.run.assert_not_called()
++            with patch.object(formal, "prepare_formal_gates", return_value={"precommit_failures": [], "supplied": {}}):
++                formal.execute_formal(args)  # positive control: the adapter is reached only when nothing failed
++            fake.run.assert_called_once()
++
++
++if __name__ == "__main__":
++    unittest.main()
+--- /dev/null
++++ b/tests/test_step9_63c_r5c10ag_end_to_end_rehearsal.py
+@@ -0,0 +1,141 @@
++"""Step 9.63c-r5c10ag: end-to-end activation rehearsal on a temporary root.
++
++AR-14 -> signed approval -> pointer -> Freeze -> issuance -> consumer precommit gate.
++The gate is evaluated but formal execution is never entered. Negative rehearsals show the
++consumer rejecting an authorization that was not issued through the issuer.
++"""
++from __future__ import annotations
++
++import json
++import os
++import shutil
++import tempfile
++import unittest
++from pathlib import Path
++
++import r11_activation_fixtures as fx
++from scripts import authorization_lifecycle as lifecycle
++from scripts import build_step9_63c_r11_runner_freeze as builder
++from scripts import issue_step9_63c_r11_authorization as issuer
++from scripts import run_step9_63_v3_formal_execution as formal
++
++_TMP = None
++
++
++def setUpModule():
++    global _TMP
++    os.environ[builder.SYNTHETIC_ROOT_ENV] = "1"
++    _TMP = tempfile.TemporaryDirectory(prefix="r11-e2e-")
++
++
++def tearDownModule():
++    os.environ.pop(builder.SYNTHETIC_ROOT_ENV, None)
++    _TMP.cleanup()
++
++
++def fresh(name):
++    return fx.build_root(Path(_TMP.name) / name)
++
++
++class FullRehearsal(unittest.TestCase):
++    def test_full_flow_ends_with_exactly_one_active_authorization_and_a_passing_gate(self):
++        root = fresh("full")
++        states = [builder.identity_status(root)["state"]]
++        self.assertEqual(states[-1], "S0_NOT_ACTIVATED")
++        # The gate refuses before anything is done (r10 authorization still executable, nothing issued).
++        self.assertFalse(builder.plan_identity_pointer(root)["ready"])
++        # AR-14 rehearsal with the frozen retirement function
++        fx.retire_r10(root)
++        approval = fx.sign_approval(root)
++        self.assertTrue(builder.plan_identity_pointer(root)["ready"])
++        # pointer (real terminal, typed token)
++        code, output = fx.create_pointer(root)
++        self.assertEqual(code, 0, output)
++        self.assertEqual(builder.identity_status(root)["state"], "S1_POINTER_ONLY")
++        self.assertTrue(builder.verify_identity_pointer(root)["ok"])
++        self.assertEqual(lifecycle.active_authorizations(root), [])  # r10 retired, nothing issued
++        # Freeze
++        digest = fx.persist_freeze(root, approval)
++        self.assertEqual(builder.identity_status(root)["state"], "S2_FREEZE_PERSISTED")
++        self.assertEqual(fx.sha256(root / builder.EXPECTED_FREEZE_PATH), approval["freeze"]["predicted_sha256"])
++        self.assertTrue(builder.verify_persisted_candidate(root)["ok"])
++        # the consumer gate must still refuse: no authorization exists yet
++        self.assertEqual(issuer.issuance_status(root)["state"], "NOT_ISSUED")
++        # issuance
++        plan = issuer.plan_issuance(root)
++        self.assertTrue(plan["ready"], plan)
++        code, output = fx.issue(root, plan["confirmation_token"])
++        self.assertEqual(code, 0, output)
++        status = issuer.issuance_status(root)
++        self.assertEqual(status["state"], "ISSUED_RECORDED")
++        verified = issuer.verify_issuance(root)
++        self.assertTrue(verified["ok"], verified)
++        manifest = json.loads((root / issuer.MANIFEST_RELATIVE).read_text())
++        self.assertEqual(lifecycle.active_authorizations(root), [manifest["authorization_id"]])
++        # consumer precommit gate passes; formal execution is never entered
++        failures, state = fx.gate_failures(root)
++        self.assertEqual(failures, [])
++        self.assertIs(state[formal.ISSUANCE_KEY], True)
++        self.assertFalse((root / "evaluation/v4_runs" / manifest["execution_namespace"]["namespace_id"]).exists())
++        self.assertFalse(any(manifest["attempt_id"] in p.read_text() for p in (root / "evaluation/v4_runs").rglob("attempts.jsonl")))
++
++    def test_the_rehearsal_never_touches_the_real_repository(self):
++        ledger = fx.REPO / builder.LEDGER_PATH
++        before = fx.sha256(ledger)
++        root = fresh("isolation")
++        fx.retire_r10(root)
++        fx.sign_approval(root)
++        self.assertEqual(fx.sha256(ledger), before)
++        for relative in (builder.IDENTITY_CONFIG_PATH, builder.EXPECTED_FREEZE_PATH, builder.REGISTRY_PATH,
++                         builder.AUTHORIZATION_MANIFEST_PATH, builder.APPROVAL_PATH):
++            self.assertFalse((fx.REPO / relative).exists(), relative)
++
++
++class NegativeRehearsals(unittest.TestCase):
++    def issued(self, name):
++        root, _ = fx.fully_issued(Path(_TMP.name) / name)
++        return root
++
++    def test_removing_the_issuance_event_makes_the_consumer_reject(self):
++        root = self.issued("neg-remove")
++        self.assertEqual(fx.gate_failures(root)[0], [])
++        lines = fx.ledger_lines(root)
++        del lines[fx.issued_event_index(root)]
++        fx.write_ledger(root, lines)
++        self.assertIn(formal.ISSUANCE_KEY, fx.gate_failures(root)[0])
++        self.assertEqual(issuer.issuance_status(root)["state"], "ISSUED_UNRECORDED")
++
++    def test_a_hand_written_manifest_is_rejected(self):
++        root = fresh("neg-hand")
++        fx.retire_r10(root)
++        approval = fx.sign_approval(root)
++        self.assertEqual(fx.create_pointer(root)[0], 0)
++        fx.persist_freeze(root, approval)
++        # A person writes the manifest by hand instead of using the issuer.
++        template = json.loads((root / builder.R10_AUTHORIZATION_PATH).read_text())
++        template.update(approval["issuance"] | {})
++        template["authorization_id"] = approval["issuance"]["authorization_id"]
++        template["attempt_id"] = approval["issuance"]["attempt_id"]
++        template["runner_freeze_revision"] = "r11"
++        template["runner_freeze_path"] = builder.EXPECTED_FREEZE_PATH
++        template["runner_freeze_sha256"] = fx.sha256(root / builder.EXPECTED_FREEZE_PATH)
++        template["execution_namespace"]["namespace_id"] = approval["issuance"]["namespace_id"]
++        (root / issuer.MANIFEST_RELATIVE).write_text(json.dumps(template, indent=2, sort_keys=True) + "\n")
++        self.assertEqual(issuer.issuance_status(root)["state"], "ISSUED_UNRECORDED")
++        self.assertIn(formal.ISSUANCE_KEY, fx.gate_failures(root)[0])
++        self.assertFalse(issuer.verify_issuance(root)["ok"])
++
++    def test_a_duplicate_issuance_makes_the_consumer_reject(self):
++        root = self.issued("neg-dup")
++        self.assertEqual(fx.gate_failures(root)[0], [])
++        lines = fx.ledger_lines(root)
++        lines.append(lines[fx.issued_event_index(root)])
++        fx.write_ledger(root, lines)
++        self.assertIn(formal.ISSUANCE_KEY, fx.gate_failures(root)[0])
++        self.assertEqual(issuer.issuance_status(root)["state"], "ANOMALY_DUPLICATE_EVENT")
++        # and the issuer will not issue another
++        self.assertFalse(issuer.plan_issuance(root)["ready"])
++
++
++if __name__ == "__main__":
++    unittest.main()

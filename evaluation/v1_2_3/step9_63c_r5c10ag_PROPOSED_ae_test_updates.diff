@@ -1,0 +1,23 @@
+--- a/tests/test_step9_63c_r5c10ae_builder_pins.py
++++ b/tests/test_step9_63c_r5c10ae_builder_pins.py
+@@ -75,7 +75,7 @@
+         self.assertEqual(builder.CHANGED_SHA256, {
+             SCANNER: "f0e74a49d152053b5455951c507edb8f7849a9e4708835711e5975a82e690e91",
+             RESOLVER: "a0f5670d3834d5f91391b41a33fbac669d6162587bc620e9bd3acf202aa3c6a5",
+-            CONSUMER: "297558393e56c645fb02b4ec45d4af41486b504034bdd717237b7738a21f4879",
++            CONSUMER: "362eb4467fdadd29edc056ecf7b446f2cab99a2d3c407d350b4e91494c5b9528",
+         })
+         self.assertEqual(set(builder.CHANGED_SHA256), builder.CHANGED)
+         for relpath, pin in builder.CHANGED_SHA256.items():
+--- a/tests/test_step9_63c_r5c10ae_consumer_precommit_gate.py
++++ b/tests/test_step9_63c_r5c10ae_consumer_precommit_gate.py
+@@ -341,7 +341,8 @@
+                  patch.object(formal, "validate_preflight_evidence", return_value=None), \
+                  patch.object(formal, "collect_r11_precommit_state", side_effect=collect), \
+                  patch.object(formal, "EXPECTED_PROJECT_ROOT", fx.root), \
+-                 patch.object(formal, "EXPECTED_PYTHON", Path(formal.sys.executable)):
++                 patch.object(formal, "EXPECTED_PYTHON", Path(formal.sys.executable)), \
++                 patch.object(formal, "verify_issuance_event", return_value=(True, "stood in; r5c10ag tests cover the cross-check")):
+                 self.assertEqual(formal.prepare_formal_gates(args)["precommit_failures"], [])
+                 pin = fx.root / "evaluation/v1_2_3/step9_61a_v3_runner_freeze_r6.json"
+                 pin.write_bytes(pin.read_bytes() + b" ")

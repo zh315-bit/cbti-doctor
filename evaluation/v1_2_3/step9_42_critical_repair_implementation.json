@@ -1,0 +1,76 @@
+{
+  "step": "9.42",
+  "status": "IMPLEMENTED_AND_VALIDATED_DEVELOPMENT_ONLY",
+  "pre_step9_42_agent_sha256": "e5e4841b51ecc6bced0f342a261a356756d07b39764670d774b910b86b8625a7",
+  "pre_step9_42_file_hashes": {
+    "adaptive_agent/answer_generation.py": "76c089613a90f88a0216f88405b4df9c5a4339bc42d0a38d33ff51f4f12a1122",
+    "adaptive_agent/runner.py": "0a3d30d8557faa967a8a32e5ea38ef0c9892a2ac390e9e0628add82decb9a5be"
+  },
+  "implementation": {
+    "safety_gate_implemented": true,
+    "authorization_outcomes": ["AUTHORIZED_FULL", "AUTHORIZED_BOUNDED", "BLOCKED_NEEDS_INFORMATION", "BLOCKED_UNSAFE_OR_INVALID"],
+    "implementation_files": ["adaptive_agent/answer_generation.py", "adaptive_agent/runner.py"],
+    "implementation_file_count": 2,
+    "behavior": {
+      "gate_position": "after state/resource updates and dependency re-evaluation, immediately before answer generation, including max-step terminal answer path",
+      "bounded_answer": "deterministic non-personalized fallback; no generative answer-model call when scope is bounded or unsafe",
+      "blocked_needs_information": "routes only to an existing applicable acquisition candidate; if none remains, fails closed to blocked unsafe",
+      "state_provenance": "ASSERTED requires user-explicit provenance; DERIVED requires user-derived provenance; RETRIEVED personal state requires diary provenance and valid projection; UNKNOWN/DEFERRED/UNAVAILABLE do not satisfy",
+      "materiality": "only goal decision fields with decision-changing/answer-scope-changing estimates or explicit safety/execution classes block full scope; detail-only missing state is bounded; unrelated optional facts do not block"
+    },
+    "case_specific_logic_found": false
+  },
+  "preservation": {
+    "r1_resource_acquisition_preserved": true,
+    "r2_low_value_ask_suppression_preserved": true,
+    "r3_state_semantics_preserved": true
+  },
+  "test_report_path": "evaluation/v1_2_3/step9_42_test_report.json",
+  "test_report_sha256": "2c0282ff86e15221d9e4944a74707d9256eb13d9330a720a8cf527974810cdb6",
+  "architecture_audit_path": "evaluation/v1_2_3/step9_42_architecture_audit.json",
+  "architecture_audit_sha256": "7eeaf5b9c8138cd62835025b0c6f9fc9d51a18753ee96e0a4d8d042155657c12",
+  "test_results": {
+    "step9_41_synthetic_test_classes": "6/6 PASS",
+    "new_answer_authorization_module": "16/16 PASS",
+    "focused_regression": "147/147 PASS",
+    "full_non_benchmark_regression": "333 run / 0 failures / 0 errors"
+  },
+  "architecture_audit": "PASS",
+  "treatment_v2_freeze": {
+    "created": true,
+    "path": "evaluation/v1_2_3/step9_42_treatment_v2_freeze.json",
+    "artifact_sha256": "06d0835af73c01c89e4aa8d2a7f03d3da023c14a7195ab8a1213817f7b353bc0",
+    "agent_sha256": "b9e891e7cd077dd5b3c6fa72b71faad978a24226c2b5e89e0b06aabde93b51d6",
+    "changed_agent_files": ["adaptive_agent/answer_generation.py", "adaptive_agent/runner.py"]
+  },
+  "frozen_non_agent_components_unchanged": {
+    "benchmark": true,
+    "harness": true,
+    "scoring": true,
+    "metric_registry": true,
+    "one_shot_rules": true,
+    "step9_34a_protocol": true,
+    "claim_policy": true,
+    "baseline_artifacts": true,
+    "treatment_v1_artifacts": true,
+    "step9_37_adjudication": true,
+    "step9_39_comparison": true
+  },
+  "claim_status": {
+    "resume_descriptive_matched_comparative_claim_eligible": false,
+    "step9_39_deltas_remain_historical_development_evidence": true
+  },
+  "execution_boundary": {
+    "v4_case_executed": 0,
+    "v4_rerun": false,
+    "v5_created": false,
+    "v5_accessed": false,
+    "evaluation_authorization_issued": false,
+    "formal_attempt_created": false,
+    "score_generated": false,
+    "model_called": false,
+    "agent_evaluated": false,
+    "rag_called_for_evaluation": false
+  },
+  "ready_for_step9_43_treatment_v2_regression_preclearance": true
+}

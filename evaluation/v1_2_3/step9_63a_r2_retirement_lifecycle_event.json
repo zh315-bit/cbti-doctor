@@ -1,0 +1,32 @@
+{
+  "artifact_type": "STEP9_63A_R2_CANONICAL_RETIREMENT_EVENT_ATTESTATION",
+  "ledger_path": "evaluation/v1_2_3/authorization_lifecycle_events.jsonl",
+  "ledger_sha256_after_append": "f573185bc39c26e14306ff1ac7c1a3e3a64e9940cb1e6f089a08942b96cb044d",
+  "canonical_event": {
+    "artifact_type": "AUTHORIZATION_LIFECYCLE_EVENT",
+    "event_type": "AUTHORIZATION_RETIRED_UNCONSUMED_NON_REUSABLE",
+    "timestamp_utc": "2026-10-05T21:35:31.913595+00:00",
+    "evaluation_id": "heldout-v4-step9_55a-treatment-v3-20260930-01",
+    "authorization_id": "auth-step9_62-e796755748e14418b9da641f5d6c15e2",
+    "attempt_id": "attempt-step9_62-6620ce3a79684874a15f5e35eac97938",
+    "original_status": "ISSUED_NOT_CONSUMED",
+    "final_status": "RETIRED_UNCONSUMED_NON_REUSABLE",
+    "authorization_consumed": false,
+    "authorization_consumption_count": 0,
+    "attempt_created": false,
+    "namespace_created": false,
+    "cases_started": 0,
+    "cases_completed": 0,
+    "reuse_determination": "/Volumes/Elements/cbti-doctor-main/evaluation/v1_2_3/step9_63a_r2_superseded_authorization_nonreuse_determination.json",
+    "reuse_determination_sha256": "b6f431b3369d2040454cfc6790cac40d7272249fd794dfa1d05eb5d6198fcef7",
+    "authorization_manifest_sha256": "7f97f9e42b8711a6ae745e4626d81fa8787a162bbfa8fdad6fe53c9fd4b975c8",
+    "lifecycle_contract_path": "/Volumes/Elements/cbti-doctor-main/evaluation/v1_2_3/step9_61a_v3_authorization_lifecycle_contract.json",
+    "lifecycle_contract_sha256": "addb3880e7141ca14d7b3011cadb439ac83076fa6b7c2b9f28f3b024d3fd1174",
+    "terminal": true
+  },
+  "reason_bound_by_pinned_determination": "SUPERSEDED_RUNNER_FREEZE",
+  "old_runner_revision_bound_by_pinned_determination": "r6",
+  "current_runner_revision_bound_by_pinned_determination": "r7",
+  "lifecycle_contract_revision": "1",
+  "original_manifest_rewritten": false
+}

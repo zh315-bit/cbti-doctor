@@ -1,0 +1,28 @@
+{
+  "step": "9.63c-r5c10z",
+  "assessment_only": true,
+  "recommended_install_location_if_later_approved": "/private/tmp/cbti-r5c10z-pytest-venv",
+  "location_currently_exists": false,
+  "project_venv_modified_by_recommendation": false,
+  "project_lock_files_modified": false,
+  "r10_frozen_member_or_evaluation_semantics_modified": false,
+  "network_requirement": "A pinned pytest wheel plus its dependencies would need an approved local wheelhouse or network access; none was found in inspected local cache/common paths. This step made no network request.",
+  "possible_effect_on_existing_test_environment": "An isolated /private/tmp venv would not change .venv, but its pytest/plugin/dependency versions can affect collection behavior; pin and record exact versions/source before use, disable third-party plugin autoload and restrict to collect-only.",
+  "rollback": "After separate approval and only after confirming the exact isolated path, remove or archive /private/tmp/cbti-r5c10z-pytest-venv. No repository or .venv restore should be needed; retain audit logs. Nothing to roll back from this step.",
+  "alternative_not_recommended": "Installing pytest directly into the project .venv would alter the established 101-distribution environment and may resolve or upgrade shared dependencies; requires a separate stronger approval and before/after package inventory.",
+  "historical_evidence_protection": {
+    "r10_freeze_manifest_sha256": "d24244235e51e7bf6c8567880c654fe3fd73b87fa1bfe1ab0f10dfdc94db2693",
+    "current_r10_member_path_hash_aggregate": "5423034cba915da15c6c2c6543c8c007b842b76529ab8d4d06d3a25a24968e41",
+    "trace_1_sha256": "e09321c89b75a4330799e4a4c286652cee82ed0e0d4fa1b8478c970dd7f6d8e5",
+    "trace_2_sha256": "5518eb4b0b7e8880c5f84e59ba0264013bed99e25edb8da93dca558304d4f084",
+    "historical_trace_original_content_integrity": "CONTENT_INTEGRITY_UNPROVEN"
+  },
+  "changes_this_step": {
+    "code_files": 0,
+    "dependencies_installed": 0,
+    "test_methods_executed": 0,
+    "formal_r11_freeze_created": false,
+    "authorization_issued": false,
+    "formal_v4_cases_executed": 0
+  }
+}

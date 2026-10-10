@@ -1,0 +1,11 @@
+{
+  "strict_definition": "a trace-visible candidate rejected by Information Value/Acquisition Cost that was retrospectively necessary",
+  "strict_false_negative_count": 0,
+  "reason": "The three harmful cases did not reject RETRIEVE or READ_DIARY candidates; the necessary candidates were never generated because upstream State/requirements were wrong.",
+  "missing_required_acquisition_not_candidate": [
+    {"case_id":"V2-KQ-02","action":"RETRIEVE","task_type":"KNOWLEDGE_QA","consequence":"premature bounded answer"},
+    {"case_id":"V2-KQ-05","action":"RETRIEVE","task_type":"KNOWLEDGE_QA","consequence":"premature bounded answer"},
+    {"case_id":"V2-DA-07","action":"READ_DIARY","task_type":"DATA_ANALYSIS","consequence":"required resource skipped"}
+  ],
+  "correct_low_value_rejection":"not_measurable as a rate; traces preserve 120 NONE/redundancy rejections and 94 diminishing-return rejections, but do not label a unique retrospective denominator."
+}

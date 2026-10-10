@@ -1,0 +1,43 @@
+{
+  "clusters": {
+    "extraction_failure": [
+      "V2-KQ-02",
+      "V2-PD-01",
+      "V2-PD-03",
+      "V2-PD-04",
+      "V2-PD-06",
+      "V2-PD-08",
+      "V2-PD-10",
+      "V2-PD-11",
+      "V2-PD-12",
+      "V2-DA-07"
+    ],
+    "sufficiency_failure": [
+      "V2-PD-05"
+    ],
+    "state_representation_failure": [],
+    "requirement_overconstraint": [],
+    "ask_eligibility_failure": [],
+    "policy_failure": [],
+    "resource_failure": [],
+    "answer_scope_failure": [],
+    "other": []
+  },
+  "six_ASK_cases": [
+    "V2-KQ-02",
+    "V2-PD-01",
+    "V2-PD-03",
+    "V2-PD-04",
+    "V2-PD-05",
+    "V2-PD-06",
+    "V2-PD-08",
+    "V2-PD-10",
+    "V2-PD-11",
+    "V2-PD-12",
+    "V2-DA-07"
+  ],
+  "notes": {
+    "extraction_failure": "assigned only where final extracted_facts were empty despite evaluator query facts; this is trace evidence, not a causal intervention estimate.",
+    "ask_eligibility_failure": "no direct rejected-candidate telemetry exists."
+  }
+}

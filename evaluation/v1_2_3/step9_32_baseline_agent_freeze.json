@@ -1,0 +1,735 @@
+{
+  "agent_file_inventory": [
+    {
+      "path": "adaptive_agent/acquisition_gate.py",
+      "sha256": "c5e7912105a9218dec0a3618c4c46f506190d14458f93936e56868f7ade50725"
+    },
+    {
+      "path": "adaptive_agent/answer_generation.py",
+      "sha256": "0cc8b831d88972ded0f8ee6538e2298ef03e807a693b022cbb6f3dbcdcde40cb"
+    },
+    {
+      "path": "adaptive_agent/candidates.py",
+      "sha256": "946d4f3daf471885a7f402ec7cbe29b75f7b9922864636ae9f32e6b32dfe9200"
+    },
+    {
+      "path": "adaptive_agent/dependency_resolver.py",
+      "sha256": "3fbf055d799e5ca6a8ebadd5b0f6e632a7592002558156a20d76d0d73ddb382d"
+    },
+    {
+      "path": "adaptive_agent/facts.py",
+      "sha256": "fa2553a0d2e67cfc38f66b554c81d4ce4f66d925d83cce367652bc35bdc42a0a"
+    },
+    {
+      "path": "adaptive_agent/flask_app.py",
+      "sha256": "82ab75eb1055b16c7e2fd4b039ff00d626c583fba1c755dbdbd6867e1bd81c7c"
+    },
+    {
+      "path": "adaptive_agent/information_value.py",
+      "sha256": "38de50261bb2c6ee09abf5344f13c9e53837642681ae6028c6d4dd67308c2f6c"
+    },
+    {
+      "path": "adaptive_agent/input_understanding.py",
+      "sha256": "47cad895b795d799521cec29dd7bca8e497349dfab655d314ef039e4602e5129"
+    },
+    {
+      "path": "adaptive_agent/policy.py",
+      "sha256": "a86fe826cb5309e3c8ddd2152b75679dac1da3adaf105dd1cc5d63e4f14a3c34"
+    },
+    {
+      "path": "adaptive_agent/preconditions.py",
+      "sha256": "891a416846262e8d5c27bffb603ba51d89aa4a5b1eebdf75bf99519b15beccbe"
+    },
+    {
+      "path": "adaptive_agent/requirements.py",
+      "sha256": "9809f419dce17db702e2b847fcf007f5a1614467e493ef2ccce16c14fd247163"
+    },
+    {
+      "path": "adaptive_agent/runner.py",
+      "sha256": "a91a576dca6febbeb06fab4717dbe705447520daf6e6376512a39f2f4fa0d0ef"
+    },
+    {
+      "path": "adaptive_agent/service.py",
+      "sha256": "07e2819af3ca6bfab511a7f5e5efa2634537ea5468cf92bbc253f94f543031ff"
+    },
+    {
+      "path": "adaptive_agent/state.py",
+      "sha256": "1d96470d4774cf40836c2fb0d8389ba75545defad3266b308f2608d5c2981ed4"
+    },
+    {
+      "path": "adaptive_agent/state_update.py",
+      "sha256": "0d7ba355795060939fa35265a9fcdf2171f3bcd8b2731a1791be692d79c60ad2"
+    },
+    {
+      "path": "adaptive_agent/sufficiency.py",
+      "sha256": "e76b221c94c5018f6b3653027b1d3d89d1f931311572d838c619c575a87d729d"
+    },
+    {
+      "path": "adaptive_agent/tools.py",
+      "sha256": "65223ad962417d68d16326c2431a205f1bdc953a0f64c5585ff38e4017a1c084"
+    },
+    {
+      "path": "configs/requirements.yaml",
+      "sha256": "f61d5055114c7186373cb8a079b73ecdbe1d7e37217d12c97a4e6e56539bb40b"
+    },
+    {
+      "path": "evaluation/recorder.py",
+      "sha256": "ca0bc7488f5af7d117298f817ccfd7f3b814bb80f60b114d1f9750c939877d9d"
+    },
+    {
+      "path": "local_embeddings.py",
+      "sha256": "f5aa8745407582c4dbb8caa470f110238e820f00be54a86444367815be83905f"
+    },
+    {
+      "path": "model_config.py",
+      "sha256": "566a6b5c3d69636c270434f3daf6e8d05dd403f8de67e92107a2efcc6d7cc34a"
+    },
+    {
+      "path": "rag_client.py",
+      "sha256": "6b6858af5eb4c5e07a29ca41723ea4de9c2a7087947ca7b877eeff4070bb590a"
+    },
+    {
+      "path": "rag_lib/.rag_db/bge-small-zh-v1.5-ch400-v1/index.faiss",
+      "sha256": "8c6d6b6ba0c8461a3c12b4182887c01fa34ebdc7d3ae654f38ed827e15c2be89"
+    },
+    {
+      "path": "rag_lib/.rag_db/bge-small-zh-v1.5-ch400-v1/index.pkl",
+      "sha256": "e1acd20fe2c16649f2bbce93ff5210b58104a50500cab530df08ba8fc2fbb4a1"
+    },
+    {
+      "path": "rag_lib/pdfs/",
+      "sha256": "01645761780c7d2cb1864cb26732334791c7cfd2984f5419dbf54c31a74b027d"
+    },
+    {
+      "path": "runtime:deepseek_nonsecret_configuration",
+      "sha256": "d0802478a59e6b2021b0476490149d7fec672fab5bda5cc45f55241268f1a7e0"
+    }
+  ],
+  "baseline_agent_file_count": 26,
+  "baseline_agent_manifest": {
+    "candidate_id": "post-step9_24-candidate-20260924-01",
+    "freeze_id": "post-step9_24-final-candidate-for-v4-protocol-20260924-01",
+    "path": "evaluation/v1_2_3/step9_26_final_candidate_freeze.json",
+    "sha256": "2de40b76bf0ad6d6c3be68294fb8b390d8c6e675c328ac59e22ec78ec010282e"
+  },
+  "baseline_agent_sha256": "4e2bffea0d7eaa9299074a960df84a1806b3ae9d4930662929abc58ca5b2ae79",
+  "baseline_config_files": [
+    {
+      "path": ".env.example",
+      "sha256": "c1e7a59566b427bd4916e99de0b0f03613a6dad04e89ec3955ef637c374e0540"
+    },
+    {
+      "path": ".python-version",
+      "sha256": "7b55f8e67b5623c4bef3fa691288da9437d79d3aba156de48d481db32ac7d16d"
+    },
+    {
+      "path": "configs/prompts/main_prompt_cognitive_therapy.txt",
+      "sha256": "f0fb247a8dff2570335d2051936c03854a9186c034db397bdd33378c21cbc28e"
+    },
+    {
+      "path": "configs/prompts/sub_prompt_cognitive_restructuring.txt",
+      "sha256": "3b3eb451d1c7bb60d5cb917abb611b030879fe8afb2c0b1fba897ffd695e4e74"
+    },
+    {
+      "path": "configs/prompts/sub_prompt_comprehensive_intervention.txt",
+      "sha256": "1440e39da61e900ac56111205286cc4c8976a68390e15a8f173594549fa40d68"
+    },
+    {
+      "path": "configs/prompts/sub_prompt_information_gathering.txt",
+      "sha256": "a2d96e72d046a2ec6bf5b4c805aa3109be9a497eca831055f7e9d436c3518a09"
+    },
+    {
+      "path": "configs/prompts/sub_prompt_summary_feedback.txt",
+      "sha256": "8cd0f563a16aba643cd52cfb3dad2b7ea02ebed16758d2396484c2cebb10ff9d"
+    },
+    {
+      "path": "configs/prompts/tool_prompt_negative_thinking_record.txt",
+      "sha256": "e9141da5e22da98132489e9f438a80bda55a06f62e5b8b9426e93e946f8c250b"
+    },
+    {
+      "path": "configs/requirements.yaml",
+      "sha256": "f61d5055114c7186373cb8a079b73ecdbe1d7e37217d12c97a4e6e56539bb40b"
+    },
+    {
+      "path": "configs/stages.yaml",
+      "sha256": "9ee5d8fb1701c7ae96eeed6f511d637fd868b15526f0b4ddf706f31b8a0f0ff3"
+    },
+    {
+      "path": "requirements-lock.txt",
+      "sha256": "4e7ec8e873364b418536494b049d09e37e957a824a1989072cdc5a62f8af72b0"
+    }
+  ],
+  "baseline_config_hash": "11323b934e451e6fc39b12e84d82387d83ba4e98c2df148452cf113566b210e5",
+  "baseline_model_config": {
+    "base_url": "https://api.deepseek.com",
+    "credential_value_or_presence_captured": false,
+    "max_retries": 1,
+    "model": "deepseek-flash",
+    "runtime_nonsecret_fingerprint": "d0802478a59e6b2021b0476490149d7fec672fab5bda5cc45f55241268f1a7e0",
+    "secret_values_included": false,
+    "seed": "NOT_CONFIGURED / provider support not relied upon",
+    "temperature": "UNSET_IN_BASELINE; preserve provider/library default for paired comparison",
+    "thinking": "disabled",
+    "timeout_seconds": 120
+  },
+  "baseline_rag_config_files": [
+    {
+      "path": "local_embeddings.py",
+      "sha256": "f5aa8745407582c4dbb8caa470f110238e820f00be54a86444367815be83905f"
+    },
+    {
+      "path": "rag_client.py",
+      "sha256": "6b6858af5eb4c5e07a29ca41723ea4de9c2a7087947ca7b877eeff4070bb590a"
+    },
+    {
+      "path": "rag_lib/.rag_db/bge-small-zh-v1.5-ch400-v1/index.faiss",
+      "sha256": "8c6d6b6ba0c8461a3c12b4182887c01fa34ebdc7d3ae654f38ed827e15c2be89"
+    },
+    {
+      "path": "rag_lib/.rag_db/bge-small-zh-v1.5-ch400-v1/index.pkl",
+      "sha256": "e1acd20fe2c16649f2bbce93ff5210b58104a50500cab530df08ba8fc2fbb4a1"
+    },
+    {
+      "path": "rag_lib/pdfs/",
+      "sha256": "01645761780c7d2cb1864cb26732334791c7cfd2984f5419dbf54c31a74b027d"
+    }
+  ],
+  "baseline_rag_config_hash": "58467abc2abafce62e8d71713684802f64a35946accf35c08007e67b0edd60a5",
+  "baseline_repair_state": "PRE_STEP9_33",
+  "created_at_utc": "2026-09-27T19:23:20.341812+00:00",
+  "current_agent_matches_final_freeze": true,
+  "final_candidate_manifest": {
+    "manifest_id": "step9_19-final-candidate-20260923-01",
+    "path": "evaluation/v1_2_3/step9_19_final_candidate_manifest.json",
+    "sha256": "21e325516f955986497b69e18eebca1d0a0658a24c4293fe75853dd464c901f5"
+  },
+  "frozen_comparison_identities": {
+    "metric_registry_sha256": "de9f348cb1dff66410c03095abdaffcc256f53679718482870e4aa4d80c75056",
+    "official_v4_runner_freeze": "evaluation/v1_2_3/step9_29a_v4_runner_freeze.json",
+    "rubric_sha256": "a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899",
+    "v4_dataset_sha256": "8b8c72092fcd7544e69d5d2ecd13610c7bb4c14210fca330698b3e5ab3f01d7f"
+  },
+  "git_reconstruction_note": "The current repository has no commit object (HEAD is unborn); the content-addressed snapshot plus frozen manifest is the reconstruction source, not a Git ref.",
+  "no_evaluation_activity": {
+    "agent_called": false,
+    "model_called": false,
+    "rag_called": false,
+    "v4_rerun": false
+  },
+  "reconstruction_snapshot": {
+    "bytes": 80834916,
+    "file_count": 101,
+    "includes_secrets": false,
+    "members": [
+      {
+        "bytes": 489,
+        "path": ".env.example",
+        "sha256": "c1e7a59566b427bd4916e99de0b0f03613a6dad04e89ec3955ef637c374e0540"
+      },
+      {
+        "bytes": 5,
+        "path": ".python-version",
+        "sha256": "7b55f8e67b5623c4bef3fa691288da9437d79d3aba156de48d481db32ac7d16d"
+      },
+      {
+        "bytes": 9970,
+        "path": "adaptive_agent/acquisition_gate.py",
+        "sha256": "c5e7912105a9218dec0a3618c4c46f506190d14458f93936e56868f7ade50725"
+      },
+      {
+        "bytes": 25148,
+        "path": "adaptive_agent/answer_generation.py",
+        "sha256": "0cc8b831d88972ded0f8ee6538e2298ef03e807a693b022cbb6f3dbcdcde40cb"
+      },
+      {
+        "bytes": 9076,
+        "path": "adaptive_agent/candidates.py",
+        "sha256": "946d4f3daf471885a7f402ec7cbe29b75f7b9922864636ae9f32e6b32dfe9200"
+      },
+      {
+        "bytes": 12825,
+        "path": "adaptive_agent/dependency_resolver.py",
+        "sha256": "3fbf055d799e5ca6a8ebadd5b0f6e632a7592002558156a20d76d0d73ddb382d"
+      },
+      {
+        "bytes": 1321,
+        "path": "adaptive_agent/facts.py",
+        "sha256": "fa2553a0d2e67cfc38f66b554c81d4ce4f66d925d83cce367652bc35bdc42a0a"
+      },
+      {
+        "bytes": 2080,
+        "path": "adaptive_agent/flask_app.py",
+        "sha256": "82ab75eb1055b16c7e2fd4b039ff00d626c583fba1c755dbdbd6867e1bd81c7c"
+      },
+      {
+        "bytes": 9262,
+        "path": "adaptive_agent/information_value.py",
+        "sha256": "38de50261bb2c6ee09abf5344f13c9e53837642681ae6028c6d4dd67308c2f6c"
+      },
+      {
+        "bytes": 16187,
+        "path": "adaptive_agent/input_understanding.py",
+        "sha256": "47cad895b795d799521cec29dd7bca8e497349dfab655d314ef039e4602e5129"
+      },
+      {
+        "bytes": 1508,
+        "path": "adaptive_agent/policy.py",
+        "sha256": "a86fe826cb5309e3c8ddd2152b75679dac1da3adaf105dd1cc5d63e4f14a3c34"
+      },
+      {
+        "bytes": 7144,
+        "path": "adaptive_agent/preconditions.py",
+        "sha256": "891a416846262e8d5c27bffb603ba51d89aa4a5b1eebdf75bf99519b15beccbe"
+      },
+      {
+        "bytes": 8836,
+        "path": "adaptive_agent/requirements.py",
+        "sha256": "9809f419dce17db702e2b847fcf007f5a1614467e493ef2ccce16c14fd247163"
+      },
+      {
+        "bytes": 9787,
+        "path": "adaptive_agent/runner.py",
+        "sha256": "a91a576dca6febbeb06fab4717dbe705447520daf6e6376512a39f2f4fa0d0ef"
+      },
+      {
+        "bytes": 2182,
+        "path": "adaptive_agent/service.py",
+        "sha256": "07e2819af3ca6bfab511a7f5e5efa2634537ea5468cf92bbc253f94f543031ff"
+      },
+      {
+        "bytes": 4529,
+        "path": "adaptive_agent/state.py",
+        "sha256": "1d96470d4774cf40836c2fb0d8389ba75545defad3266b308f2608d5c2981ed4"
+      },
+      {
+        "bytes": 12185,
+        "path": "adaptive_agent/state_update.py",
+        "sha256": "0d7ba355795060939fa35265a9fcdf2171f3bcd8b2731a1791be692d79c60ad2"
+      },
+      {
+        "bytes": 2530,
+        "path": "adaptive_agent/sufficiency.py",
+        "sha256": "e76b221c94c5018f6b3653027b1d3d89d1f931311572d838c619c575a87d729d"
+      },
+      {
+        "bytes": 3700,
+        "path": "adaptive_agent/tools.py",
+        "sha256": "65223ad962417d68d16326c2431a205f1bdc953a0f64c5585ff38e4017a1c084"
+      },
+      {
+        "bytes": 787,
+        "path": "configs/requirements.yaml",
+        "sha256": "f61d5055114c7186373cb8a079b73ecdbe1d7e37217d12c97a4e6e56539bb40b"
+      },
+      {
+        "bytes": 986,
+        "path": "configs/stages.yaml",
+        "sha256": "9ee5d8fb1701c7ae96eeed6f511d637fd868b15526f0b4ddf706f31b8a0f0ff3"
+      },
+      {
+        "bytes": 4068,
+        "path": "evaluation/recorder.py",
+        "sha256": "ca0bc7488f5af7d117298f817ccfd7f3b814bb80f60b114d1f9750c939877d9d"
+      },
+      {
+        "bytes": 1166,
+        "path": "local_embeddings.py",
+        "sha256": "f5aa8745407582c4dbb8caa470f110238e820f00be54a86444367815be83905f"
+      },
+      {
+        "bytes": 830,
+        "path": "model_config.py",
+        "sha256": "566a6b5c3d69636c270434f3daf6e8d05dd403f8de67e92107a2efcc6d7cc34a"
+      },
+      {
+        "bytes": 5105,
+        "path": "rag_client.py",
+        "sha256": "6b6858af5eb4c5e07a29ca41723ea4de9c2a7087947ca7b877eeff4070bb590a"
+      },
+      {
+        "bytes": 2048045,
+        "path": "rag_lib/.rag_db/bge-small-zh-v1.5-ch400-v1/index.faiss",
+        "sha256": "8c6d6b6ba0c8461a3c12b4182887c01fa34ebdc7d3ae654f38ed827e15c2be89"
+      },
+      {
+        "bytes": 827766,
+        "path": "rag_lib/.rag_db/bge-small-zh-v1.5-ch400-v1/index.pkl",
+        "sha256": "e1acd20fe2c16649f2bbce93ff5210b58104a50500cab530df08ba8fc2fbb4a1"
+      },
+      {
+        "bytes": 432305,
+        "path": "rag_lib/pdfs/CBTI_1.pdf",
+        "sha256": "cfa03abb6e6c5204b8f2225e05ddbe8db5dabf57edfbaa76852183900e3aa8f6"
+      },
+      {
+        "bytes": 2245439,
+        "path": "rag_lib/pdfs/CBTI_10.pdf",
+        "sha256": "d6380203bd0b606c4d2c9c72b225299065128fba9c2ddd56fc240c2211bc70db"
+      },
+      {
+        "bytes": 2838951,
+        "path": "rag_lib/pdfs/CBTI_12.pdf",
+        "sha256": "a3839464cc224852a6aed36dba9a789d12b89f93ddf59b18335e03fb00e136d0"
+      },
+      {
+        "bytes": 906,
+        "path": "rag_lib/pdfs/CBTI_13.pdf",
+        "sha256": "ce3ef9d5b8e506bd15fd2368d11c891e257ea8203adbb0ec722c991977af6304"
+      },
+      {
+        "bytes": 572127,
+        "path": "rag_lib/pdfs/CBTI_14.pdf",
+        "sha256": "c2ac2d3f639be79f3592892583f32294687ad0ba03f00e321c3c4c7d54da8bc0"
+      },
+      {
+        "bytes": 678,
+        "path": "rag_lib/pdfs/CBTI_15.pdf",
+        "sha256": "db03f04206dd2b77161c96f66d7dd06311a53d6ece2e003b8b204af6a682fd56"
+      },
+      {
+        "bytes": 2608085,
+        "path": "rag_lib/pdfs/CBTI_16.pdf",
+        "sha256": "033073260ed57138bddf010043c8c35e27ca7543f490f78050bd0b0b2b701005"
+      },
+      {
+        "bytes": 20713,
+        "path": "rag_lib/pdfs/CBTI_17.pdf",
+        "sha256": "88f5cae8a22d05d412e20618dd13202a297c0b569f360e39b4267a1e0ee49d49"
+      },
+      {
+        "bytes": 2997825,
+        "path": "rag_lib/pdfs/CBTI_18.pdf",
+        "sha256": "41231d8d9c0c3edcedaf431206566e6f1a30180ed389e0aeed3d0579f5219a49"
+      },
+      {
+        "bytes": 1336588,
+        "path": "rag_lib/pdfs/CBTI_19.pdf",
+        "sha256": "5be045d3b832c09fc3759e8c9ecb65b4a94b96bff03a99f4f24deccf3e594742"
+      },
+      {
+        "bytes": 4963237,
+        "path": "rag_lib/pdfs/CBTI_2.pdf",
+        "sha256": "aa148c2a8fb63d66b8b508e545c83ea75309e100b9b705efc553fecdfb014be0"
+      },
+      {
+        "bytes": 1310913,
+        "path": "rag_lib/pdfs/CBTI_20.pdf",
+        "sha256": "c8b06bb8a2ddab5461e63babd2ed630ddef5ac5976aa09124426f6b2bd13fab3"
+      },
+      {
+        "bytes": 199222,
+        "path": "rag_lib/pdfs/CBTI_21.pdf",
+        "sha256": "ab5f9398921c4a665fc591d9859e4358293b1eb4cc867f2a9b2be2131803e941"
+      },
+      {
+        "bytes": 584940,
+        "path": "rag_lib/pdfs/CBTI_22.pdf",
+        "sha256": "74a1b52084cfbd97738b69891bccd780fe86121af049be8bbb324e1cea12a911"
+      },
+      {
+        "bytes": 523143,
+        "path": "rag_lib/pdfs/CBTI_23.pdf",
+        "sha256": "5499cc9b66e508509d7ffe7ef0c6364a9138c8cfb76c1b5543e485d4fc480345"
+      },
+      {
+        "bytes": 566545,
+        "path": "rag_lib/pdfs/CBTI_24.pdf",
+        "sha256": "33f8e291f5591ea551b021edd5ed23420d6a5c96e4a27052bfac8acd818fcfd9"
+      },
+      {
+        "bytes": 1071637,
+        "path": "rag_lib/pdfs/CBTI_25.pdf",
+        "sha256": "63ac17e9e1bd5cfd9fa37a346230fbece74a81cb2bfb6bdef9c91749fd5ef230"
+      },
+      {
+        "bytes": 2516576,
+        "path": "rag_lib/pdfs/CBTI_26.pdf",
+        "sha256": "f0ca6d44e25819bdc4893a5af6f9be3c9e391745c552d84368580281714f2b0a"
+      },
+      {
+        "bytes": 2311481,
+        "path": "rag_lib/pdfs/CBTI_27.pdf",
+        "sha256": "09232fbc868322a45fef23528ed364e00f7ca69f2e5605fbd9d89bb366a56fd3"
+      },
+      {
+        "bytes": 823781,
+        "path": "rag_lib/pdfs/CBTI_28.pdf",
+        "sha256": "f648eac2cbbf6f00410d41396ac0ab821bbca2412a8cc177084f2cc7a4728fae"
+      },
+      {
+        "bytes": 577666,
+        "path": "rag_lib/pdfs/CBTI_3.pdf",
+        "sha256": "d9f05b1a9188148a4c11b416052518edce6ddf10a85a69d70af91e35842355a8"
+      },
+      {
+        "bytes": 1092263,
+        "path": "rag_lib/pdfs/CBTI_30.pdf",
+        "sha256": "6fb77247e95c812f148bdffc4d7a6e2b74eb9c9075b8a9a72afa8b3c23a61b2c"
+      },
+      {
+        "bytes": 1878657,
+        "path": "rag_lib/pdfs/CBTI_31.pdf",
+        "sha256": "012727ab88c1e7813d554716378096aabde6bb152cf8214634b85e1c62340f5f"
+      },
+      {
+        "bytes": 1255331,
+        "path": "rag_lib/pdfs/CBTI_32.pdf",
+        "sha256": "9564981d5b69c9ca3751145fa7a71119279d727007e35f550a54446644be3bc5"
+      },
+      {
+        "bytes": 808521,
+        "path": "rag_lib/pdfs/CBTI_33.pdf",
+        "sha256": "a2bfbf88c97b4994d9224abb959aec40625dfe4d55f4d9aa9c2345fff547d8b3"
+      },
+      {
+        "bytes": 1109645,
+        "path": "rag_lib/pdfs/CBTI_34.pdf",
+        "sha256": "dec34443e66b2be39ff6df841ce0730e30995e835c1bae55953bc24918798b4a"
+      },
+      {
+        "bytes": 20671,
+        "path": "rag_lib/pdfs/CBTI_35.pdf",
+        "sha256": "cfb86089978d8fcbf6ac33e5e1aea8071d182e3895f38a6ec4722522068ff0c9"
+      },
+      {
+        "bytes": 400589,
+        "path": "rag_lib/pdfs/CBTI_36.pdf",
+        "sha256": "c054961344310694f8395e7cf62338e87e3ad9542d2b8a54cd002e352f94d923"
+      },
+      {
+        "bytes": 434529,
+        "path": "rag_lib/pdfs/CBTI_37.pdf",
+        "sha256": "dbd872833d4bcabfb1040ad91e398a56b4edd9a78ca21a51a828220b8e9584e8"
+      },
+      {
+        "bytes": 5601512,
+        "path": "rag_lib/pdfs/CBTI_38.pdf",
+        "sha256": "e5bf8023aaf4630a531706338a003619899518456b0d630dd19e2de956797cd9"
+      },
+      {
+        "bytes": 678,
+        "path": "rag_lib/pdfs/CBTI_39.pdf",
+        "sha256": "45ba74d9d6cafe66229ddad213d7a5d3c1c4e37935401ba750bb47287168df7c"
+      },
+      {
+        "bytes": 146805,
+        "path": "rag_lib/pdfs/CBTI_4.pdf",
+        "sha256": "21cc77751cddfaa928eb0334c9ecc8bf8739c12a5aba3345d5ea380a5a107e67"
+      },
+      {
+        "bytes": 6600111,
+        "path": "rag_lib/pdfs/CBTI_40.pdf",
+        "sha256": "5a2d4b20c42cc3dc10332653fb667a88ebb7b6414d7a95d1f9d3324c86f2ef9e"
+      },
+      {
+        "bytes": 556105,
+        "path": "rag_lib/pdfs/CBTI_41.pdf",
+        "sha256": "7ce4b047fe2c6e2e89fadf43c9a361e051b7bd8a75328add607beb2258e898f6"
+      },
+      {
+        "bytes": 1908852,
+        "path": "rag_lib/pdfs/CBTI_42.pdf",
+        "sha256": "8bfdaeaf61bc987d062127a0796b4c1cd3241b8cc8080e7856686d2616e76359"
+      },
+      {
+        "bytes": 951161,
+        "path": "rag_lib/pdfs/CBTI_43.pdf",
+        "sha256": "2537a71ab2a1e7bdd4f89c927bd33aca1549fa5e3a260a43df60c7c63922eb9f"
+      },
+      {
+        "bytes": 372027,
+        "path": "rag_lib/pdfs/CBTI_44.pdf",
+        "sha256": "12b5bff6b9912253b9c2cbbc455c4a539ae34ca3aa3ec8110cbf46fb1b7e5ef4"
+      },
+      {
+        "bytes": 4226626,
+        "path": "rag_lib/pdfs/CBTI_46.pdf",
+        "sha256": "a7916f1ce03b067cff60adc945051b9bafefa19d7780ee76b1c33f48190c4ad3"
+      },
+      {
+        "bytes": 1485129,
+        "path": "rag_lib/pdfs/CBTI_47.pdf",
+        "sha256": "52ba08a8f3aed8029d1826464c2cd0b6a2c015f07b202d25bd71fc1a10ec23bb"
+      },
+      {
+        "bytes": 921286,
+        "path": "rag_lib/pdfs/CBTI_48.pdf",
+        "sha256": "8d421a40e5abb223c21bb54abd0881fc5f547b1aaeb9527ba992a1042edf8b99"
+      },
+      {
+        "bytes": 3843293,
+        "path": "rag_lib/pdfs/CBTI_5.pdf",
+        "sha256": "d3dceb77d7e26b730d8605bff006ee70898804daa106faf7e722dfd1a483e060"
+      },
+      {
+        "bytes": 2097606,
+        "path": "rag_lib/pdfs/CBTI_50.pdf",
+        "sha256": "b5e1d5eea78c5794d107a2c2bba23a2f6d47efef707a3b6442a3347e52ef0436"
+      },
+      {
+        "bytes": 111682,
+        "path": "rag_lib/pdfs/CBTI_51.pdf",
+        "sha256": "763e75e35120d22edeaf048e6be748f3d26e5434cc0dcb18d2d7fe021ad1a299"
+      },
+      {
+        "bytes": 1004333,
+        "path": "rag_lib/pdfs/CBTI_52.pdf",
+        "sha256": "740e4378b56df9cc79bab3ba6816ebfb9d38a9b319c2d999c455edd644cf9d43"
+      },
+      {
+        "bytes": 658379,
+        "path": "rag_lib/pdfs/CBTI_53.pdf",
+        "sha256": "8bcfdbff99281a951add7e88e59965fbd73cf44ab1f5b91b43e3887333f7d7d0"
+      },
+      {
+        "bytes": 1187076,
+        "path": "rag_lib/pdfs/CBTI_55.pdf",
+        "sha256": "e3012e3631b0696106a4404ab3624e3c311003a954a14874934eab163e7167e1"
+      },
+      {
+        "bytes": 476702,
+        "path": "rag_lib/pdfs/CBTI_57.pdf",
+        "sha256": "af6f7f6bb78ad0d5f44ba5115aa38d56f11c2720426d6933a6b1ece4a7def691"
+      },
+      {
+        "bytes": 6885098,
+        "path": "rag_lib/pdfs/CBTI_58.pdf",
+        "sha256": "6d00107b91f615834f27d98461b42e40b77fede613a599bae3941ca36adee8e1"
+      },
+      {
+        "bytes": 291695,
+        "path": "rag_lib/pdfs/CBTI_6.pdf",
+        "sha256": "4d4b82a49b5946ffc0347282f715b42a730157bbeb64ebd162dd1132e8d1d2d8"
+      },
+      {
+        "bytes": 408260,
+        "path": "rag_lib/pdfs/CBTI_60.pdf",
+        "sha256": "99ff7e34b56a7a6ce5ec14745f44a01043efb2d9e117b233accdd6a83ce710b8"
+      },
+      {
+        "bytes": 20643,
+        "path": "rag_lib/pdfs/CBTI_61.pdf",
+        "sha256": "da9461eec8219e233d4078ebad55b7b3f3bd8300dd519bc056ddc87bca6b3169"
+      },
+      {
+        "bytes": 678,
+        "path": "rag_lib/pdfs/CBTI_62.pdf",
+        "sha256": "8c1eac0fba73aa3bddb8ec4b418a3b9142fa891f1f19b6ebc25fed46430054dd"
+      },
+      {
+        "bytes": 896935,
+        "path": "rag_lib/pdfs/CBTI_63.pdf",
+        "sha256": "a5cebdf14f51f47a432dd63699c9a87148eb522f71b22fff8ea8d178a702a303"
+      },
+      {
+        "bytes": 442659,
+        "path": "rag_lib/pdfs/CBTI_64.pdf",
+        "sha256": "b4ae39f9d44317890cd8385a109e79a5392acf5c324ead145db9d04ae2878ffe"
+      },
+      {
+        "bytes": 2577651,
+        "path": "rag_lib/pdfs/CBTI_65.pdf",
+        "sha256": "fb74ba504d4fb9ee558b03acafb840d1c26fc5a98bbbdab3415f08baca72feb4"
+      },
+      {
+        "bytes": 71532,
+        "path": "rag_lib/pdfs/CBTI_66.pdf",
+        "sha256": "330f1d283181a254a850481e829ddc5b0fceabee18616b2451d910b6d87c3be1"
+      },
+      {
+        "bytes": 439475,
+        "path": "rag_lib/pdfs/CBTI_67.pdf",
+        "sha256": "fef7b27358e2e47e0cbc62c8e57a18e6d8cf5971d167b73ca36bd7ea47c61664"
+      },
+      {
+        "bytes": 20662,
+        "path": "rag_lib/pdfs/CBTI_68.pdf",
+        "sha256": "19c99a9600627c415e9efe57ef0c6301ab631d4fdf3fceda9926469b61b59207"
+      },
+      {
+        "bytes": 272399,
+        "path": "rag_lib/pdfs/CBTI_69.pdf",
+        "sha256": "bb50d4d5c58ff2b18292eb573dadb33d1f8a4c4ac5fc3eb40c8cca670a851244"
+      },
+      {
+        "bytes": 678,
+        "path": "rag_lib/pdfs/CBTI_70.pdf",
+        "sha256": "adfa4bdf6a6a4f32cefc8dbda833d844bc3cc7a86368a8e2ac84f6faa5092266"
+      },
+      {
+        "bytes": 155483,
+        "path": "rag_lib/pdfs/CBTI_71.pdf",
+        "sha256": "9be0edaf1bdb37b441c1fca68f5a0615c5d2e367415b1562e2de44aceda47620"
+      },
+      {
+        "bytes": 794062,
+        "path": "rag_lib/pdfs/CBTI_72.pdf",
+        "sha256": "5ebd36fbe93bf0f84ba1df1ebfab001a320389c0973296f8f35c153a895b43ec"
+      },
+      {
+        "bytes": 494840,
+        "path": "rag_lib/pdfs/CBTI_74.pdf",
+        "sha256": "8332f77fab4d366b772490c0ce9be02c5d74d8e226a729fdd1ba82ffea0f334d"
+      },
+      {
+        "bytes": 602988,
+        "path": "rag_lib/pdfs/CBTI_75.pdf",
+        "sha256": "e2fd213b970f3d372332d73d66bb39e11aabd07b4310750ffa92c2f5c8348943"
+      },
+      {
+        "bytes": 678,
+        "path": "rag_lib/pdfs/CBTI_76.pdf",
+        "sha256": "bc0f4a0373a030bf96659fe4aaff7413862f39e65a2cec27e3391325ae9bbcb2"
+      },
+      {
+        "bytes": 20689,
+        "path": "rag_lib/pdfs/CBTI_77.pdf",
+        "sha256": "d4f46f3fa6b13d230d85387c4d15bf20949afce059be869df965cc73f7e25d63"
+      },
+      {
+        "bytes": 611851,
+        "path": "rag_lib/pdfs/CBTI_78.pdf",
+        "sha256": "dead364b556261feeebe0ddffdf35d43d3225dd7721825ed60e60552f01a4c28"
+      },
+      {
+        "bytes": 992872,
+        "path": "rag_lib/pdfs/CBTI_79.pdf",
+        "sha256": "788942b5fa73794ffdc9c68ec70267152aa38a35c5b0d9c017aa60cdfec93826"
+      },
+      {
+        "bytes": 363297,
+        "path": "rag_lib/pdfs/CBTI_8.pdf",
+        "sha256": "ede9c9317d530f17c542df03f2b6ea162d72e6cd95f43e7221150a73ed9977be"
+      },
+      {
+        "bytes": 1133126,
+        "path": "rag_lib/pdfs/CBTI_80.pdf",
+        "sha256": "fc6faf66481efb64fc155ad270ceacade95cd36541754804d8f3f03e0bf8d1a2"
+      },
+      {
+        "bytes": 1173715,
+        "path": "rag_lib/pdfs/CBTI_81.pdf",
+        "sha256": "df083261da37025ff5c5010703e4ea5574b88aa3b831f363017fcad27533b975"
+      },
+      {
+        "bytes": 1195742,
+        "path": "rag_lib/pdfs/CBTI_82.pdf",
+        "sha256": "769d6f184790f64f62a499bec147282473ab3c5359f94d142442eae1d4dec4e0"
+      },
+      {
+        "bytes": 311712,
+        "path": "rag_lib/pdfs/CBTI_9.pdf",
+        "sha256": "05a8006737a6a42abe240c7863118d296de1eff64c00efab3e337c5a1d5a1f0b"
+      },
+      {
+        "bytes": 1365,
+        "path": "requirements-lock.txt",
+        "sha256": "4e7ec8e873364b418536494b049d09e37e957a824a1989072cdc5a62f8af72b0"
+      }
+    ],
+    "path": "evaluation/v1_2_3/step9_32_baseline_agent_snapshot.tar.gz",
+    "restore_instructions": "Extract into an isolated checkout, verify each member SHA-256, then verify the Step 9.26 candidate manifest inventory and aggregate SHA-256.",
+    "sha256": "f00eb91a8020dbff5e87c4dc5d7c58c02ebeaf713acb8451057de4a60a7dd88a"
+  },
+  "schema_version": "step9_32_baseline_agent_freeze.v1"
+}

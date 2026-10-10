@@ -5,8 +5,11 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
+from scripts import authorization_lifecycle as lifecycle
 from scripts import run_step9_35a_matched_treatment as runner
+from scripts import v3_execution_transaction as transaction
 
 
 class MatchedTreatmentAuthorizationTests(unittest.TestCase):
@@ -60,11 +63,14 @@ class MatchedTreatmentAuthorizationTests(unittest.TestCase):
             "max_formal_attempts": 1,
             "consumed": False,
             "consumed_at_utc": None,
+            "authorization_status": "ISSUED_NOT_CONSUMED",
+            "authorization_consumption_count": 0,
             "authorized_by": "offline-test-fixture",
             # Deliberately no randomized-preregistration prerequisite.
         }
         self.auth_path = self.root / "authorization.json"
         self._write_auth()
+        self._isolate_lifecycle()
         self.supplied = {key: self.pins[key] for key in (
             "treatment_agent_sha256", "benchmark_sha256", "harness_sha256",
             "scoring_sha256", "metric_registry_sha256", "one_shot_rules_sha256",
@@ -76,6 +82,26 @@ class MatchedTreatmentAuthorizationTests(unittest.TestCase):
 
     def _write_auth(self):
         self.auth_path.write_text(json.dumps(self.auth), encoding="utf-8")
+
+    def _isolate_lifecycle(self):
+        # The runner consults the real lifecycle reducer before its own checks. Give
+        # the reducer a separate temporary root holding issuance evidence for the
+        # synthetic ID only, so it never reads repository authorization state.
+        self.lifecycle_root = self.root / "lifecycle"
+        evidence_dir = self.lifecycle_root / "evaluation/v1_2_3"
+        evidence_dir.mkdir(parents=True)
+        self.lifecycle_manifest = evidence_dir / "step_test_authorization_manifest.json"
+        self.lifecycle_manifest.write_text(json.dumps(self.auth), encoding="utf-8")
+        self.lifecycle_ledger = evidence_dir / "authorization_lifecycle_events.jsonl"
+        lifecycle_runs = self.lifecycle_root / "evaluation/v4_runs"
+        for target, name, value in (
+                (lifecycle, "ROOT", self.lifecycle_root),
+                (lifecycle, "EVENT_LEDGER_PATH", self.lifecycle_ledger),
+                (transaction, "RUN_ROOT", lifecycle_runs),
+                (transaction, "TRANSACTION_ROOT", lifecycle_runs / ".execution_transactions")):
+            patcher = patch.object(target, name, value)
+            patcher.start()
+            self.addCleanup(patcher.stop)
 
     def _validate(self):
         return runner.validate_authorization(
@@ -203,6 +229,22 @@ class MatchedTreatmentAuthorizationTests(unittest.TestCase):
     def test_invalid_frozen_identity_rejected_before_authorization(self):
         self.pins["all_frozen_hashes_match"] = False
         with self.assertRaisesRegex(RuntimeError, "frozen artifact"):
+            self._validate()
+
+    def test_missing_lifecycle_issuance_evidence_fails_closed(self):
+        self.lifecycle_manifest.unlink()
+        with self.assertRaisesRegex(RuntimeError, "not executable: INCONSISTENT_FAIL_CLOSED"):
+            self._validate()
+
+    def test_retired_lifecycle_authorization_fails_closed(self):
+        self.lifecycle_ledger.write_text(json.dumps({
+            "authorization_id": self.auth_id,
+            "event_type": lifecycle.RETIRE_EVENT,
+            "final_status": lifecycle.RETIRED,
+            "authorization_consumed": False,
+            "authorization_consumption_count": 0,
+        }) + "\n", encoding="utf-8")
+        with self.assertRaisesRegex(RuntimeError, "not executable: RETIRED_UNCONSUMED_NON_REUSABLE"):
             self._validate()
 
 

@@ -1,0 +1,113 @@
+{
+  "artifact_type": "STEP9_63C_R5C3_BOOTSTRAP_DEPENDENCY_ANALYSIS",
+  "step": "9.63c-r5c3",
+  "timestamp_utc": "2026-10-06T19:11:39Z",
+  "mode": "READ_ONLY_DESIGN_ONLY",
+  "status": "PASS_DESIGN_ONLY_BOOTSTRAP_DEPENDENCIES_IDENTIFIED",
+  "historical_inputs": {
+    "step9_63c_r5c2_status": "FAIL_CLOSED_R9_FREEZE_BINDING_INCOMPATIBILITY",
+    "r8_freeze_path": "evaluation/v1_2_3/step9_63c_r3_runner_freeze.json",
+    "r8_freeze_sha256": "86be96061d8c1cfbf769e21aac388cf2a308f53f6380f67c401d4c64b0bf4e6b",
+    "r8_member_count": 12,
+    "r8_changed_member_count": 1,
+    "changed_member": "scripts/run_step9_63_v3_formal_execution.py",
+    "changed_member_frozen_sha256": "95cfa6009ca934ca7007a960a26e1d2af2b5bdf55f9089ca5875b02ad699189d",
+    "changed_member_current_sha256": "a550c2a4cc9e8081dcaa897b19dfea26602120c528de3130fa2d304a4c76836f",
+    "old_authorization_id": "auth-step9_63c_r4-4b2749ce10014634ac6de155d37ec6a9",
+    "old_authorization_status": "ISSUED_NOT_CONSUMED",
+    "old_authorization_consumed": false,
+    "old_authorization_consumption_count": 0,
+    "retirement_event_appended": false,
+    "historical_pin_count": 55,
+    "historical_pin_mismatch_count": 0,
+    "step9_58_provenance_gap": "PRESENT_AND_DOCUMENTED"
+  },
+  "dependency_graph": [
+    {
+      "from": "current formal runner and adapter bytes",
+      "to": "r8 freeze identity",
+      "evidence": "scripts/run_step9_63_v3_formal_execution.py:25-26,161-179 and scripts/run_step9_53_v3_identity_adapter.py:23-24,283-309,390-400,563-569 hard-code r8 path/revision and exact member hashes"
+    },
+    {
+      "from": "current formal runner bytes",
+      "to": "r8 member mismatch",
+      "evidence": "Step 9.63c-r5c2 records exactly one changed r8 member: formal entry hash differs from the freeze"
+    },
+    {
+      "from": "r9 freeze / fresh r9 authorization",
+      "to": "current formal runner and identity adapter",
+      "evidence": "both consumers reject a non-r8 revision/path binding; static r9 manifest alone cannot make the current entry executable"
+    },
+    {
+      "from": "r9 local preflight evidence",
+      "to": "old r8 authorization identity",
+      "evidence": "scripts/preflight_step9_63c_r5_mac_local.py:29-46,87-106 pins old auth, r8 freeze, and r8-specific preflight ID"
+    },
+    {
+      "from": "retirement lifecycle helper",
+      "to": "historical authorization + frozen retirement determination + zero transaction/attempt/reservation/namespace",
+      "evidence": "scripts/authorization_lifecycle.py:138-218 validates contract, determination, immutable manifest state, transaction absence, identity absence, then appends/fsyncs terminal event"
+    },
+    {
+      "from": "r8 retirement append",
+      "to": "historical pin helper rejection",
+      "evidence": "scripts/issue_step9_63a_r3_authorization.py:44-69 requires lifecycle ledger full length 2384 and full-file SHA f573...044d before it separately checks a prefix digest"
+    },
+    {
+      "from": "fresh r9 authorization issuance/preflight eligibility",
+      "to": "active authorization scan + historical pin helper",
+      "evidence": "scripts/issue_step9_63a_r3_authorization.py:96-99 and scripts/preflight_step9_63c_r5_mac_local.py:144-? / 221-222"
+    },
+    {
+      "from": "formal execution entry",
+      "to": "preflight evidence and transaction commit",
+      "evidence": "scripts/run_step9_63_v3_formal_execution.py:156 onward validates current freeze and explicit preflight identity before adapter/transaction path"
+    },
+    {
+      "from": "parent runner",
+      "to": "transaction-resolved namespace",
+      "evidence": "scripts/run_step9_35a_matched_treatment.py:run requires transaction_id and explicit execution_root; transaction claim binds derived namespace and runner/Agent/evaluation identities"
+    }
+  ],
+  "answers": {
+    "formal_entry_freeze_validation": "Reads hard-coded r8 freeze; requires FROZEN_NOT_AUTHORIZED, exact revision, and formal-entry file SHA equal freeze member; then authorization/preflight must bind that freeze SHA.",
+    "identity_adapter_binding": "Hard-codes r8 freeze path/revision, derives current evaluation bindings, checks current adapter/parent/allocator/transaction/lifecycle/formal-entry hashes against the freeze, and requires authorization revision/hash in PRE_ATTEMPT.",
+    "retirement_requires_current_runner_match": false,
+    "retirement_runner_coupling_evidence": "No CURRENT_RUNNER_MATCHES_AUTHORIZATION_FREEZE check exists in retire_unconsumed_authorization. Its authority is the frozen lifecycle contract plus pinned non-reuse determination, immutable issued/unconsumed manifest, no transaction and no matching attempt/reservation/namespace, all under shared lifecycle lock.",
+    "freeze_builder_active_auth_zero_requirement": "NOT_ESTABLISHED: no dedicated r8/r9 freeze-builder function was found in the inspected implementation. Freeze artifact creation is an offline identity-recording action; current fresh-authorization eligibility separately requires no other active executable authorization. Do not claim that the builder itself enforces zero active authorizations without identifying such code.",
+    "historical_pin_semantics": "Mixed: the helper pins the current whole lifecycle ledger length and SHA, and also checks a historical 1161-byte prefix SHA. Whole-file pin blocks every legitimate append.",
+    "append_failure_mechanism": "A terminal retirement event changes both current ledger length and whole-file digest, so strict equality to the pre-retirement 2384-byte file/full SHA fails although the original prefix remains intact.",
+    "preflight_old_auth_binding": "The available r5 helper constants, authorization manifest hash, freeze hash/revision, fixed identity, and r8-specific preflight ID grammar refer to the already issued r8 authorization; it cannot certify a fresh r9 authorization."
+  },
+  "cycle_classification": {
+    "bootstrap_dependency_cycle_confirmed": true,
+    "root_cause_class": "MIXED_AUTHORITY_AND_STALE_IDENTITY_BINDINGS_WITH_WHOLE_LEDGER_PIN_COUPLING",
+    "cycle": "Modified formal-entry bytes fail the r8 member hash; r9 execution identity cannot pass r8-hardcoded formal-entry/adapter consumers; current r5 preflight cannot bind r9; retiring r8 is the safe way to clear lifecycle-active authorization before fresh issue, but appending retirement invalidates whole-ledger historical pin equality used by downstream eligibility. Retirement itself does not require current runner equality, and no freeze-builder zero-active-auth gate was established."
+  },
+  "namespace_authority": {
+    "single_namespace_authority": "TRANSACTION_RESOLVED_EXECUTION_NAMESPACE",
+    "preserved_by_current_contract": true,
+    "transaction_module_identity_fields": ["transaction_id", "authorization_id", "attempt_id", "namespace_id", "runner_sha256", "agent_sha256", "evaluation_identity_sha256", "case_set_sha256"],
+    "design_constraint": "All r9 freeze/auth/attempt/namespace/preflight bindings must converge on one transaction-derived execution identity; do not add a parallel namespace derivation authority."
+  },
+  "historical_identity_state": {
+    "agent_sha256": "085d338ed95bbef7370c41cf97ca0d6653ffdfd2f1c924eef4b7123dfdea4607",
+    "frozen_evaluation_identities_match": true,
+    "case_count": 40,
+    "task_distribution": {"KNOWLEDGE_QA": 10, "CAUSE_ASSESSMENT": 10, "PERSONALIZED_DECISION": 10, "DATA_ANALYSIS": 10},
+    "old_r5_artifact_provenance": "E_STILL_UNPROVEN",
+    "old_r5_artifact_formal_acceptance": false
+  },
+  "scope_and_side_effects": {
+    "production_code_modified": false,
+    "runner_modified": false,
+    "r9_freeze_created": false,
+    "authorization_retirement_appended": false,
+    "new_authorization_issued": false,
+    "attempt_created": false,
+    "namespace_created_or_reserved": false,
+    "tests_run": false,
+    "model_agent_rag_or_http_used": false,
+    "formal_v4_case_executed": 0
+  }
+}

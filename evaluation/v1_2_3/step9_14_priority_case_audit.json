@@ -1,0 +1,42 @@
+{
+  "evaluation_id": "clean-evaluation-v1_2_3-20260922-01",
+  "attempt_id": "attempt_f68c187816f84678b200ea85aa32eb3d",
+  "cases": {
+    "V2-KQ-02": {
+      "raw_input":"半夜醒了，我是硬躺着还是先起来缓缓？",
+      "actual_goal":"决定夜间醒来后是继续躺着还是先起床缓解",
+      "actual_task_type":"PERSONALIZED_DECISION",
+      "first_state_facts":{},"decision_missing":["bedtime","sleep_onset_latency","wake_time","total_sleep_time","nighttime_awakenings","recent_sleep_pattern"],
+      "dependencies":[],"evidence_sufficiency":"LOW","preconditions":[],"retrieve_candidate":false,
+      "path":["ASK:wake_time","ASK:bedtime","ASK:sleep_onset_latency","ANSWER"],"critical_failure":false,
+      "conclusion":"Input Understanding/goal representation is the first divergence. Because the knowledge/education goal is lost, no evidence dependency, RETRIEVE candidate, or precondition exists; the subsequent asks are downstream.",
+      "final_answer_scope":"safe limitation; does not explain the general stimulus-control principle requested"
+    },
+    "V2-KQ-05": {
+      "raw_input":"白天困得不行。晚上又怕睡不着。午睡到底要不要？",
+      "actual_goal":"Decide whether daytime napping is advisable given excessive daytime sleepiness and fear of not sleeping at night.",
+      "actual_task_type":"PERSONALIZED_DECISION",
+      "first_state_facts":{},"dependencies":[],"evidence_sufficiency":"LOW","preconditions":[],"retrieve_candidate":false,
+      "path":["ASK:bedtime","ASK:sleep_onset_latency","ASK:wake_time","ANSWER"],"critical_failure":false,
+      "conclusion":"Goal/task classification differs from frozen KNOWLEDGE_QA definition. No EVIDENCE dependency or RETRIEVE candidate was produced; policy did not reject a retrieve candidate.",
+      "final_answer_scope":"safe limitation/general caveat; no general education answer"
+    },
+    "V2-DA-07": {
+      "raw_input":"日记在账号里。我想知道周末晚睡是不是最值得先改的点，还是其实夜醒更影响我？",
+      "actual_goal":"判断周末晚睡与夜醒哪个更值得优先改善",
+      "actual_task_type":"PERSONALIZED_DECISION",
+      "first_state_facts":{},"required_resources":[],"dependencies":[],"preconditions":[],"read_diary_candidate":false,
+      "path":["ASK:nighttime_awakenings","ASK:bedtime","ASK:sleep_onset_latency","ASK:wake_time","ANSWER"],"READ_DIARY_count":0,"critical_failure":false,
+      "conclusion":"Dependency formation never represented the diary resource, and the ASK targets gather diary contents manually rather than satisfying the requested resource path. This is upstream of Information Value/Policy.",
+      "final_answer_scope":"safe limitation; requested comparison not delivered"
+    },
+    "V2-DA-03/04/05/08": {
+      "paths":"READ_DIARY → ANSWER",
+      "fixture_source_entry_counts":{"DA-03":14,"DA-04":7,"DA-05":14,"DA-08":11},
+      "projected_entry_count":null,"source_dates":[],"projected_dates":[],"provenance":null,"projection_status":"invalid",
+      "state_diary_facts_written":false,"critical_failure":false,
+      "answer_consistency":"PASS for safety: answer says diary unavailable/invalid and makes no diary-derived quantitative or trend claim; substantive requested analysis is incomplete.",
+      "root_cause":"V2 fixture adapter supplied summary-shaped strings without source cardinality/date coverage/provenance/semantics required by Diary Contract V2. The validator correctly failed closed; this is a fixture/tool-contract integration issue, not Policy."
+    }
+  }
+}

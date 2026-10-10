@@ -1,0 +1,23 @@
+{
+  "step": "9.63c-r5c10x",
+  "review_only": true,
+  "tests_collected_this_step": 0,
+  "tests_executed_this_step": 0,
+  "collection_success_in_future_means": "Only that Python can discover the module's test methods without loading the absent formal r11 pointer during import.",
+  "collection_success_does_not_mean": [
+    "Any method has passed.",
+    "Formal r11 identity or authorization exists.",
+    "A real transaction, parent.run or preflight path is safe to execute.",
+    "Historical Trace original content integrity is proven."
+  ],
+  "candidate_later_offline_acceptance_if_separately_approved": [
+    "Before any patch, verify target SHA-256 and that target is outside the r10 20-member inventory; protect current Trace and r10 manifest SHA baselines.",
+    "Change only tests/test_step9_63b_mac_local_preflight.py by moving the existing transport import into the eight methods that use it; preserve assertions and synthetic fixtures.",
+    "Run static syntax and collection-only verification for this single file in a later approved implementation step; record collected count and import errors separately from passes.",
+    "Check by read-only source/hash audit that no production/frozen member, resolver, authorization state or historical Trace file changed.",
+    "Do not execute any of its eight test methods without a further method-by-method identity, network and artifact-write review. Do not invent a formal r11 pointer for testing."
+  ],
+  "runtime_blocked_now": "All eight candidate methods use the transport object; a later method-local import will still reach the absent formal r11 pointer at test execution time. Several methods also call run_preflight or connectivity-related functions.",
+  "historical_trace_content_integrity": "CONTENT_INTEGRITY_UNPROVEN",
+  "formal_v4_execution_allowed": false
+}

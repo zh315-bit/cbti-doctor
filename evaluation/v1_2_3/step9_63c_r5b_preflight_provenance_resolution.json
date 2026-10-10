@@ -1,0 +1,63 @@
+{
+  "artifact_type": "STEP9_63C_R5B_PREFLIGHT_PROVENANCE_RESOLUTION",
+  "step": "9.63c-r5b",
+  "timestamp_utc": "2026-10-06T15:49:26Z",
+  "existing_artifact_path": "evaluation/v1_2_3/step9_63c_r5_mac_local_final_preclearance.json",
+  "existing_artifact_sha256": "9b4d2c5112b07698b57f149bdb2634b7ee193888f15c97cd65d6bb6c5a86889b",
+  "step9_63c_r5a_recorded_sha256": "9b4d2c5112b07698b57f149bdb2634b7ee193888f15c97cd65d6bb6c5a86889b",
+  "step9_63c_r5b_request_claimed_sha256": "9b4d2c5112b07698b57f149bdb2634b7ee193888f15c97ca65d6bb6c5a86889b",
+  "request_pin_matches_file": false,
+  "request_pin_disposition": "EXTERNAL_REQUEST_PIN_MISMATCH; original artifact not changed",
+  "file_metadata": {
+    "inode": 131943,
+    "birthtime_local": "2026-10-06T11:12:51-0400",
+    "mtime_local": "2026-10-06T11:12:52-0400",
+    "ctime_local": "2026-10-06T11:12:52-0400",
+    "size_bytes": 3195,
+    "owner": "huzhuoyang",
+    "group": "staff",
+    "mode": "-rwx------",
+    "extended_attributes": ["com.apple.provenance"],
+    "extended_attribute_proves_creator_or_completion": false
+  },
+  "artifact_internal_timestamp_utc": "2026-10-06T15:12:51.985479+00:00",
+  "time_correlation": {
+    "internal_timestamp_matches_birthtime_to_one_second": true,
+    "artifact_postdates_original_r5_script_and_test_edits": true,
+    "artifact_predates_r5a_forensics": true,
+    "record_md_r5a_append_postdates_artifact": true,
+    "user_reported_failed_mac_invocation_timestamp_independently_available": false,
+    "timing_alone_is_provenance_proof": false
+  },
+  "shell_history": {
+    "path": "/Users/huzhuoyang/.zsh_history",
+    "exact_r5_command_match_count": 1,
+    "matching_line_number": 1862,
+    "contains_exit_status": false,
+    "contains_successful_write_completion": false,
+    "history_mtime_postdates_artifact": true
+  },
+  "preparation_and_test_path_audit": {
+    "can_preparation_create_real_target": false,
+    "can_offline_test_create_real_target": false,
+    "can_import_create_real_target": false,
+    "old_script_success_write_path": "main -> run_preflight -> write_attestation -> fixed ARTIFACT with O_EXCL",
+    "offline_success_test_write_path": "test_success_fixture_exclusively_writes_only_evidence -> patched ARTIFACT_DIR/TemporaryDirectory in current tests; original r5 test patched ARTIFACT/TemporaryDirectory",
+    "import_behavior": "main is guarded by if __name__ == '__main__'; no import-time artifact write",
+    "caveat": "A separate, unrecorded manual invocation or arbitrary file write cannot be excluded by source inspection."
+  },
+  "independent_successful_mac_terminal_completion_evidence_found": false,
+  "successful_mac_r5_invocation_independently_proven": false,
+  "provenance_class": "E_STILL_UNPROVEN",
+  "provenance_confidence": "HIGH_THAT_COMPLETION_IS_NOT_INDEPENDENTLY_PROVEN",
+  "existing_artifact_acceptable_for_formal_execution": false,
+  "existing_artifact_preserved": true,
+  "existing_artifact_modified": false,
+  "supporting_evidence": [
+    "The old artifact parses as PASS, binds the current r8 authorization/attempt/namespace, and records Mac-local DNS/TCP/TLS PASS, but its own claims are not independent provenance.",
+    "The exact r5 command occurs once in available zsh history, but the history entry has no timestamp, exit status, output, or write-completion proof.",
+    "The file's com.apple.provenance extended attribute does not identify a verified invoking terminal or completed process.",
+    "No successful invocation transcript, execution log, or signed creator attestation was found in record.md, r5 preparation artifacts, offline test logs, or repository files.",
+    "The user's reported failed invocation proves only that the file already existed at that invocation."
+  ]
+}

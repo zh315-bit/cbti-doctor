@@ -1,0 +1,36 @@
+{
+  "artifact_type": "STEP9_55A_V3_SYNTHETIC_NAMESPACE_LIFECYCLE_TEST_REPORT",
+  "step": "9.55a",
+  "status": "PASS",
+  "test_path": "tests/test_step9_55a_namespace_lifecycle.py",
+  "test_sha256": "526b3a1f3e75a582b7cb3bdb3ff3904d157d6afe5653d08f5186021142fd038b",
+  "synthetic_conditions": [
+    "absent namespace before attempt passes",
+    "unrelated namespace before attempt fails closed",
+    "parent-created exact attempt namespace before case 1 passes",
+    "different attempt identity fails closed",
+    "different authorization identity fails closed",
+    "pre-existing case result fails closed",
+    "pre-existing raw trace fails closed",
+    "nonzero cases_started fails closed",
+    "COMPLETED attempt fails closed",
+    "consumed Step 9.54 authorization cannot be reused",
+    "failed Step 9.55 attempt cannot be resumed",
+    "new future authorization/attempt can pass synthetic preflight"
+  ],
+  "lifecycle_tests": 12,
+  "focused_regression_modules": [
+    "tests.test_step9_55a_namespace_lifecycle",
+    "tests.test_step9_53_v3_identity_adapter",
+    "tests.test_step9_35a_treatment_runner",
+    "tests.test_step9_50_traceability_contract"
+  ],
+  "focused_regression_total": 51,
+  "passed": 51,
+  "failed": 0,
+  "errors": 0,
+  "model_called_for_case_execution": false,
+  "agent_called_for_case_execution": false,
+  "rag_called_for_case_execution": false,
+  "v4_case_executed": 0
+}

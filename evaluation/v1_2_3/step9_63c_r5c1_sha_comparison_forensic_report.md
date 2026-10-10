@@ -1,0 +1,11 @@
+# Step 9.63c-r5c1 — Old R5 artifact SHA comparison forensics
+
+Status: `PASS_READ_ONLY_FORENSICS_REQUEST_PIN_VALUE_MISMATCH_CONFIRMED`. This does not lift the r5c fail-closed gate.
+
+The exact old artifact is a 3,195-byte regular file at `evaluation/v1_2_3/step9_63c_r5_mac_local_final_preclearance.json`. SHA-256 over its **raw file bytes**, without JSON reserialization, is `9b4d2c5112b07698b57f149bdb2634b7ee193888f15c97cd65d6bb6c5a86889b`. The original r5c request pin is `9b4d2c5112b07698b57f149bdb2634b7ee193888f15c97ca65d6bb6c5a86889b`. Both are 64-character ASCII hex strings. At zero-based index 47 (the 48th character), the request has `a` (U+0061, UTF-8 `61`) and the raw digest has `d` (U+0064, UTF-8 `64`). There is no leading/trailing whitespace, Unicode lookalike, casing, or normalization explanation: exact, stripped, lowercase, and NFKC comparisons are all false.
+
+There is no executable `OLD_R5_ARTIFACT_SHA256_MATCH` comparison function in the production repository. Step r5c used a read-only `shasum` calculation and recorded its decision in `step9_63c_r5c_fail_closed_precheck.json` lines 9–12: computed `...97cd65...`, requested `...97ca65...`, match `false`. Its Markdown report also displays these distinct values. The new r5c1 request quotes `...97ca65...` twice, including as the purported actual digest; that quotation is not the raw-byte measurement or what the stored r5c report says. This is `B_REQUEST_PIN_VALUE_MISMATCH`, not a comparison-code or stored-report rendering bug.
+
+The r5a and r5b records both contain `...97cd65...` and match the current raw bytes. `OLD_ARTIFACT_BYTE_INTEGRITY = PASS` means only that this file's bytes have stayed stable; its provenance remains `E_STILL_UNPROVEN`, and it is not acceptable for formal execution. The old authorization remains issued/unconsumed, count zero; no retirement event, r9 freeze, authorization, attempt, namespace, HTTP request, model/Agent/RAG activity or V4 case was created. All 55 historical pins still match, and Step 9.58's provenance gap remains documented.
+
+The only indicated repair is correction or explicit confirmation of the external r5c pin for a later request. No code, artifact, lifecycle, freeze, or execution repair was performed here. `READY_FOR_R8_RETIREMENT_AND_R9_FREEZE = NO` in this forensic step.

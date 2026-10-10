@@ -1,0 +1,39 @@
+{
+  "scope": "read-only diagnosis of the real Step 9.12 synthetic smoke; no preflight, model, or Benchmark execution in this step",
+  "synthetic_smoke_observed": {"state_created":true,"action_recorded":true,"answer_returned":true,"goal_id":"PRESENT","semantic_id":"PRESENT","dependency_id":"PRESENT","precondition_id":"NULL in final-state scanner","candidate_id":"NULL in final-state scanner","action_id":"PRESENT","tool_result_id":"PRESENT","state_update_id":"PRESENT"},
+  "reconstructed_path": [
+    {"layer":"Input Understanding","component":"LLMInputUnderstander / apply_understanding","object_created":"state goal/task/facts","id_created":"goal_id","persisted":"state and state_history INPUT_UNDERSTANDING"},
+    {"layer":"Goal Semantics","component":"DependencyResolver.resolve","object_created":"semantic provenance","id_created":"semantic_id","persisted":"state.semantic_provenance and DECISION snapshot"},
+    {"layer":"Dependency","component":"DependencyResolver.resolve","object_created":"EVIDENCE dependency","id_created":"dependency_id","persisted":"state.dependencies_* and DECISION snapshot"},
+    {"layer":"Hard Preconditions","component":"evaluate_preconditions","object_created":"EVIDENCE precondition","id_created":"precondition_id","persisted":"state.preconditions_considered in the first DECISION snapshot","passed_to_next":"ActionCandidate.source_precondition_id"},
+    {"layer":"Candidate","component":"evaluate_preconditions returns ActionCandidate","object_created":"RETRIEVE ActionCandidate","id_created":"candidate_id","persisted":"DECISION candidate_actions/chosen_action","passed_to_next":"record_action stores selected_candidate_id"},
+    {"layer":"Action","component":"AdaptiveAgentState.record_action","object_created":"RETRIEVE action history item","id_created":"action_id","persisted":"state.action_history","passed_to_next":"State Update source_action_id"},
+    {"layer":"Tool and State Update","component":"apply_retrieval_result","object_created":"retrieval result / lineage event","id_created":"tool_result_id and state_update_id","persisted":"state.lineage_events and RETRIEVE snapshot"},
+    {"layer":"Re-evaluation","component":"runner._refresh after RETRIEVE","object_created":"satisfied EVIDENCE dependency and ANSWER ActionCandidate","id_created":"new semantic/dependency/candidate IDs","persisted":"RETRIEVE and next DECISION snapshots","important":"preconditions_considered and considered_information are intentionally reset for the new revision"},
+    {"layer":"Final Answer","component":"policy.choose then record_action","object_created":"ANSWER ActionCandidate/action","id_created":"candidate_id/action_id","persisted":"candidate_actions and action_history","precondition_id":"not applicable after evidence is satisfied"}
+  ],
+  "code_evidence": [
+    {"path":"adaptive_agent/preconditions.py","evidence":"precondition() creates precondition_id; hard EVIDENCE candidate receives candidate_id and source_precondition_id"},
+    {"path":"adaptive_agent/state.py","evidence":"record_action() creates action_id and persists selected_candidate_id"},
+    {"path":"adaptive_agent/state_update.py","evidence":"tool result/state update IDs link to source_action_id"},
+    {"path":"adaptive_agent/runner.py","evidence":"_refresh rebuilds state lists; DECISION snapshots preserve per-step preconditions/candidates/chosen_action"},
+    {"path":"scripts/preflight_step9_12_local.py","evidence":"smoke searches final state.preconditions_considered and final state.considered_information instead of recorded decision/action history"},
+    {"path":"evaluation/v1_2_1/step9_7_integration_traces.jsonl","evidence":"I1 shows pre_goal_t1_r1_1 → cand_goal_t1_r1_1 → act_goal_t1_r1_1 → tool_goal_t1_r1_1 / upd_goal_t1_r2_1, followed by a distinct final ANSWER candidate"}
+  ],
+  "failure_classification": {
+    "precondition_id":{"class":"F","meaning":"The final ANSWER action legitimately has no active precondition; the prior RETRIEVE precondition was created and persisted in its DECISION snapshot."},
+    "candidate_id":{"class":"G","meaning":"The candidate was created and retained as action_history.selected_candidate_id, but the smoke scanner queried considered_information, which is not the candidate-ID carrier and is reset on refresh."},
+    "primary_cause":"LINEAGE_SCHEMA_TOO_STRICT",
+    "secondary_causes":["TEST_COVERAGE_GAP","TRACE_OBSERVABILITY_BUG in the preflight consumer"],
+    "agent_behavior_bug":false,
+    "trace_recorder_bug":false,
+    "production_wiring_bug":false,
+    "object_id_propagation_bug":false
+  },
+  "full_lineage_assumption_valid":"PARTIAL",
+  "valid_lineage_shapes": {
+    "dependency_forced_tool":"goal_id → semantic_id → dependency_id → precondition_id → candidate_id → action_id → tool_result_id → state_update_id",
+    "policy_selected_answer_after_satisfaction":"goal_id → semantic_id → dependency_id (SATISFIED) → candidate_id → action_id; precondition_id is not applicable",
+    "optional_policy_action":"goal_id → candidate_id → action_id; a precondition/dependency is not universally required"
+  }
+}

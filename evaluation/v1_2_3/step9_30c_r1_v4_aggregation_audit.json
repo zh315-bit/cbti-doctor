@@ -1,0 +1,75 @@
+{
+  "adjudication_modified": false,
+  "adjudication_sha256_actual": "85d436955fe2b7ea2448bce94fcb4443d7004140c5b0c4090283f7a0907cd645",
+  "adjudication_sha256_expected": "85d436955fe2b7ea2448bce94fcb4443d7004140c5b0c4090283f7a0907cd645",
+  "adjudication_validation": "PASS_40_UNIQUE_COMPLETE_CASES_SCORE_AND_ARITHMETIC_CHECKED",
+  "aggregator_path": "scripts/aggregate_step9_30c_v4.py",
+  "aggregator_sha256_at_final_audit": "01aea00ad6a644a44d63a6c31e4bf372f43b53b45f9bc1b9bd7d2649e8522395",
+  "aggregate_reconciliation_note": "The preregistered total-acquisition metric was added to the aggregate metrics artifact from the same frozen 40-row case summary (32 actions / 40 cases); it does not modify any frozen source or alter scoring semantics.",
+  "consistency_audit_status": "PASS_SINGLE_REVIEWER_DETERMINISTIC_CHECKS",
+  "required_reviewer_fields_complete": true,
+  "score_ranges_valid": true,
+  "failure_labels_valid": true,
+  "critical_labels_valid": true,
+  "preregistered_total_acquisition_metric": {
+    "numerator": 32,
+    "denominator": 40,
+    "formula": "(ASK + RETRIEVE + READ_DIARY) / adjudicated cases",
+    "value": 0.8,
+    "included_in_metrics_artifact": true
+  },
+  "agent_called": false,
+  "attempt_ledger_modified": false,
+  "case_results_modified": false,
+  "case_summary_excludes_prompts_answers_evidence_and_rationales": true,
+  "created_at_utc": "2026-09-27T18:32:49.601184+00:00",
+  "historical_scores_loaded": false,
+  "identity_gate": {
+    "canonical_input_adjudication_sha256": "85d436955fe2b7ea2448bce94fcb4443d7004140c5b0c4090283f7a0907cd645",
+    "computed_adjudication_sha256": "85d436955fe2b7ea2448bce94fcb4443d7004140c5b0c4090283f7a0907cd645",
+    "status": "PASS",
+    "step9_30b_freeze_sha256": "85d436955fe2b7ea2448bce94fcb4443d7004140c5b0c4090283f7a0907cd645"
+  },
+  "input_hashes": {
+    "adjudication": "85d436955fe2b7ea2448bce94fcb4443d7004140c5b0c4090283f7a0907cd645",
+    "attempts_ledger": "5fe1b11cbe0c28ccdfd056e3141862748897dc3b419ff6f05eb3ad8cb847b59f",
+    "case_results": "77042ae9f5a5a75f7f7efd068e3c182e5725fa709e4f68ae63e58f0bbad0d2ea",
+    "lineage_sidecar": "a7b39f70b8f2591982f19ae2ea6d66918b4bd4bba0e588300317ec14f0cfd447",
+    "metric_registry": "de9f348cb1dff66410c03095abdaffcc256f53679718482870e4aa4d80c75056",
+    "raw_traces": "e1aac03f4dbedf567c625694e084fa23155c8bfc2db1d43c4dffbce158734189",
+    "rubric": "a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899"
+  },
+  "input_hashes_before_after_match": true,
+  "input_manifest_verified": true,
+  "lineage_sidecar_modified": false,
+  "metric_registry_modified": false,
+  "model_called": false,
+  "original_step9_30c_failure_audit_preserved": true,
+  "original_step9_30c_failure_audit_sha256": "cfd8857ff61091872dcd057a0d11b5634a5f49219bf046013bf9647df8e31a63",
+  "outputs": {
+    "audit": {
+      "path": "evaluation/v1_2_3/step9_30c_r1_v4_aggregation_audit.json"
+    },
+    "case_summary": {
+      "path": "evaluation/v1_2_3/step9_30c_v4_case_level_summary.jsonl",
+      "rows": 40,
+      "sha256": "70f2a83b3f6ddd5e07161563d64125591e26ea10e7e3d8cb145312eebb411bcb"
+    },
+    "metrics": {
+      "path": "evaluation/v1_2_3/step9_30c_v4_aggregate_metrics.json",
+      "sha256": "b8118fd180e434dbda0f8baf5ed5f45d06456a2346c39eec21365ef3f3c5f473"
+    },
+    "report": {
+      "append_only": true,
+      "path": "evaluation/v1_2_3/step9_30c_v4_aggregate_report.md",
+      "sha256": "8aff5a789db66646b0d25eae76bb964477b35e6e6761b8a45006255b89fbb77e"
+    }
+  },
+  "overall_pass_threshold_created": false,
+  "rag_called": false,
+  "raw_traces_modified": false,
+  "scoring_rubric_modified": false,
+  "status": "PASS_DETERMINISTIC_AGGREGATION",
+  "step": "9.30c-r1",
+  "v4_rerun": false
+}

@@ -1,0 +1,78 @@
+[
+ {
+  "mutant": "multi_active:exactly_one_check_removed",
+  "function": "collect_r11_precommit_state",
+  "tests": [
+   "test_second_active_authorization_rejected"
+  ],
+  "result": "KILLED"
+ },
+ {
+  "mutant": "multi_active:bound_id_check_removed",
+  "function": "collect_r11_precommit_state",
+  "tests": [
+   "test_second_active_authorization_rejected"
+  ],
+  "result": "KILLED"
+ },
+ {
+  "mutant": "multi_active:independent_recount_replaced_by_producer_view",
+  "function": "collect_r11_precommit_state",
+  "tests": [
+   "test_second_active_authorization_rejected"
+  ],
+  "result": "KILLED"
+ },
+ {
+  "mutant": "pins:gate_check_removed",
+  "function": "collect_r11_precommit_state",
+  "tests": [
+   "test_historical_pin_mismatch_rejected",
+   "test_inventory_pin_mismatch_rejected",
+   "test_ledger_prefix_tamper_rejected",
+   "test_historical_pin_count_54_rejected"
+  ],
+  "result": "KILLED"
+ },
+ {
+  "mutant": "pins:inventory_hash_check_removed",
+  "function": "verify_historical_pins",
+  "tests": [
+   "test_inventory_pin_mismatch_rejected"
+  ],
+  "result": "KILLED"
+ },
+ {
+  "mutant": "pins:supplemental_hash_check_removed",
+  "function": "verify_historical_pins",
+  "tests": [
+   "test_historical_pin_mismatch_rejected"
+  ],
+  "result": "KILLED"
+ },
+ {
+  "mutant": "pins:ledger_prefix_check_removed",
+  "function": "verify_historical_pins",
+  "tests": [
+   "test_ledger_prefix_tamper_rejected"
+  ],
+  "result": "KILLED"
+ },
+ {
+  "mutant": "pins:count_check_removed",
+  "function": "verify_historical_pins",
+  "tests": [
+   "test_historical_pin_count_54_rejected"
+  ],
+  "result": "KILLED"
+ },
+ {
+  "mutant": "pins:gate_result_ignored_by_execute_formal",
+  "function": "execute_formal",
+  "tests": [
+   "test_prepare_formal_gates_reports_real_precommit_failures"
+  ],
+  "result": "KILLED"
+ }
+]
+KILLED 9 of 9

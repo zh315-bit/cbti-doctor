@@ -1,0 +1,41 @@
+{
+  "step": "9.63c-r5c10q",
+  "plan_only": true,
+  "test_execution_in_this_step": false,
+  "historical_import_placeholder_count": 12,
+  "static_source_test_definition_count": 183,
+  "collection_pass_contract": [
+    "All 12 exact B2 modules import under a separately approved offline test-only fixture; zero import-error placeholders.",
+    "Reconcile actual collected IDs against the pre-patch static test-definition inventory (183 definitions); no removal, skip, xfail or narrowed discovery.",
+    "Report collection results for each module separately; a collected method is never counted as passed without execution.",
+    "No real formal r11 pointer/freeze, authorization, attempt, Registry claim, namespace or transaction is created."
+  ],
+  "test_pass_contract": [
+    "Execute the collected methods only after a static write-path and network/inference audit of each target module.",
+    "Report per-module actual passed, failed, runtime errors, skipped and import errors; do not extrapolate from the earlier 124/124 scoped suite.",
+    "Synthetic data are confined to temporary roots; production identity and Consumer code remains unchanged and exercised for applicable boundary tests.",
+    "Existing negative lifecycle, authorization, namespace, transaction, preflight, provenance and case-start tests retain their rejection assertions."
+  ],
+  "required_negative_controls": [
+    "Missing formal r11 pointer rejects the real resolver and formal consumer before authorization consumption, transaction creation or adapter.run.",
+    "Wrong r11 revision, freeze path, pointer SHA/member SHA and r10 authorization/artifact replay are rejected.",
+    "A synthetic test identity cannot be mistaken for the formal repository pointer; no shared sys.modules/mock state remains after test process exit.",
+    "Historical trace/authorization/ledger roots cannot be written; failure paths leave byte hashes and directory inventories unchanged.",
+    "No network, HTTP inference, model, Agent, RAG or formal V4 case call occurs."
+  ],
+  "protected_evidence_pre_post_checks": [
+    "SHA-256, size and path inventory for both historical trace directories, including the two named traces",
+    "r10 freeze manifest and all 20 member bytes",
+    "historical authorization manifest and real append-only lifecycle ledger",
+    "formal r11 pointer/freeze absence"
+  ],
+  "failure_stop_conditions": [
+    "Any required production/frozen adapter, resolver, issuer or consumer edit",
+    "Any fake formal r11 pointer/freeze or real authorization/attempt state",
+    "Any dropped test definition or collection-pass claim based on only a subset of 12 modules",
+    "Any protected evidence byte or path change",
+    "Any missing/invalid identity accepted by formal validation"
+  ],
+  "current_collection_result": "NOT_RUN",
+  "current_test_result": "NOT_RUN"
+}

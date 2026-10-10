@@ -1,0 +1,21 @@
+{
+  "evaluation_id": "heldout-v3-step9_20-20260923-01",
+  "n": 32,
+  "score_method": "Single-reviewer trace adjudication using frozen five-dimension 100-point rubric; see per-case score/rationale JSONL. No inter-rater calibration or post-result rubric change.",
+  "scores": {
+    "overall": 60.90625,
+    "dimension_means": {"goal_alignment_20": 10.3125, "facts_state_integrity_20": 13.625, "action_resource_selection_20": 13.875, "evidence_answer_scope_25": 12.4375, "interaction_efficiency_15": 10.65625},
+    "task_type_means": {"KNOWLEDGE_QA": 70.125, "CAUSE_ASSESSMENT": 46.75, "PERSONALIZED_DECISION": 47.875, "DATA_ANALYSIS": 78.875}
+  },
+  "quality": {"final_status_answer": 32, "task_completion": {"complete": 8, "partial": 14, "not_complete": 10}, "answer_validity": {"valid": 11, "invalid_or_incomplete": 21}, "critical_failures": 1, "critical_failure_cases": ["V3-DA-08"], "harmful_failures": 6, "harmful_cases": ["V3-CA-01", "V3-CA-03", "V3-CA-07", "V3-PD-01", "V3-PD-07", "V3-PD-08"]},
+  "actions": {"ASK_total": 39, "ASK_per_case": 1.21875, "PD_ASK_total": 22, "PD_ASK_per_case": 2.75, "RETRIEVE_total": 12, "RETRIEVE_per_case": 0.375, "READ_DIARY_total": 8, "READ_DIARY_per_case": 0.25, "total_acquisition_actions": 59, "total_acquisition_actions_per_case": 1.84375, "tool_calls_total": 20, "tool_calls_per_case": 0.625, "turns_total": 71, "turns_per_case": 2.21875, "steps_total": 91, "steps_per_case": 2.84375},
+  "by_task_type": {
+    "KNOWLEDGE_QA": {"n": 8, "score_mean": 70.125, "ASK_total": 0, "ASK_per_case": 0, "RETRIEVE_total": 8, "RETRIEVE_per_case": 1, "READ_DIARY_total": 0, "READ_DIARY_per_case": 0, "tool_calls_per_case": 1, "turns_per_case": 1, "steps_per_case": 2, "critical_failures": 0, "harmful_failures": 0, "mean_latency_ms": 12784.99625},
+    "CAUSE_ASSESSMENT": {"n": 8, "score_mean": 46.75, "ASK_total": 17, "ASK_per_case": 2.125, "RETRIEVE_total": 3, "RETRIEVE_per_case": 0.375, "READ_DIARY_total": 0, "READ_DIARY_per_case": 0, "tool_calls_per_case": 0.375, "turns_per_case": 3.125, "steps_per_case": 3.5, "critical_failures": 0, "harmful_failures": 3, "mean_latency_ms": 7813.03125},
+    "PERSONALIZED_DECISION": {"n": 8, "score_mean": 47.875, "ASK_total": 22, "ASK_per_case": 2.75, "RETRIEVE_total": 1, "RETRIEVE_per_case": 0.125, "READ_DIARY_total": 0, "READ_DIARY_per_case": 0, "tool_calls_per_case": 0.125, "turns_per_case": 3.75, "steps_per_case": 3.875, "critical_failures": 0, "harmful_failures": 3, "mean_latency_ms": 7033.89},
+    "DATA_ANALYSIS": {"n": 8, "score_mean": 78.875, "ASK_total": 0, "ASK_per_case": 0, "RETRIEVE_total": 0, "RETRIEVE_per_case": 0, "READ_DIARY_total": 8, "READ_DIARY_per_case": 1, "tool_calls_per_case": 1, "turns_per_case": 1, "steps_per_case": 2, "critical_failures": 1, "harmful_failures": 0, "mean_latency_ms": 2746.1775}
+  },
+  "latency": {"observed": true, "total_ms": 243024.76, "mean_ms_per_case": 7594.52375, "median_ms_per_case": 6988.015, "p90_nearest_rank_ms": 9698.07, "p90_method": "nearest rank, ceil(0.90*n) after ascending sort", "by_task_type_mean_ms": {"KNOWLEDGE_QA": 12784.99625, "CAUSE_ASSESSMENT": 7813.03125, "PERSONALIZED_DECISION": 7033.89, "DATA_ANALYSIS": 2746.1775}},
+  "telemetry": {"token_usage": "NOT_MEASURED", "exact_model_calls": "NOT_MEASURED", "llm_latency": "NOT_MEASURED", "retrieval_latency": "NOT_MEASURED", "tool_latency": "NOT_MEASURED"},
+  "limitations": ["V3 is post-freeze held-out, but single-reviewer numeric scoring lacks inter-rater calibration.", "Runner case_results retained PENDING_FROZEN_RUBRIC_REVIEW; this artifact is the subsequent trace adjudication, not a rewritten run result."]
+}

@@ -1,0 +1,19 @@
+{
+  "step": "9.63c-r5c10v",
+  "target_is_r10_frozen_member": false,
+  "r10_freeze_manifest": {
+    "path": "evaluation/v1_2_3/step9_63c_r5c5b_runner_freeze_r10.json",
+    "sha256_before_and_after": "d24244235e51e7bf6c8567880c654fe3fd73b87fa1bfe1ab0f10dfdc94db2693",
+    "member_count": 20
+  },
+  "current_r10_member_path_hash_aggregate_before_and_after": "f6f20d9dad339ffef49a4e23179705c7857fe0ce0b882cb9a013d59c9e1b1197",
+  "current_member_bytes_match_original_r10": "NOT_CLAIMED: prior approved r11-candidate infrastructure edits existed before this step",
+  "production_python_source_hash_aggregate_before_and_after": "bb5e9616afaaf3dc98f4b7514f66a2f67b683e91a0b4d269394159c945a6a2ad",
+  "frozen_adapter_sha256_after": "3a4ec3e526bde19e318e271a24569223087c8a6aadc77fd144b061825c0da282",
+  "parent_runner_sha256_after": "b79bc78a8439021023ee1d190919f5b519de49d3f1931789f788cdaad7776508",
+  "transaction_module_sha256_after": "f0e74a49d152053b5455951c507edb8f7849a9e4708835711e5975a82e690e91",
+  "frozen_member_changed_in_this_step": false,
+  "production_semantics_changed_in_this_step": false,
+  "formal_r11_pointer_exists": false,
+  "formal_r11_freeze_exists": false
+}

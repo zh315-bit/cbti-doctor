@@ -1,0 +1,27 @@
+{
+  "step": "9.63c-r5c10y",
+  "r10_freeze_manifest_path": "evaluation/v1_2_3/step9_63c_r5c5b_runner_freeze_r10.json",
+  "r10_freeze_manifest_sha256_before_after": "d24244235e51e7bf6c8567880c654fe3fd73b87fa1bfe1ab0f10dfdc94db2693",
+  "current_20_member_path_hash_aggregate_before_after": "5423034cba915da15c6c2c6543c8c007b842b76529ab8d4d06d3a25a24968e41",
+  "current_20_member_aggregate_note": "This is a forward before/after observation of current paths, not a claim that all current bytes match the original historical r10 member hashes.",
+  "target_in_r10_member_inventory": false,
+  "frozen_member_changed_by_this_step": false,
+  "historical_trace_files": [
+    {
+      "path": "evaluation/v1_2/step8_3_mechanism_traces.jsonl",
+      "sha256_before_after": "e09321c89b75a4330799e4a4c286652cee82ed0e0d4fa1b8478c970dd7f6d8e5"
+    },
+    {
+      "path": "evaluation/v1_2_1/step8_7_mechanism_traces.jsonl",
+      "sha256_before_after": "5518eb4b0b7e8880c5f84e59ba0264013bed99e25edb8da93dca558304d4f084"
+    }
+  ],
+  "historical_trace_modified_by_this_step": false,
+  "historical_trace_original_content_integrity": "CONTENT_INTEGRITY_UNPROVEN",
+  "formal_r11_pointer_present": false,
+  "formal_r11_freeze_present": false,
+  "identity_guard_bypassed": false,
+  "authorization_issued_or_consumed": false,
+  "formal_v4_cases_executed": 0,
+  "production_or_frozen_code_modified_by_this_step": false
+}

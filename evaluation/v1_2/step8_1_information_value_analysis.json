@@ -1,0 +1,41 @@
+{
+  "framework": "ordinal_information_value_v1_2_design",
+  "input_ASK": 112,
+  "mapping": {
+    "necessary": {
+      "information_value": "HIGH",
+      "reason": "counterfactual value can change next action or core answer scope"
+    },
+    "useful_but_optional": {
+      "information_value": "MEDIUM",
+      "reason": "may change personalization/scope, but does not always block a bounded answer"
+    },
+    "redundant": {
+      "information_value": "NONE",
+      "reason": "semantic equivalent already present in State/provenance"
+    },
+    "irrelevant": {
+      "information_value": "NONE",
+      "reason": "does not affect current goal or safe answer"
+    }
+  },
+  "information_value_counts": {
+    "HIGH": 21,
+    "MEDIUM": 9,
+    "LOW": 0,
+    "NONE": 82
+  },
+  "rates": {
+    "HIGH": 0.1875,
+    "MEDIUM": 0.0804,
+    "LOW": 0.0,
+    "NONE": 0.7321
+  },
+  "cost_model": {
+    "ASK": "MEDIUM initially; increases with prior ASK count, repeated target, and cognitive burden",
+    "RETRIEVE": "MEDIUM; tool/latency and evidence relevance cost",
+    "READ_DIARY": "LOW when available and relevant, HIGH/unavailable when missing",
+    "ANSWER": "risk cost, increasing with uncertainty, personalization, and grounding exposure"
+  },
+  "stop_rule": "stop acquisition when no remaining fact has HIGH value, or MEDIUM value that changes answer scope enough to justify its cost and answer risk"
+}

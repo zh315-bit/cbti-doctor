@@ -1,0 +1,122 @@
+{
+  "artifact_type": "STEP9_63C_R5C8E_PRODUCER_OWNED_PREFLIGHT_PREPARATION_AUDIT",
+  "step": "9.63c-r5c8e",
+  "timestamp_utc": "2026-10-07T18:08:21Z",
+  "status": "FAIL_CLOSED_HISTORICAL_INVOCATION_COLLISION_CHECK_NOT_PROVEN",
+  "execution_identity": {
+    "runner_freeze_revision": "r10",
+    "runner_freeze_path": "evaluation/v1_2_3/step9_63c_r5c5b_runner_freeze_r10.json",
+    "runner_freeze_member_count": 20,
+    "runner_freeze_hash_mismatch_count": 0,
+    "current_runner_matches_r10_freeze": true,
+    "current_agent_matches_v3_freeze": true,
+    "frozen_evaluation_identities_match": true,
+    "case_count": 40,
+    "case_set_match": true,
+    "case_order_match": true,
+    "task_distribution": {
+      "KNOWLEDGE_QA": 10,
+      "CAUSE_ASSESSMENT": 10,
+      "PERSONALIZED_DECISION": 10,
+      "DATA_ANALYSIS": 10
+    },
+    "historical_pin_count": 55,
+    "historical_pin_mismatch_count": 0,
+    "step9_58_provenance_gap": "PRESENT_AND_DOCUMENTED"
+  },
+  "authorization_lifecycle": {
+    "unified_lifecycle_reducer_used": true,
+    "active_executable_authorization_count": 1,
+    "authorization_id": "auth-step9_63c_r5c6-aff5c4b96bb74278a14d3fd08bf8a84e",
+    "authorization_derived_state": "ISSUED_EXECUTABLE",
+    "authorization_consumed": false,
+    "authorization_consumption_count": 0,
+    "attempt_exists": false,
+    "namespace_exists": false,
+    "namespace_reserved": false,
+    "transaction_started": false,
+    "r7_derived_state": "COMMITTED_BURNED_PRE_CASE_NON_REUSABLE",
+    "r8_derived_state": "RETIRED_UNCONSUMED_NON_REUSABLE"
+  },
+  "producer_consumer_contract": {
+    "producer_path": "scripts/preflight_step9_63c_r5c7_mac_local.py",
+    "producer_sha256": "e3f33f5c00641cbd4bb338d2bab28187df806cbb6ed6314010bd6076f93ccdfa",
+    "frozen_consumer_path": "scripts/run_step9_63_v3_formal_execution.py",
+    "frozen_consumer_sha256": "ce8363555b734e39802236eaa2ee31233359ee367acf1094630836f924256cf2",
+    "contract_mismatch_count": 0,
+    "offline_fixture_accepted_by_frozen_validator": true,
+    "authoritative_preflight_id_owner": "PRODUCER",
+    "authoritative_target_owner": "PRODUCER",
+    "pre_execution_id_knowledge_required": false,
+    "runtime_generated_uuid_identity": true,
+    "consumer_compatible_id_and_target": true,
+    "target_exists_precheck": true,
+    "exclusive_target_create": true,
+    "existing_target_collision_fail_closed": true,
+    "existing_artifact_overwrite_forbidden": true,
+    "historical_invocation_collision_check": false,
+    "blocker": "The producer derives a fresh UUID4 ID and tests only its derived target path. It does not consult a historical preflight invocation-ID inventory. An earlier failed invocation with no artifact cannot be detected by the current target check.",
+    "code_evidence": [
+      "scripts/preflight_step9_63c_r5c7_mac_local.py:106-126",
+      "scripts/preflight_step9_63c_r5c7_mac_local.py:420-450",
+      "evaluation/v1_2_3/step9_63c_r5c8d_invocation_identity_ownership_report.md"
+    ],
+    "success_stdout_fields": [
+      "STEP9_63C_R5_STATUS",
+      "preflight_id",
+      "artifact_path",
+      "artifact_sha256",
+      "ready_for_single_atomic_formal_execution"
+    ],
+    "success_stdout_status_value": "PASS_R10_MAC_LOCAL_FINAL_NON_CONSUMING_PRECLEARANCE",
+    "failure_stdout_fields": [
+      "FAILURE_STAGE",
+      "FAILURE_EXCEPTION_TYPE",
+      "FAILURE_EXCEPTION_MESSAGE_SANITIZED"
+    ]
+  },
+  "offline_validation": {
+    "exact_test_manifest": [
+      "tests.test_step9_63c_r5c8b_preflight_contract",
+      "tests.test_step9_63c_r5c7_preflight",
+      "tests.test_step9_63c_r5c5b_lifecycle_reducer.LifecycleReducerTests.test_01_clean_issuance_is_executable",
+      "tests.test_step9_63c_r5c5b_lifecycle_reducer.LifecycleReducerTests.test_03_retirement_is_terminal",
+      "tests.test_step9_63c_r5c5b_lifecycle_reducer.LifecycleReducerTests.test_05_burned_commit_is_terminal",
+      "tests.test_step9_63c_r5c5b_lifecycle_reducer.LifecycleReducerTests.test_08_consumption_is_terminal",
+      "tests.test_step9_63c_r5c5b_lifecycle_reducer.LifecycleReducerTests.test_13_stray_namespace_marker_fails_closed",
+      "tests.test_step9_63c_r5c5b_lifecycle_reducer.LifecycleReducerTests.test_15_old_r7_historical_regression",
+      "tests.test_step9_63c_r5c5b_lifecycle_reducer.LifecycleReducerTests.test_16_old_r8_historical_regression",
+      "tests.test_step9_63c_r5c5b_lifecycle_reducer.LifecycleReducerTests.test_19_assert_executable_rejects_r7",
+      "tests.test_step9_63c_r5c5b_lifecycle_reducer.LifecycleReducerTests.test_20_manifest_and_transaction_bytes_unchanged",
+      "tests.test_step9_63c_r5c5b_lifecycle_reducer.LifecycleReducerTests.test_21_historical_pin_inventory_still_passes"
+    ],
+    "test_count": 41,
+    "test_failures": 0,
+    "test_errors": 0,
+    "contract_test_failures": 0,
+    "py_compile": "PASS",
+    "network_used": false
+  },
+  "hard_boundary": {
+    "work_generated_preflight_id": false,
+    "work_generated_preflight_target": false,
+    "real_mac_local_preflight_run": false,
+    "formal_preflight_artifact_generated": false,
+    "terminal_command_generated": false,
+    "formal_execution_command_generated": false,
+    "producer_modified": false,
+    "frozen_consumer_modified": false,
+    "r10_freeze_modified": false,
+    "new_authorization_issued": false,
+    "authorization_consumed": false,
+    "attempt_created": false,
+    "namespace_created_or_reserved": false,
+    "transaction_started": false,
+    "http_inference_request_sent": false,
+    "model_inference_executed": false,
+    "agent_evaluation_executed": false,
+    "rag_evaluation_executed": false,
+    "formal_v4_case_executed": 0
+  },
+  "ready_for_user_mac_local_preflight": false
+}

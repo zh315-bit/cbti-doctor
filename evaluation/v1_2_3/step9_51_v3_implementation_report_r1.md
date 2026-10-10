@@ -1,0 +1,9 @@
+# Step 9.51 — V3 Implementation Validation (r1)
+
+Status: **PASS — development-only validation; no formal evaluation authority.** This append-only revision supersedes the initial 323-case Step 9.51 report after adding an explicit current-V3 identity test next to the frozen-V2 artifact self-consistency test.
+
+The original Step 9.51 selector used `unittest discover('tests')` but excluded module names prefixed `tests.`. Discovery returns `test_...`, so Step 9.30a and 9.30c were selected. The prior 9.30c test recomputed the frozen 40-case V4 aggregate in memory; frozen artifact hash audits found no write or overwrite. The V2 live-tree identity error was expected under V3 development. The V2 frozen artifact/inventory remains self-consistent; current V3 source is not required to match it.
+
+The explicit Step 9.51a manifest selected 31 modules / 324 cases and excluded 10 reviewed modules. Dry-run confirmed no Step 9.30a/9.30c, formal V4, aggregate, adjudication, or V5 test selection. The final `.venv` rerun passed **324/324**, 0 failures, 0 errors, 0 skips, including Step 9.50 synthetic coverage 40/40, Step 9.41/9.42 safety 16/16, a V2 freeze self-consistency test, and a V3 development identity test. Historical frozen result/trace/adjudication/aggregate/comparison pins were checked 183 times before and 40 direct outputs after the rerun; all matched.
+
+Current V3 development Agent inventory SHA-256: `085d338ed95bbef7370c41cf97ca0d6653ffdfd2f1c924eef4b7123dfdea4607`. Production Agent code was not modified during remediation. PD06/PD08/common safety, epistemic distinctions, decision mirroring, traceability, and static anti-overfit checks pass. No V4 case, Step 9.51a aggregation/adjudication, model/RAG formal evaluation, V5 access, authorization, or formal attempt occurred. The prior failed Step 9.51 in-memory aggregate is explicitly retained in the audit trail. Step 9.52 was not run.

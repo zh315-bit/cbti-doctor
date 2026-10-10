@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "checks": {
+    "new_goal": "I7",
+    "follow_up": "I3",
+    "retrieve_resync": "I1/I4",
+    "diary_resync": "I5",
+    "unavailable": "I6",
+    "useful_optional": "I8"
+  }
+}

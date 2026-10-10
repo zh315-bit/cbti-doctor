@@ -1,0 +1,22 @@
+{
+  "method": "Frozen metric-registry target-by-target manual review of each ASK against current goal, known State, dependency and acceptable bounded path. Categories are judgments, not calibrated probabilities.",
+  "denominator": 39,
+  "counts": {"necessary": 7, "useful_but_optional": 13, "redundant": 6, "irrelevant": 13},
+  "rates": {"necessary": 0.179487, "useful_but_optional": 0.333333, "redundant": 0.153846, "irrelevant": 0.333333, "necessary_plus_useful": 0.512821, "redundant_plus_irrelevant": 0.487179},
+  "per_case": [
+    {"case_id": "V3-CA-01", "asks": [["bedtime", "irrelevant", "时间不决定工作压力与浅睡的受限讨论"], ["sleep_time_or_sleep_onset_latency", "useful_but_optional", "可丰富入睡体验但非当前回答前提"], ["wake_time", "irrelevant", "与当前因果咨询无直接改变"]]},
+    {"case_id": "V3-CA-02", "asks": [["sleep_onset_latency", "useful_but_optional", "帮助量化睡前清醒"], ["bedtime", "useful_but_optional", "帮助界定早通勤作息"], ["wake_time", "necessary", "明确早班约束下睡眠时段"]]},
+    {"case_id": "V3-CA-03", "asks": [["bedtime", "irrelevant", "光照/练习比较不取决于床时精度"], ["sleep_onset_latency", "useful_but_optional", "可量化翻来覆去"], ["wake_time", "irrelevant", "不改变受限比较"]]},
+    {"case_id": "V3-CA-05", "asks": [["perceived_stress", "necessary", "压力与夜醒后思虑直接相关"], ["bedtime", "useful_but_optional", "可能提供背景但非前提"], ["sleep_onset_latency", "redundant", "原始输入已说入睡不难"], ["wake_time", "useful_but_optional", "可补充睡眠时段背景"]]},
+    {"case_id": "V3-CA-07", "asks": [["perceived_stress", "useful_but_optional", "可补充事件后状态"], ["sleep_onset_latency", "redundant", "原句已说明入睡很久"], ["bedtime", "irrelevant", "不能决定单次争吵是否证明长期病因"], ["wake_time", "irrelevant", "同样不改变因果边界"]]},
+    {"case_id": "V3-PD-01", "asks": [["bedtime", "irrelevant", "偶发一晚是否大幅调床时无需精确床时"], ["sleep_onset_latency", "irrelevant", "不改变偶发事件的受限建议"]]},
+    {"case_id": "V3-PD-02", "asks": [["sleep_onset_latency", "useful_but_optional", "可能改变取舍幅度"], ["bedtime", "useful_but_optional", "界定目前上床时间"], ["wake_time", "necessary", "早班限制下起床时间直接影响取舍"]]},
+    {"case_id": "V3-PD-03", "asks": [["bedtime", "useful_but_optional", "可说明夜间窗口"], ["sleep_onset_latency", "useful_but_optional", "可区分困倦与实际入睡"], ["wake_time", "redundant", "用户已明确 07:15 起床"]]},
+    {"case_id": "V3-PD-04", "asks": [["sleep_onset_latency", "irrelevant", "晚归日与平日的双端点优先级不靠该值"], ["bedtime", "necessary", "两类日子的 bedtime 对决策重要"], ["wake_time", "necessary", "固定起床端点对取舍重要"]]},
+    {"case_id": "V3-PD-05", "asks": [["sleep_onset_latency", "redundant", "明示 22:30 上床、23:00 睡着可确定性得到"], ["bedtime", "redundant", "用户已明确 22:30"], ["wake_time", "redundant", "用户已明确 06:30"]]},
+    {"case_id": "V3-PD-06", "asks": [["sleep_onset_latency", "useful_but_optional", "可能辅助压缩窗口判断"], ["bedtime", "useful_but_optional", "辅助卧床窗口"], ["wake_time", "necessary", "窗口至少需确认起床端点，但仍缺总睡眠时长"]]},
+    {"case_id": "V3-PD-07", "asks": [["bedtime", "irrelevant", "单次漏闹钟的受限回答不需床时"], ["sleep_onset_latency", "irrelevant", "不改变当前决策"]]},
+    {"case_id": "V3-PD-08", "asks": [["bedtime", "irrelevant", "两晚短睡和日困咨询不需床时精度"], ["sleep_onset_latency", "irrelevant", "对当前受限回答收益很低"], ["wake_time", "necessary", "帮助界定与作息端点的关系"]]}
+  ],
+  "tool_action_quality": {"total_retrieve": 12, "total_read_diary": 8, "unnecessary_retrieve": 0, "unnecessary_read_diary": 1, "unnecessary_read_diary_cases": ["V3-DA-07"], "redundant_plus_irrelevant_acquisition_total": 20, "all_acquisition_actions": 59, "redundant_plus_irrelevant_acquisition_rate": 0.338983, "note": "DA-07 already supplied three durations in the query; its diary request followed extraction failure. Other RETRIEVE actions had active knowledge-evidence dependence or plausible goal value; unsuccessful downstream answer use is not automatically counted as unnecessary retrieval."}
+}

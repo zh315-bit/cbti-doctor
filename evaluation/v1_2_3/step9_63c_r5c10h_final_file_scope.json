@@ -1,0 +1,24 @@
+{
+  "step": "9.63c-r5c10h",
+  "status": "PROPOSED_ONLY_REQUIRES_SEPARATE_IMPLEMENTATION_APPROVAL",
+  "recommended_option": "A",
+  "proposed_r11_member_count": 20,
+  "member_accounting": {"unchanged_r10_member_paths": 14, "changed_existing_member_paths": 3, "new_paths_replacing_old_member_paths": 3},
+  "changed_existing_member_paths": [
+    {"path": "scripts/v3_execution_transaction.py", "change": "Already-approved r5c10c scanner repair only; no further edit planned"},
+    {"path": "scripts/v3_runner_identity.py", "change": "Explicit r11 versioned pointer selection, strict no-r10-fallback verification"},
+    {"path": "scripts/run_step9_63_v3_formal_execution.py", "change": "Add fail-closed preflight producer/member-SHA and registry claim/prefix provenance gate before adapter execution; retain all existing guards"}
+  ],
+  "new_paths_replacing_old_member_paths": [
+    {"new_path": "scripts/build_step9_63c_r11_runner_freeze.py", "replaces_r10_member_path": "scripts/build_step9_63c_r5c4_runner_freeze.py", "purpose": "Versioned r11 construction with r10 parent and exclusive durable output"},
+    {"new_path": "evaluation/v1_2_3/step9_63c_r11_current_runner_identity.json", "replaces_r10_member_path": "evaluation/v1_2_3/step9_63c_r5c4_current_runner_identity.json", "purpose": "Independent path/revision pointer without manifest-SHA cycle"},
+    {"new_path": "scripts/preflight_step9_63c_r11_mac_local.py", "replaces_r10_member_path": "scripts/preflight_step9_63c_r5_mac_local.py", "purpose": "Versioned registry-aware producer emitting frozen-consumer-compatible evidence"}
+  ],
+  "new_nonmember_runtime_state": [
+    {"path": "evaluation/v1_2_3/step9_63c_r11_preflight_invocations.jsonl", "status": "PROPOSED_NOT_CREATED", "reason_not_frozen": "Append-only claims change file bytes; full-file SHA cannot be an immutable freeze member", "frozen_boundary": "Producer/consumer code fixes schema/path/validation; future artifacts pin claim prefix length/hash"}
+  ],
+  "new_nonmember_tests": ["tests/test_step9_63c_r11_freeze_bootstrap.py", "tests/test_step9_63c_r11_preflight_registry.py", "tests/test_step9_63c_r11_formal_consumer_contract.py"],
+  "existing_files_no_change_planned": ["scripts/run_step9_53_v3_identity_adapter.py", "scripts/authorization_lifecycle.py", "scripts/preflight_step9_63c_current_mac_local.py", "scripts/preflight_step9_63c_r5c7_mac_local.py", "evaluation/v1_2_3/step9_63c_r5c8f_preflight_invocations.jsonl", "scripts/issue_step9_63a_r3_authorization.py"],
+  "historical_immutable": ["evaluation/v1_2_3/step9_63c_r5c5b_runner_freeze_r10.json", "evaluation/v1_2_3/step9_63c_r5c4_current_runner_identity.json", "scripts/build_step9_63c_r5c4_runner_freeze.py", "historical authorization manifests/lifecycle events/preflight artifacts/transaction journals/attempts/traces/audits", "V3 Agent and frozen V4 benchmark/harness/scoring/rubric/metrics/one-shot rules"],
+  "pending_contracts": ["Exact new registry genesis/claim schema and prefix algorithm must be reviewed before implementation", "Future authorization issuer/retirement requirements are separate and not authorized here", "If offline tests reveal a need to edit any other frozen member, stop and return for new scope review"]
+}

@@ -1,0 +1,94 @@
+{
+  "CLOUDFLARE_DNS_STATUS": "PASS",
+  "DEEPSEEK_API_KEY_PRESENT": true,
+  "DEEPSEEK_BASE_URL_HOST": "api.deepseek.com",
+  "DEEPSEEK_MODEL": "deepseek-flash",
+  "DEFAULT_DIG_STATUS": "PASS",
+  "DNS_ADDRESSES": {
+    "cloudflare": [
+      "3.173.21.63"
+    ],
+    "default_dig": [
+      "3.173.21.63"
+    ],
+    "google": [
+      "3.173.21.63"
+    ],
+    "python": [
+      "3.173.21.63"
+    ],
+    "system": [
+      "3.173.21.63"
+    ]
+  },
+  "GOOGLE_DNS_STATUS": "PASS",
+  "PROJECT_ROOT_MATCH": true,
+  "PROJECT_VENV_MATCH": true,
+  "PYTHON_GETADDRINFO_STATUS": "PASS",
+  "SYSTEM_DNS_STATUS": "PASS",
+  "TCP_CONNECTION": "PASS",
+  "TLS_CERTIFICATE_PRESENT": true,
+  "TLS_CERTIFICATE_VERIFIED": true,
+  "TLS_CONNECTION": "PASS",
+  "TLS_VERSION": "TLSv1.3",
+  "agent_evaluation_executed": false,
+  "artifact_type": "STEP9_63C_R5C7E_R10_MAC_LOCAL_NON_CONSUMING_PREFLIGHT",
+  "attempt_exists": false,
+  "attempt_id": "attempt-step9_63c_r5c6-3401b701486c4fdeb4019b461d024bd4",
+  "authorization_consumed": false,
+  "authorization_consumption_count": 0,
+  "authorization_derived_state": "ISSUED_EXECUTABLE",
+  "authorization_id": "auth-step9_63c_r5c6-aff5c4b96bb74278a14d3fd08bf8a84e",
+  "authorization_manifest_sha256": "beac52d1ed3bc11efa02b1a924a8abc7b210171bf5cc1b7910011a6ef9741241",
+  "authorization_status": "ISSUED_NOT_CONSUMED",
+  "case_count": 40,
+  "case_order_fingerprint_sha256": "d930455e417935337a6e3459defbdc3ee3829b71786fbd8438ef092b62429e68",
+  "case_set_fingerprint_sha256": "d930455e417935337a6e3459defbdc3ee3829b71786fbd8438ef092b62429e68",
+  "evaluation_id": "heldout-v4-step9_55a-treatment-v3-20260930-01",
+  "execution_environment": "MAC_LOCAL",
+  "formal_v4_case_executed": 0,
+  "frozen_evaluation_identity_sha256": "fc9745a44cfaa94cded49ce8907e8c4aa98cfff932e59fddc7aaa1519415f864",
+  "historical_pin_count": 55,
+  "historical_pin_mismatch_count": 0,
+  "http_inference_request_sent": false,
+  "identity_bindings": {
+    "benchmark_sha256": "8b8c72092fcd7544e69d5d2ecd13610c7bb4c14210fca330698b3e5ab3f01d7f",
+    "case_order_fingerprint_sha256": "d930455e417935337a6e3459defbdc3ee3829b71786fbd8438ef092b62429e68",
+    "case_set_fingerprint_sha256": "d930455e417935337a6e3459defbdc3ee3829b71786fbd8438ef092b62429e68",
+    "harness_sha256": "8bc271bebc1c5da5351d517e2bb4a0d1a99fda3de1b713a6197b12f81fad70c7",
+    "matched_protocol_sha256": "a71ba06090370b576fbba66bc4b005e519ddbabff3021a40c6546fc855f90265",
+    "metric_registry_sha256": "de9f348cb1dff66410c03095abdaffcc256f53679718482870e4aa4d80c75056",
+    "model_configuration_fingerprint_sha256": "d0802478a59e6b2021b0476490149d7fec672fab5bda5cc45f55241268f1a7e0",
+    "one_shot_rules_sha256": "1c7ed4ef47865b117bc943f3e0ad9a859f4f74cfb4e8001f723ac5532af140d0",
+    "rag_configuration_fingerprint_sha256": "58467abc2abafce62e8d71713684802f64a35946accf35c08007e67b0edd60a5",
+    "scoring_rubric_sha256": "a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899",
+    "scoring_sha256": "f742a8f8af7c8747818dadad81621c15d12d74f50538019913dfe18ab53bf59b",
+    "tool_adapter_sha256": "65223ad962417d68d16326c2431a205f1bdc953a0f64c5585ff38e4017a1c084",
+    "treatment_agent_sha256": "085d338ed95bbef7370c41cf97ca0d6653ffdfd2f1c924eef4b7123dfdea4607"
+  },
+  "model_inference_executed": false,
+  "namespace_exists": false,
+  "namespace_id": "heldout-v4-treatment-v3-run-8e4bd0fd803f31b9e0da",
+  "namespace_reserved": false,
+  "preflight_id": "preflight-step9_63c-r10-7decee88a4c8439fb3f30ffb68240b31",
+  "preflight_script_sha256": "2b183d5380aa7be511723c2e3f0ac7b5b596c77efe8fdb09a032de1cffec97ca",
+  "preflight_target": "evaluation/v1_2_3/step9_63c_r5c7e_preflight-step9_63c-r10-7decee88a4c8439fb3f30ffb68240b31_mac_local_final_preclearance.json",
+  "project_root": "/Volumes/Elements/cbti-doctor-main",
+  "python_executable": "/Users/huzhuoyang/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+  "rag_evaluation_executed": false,
+  "ready_for_single_atomic_formal_execution": true,
+  "runner_freeze_revision": "r10",
+  "runner_freeze_sha256": "d24244235e51e7bf6c8567880c654fe3fd73b87fa1bfe1ab0f10dfdc94db2693",
+  "status": "PASS_MAC_LOCAL_FINAL_NON_CONSUMING_PRECLEARANCE",
+  "step": "9.63c-r5c7e",
+  "step9_58_provenance_gap": "PRESENT_AND_DOCUMENTED",
+  "task_distribution": {
+    "CAUSE_ASSESSMENT": 10,
+    "DATA_ANALYSIS": 10,
+    "KNOWLEDGE_QA": 10,
+    "PERSONALIZED_DECISION": 10
+  },
+  "timestamp_utc": "2026-10-07T16:19:09.307792+00:00",
+  "transaction_started": false,
+  "v3_agent_sha256": "085d338ed95bbef7370c41cf97ca0d6653ffdfd2f1c924eef4b7123dfdea4607"
+}

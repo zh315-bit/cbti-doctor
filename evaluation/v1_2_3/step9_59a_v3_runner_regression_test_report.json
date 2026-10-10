@@ -1,0 +1,38 @@
+{
+  "artifact_type": "STEP9_59A_SAFE_REGRESSION_TEST_REPORT",
+  "step": "9.59a",
+  "status": "PASS",
+  "created_at_utc": "2026-10-01T19:57:39Z",
+  "test_manifest": [
+    "tests.test_step9_59a_auth_identity_binding",
+    "tests.test_step9_55a_namespace_lifecycle",
+    "tests.test_step9_58a_r1_namespace_allocator",
+    "tests.test_step9_53_v3_identity_adapter",
+    "tests.test_step9_42_answer_authorization",
+    "tests.test_step9_50_traceability_contract"
+  ],
+  "test_count": 60,
+  "failures": 0,
+  "errors": 0,
+  "critical_coverage": {
+    "parent_validator_uses_authoritative_r5_pins": "PASS",
+    "stale_r4_incompatible_authorization_rejected": "PASS",
+    "preflight_fails_closed_on_runner_pin_mismatch": "PASS",
+    "prior_step9_54_authorization_reuse_rejected": "PASS",
+    "failed_step9_55_attempt_resume_rejected": "PASS",
+    "exactly_once_and_namespace_guards": "PASS",
+    "namespace_derivation_and_isolation": "PASS",
+    "v3_agent_identity": "PASS",
+    "v3_safety_and_traceability_regression": "PASS",
+    "case_specific_runner_logic": "NOT_FOUND"
+  },
+  "boundary": {
+    "benchmark_case_loaded": false,
+    "model_called": false,
+    "agent_called_for_evaluation": false,
+    "rag_called_for_evaluation": false,
+    "authorization_issued": false,
+    "attempt_created": false,
+    "formal_v4_case_executed": 0
+  }
+}

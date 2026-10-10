@@ -1,0 +1,29 @@
+{
+  "step": "9.63c-r5c10n",
+  "status": "DRAFT_PATCH_SCOPE_NOT_IMPLEMENTED",
+  "r10_member_count": 20,
+  "candidate_files": [
+    {
+      "path": "tests/test_v1_2_mechanism_validation.py",
+      "current_sha256": "2d5d8fcc4919b798b907903bdd61bf8d3cb987351195b61b397ac379fa3739b5",
+      "r10_frozen_member": false,
+      "current_write_sites": ["line 18: fixed TRACE_PATH", "lines 133-134: mkdir plus Path.write_text"],
+      "proposed_change": "Method-local TemporaryDirectory outside repository; same JSONL serialization and 18-case assertions; no fixed historical trace write.",
+      "other_test_impact": "No production import change; test-local target prevents shared path. Other tests referring to old trace are not automatically reinterpreted.",
+      "production_behavior_proof_gate": "Production files and r10 member hashes unchanged before/after; static diff touches only this test and its peer; no production monkeypatch/global path selector."
+    },
+    {
+      "path": "tests/test_v1_2_1_mechanism_validation.py",
+      "current_sha256": "2d92acdfe7923c631d950d1f4bf1efc99ae333f41f3981c12371d6def8ed8307",
+      "r10_frozen_member": false,
+      "current_write_sites": ["line 16: fixed TRACE", "line 54: mkdir plus Path.write_text"],
+      "proposed_change": "Method-local TemporaryDirectory outside repository; same JSONL serialization and 19-case assertion; no fixed historical trace write.",
+      "other_test_impact": "No production import change; output becomes transient, so any consumer relying on a test side effect must be identified and separately reviewed rather than silently fed new bytes.",
+      "production_behavior_proof_gate": "Production files and r10 member hashes unchanged before/after; static diff touches only these two test modules."
+    }
+  ],
+  "frozen_member_modification_candidate": null,
+  "frozen_member_change_required_for_this_limited_patch": false,
+  "production_semantics_change_required": false,
+  "repair_implemented": false
+}

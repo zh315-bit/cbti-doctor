@@ -1,0 +1,44 @@
+{
+  "step": "9.63c-r5c10r",
+  "scope": "one non-frozen test module only",
+  "target_test_file": "tests/test_step9_58a_r1_namespace_allocator.py",
+  "target_is_r10_frozen_member": false,
+  "git_tracking_note": "Target was already untracked in Git before this step; git diff cannot represent its pre-step bytes. The pre-step SHA-256 and exact two-line relocation below establish this step's boundary; no pre-existing content was overwritten.",
+  "target_sha256_before": "a4706b8317a5ceca4452d09e5bfe550436d771fade51aeafad54ad676cc6d666",
+  "target_sha256_after": "6f1295cffce4391884ab4b2c65b044f6380507cee60314f1ca7ec4491dea6de2",
+  "exact_change": [
+    "Remove module-scope: from scripts import run_step9_53_v3_identity_adapter as adapter",
+    "Add the identical import as the first statement of test_reserved_fresh_namespace_requires_transaction_for_post_first_case_guard"
+  ],
+  "assertions_removed": 0,
+  "tests_skipped_or_xfailed": 0,
+  "other_test_files_modified_in_this_step": 0,
+  "dependency_sha256_before_and_after": {
+    "scripts/v3_namespace_allocator.py": "3ee484e52eb67003e0ae3b5548b821156e7ebc399c227df0b55dcd0fad385bc5",
+    "scripts/run_step9_53_v3_identity_adapter.py": "3a4ec3e526bde19e318e271a24569223087c8a6aadc77fd144b061825c0da282",
+    "scripts/v3_runner_identity.py": "a0f5670d3834d5f91391b41a33fbac669d6162587bc620e9bd3acf202aa3c6a5"
+  },
+  "r10_freeze_manifest_sha256_before_and_after": "d24244235e51e7bf6c8567880c654fe3fd73b87fa1bfe1ab0f10dfdc94db2693",
+  "current_r10_member_path_hash_aggregate_before_and_after": "f6f20d9dad339ffef49a4e23179705c7857fe0ce0b882cb9a013d59c9e1b1197",
+  "current_r10_members_already_divergent_from_historical_r10": "Pre-existing r11 candidate infrastructure changes; not introduced or repaired by this step. Aggregate equality is a before/after protection check, not a claim that the current tree matches historical r10.",
+  "production_python_source_hash_aggregate_before_and_after": "bb5e9616afaaf3dc98f4b7514f66a2f67b683e91a0b4d269394159c945a6a2ad",
+  "historical_protected_directory_file_count_before_and_after": 110,
+  "historical_protected_directory_path_hash_aggregate_before_and_after": "5dcaa341ef35160f3840e244f0943b1620f4b4bfcf0b6241247a7a5274f83751",
+  "historical_traces": [
+    {
+      "path": "evaluation/v1_2/step8_3_mechanism_traces.jsonl",
+      "sha256_before_and_after": "e09321c89b75a4330799e4a4c286652cee82ed0e0d4fa1b8478c970dd7f6d8e5",
+      "size_bytes_before_and_after": 64294,
+      "mtime_before_and_after": "2026-10-09T11:37:42-0400"
+    },
+    {
+      "path": "evaluation/v1_2_1/step8_7_mechanism_traces.jsonl",
+      "sha256_before_and_after": "5518eb4b0b7e8880c5f84e59ba0264013bed99e25edb8da93dca558304d4f084",
+      "size_bytes_before_and_after": 33014,
+      "mtime_before_and_after": "2026-10-09T11:37:42-0400"
+    }
+  ],
+  "historical_trace_content_integrity": "CONTENT_INTEGRITY_UNPROVEN",
+  "formal_r11_pointer_present": false,
+  "formal_r11_freeze_present": false
+}

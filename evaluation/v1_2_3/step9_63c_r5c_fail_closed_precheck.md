@@ -1,0 +1,7 @@
+# Step 9.63c-r5c — Fail-closed precheck
+
+No retirement event, r9 freeze, new authorization, Mac preflight or V4 execution was created. The r5c request requires the preserved old r5 artifact to match SHA-256 `9b4d2c5112b07698b57f149bdb2634b7ee193888f15c97ca65d6bb6c5a86889b`. Independent local calculation is `9b4d2c5112b07698b57f149bdb2634b7ee193888f15c97cd65d6bb6c5a86889b`, exactly the value recorded in r5a and r5b. The one-character discrepancy is in the request pin; there is no evidence the artifact changed. Its provenance remains `E_STILL_UNPROVEN` and it is not formal execution evidence.
+
+Because the requested `OLD_R5_ARTIFACT_SHA256_MATCH = YES` gate cannot be met, the irreversible r8 retirement append and r9 freeze construction were stopped before mutation. Read-only checks confirmed the old authorization manifest remains `ISSUED_NOT_CONSUMED`, consumed `NO`, count 0; its attempt, namespace and reservation are absent. The current formal entry differs from exactly one of the 12 r8 freeze members, so the old authorization cannot execute with current bytes. All 55 historical pins verified with zero mismatch; the Step 9.58 provenance gap remains documented.
+
+To continue, the user must resolve the explicit r5c pin discrepancy by supplying the corrected SHA or authorizing the locally verified r5a/r5b identity. This is not a request to modify the old artifact or waive a hash gate.

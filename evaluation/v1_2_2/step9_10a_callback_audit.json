@@ -1,0 +1,59 @@
+{
+  "step": "9.10a",
+  "audit_type": "static harness callback self-reference audit",
+  "findings": [
+    {
+      "mechanism": "state_view",
+      "risk_before": "wrapper -> patched base.state_view -> wrapper",
+      "result_after": "PASS",
+      "evidence": "Wrapper calls captured original_state_view; focused AST test asserts no base.state_view call inside wrapper.",
+      "change_made": true
+    },
+    {
+      "mechanism": "before_case",
+      "risk": "callback-to-runner self-reference",
+      "result": "PASS",
+      "evidence": "Callback only records STARTED through run_guard before the base loop's case execution boundary.",
+      "change_made": false
+    },
+    {
+      "mechanism": "after_case",
+      "risk": "callback-to-runner self-reference",
+      "result": "PASS",
+      "evidence": "Callback only appends completed-case ledger progress and does not invoke base.main or an Agent component.",
+      "change_made": false
+    },
+    {
+      "mechanism": "recorder hooks",
+      "risk": "recursive recorder dispatch",
+      "result": "NOT_PRESENT_IN_STEP9_8_WRAPPER",
+      "evidence": "The wrapper installs no recorder hook; EvaluationRecorder is constructed in the base runner.",
+      "change_made": false
+    },
+    {
+      "mechanism": "trace callbacks",
+      "risk": "trace callback self-reference",
+      "result": "NOT_PRESENT_AS_SEPARATE_CALLBACK",
+      "evidence": "Trace serialization is the state_view wrapper audited above.",
+      "change_made": false
+    },
+    {
+      "mechanism": "ledger callbacks",
+      "risk": "ledger-to-Agent recursion",
+      "result": "PASS",
+      "evidence": "FrozenRunGuard appends JSONL status records and does not invoke runner, model, or Agent loop.",
+      "change_made": false
+    },
+    {
+      "mechanism": "tool/state projection callbacks",
+      "risk": "harness callback recursion",
+      "result": "NOT_PRESENT_IN_STEP9_8_WRAPPER",
+      "evidence": "Diary projection remains inside existing Agent Tool -> State code and was not wrapped or changed.",
+      "change_made": false
+    }
+  ],
+  "case_specific_logic_added": false,
+  "external_model_called": false,
+  "benchmark_v2_executed": false,
+  "benchmark_v3_accessed": false
+}

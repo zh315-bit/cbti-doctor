@@ -1,0 +1,22 @@
+{
+  "artifact_type": "STEP9_63_SAFE_OFFLINE_TEST_MANIFEST",
+  "step": "9.63",
+  "test_command": ".venv/bin/python -m unittest tests.test_step9_63_v3_formal_execution -v",
+  "test_file": "tests/test_step9_63_v3_formal_execution.py",
+  "test_file_sha256": "4055804aa223cb7b42c600df07709eb12ea5a97f23e3da06422d0f09f196cb73",
+  "test_count": 23,
+  "failures": 0,
+  "errors": 0,
+  "test_data": "synthetic in-memory fixtures only",
+  "real_authorization_mutated": false,
+  "real_namespace_created": false,
+  "model_agent_rag_called": false,
+  "formal_case_executed": false,
+  "coverage": [
+    "issued/unconsumed, consumed, retired, and wrong authorization states",
+    "runner, Agent, frozen identity, case-set, case-order, and historical mismatch rejection",
+    "namespace/attempt collision, multiple active authorizations, and connectivity failure rejection",
+    "precommit non-mutation, exactly-once, crash partial-commit classification, trace preservation",
+    "provenance gap preservation, import/build safety, and mandatory atomic/crash protocol gates"
+  ]
+}

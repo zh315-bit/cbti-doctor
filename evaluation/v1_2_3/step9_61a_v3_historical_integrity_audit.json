@@ -1,0 +1,31 @@
+{
+  "artifact_type": "STEP9_61A_V3_HISTORICAL_INTEGRITY_AUDIT",
+  "step": "9.61a",
+  "status": "PASS_PINNED_HISTORICAL_ARTIFACTS_UNMODIFIED",
+  "step9_60a_pinned_artifacts_rechecked": 34,
+  "step9_60a_pin_mismatches": 0,
+  "step9_59b_authorization_manifest_sha256": "163dc22d36dc97f2159f59f6dfcef9f1497c538149949a94683d00bf84420f44",
+  "step9_59b_authorization_freeze_sha256": "5c7a248dcc202a1bd83ac887dbae9abb01348fd9775980277b106853a225cb0b",
+  "step9_61_audit_sha256": "8917201996c69ae7f8ac283fdf49391c771a620fc3e6ba08cb8594122df6888d",
+  "step9_60b_integrity_audit_sha256": "7a427f4842020ff9190aa6c451ba17ff30370c602dec92d0f70172e65d05ada1",
+  "step9_58_provenance_gap": "PRESENT_AND_DOCUMENTED",
+  "step9_58_original_artifact_set": "MISSING_AS_DOCUMENTED; NOT_RECREATED",
+  "step9_60_failure": "PRESERVED_AS_CONVERSATION_EVIDENCE; NOT_SYNTHESIZED",
+  "historical_facts_preserved": [
+    "Step 9.57 DNS failure",
+    "Steps 9.57a, 9.57b, 9.57c",
+    "Step 9.58 provenance gap",
+    "Step 9.58a-r1",
+    "Step 9.59 failure",
+    "Step 9.59a repair",
+    "Step 9.59b authorization issuance and unconsumed state",
+    "Step 9.60 failure",
+    "Step 9.60a",
+    "Step 9.60b",
+    "Step 9.61 fail-closed audit"
+  ],
+  "old_manifest_modified": false,
+  "old_freeze_modified": false,
+  "historical_evaluation_artifacts_modified": false,
+  "retirement_event_is_separate_append_only_lifecycle_evidence": true
+}

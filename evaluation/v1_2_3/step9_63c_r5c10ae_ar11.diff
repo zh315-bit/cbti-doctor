@@ -1,0 +1,203 @@
+--- a/scripts/build_step9_63c_r11_runner_freeze.py
++++ b/scripts/build_step9_63c_r11_runner_freeze.py
+@@ -4,6 +4,7 @@
+ import hashlib
+ import json
+ import os
++import re
+ from datetime import datetime, timezone
+ from pathlib import Path
+ from typing import Any
+@@ -63,6 +64,98 @@
+     return hashlib.sha256(path.read_bytes()).hexdigest()
+ 
+ 
++# Step 9.63c-r5c10ae AR-11: copied verbatim from the r10-era
++# scripts/build_step9_63c_r5c4_runner_freeze.py (SHA-256 9ebfe83b...) so the r11
++# builder no longer depends on a file outside the r11 member inventory.
++def sha256_bytes(data: bytes) -> str:
++    return hashlib.sha256(data).hexdigest()
++
++
++def nonsecret_model_configuration_matches(root: Path) -> bool:
++    """Read only the two frozen non-secret model settings; never load credentials."""
++    values: dict[str, str] = {}
++    env_path = root / ".env"
++    if env_path.is_file():
++        for line in env_path.read_text(encoding="utf-8").splitlines():
++            match = re.match(r"^\s*(DEEPSEEK_MODEL|DEEPSEEK_BASE_URL)\s*=\s*(.*?)\s*$", line)
++            if match:
++                value = match.group(2)
++                if len(value) >= 2 and value[0] == value[-1] and value[0] in "\"'":
++                    value = value[1:-1]
++                values[match.group(1)] = value
++    model = os.environ.get("DEEPSEEK_MODEL", values.get("DEEPSEEK_MODEL", "deepseek-flash"))
++    base_url = os.environ.get("DEEPSEEK_BASE_URL", values.get("DEEPSEEK_BASE_URL", "https://api.deepseek.com"))
++    return model == "deepseek-flash" and base_url.rstrip("/") == "https://api.deepseek.com"
++
++
++def verify_frozen_inputs(root: Path, identities: dict[str, Any]) -> None:
++    from scripts import run_step9_53_v3_identity_adapter as adapter
++
++    agent_sha, agent_match = adapter.current_v3_agent_identity()
++    if not agent_match or agent_sha != identities["treatment_agent_sha256"]:
++        raise RuntimeError("V3 Agent freeze mismatch")
++    benchmark_path = root / identities["benchmark_path"]
++    if sha256_file(benchmark_path) != identities["benchmark_sha256"]:
++        raise RuntimeError("V4 benchmark SHA mismatch")
++    manifest = json.loads((root / "evaluation/benchmarks/benchmark_v4_manifest.json").read_text())
++    if (manifest.get("status") != "SEALED_NOT_EVALUATED"
++            or manifest.get("case_count") != 40
++            or sha256_file(root / "evaluation/benchmarks/benchmark_v4_manifest.json")
++            != identities["benchmark_manifest_sha256"]):
++        raise RuntimeError("V4 benchmark manifest mismatch")
++    # The byte-exact sealed dataset hash is the frozen case-set/order proof;
++    # its prior freeze already records the 40-case distribution and fingerprint.
++    if (identities.get("case_count") != 40
++            or identities.get("task_distribution") != {
++                "KNOWLEDGE_QA": 10, "CAUSE_ASSESSMENT": 10,
++                "PERSONALIZED_DECISION": 10, "DATA_ANALYSIS": 10}
++            or len(identities.get("case_order_fingerprint_sha256", "")) != 64):
++        raise RuntimeError("V4 frozen case identity metadata mismatch")
++    path_hashes = {
++        "scoring_rubric_sha256": "evaluation/benchmark_v1_1_scoring.md",
++        "metric_registry_sha256": "evaluation/v1_2_3/step9_26_v4_metric_registry.json",
++        "one_shot_rules_sha256": "evaluation/v1_2_3/step9_26_v4_one_shot_rules.md",
++        "matched_protocol_sha256": "evaluation/v1_2_3/step9_34a_matched_comparison_protocol.json",
++        "baseline_metric_lock_sha256": "evaluation/v1_2_3/step9_34a_baseline_metric_lock.json",
++        "claim_policy_sha256": "evaluation/v1_2_3/step9_34a_claim_policy.json",
++        "tool_adapter_sha256": "adaptive_agent/tools.py",
++        "dependency_lock_sha256": "requirements-lock.txt",
++    }
++    if any(sha256_file(root / path_hashes[key]) != identities[key] for key in path_hashes):
++        raise RuntimeError("frozen evaluation asset mismatch")
++    harness = json.loads((root / "evaluation/v1_2_3/step9_13a_harness_freeze.json").read_text())
++    scoring = json.loads((root / "evaluation/v1_2_3/step9_11_clean_freeze_manifest.json").read_text())
++    for field, inventory, expected in (
++        ("new_harness_files", harness, identities["harness_sha256"]),
++        ("scoring_files", scoring, identities["scoring_sha256"]),
++    ):
++        rows = inventory[field]
++        payload = "".join(f"{path}\t{digest}\n" for path, digest in sorted(rows))
++        if any(sha256_file(root / path) != digest for path, digest in rows) or sha256_bytes(payload.encode()) != expected:
++            raise RuntimeError(f"{field} frozen identity mismatch")
++    source_rows = json.loads((root / "evaluation/v1_2_3/step9_42_treatment_v2_freeze.json").read_text())["agent_behavior_files"]
++    rag_paths = {item["path"] for item in json.loads(
++        (root / "evaluation/v1_2_3/step9_32_baseline_agent_freeze.json").read_text()
++    )["baseline_rag_config_files"]}
++    rag_rows = []
++    for path, _ in source_rows:
++        if path in rag_paths:
++            target = root / ("rag_lib/pdfs" if path == "rag_lib/pdfs/" else path)
++            if path == "rag_lib/pdfs/":
++                entries = "".join(f"{sha256_file(item)}  {item.relative_to(root)}\n"
++                                   for item in sorted(target.glob("*"))
++                                   if item.is_file() and not item.name.startswith("._"))
++                digest = sha256_bytes(entries.encode())
++            else:
++                digest = sha256_file(target)
++            rag_rows.append([path, digest])
++    rag_payload = "".join(f"{path}\t{digest}\n" for path, digest in sorted(rag_rows))
++    if sha256_bytes(rag_payload.encode()) != identities["rag_configuration_fingerprint_sha256"]:
++        raise RuntimeError("frozen RAG configuration identity mismatch")
++    if not nonsecret_model_configuration_matches(root):
++        raise RuntimeError("frozen model configuration mismatch")
++
++
+ def canonical_sha256(value: Any) -> str:
+     return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(",", ":"),
+                                      ensure_ascii=False).encode()).hexdigest()
+@@ -154,8 +247,6 @@
+ 
+ def build_candidate(root: Path = ROOT) -> dict[str, Any]:
+     """Production qualification; this step only tests assemble_candidate in temp roots."""
+-    from scripts.build_step9_63c_r5c4_runner_freeze import verify_frozen_inputs
+-
+     candidate = assemble_candidate(root)
+     verify_frozen_inputs(root, candidate["bound_identities"])
+     return candidate
+--- a/tests/test_step9_63c_r5c10ae_builder_pins.py
++++ b/tests/test_step9_63c_r5c10ae_builder_pins.py
+@@ -81,5 +81,82 @@
+                 builder.assemble_candidate(root)
+ 
+ 
++class InlinedFrozenInputEquivalenceTests(unittest.TestCase):
++    """AR-11: the inlined verify_frozen_inputs behaves exactly like the r5c4 original.
++
++    Both functions import the frozen identity adapter internally. For this
++    differential test only, a scoped stand-in (restored by patch.dict) answers the
++    agent-identity question identically for both; nothing is written and no
++    repository identity artifact exists or is created.
++    """
++
++    @classmethod
++    def setUpClass(cls):
++        from scripts import build_step9_63c_r5c4_runner_freeze as legacy
++        cls.legacy = legacy
++        r10 = json.loads((REPO / builder.PARENT_PATH).read_text(encoding="utf-8"))
++        cls.identities = r10["bound_identities"]
++
++    def test_inlined_functions_are_verbatim_and_import_free(self):
++        import ast
++        import inspect
++        for name in ("sha256_bytes", "nonsecret_model_configuration_matches", "verify_frozen_inputs"):
++            with self.subTest(name=name):
++                self.assertEqual(inspect.getsource(getattr(builder, name)),
++                                 inspect.getsource(getattr(self.legacy, name)))
++        tree = ast.parse(Path(builder.__file__).read_text(encoding="utf-8"))
++        imported = {node.module for node in ast.walk(tree) if isinstance(node, ast.ImportFrom)}
++        self.assertNotIn("scripts.build_step9_63c_r5c4_runner_freeze", imported)
++        self.assertNotIn("build_step9_63c_r5c4_runner_freeze", inspect.getsource(builder.build_candidate))
++        self.assertEqual(len(builder.MEMBER_PATHS), 20)
++        self.assertNotIn("scripts/build_step9_63c_r5c4_runner_freeze.py", builder.MEMBER_PATHS)
++
++    def outcome(self, function, identities, agent=None, agent_ok=True, env=None):
++        import os
++        import sys
++        import types
++        import scripts
++        stub = types.SimpleNamespace(current_v3_agent_identity=lambda: (
++            agent or identities["treatment_agent_sha256"], agent_ok))
++        name = "scripts.run_step9_53_v3_identity_adapter"
++        with patch.dict(sys.modules, {name: stub}), \
++             patch.object(scripts, "run_step9_53_v3_identity_adapter", stub, create=True), \
++             patch.dict(os.environ, env or {}):
++            try:
++                function(REPO, identities)
++            except Exception as error:  # compare type and message exactly
++                return type(error).__name__, str(error)
++            return None
++
++    def test_differential_behaviour_matches_original(self):
++        base = dict(self.identities)
++        scenarios = {
++            "unchanged": ({}, {}),
++            "agent_mismatch": ({}, {"agent": "f" * 64}),
++            "agent_inventory_not_ok": ({}, {"agent_ok": False}),
++            "benchmark_sha": ({"benchmark_sha256": "0" * 64}, {}),
++            "benchmark_manifest_sha": ({"benchmark_manifest_sha256": "0" * 64}, {}),
++            "case_count": ({"case_count": 39}, {}),
++            "task_distribution": ({"task_distribution": {"KNOWLEDGE_QA": 40}}, {}),
++            "case_order_fingerprint": ({"case_order_fingerprint_sha256": "abc"}, {}),
++            "scoring_rubric": ({"scoring_rubric_sha256": "0" * 64}, {}),
++            "dependency_lock": ({"dependency_lock_sha256": "0" * 64}, {}),
++            "harness": ({"harness_sha256": "0" * 64}, {}),
++            "scoring": ({"scoring_sha256": "0" * 64}, {}),
++            "rag_configuration": ({"rag_configuration_fingerprint_sha256": "0" * 64}, {}),
++            "model_configuration": ({}, {"env": {"DEEPSEEK_MODEL": "other-model"}}),
++        }
++        results = {}
++        for label, (changes, options) in scenarios.items():
++            with self.subTest(scenario=label):
++                identities = {**base, **changes}
++                original = self.outcome(self.legacy.verify_frozen_inputs, identities, **options)
++                inlined = self.outcome(builder.verify_frozen_inputs, identities, **options)
++                self.assertEqual(inlined, original)
++                results[label] = inlined
++        self.assertIsNone(results["unchanged"])
++        self.assertTrue(all(results[label] is not None for label in scenarios if label != "unchanged"))
++
++
+ if __name__ == "__main__":
+     unittest.main()

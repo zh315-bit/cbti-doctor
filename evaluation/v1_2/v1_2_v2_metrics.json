@@ -1,0 +1,55 @@
+{
+  "benchmark_interpretation": "development_regression_set_not_held_out",
+  "cases": 40,
+  "overall_score": 67.5,
+  "dimension_means": {
+    "goal_alignment": 18.2,
+    "facts_state_integrity": 13.75,
+    "action_resource_selection": 13.7,
+    "evidence_answer_scope": 12.82,
+    "interaction_efficiency": 9.03
+  },
+  "task_scores": {
+    "DATA_ANALYSIS": 64.38,
+    "KNOWLEDGE_QA": 83.5,
+    "CAUSE_ASSESSMENT": 72.5,
+    "PERSONALIZED_DECISION": 52.08
+  },
+  "ASK_per_case": 1.775,
+  "ask_counts": {
+    "irrelevant": 23,
+    "redundant": 25,
+    "necessary": 17,
+    "useful_but_optional": 6
+  },
+  "ask_rates": {
+    "irrelevant": 0.3239,
+    "redundant": 0.3521,
+    "necessary": 0.2394,
+    "useful_but_optional": 0.0845
+  },
+  "six_ASK_limit_cases": 0,
+  "RETRIEVE_per_case": 0.35,
+  "READ_DIARY_per_case": 0.2,
+  "turns_per_case": 2.775,
+  "steps_per_case": 3.325,
+  "premature_answer_rate": 0.075,
+  "unsupported_personalization_rate": 0,
+  "resource_skipping_failures": [
+    "V2-DA-07"
+  ],
+  "critical_failures": {
+    "V2-DA-03": "answer_contradicts_diary_fixture",
+    "V2-DA-04": "answer_contradicts_diary_fixture",
+    "V2-DA-05": "answer_contradicts_diary_fixture",
+    "V2-DA-08": "answer_contradicts_diary_fixture"
+  },
+  "token_usage": "not_available",
+  "latency": "not_available",
+  "LLM_calls": "not_available",
+  "paired_counts": {
+    "unchanged": 11,
+    "improved": 17,
+    "regressed": 12
+  }
+}

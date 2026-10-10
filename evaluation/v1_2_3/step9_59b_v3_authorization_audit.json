@@ -1,0 +1,121 @@
+{
+  "artifact_type": "STEP9_59B_V3_FRESH_ONE_SHOT_AUTHORIZATION_AUDIT",
+  "step": "9.59b",
+  "status": "PASS_AUTHORIZATION_ISSUED_NOT_CONSUMED",
+  "created_at_utc": "2026-10-01T20:06:07Z",
+  "authorization_manifest_path": "evaluation/v1_2_3/step9_59b_v3_authorization_manifest.json",
+  "authorization_manifest_sha256": "163dc22d36dc97f2159f59f6dfcef9f1497c538149949a94683d00bf84420f44",
+  "authorization_report_path": "evaluation/v1_2_3/step9_59b_v3_authorization_report.md",
+  "authorization_report_sha256": "163297659ec7505e8d943af2c16a48700aebf08504510f1f51c0184db9597584",
+  "authorization_id": "auth-step9_59b-0f63fb3bd6934e4b9a1c7e5808c24825",
+  "attempt_id": "attempt-step9_59b-f3a11b5d44914eb9b335ccec4f1bcf86",
+  "attempt_id_status": "PREBOUND_IDENTITY_ONLY_NOT_CREATED",
+  "authorization_status": "ISSUED_NOT_CONSUMED",
+  "authorization_consumption_count": 0,
+  "current_runner_matches_r5_freeze": true,
+  "runner_freeze_revision": "r5",
+  "runner_freeze_path": "evaluation/v1_2_3/step9_59a_v3_runner_freeze_r5.json",
+  "runner_freeze_sha256": "1007fde3dbfc604383a592523f100dc050fa21c93f23d8c88e9835e29f868314",
+  "runner_sha256": "7e75a80ad529c3df67a775287ca0aa9ada4f5ae7b18d1a0b85e593006362fe12",
+  "current_agent_matches_v3_freeze": true,
+  "agent_sha256": "085d338ed95bbef7370c41cf97ca0d6653ffdfd2f1c924eef4b7123dfdea4607",
+  "frozen_identities_match": true,
+  "frozen_identity_checks": {
+    "benchmark_and_manifest": true,
+    "harness": true,
+    "scoring": true,
+    "rubric": true,
+    "metric_registry": true,
+    "one_shot_rules": true,
+    "model_configuration": true,
+    "tool_configuration": true,
+    "rag_configuration": true,
+    "case_set": true,
+    "case_order": true,
+    "task_distribution": true,
+    "evaluation_semantics_changed": false
+  },
+  "authorization_validator_binding_match": true,
+  "validator_verification": {
+    "adapter_pre_attempt_guard": "PASS",
+    "parent_validate_authorization": "PASS",
+    "frozen_binding_injected_from_current_r5_identity": true,
+    "validated_treatment_runner_sha256": "7e75a80ad529c3df67a775287ca0aa9ada4f5ae7b18d1a0b85e593006362fe12",
+    "authorization_consumed": false,
+    "consumption_count": 0
+  },
+  "connectivity_preclearance": {
+    "path": "evaluation/v1_2_3/step9_57c_v3_connectivity_recovery.json",
+    "sha256": "40dfee10d891d0ecfcd9a4cee6c40702877a6ff7f358b9c78266b7b6ff73cd14",
+    "status": "PASS_CONNECTIVITY_RECOVERY_NON_CONSUMING",
+    "dns": "PASS",
+    "transport": "PASS_TLS_1_3_CERTIFICATE_VERIFIED",
+    "inference_request_sent": false
+  },
+  "case_identity": {
+    "case_count": 40,
+    "case_set_match": true,
+    "case_order_match": true,
+    "case_order_fingerprint_sha256": "d930455e417935337a6e3459defbdc3ee3829b71786fbd8438ef092b62429e68",
+    "task_distribution": {
+      "KNOWLEDGE_QA": 10,
+      "CAUSE_ASSESSMENT": 10,
+      "PERSONALIZED_DECISION": 10,
+      "DATA_ANALYSIS": 10
+    }
+  },
+  "namespace": {
+    "id": "heldout-v4-treatment-v3-run-442d8ee058d32e6ffe21",
+    "derived_from_evaluation_authorization_attempt": true,
+    "fresh_physical_namespace_required": true,
+    "preexisting": false,
+    "empty": true,
+    "isolated": true,
+    "reservation_marker_created": false,
+    "attempt_namespace_created": false,
+    "historical_reuse_forbidden": true,
+    "burned_namespace_reuse_forbidden": true
+  },
+  "historical_integrity": {
+    "status": "PASS",
+    "step9_55_failed_attempt_ledger_sha256": "57967d950a3a4c700f3187e3d495ca39b4e01d5700ef31a9ebe36c3380450de6",
+    "step9_57_failed_attempt_ledger_sha256": "10d3577bd59f886e5b5b79f23c8e911e117bfc52004eb234034f9314c2c5728e",
+    "step9_57c_connectivity_artifact_sha256": "40dfee10d891d0ecfcd9a4cee6c40702877a6ff7f358b9c78266b7b6ff73cd14",
+    "step9_58_provenance_gap": "PRESENT_AND_DOCUMENTED",
+    "step9_59_failure_status": "NOT_ISSUED_FAIL_CLOSED_RUNNER_PARENT_IDENTITY_MISMATCH",
+    "step9_59_failure_artifacts_preserved": true,
+    "step9_59a_artifacts_preserved": true,
+    "r4_historical_freeze_preserved": true,
+    "r5_current_authoritative": true,
+    "historical_hash_mismatches": 0
+  },
+  "reuse_guards": {
+    "prior_authorizations_reusable": false,
+    "prior_attempts_reusable": false,
+    "step9_59_burned_authorization_id_reused": false,
+    "step9_59_burned_attempt_id_reused": false,
+    "new_authorization_id_globally_unique": true,
+    "new_attempt_id_globally_unique": true
+  },
+  "one_shot": {
+    "exactly_once_authorization": true,
+    "attempt_identity_exactly_once": true,
+    "only_prebound_attempt_may_consume": true,
+    "automatic_retry_or_resume": false,
+    "interruption_preserves_attempt_and_forbids_rerun": true
+  },
+  "step9_59b_boundary": {
+    "formal_attempt_created": false,
+    "authorization_consumed": false,
+    "formal_v4_case_executed": 0,
+    "model_called_for_case_execution": false,
+    "agent_called_for_case_execution": false,
+    "rag_called_for_case_execution": false,
+    "adjudication_executed": false,
+    "aggregation_executed": false,
+    "comparison_executed": false,
+    "v5_created_or_accessed": false,
+    "step9_60_executed": false
+  },
+  "ready_for_step9_60_v3_formal_execution": true
+}

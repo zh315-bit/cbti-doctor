@@ -1,0 +1,32 @@
+{
+  "freeze_id": "post-step9_24-candidate-20260924-01",
+  "created_at": "2026-09-24T19:25:39Z",
+  "freeze_kind": "DEVELOPMENT_CANDIDATE_NOT_BENCHMARK_AUTHORIZATION",
+  "parent_candidate_freeze": "evaluation/v1_2_3/step9_23a_candidate_freeze.json",
+  "parent_candidate_agent_aggregate_hash": "d9d657e3c74587291fbb0eea99d762fcf5a4db53e280198de5f3251f5d1ed14e",
+  "effective_inventory_source": "Step 9.18 agent_behavior_files with Step 9.23a and Step 9.24 authorized changed files replacing same paths",
+  "effective_agent_file_count": 26,
+  "inherited_evaluation_identity": {
+    "benchmark_v2_sha256": "723ab458f5808d7d8ea542e519ddbf19afe59463e0b355700b1b537f942bb4f6",
+    "scoring_sha256": "f742a8f8af7c8747818dadad81621c15d12d74f50538019913dfe18ab53bf59b",
+    "harness_freeze": "evaluation/v1_2_3/step9_13a_harness_freeze.json",
+    "harness_sha256": "8bc271bebc1c5da5351d517e2bb4a0d1a99fda3de1b713a6197b12f81fad70c7"
+  },
+  "authorized_divergence": {
+    "step": "9.24",
+    "scope": "goal-conditioned information value estimation and optional acquisition gating",
+    "changed_agent_files": [
+      ["adaptive_agent/acquisition_gate.py", "c5e7912105a9218dec0a3618c4c46f506190d14458f93936e56868f7ade50725"],
+      ["adaptive_agent/information_value.py", "38de50261bb2c6ee09abf5344f13c9e53837642681ae6028c6d4dd67308c2f6c"]
+    ],
+    "unchanged_behavior_boundaries": ["Input Understanding", "DependencyResolver semantics", "Hard Preconditions", "Sufficiency", "Candidate ranking", "Decision Policy", "Tools", "Tool → State Projection", "Answer Generation", "RAG"]
+  },
+  "agent_aggregate_hash": "4e2bffea0d7eaa9299074a960df84a1806b3ae9d4930662929abc58ca5b2ae79",
+  "benchmark_v2_rerun": false,
+  "benchmark_v3_accessed": false,
+  "v3_final_heldout_reusable": false,
+  "case_specific_logic_present": false,
+  "regression_status": "PASS",
+  "regression_tests": {"run": 244, "passed": 244, "failed": 0, "skipped": 0},
+  "notes": "Distinct Step 9.24 candidate identity. Step 9.11, Step 9.18, Step 9.19, Step 9.23a, consumed V3 identity/results remain unchanged. No benchmark authorization is implied."
+}

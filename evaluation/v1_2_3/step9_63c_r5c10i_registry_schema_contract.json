@@ -1,0 +1,56 @@
+{
+  "step": "9.63c-r5c10i",
+  "contract_status": "FINAL_DESIGN_ONLY_NOT_IMPLEMENTED",
+  "registry_version": 2,
+  "repository_relative_path": "evaluation/v1_2_3/step9_63c_r11_preflight_invocations.jsonl",
+  "producer_path": "scripts/preflight_step9_63c_r11_mac_local.py",
+  "consumer_path": "scripts/run_step9_63_v3_formal_execution.py",
+  "file_type": "single exact-path regular non-symlink UTF-8 JSONL append-only runtime audit log; not a frozen member",
+  "line_format": "one canonical JSON object per newline; no duplicate keys, blank lines, invalid UTF-8, invalid JSON or trailing partial line",
+  "event_types": {
+    "PREFLIGHT_INVOCATION_REGISTRY_INITIALIZED": {
+      "cardinality": "exactly one, first record only; not a real invocation claim",
+      "required_exact_fields": ["event_type", "registry_version", "created_at_utc", "producer", "preflight_script_sha256", "runner_freeze_revision", "runner_freeze_path", "runner_freeze_sha256"],
+      "constraints": "registry_version=2; revision=r11; producer path and digest match current r11 freeze member; freeze path/digest match independently resolved r11; timestamp timezone-aware"
+    },
+    "PREFLIGHT_INVOCATION_CLAIMED": {
+      "cardinality": "at most one per invocation_id in the entire file; append before connectivity or artifact write",
+      "required_exact_fields": ["event_type", "invocation_id", "created_at_utc", "producer", "preflight_script_sha256", "authorization_id", "attempt_id", "evaluation_id", "runner_freeze_revision", "runner_freeze_sha256", "benchmark_sha256", "case_order_fingerprint_sha256", "preflight_target"],
+      "constraints": "fresh invocation_id; producer and freeze match genesis/current freeze; authorization/attempt/evaluation/benchmark/order match fresh authorization; target equals consumer-computed exact path; timezone-aware timestamp"
+    },
+    "PREFLIGHT_ARTIFACT_PERSISTED": {
+      "cardinality": "zero or one per claimed invocation_id; append only after artifact exclusive write and file+directory fsync",
+      "required_exact_fields": ["event_type", "invocation_id", "persisted_at_utc", "preflight_target", "artifact_sha256"],
+      "constraints": "must follow matching claim; target equals claim/computed target; digest equals actual artifact bytes and explicit consumer SHA; timezone-aware timestamp"
+    },
+    "PREFLIGHT_INVOCATION_FAILED": {
+      "cardinality": "optional zero or one per claimed invocation_id, only before a persistence event",
+      "required_exact_fields": ["event_type", "invocation_id", "failed_at_utc", "failure_stage"],
+      "constraints": "sanitized finite stage code, no prompt/API key/secret; terminal and never accepted as a usable preflight"
+    }
+  },
+  "id_and_artifact_binding": {
+    "invocation_id_equals_preflight_id": true,
+    "id_regex": "preflight-step9_63c_r5-[a-z0-9]+-[0-9a-f]{32}",
+    "r11_producer_token": "r11",
+    "example_shape": "preflight-step9_63c_r5-r11-<32 lowercase hex>",
+    "artifact_basename_template": "step9_63c_r5_{authorization_id}_{preflight_id}_mac_local_preclearance.json",
+    "artifact_existing_fields_to_retain": ["PREFLIGHT_ID", "preflight_id", "AUTHORIZATION_ID", "authorization_id", "AUTHORIZATION_MANIFEST_SHA256", "RUNNER_FREEZE_REVISION", "RUNNER_AGGREGATE_SHA256", "runner_freeze_sha256", "ATTEMPT_ID", "NAMESPACE_ID", "STEP9_63C_R5_STATUS", "preflight_script_sha256", "preflight_target", "case_count", "case_order_fingerprint_sha256", "task_distribution", "identity_bindings", "status", "timestamp_utc", "READY_FOR_SINGLE_ATOMIC_FORMAL_EXECUTION"],
+    "r11_artifact_fields_added_for_new_guard": ["invocation_registry_claim_prefix_length_bytes", "invocation_registry_claim_prefix_sha256"],
+    "artifact_sha_binding": "Artifact cannot contain its own SHA. Persistence event records actual artifact SHA after write; formal CLI supplies exact artifact SHA; consumer compares both with bytes read from computed path."
+  },
+  "append_only_and_concurrency": {
+    "initialization": "Create new r11 registry exclusively as regular non-symlink file, write genesis newline, fsync file and directory; never edit old r10 registry.",
+    "claim": "Exclusive file lock; strictly parse entire current log and reject malformed/duplicate history; generate/check fresh ID and absent computed target; append claim and fsync before any transport or artifact activity.",
+    "failure": "A claim remains permanently used if transport/artifact/persistence fails or process crashes. Optional failure event may document a known failure but absence of it never restores the ID.",
+    "persistence": "Exclusive artifact write+fsync, then exclusive-locked persistence-event append+fsync; crash between these leaves an artifact without a persistence event and consumer rejects it.",
+    "consumer": "Shared lock; strict parse of full log; exact one claim and one persistence event for ID, no failure event, matching claim-prefix byte length/SHA and artifact digest; no accepted partial or duplicate state.",
+    "full_file_sha_policy": "Do not pin mutable registry full-file SHA in immutable r11 freeze; later valid appends are expected. Pin and verify the claim prefix bytes while also validating the entire later log."
+  },
+  "filesystem_boundary": "Use exact configured registry path, never glob *.jsonl. AppleDouble ._* companions and unrelated files are not registry inputs; a missing/corrupt canonical registry, symlink, directory, invalid UTF-8/JSON or malformed event fails closed. Never skip a damaged canonical record.",
+  "untrusted_claims_requiring_independent_checks": ["producer path or self-reported SHA", "runner freeze revision/path/SHA", "authorization/attempt/evaluation IDs", "benchmark/case-order identity", "preflight target path", "artifact SHA", "DNS/TCP/TLS readiness", "claim-prefix length/SHA"],
+  "independent_authorities": ["current r11 freeze and actual member bytes", "fresh authorization manifest and reducer", "consumer-computed artifact path and actual bytes", "strictly parsed registry under lock", "existing frozen formal preflight safety/freshness checks"],
+  "provenance_limit": "Local hashes and append-only checks provide auditable consistency, not cryptographic proof against an actor able to rewrite all local files and reauthorize commands.",
+  "historical_r10_registry_modified": false,
+  "new_r11_registry_created": false
+}

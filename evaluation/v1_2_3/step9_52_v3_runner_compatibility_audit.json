@@ -1,0 +1,12 @@
+{
+  "artifact_type": "STEP9_52_V3_RUNNER_COMPATIBILITY_AUDIT",
+  "step": "9.52",
+  "created_at_utc": "2026-09-30T18:40:19Z",
+  "status": "INFRASTRUCTURE_IDENTITY_ADAPTATION_REQUIRED",
+  "classification": "IDENTITY_ADAPTER_UPDATE_REQUIRED",
+  "existing_v3_runner": {"path": "scripts/run_step9_20_v3_heldout.py", "sha256": "242adea8e254229d643353654b3438dd20cbdd4e2db4391a81d3a3a9f0185aa3", "pinned_candidate_manifest": "evaluation/v1_2_3/step9_19_final_candidate_manifest.json", "pinned_evaluation_id": "heldout-v3-step9_20-20260923-01", "accepts_current_step9_51_v3_identity": false, "evidence": "Runner constants, frozen manifest path, and identity comparisons are specific to the historical 9.19 V3 candidate."},
+  "existing_treatment_identity_adapter": {"path": "scripts/run_step9_43a_treatment_v2.py", "sha256": "9509194370d7530327741f9da69f98bc1b554576e62023d5ebce2e8316adf9e9", "pinned_agent_sha256": "b9e891e7cd077dd5b3c6fa72b71faad978a24226c2b5e89e0b06aabde93b51d6", "allowed_identity_contracts": ["step9_43a_treatment_v1_identity_contract.json", "step9_43a_treatment_v2_identity_contract.json"], "accepts_current_step9_51_v3_identity": false, "evidence": "The adapter checks the literal V2 treatment agent hash and rejects identity-contract paths outside its explicit V1/V2 allowlist."},
+  "semantics": {"evaluation_semantics_change_required": false, "required_change_scope": "Infrastructure-only explicit V3-treatment identity contract and adapter binding; preserve production execution, case ordering, session isolation, limits, tool/RAG/model configuration, scoring and one-shot guards.", "runner_modified_in_step9_52": false, "old_runner_freezes_claimed_to_match_current_v3": false},
+  "ready_for_step9_53_runner_preclearance": true,
+  "never_executed": {"runner": true, "case_path": true, "authorization_path": true}
+}

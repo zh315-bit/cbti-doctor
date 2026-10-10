@@ -1,0 +1,60 @@
+{
+  "artifact": "step9_5_goal_requirement_sync_and_lineage_design",
+  "mode": "design_only_frozen_trace_analysis",
+  "scope_guards": {
+    "agent_modified": false,
+    "policy_modified": false,
+    "benchmark_v2_run": false,
+    "benchmark_v3_accessed": false,
+    "model_configuration_status": "NOT_VERIFIED"
+  },
+  "current_runtime_dataflow": [
+    {"stage": "InputUnderstanding", "module": "adaptive_agent/input_understanding.py", "outputs": ["goal", "task_type", "facts", "new_goal"]},
+    {"stage": "BaseRequirementResolution", "module": "adaptive_agent/runner.py:run_turn", "inputs": ["task_type", "goal"], "outputs": ["RequirementSet"]},
+    {"stage": "Sufficiency", "module": "adaptive_agent/sufficiency.py:update", "inputs": ["RequirementSet", "facts", "resources", "evidence"], "outputs": ["required_missing", "decision_relevant_missing", "secondary_missing", "sufficiency"]},
+    {"stage": "DependencyResolution", "module": "adaptive_agent/dependency_resolver.py:resolve", "inputs": ["goal", "task_type_signal", "RequirementSet", "state"], "outputs": ["dependencies"]},
+    {"stage": "HardPreconditions", "module": "adaptive_agent/preconditions.py:evaluate_preconditions", "inputs": ["dependencies"], "outputs": ["mandatory_candidate_or_none"]},
+    {"stage": "OptionalCandidates", "module": "adaptive_agent/candidates.py:build_candidates", "inputs": ["RequirementSet", "missing", "information_value", "cost"], "outputs": ["candidates"]},
+    {"stage": "Decision", "module": "adaptive_agent/policy.py:HeuristicDecisionPolicy.choose", "inputs": ["candidates"], "outputs": ["selected_action"]},
+    {"stage": "ToolAndStateUpdate", "module": "adaptive_agent/runner.py + adaptive_agent/state_update.py", "outputs": ["facts", "evidence", "resource_status", "projection"]}
+  ],
+  "observed_dual_source_defect": {
+    "description": "A requirement object resolved once from task_type is reused across later refreshes even when goal-semantic dependency resolution repairs the answer dependency.",
+    "evidence": "Step 9.4 wrong-task knowledge synthetic trace: EVIDENCE reaches SATISFIED after RETRIEVE but inherited PERSONALIZED_DECISION fields can generate later ASK.",
+    "first_divergence": "base RequirementSet remains authoritative for optional candidate missing fields after dependency re-resolution"
+  },
+  "recommended_authority_order": [
+    "validated_state_and_tool_truth",
+    "goal_semantics_for_goal_specific_validity",
+    "task_type_as_base_requirement_signal",
+    "effective_requirements_for_optional_information_and_scope",
+    "dependency_status_for_hard_preconditions",
+    "policy_for_selection_among_non-forced_candidates"
+  ],
+  "recommended_target_dataflow": [
+    "input_understanding",
+    "base_requirements",
+    "goal_semantics_with_provenance",
+    "preliminary_missing",
+    "dependency_resolution",
+    "effective_requirement_synchronization",
+    "recomputed_sufficiency",
+    "dependency_reresolution",
+    "hard_preconditions",
+    "optional_candidates_information_value_cost_stop",
+    "policy",
+    "tool_state_update",
+    "next_revision"
+  ],
+  "ownership": {
+    "required_missing": "effective requirement completeness signal; never direct action authority",
+    "decision_relevant_missing": "optional acquisition input unless represented by VALIDITY_STATE dependency",
+    "secondary_missing": "answer-detail signal only",
+    "dependency": "valid-answer precondition represented separately from requirements"
+  },
+  "lineage_entities": ["goal_id", "semantic_id", "dependency_id", "precondition_id", "candidate_id", "action_id", "tool_result_id", "state_update_id"],
+  "implementation_boundary": {
+    "modify_if_step9_6_authorized": ["requirements.py", "runner.py", "sufficiency.py", "candidates.py", "dependency_resolver.py", "preconditions.py", "state.py", "recorder/snapshot serialization", "focused synthetic tests"],
+    "do_not_modify": ["input_understanding.py", "policy.py", "information_value.py", "answer_generation.py", "tools.py Diary Contract V2 semantics", "Benchmark V2", "Benchmark V3", "scoring"]
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "step": "9.63c-r5c10m",
+  "audit_mode": "STATIC_READ_ONLY_NO_TEST_EXECUTION",
+  "affected_historical_trace_count": 2,
+  "trusted_pre_run_hash_available": false,
+  "historical_trace_content_integrity": "CONTENT_INTEGRITY_UNPROVEN",
+  "files": [
+    {
+      "absolute_path": "/Volumes/Elements/cbti-doctor-main/evaluation/v1_2/step8_3_mechanism_traces.jsonl",
+      "size_bytes": 64294,
+      "current_sha256": "e09321c89b75a4330799e4a4c286652cee82ed0e0d4fa1b8478c970dd7f6d8e5",
+      "mtime_local": "2026-10-09T11:37:42-0400",
+      "git_status": "UNTRACKED_NO_GIT_OBJECT",
+      "r10_frozen_member": false,
+      "historical_manifest_names_trace_hash": false,
+      "trusted_original_copy_found_in_repository": false,
+      "content_unchanged_since_pre_run": "NOT_PROVEN"
+    },
+    {
+      "absolute_path": "/Volumes/Elements/cbti-doctor-main/evaluation/v1_2_1/step8_7_mechanism_traces.jsonl",
+      "size_bytes": 33014,
+      "current_sha256": "5518eb4b0b7e8880c5f84e59ba0264013bed99e25edb8da93dca558304d4f084",
+      "mtime_local": "2026-10-09T11:37:42-0400",
+      "git_status": "UNTRACKED_NO_GIT_OBJECT",
+      "r10_frozen_member": false,
+      "historical_manifest_names_trace_hash": false,
+      "trusted_original_copy_found_in_repository": false,
+      "content_unchanged_since_pre_run": "NOT_PROVEN"
+    }
+  ],
+  "baseline_search": [
+    "git ls-files and git log --all for the exact paths returned no tracked object or commit",
+    "Step 8.4 and Step 8.9 freeze manifests pin source and evaluation inputs, not these trace bytes",
+    "repository search found textual references but no independent pre-run trace digest",
+    "same-name ._* files are AppleDouble metadata, not verified content backups"
+  ],
+  "scope_limit": "External backups and snapshots were not inspected; absence of a repository baseline is not proof that no external baseline exists.",
+  "historical_trace_restored": false,
+  "r10_freeze_manifest_path": "evaluation/v1_2_3/step9_63c_r5c5b_runner_freeze_r10.json",
+  "r10_freeze_manifest_current_sha256": "d24244235e51e7bf6c8567880c654fe3fd73b87fa1bfe1ab0f10dfdc94db2693"
+}

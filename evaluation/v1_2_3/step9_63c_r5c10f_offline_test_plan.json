@@ -1,0 +1,21 @@
+{
+  "step": "9.63c-r5c10f",
+  "status": "DESIGN_ONLY_NOT_RUN",
+  "synthetic_only": true,
+  "cases": [
+    {"id": "T01", "scenario": "r10 raw manifest and old pointer bytes unchanged", "expected": "PASS exact historical hashes; any byte drift FAIL_CLOSED"},
+    {"id": "T02", "scenario": "r11 independent exclusive creation from r10 parent", "expected": "PASS once; existing target, duplicate revision or wrong parent FAIL_CLOSED"},
+    {"id": "T03", "scenario": "r11 inventory exactly 20 unique safe paths and true file SHA values", "expected": "PASS exact aggregate/raw manifest SHA; missing, duplicate, symlink or changed member FAIL_CLOSED"},
+    {"id": "T04", "scenario": "r11 resolver binds exact r11 pointer and manifest", "expected": "PASS r11; absent/malformed pointer, r10 fallback, wrong path/revision/pointer SHA FAIL_CLOSED"},
+    {"id": "T05", "scenario": "r10 authorization presented to r11 adapter and formal entry", "expected": "FAIL_CLOSED before transaction or consumption"},
+    {"id": "T06", "scenario": "r11 authorization with r10/wrong preflight revision, path, ID or SHA", "expected": "FAIL_CLOSED before side effects"},
+    {"id": "T07", "scenario": "r11 manifest corruption, changed member, wrong parent or aggregate", "expected": "FAIL_CLOSED with no r10 downgrade"},
+    {"id": "T08", "scenario": "scanner accepts canonical synthetic JSONL and excludes verified AppleDouble companion", "expected": "PASS same legal-event parse; companion never decoded"},
+    {"id": "T09", "scenario": "canonical journal invalid UTF-8/JSON, duplicate identity or illegal transaction sequence", "expected": "FAIL_CLOSED; never silently skipped"},
+    {"id": "T10", "scenario": "one-shot and lifecycle synthetic replay/retirement predicates", "expected": "Existing outcomes unchanged; consumed/burned/retired or prior attempt cannot execute"},
+    {"id": "T11", "scenario": "producer-to-consumer r11 preflight payload fixture", "expected": "Frozen formal validator accepts only exact future r11 identity and synthetic PASS evidence; no network/preflight execution"},
+    {"id": "T12", "scenario": "builder ordering and hash-cycle guard", "expected": "Pointer lacks manifest digest; member bytes finalized before manifest; manifest before downstream pins"}
+  ],
+  "tests_executed_this_step": 0,
+  "formal_preflight_or_v4_executed": false
+}

@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "original_step9_8": {
+    "status": "FROZEN_RUN_CONSUMED",
+    "terminal_attempt_status": "FAILED_AFTER_PARTIAL_EXECUTION",
+    "failure_class": "EVALUATION_HARNESS_FAILURE",
+    "cases_started": 1,
+    "cases_completed": 0,
+    "valid_case_results": false,
+    "mutable": false
+  },
+  "recovery_evaluation": {
+    "identity": "new_evaluation_id_new_authorization_id_new_attempt_id",
+    "parent_failure_reference_required": true,
+    "states": [
+      "DESIGNED",
+      "HARNESS_FIXED_PENDING_VALIDATION",
+      "EQUIVALENCE_VALIDATED",
+      "LOCAL_PREFLIGHT_PASSED",
+      "AUTHORIZED",
+      "STARTED",
+      "FAILED_BEFORE_FIRST_CASE",
+      "FAILED_AFTER_PARTIAL_EXECUTION",
+      "COMPLETED"
+    ],
+    "allowed_transitions": {
+      "DESIGNED": ["HARNESS_FIXED_PENDING_VALIDATION"],
+      "HARNESS_FIXED_PENDING_VALIDATION": ["EQUIVALENCE_VALIDATED"],
+      "EQUIVALENCE_VALIDATED": ["LOCAL_PREFLIGHT_PASSED"],
+      "LOCAL_PREFLIGHT_PASSED": ["AUTHORIZED"],
+      "AUTHORIZED": ["STARTED", "FAILED_BEFORE_FIRST_CASE"],
+      "STARTED": ["FAILED_AFTER_PARTIAL_EXECUTION", "COMPLETED"]
+    },
+    "automatic_retry_allowed": false,
+    "new_human_authorization_required_for_execution": true
+  }
+}

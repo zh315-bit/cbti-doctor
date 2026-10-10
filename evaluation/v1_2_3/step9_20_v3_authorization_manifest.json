@@ -1,0 +1,52 @@
+{
+  "evaluation_id": "heldout-v3-step9_20-20260923-01",
+  "authorization_id": null,
+  "attempt_id": null,
+  "authorization_status": "NOT_ISSUED",
+  "issued_at_utc": null,
+  "candidate_manifest": "evaluation/v1_2_3/step9_19_final_candidate_manifest.json",
+  "candidate_manifest_sha256": "21e325516f955986497b69e18eebca1d0a0658a24c4293fe75853dd464c901f5",
+  "frozen_identity_audit": {
+    "agent_aggregate_sha256": "0dfdbac361d68dfeb577433107395b50f4c2fa8ca59f3e1d226fbd9271a839a7",
+    "agent_hash_match": true,
+    "harness_aggregate_sha256": "8bc271bebc1c5da5351d517e2bb4a0d1a99fda3de1b713a6197b12f81fad70c7",
+    "harness_hash_match": true,
+    "scoring_aggregate_sha256": "f742a8f8af7c8747818dadad81621c15d12d74f50538019913dfe18ab53bf59b",
+    "scoring_hash_match": true,
+    "metric_registry_sha256": "a44f8959b1683775b3f8f956f7f990572faa5c204ae5da3fa1201245c56755ab",
+    "metric_registry_match": true,
+    "one_shot_rules_sha256": "8333e4f7a42258a740d938e0315df00ea38ce15a9b6726ac43d5d9cecf925d6f",
+    "one_shot_rules_match": true,
+    "heldout_protocol_sha256": "6c5680bd8c89817c2acc9f43dd66843d6920c3344bcbf31ef1cb99ce59df140e",
+    "final_freeze_match": true
+  },
+  "candidate_logic_audit": {
+    "case_specific_logic_present": false,
+    "scope": ["adaptive_agent/", "configs/requirements.yaml"],
+    "v3_content_accessed": false
+  },
+  "local_preflight": {
+    "status": "BLOCKED_NOT_VERIFIED_IN_CURRENT_EXECUTION_ENVIRONMENT",
+    "current_environment_credential_present": false,
+    "latest_available_local_artifact": "evaluation/v1_2_3/step9_13a_local_real_preflight_20260922T185940Z_c7153f2c4b6f47b5a7943132a24f9e12.json",
+    "artifact_evaluation_id_matches": false,
+    "artifact_agent_hash_matches": false,
+    "model_endpoint_ready": false,
+    "production_smoke_current_identity": "NOT_VERIFIED"
+  },
+  "runner_audit": {
+    "existing_runner": "scripts/run_step9_12_frozen_evaluation.py",
+    "suitable_for_v3": false,
+    "reason": "The runner is explicitly bound to the Step 9.11/V2 evaluation identity, V2 case path, 40-case V2 semantics and V2 attempt ledger. Reusing it for V3 would violate the one-shot protocol.",
+    "v3_runner_prepared": false,
+    "reason_not_prepared": "A V3-specific runner would become a new execution-harness identity not covered by the Step 9.19 frozen harness aggregate. The authorized preparation stage requires an exact harness freeze match; no separately approved Step 9.20 harness freeze exists. Fail closed rather than silently extending the frozen harness."
+  },
+  "blockers": [
+    "No DEEPSEEK_API_KEY is available in the current execution environment; the historical local preflight artifact is bound to the prior Step 9.12 Evaluation ID and old Agent hash and is not valid evidence for this evaluation.",
+    "The existing one-shot runner is V2-specific. A V3 runner would require an independently audited and frozen execution-harness identity before authorization."
+  ],
+  "benchmark_v3_accessed": false,
+  "benchmark_v2_rerun": false,
+  "real_model_called": false,
+  "ready_for_manual_v3_execution": false
+}
