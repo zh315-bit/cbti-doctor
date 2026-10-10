@@ -1,0 +1,46 @@
+{
+  "approval_record_path": "evaluation/v1_2_3/step9_63c_r11_activation_approval.json",
+  "approval_record_sha256": "46cd40f4c780d45bd2d108c531f4da7815dfe20c5df7dd398a21cecad52e31fb",
+  "approver": "huzhuoyang",
+  "artifact_type": "R11_IDENTITY_POINTER_CREATION_RECORD",
+  "confirmation_token_sha256": "46e40fbdfb274edfccfde188cd707fce6cdef1989cadcd1d2826107ffd9dc6d8",
+  "created_at_utc": "2026-10-10T21:16:03.614985+00:00",
+  "interactive_terminal": true,
+  "operator": "huzhuoyang",
+  "pointer_path": "evaluation/v1_2_3/step9_63c_r11_current_runner_identity.json",
+  "pointer_sha256": "4e077781faeecee57da02f37d1d3ad8cdc9dfa895d3eb72b1b4ab1f1d3f696fe",
+  "pointer_size": 389,
+  "preconditions": [
+    {
+      "name": "PP1 no activation artifact exists",
+      "ok": true
+    },
+    {
+      "name": "PP2 approval record signed and every pin matches the current bytes",
+      "ok": true
+    },
+    {
+      "name": "PP4 AR-14 done: the r10 authorization is retired and non-executable",
+      "ok": true
+    },
+    {
+      "name": "PP5 every non-current V3 authorization is non-executable",
+      "ok": true
+    },
+    {
+      "name": "PP6 the 55 historical pins verify",
+      "ok": true
+    },
+    {
+      "name": "PP7 no r11 transaction journal exists",
+      "ok": true
+    },
+    {
+      "name": "PP9 environment",
+      "ok": true
+    }
+  ],
+  "synthetic_root": false,
+  "tool_path": "scripts/build_step9_63c_r11_runner_freeze.py",
+  "tool_sha256": "99031a9156da87164c16b71eff9e2a9961428c52bbf7bc2590741e51e55f950e"
+}
