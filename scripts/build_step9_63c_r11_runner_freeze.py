@@ -456,7 +456,8 @@ def verify_persisted_candidate(root: Path) -> dict[str, Any]:
 
 
 def build_approval(root: Path, *, created_at_utc: str, regression_result: str | None = None,
-                   issuance: dict[str, str] | None = None) -> dict[str, Any]:
+                   issuance: dict[str, str] | None = None, approval_id: str | None = None,
+                   final: bool = False) -> dict[str, Any]:
     """Unsigned approval record built from the CURRENT bytes (printed by --print-approval-draft)."""
     root = Path(root)
     members = member_shas(root)
@@ -489,12 +490,26 @@ def build_approval(root: Path, *, created_at_utc: str, regression_result: str | 
                                         "sha256": "ca168f6939c4697a7a7bccc0b365b414d9a0e632f40de4242eb0a47e2d985285"}},
         "regression": {"result_path": regression_result,
                        "result_sha256": sha256_file(root / regression_result) if regression_result else None},
-        "repository_aggregate": {**repository_aggregate(root), "excludes": sorted(AGGREGATE_SKIP_DIRS) + [APPROVAL_PATH, APPROVAL_DRAFT_PATH, "._*"]},
+        "repository_aggregate": {**stable_aggregate(root), "excludes": sorted(AGGREGATE_SKIP_DIRS) + [APPROVAL_PATH, APPROVAL_DRAFT_PATH, "._*", *ACTIVATION_OUTPUTS],
+                                 "note": "stable across the gated activation steps: the files those steps create or append to are excluded and pinned separately"},
         "freeze": predict_freeze(root, created_at_utc),
         "issuance": cleaned,
         "ar14": {"old_authorization_id": R10_AUTHORIZATION_ID, "old_authorization_manifest_sha256": R10_AUTHORIZATION_SHA256,
                  "must_be_retired_before_pointer_creation": True},
     }
+    extra = activation_pins(root, approval_id or f"approval-step9_63c_r11-{uuid.uuid4().hex}", result["freeze"])
+    result["ar14"].update(extra.pop("ar14"))
+    result.update(extra)
+    result["accepted_exceptions"] = json.loads(json.dumps(ACCEPTED_EXCEPTIONS))
+    if final:
+        result["signed_at_commit"] = None
+        result["commit_pin"] = {
+            "required": True, "head_when_prepared": head_commit(root),
+            "meaning": ("signing means: commit first (clean working tree), then fill signed_at_commit with the commit SHA; "
+                        "every gated entry refuses unless Git HEAD still equals it")}
+        result["content_sha256"] = approval_content_sha256(result)
+        result["tokens"]["retire_r10"]["value"] = retire_token(result["content_sha256"])
+        result["tokens"]["create_freeze"]["value"] = freeze_token(result["freeze"]["predicted_sha256"], result["content_sha256"])
     return result
 
 
@@ -521,6 +536,14 @@ def verify_approval(root: Path, approval: dict[str, Any], *, require_signed: boo
             datetime.fromisoformat(approval.get("signed_at_utc"))
         except (TypeError, ValueError):
             problems.append("approval record has no valid signed_at_utc")
+    if "content_sha256" in approval and approval_content_sha256(approval) != approval["content_sha256"]:
+        problems.append("approval content differs from the prepared draft apart from the four signature fields")
+    if require_signed and isinstance(approval.get("commit_pin"), dict) and approval["commit_pin"].get("required"):
+        pinned = approval.get("signed_at_commit")
+        if not isinstance(pinned, str) or not re.fullmatch(r"[0-9a-f]{40}", pinned):
+            problems.append("approval names no signing commit (signed_at_commit)")
+        elif head_commit(root) != pinned:
+            problems.append("Git HEAD differs from the commit the approval was signed at")
     pointer = approval.get("pointer", {})
     if (pointer.get("canonical_sha256") != POINTER_SHA256 or pointer.get("canonical_size") != POINTER_SIZE
             or sha256_bytes(canonical_pointer_bytes()) != POINTER_SHA256 or len(canonical_pointer_bytes()) != POINTER_SIZE):
@@ -554,7 +577,7 @@ def verify_approval(root: Path, approval: dict[str, Any], *, require_signed: boo
             problems.append("regression result file differs from the approved SHA")
     if check_aggregate:
         aggregate = approval.get("repository_aggregate", {})
-        if repository_aggregate(root)["sha256"] != aggregate.get("sha256"):
+        if stable_aggregate(root)["sha256"] != aggregate.get("sha256"):
             problems.append("repository state changed since the approval record was prepared")
     freeze = approval.get("freeze", {})
     if not isinstance(freeze.get("created_at_utc"), str) or not re.fullmatch(r"[0-9a-f]{64}", str(freeze.get("predicted_sha256", ""))):
@@ -718,6 +741,7 @@ def _fsync_dir(path: Path) -> None:
 
 
 def _write_exclusive(path: Path, data: bytes) -> None:
+    _verify_manifest_matches_plan(path, data)
     fd = os.open(path, os.O_CREAT | os.O_EXCL | os.O_WRONLY | getattr(os, "O_NOFOLLOW", 0), 0o600)
     with os.fdopen(fd, "wb") as stream:
         stream.write(data)
@@ -778,6 +802,444 @@ def create_identity_pointer(root: Path, approval_path: Path | None = None) -> di
             "state": identity_status(root)["state"]}
 
 
+# =====================================================================================
+# Step 9.63c-r5c10ah: gated entries for AR-14 (retire the r10 authorization) and for
+# creating the r11 Freeze, a repository aggregate that is stable across the gated
+# activation steps, and a pre-write proof that the issuance manifest equals the plan.
+# Every write entry needs an interactive terminal, a typed token and a signed approval.
+# =====================================================================================
+DETERMINATION_PATH = "evaluation/v1_2_3/step9_63c_r11_ar14_determination.json"
+LIFECYCLE_CONTRACT_PATH = "evaluation/v1_2_3/step9_61a_v3_authorization_lifecycle_contract.json"
+# Files the gated activation steps legitimately create or append to. The approval pins each of
+# them separately (ledger pre-state, canonical pointer, predicted Freeze, issuance), so the
+# aggregate over everything ELSE stays valid from the first gated step to the last.
+ACTIVATION_OUTPUTS = (LEDGER_PATH, LOCK_RELATIVE, IDENTITY_CONFIG_PATH, POINTER_CREATION_RECORD_PATH,
+                      EXPECTED_FREEZE_PATH, REGISTRY_PATH, AUTHORIZATION_MANIFEST_PATH)
+RETIRE_TOKEN_FORMAT = "RETIRE-R10-<first 12 hex of the uuid part of the r10 authorization id>-<first 12 hex of the approval content SHA-256>"
+FREEZE_TOKEN_FORMAT = "CREATE-R11-FREEZE-<first 12 hex of the predicted Freeze SHA-256>-<first 12 hex of the approval content SHA-256>"
+POINTER_TOKEN_FORMAT = "CREATE-R11-POINTER-<first 12 hex of the canonical pointer SHA-256>"
+ISSUE_TOKEN_FORMAT = "ISSUE-R11-AUTH-<first 12 hex of SHA-256(authorization id | freeze SHA-256 | approval record SHA-256)>"
+RETIREMENT_MASKED_FIELDS = ("lifecycle_event_id", "timestamp_utc")
+ISSUED_EVENT_TYPE_NAME = "AUTHORIZATION_ISSUED"  # defined by the consumer; the issuer appends it after the retirement
+
+
+def stable_aggregate(root: Path) -> dict[str, Any]:
+    return repository_aggregate(Path(root), extra_excludes=ACTIVATION_OUTPUTS)
+
+
+def determination_document(approval_id: str) -> dict[str, Any]:
+    return {
+        "artifact_type": "V3_SUPERSEDED_AUTHORIZATION_NONREUSE_DETERMINATION",
+        "step": "9.63c-r5c10ah", "approval_id": approval_id,
+        "references": "the r11 activation approval record that carries this approval_id",
+        "old_authorization_id": R10_AUTHORIZATION_ID,
+        "old_authorization_reuse_status": "PROVEN_NON_REUSABLE_BY_FROZEN_CONTRACT",
+        "retirement_reason": "SUPERSEDED_BY_APPROVED_R11_ACTIVATION",
+        "old_authorization_manifest_path": R10_AUTHORIZATION_PATH,
+        "old_authorization_manifest_sha256": R10_AUTHORIZATION_SHA256,
+        "authorization_consumed": False, "authorization_consumption_count": 0,
+        "attempt_or_transaction_exists": False, "namespace_or_reservation_exists": False,
+        "case_results_or_traces_exist": False, "current_runner_equality_required": False,
+    }
+
+
+def canonical_determination_bytes(approval_id: str) -> bytes:
+    return (json.dumps(determination_document(approval_id), indent=2, sort_keys=True) + "\n").encode("utf-8")
+
+
+R10_UUID_PREFIX12 = R10_AUTHORIZATION_ID.rsplit("-", 1)[1][:12]
+SIGNATURE_FIELDS = {"status": APPROVAL_DRAFT, "approver": None, "signed_at_utc": None, "signed_at_commit": None}
+
+
+def approval_content_sha256(approval: dict[str, Any]) -> str:
+    """SHA-256 of the approval with its four signature fields (and this hash itself) neutralized: the same
+    value for the prepared draft and for the signed record, so a token can name it before signing."""
+    neutral = {k: v for k, v in approval.items() if k != "content_sha256"}
+    neutral.update(SIGNATURE_FIELDS)
+    # The repository aggregate covers the checklist and runbook, which quote the tokens derived from this hash;
+    # it is verified against the repository on its own (verify_approval), so it is not part of the hash.
+    neutral.pop("repository_aggregate", None)
+    if isinstance(neutral.get("tokens"), dict):  # concrete token values are derived from this hash
+        neutral["tokens"] = {k: {kk: vv for kk, vv in v.items() if kk != "value"} for k, v in neutral["tokens"].items()}
+    return sha256_bytes((json.dumps(neutral, indent=2, sort_keys=True) + "\n").encode())
+
+
+def approval_token_part(root: Path, approval: dict[str, Any]) -> str:
+    """Final-form approvals name themselves by content hash; earlier-form approvals by file hash."""
+    if "content_sha256" in approval:
+        return approval["content_sha256"]
+    return sha256_file(Path(root) / APPROVAL_PATH)
+
+
+def head_commit(root: Path) -> str | None:
+    """Current Git HEAD commit SHA read from the files in .git (no subprocess)."""
+    try:
+        git = Path(root) / ".git"
+        ref = (git / "HEAD").read_text(encoding="utf-8").strip()
+        if not ref.startswith("ref:"):
+            return ref if re.fullmatch(r"[0-9a-f]{40}", ref) else None
+        name = ref.split(" ", 1)[1]
+        if (git / name).is_file():
+            value = (git / name).read_text(encoding="utf-8").strip()
+        else:
+            value = next(line.split(" ", 1)[0] for line in (git / "packed-refs").read_text(encoding="utf-8").splitlines()
+                         if line.endswith(" " + name))
+        return value if re.fullmatch(r"[0-9a-f]{40}", value) else None
+    except (OSError, StopIteration, ValueError):
+        return None
+
+
+ACCEPTED_EXCEPTIONS = [{
+    "id": "AR-15",
+    "subject": "historical trace original content integrity",
+    "state": "CONTENT_INTEGRITY_UNPROVEN",
+    "text": ("Historical Trace original content integrity is CONTENT_INTEGRITY_UNPROVEN: only that the current hashes are "
+             "unchanged can be proven, not the original content. Signing this record means accepting that."),
+}]
+
+
+def retire_token(approval_sha256: str) -> str:
+    return f"RETIRE-R10-{R10_UUID_PREFIX12}-{approval_sha256[:12]}"
+
+
+def freeze_token(predicted_sha256: str, approval_sha256: str) -> str:
+    return f"CREATE-R11-FREEZE-{predicted_sha256[:12]}-{approval_sha256[:12]}"
+
+
+def retirement_event_template(root: Path, determination_sha256: str) -> dict[str, Any]:
+    """The event the frozen function will append, with the two fields it generates at call time masked."""
+    from scripts import authorization_lifecycle as lifecycle
+
+    root = Path(root)
+    auth = read_json_file(root / R10_AUTHORIZATION_PATH)
+    return {
+        "artifact_type": "AUTHORIZATION_LIFECYCLE_EVENT", "event_type": lifecycle.RETIRE_EVENT,
+        "lifecycle_event_id": None, "timestamp_utc": None,
+        "evaluation_id": auth["evaluation_id"], "authorization_id": R10_AUTHORIZATION_ID, "attempt_id": auth["attempt_id"],
+        "original_status": lifecycle.ISSUED, "final_status": lifecycle.RETIRED,
+        "authorization_consumed": False, "authorization_consumption_count": 0,
+        "attempt_created": False, "namespace_created": False, "cases_started": 0, "cases_completed": 0,
+        "reuse_determination": DETERMINATION_PATH, "reuse_determination_sha256": determination_sha256,
+        "authorization_manifest_sha256": sha256_file(root / R10_AUTHORIZATION_PATH),
+        "historical_runner_freeze_path": auth["runner_freeze_path"],
+        "historical_runner_freeze_sha256": auth["runner_freeze_sha256"],
+        "historical_runner_freeze_revision": auth["runner_freeze_revision"],
+        "lifecycle_contract_path": LIFECYCLE_CONTRACT_PATH,
+        "lifecycle_contract_sha256": sha256_file(root / LIFECYCLE_CONTRACT_PATH), "terminal": True,
+    }
+
+
+def _path_matches(value: Any, relative: str) -> bool:
+    """The frozen function records the paths exactly as called (absolute for the gated entry), so the
+    recorded value may be the repository-relative path or an absolute path ending in it."""
+    return isinstance(value, str) and (value == relative or (value.startswith("/") and value.endswith("/" + relative)))
+
+
+def activation_pins(root: Path, approval_id: str, freeze: dict[str, Any]) -> dict[str, Any]:
+    """Approval fields added in r5c10ah: identity of the record, the AR-14 pre-state and expected
+    event, and the token formats of every gated entry."""
+    root = Path(root)
+    determination = canonical_determination_bytes(approval_id)
+    determination_sha = sha256_bytes(determination)
+    ledger = (root / LEDGER_PATH).read_bytes()
+    template = retirement_event_template(root, determination_sha)
+    return {
+        "approval_id": approval_id,
+        "ar14": {
+            "determination": {"path": DETERMINATION_PATH, "size": len(determination), "sha256": determination_sha},
+            "pre_retirement_ledger": {"path": LEDGER_PATH, "size": len(ledger), "sha256": sha256_bytes(ledger)},
+            "expected_retirement_event_template": template,
+            "expected_retirement_event_template_sha256": sha256_bytes(json.dumps(template, sort_keys=True, ensure_ascii=False).encode()),
+            "post_retirement_ledger_rule": (
+                "the pre-retirement ledger bytes unchanged, followed by exactly ONE line: the template with a fresh "
+                "lifecycle_event_id (retire-<32 hex>) and a timestamp_utc later than every earlier event; the exact SHA-256 "
+                "of the post-retirement ledger cannot be pinned because those two fields are generated inside the frozen "
+                "function at call time"),
+        },
+        "tokens": {
+            "retire_r10": {"format": RETIRE_TOKEN_FORMAT, "fixed_part": f"RETIRE-R10-{R10_UUID_PREFIX12}-"},
+            "create_pointer": {"format": POINTER_TOKEN_FORMAT, "value": POINTER_TOKEN},
+            "create_freeze": {"format": FREEZE_TOKEN_FORMAT, "fixed_part": f"CREATE-R11-FREEZE-{freeze['predicted_sha256'][:12]}-"},
+            "issue": {"format": ISSUE_TOKEN_FORMAT},
+        },
+    }
+
+
+def _environment_condition(root: Path) -> tuple[bool, str]:
+    if is_production_root(root):
+        problems = []
+        if sys.platform != "darwin":
+            problems.append("not macOS")
+        if Path(sys.prefix).resolve() != (ROOT / ".venv").resolve():
+            problems.append("not running inside the project .venv")
+        if Path.cwd().resolve() != ROOT.resolve():
+            problems.append("cwd is not the project root")
+        return not problems, "production root" + (": " + "; ".join(problems) if problems else "")
+    return os.environ.get(SYNTHETIC_ROOT_ENV) == "1", f"synthetic root (requires {SYNTHETIC_ROOT_ENV}=1)"
+
+
+def _load_approval_for_entry(root: Path) -> tuple[dict[str, Any] | None, str | None]:
+    try:
+        return load_approval(root), None
+    except (RuntimeError, ValueError, OSError) as error:
+        return None, f"{type(error).__name__}: {error}"
+
+
+def _reduce_r10(root: Path) -> dict[str, Any]:
+    from scripts import authorization_lifecycle as lifecycle
+
+    manifest_path = root / R10_AUTHORIZATION_PATH
+    return lifecycle.reduce_authorization_lifecycle(
+        authorization_id=R10_AUTHORIZATION_ID, manifest=read_json_file(manifest_path), manifest_path=manifest_path,
+        ledger_path=root / LEDGER_PATH, run_root=root / "evaluation/v4_runs", transaction_root=root / TRANSACTION_RELATIVE)
+
+
+def plan_retirement(root: Path) -> dict[str, Any]:
+    """RT1-RT7. Read-only."""
+    from scripts import authorization_lifecycle as lifecycle
+    from scripts import run_step9_63_v3_formal_execution as formal
+
+    root = Path(root)
+    approval, error = _load_approval_for_entry(root)
+    conditions: list[dict[str, Any]] = []
+    if error:
+        conditions.append({"name": "approval record readable", "ok": False, "detail": error})
+    _condition(conditions, "RT1 approval record signed and every pin matches the current bytes", lambda: (
+        (lambda problems: (not problems, "; ".join(problems)))(verify_approval(root, approval))
+        if approval is not None else (False, "no approval record")))
+    _condition(conditions, "RT2 no r11 artifact exists yet (pointer, Freeze, registry, r11 authorization, creation record)", lambda: (
+        not any(_artifact_present(root / p) for p in (IDENTITY_CONFIG_PATH, EXPECTED_FREEZE_PATH, REGISTRY_PATH,
+                                                      AUTHORIZATION_MANIFEST_PATH, POINTER_CREATION_RECORD_PATH)), ""))
+
+    def ledger_pin() -> tuple[bool, str]:
+        pin = approval["ar14"]["pre_retirement_ledger"]
+        raw = (root / LEDGER_PATH).read_bytes()
+        return len(raw) == pin["size"] and sha256_bytes(raw) == pin["sha256"], f"ledger is {len(raw)} bytes, pinned {pin['size']}"
+    _condition(conditions, "RT3 the ledger bytes equal the approval's pre-retirement ledger pin", ledger_pin)
+
+    def target_executable() -> tuple[bool, str]:
+        if lifecycle.authorization_retirement_event(R10_AUTHORIZATION_ID, ledger_path=root / LEDGER_PATH) is not None:
+            return False, "the r10 authorization already has a terminal retirement event"
+        result = _reduce_r10(root)
+        return result["derived_state"] == lifecycle.ISSUED_EXECUTABLE and result["executable"] is True, f"reducer state {result['derived_state']}"
+    _condition(conditions, "RT4 the r10 authorization is still ISSUED_EXECUTABLE", target_executable)
+
+    def determination() -> tuple[bool, str]:
+        path = root / DETERMINATION_PATH
+        if path.is_symlink() or not path.is_file():
+            return False, "determination file missing or unsafe"
+        data = path.read_bytes()
+        pin = approval["ar14"]["determination"]
+        ok = (data == canonical_determination_bytes(approval["approval_id"]) and sha256_bytes(data) == pin["sha256"]
+              and approval["approval_id"].encode() in data)
+        return ok, "determination equals the canonical bytes derived from the approval and references its approval_id"
+    _condition(conditions, "RT5 the non-reuse determination exists, equals its pin and references this approval", determination)
+    _condition(conditions, "RT6 the 55 historical pins verify", lambda: formal.verify_historical_pins(root) == formal.HISTORICAL_PIN_COUNT)
+    _condition(conditions, "RT7 environment", lambda: _environment_condition(root))
+    token = retire_token(approval_token_part(root, approval)) if approval is not None else None
+    return {"mode": "plan-retire-r10", "writes_nothing": True, "target": LEDGER_PATH, "confirmation_token": token,
+            "expected_event_template": (approval or {}).get("ar14", {}).get("expected_retirement_event_template"),
+            "preconditions": conditions, "ready": all(c["ok"] for c in conditions)}
+
+
+def verify_retirement(root: Path) -> dict[str, Any]:
+    """Read-only: the ledger is the pinned pre-state plus exactly the approved retirement event."""
+    from scripts import authorization_lifecycle as lifecycle
+
+    root = Path(root)
+    approval, error = _load_approval_for_entry(root)
+    checks: list[dict[str, Any]] = []
+    if approval is None:
+        return {"mode": "verify-retire-r10", "writes_nothing": True, "state": "NO_APPROVAL", "checks": [
+            {"name": "approval record readable", "ok": False, "detail": error}], "ok": False}
+    pin = approval["ar14"]["pre_retirement_ledger"]
+    raw = (root / LEDGER_PATH).read_bytes()
+    prefix_ok = len(raw) >= pin["size"] and sha256_bytes(raw[:pin["size"]]) == pin["sha256"]
+    state = "ANOMALY_LEDGER_PREFIX_CHANGED" if not prefix_ok else "NOT_RETIRED" if len(raw) == pin["size"] else "CHECKING"
+    if state == "CHECKING":
+        tail = raw[pin["size"]:]
+        _condition(checks, "V1 the pre-retirement ledger bytes are unchanged", lambda: True)
+
+        lines = tail.decode("utf-8").split("\n")
+        retirement_line = lines[0] if lines else ""
+
+        def one_line() -> tuple[bool, str]:
+            # exactly one retirement line right after the pinned prefix; the only thing that may follow it
+            # (once the sequence has moved on) is the single AUTHORIZATION_ISSUED event of the issuer
+            rest = [line for line in lines[1:] if line != ""]
+            ends_cleanly = lines[-1] == "" and retirement_line != ""
+            later_ok = len(rest) <= 1 and all(json.loads(line).get("event_type") == ISSUED_EVENT_TYPE_NAME for line in rest)
+            return ends_cleanly and later_ok, f"{len(tail)} bytes appended, {len(rest)} later line(s)"
+        _condition(checks, "V2 exactly one line was appended for the retirement (only the issuance event may follow it)", one_line)
+
+        def matches_template() -> tuple[bool, str]:
+            event = json.loads(retirement_line)
+            template = approval["ar14"]["expected_retirement_event_template"]
+            path_fields = ("reuse_determination", "lifecycle_contract_path")
+            differing = sorted(k for k in set(event) | set(template) if k not in RETIREMENT_MASKED_FIELDS and k not in path_fields
+                               and event.get(k) != template.get(k))
+            differing += [k for k in path_fields if not _path_matches(event.get(k), template[k])]
+            if differing:
+                return False, "fields differ from the approved template: " + ", ".join(differing)
+            if not re.fullmatch(r"retire-[0-9a-f]{32}", str(event.get("lifecycle_event_id"))):
+                return False, "lifecycle_event_id has the wrong shape"
+            stamp = datetime.fromisoformat(event["timestamp_utc"])
+            earlier = [datetime.fromisoformat(json.loads(line)["timestamp_utc"]) for line in raw[:pin["size"]].decode().splitlines()
+                       if line.strip() and "timestamp_utc" in json.loads(line)]
+            return all(stamp > e for e in earlier), "event equals the approved template; timestamp is later than every earlier event"
+        _condition(checks, "V3 the appended event equals the approved template (except the two generated fields)", matches_template)
+
+        def reducer() -> tuple[bool, str]:
+            result = _reduce_r10(root)
+            return result["derived_state"] == lifecycle.RETIRED_STATE and result["executable"] is False, f"reducer state {result['derived_state']}"
+        _condition(checks, "V4 the reducer judges the r10 authorization retired and non-executable", reducer)
+        _condition(checks, "V5 exactly one retirement event exists for the r10 authorization", lambda: (
+            lifecycle.authorization_retirement_event(R10_AUTHORIZATION_ID, ledger_path=root / LEDGER_PATH) is not None, ""))
+        state = "RETIRED_AS_APPROVED" if all(c["ok"] for c in checks) else "ANOMALY_APPENDED_CONTENT_NOT_AS_APPROVED"
+    return {"mode": "verify-retire-r10", "writes_nothing": True, "state": state, "checks": checks, "ok": state == "RETIRED_AS_APPROVED"}
+
+
+def retire_r10(root: Path) -> dict[str, Any]:
+    """THE AR-14 write entry. Calls only the frozen retire_unconsumed_authorization, which takes the
+    lifecycle lock itself; the surrounding checks run before and after it."""
+    from scripts import authorization_lifecycle as lifecycle
+
+    root = Path(root)
+    require_write_environment(root, "retire the r10 authorization")
+    plan = plan_retirement(root)
+    if not plan["ready"]:
+        raise RuntimeError("retirement refused; failed preconditions: " + "; ".join(c["name"] for c in plan["preconditions"] if not c["ok"]))
+    confirm_with_token(plan["confirmation_token"], "retire the r10 authorization (IRREVERSIBLE append to the lifecycle ledger)\n"
+                       + json.dumps(plan["expected_event_template"], indent=2, ensure_ascii=False))
+    approval = load_approval(root)
+    ledger = root / LEDGER_PATH
+    before = ledger.read_bytes()
+    pin = approval["ar14"]["pre_retirement_ledger"]
+    if len(before) != pin["size"] or sha256_bytes(before) != pin["sha256"]:
+        raise RuntimeError("ledger changed after the confirmation; nothing was written")
+    try:
+        event = lifecycle.retire_unconsumed_authorization(
+            authorization_path=root / R10_AUTHORIZATION_PATH, expected_authorization_id=R10_AUTHORIZATION_ID,
+            run_root=root / "evaluation/v4_runs", ledger_path=ledger, lock_path=root / LOCK_RELATIVE,
+            contract_path=root / LIFECYCLE_CONTRACT_PATH, determination_path=root / DETERMINATION_PATH,
+            determination_sha256=approval["ar14"]["determination"]["sha256"])
+    except Exception as error:
+        if ledger.read_bytes() != before:
+            raise RuntimeError(f"POSTCONDITION_FAILED: the frozen function raised ({error}) but the ledger changed; "
+                               "the ledger is append-only and nothing was deleted: run --verify-retire and report") from error
+        raise RuntimeError(f"retirement refused by the frozen function; the ledger is unchanged: {error}") from error
+    verification = verify_retirement(root)
+    appended = ledger.read_bytes()[len(before):]
+    if not verification["ok"] or not (appended.endswith(b"\n") and appended.count(b"\n") == 1) or not ledger.read_bytes().startswith(before):
+        raise RuntimeError("POSTCONDITION_FAILED: the ledger after retirement is not the approved pre-state plus one approved event "
+                           f"({verification['state']}); nothing was deleted (the ledger is append-only): run --verify-retire and report")
+    return {"result": "RETIRED", "lifecycle_event_id": event["lifecycle_event_id"], "state": verification["state"]}
+
+
+def plan_freeze(root: Path) -> dict[str, Any]:
+    """FZ1-FZ7. Read-only."""
+    from scripts import authorization_lifecycle as lifecycle
+    from scripts import run_step9_63_v3_formal_execution as formal
+
+    root = Path(root)
+    approval, error = _load_approval_for_entry(root)
+    conditions: list[dict[str, Any]] = []
+    context: dict[str, Any] = {}
+    if error:
+        conditions.append({"name": "approval record readable", "ok": False, "detail": error})
+    _condition(conditions, "FZ1 approval record signed and every pin matches the current bytes", lambda: (
+        (lambda problems: (not problems, "; ".join(problems)))(verify_approval(root, approval))
+        if approval is not None else (False, "no approval record")))
+
+    def ar14() -> tuple[bool, str]:
+        event = lifecycle.authorization_retirement_event(R10_AUTHORIZATION_ID, ledger_path=root / LEDGER_PATH)
+        if event is None:
+            return False, "the r10 authorization has no terminal retirement event (AR-14 not done)"
+        result = _reduce_r10(root)
+        return result["derived_state"] == lifecycle.RETIRED_STATE and result["executable"] is False, f"reducer state {result['derived_state']}"
+    _condition(conditions, "FZ2 AR-14 done: the reducer judges the r10 authorization retired", ar14)
+
+    def pointer() -> tuple[bool, str]:
+        path, record = root / IDENTITY_CONFIG_PATH, root / POINTER_CREATION_RECORD_PATH
+        if path.is_symlink() or not path.is_file() or path.read_bytes() != canonical_pointer_bytes() or sha256_file(path) != POINTER_SHA256:
+            return False, "the identity pointer is missing or not canonical"
+        data = read_json_file(record)
+        return data.get("pointer_sha256") == POINTER_SHA256 and data.get("approval_record_sha256") == sha256_file(root / APPROVAL_PATH), \
+            "pointer canonical; creation record binds it to this approval"
+    _condition(conditions, "FZ3 the identity pointer exists with the canonical bytes and its record binds this approval", pointer)
+    _condition(conditions, "FZ4 no Freeze, registry or r11 authorization exists", lambda: (
+        not any(_artifact_present(root / p) for p in (EXPECTED_FREEZE_PATH, REGISTRY_PATH, AUTHORIZATION_MANIFEST_PATH)), ""))
+
+    def prediction() -> tuple[bool, str]:
+        pinned = approval["freeze"]
+        candidate = assemble_candidate(root, created_at_utc=pinned["created_at_utc"])
+        data = (json.dumps(candidate, sort_keys=True, indent=2) + "\n").encode()
+        context["data"] = data
+        return sha256_bytes(data) == pinned["predicted_sha256"] and len(data) == pinned["predicted_size"], \
+            f"assembled Freeze {sha256_bytes(data)}, approved {pinned['predicted_sha256']}"
+    _condition(conditions, "FZ5 the Freeze assembled from the current bytes equals the approved prediction", prediction)
+    _condition(conditions, "FZ6 the 55 historical pins verify", lambda: formal.verify_historical_pins(root) == formal.HISTORICAL_PIN_COUNT)
+    _condition(conditions, "FZ7 environment", lambda: _environment_condition(root))
+    token = freeze_token(approval["freeze"]["predicted_sha256"], approval_token_part(root, approval)) if approval is not None else None
+    return {"mode": "plan-freeze", "writes_nothing": True, "target": EXPECTED_FREEZE_PATH, "confirmation_token": token,
+            "preconditions": conditions, "ready": all(c["ok"] for c in conditions), "_data": context.get("data")}
+
+
+def create_freeze(root: Path) -> dict[str, Any]:
+    """THE Freeze write entry: terminal + token + signed approval, O_EXCL + fsync + readback, SHA must
+    equal the approved prediction. Never overwrites; never deletes."""
+    from scripts import authorization_lifecycle as lifecycle
+
+    root = Path(root)
+    require_write_environment(root, "create the r11 Freeze")
+    plan = plan_freeze(root)
+    if not plan["ready"]:
+        raise RuntimeError("Freeze creation refused; failed preconditions: " + "; ".join(c["name"] for c in plan["preconditions"] if not c["ok"]))
+    data = plan["_data"]
+    approval = load_approval(root)
+    predicted = approval["freeze"]["predicted_sha256"]
+    confirm_with_token(plan["confirmation_token"], f"create the r11 Freeze ({len(data)} bytes, SHA-256 {predicted})")
+    target = root / EXPECTED_FREEZE_PATH
+    with lifecycle.lifecycle_lock(root / LOCK_RELATIVE):
+        again = plan_freeze(root)  # re-check inside the lock
+        if not again["ready"] or again["_data"] != data:
+            raise RuntimeError("Freeze creation refused after taking the lock: " + "; ".join(c["name"] for c in again["preconditions"] if not c["ok"]))
+        _write_exclusive(target, data)
+        written = target.read_bytes()
+        if written != data or sha256_bytes(written) != predicted:
+            raise RuntimeError(
+                f"FREEZE_SHA_MISMATCH: the file on disk has SHA-256 {sha256_bytes(written)}, the approved prediction is {predicted}. "
+                "Nothing was deleted. Recovery: leave the file in place, do NOT issue an authorization, run --verify-freeze and --status, and "
+                "report; a person decides whether to move the file aside and start again from a corrected approval record.")
+    verification = verify_persisted_candidate(root)
+    if not verification["ok"]:
+        raise RuntimeError("FREEZE_NOT_REPRODUCIBLE: " + verification["reason"] + " (nothing was deleted; report)")
+    return {"result": "CREATED", "freeze_sha256": predicted, "state": identity_status(root)["state"]}
+
+
+def _verify_manifest_matches_plan(path: Path, data: bytes) -> None:
+    """Before the issuance manifest is written, prove it equals the plan: the same bytes the issuer
+    would produce for a fresh plan, apart from issued_at_utc."""
+    target = Path(path)
+    if not target.as_posix().endswith(AUTHORIZATION_MANIFEST_PATH):
+        return
+    root = target
+    for _ in Path(AUTHORIZATION_MANIFEST_PATH).parts:
+        root = root.parent
+    from scripts import issue_step9_63c_r11_authorization as issuer
+
+    plan = issuer.plan_issuance(root)
+    preview = plan.get("manifest_preview")
+    written = json.loads(data.decode("utf-8"))
+    if not isinstance(preview, dict) or not isinstance(written, dict) or not isinstance(written.get("issued_at_utc"), str):
+        raise RuntimeError("MANIFEST_DIFFERS_FROM_PLAN: nothing was written (no comparable plan manifest)")
+    differing = sorted(k for k in set(preview) | set(written) if k != "issued_at_utc" and preview.get(k) != written.get(k))
+    if differing:
+        raise RuntimeError("MANIFEST_DIFFERS_FROM_PLAN: nothing was written; differing keys: " + ", ".join(differing))
+    if issuer.manifest_bytes({**preview, "issued_at_utc": written["issued_at_utc"]}) != data:
+        raise RuntimeError("MANIFEST_DIFFERS_FROM_PLAN: nothing was written; the bytes differ from the plan's serialization")
+
+
 def main(argv: list[str] | None = None) -> int:
     import argparse
 
@@ -791,6 +1253,11 @@ def main(argv: list[str] | None = None) -> int:
     mode.add_argument("--verify-freeze", action="store_true", help="read-only: reassemble and compare the persisted freeze")
     mode.add_argument("--print-approval-draft", action="store_true", help="read-only: print an unsigned approval record")
     mode.add_argument("--create-pointer", action="store_true", help="WRITE: interactive terminal and typed token required")
+    mode.add_argument("--plan-retire", action="store_true", help="read-only: preconditions for retiring the r10 authorization (AR-14)")
+    mode.add_argument("--verify-retire", action="store_true", help="read-only: the ledger is the pinned pre-state plus the approved event")
+    mode.add_argument("--retire-r10", action="store_true", help="WRITE (irreversible): interactive terminal and typed token required")
+    mode.add_argument("--plan-freeze", action="store_true", help="read-only: preconditions for creating the r11 Freeze")
+    mode.add_argument("--create-freeze", action="store_true", help="WRITE: interactive terminal and typed token required")
     parser.add_argument("--created-at", default="2026-10-10T00:00:00+00:00")
     parser.add_argument("--regression-result")
     args = parser.parse_args(argv)
@@ -803,9 +1270,19 @@ def main(argv: list[str] | None = None) -> int:
         elif args.verify_freeze:
             out = verify_persisted_candidate(root)
         elif args.print_approval_draft:
-            out = build_approval(root, created_at_utc=args.created_at, regression_result=args.regression_result)
+            out = build_approval(root, created_at_utc=args.created_at, regression_result=args.regression_result, final=True)
         elif args.create_pointer:
             out = create_identity_pointer(root, args.approval)
+        elif args.plan_retire:
+            out = plan_retirement(root)
+        elif args.verify_retire:
+            out = verify_retirement(root)
+        elif args.retire_r10:
+            out = retire_r10(root)
+        elif args.plan_freeze:
+            out = {k: v for k, v in plan_freeze(root).items() if k != "_data"}
+        elif args.create_freeze:
+            out = create_freeze(root)
         else:
             out = plan_identity_pointer(root, args.approval)
     except (PermissionError, RuntimeError) as error:

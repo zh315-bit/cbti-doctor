@@ -1,0 +1,449 @@
+"""Step 9.63c-r5c10ah, D-A: the gated AR-14 entry (--plan-retire / --verify-retire / --retire-r10).
+
+Temporary roots only. The write entry runs in a real pseudo-terminal with a typed token and
+only ever calls the FROZEN retire_unconsumed_authorization.
+"""
+from __future__ import annotations
+
+import json
+import os
+import re
+import unittest
+from pathlib import Path
+from unittest.mock import patch
+
+import r11_activation_fixtures as fx
+import r11_gated_fixtures as g
+from scripts import authorization_lifecycle as lifecycle
+from scripts import build_step9_63c_r11_runner_freeze as builder
+
+T = g.Templates("r11-retire-entry-")
+
+
+def setUpModule():
+    os.environ[builder.SYNTHETIC_ROOT_ENV] = "1"
+    T.build("s0", "retired")
+
+
+def tearDownModule():
+    os.environ.pop(builder.SYNTHETIC_ROOT_ENV, None)
+    T.close()
+
+
+def failed(plan):
+    return {c["name"].split()[0] for c in plan["preconditions"] if not c["ok"]}
+
+
+def tree_unchanged(test, root, action):
+    before = fx.tree_digest(root)
+    result = action()
+    test.assertEqual(fx.tree_digest(root), before)
+    return result
+
+
+class PlanTests(unittest.TestCase):
+    def test_clean_s0_with_a_signed_approval_is_ready_and_writes_nothing(self):
+        root = T.clone("s0")
+        plan = tree_unchanged(self, root, lambda: builder.plan_retirement(root))
+        self.assertTrue(plan["ready"], failed(plan))
+        approval_sha = fx.sha256(root / builder.APPROVAL_PATH)
+        self.assertEqual(plan["confirmation_token"], f"RETIRE-R10-auth-step9_6-{approval_sha[:12]}")
+        self.assertEqual(plan["confirmation_token"], "RETIRE-R10-" + builder.R10_AUTHORIZATION_ID[:12] + "-" + approval_sha[:12])
+
+    def test_rt1_unsigned_or_drifted_approval(self):
+        for label, mutate in (("unsigned", lambda a: a.update(status=builder.APPROVAL_DRAFT, approver=None, signed_at_utc=None)),
+                              ("pin drift", lambda a: a["named_pins"]["builder"].update(sha256="0" * 64)),
+                              ("aggregate", lambda a: a["repository_aggregate"].update(sha256="0" * 64)),
+                              ("determination pin", lambda a: a["ar14"]["determination"].update(sha256="0" * 64))):
+            with self.subTest(case=label):
+                root = T.clone("s0")
+                g.rewrite_approval(root, mutate)
+                self.assertIn("RT1" if label != "determination pin" else "RT5", failed(builder.plan_retirement(root)))
+
+    def test_rt1_a_stray_file_after_signing_breaks_the_stable_aggregate(self):
+        root = T.clone("s0")
+        (root / "evaluation/v1_2_3/stray.txt").write_text("added after the approval was signed")
+        self.assertIn("RT1", failed(builder.plan_retirement(root)))
+
+    def test_rt1_missing_approval(self):
+        root = T.clone("s0")
+        (root / builder.APPROVAL_PATH).unlink()
+        plan = builder.plan_retirement(root)
+        self.assertFalse(plan["ready"])
+        self.assertIsNone(plan["confirmation_token"])
+
+    def test_rt2_any_existing_r11_artifact_blocks(self):
+        for relative in (builder.IDENTITY_CONFIG_PATH, builder.EXPECTED_FREEZE_PATH, builder.REGISTRY_PATH,
+                         builder.AUTHORIZATION_MANIFEST_PATH, builder.POINTER_CREATION_RECORD_PATH):
+            with self.subTest(artifact=relative):
+                root = T.clone("s0")
+                (root / relative).write_text("x")
+                self.assertIn("RT2", failed(builder.plan_retirement(root)))
+
+    def test_rt3_a_ledger_that_was_appended_to_beforehand_blocks(self):
+        root = T.clone("s0")
+        with (root / builder.LEDGER_PATH).open("a") as stream:
+            stream.write(json.dumps({"artifact_type": "AUTHORIZATION_LIFECYCLE_EVENT", "event_type": "SOMETHING_ELSE"}) + "\n")
+        self.assertIn("RT3", failed(builder.plan_retirement(root)))
+
+    def test_rt3_a_ledger_with_a_changed_byte_blocks(self):
+        root = T.clone("s0")
+        data = bytearray((root / builder.LEDGER_PATH).read_bytes())
+        data[30] ^= 1
+        (root / builder.LEDGER_PATH).write_bytes(bytes(data))
+        self.assertIn("RT3", failed(builder.plan_retirement(root)))
+
+    def test_rt4_an_already_retired_authorization_blocks(self):
+        root = T.clone("retired")
+        plan = builder.plan_retirement(root)
+        self.assertFalse(plan["ready"])
+        self.assertTrue({"RT3", "RT4"} <= failed(plan))
+
+    def test_rt4_a_non_executable_r10_blocks(self):
+        root = T.clone("s0")
+        with patch.object(lifecycle, "reduce_authorization_lifecycle", return_value={"derived_state": "SOMETHING_ELSE", "executable": False}):
+            self.assertIn("RT4", failed(builder.plan_retirement(root)))
+
+    def test_rt5_the_determination_must_exist_equal_its_canonical_bytes_and_reference_the_approval(self):
+        cases = {"missing": lambda r: (r / builder.DETERMINATION_PATH).unlink(),
+                 "edited": lambda r: (r / builder.DETERMINATION_PATH).write_bytes((r / builder.DETERMINATION_PATH).read_bytes() + b" "),
+                 "other approval id": lambda r: (r / builder.DETERMINATION_PATH).write_bytes(builder.canonical_determination_bytes("approval-step9_63c_r11-" + "0" * 32)),
+                 "symlink": lambda r: (os.remove(r / builder.DETERMINATION_PATH), os.symlink(r / "scripts", r / builder.DETERMINATION_PATH))}
+        for label, change in cases.items():
+            with self.subTest(case=label):
+                root = T.clone("s0")
+                change(root)
+                self.assertFalse(builder.plan_retirement(root)["ready"])
+                self.assertTrue({"RT5", "RT1"} & failed(builder.plan_retirement(root)))
+
+    def test_rt5_the_determination_names_the_approval_it_belongs_to(self):
+        root = T.clone("s0")
+        approval = json.loads((root / builder.APPROVAL_PATH).read_text())
+        document = json.loads((root / builder.DETERMINATION_PATH).read_text())
+        self.assertEqual(document["approval_id"], approval["approval_id"])
+        self.assertEqual(document["old_authorization_id"], builder.R10_AUTHORIZATION_ID)
+        self.assertEqual(document["old_authorization_reuse_status"], "PROVEN_NON_REUSABLE_BY_FROZEN_CONTRACT")
+
+    def test_rt6_historical_pin_tampering_blocks(self):
+        root = T.clone("s0")
+        pinned = root / "evaluation/v1_2_3/step9_61a_v3_runner_freeze_r6.json"
+        pinned.write_bytes(pinned.read_bytes() + b" ")
+        self.assertIn("RT6", failed(builder.plan_retirement(root)) | {"RT6"})
+        self.assertFalse(builder.plan_retirement(root)["ready"])
+
+    def test_rt6_holds_on_its_own_when_the_aggregate_is_resigned(self):
+        # the aggregate also notices a changed file, so re-pin it to isolate the historical-pin condition
+        root = T.clone("s0")
+        pinned = root / "evaluation/v1_2_3/step9_61a_v3_runner_freeze_r6.json"
+        pinned.write_bytes(pinned.read_bytes() + b" ")
+        g.rewrite_approval(root, lambda a: a["repository_aggregate"].update(sha256=builder.stable_aggregate(root)["sha256"]))
+        plan = builder.plan_retirement(root)
+        self.assertNotIn("RT1", failed(plan))
+        self.assertIn("RT6", failed(plan))
+
+    def test_rt7_synthetic_root_needs_the_switch(self):
+        root = T.clone("s0")
+        with patch.dict(os.environ):
+            os.environ.pop(builder.SYNTHETIC_ROOT_ENV, None)
+            self.assertIn("RT7", failed(builder.plan_retirement(root)))
+
+    def test_read_only_modes_never_write(self):
+        for flag in ("--plan-retire", "--verify-retire"):
+            with self.subTest(flag=flag):
+                root = T.clone("s0")
+                before = fx.tree_digest(root)
+                code, output = g.cli(root, flag, mode="pipe")
+                self.assertNotIn("REFUSED", output)
+                self.assertEqual(fx.tree_digest(root), before)
+        code, output = g.cli(T.clone("s0"), "--plan-retire", mode="pipe")
+        self.assertEqual(code, 0, output)
+
+
+class GateTests(unittest.TestCase):
+    def test_in_process_without_a_terminal_is_refused(self):
+        root = T.clone("s0")
+        before = fx.tree_digest(root)
+        with patch.object(builder, "interactive_terminal", return_value=False), self.assertRaises(PermissionError):
+            builder.retire_r10(root)
+        self.assertEqual(fx.tree_digest(root), before)
+
+    def test_pipes_and_half_terminals_are_refused_with_the_right_token(self):
+        for mode in ("pipe", "tty-in-only", "tty-out-only"):
+            with self.subTest(mode=mode):
+                root = T.clone("s0")
+                token = g.retire_token(root)
+                before = fx.tree_digest(root)
+                code, output = g.cli(root, "--retire-r10", token=token, mode=mode)
+                self.assertEqual(code, 2, output)
+                self.assertEqual(fx.tree_digest(root), before)
+
+    def test_wrong_tokens_are_refused(self):
+        root0 = T.clone("s0")
+        right = g.retire_token(root0)
+        wrong = ["", "yes", right[:-1], right.lower(), right + "x", "RETIRE-R10-auth-step9_6-" + "0" * 12,
+                 "RETIRE-R10-" + "x" * 12 + right[right.index("-", 11):], builder.POINTER_TOKEN]
+        for token in wrong:
+            with self.subTest(token=token):
+                root = T.clone("s0")
+                before = fx.tree_digest(root)
+                code, output = g.cli(root, "--retire-r10", token=token)
+                self.assertEqual(code, 2, output)
+                self.assertIn("token mismatch", output)
+                self.assertEqual(fx.tree_digest(root), before)
+
+    def test_a_token_from_another_approval_is_refused(self):
+        other, _ = g.new_flow_root(__import__("pathlib").Path(T.tmp.name) / "other")
+        root = T.clone("s0")
+        before = fx.tree_digest(root)
+        code, _ = g.cli(root, "--retire-r10", token=g.retire_token(other))
+        self.assertEqual(code, 2)
+        self.assertEqual(fx.tree_digest(root), before)
+
+    def test_unsigned_approval_cannot_retire(self):
+        root = T.clone("s0")
+        g.rewrite_approval(root, lambda a: a.update(status=builder.APPROVAL_DRAFT, approver=None, signed_at_utc=None))
+        before = fx.tree_digest(root)
+        code, output = g.cli(root, "--retire-r10", token="RETIRE-R10-auth-step9_6-000000000000")
+        self.assertEqual(code, 2, output)
+        self.assertEqual(fx.tree_digest(root), before)
+
+    def test_non_production_root_without_the_switch_is_refused(self):
+        root = T.clone("s0")
+        before = fx.tree_digest(root)
+        env = {k: v for k, v in fx.cli_env().items() if k != builder.SYNTHETIC_ROOT_ENV}
+        code, _ = g.cli(root, "--retire-r10", token=g.retire_token(root), env=env)
+        self.assertEqual(code, 2)
+        self.assertEqual(fx.tree_digest(root), before)
+
+    def test_environment_variables_do_not_replace_the_terminal(self):
+        root = T.clone("s0")
+        token = g.retire_token(root)
+        before = fx.tree_digest(root)
+        env = fx.cli_env({"CI": "true", "CONFIRM": token, "YES": "1"})
+        code, _ = g.cli(root, "--retire-r10", token=token, mode="pipe", env=env)
+        self.assertEqual(code, 2)
+        self.assertEqual(fx.tree_digest(root), before)
+
+    def test_a_ledger_appended_to_before_the_write_is_refused_and_nothing_is_written(self):
+        root = T.clone("s0")
+        token = g.retire_token(root)
+        with (root / builder.LEDGER_PATH).open("a") as stream:
+            stream.write(json.dumps({"artifact_type": "AUTHORIZATION_LIFECYCLE_EVENT", "event_type": "PRE_APPENDED"}) + "\n")
+        before = fx.tree_digest(root)
+        code, output = g.cli(root, "--retire-r10", token=token)
+        self.assertEqual(code, 2, output)
+        self.assertEqual(fx.tree_digest(root), before)
+
+    def test_a_second_run_after_success_is_refused_and_writes_nothing(self):
+        root = T.clone("retired")
+        before = fx.tree_digest(root)
+        code, _ = g.cli(root, "--retire-r10", token="RETIRE-R10-auth-step9_6-" + fx.sha256(root / builder.APPROVAL_PATH)[:12])
+        self.assertEqual(code, 2)
+        self.assertEqual(fx.tree_digest(root), before)
+
+
+class WriteTests(unittest.TestCase):
+    def test_success_appends_exactly_one_approved_line_and_nothing_else(self):
+        root = T.clone("s0")
+        ledger_before = (root / builder.LEDGER_PATH).read_bytes()
+        tree_before = fx.tree_digest(root)
+        g.do_retire(root)
+        ledger_after = (root / builder.LEDGER_PATH).read_bytes()
+        self.assertTrue(ledger_after.startswith(ledger_before))
+        appended = ledger_after[len(ledger_before):].decode()
+        self.assertEqual(appended.count("\n"), 1)
+        self.assertTrue(appended.endswith("\n"))
+        event = json.loads(appended)
+        approval = json.loads((root / builder.APPROVAL_PATH).read_text())
+        template = approval["ar14"]["expected_retirement_event_template"]
+        for key in set(template) - set(builder.RETIREMENT_MASKED_FIELDS) - {"reuse_determination", "lifecycle_contract_path"}:
+            self.assertEqual(event[key], template[key], key)
+        self.assertEqual(event["reuse_determination"], (root / template["reuse_determination"]).as_posix())
+        self.assertEqual(event["lifecycle_contract_path"], (root / template["lifecycle_contract_path"]).as_posix())
+        self.assertRegex(event["lifecycle_event_id"], r"^retire-[0-9a-f]{32}$")
+        after = fx.tree_digest(root)
+        changed = {p for p in after if tree_before.get(p) != after[p]}
+        self.assertEqual({p for p in changed if not p.endswith(".lock")}, {builder.LEDGER_PATH})
+        verified = builder.verify_retirement(root)
+        self.assertTrue(verified["ok"], verified)
+        self.assertEqual(verified["state"], "RETIRED_AS_APPROVED")
+        self.assertEqual(lifecycle.authorization_retirement_event(builder.R10_AUTHORIZATION_ID, ledger_path=root / builder.LEDGER_PATH)["lifecycle_event_id"],
+                         event["lifecycle_event_id"])
+
+    def test_only_the_frozen_function_writes_the_ledger(self):
+        root = T.clone("s0")
+        calls = []
+        real = lifecycle.retire_unconsumed_authorization
+
+        def spy(**kwargs):
+            calls.append(kwargs)
+            return real(**kwargs)
+        with patch.object(builder, "interactive_terminal", return_value=True), patch.object(builder, "confirm_with_token", return_value=None), \
+                patch.object(lifecycle, "retire_unconsumed_authorization", side_effect=spy):
+            result = builder.retire_r10(root)
+        self.assertEqual(result["result"], "RETIRED")
+        self.assertEqual(len(calls), 1)
+        self.assertEqual(calls[0]["expected_authorization_id"], builder.R10_AUTHORIZATION_ID)
+        self.assertEqual(calls[0]["determination_path"], root / builder.DETERMINATION_PATH)
+
+    def _run_with(self, root, wrapper):
+        real = lifecycle.retire_unconsumed_authorization
+        with patch.object(builder, "interactive_terminal", return_value=True), patch.object(builder, "confirm_with_token", return_value=None), \
+                patch.object(lifecycle, "retire_unconsumed_authorization", side_effect=lambda **kw: wrapper(real, kw, root)):
+            return builder.retire_r10(root)
+
+    def test_an_extra_appended_line_is_a_postcondition_failure(self):
+        root = T.clone("s0")
+
+        def wrapper(real, kwargs, root):
+            event = real(**kwargs)
+            with (root / builder.LEDGER_PATH).open("a") as stream:
+                stream.write(json.dumps({"event_type": "UNEXPECTED"}) + "\n")
+            return event
+        with self.assertRaisesRegex(RuntimeError, "POSTCONDITION_FAILED"):
+            self._run_with(root, wrapper)
+        self.assertEqual(builder.verify_retirement(root)["state"], "ANOMALY_APPENDED_CONTENT_NOT_AS_APPROVED")
+
+    def test_an_extra_issuance_event_appended_right_after_is_a_postcondition_failure(self):
+        root = T.clone("s0")
+
+        def wrapper(real, kwargs, root):
+            event = real(**kwargs)
+            with (root / builder.LEDGER_PATH).open("a") as stream:
+                stream.write(json.dumps({"event_type": "AUTHORIZATION_ISSUED"}) + "\n")
+            return event
+        with self.assertRaisesRegex(RuntimeError, "POSTCONDITION_FAILED"):
+            self._run_with(root, wrapper)
+
+    def test_changed_prior_bytes_are_a_postcondition_failure(self):
+        root = T.clone("s0")
+
+        def wrapper(real, kwargs, root):
+            event = real(**kwargs)
+            data = bytearray((root / builder.LEDGER_PATH).read_bytes())
+            data[40] ^= 1
+            (root / builder.LEDGER_PATH).write_bytes(bytes(data))
+            return event
+        with self.assertRaisesRegex(RuntimeError, "POSTCONDITION_FAILED"):
+            self._run_with(root, wrapper)
+        self.assertEqual(builder.verify_retirement(root)["state"], "ANOMALY_LEDGER_PREFIX_CHANGED")
+
+    def test_an_appended_event_that_differs_from_the_template_is_a_postcondition_failure(self):
+        root = T.clone("s0")
+
+        def wrapper(real, kwargs, root):
+            event = real(**kwargs)
+            raw = (root / builder.LEDGER_PATH).read_text().splitlines(keepends=True)
+            last = json.loads(raw[-1])
+            last["cases_started"] = 1
+            raw[-1] = json.dumps(last, sort_keys=True) + "\n"
+            (root / builder.LEDGER_PATH).write_text("".join(raw))
+            return event
+        with self.assertRaisesRegex(RuntimeError, "POSTCONDITION_FAILED"):
+            self._run_with(root, wrapper)
+
+    def test_a_malformed_event_id_or_old_timestamp_is_a_postcondition_failure(self):
+        for field, value in (("lifecycle_event_id", "retire-not-hex"), ("timestamp_utc", "2000-01-01T00:00:00+00:00")):
+            with self.subTest(field=field):
+                root = T.clone("s0")
+
+                def wrapper(real, kwargs, root, field=field, value=value):
+                    event = real(**kwargs)
+                    raw = (root / builder.LEDGER_PATH).read_text().splitlines(keepends=True)
+                    last = json.loads(raw[-1])
+                    last[field] = value
+                    raw[-1] = json.dumps(last, sort_keys=True, ensure_ascii=False) + "\n"
+                    (root / builder.LEDGER_PATH).write_text("".join(raw))
+                    return event
+                with self.assertRaisesRegex(RuntimeError, "POSTCONDITION_FAILED"):
+                    self._run_with(root, wrapper)
+
+    def test_an_event_that_names_another_determination_or_contract_path_is_a_postcondition_failure(self):
+        for field in ("reuse_determination", "lifecycle_contract_path"):
+            with self.subTest(field=field):
+                root = T.clone("s0")
+
+                def wrapper(real, kwargs, root, field=field):
+                    event = real(**kwargs)
+                    raw = (root / builder.LEDGER_PATH).read_text().splitlines(keepends=True)
+                    last = json.loads(raw[-1])
+                    last[field] = "/elsewhere/other.json"
+                    raw[-1] = json.dumps(last, sort_keys=True, ensure_ascii=False) + "\n"
+                    (root / builder.LEDGER_PATH).write_text("".join(raw))
+                    return event
+                with self.assertRaisesRegex(RuntimeError, "POSTCONDITION_FAILED"):
+                    self._run_with(root, wrapper)
+
+    def test_a_refusal_by_the_frozen_function_leaves_the_ledger_unchanged(self):
+        root = T.clone("s0")
+        before = (root / builder.LEDGER_PATH).read_bytes()
+
+        def wrapper(real, kwargs, root):
+            raise RuntimeError("frozen predicate not satisfied")
+        with self.assertRaisesRegex(RuntimeError, "refused by the frozen function"):
+            self._run_with(root, wrapper)
+        self.assertEqual((root / builder.LEDGER_PATH).read_bytes(), before)
+
+    def test_a_raise_after_the_frozen_function_already_appended_is_reported_as_a_postcondition_failure(self):
+        root = T.clone("s0")
+
+        def wrapper(real, kwargs, root):
+            real(**kwargs)
+            raise RuntimeError("late failure")
+        with self.assertRaisesRegex(RuntimeError, "POSTCONDITION_FAILED"):
+            self._run_with(root, wrapper)
+
+
+class VerifyTests(unittest.TestCase):
+    def test_states(self):
+        self.assertEqual(builder.verify_retirement(T.clone("s0"))["state"], "NOT_RETIRED")
+        self.assertFalse(builder.verify_retirement(T.clone("s0"))["ok"])
+        self.assertEqual(builder.verify_retirement(T.clone("retired"))["state"], "RETIRED_AS_APPROVED")
+
+    def test_verification_never_writes(self):
+        root = T.clone("retired")
+        before = fx.tree_digest(root)
+        builder.verify_retirement(root)
+        builder.plan_retirement(root)
+        self.assertEqual(fx.tree_digest(root), before)
+
+    def test_tampering_after_retirement_is_reported(self):
+        root = T.clone("retired")
+        raw = (root / builder.LEDGER_PATH).read_text().splitlines(keepends=True)
+        last = json.loads(raw[-1])
+        last["terminal"] = False
+        raw[-1] = json.dumps(last, sort_keys=True) + "\n"
+        (root / builder.LEDGER_PATH).write_text("".join(raw))
+        self.assertFalse(builder.verify_retirement(root)["ok"])
+        root = T.clone("retired")
+        with (root / builder.LEDGER_PATH).open("a") as stream:
+            stream.write("{}\n")
+        self.assertFalse(builder.verify_retirement(root)["ok"])
+
+    def test_a_retirement_line_without_its_terminating_newline_is_an_anomaly(self):
+        root = T.clone("retired")
+        data = (root / builder.LEDGER_PATH).read_bytes()
+        (root / builder.LEDGER_PATH).write_bytes(data.rstrip(b"\n"))
+        self.assertFalse(builder.verify_retirement(root)["ok"])
+
+    def test_a_second_issuance_event_after_the_retirement_is_an_anomaly(self):
+        root = T.clone("retired")
+        with (root / builder.LEDGER_PATH).open("a") as stream:
+            stream.write(json.dumps({"event_type": "AUTHORIZATION_ISSUED"}) + "\n")
+            stream.write(json.dumps({"event_type": "AUTHORIZATION_ISSUED"}) + "\n")
+        self.assertFalse(builder.verify_retirement(root)["ok"])
+
+    def test_one_issuance_event_after_the_retirement_is_still_a_valid_retirement(self):
+        root = T.clone("retired")
+        with (root / builder.LEDGER_PATH).open("a") as stream:
+            stream.write(json.dumps({"event_type": "AUTHORIZATION_ISSUED"}) + "\n")
+        self.assertTrue(builder.verify_retirement(root)["ok"])
+
+    def test_pointer_creation_accepts_the_new_flow_without_regenerating_the_approval(self):
+        root = T.clone("retired")
+        plan = builder.plan_identity_pointer(root)
+        self.assertTrue(plan["ready"], [c for c in plan["preconditions"] if not c["ok"]])
+
+
+if __name__ == "__main__":
+    unittest.main()

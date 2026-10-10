@@ -1,0 +1,23 @@
+--- a/tests/test_step9_63c_r5c10ad_v2_archival_replay.py
++++ b/tests/test_step9_63c_r5c10ad_v2_archival_replay.py
+@@ -23,6 +23,7 @@
+ 
+ ROOT = Path(__file__).resolve().parents[1]
+ CONTRACT = "evaluation/v1_2_3/step9_43a_treatment_v2_identity_contract.json"
++V2_ARCHIVAL_COMMIT = "201ef5c2d406b0eaf2ebf5ce12db912b3caf5762"
+ # Path -> V2 pin; all five equal the Git HEAD blob and differ from the working tree.
+ REPLAY = {
+     "scripts/run_step9_35a_matched_treatment.py": "920486b1d7984fae6ee77b5ac51af0d0a98caf42e445d1abcf7ff75b46038505",
+@@ -52,9 +53,9 @@
+ 
+ 
+ def head_blob(relpath: str) -> bytes:
+-    ref = (ROOT / ".git/HEAD").read_text(encoding="utf-8").strip()
+-    commit = ((ROOT / ".git" / ref.split(" ", 1)[1]).read_text(encoding="utf-8").strip()
+-              if ref.startswith("ref:") else ref)
++    # The V2-era bytes live in the last commit before the checkpoint commit 23994b2; HEAD moved on and
++    # now holds the current bytes, so the archival commit is named explicitly.
++    commit = V2_ARCHIVAL_COMMIT
+     kind, body = git_object(commit)
+     if kind != "commit":
+         raise RuntimeError("HEAD is not a commit")

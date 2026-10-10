@@ -1,14 +1,67 @@
 {
+  "accepted_exceptions": [
+    {
+      "id": "AR-15",
+      "state": "CONTENT_INTEGRITY_UNPROVEN",
+      "subject": "historical trace original content integrity",
+      "text": "Historical Trace original content integrity is CONTENT_INTEGRITY_UNPROVEN: only that the current hashes are unchanged can be proven, not the original content. Signing this record means accepting that."
+    }
+  ],
+  "approval_id": "approval-step9_63c_r11-6ec0ca3e42a641e8b7b92ed6c64e66f2",
   "approver": null,
   "ar14": {
+    "determination": {
+      "path": "evaluation/v1_2_3/step9_63c_r11_ar14_determination.json",
+      "sha256": "41b524d09a258505cf036d7987b6cf2076bc0ad041a3545b5fdb563420da01d2",
+      "size": 949
+    },
+    "expected_retirement_event_template": {
+      "artifact_type": "AUTHORIZATION_LIFECYCLE_EVENT",
+      "attempt_created": false,
+      "attempt_id": "attempt-step9_63c_r5c6-3401b701486c4fdeb4019b461d024bd4",
+      "authorization_consumed": false,
+      "authorization_consumption_count": 0,
+      "authorization_id": "auth-step9_63c_r5c6-aff5c4b96bb74278a14d3fd08bf8a84e",
+      "authorization_manifest_sha256": "beac52d1ed3bc11efa02b1a924a8abc7b210171bf5cc1b7910011a6ef9741241",
+      "cases_completed": 0,
+      "cases_started": 0,
+      "evaluation_id": "heldout-v4-step9_55a-treatment-v3-20260930-01",
+      "event_type": "AUTHORIZATION_RETIRED_UNCONSUMED_NON_REUSABLE",
+      "final_status": "RETIRED_UNCONSUMED_NON_REUSABLE",
+      "historical_runner_freeze_path": "evaluation/v1_2_3/step9_63c_r5c5b_runner_freeze_r10.json",
+      "historical_runner_freeze_revision": "r10",
+      "historical_runner_freeze_sha256": "d24244235e51e7bf6c8567880c654fe3fd73b87fa1bfe1ab0f10dfdc94db2693",
+      "lifecycle_contract_path": "evaluation/v1_2_3/step9_61a_v3_authorization_lifecycle_contract.json",
+      "lifecycle_contract_sha256": "addb3880e7141ca14d7b3011cadb439ac83076fa6b7c2b9f28f3b024d3fd1174",
+      "lifecycle_event_id": null,
+      "namespace_created": false,
+      "original_status": "ISSUED_NOT_CONSUMED",
+      "reuse_determination": "evaluation/v1_2_3/step9_63c_r11_ar14_determination.json",
+      "reuse_determination_sha256": "41b524d09a258505cf036d7987b6cf2076bc0ad041a3545b5fdb563420da01d2",
+      "terminal": true,
+      "timestamp_utc": null
+    },
+    "expected_retirement_event_template_sha256": "eb36196532100764b3d715a0bf3feef255163bbbce03840e32c43a6cb937b233",
     "must_be_retired_before_pointer_creation": true,
     "old_authorization_id": "auth-step9_63c_r5c6-aff5c4b96bb74278a14d3fd08bf8a84e",
-    "old_authorization_manifest_sha256": "beac52d1ed3bc11efa02b1a924a8abc7b210171bf5cc1b7910011a6ef9741241"
+    "old_authorization_manifest_sha256": "beac52d1ed3bc11efa02b1a924a8abc7b210171bf5cc1b7910011a6ef9741241",
+    "post_retirement_ledger_rule": "the pre-retirement ledger bytes unchanged, followed by exactly ONE line: the template with a fresh lifecycle_event_id (retire-<32 hex>) and a timestamp_utc later than every earlier event; the exact SHA-256 of the post-retirement ledger cannot be pinned because those two fields are generated inside the frozen function at call time",
+    "pre_retirement_ledger": {
+      "path": "evaluation/v1_2_3/authorization_lifecycle_events.jsonl",
+      "sha256": "aaa2e9898a8869db052a1248a0ca2b0574d9c36093aee608db59457f24c2a60e",
+      "size": 3856
+    }
   },
   "artifact_type": "R11_ACTIVATION_APPROVAL",
+  "commit_pin": {
+    "head_when_prepared": "23994b21582641c653fd3ca777291a013d473a7d",
+    "meaning": "signing means: commit first (clean working tree), then fill signed_at_commit with the commit SHA; every gated entry refuses unless Git HEAD still equals it",
+    "required": true
+  },
+  "content_sha256": "af433dc27b5d1747c16c813e32af0282ff3bba83bebd1a717bafdcd009f29ad2",
   "freeze": {
-    "created_at_utc": "2026-10-10T03:56:44+00:00",
-    "predicted_sha256": "872274d411e20d9797714f461bcea7e4a6d92684feba6b8084edd357fdee07b8",
+    "created_at_utc": "2026-10-10T13:10:38+00:00",
+    "predicted_sha256": "bafcec8d2ae0bad6c3cb43e89bd49171b85374957ec6ce173071fef5248357b3",
     "predicted_size": 9365
   },
   "historical": {
@@ -27,10 +80,10 @@
     }
   },
   "issuance": {
-    "attempt_id": "attempt-step9_63c_r11-ff4f4029a43b48338db75dc95c1dfcce",
-    "authorization_id": "auth-step9_63c_r11-f21ad78ac3404eff9b92e5cf013ec70b",
+    "attempt_id": "attempt-step9_63c_r11-2312daefa1364bfd83ff3948d101c765",
+    "authorization_id": "auth-step9_63c_r11-1a399434ec0e4494b0045734846b2042",
     "evaluation_id": "heldout-v4-step9_55a-treatment-v3-20260930-01",
-    "namespace_id": "heldout-v4-treatment-v3-run-d17d217d3c918d62d6ba"
+    "namespace_id": "heldout-v4-treatment-v3-run-9ec9c305cc4de01e6538"
   },
   "members": {
     "evaluation/v1_2_3/step9_51_v3_development_freeze_r1.json": "106e18707aa66806c3953c8d5f38484f534d78e4fd230cbd6c491304aaf8cd27",
@@ -42,7 +95,7 @@
     "evaluation/v1_2_3/step9_63c_r11_current_runner_identity.json": "4e077781faeecee57da02f37d1d3ad8cdc9dfa895d3eb72b1b4ab1f1d3f696fe",
     "scripts/append_only_ledger.py": "5fd9f13b9aafbb8617c582ba1ed7de93d3814aefc30e8b442afe881bcd26825f",
     "scripts/authorization_lifecycle.py": "f0d8b7e04fa2710765b74f4f293436b051af005d11851bf9583da14ff6612744",
-    "scripts/build_step9_63c_r11_runner_freeze.py": "7f72a17c584efe7ee66ee95290d28b6c55daf83ccc08ebebeb3f9319dec30f81",
+    "scripts/build_step9_63c_r11_runner_freeze.py": "99031a9156da87164c16b71eff9e2a9961428c52bbf7bc2590741e51e55f950e",
     "scripts/issue_step9_63c_r11_authorization.py": "f41763f5c82e04360b3d9bcf694e6d05a6fcfa42ae8d71ada29be4ab204e32ab",
     "scripts/preflight_step9_62b_mac_local.py": "c4af2640e0e61a0b84a56b6a6c24f2cb3ceeaa4bb1d552d7180d8c5c54a8eda4",
     "scripts/preflight_step9_63c_current_mac_local.py": "820cc2b6cc0e4f4569b2c8d8d7b19514ac233d6fa8e2cd96ddd58f14d3aefba6",
@@ -57,7 +110,7 @@
   "named_pins": {
     "builder": {
       "path": "scripts/build_step9_63c_r11_runner_freeze.py",
-      "sha256": "7f72a17c584efe7ee66ee95290d28b6c55daf83ccc08ebebeb3f9319dec30f81"
+      "sha256": "99031a9156da87164c16b71eff9e2a9961428c52bbf7bc2590741e51e55f950e"
     },
     "consumer": {
       "path": "scripts/run_step9_63_v3_formal_execution.py",
@@ -86,8 +139,8 @@
     "path": "evaluation/v1_2_3/step9_63c_r11_current_runner_identity.json"
   },
   "regression": {
-    "result_path": "evaluation/v1_2_3/step9_63c_r5c10ag_regression_results.json",
-    "result_sha256": "505663fcab46fd6375bfb21f019eb7dcd743e151c1b486e398963d87e0e346e8"
+    "result_path": "evaluation/v1_2_3/step9_63c_r5c10ai_regression_results.json",
+    "result_sha256": "cb183d96a689c68212d0dfac86bf8b17140f7db4d09b114c2f7a89beb2eb9b10"
   },
   "repository_aggregate": {
     "excludes": [
@@ -97,14 +150,42 @@
       "models",
       "evaluation/v1_2_3/step9_63c_r11_activation_approval.json",
       "evaluation/v1_2_3/step9_63c_r11_activation_approval.DRAFT.json",
-      "._*"
+      "._*",
+      "evaluation/v1_2_3/authorization_lifecycle_events.jsonl",
+      "evaluation/v4_runs/.namespace-allocation.lock",
+      "evaluation/v1_2_3/step9_63c_r11_current_runner_identity.json",
+      "evaluation/v1_2_3/step9_63c_r11_identity_pointer_creation_record.json",
+      "evaluation/v1_2_3/step9_63c_r11_runner_freeze.json",
+      "evaluation/v1_2_3/step9_63c_r11_preflight_invocations.jsonl",
+      "evaluation/v1_2_3/step9_63c_r11_v3_authorization_manifest.json"
     ],
-    "files": 1257,
-    "sha256": "49509adbb7ebf3a1fde6ed7db03305c7c0c95529d8eaf4e0d36836b764165371"
+    "files": 1318,
+    "note": "stable across the gated activation steps: the files those steps create or append to are excluded and pinned separately",
+    "sha256": "2b25428b4f319d3a02bea80155e5b373d57437199cc87b2777164c1e0c40534a"
   },
   "schema_version": 1,
+  "signed_at_commit": null,
   "signed_at_utc": null,
   "status": "DRAFT_NOT_SIGNED",
+  "tokens": {
+    "create_freeze": {
+      "fixed_part": "CREATE-R11-FREEZE-bafcec8d2ae0-",
+      "format": "CREATE-R11-FREEZE-<first 12 hex of the predicted Freeze SHA-256>-<first 12 hex of the approval content SHA-256>",
+      "value": "CREATE-R11-FREEZE-bafcec8d2ae0-af433dc27b5d"
+    },
+    "create_pointer": {
+      "format": "CREATE-R11-POINTER-<first 12 hex of the canonical pointer SHA-256>",
+      "value": "CREATE-R11-POINTER-4e077781faee"
+    },
+    "issue": {
+      "format": "ISSUE-R11-AUTH-<first 12 hex of SHA-256(authorization id | freeze SHA-256 | approval record SHA-256)>"
+    },
+    "retire_r10": {
+      "fixed_part": "RETIRE-R10-aff5c4b96bb7-",
+      "format": "RETIRE-R10-<first 12 hex of the uuid part of the r10 authorization id>-<first 12 hex of the approval content SHA-256>",
+      "value": "RETIRE-R10-aff5c4b96bb7-af433dc27b5d"
+    }
+  },
   "unchanged_members": {
     "evaluation/v1_2_3/step9_51_v3_development_freeze_r1.json": "106e18707aa66806c3953c8d5f38484f534d78e4fd230cbd6c491304aaf8cd27",
     "evaluation/v1_2_3/step9_52_v3_pre_evaluation_validation.json": "7f2a5e43f4131feec1fed51121e0a398a9c9ca0ab1679073be8a91c19c4940d3",

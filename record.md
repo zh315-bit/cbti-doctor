@@ -3494,3 +3494,33 @@ The version inventory contains r3–r10 and no r11; `r11` is proposed only. `eva
 **偏离与待决**：令牌由 `授权 ID|Freeze SHA|批准记录 SHA` 派生（设计 H3 的清单 SHA 不可行）；未变成员实为 13 个而不是 14（第 7 号成员被替换）；AR-14 与创建 Freeze 都没有门禁入口（D-A、D-B，建议下一次 builder 修订加入）；guard v3 是防误操作护栏不是安全边界；回滚了 `ar7e_adtest.diff`（ad 测试恢复为 `eaa60942…`）。
 
 **产物**（`evaluation/v1_2_3/`）：`step9_63c_r5c10ag_change_report.md`、`_regression_results.json`、`_mutation_results.json`、`_e2e_rehearsal_report.json`、`_repository_integrity_report.json`、`_r11_freeze_readiness_matrix.json`、`_remaining_blockers.md`、`_guard_scope.md`、`_consumer.diff`、`_builder.diff`、`_issuer.diff`、`_tests.diff`、`_manifest.diff`、`_PROPOSED_ae_test_updates.diff`（未应用）、`_mutation_tools/`、`_test_boundary_manifest.json`；`step9_63c_r11_activation_runbook.md`、`step9_63c_r11_activation_approval_checklist.md`、`step9_63c_r11_activation_approval.DRAFT.json`（**未签署**，AR-14 之后必须重新生成）。新代码：`scripts/issue_step9_63c_r11_authorization.py`、`scripts/validate_step9_63c_r5c10ag_test_boundary.py`、`tests/r11_activation_fixtures.py` 与 5 个 `tests/test_step9_63c_r5c10ag_*.py`。
+
+## Step 9.63c-r5c10ah — AR-14 与 Freeze 创建的门禁入口（D-A、D-B），清理被取代的历史测试，重新生成批准记录草案
+
+`PASS_GATED_ENTRIES_IMPLEMENTED_AND_REHEARSED_ON_TEMPORARY_ROOTS_NOTHING_ACTIVATED`。真实仓库里没有 r11 指针、Freeze、Registry、授权或已签署的批准记录；没有执行 AR-14；真实账本仍是 3856 字节、没有增加任何字节；我没有 commit、没有 push。`READY_FOR_R11_FREEZE_REVIEW = NO`（矩阵 26 PASS / 2 FAIL / 6 BLOCKED）。
+
+**SHA**：builder `9cfaf75a1c7ab2b2a6b0c0126c77692e02144f8483f9384fb361f3b92f832ea9`（原 `7f72a17c…`，**唯一变化**）；consumer `362eb446…9528`、签发器 `f41763f5…32ab`、resolver `a0f5670d…c6a5` 均未变。
+
+**做了什么**：①builder 新增 `--plan-retire/--verify-retire/--retire-r10`（只调用冻结的退役函数；写前核对账本钉值、r10 仍为 ISSUED_EXECUTABLE、判定文件引用批准记录；写后核对旧字节不变、恰好一行、等于模板、reducer 已退役）和 `--plan-freeze/--create-freeze`（AR-14 与指针为前置；O_EXCL+fsync+读回；SHA 必须等于预测）；②批准记录改成只需在 AR-14 之前签一次（整仓聚合哈希排除各步骤产物并单独钉住它们）；③H3：`--issue` 写入前证明清单与计划逐字节一致（除 issued_at_utc），放在 builder 的独占写原语里，签发器未动；④常设规则：九个被取代的钉值/清单/读回测试按 AR-2 归档退役，取代测试用变异证明（13/13）；⑤新的运行手册（每步只调用门禁入口）、核对清单、批准记录草案；“14 个未变成员”在本步所有文档里统一为 13。
+
+**验证**：107 个新测试通过；变异 77 个，63 被杀，14 个幸存者全部归类；门禁端到端演练 PASS，31 个负向演练全部被拒绝且无写入；回归两次逐项一致：1043 项 = 1010 通过 / 4 失败 / 29 错误 / 4 导入阻断，RC1 同一个 33 项集合，整仓哈希零变化。
+
+**待决**：检查点提交 `23994b2` 把 HEAD 移到了当前字节，使 r5c10ad 归档重放的 2 个测试失败（非本步引起；未应用的提案 `PROPOSED_ad_archival_replay_update.diff` 已验证）；我多退役了 r5c10ag 的 3 个测试（后果性的）；AR-14 之后账本只能钉规则+模板；仓库里放了一个惰性的 AR-14 判定文件。
+
+**产物**（`evaluation/v1_2_3/step9_63c_r5c10ah_*`）：`change_report.md`、`regression_results.json`、`mutation_results.json`、`e2e_gated_rehearsal_report.json`、`repository_integrity_report.json`、`r11_freeze_readiness_matrix.json`、`remaining_blockers.md`、`coverage_mapping.json`、`activation_runbook.md`、`activation_approval_checklist.md`、`test_boundary_manifest.json`、`builder.diff`、`tests.diff`、`retirement.diff`、`manifest.diff`、`determination_file.diff`、`PROPOSED_ad_archival_replay_update.diff`（未应用）、`mutation_tools/`；`step9_63c_r11_activation_approval.DRAFT.json`（**未签署**）、`step9_63c_r11_ar14_determination.json`（惰性）。
+
+**勘误（r5c10ai 追加）**：更早步骤的文档和就绪矩阵（r5c10c–r5c10af 的若干记录）里的“14 个未变成员”是当时的口径（把 r7 签发器算作与 r10 相同）。自 r5c10ag 起第 7 号成员被 r11 签发器替换，20 个成员的构成是：13 个与 r10 逐字相同 + 3 个已批准变更（scanner、resolver、consumer）+ 4 个新增/替换（指针、r11 producer、r11 builder、r11 签发器）。本步及之后的所有文档和批准记录统一写 13；历史文档按你的决定不改。
+
+## Step 9.63c-r5c10ai — 最终待签署的激活批准记录；归档重放、退役令牌、AR-15、提交钉
+
+`PASS_FINAL_APPROVAL_PACKAGE_PREPARED_NOTHING_ACTIVATED`。真实仓库里没有 r11 指针、Freeze、授权或已签署的批准记录；没有执行 AR-14；真实账本仍是 3856 字节；我没有 commit、没有 push。`READY_FOR_R11_FREEZE_REVIEW = NO`（矩阵 29 PASS / 6 BLOCKED（等待人工激活）/ 2 ACCEPTED_EXCEPTION / 0 FAIL）。
+
+**SHA**：builder `99031a9156da87164c16b71eff9e2a9961428c52bbf7bc2590741e51e55f950e`（原 `9cfaf75a…`，唯一变化）；consumer `362eb446…9528`、签发器 `f41763f5…32ab`、resolver `a0f5670d…c6a5` 均未变。
+
+**做了什么**：①R16/R33：不应用提案；r5c10ad 重放模块整体归档退役，新模块固定读取提交 201ef5c 并断言它是 HEAD 的祖先；②退役令牌第一段改为 r10 ID 的 uuid 前 12 位 `aff5c4b96bb7`，第二段为批准记录内容哈希（四个签名字段置空后的 SHA；这样令牌现在就能写全，且签署后不变），补了“另一个 step9_6x 前缀被拒绝”等负向测试；③“14→13”勘误；④批准记录新增 `accepted_exceptions`（AR-15）、`signed_at_commit`/`commit_pin`（签署时填，所有入口核对 HEAD 不变）、`content_sha256`；R15 为 ACCEPTED_EXCEPTION；⑤AR-14 之后账本按“模板 + 前缀不变 + 恰好多一行”验证。
+
+**验证**：36 个新测试通过；变异 33/33 被杀；最终版本的门禁演练 PASS，46 个负向演练全部被拒绝且无写入；回归两次逐项一致：1074 项 = 1043 通过 / 2 失败（RC1 的 1 个 + RC6）/ 29 错误 / 4 导入阻断；非身份类失败只剩 RC5、RC6，RC1 同一个 33 项集合，整仓哈希零变化。
+
+**产物**（`evaluation/v1_2_3/step9_63c_r5c10ai_*`）：`change_report.md`、`regression_results.json`、`mutation_results.json`、`final_form_rehearsal_report.json`、`repository_integrity_report.json`、`r11_freeze_readiness_matrix.json`、`remaining_blockers.md`、`coverage_mapping.json`、`activation_approval_checklist.md`、`activation_runbook.md`、`test_boundary_manifest.json`、`builder.diff`、`tests.diff`、`retirement.diff`、`manifest.diff`、`mutation_tools/`；`step9_63c_r11_activation_approval.DRAFT.json`（最终待签署，未签署）。
+
+**r5c10ai-fix**：只修正激活核对清单（第 8、9 节有 3 条期望输出是在 builder 最后一次修改之前对旧草案生成的，含 KeyError 和旧内容哈希）。未改任何代码、未 commit、未执行写入入口。在最终仓库上重新生成清单，新增生成器和自检（重跑全部 44 条命令并逐字比对，44/44 一致）；因清单变化重新生成了草案的 `repository_aggregate`，内容哈希和三个令牌不变。见 `step9_63c_r5c10ai_fix_report.md`。

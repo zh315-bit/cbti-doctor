@@ -1,0 +1,154 @@
+--- a/scripts/build_step9_63c_r11_runner_freeze.py
++++ b/scripts/build_step9_63c_r11_runner_freeze.py
+@@ -456,7 +456,8 @@
+ 
+ 
+ def build_approval(root: Path, *, created_at_utc: str, regression_result: str | None = None,
+-                   issuance: dict[str, str] | None = None, approval_id: str | None = None) -> dict[str, Any]:
++                   issuance: dict[str, str] | None = None, approval_id: str | None = None,
++                   final: bool = False) -> dict[str, Any]:
+     """Unsigned approval record built from the CURRENT bytes (printed by --print-approval-draft)."""
+     root = Path(root)
+     members = member_shas(root)
+@@ -499,6 +500,16 @@
+     extra = activation_pins(root, approval_id or f"approval-step9_63c_r11-{uuid.uuid4().hex}", result["freeze"])
+     result["ar14"].update(extra.pop("ar14"))
+     result.update(extra)
++    result["accepted_exceptions"] = json.loads(json.dumps(ACCEPTED_EXCEPTIONS))
++    if final:
++        result["signed_at_commit"] = None
++        result["commit_pin"] = {
++            "required": True, "head_when_prepared": head_commit(root),
++            "meaning": ("signing means: commit first (clean working tree), then fill signed_at_commit with the commit SHA; "
++                        "every gated entry refuses unless Git HEAD still equals it")}
++        result["content_sha256"] = approval_content_sha256(result)
++        result["tokens"]["retire_r10"]["value"] = retire_token(result["content_sha256"])
++        result["tokens"]["create_freeze"]["value"] = freeze_token(result["freeze"]["predicted_sha256"], result["content_sha256"])
+     return result
+ 
+ 
+@@ -525,6 +536,14 @@
+             datetime.fromisoformat(approval.get("signed_at_utc"))
+         except (TypeError, ValueError):
+             problems.append("approval record has no valid signed_at_utc")
++    if "content_sha256" in approval and approval_content_sha256(approval) != approval["content_sha256"]:
++        problems.append("approval content differs from the prepared draft apart from the four signature fields")
++    if require_signed and isinstance(approval.get("commit_pin"), dict) and approval["commit_pin"].get("required"):
++        pinned = approval.get("signed_at_commit")
++        if not isinstance(pinned, str) or not re.fullmatch(r"[0-9a-f]{40}", pinned):
++            problems.append("approval names no signing commit (signed_at_commit)")
++        elif head_commit(root) != pinned:
++            problems.append("Git HEAD differs from the commit the approval was signed at")
+     pointer = approval.get("pointer", {})
+     if (pointer.get("canonical_sha256") != POINTER_SHA256 or pointer.get("canonical_size") != POINTER_SIZE
+             or sha256_bytes(canonical_pointer_bytes()) != POINTER_SHA256 or len(canonical_pointer_bytes()) != POINTER_SIZE):
+@@ -796,8 +815,8 @@
+ # aggregate over everything ELSE stays valid from the first gated step to the last.
+ ACTIVATION_OUTPUTS = (LEDGER_PATH, LOCK_RELATIVE, IDENTITY_CONFIG_PATH, POINTER_CREATION_RECORD_PATH,
+                       EXPECTED_FREEZE_PATH, REGISTRY_PATH, AUTHORIZATION_MANIFEST_PATH)
+-RETIRE_TOKEN_FORMAT = "RETIRE-R10-<first 12 characters of the r10 authorization id>-<first 12 hex of the approval record SHA-256>"
+-FREEZE_TOKEN_FORMAT = "CREATE-R11-FREEZE-<first 12 hex of the predicted Freeze SHA-256>-<first 12 hex of the approval record SHA-256>"
++RETIRE_TOKEN_FORMAT = "RETIRE-R10-<first 12 hex of the uuid part of the r10 authorization id>-<first 12 hex of the approval content SHA-256>"
++FREEZE_TOKEN_FORMAT = "CREATE-R11-FREEZE-<first 12 hex of the predicted Freeze SHA-256>-<first 12 hex of the approval content SHA-256>"
+ POINTER_TOKEN_FORMAT = "CREATE-R11-POINTER-<first 12 hex of the canonical pointer SHA-256>"
+ ISSUE_TOKEN_FORMAT = "ISSUE-R11-AUTH-<first 12 hex of SHA-256(authorization id | freeze SHA-256 | approval record SHA-256)>"
+ RETIREMENT_MASKED_FIELDS = ("lifecycle_event_id", "timestamp_utc")
+@@ -826,10 +845,61 @@
+ 
+ def canonical_determination_bytes(approval_id: str) -> bytes:
+     return (json.dumps(determination_document(approval_id), indent=2, sort_keys=True) + "\n").encode("utf-8")
++
++
++R10_UUID_PREFIX12 = R10_AUTHORIZATION_ID.rsplit("-", 1)[1][:12]
++SIGNATURE_FIELDS = {"status": APPROVAL_DRAFT, "approver": None, "signed_at_utc": None, "signed_at_commit": None}
++
++
++def approval_content_sha256(approval: dict[str, Any]) -> str:
++    """SHA-256 of the approval with its four signature fields (and this hash itself) neutralized: the same
++    value for the prepared draft and for the signed record, so a token can name it before signing."""
++    neutral = {k: v for k, v in approval.items() if k != "content_sha256"}
++    neutral.update(SIGNATURE_FIELDS)
++    # The repository aggregate covers the checklist and runbook, which quote the tokens derived from this hash;
++    # it is verified against the repository on its own (verify_approval), so it is not part of the hash.
++    neutral.pop("repository_aggregate", None)
++    if isinstance(neutral.get("tokens"), dict):  # concrete token values are derived from this hash
++        neutral["tokens"] = {k: {kk: vv for kk, vv in v.items() if kk != "value"} for k, v in neutral["tokens"].items()}
++    return sha256_bytes((json.dumps(neutral, indent=2, sort_keys=True) + "\n").encode())
++
++
++def approval_token_part(root: Path, approval: dict[str, Any]) -> str:
++    """Final-form approvals name themselves by content hash; earlier-form approvals by file hash."""
++    if "content_sha256" in approval:
++        return approval["content_sha256"]
++    return sha256_file(Path(root) / APPROVAL_PATH)
++
++
++def head_commit(root: Path) -> str | None:
++    """Current Git HEAD commit SHA read from the files in .git (no subprocess)."""
++    try:
++        git = Path(root) / ".git"
++        ref = (git / "HEAD").read_text(encoding="utf-8").strip()
++        if not ref.startswith("ref:"):
++            return ref if re.fullmatch(r"[0-9a-f]{40}", ref) else None
++        name = ref.split(" ", 1)[1]
++        if (git / name).is_file():
++            value = (git / name).read_text(encoding="utf-8").strip()
++        else:
++            value = next(line.split(" ", 1)[0] for line in (git / "packed-refs").read_text(encoding="utf-8").splitlines()
++                         if line.endswith(" " + name))
++        return value if re.fullmatch(r"[0-9a-f]{40}", value) else None
++    except (OSError, StopIteration, ValueError):
++        return None
++
++
++ACCEPTED_EXCEPTIONS = [{
++    "id": "AR-15",
++    "subject": "historical trace original content integrity",
++    "state": "CONTENT_INTEGRITY_UNPROVEN",
++    "text": ("Historical Trace original content integrity is CONTENT_INTEGRITY_UNPROVEN: only that the current hashes are "
++             "unchanged can be proven, not the original content. Signing this record means accepting that."),
++}]
+ 
+ 
+ def retire_token(approval_sha256: str) -> str:
+-    return f"RETIRE-R10-{R10_AUTHORIZATION_ID[:12]}-{approval_sha256[:12]}"
++    return f"RETIRE-R10-{R10_UUID_PREFIX12}-{approval_sha256[:12]}"
+ 
+ 
+ def freeze_token(predicted_sha256: str, approval_sha256: str) -> str:
+@@ -887,7 +957,7 @@
+                 "function at call time"),
+         },
+         "tokens": {
+-            "retire_r10": {"format": RETIRE_TOKEN_FORMAT, "fixed_part": f"RETIRE-R10-{R10_AUTHORIZATION_ID[:12]}-"},
++            "retire_r10": {"format": RETIRE_TOKEN_FORMAT, "fixed_part": f"RETIRE-R10-{R10_UUID_PREFIX12}-"},
+             "create_pointer": {"format": POINTER_TOKEN_FORMAT, "value": POINTER_TOKEN},
+             "create_freeze": {"format": FREEZE_TOKEN_FORMAT, "fixed_part": f"CREATE-R11-FREEZE-{freeze['predicted_sha256'][:12]}-"},
+             "issue": {"format": ISSUE_TOKEN_FORMAT},
+@@ -966,7 +1036,7 @@
+     _condition(conditions, "RT5 the non-reuse determination exists, equals its pin and references this approval", determination)
+     _condition(conditions, "RT6 the 55 historical pins verify", lambda: formal.verify_historical_pins(root) == formal.HISTORICAL_PIN_COUNT)
+     _condition(conditions, "RT7 environment", lambda: _environment_condition(root))
+-    token = retire_token(sha256_file(root / APPROVAL_PATH)) if approval is not None else None
++    token = retire_token(approval_token_part(root, approval)) if approval is not None else None
+     return {"mode": "plan-retire-r10", "writes_nothing": True, "target": LEDGER_PATH, "confirmation_token": token,
+             "expected_event_template": (approval or {}).get("ar14", {}).get("expected_retirement_event_template"),
+             "preconditions": conditions, "ready": all(c["ok"] for c in conditions)}
+@@ -1110,7 +1180,7 @@
+     _condition(conditions, "FZ5 the Freeze assembled from the current bytes equals the approved prediction", prediction)
+     _condition(conditions, "FZ6 the 55 historical pins verify", lambda: formal.verify_historical_pins(root) == formal.HISTORICAL_PIN_COUNT)
+     _condition(conditions, "FZ7 environment", lambda: _environment_condition(root))
+-    token = freeze_token(approval["freeze"]["predicted_sha256"], sha256_file(root / APPROVAL_PATH)) if approval is not None else None
++    token = freeze_token(approval["freeze"]["predicted_sha256"], approval_token_part(root, approval)) if approval is not None else None
+     return {"mode": "plan-freeze", "writes_nothing": True, "target": EXPECTED_FREEZE_PATH, "confirmation_token": token,
+             "preconditions": conditions, "ready": all(c["ok"] for c in conditions), "_data": context.get("data")}
+ 
+@@ -1200,7 +1270,7 @@
+         elif args.verify_freeze:
+             out = verify_persisted_candidate(root)
+         elif args.print_approval_draft:
+-            out = build_approval(root, created_at_utc=args.created_at, regression_result=args.regression_result)
++            out = build_approval(root, created_at_utc=args.created_at, regression_result=args.regression_result, final=True)
+         elif args.create_pointer:
+             out = create_identity_pointer(root, args.approval)
+         elif args.plan_retire:

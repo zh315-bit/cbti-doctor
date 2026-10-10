@@ -1,0 +1,129 @@
+{
+ "artifact_type": "R5C10AH_REPOSITORY_INTEGRITY_REPORT",
+ "step": "9.63c-r5c10ah",
+ "baseline": "ah_snap_start (start of this step, after the checkpoint commit 23994b2) -> ah_snap_end (end of the second guarded regression)",
+ "added_before_documents": [
+  "evaluation/v1_2_3/step9_63c_r11_ar14_determination.json",
+  "evaluation/v1_2_3/step9_63c_r5c10ah_mutation_tools/ah_mutation.py",
+  "evaluation/v1_2_3/step9_63c_r5c10ah_mutation_tools/e2e_gated_rehearsal_report.py",
+  "evaluation/v1_2_3/step9_63c_r5c10ah_mutation_tools/retire_methods.py",
+  "evaluation/v1_2_3/step9_63c_r5c10ah_test_boundary_manifest.json",
+  "scripts/validate_step9_63c_r5c10ah_test_boundary.py",
+  "tests/r11_gated_fixtures.py",
+  "tests/retired/test_step9_63c_r5c10ad_test_boundary_manifest.py.retired",
+  "tests/retired/test_step9_63c_r5c10ae_builder_pins.py.retired",
+  "tests/retired/test_step9_63c_r5c10ae_consumer_precommit_gate.py.retired",
+  "tests/retired/test_step9_63c_r5c10ae_test_boundary_manifest.py.retired",
+  "tests/retired/test_step9_63c_r5c10ag_authorization_issuer.py.retired",
+  "tests/retired/test_step9_63c_r5c10ag_test_boundary_manifest.py.retired",
+  "tests/test_step9_63c_r5c10ah_end_to_end_gated_rehearsal.py",
+  "tests/test_step9_63c_r5c10ah_freeze_entry.py",
+  "tests/test_step9_63c_r5c10ah_issuance_plan_proof.py",
+  "tests/test_step9_63c_r5c10ah_retire_entry.py",
+  "tests/test_step9_63c_r5c10ah_superseding_tests.py",
+  "tests/test_step9_63c_r5c10ah_test_boundary_manifest.py"
+ ],
+ "appledouble_files_added": 20,
+ "modified": [
+  "scripts/build_step9_63c_r11_runner_freeze.py",
+  "tests/retired/RETIRED_INDEX.json",
+  "tests/test_step9_63c_r5c10ad_test_boundary_manifest.py",
+  "tests/test_step9_63c_r5c10ae_builder_pins.py",
+  "tests/test_step9_63c_r5c10ae_consumer_precommit_gate.py",
+  "tests/test_step9_63c_r5c10ae_test_boundary_manifest.py",
+  "tests/test_step9_63c_r5c10ag_authorization_issuer.py",
+  "tests/test_step9_63c_r5c10ag_test_boundary_manifest.py"
+ ],
+ "removed": [],
+ "checks": [
+  {
+   "id": "C1",
+   "check": "resolver SHA unchanged (a0f5670d\u2026)",
+   "ok": true
+  },
+  {
+   "id": "C2",
+   "check": "consumer SHA unchanged (362eb446\u2026)",
+   "ok": true
+  },
+  {
+   "id": "C3",
+   "check": "issuer SHA unchanged (f41763f5\u2026)",
+   "ok": true
+  },
+  {
+   "id": "C4",
+   "check": "adapter, authorization_lifecycle.py, the r7 issuer file and the other frozen r10 members equal their r10 manifest SHA",
+   "ok": true,
+   "paths": [
+    "scripts/run_step9_53_v3_identity_adapter.py",
+    "scripts/authorization_lifecycle.py",
+    "scripts/issue_step9_63a_r3_authorization.py",
+    "scripts/run_step9_35a_matched_treatment.py",
+    "scripts/v3_namespace_allocator.py",
+    "scripts/append_only_ledger.py",
+    "scripts/preflight_step9_63c_current_mac_local.py",
+    "scripts/preflight_step9_62b_mac_local.py"
+   ]
+  },
+  {
+   "id": "C5",
+   "check": "scanner SHA unchanged",
+   "ok": true
+  },
+  {
+   "id": "C6",
+   "check": "r10 freeze manifest and r10 authorization manifest unchanged",
+   "ok": true
+  },
+  {
+   "id": "C7",
+   "check": "real ledger byte-identical to the start of the step (3856 bytes) and its 1161-byte prefix pin holds",
+   "ok": true,
+   "sha256": "aaa2e9898a8869db052a1248a0ca2b0574d9c36093aee608db59457f24c2a60e"
+  },
+  {
+   "id": "C8",
+   "check": "55 historical pins verify on the real repository",
+   "ok": true
+  },
+  {
+   "id": "C9",
+   "check": "no r11 pointer, Freeze, Registry, authorization manifest, creation record or signed approval exists",
+   "ok": true
+  },
+  {
+   "id": "C10",
+   "check": "tracked files modified during this step are exactly the builder, RETIRED_INDEX.json and the six retirement targets (plus the two superseded-manifest hosts)",
+   "ok": true,
+   "changed_files": [
+    "scripts/build_step9_63c_r11_runner_freeze.py",
+    "tests/retired/RETIRED_INDEX.json",
+    "tests/test_step9_63c_r5c10ad_test_boundary_manifest.py",
+    "tests/test_step9_63c_r5c10ae_builder_pins.py",
+    "tests/test_step9_63c_r5c10ae_consumer_precommit_gate.py",
+    "tests/test_step9_63c_r5c10ae_test_boundary_manifest.py",
+    "tests/test_step9_63c_r5c10ag_authorization_issuer.py",
+    "tests/test_step9_63c_r5c10ag_test_boundary_manifest.py"
+   ]
+  },
+  {
+   "id": "C11",
+   "check": "r5c10ae and r5c10ag manifests and every archive under tests/retired/ keep their bytes",
+   "ok": true
+  },
+  {
+   "id": "C12",
+   "check": "whole repository unchanged by the two guarded regressions and by the mutation and rehearsal tools (0 added / removed / content-changed / mtime-only between the snapshots)",
+   "ok": true,
+   "files": 2635
+  },
+  {
+   "id": "C13",
+   "check": "the AR-14 determination file (inert) equals the canonical bytes for its approval_id",
+   "ok": true
+  }
+ ],
+ "all_ok": true,
+ "note": "Documents, reports, the approval draft and record.md are written after this report was computed."
+}

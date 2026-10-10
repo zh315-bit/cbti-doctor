@@ -71,16 +71,6 @@ def scoped_adapter_stub(stub):
 
 
 class BuilderPinTests(unittest.TestCase):
-    def test_pins_equal_reviewed_constants_and_current_bytes(self):
-        self.assertEqual(builder.CHANGED_SHA256, {
-            SCANNER: "f0e74a49d152053b5455951c507edb8f7849a9e4708835711e5975a82e690e91",
-            RESOLVER: "a0f5670d3834d5f91391b41a33fbac669d6162587bc620e9bd3acf202aa3c6a5",
-            CONSUMER: "297558393e56c645fb02b4ec45d4af41486b504034bdd717237b7738a21f4879",
-        })
-        self.assertEqual(set(builder.CHANGED_SHA256), builder.CHANGED)
-        for relpath, pin in builder.CHANGED_SHA256.items():
-            with self.subTest(relpath=relpath):
-                self.assertEqual(digest(REPO / relpath), pin)
 
     def test_exact_inventory_assembles(self):
         with synthetic_root() as root:

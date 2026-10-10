@@ -1,0 +1,502 @@
+--- /dev/null
++++ b/tests/r11_final_fixtures.py
+@@ -0,0 +1,57 @@
++"""Fixtures for the Step 9.63c-r5c10ai tests (not a test module): the FINAL-FORM approval
++(content hash, commit pin, accepted exceptions) driven through the gated entries on temporary roots."""
++from __future__ import annotations
++
++import json
++import shutil
++import tempfile
++import uuid
++from pathlib import Path
++
++import r11_activation_fixtures as fx
++import r11_gated_fixtures as g
++from scripts import build_step9_63c_r11_runner_freeze as builder
++
++FAKE_COMMIT = "c" * 40
++OTHER_COMMIT = "d" * 40
++
++
++def set_head(root: Path, commit: str | None) -> None:
++    git = Path(root) / ".git"
++    if commit is None:
++        shutil.rmtree(git, ignore_errors=True)
++        return
++    git.mkdir(exist_ok=True)
++    (git / "HEAD").write_text(commit + "\n")
++
++
++def final_flow_root(base: Path, *, sign: bool = True, commit: str | None = FAKE_COMMIT, head: str | None = FAKE_COMMIT,
++                    approval_id: str | None = None, created_at: str = fx.CREATED_AT) -> tuple[Path, dict]:
++    root = fx.build_root(Path(base))
++    set_head(root, head)
++    aid = approval_id or f"approval-step9_63c_r11-{uuid.uuid4().hex}"
++    (root / builder.DETERMINATION_PATH).write_bytes(builder.canonical_determination_bytes(aid))
++    approval = builder.build_approval(root, created_at_utc=created_at, approval_id=aid, final=True)
++    if sign:
++        g.signed(approval)
++        approval["signed_at_commit"] = commit
++    fx.write_approval(root, approval)
++    return root, approval
++
++
++def through_final(base: Path, stage: str) -> tuple[Path, dict]:
++    root, approval = final_flow_root(base)
++    steps = {"retired": g.do_retire, "pointer": g.do_pointer, "freeze": g.do_freeze, "issued": g.do_issue}
++    if stage == "s0":
++        return root, approval
++    for name in ("retired", "pointer", "freeze", "issued"):
++        steps[name](root)
++        if name == stage:
++            break
++    return root, approval
++
++
++class FinalTemplates(g.Templates):
++    def build(self, *stages: str) -> None:
++        for stage in stages:
++            self.roots[stage], _ = through_final(Path(self.tmp.name) / stage, stage)
+--- /dev/null
++++ b/tests/test_step9_63c_r5c10ai_final_form_and_tokens.py
+@@ -0,0 +1,241 @@
++"""Step 9.63c-r5c10ai: the final-form approval record (content hash, signing commit pin, accepted
++exceptions), the retirement token built from the uuid part of the r10 id, and the complete gated
++sequence on temporary roots with the final version."""
++from __future__ import annotations
++
++import json
++import os
++import unittest
++from pathlib import Path
++
++import r11_activation_fixtures as fx
++import r11_final_fixtures as ff
++import r11_gated_fixtures as g
++from scripts import authorization_lifecycle as lifecycle
++from scripts import build_step9_63c_r11_runner_freeze as builder
++from scripts import issue_step9_63c_r11_authorization as issuer
++from scripts import run_step9_63_v3_formal_execution as formal
++
++T = ff.FinalTemplates("r11-final-form-")
++R10_UUID = "aff5c4b96bb74278a14d3fd08bf8a84e"
++
++
++def setUpModule():
++    os.environ[builder.SYNTHETIC_ROOT_ENV] = "1"
++    T.build("s0", "retired", "pointer", "freeze", "issued")
++
++
++def tearDownModule():
++    os.environ.pop(builder.SYNTHETIC_ROOT_ENV, None)
++    T.close()
++
++
++def approval_of(root):
++    return json.loads((root / builder.APPROVAL_PATH).read_text())
++
++
++def failed(plan):
++    return {c["name"].split()[0] for c in plan["preconditions"] if not c["ok"]}
++
++
++class TokenTests(unittest.TestCase):
++    def test_the_retirement_token_uses_the_uuid_part_of_the_r10_id_and_the_content_hash(self):
++        root = T.clone("s0")
++        approval = approval_of(root)
++        token = builder.plan_retirement(root)["confirmation_token"]
++        self.assertEqual(builder.R10_AUTHORIZATION_ID.rsplit("-", 1)[1], R10_UUID)
++        self.assertEqual(token, f"RETIRE-R10-{R10_UUID[:12]}-{approval['content_sha256'][:12]}")
++        self.assertEqual(token.split("-")[2], "aff5c4b96bb7")
++
++    def test_the_tokens_printed_in_the_draft_equal_the_tokens_the_signed_record_demands(self):
++        root = T.clone("pointer")
++        approval = approval_of(root)
++        self.assertEqual(approval["tokens"]["retire_r10"]["value"], f"RETIRE-R10-aff5c4b96bb7-{approval['content_sha256'][:12]}")
++        self.assertEqual(approval["tokens"]["create_freeze"]["value"], builder.plan_freeze(root)["confirmation_token"])
++        self.assertEqual(approval["tokens"]["create_pointer"]["value"], builder.POINTER_TOKEN)
++        # the same values are in the unsigned form, i.e. they were knowable before signing (rebuilt on the untouched root)
++        fresh = T.clone("s0")
++        a0 = approval_of(fresh)
++        draft = builder.build_approval(fresh, created_at_utc=a0["freeze"]["created_at_utc"], approval_id=a0["approval_id"],
++                                       issuance=a0["issuance"], final=True)
++        self.assertEqual(draft["content_sha256"], a0["content_sha256"])
++        self.assertEqual(draft["tokens"]["retire_r10"]["value"], builder.plan_retirement(fresh)["confirmation_token"])
++
++    def test_the_token_does_not_change_when_the_four_signature_fields_change(self):
++        root = T.clone("s0")
++        before = builder.plan_retirement(root)["confirmation_token"]
++        g.rewrite_approval(root, lambda a: a.update(approver="somebody else", signed_at_utc="2027-05-05T05:05:05+00:00"))
++        self.assertEqual(builder.plan_retirement(root)["confirmation_token"], before)
++
++    def test_tokens_do_not_depend_on_the_repository_aggregate_but_the_aggregate_is_still_verified(self):
++        # the checklist and runbook quote the tokens and are part of the aggregate, so the hash must not include it
++        root = T.clone("s0")
++        before = builder.plan_retirement(root)["confirmation_token"]
++        approval = approval_of(root)
++        approval["repository_aggregate"]["sha256"] = "0" * 64
++        self.assertEqual(builder.approval_content_sha256(approval), approval["content_sha256"])
++        g.rewrite_approval(root, lambda a: a["repository_aggregate"].update(sha256="0" * 64))
++        plan = builder.plan_retirement(root)
++        self.assertEqual(plan["confirmation_token"], before)
++        self.assertFalse(plan["ready"])
++        self.assertTrue(any("repository state changed" in c["detail"] for c in plan["preconditions"] if c["name"].startswith("RT1")))
++
++    def test_a_token_from_another_step9_6x_authorization_id_is_refused(self):
++        root = T.clone("s0")
++        part = approval_of(root)["content_sha256"][:12]
++        before = fx.tree_digest(root)
++        for other_id in ("auth-step9_63c_r4-4b2749ce10014634ac6de155d37ec6a9", "auth-step9_63a_r3-0123456789abcdef0123456789abcdef"):
++            token = f"RETIRE-R10-{other_id.rsplit('-', 1)[1][:12]}-{part}"
++            code, output = g.cli(root, "--retire-r10", token=token)
++            self.assertEqual(code, 2, output)
++            self.assertIn("token mismatch", output)
++        self.assertEqual(fx.tree_digest(root), before)
++
++    def test_the_previous_literal_prefix_and_other_malformed_tokens_are_refused(self):
++        root = T.clone("s0")
++        part = approval_of(root)["content_sha256"][:12]
++        right = f"RETIRE-R10-aff5c4b96bb7-{part}"
++        before = fx.tree_digest(root)
++        for token in (f"RETIRE-R10-auth-step9_6-{part}", right[:-1], right.upper(), right + "0", f"RETIRE-R10-aff5c4b96bb7-{'0' * 12}",
++                      f"RETIRE-R10-aff5c4b96bb7-{fx.sha256(root / builder.APPROVAL_PATH)[:12]}", f"RETIRE-R10-{R10_UUID}-{part}"):
++            with self.subTest(token=token):
++                code, _ = g.cli(root, "--retire-r10", token=token)
++                self.assertEqual(code, 2)
++        self.assertEqual(fx.tree_digest(root), before)
++
++    def test_the_freeze_token_binds_the_prediction_and_the_content_hash(self):
++        root = T.clone("pointer")
++        approval = approval_of(root)
++        before = fx.tree_digest(root)
++        for token in (f"CREATE-R11-FREEZE-{'0' * 12}-{approval['content_sha256'][:12]}",
++                      f"CREATE-R11-FREEZE-{approval['freeze']['predicted_sha256'][:12]}-{'0' * 12}",
++                      f"CREATE-R11-FREEZE-{approval['freeze']['predicted_sha256'][:12]}-{fx.sha256(root / builder.APPROVAL_PATH)[:12]}"):
++            code, _ = g.cli(root, "--create-freeze", token=token)
++            self.assertEqual(code, 2)
++        self.assertEqual(fx.tree_digest(root), before)
++
++    def test_earlier_form_approvals_keep_the_file_hash_token(self):
++        root, approval = g.new_flow_root(Path(T.tmp.name) / "old-form")
++        self.assertNotIn("content_sha256", approval)
++        self.assertEqual(builder.approval_token_part(root, approval), fx.sha256(root / builder.APPROVAL_PATH))
++
++
++class ContentAndCommitTests(unittest.TestCase):
++    def test_any_edit_beyond_the_four_signature_fields_is_detected(self):
++        for label, mutate in (("freeze time", lambda a: a["freeze"].update(created_at_utc="2030-01-01T00:00:00+00:00")),
++                              ("issuance id", lambda a: a["issuance"].update(authorization_id="auth-step9_63c_r11-" + "1" * 32)),
++                              ("exception text", lambda a: a["accepted_exceptions"][0].update(text="edited")),
++                              ("token format", lambda a: a["tokens"]["issue"].update(format="edited")),
++                              ("removed content hash value", lambda a: a.update(content_sha256="0" * 64))):
++            with self.subTest(case=label):
++                root = T.clone("s0")
++                g.rewrite_approval(root, mutate)
++                plan = builder.plan_retirement(root)
++                self.assertFalse(plan["ready"])
++                self.assertIn("RT1", failed(plan))
++                self.assertTrue(any("differs from the prepared draft" in c["detail"] for c in plan["preconditions"] if c["name"].startswith("RT1")))
++
++    def test_the_four_signature_fields_may_differ(self):
++        root = T.clone("s0")
++        g.rewrite_approval(root, lambda a: a.update(approver="x", signed_at_utc="2030-01-01T00:00:00+00:00"))
++        self.assertTrue(builder.plan_retirement(root)["ready"])
++
++    def test_signing_requires_a_commit_and_HEAD_must_equal_it(self):
++        cases = {"no commit": lambda r: g.rewrite_approval(r, lambda a: a.update(signed_at_commit=None)),
++                 "malformed commit": lambda r: g.rewrite_approval(r, lambda a: a.update(signed_at_commit="abc")),
++                 "other commit": lambda r: g.rewrite_approval(r, lambda a: a.update(signed_at_commit=ff.OTHER_COMMIT)),
++                 "HEAD moved": lambda r: ff.set_head(r, ff.OTHER_COMMIT),
++                 "no git directory": lambda r: ff.set_head(r, None)}
++        for label, change in cases.items():
++            with self.subTest(case=label):
++                root = T.clone("s0")
++                change(root)
++                plan = builder.plan_retirement(root)
++                self.assertFalse(plan["ready"])
++                self.assertIn("RT1", failed(plan))
++
++    def test_the_commit_pin_is_enforced_by_every_gated_entry(self):
++        entries = [("retired" if False else "s0", g.POINTER_MODULE, "--retire-r10", lambda r: builder.plan_retirement(r)["confirmation_token"]),
++                   ("retired", g.POINTER_MODULE, "--create-pointer", lambda r: builder.POINTER_TOKEN),
++                   ("pointer", g.POINTER_MODULE, "--create-freeze", lambda r: builder.plan_freeze(r)["confirmation_token"]),
++                   ("freeze", g.ISSUER_MODULE, "--issue", lambda r: issuer.plan_issuance(r)["confirmation_token"])]
++        for state, module, flag, token in entries:
++            with self.subTest(entry=flag):
++                root = T.clone(state)
++                valid = token(root)
++                ff.set_head(root, ff.OTHER_COMMIT)  # somebody committed after signing
++                before = fx.tree_digest(root)
++                code, _ = fx.run_cli(module, root, [flag], mode="tty", lines=[valid])
++                self.assertEqual(code, 2)
++                self.assertEqual(fx.tree_digest(root), before)
++
++    def test_an_unsigned_record_never_passes_the_commit_check(self):
++        root, _ = ff.final_flow_root(Path(T.tmp.name) / "unsigned", sign=False)
++        self.assertFalse(builder.plan_retirement(root)["ready"])
++
++    def test_a_record_prepared_before_the_commit_pin_existed_is_unaffected(self):
++        root, _ = g.new_flow_root(Path(T.tmp.name) / "old-form-2")
++        self.assertTrue(builder.plan_retirement(root)["ready"])
++
++    def test_head_commit_reads_detached_loose_and_packed_refs(self):
++        import tempfile
++        with tempfile.TemporaryDirectory() as directory:
++            root = Path(directory)
++            (root / ".git/refs/heads").mkdir(parents=True)
++            sha = "a" * 40
++            (root / ".git/HEAD").write_text(sha + "\n")
++            self.assertEqual(builder.head_commit(root), sha)
++            (root / ".git/HEAD").write_text("ref: refs/heads/main\n")
++            self.assertIsNone(builder.head_commit(root))
++            (root / ".git/refs/heads/main").write_text("b" * 40 + "\n")
++            self.assertEqual(builder.head_commit(root), "b" * 40)
++            (root / ".git/refs/heads/main").unlink()
++            (root / ".git/packed-refs").write_text("# pack-refs\n" + "e" * 40 + " refs/heads/main\n")
++            self.assertEqual(builder.head_commit(root), "e" * 40)
++            (root / ".git/HEAD").write_text("zzz\n")
++            self.assertIsNone(builder.head_commit(root))
++
++    def test_head_commit_on_the_real_repository_is_a_full_sha(self):
++        self.assertRegex(builder.head_commit(builder.ROOT) or "", "^[0-9a-f]{40}$")
++
++
++class AcceptedExceptionTests(unittest.TestCase):
++    def test_ar15_is_recorded_as_an_accepted_exception_in_every_draft(self):
++        for final in (False, True):
++            root, approval = ff.final_flow_root(Path(T.tmp.name) / f"exc{final}") if final else g.new_flow_root(Path(T.tmp.name) / "exc-old")
++            [exception] = approval["accepted_exceptions"]
++            self.assertEqual((exception["id"], exception["state"]), ("AR-15", "CONTENT_INTEGRITY_UNPROVEN"))
++            self.assertIn("CONTENT_INTEGRITY_UNPROVEN", exception["text"])
++            self.assertIn("Signing this record means accepting that", exception["text"])
++
++    def test_the_final_form_pins_the_exception_through_the_content_hash(self):
++        root = T.clone("s0")
++        approval = approval_of(root)
++        approval["accepted_exceptions"] = []
++        self.assertNotEqual(builder.approval_content_sha256(approval), approval_of(root)["content_sha256"])
++
++
++class FinalFormSequence(unittest.TestCase):
++    def test_the_complete_gated_sequence_with_the_final_form(self):
++        root, approval = ff.final_flow_root(Path(T.tmp.name) / "full")
++        raw = (root / builder.APPROVAL_PATH).read_bytes()
++        steps = [("retire", g.POINTER_MODULE, "--retire-r10", lambda r: builder.plan_retirement(r)["confirmation_token"]),
++                 ("pointer", g.POINTER_MODULE, "--create-pointer", lambda r: builder.POINTER_TOKEN),
++                 ("freeze", g.POINTER_MODULE, "--create-freeze", lambda r: builder.plan_freeze(r)["confirmation_token"]),
++                 ("issue", g.ISSUER_MODULE, "--issue", lambda r: issuer.plan_issuance(r)["confirmation_token"])]
++        for name, module, flag, token in steps:
++            code, output = fx.run_cli(module, root, [flag], mode="tty", lines=[token(root)])
++            self.assertEqual(code, 0, (name, output[-500:]))
++            self.assertEqual((root / builder.APPROVAL_PATH).read_bytes(), raw)
++        self.assertTrue(builder.verify_retirement(root)["ok"])
++        self.assertTrue(builder.verify_persisted_candidate(root)["ok"])
++        self.assertTrue(issuer.verify_issuance(root)["ok"])
++        manifest = json.loads((root / builder.AUTHORIZATION_MANIFEST_PATH).read_text())
++        self.assertEqual(lifecycle.active_authorizations(root), [manifest["authorization_id"]])
++        self.assertEqual(fx.sha256(root / builder.EXPECTED_FREEZE_PATH), approval["freeze"]["predicted_sha256"])
++        failures = g.with_gate(root, lambda args: formal.prepare_formal_gates(args)["precommit_failures"])
++        self.assertEqual(failures, [])
++
++
++if __name__ == "__main__":
++    unittest.main()
+--- /dev/null
++++ b/tests/test_step9_63c_r5c10ai_v2_archival_replay.py
+@@ -0,0 +1,195 @@
++"""Step 9.63c-r5c10ai (supersedes r5c10ad AR-6): replay the frozen V2 identity preflight from the
++V2-era Git commit 201ef5c, which must be an ancestor of the current HEAD.
++
++The r5c10ad version read the blobs from Git HEAD; the checkpoint commit 23994b2 moved HEAD onto the
++current bytes, so this version names the archival commit explicitly. Original description:
++
++``tests/test_step9_43a_treatment_identity.py::test_01a`` asserts that the *working
++tree* still satisfies the V2 identity. It cannot: the parent runner and three Agent
++files have since evolved (V3 / r10). That test file is itself pinned by the V2 runner
++freeze, so it is left untouched. Instead this module rebuilds the V2-era snapshot in a
++temporary root, taking every drifted file from the Git HEAD blob whose SHA-256 equals
++the V2 pin, and runs the unmodified V2 verifier there in a subprocess (so every
++``scripts`` module resolves its ROOT inside the temporary root). The repository
++working tree is only read, never written. CI keeps excluding test_step9_43a.
++"""
++from __future__ import annotations
++
++import hashlib
++import json
++import shutil
++import subprocess
++import sys
++import tempfile
++import unittest
++import zlib
++from pathlib import Path
++
++ROOT = Path(__file__).resolve().parents[1]
++CONTRACT = "evaluation/v1_2_3/step9_43a_treatment_v2_identity_contract.json"
++V2_ARCHIVAL_COMMIT = "201ef5c2d406b0eaf2ebf5ce12db912b3caf5762"
++# Path -> V2 pin; all five equal the blob in the archival commit and differ from the working tree.
++REPLAY = {
++    "scripts/run_step9_35a_matched_treatment.py": "920486b1d7984fae6ee77b5ac51af0d0a98caf42e445d1abcf7ff75b46038505",
++    "tests/test_step9_43a_treatment_identity.py": "9936772aee53ae523a28669025a678d2cda58a30cea6a0561189d9afc0e891ef",
++    "adaptive_agent/answer_generation.py": "349221cd82a875990283f8958da5e2f22f7c10da0fe99391da3b043fbff9cbbb",
++    "adaptive_agent/runner.py": "e1dc32788f105b7ce4912853201e601a37c627b6df39493a49103ad7945a5781",
++    "evaluation/recorder.py": "ca0bc7488f5af7d117298f817ccfd7f3b814bb80f60b114d1f9750c939877d9d",
++}
++
++
++def sha256_bytes(data: bytes) -> str:
++    return hashlib.sha256(data).hexdigest()
++
++
++def git_object(sha: str) -> tuple[str, bytes]:
++    loose = ROOT / ".git/objects" / sha[:2] / sha[2:]
++    if loose.is_file():
++        raw = zlib.decompress(loose.read_bytes())
++        header, _, body = raw.partition(b"\0")
++        return header.split(b" ")[0].decode(), body
++    # Packed repositories (e.g. shallow CI checkouts): read-only plumbing fallback.
++    kind = subprocess.run(["git", "cat-file", "-t", sha], cwd=ROOT, check=True,
++                          capture_output=True, text=True).stdout.strip()
++    body = subprocess.run(["git", "cat-file", kind, sha], cwd=ROOT, check=True,
++                          capture_output=True).stdout
++    return kind, body
++
++
++def current_head() -> str:
++    ref = (ROOT / ".git/HEAD").read_text(encoding="utf-8").strip()
++    if not ref.startswith("ref:"):
++        return ref
++    name = ref.split(" ", 1)[1]
++    loose = ROOT / ".git" / name
++    if loose.exists():
++        return loose.read_text(encoding="utf-8").strip()
++    for line in (ROOT / ".git/packed-refs").read_text(encoding="utf-8").splitlines():
++        if line.endswith(" " + name):
++            return line.split(" ", 1)[0]
++    raise RuntimeError("cannot resolve HEAD")
++
++
++def parents_of(commit: str) -> list[str]:
++    kind, body = git_object(commit)
++    if kind != "commit":
++        raise RuntimeError("not a commit: " + commit)
++    return [line.split(" ", 1)[1] for line in body.split(b"\n\n", 1)[0].decode().splitlines() if line.startswith("parent ")]
++
++
++def head_blob(relpath: str) -> bytes:
++    """Blob of ``relpath`` in the archival commit (the name is kept from the r5c10ad version)."""
++    commit = V2_ARCHIVAL_COMMIT
++    kind, body = git_object(commit)
++    if kind != "commit":
++        raise RuntimeError("the archival commit is not a commit")
++    tree = body.split(b"\n", 1)[0].split(b" ")[1].decode()
++    for part in relpath.split("/"):
++        kind, body = git_object(tree)
++        if kind != "tree":
++            raise RuntimeError(f"not a tree on path {relpath}")
++        found, index = None, 0
++        while index < len(body):
++            space = body.index(b" ", index)
++            nul = body.index(b"\0", space)
++            if body[space + 1:nul].decode() == part:
++                found = body[nul + 1:nul + 21].hex()
++                break
++            index = nul + 21
++        if found is None:
++            raise RuntimeError(f"path absent from the archival commit: {relpath}")
++        tree = found
++    kind, body = git_object(tree)
++    if kind != "blob":
++        raise RuntimeError(f"not a blob: {relpath}")
++    return body
++
++
++def mirror(source: Path, target: Path, keep: set[str], copy_all: bool = False) -> None:
++    """Symlink everything except the paths in ``keep``; copy ``scripts`` so module
++    ROOTs (computed with Path(__file__).resolve()) stay inside the temporary root."""
++    target.mkdir()
++    for entry in source.iterdir():
++        rel = entry.relative_to(ROOT).as_posix()
++        if entry.name.startswith("._") or entry.name == "__pycache__" or rel in {".git", ".venv"}:
++            continue
++        nested = any(path.startswith(rel + "/") for path in keep)
++        if entry.is_dir() and not entry.is_symlink() and (copy_all or rel == "scripts" or nested):
++            mirror(entry, target / entry.name, keep, copy_all or rel == "scripts")
++        elif rel in keep:
++            continue
++        elif copy_all:
++            shutil.copyfile(entry, target / entry.name)
++        else:
++            (target / entry.name).symlink_to(entry)
++
++
++class V2ArchivalReplayTests(unittest.TestCase):
++    def test_the_archival_commit_exists_and_is_an_ancestor_of_the_current_head(self):
++        self.assertRegex(V2_ARCHIVAL_COMMIT, "^[0-9a-f]{40}$")
++        kind, _ = git_object(V2_ARCHIVAL_COMMIT)
++        self.assertEqual(kind, "commit")
++        head = current_head()
++        seen, queue = set(), [head]
++        while queue:
++            commit = queue.pop()
++            if commit == V2_ARCHIVAL_COMMIT:
++                break
++            if commit in seen:
++                continue
++            seen.add(commit)
++            queue.extend(parents_of(commit))
++            self.assertLess(len(seen), 5000)
++        else:
++            self.fail("the archival commit is not an ancestor of HEAD")
++
++    def test_the_archival_commit_is_not_the_current_head(self):
++        self.assertNotEqual(current_head(), V2_ARCHIVAL_COMMIT)
++
++    def test_archival_blobs_equal_v2_pins_and_differ_from_working_tree(self):
++        freeze = json.loads((ROOT / "evaluation/v1_2_3/step9_43a_treatment_v2_runner_freeze.json")
++                            .read_text(encoding="utf-8"))
++        self.assertEqual(sha256_bytes(head_blob(freeze["parent_runner_path"])), freeze["parent_runner_sha256"])
++        self.assertEqual(sha256_bytes(head_blob(freeze["runner_test_path"])), freeze["runner_test_sha256"])
++        agent = dict(json.loads((ROOT / "evaluation/v1_2_3/step9_42_treatment_v2_freeze.json")
++                                .read_text(encoding="utf-8"))["agent_behavior_files"])
++        for path, pin in REPLAY.items():
++            with self.subTest(path=path):
++                expected = agent.get(path) or freeze.get(
++                    {"scripts/run_step9_35a_matched_treatment.py": "parent_runner_sha256",
++                     "tests/test_step9_43a_treatment_identity.py": "runner_test_sha256"}[path])
++                self.assertEqual(expected, pin)
++                self.assertEqual(sha256_bytes(head_blob(path)), pin)
++                if path != "tests/test_step9_43a_treatment_identity.py":
++                    self.assertNotEqual(sha256_bytes((ROOT / path).read_bytes()), expected)
++
++    def test_01a_frozen_v2_identity_preflight_passes_on_archived_bytes(self):
++        before = {path: sha256_bytes((ROOT / path).read_bytes()) for path in REPLAY}
++        with tempfile.TemporaryDirectory() as directory:
++            root = Path(directory).resolve() / "root"
++            mirror(ROOT, root, set(REPLAY) | {CONTRACT})
++            for path in REPLAY:
++                (root / path).write_bytes(head_blob(path))
++            shutil.copyfile(ROOT / CONTRACT, root / CONTRACT)
++            code = (
++                "import json, sys\nsys.path.insert(0, '.')\n"
++                "from pathlib import Path\n"
++                "import scripts.run_step9_43a_treatment_v2 as v2\n"
++                "import scripts.run_step9_35a_matched_treatment as legacy\n"
++                f"contract, freeze, runtime = v2.load_verified_identity(Path({CONTRACT!r}).resolve())\n"
++                "print(json.dumps({'agent': contract['treatment_agent_sha256'],"
++                " 'repair_class': freeze['repair_class'], 'case_count': runtime['pins']['case_count'],"
++                " 'v2_root': str(v2.ROOT), 'legacy_root': str(legacy.ROOT)}))\n")
++            result = subprocess.run([sys.executable, "-c", code], cwd=root,
++                                    capture_output=True, text=True, check=False)
++            self.assertEqual(result.returncode, 0, result.stderr[-2000:])
++            outcome = json.loads(result.stdout)
++            self.assertEqual((outcome["v2_root"], outcome["legacy_root"]), (str(root), str(root)))
++        self.assertEqual(outcome["agent"], "b9e891e7cd077dd5b3c6fa72b71faad978a24226c2b5e89e0b06aabde93b51d6")
++        self.assertEqual(outcome["repair_class"], "INFRASTRUCTURE_IDENTITY_COMPATIBILITY_ONLY")
++        self.assertEqual(outcome["case_count"], 40)
++        self.assertEqual({path: sha256_bytes((ROOT / path).read_bytes()) for path in REPLAY}, before)
++
++
++if __name__ == "__main__":
++    unittest.main()

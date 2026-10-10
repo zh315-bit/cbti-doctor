@@ -1,0 +1,541 @@
+{
+ "artifact_type": "R5C10AI_FINAL_FORM_REHEARSAL_REPORT",
+ "root_kind": "temporary directories, deleted afterwards",
+ "sequence": "signed approval -> --retire-r10 -> --create-pointer -> --create-freeze -> --issue -> consumer precommit gate",
+ "result": "PASS",
+ "positive": {
+  "consumer_gate_failures": [],
+  "active": [
+   "auth-step9_63c_r11-f1614d4cba3f45788fbc0326069d7cd9"
+  ],
+  "exactly_one_active": true,
+  "freeze_sha_equals_prediction": true,
+  "retirement_appended_one_line": true,
+  "namespace_created": false,
+  "formal_execution_entered": false,
+  "approval_unchanged_throughout": true
+ },
+ "retirement_event_line_appended": "{\"artifact_type\": \"AUTHORIZATION_LIFECYCLE_EVENT\", \"attempt_created\": false, \"attempt_id\": \"attempt-step9_63c_r5c6-3401b701486c4fdeb4019b461d024bd4\", \"authorization_consumed\": false, \"authorization_consumption_count\": 0, \"authorization_id\": \"auth-step9_63c_r5c6-aff5c4b96bb74278a14d3fd08bf8a84e\", \"authorization_manifest_sha256\": \"beac52d1ed3bc11efa02b1a924a8abc7b210171bf5cc1b7910011a6ef9741241\", \"cases_completed\": 0, \"cases_started\": 0, \"evaluation_id\": \"heldout-v4-step9_55a-treatment-v3-20260930-01\", \"event_type\": \"AUTHORIZATION_RETIRED_UNCONSUMED_NON_REUSABLE\", \"final_status\": \"RETIRED_UNCONSUMED_NON_REUSABLE\", \"historical_runner_freeze_path\": \"evaluation/v1_2_3/step9_63c_r5c5b_runner_freeze_r10.json\", \"historical_runner_freeze_revision\": \"r10\", \"historical_runner_freeze_sha256\": \"d24244235e51e7bf6c8567880c654fe3fd73b87fa1bfe1ab0f10dfdc94db2693\", \"lifecycle_contract_path\": \"/private/var/folders/9c/900zw79d6y5f51r1vtf5tpx00000gn/T/r11-gated-report-pnndvx48/full/root/evaluation/v1_2_3/step9_61a_v3_authorization_lifecycle_contract.json\", \"lifecycle_contract_sha256\": \"addb3880e7141ca14d7b3011cadb439ac83076fa6b7c2b9f28f3b024d3fd1174\", \"lifecycle_event_id\": \"retire-6448c768e9054fe8ad99df0aecf84284\", \"namespace_created\": false, \"original_status\": \"ISSUED_NOT_CONSUMED\", \"reuse_determination\": \"/private/var/folders/9c/900zw79d6y5f51r1vtf5tpx00000gn/T/r11-gated-report-pnndvx48/full/root/evaluation/v1_2_3/step9_63c_r11_ar14_determination.json\", \"reuse_determination_sha256\": \"486bb1e7a579a4f248129e5067a06f93055da912388f105fd5cfd1baf98b9d67\", \"terminal\": true, \"timestamp_utc\": \"2026-10-10T13:04:26.021963+00:00\"}",
+ "negative_rehearsals": [
+  {
+   "rehearsal": "unsigned approval / retire",
+   "entry": "--retire-r10",
+   "mode": "tty",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "retirement refused; failed preconditions: RT1 approval record signed and every pin matches the current bytes"
+  },
+  {
+   "rehearsal": "wrong token / retire",
+   "entry": "--retire-r10",
+   "mode": "tty",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "retire the r10 authorization (IRREVERSIBLE append to the lifecycle ledger)\\n{\\n  \\"
+  },
+  {
+   "rehearsal": "empty token / retire",
+   "entry": "--retire-r10",
+   "mode": "tty",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "retire the r10 authorization (IRREVERSIBLE append to the lifecycle ledger)\\n{\\n  \\"
+  },
+  {
+   "rehearsal": "non-interactive (pipe) / retire",
+   "entry": "--retire-r10",
+   "mode": "pipe",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "retire the r10 authorization: refused - an interactive terminal (stdin and stdout attached to a TTY) is required; agents, CI and pipes may not write"
+  },
+  {
+   "rehearsal": "non-interactive (tty-in-only) / retire",
+   "entry": "--retire-r10",
+   "mode": "tty-in-only",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "retire the r10 authorization: refused - an interactive terminal (stdin and stdout attached to a TTY) is required; agents, CI and pipes may not write"
+  },
+  {
+   "rehearsal": "non-interactive (tty-out-only) / retire",
+   "entry": "--retire-r10",
+   "mode": "tty-out-only",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "retire the r10 authorization: refused - an interactive terminal (stdin and stdout attached to a TTY) is required; agents, CI and pipes may not write"
+  },
+  {
+   "rehearsal": "unsigned approval / pointer",
+   "entry": "--create-pointer",
+   "mode": "tty",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "pointer creation refused; failed preconditions: PP2 approval record signed and every pin matches the current bytes"
+  },
+  {
+   "rehearsal": "wrong token / pointer",
+   "entry": "--create-pointer",
+   "mode": "tty",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "create the r11 identity pointer: refused - confirmation token mismatch"
+  },
+  {
+   "rehearsal": "empty token / pointer",
+   "entry": "--create-pointer",
+   "mode": "tty",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "create the r11 identity pointer: refused - confirmation token mismatch"
+  },
+  {
+   "rehearsal": "non-interactive (pipe) / pointer",
+   "entry": "--create-pointer",
+   "mode": "pipe",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "create the r11 identity pointer: refused - an interactive terminal (stdin and stdout attached to a TTY) is required; agents, CI and pipes may not write"
+  },
+  {
+   "rehearsal": "non-interactive (tty-in-only) / pointer",
+   "entry": "--create-pointer",
+   "mode": "tty-in-only",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "create the r11 identity pointer: refused - an interactive terminal (stdin and stdout attached to a TTY) is required; agents, CI and pipes may not write"
+  },
+  {
+   "rehearsal": "non-interactive (tty-out-only) / pointer",
+   "entry": "--create-pointer",
+   "mode": "tty-out-only",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "create the r11 identity pointer: refused - an interactive terminal (stdin and stdout attached to a TTY) is required; agents, CI and pipes may not write"
+  },
+  {
+   "rehearsal": "unsigned approval / freeze",
+   "entry": "--create-freeze",
+   "mode": "tty",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "Freeze creation refused; failed preconditions: FZ1 approval record signed and every pin matches the current bytes; FZ3 the identity pointer exists with the canonical bytes and its record binds this approval"
+  },
+  {
+   "rehearsal": "wrong token / freeze",
+   "entry": "--create-freeze",
+   "mode": "tty",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "create the r11 Freeze (9365 bytes, SHA-256 b0948c5863d259ec2289531f1414b9aaf9c12470cc07b56c20166d163749d729): refused - confirmation token mismatch"
+  },
+  {
+   "rehearsal": "empty token / freeze",
+   "entry": "--create-freeze",
+   "mode": "tty",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "create the r11 Freeze (9365 bytes, SHA-256 b0948c5863d259ec2289531f1414b9aaf9c12470cc07b56c20166d163749d729): refused - confirmation token mismatch"
+  },
+  {
+   "rehearsal": "non-interactive (pipe) / freeze",
+   "entry": "--create-freeze",
+   "mode": "pipe",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "create the r11 Freeze: refused - an interactive terminal (stdin and stdout attached to a TTY) is required; agents, CI and pipes may not write"
+  },
+  {
+   "rehearsal": "non-interactive (tty-in-only) / freeze",
+   "entry": "--create-freeze",
+   "mode": "tty-in-only",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "create the r11 Freeze: refused - an interactive terminal (stdin and stdout attached to a TTY) is required; agents, CI and pipes may not write"
+  },
+  {
+   "rehearsal": "non-interactive (tty-out-only) / freeze",
+   "entry": "--create-freeze",
+   "mode": "tty-out-only",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "create the r11 Freeze: refused - an interactive terminal (stdin and stdout attached to a TTY) is required; agents, CI and pipes may not write"
+  },
+  {
+   "rehearsal": "unsigned approval / issue",
+   "entry": "--issue",
+   "mode": "tty",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "issuance refused; failed conditions: I0 approval record signed and its pins match the current bytes; I1 pointer has the canonical bytes and a creation record binds it to this approval"
+  },
+  {
+   "rehearsal": "wrong token / issue",
+   "entry": "--issue",
+   "mode": "tty",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "issue the r11 authorization\\nmanifest SHA-256 9c2eaaabec2e43883f48cc114c4ab749232e6351f63014364277586417b2e3d2\\n{\\n  \\"
+  },
+  {
+   "rehearsal": "empty token / issue",
+   "entry": "--issue",
+   "mode": "tty",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "issue the r11 authorization\\nmanifest SHA-256 9cbd498710722aed02417beff063d4fcd911d0c509fd2a660a6e7edc3213084e\\n{\\n  \\"
+  },
+  {
+   "rehearsal": "non-interactive (pipe) / issue",
+   "entry": "--issue",
+   "mode": "pipe",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "issue the r11 authorization: refused - an interactive terminal (stdin and stdout attached to a TTY) is required; agents, CI and pipes may not write"
+  },
+  {
+   "rehearsal": "non-interactive (tty-in-only) / issue",
+   "entry": "--issue",
+   "mode": "tty-in-only",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "issue the r11 authorization: refused - an interactive terminal (stdin and stdout attached to a TTY) is required; agents, CI and pipes may not write"
+  },
+  {
+   "rehearsal": "non-interactive (tty-out-only) / issue",
+   "entry": "--issue",
+   "mode": "tty-out-only",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "issue the r11 authorization: refused - an interactive terminal (stdin and stdout attached to a TTY) is required; agents, CI and pipes may not write"
+  },
+  {
+   "rehearsal": "ledger had a line appended beforehand / retire",
+   "entry": "--retire-r10",
+   "mode": "tty",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "retirement refused; failed preconditions: RT3 the ledger bytes equal the approval's pre-retirement ledger pin"
+  },
+  {
+   "rehearsal": "Freeze prediction does not match / freeze",
+   "entry": "--create-freeze",
+   "mode": "tty",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "Freeze creation refused; failed preconditions: FZ1 approval record signed and every pin matches the current bytes; FZ3 the identity pointer exists with the canonical bytes and its record binds this approval; FZ5 the Freeze assembled from the current bytes equa"
+  },
+  {
+   "rehearsal": "skip AR-14: create the pointer / pointer",
+   "entry": "--create-pointer",
+   "mode": "tty",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "pointer creation refused; failed preconditions: PP4 AR-14 done: the r10 authorization is retired and non-executable; PP5 every non-current V3 authorization is non-executable"
+  },
+  {
+   "rehearsal": "skip AR-14: create the Freeze directly / freeze",
+   "entry": "--create-freeze",
+   "mode": "tty",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "Freeze creation refused; failed preconditions: FZ2 AR-14 done: the reducer judges the r10 authorization retired"
+  },
+  {
+   "rehearsal": "skip the Freeze: issue / issue",
+   "entry": "--issue",
+   "mode": "tty",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "issuance refused; failed conditions: I2 resolve_current_freeze succeeds; I3 freeze SHA equals the value pinned in the approval record; I4 the persisted freeze reassembles byte for byte; I12 issuance time is later than the freeze and the last ledger event"
+  },
+  {
+   "rehearsal": "replay AR-14 / retire",
+   "entry": "--retire-r10",
+   "mode": "tty",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "retirement refused; failed preconditions: RT3 the ledger bytes equal the approval's pre-retirement ledger pin; RT4 the r10 authorization is still ISSUED_EXECUTABLE"
+  },
+  {
+   "rehearsal": "replay Freeze creation / freeze",
+   "entry": "--create-freeze",
+   "mode": "tty",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "Freeze creation refused; failed preconditions: FZ4 no Freeze, registry or r11 authorization exists; FZ5 the Freeze assembled from the current bytes equals the approved prediction"
+  },
+  {
+   "rehearsal": "token from another step9_6x authorization id (step9_63c_r4) / retire",
+   "entry": "--retire-r10",
+   "mode": "tty",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "retire the r10 authorization (IRREVERSIBLE append to the lifecycle ledger)\\n{\\n  \\"
+  },
+  {
+   "rehearsal": "token with the previous literal first segment / retire",
+   "entry": "--retire-r10",
+   "mode": "tty",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "retire the r10 authorization (IRREVERSIBLE append to the lifecycle ledger)\\n{\\n  \\"
+  },
+  {
+   "rehearsal": "token whose second part is the signed file hash instead of the content hash / retire",
+   "entry": "--retire-r10",
+   "mode": "tty",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "retire the r10 authorization (IRREVERSIBLE append to the lifecycle ledger)\\n{\\n  \\"
+  },
+  {
+   "rehearsal": "Git HEAD moved after signing (committed again) / retire",
+   "entry": "--retire-r10",
+   "mode": "tty",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "retirement refused; failed preconditions: RT1 approval record signed and every pin matches the current bytes"
+  },
+  {
+   "rehearsal": "approval names no signing commit / retire",
+   "entry": "--retire-r10",
+   "mode": "tty",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "retirement refused; failed preconditions: RT1 approval record signed and every pin matches the current bytes"
+  },
+  {
+   "rehearsal": "approval content edited beyond the signature fields / retire",
+   "entry": "--retire-r10",
+   "mode": "tty",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "retirement refused; failed preconditions: RT1 approval record signed and every pin matches the current bytes"
+  },
+  {
+   "rehearsal": "Git HEAD moved after signing (committed again) / pointer",
+   "entry": "--create-pointer",
+   "mode": "tty",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "pointer creation refused; failed preconditions: PP2 approval record signed and every pin matches the current bytes"
+  },
+  {
+   "rehearsal": "approval names no signing commit / pointer",
+   "entry": "--create-pointer",
+   "mode": "tty",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "pointer creation refused; failed preconditions: PP2 approval record signed and every pin matches the current bytes"
+  },
+  {
+   "rehearsal": "approval content edited beyond the signature fields / pointer",
+   "entry": "--create-pointer",
+   "mode": "tty",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "pointer creation refused; failed preconditions: PP2 approval record signed and every pin matches the current bytes"
+  },
+  {
+   "rehearsal": "Git HEAD moved after signing (committed again) / freeze",
+   "entry": "--create-freeze",
+   "mode": "tty",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "Freeze creation refused; failed preconditions: FZ1 approval record signed and every pin matches the current bytes"
+  },
+  {
+   "rehearsal": "approval names no signing commit / freeze",
+   "entry": "--create-freeze",
+   "mode": "tty",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "Freeze creation refused; failed preconditions: FZ1 approval record signed and every pin matches the current bytes; FZ3 the identity pointer exists with the canonical bytes and its record binds this approval"
+  },
+  {
+   "rehearsal": "approval content edited beyond the signature fields / freeze",
+   "entry": "--create-freeze",
+   "mode": "tty",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "Freeze creation refused; failed preconditions: FZ1 approval record signed and every pin matches the current bytes; FZ3 the identity pointer exists with the canonical bytes and its record binds this approval"
+  },
+  {
+   "rehearsal": "Git HEAD moved after signing (committed again) / issue",
+   "entry": "--issue",
+   "mode": "tty",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "issuance refused; failed conditions: I0 approval record signed and its pins match the current bytes"
+  },
+  {
+   "rehearsal": "approval names no signing commit / issue",
+   "entry": "--issue",
+   "mode": "tty",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "issuance refused; failed conditions: I0 approval record signed and its pins match the current bytes; I1 pointer has the canonical bytes and a creation record binds it to this approval"
+  },
+  {
+   "rehearsal": "approval content edited beyond the signature fields / issue",
+   "entry": "--issue",
+   "mode": "tty",
+   "exit_code": 2,
+   "refused": true,
+   "no_write": true,
+   "reason": "issuance refused; failed conditions: I0 approval record signed and its pins match the current bytes; I1 pointer has the canonical bytes and a creation record binds it to this approval"
+  }
+ ],
+ "negative_summary": {
+  "total": 46,
+  "refused": 46,
+  "no_write": 46
+ },
+ "consumer_still_rejects_a_missing_issuance_event": {
+  "event_removed": true
+ },
+ "steps": [
+  {
+   "step": "0 status",
+   "command": "--status",
+   "exit_code": 0,
+   "output": "{\n  \"creation_record_present\": false,\n  \"freeze_present\": false,\n  \"pointer_canonical\": false,\n  \"pointer_present\": false,\n  \"r11_authorization_present\": false,\n  \"registry_present\": false,\n  \"state\": \"S0_NOT_ACTIVATED\"\n}"
+  },
+  {
+   "step": "0 pointer plan before AR-14 (must NOT be ready)",
+   "command": "--plan",
+   "exit_code": 1,
+   "output": "{\n  \"canonical_bytes\": \"{\\n  \\\"artifact_type\\\": \\\"V3_CURRENT_RUNNER_IDENTITY_POINTER\\\",\\n  \\\"execution_permission\\\": false,\\n  \\\"runner_freeze_path\\\": \\\"evaluation/v1_2_3/step9_63c_r11_runner_freeze.json\\\",\\n  \\\"runner_freeze_revision\\\": \\\"r11\\\",\\n  \\\"status\\\": \\\"FROZEN_IDENTITY_POINTER_NOT_AUTHORIZATION\\\",\\n  \\\"step\\\": \\\"9.63c-r11\\\",\\n  \\\"supersedes_for_new_authorization_only\\\": \\\"evaluation/v1_2_3/step9_63c_r5c5b_runner_freeze_r10.json\\\"\\n}\\n\",\n  \"canonical_sha256\": \"4e077781faeecee57da02f37d1d3ad8cdc9dfa895d3eb72b1b4ab1f1d3f696fe\",\n  \"canonical_size\": 389,\n  \"confirmation_token\": \"CREATE-R11-POINTER-4e077781faee\",\n  \"mode\": \"plan\",\n  \"preconditions\": [\n    {\n      \"detail\": \"pointer, freeze, registry, r11 authorization and creation record must all be absent\",\n      \"name\": \"PP1 no activation artifact exists\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"\",\n      \"name\": \"PP2 approval record signed and every pin matches the current bytes\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"the r10 authorization has no terminal retirement event (AR-14 not done)\",\n      \"name\": \"PP4 AR-14 done: the r10 authorization is retired and non-executable\",\n      \"ok\": false\n    },\n    {\n      \"detail\": \"9 superseded authorizations checked\",\n      \"name\": \"PP5 every non-current V3 authorization is non-executable\",\n      \"ok\": false\n    },\n    {\n      \"detail\": \"\",\n      \"name\": \"PP6 the 55 historical pins verify\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"\",\n      \"name\": \"PP7 no r11 transaction journal exists\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"synthetic root (requires CBTI_ALLOW_SYNTHETIC_ROOT=1)\",\n      \"name\": \"PP9 environment\",\n      \"ok\": true\n    }\n  ],\n  \"ready\": false,\n  \"status\": {\n    \"creation_record_present\": false,\n    \"freeze_present\": false,\n    \"pointer_canonical\": false,\n    \"pointer_present\": false,\n    \"r11_authorization_present\": false,\n    \"registry_present\": false,\n    \"state\": \"S0_NOT_ACTIVATED\"\n  },\n  \"target\": \"evaluation/v1_2_3/step9_63c_r11_current_runner_identity.json\",\n  \"writes_nothing\": true\n}"
+  },
+  {
+   "step": "1 AR-14 plan",
+   "command": "--plan-retire",
+   "exit_code": 0,
+   "output": "{\n  \"confirmation_token\": \"RETIRE-R10-aff5c4b96bb7-7bee9b7802d9\",\n  \"expected_event_template\": {\n    \"artifact_type\": \"AUTHORIZATION_LIFECYCLE_EVENT\",\n    \"attempt_created\": false,\n    \"attempt_id\": \"attempt-step9_63c_r5c6-3401b701486c4fdeb4019b461d024bd4\",\n    \"authorization_consumed\": false,\n    \"authorization_consumption_count\": 0,\n    \"authorization_id\": \"auth-step9_63c_r5c6-aff5c4b96bb74278a14d3fd08bf8a84e\",\n    \"authorization_manifest_sha256\": \"beac52d1ed3bc11efa02b1a924a8abc7b210171bf5cc1b7910011a6ef9741241\",\n    \"cases_completed\": 0,\n    \"cases_started\": 0,\n    \"evaluation_id\": \"heldout-v4-step9_55a-treatment-v3-20260930-01\",\n    \"event_type\": \"AUTHORIZATION_RETIRED_UNCONSUMED_NON_REUSABLE\",\n    \"final_status\": \"RETIRED_UNCONSUMED_NON_REUSABLE\",\n    \"historical_runner_freeze_path\": \"evaluation/v1_2_3/step9_63c_r5c5b_runner_freeze_r10.json\",\n    \"historical_runner_freeze_revision\": \"r10\",\n    \"historical_runner_freeze_sha256\": \"d24244235e51e7bf6c8567880c654fe3fd73b87fa1bfe1ab0f10dfdc94db2693\",\n    \"lifecycle_contract_path\": \"evaluation/v1_2_3/step9_61a_v3_authorization_lifecycle_contract.json\",\n    \"lifecycle_contract_sha256\": \"addb3880e7141ca14d7b3011cadb439ac83076fa6b7c2b9f28f3b024d3fd1174\",\n    \"lifecycle_event_id\": null,\n    \"namespace_created\": false,\n    \"original_status\": \"ISSUED_NOT_CONSUMED\",\n    \"reuse_determination\": \"evaluation/v1_2_3/step9_63c_r11_ar14_determination.json\",\n    \"reuse_determination_sha256\": \"486bb1e7a579a4f248129e5067a06f93055da912388f105fd5cfd1baf98b9d67\",\n    \"terminal\": true,\n    \"timestamp_utc\": null\n  },\n  \"mode\": \"plan-retire-r10\",\n  \"preconditions\": [\n    {\n      \"detail\": \"\",\n      \"name\": \"RT1 approval record signed and every pin matches the current bytes\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"\",\n      \"name\": \"RT2 no r11 artifact exists yet (pointer, Freeze, registry, r11 authorization, creation record)\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"ledger is 3856 bytes, pinned 3856\",\n      \"name\": \"RT3 the ledger bytes equal the approval's pre-retirement ledger pin\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"reducer state ISSUED_EXECUTABLE\",\n      \"name\": \"RT4 the r10 authorization is still ISSUED_EXECUTABLE\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"determination equals the canonical bytes derived from the approval and references its approval_id\",\n      \"name\": \"RT5 the non-reuse determination exists, equals its pin and references this approval\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"\",\n      \"name\": \"RT6 the 55 historical pins verify\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"synthetic root (requires CBTI_ALLOW_SYNTHETIC_ROOT=1)\",\n      \"name\": \"RT7 environment\",\n      \"ok\": true\n    }\n  ],\n  \"ready\": true,\n  \"target\": \"evaluation/v1_2_3/authorization_lifecycle_events.jsonl\",\n  \"writes_nothing\": true\n}"
+  },
+  {
+   "step": "1 AR-14 verify before (NOT_RETIRED)",
+   "command": "--verify-retire",
+   "exit_code": 1,
+   "output": "{\n  \"checks\": [],\n  \"mode\": \"verify-retire-r10\",\n  \"ok\": false,\n  \"state\": \"NOT_RETIRED\",\n  \"writes_nothing\": true\n}"
+  },
+  {
+   "step": "1 AR-14 write (real pty, typed token)",
+   "command": "--retire-r10",
+   "exit_code": 0,
+   "output": "RETIRE-R10-aff5c4b96bb7-7bee9b7802d9\r\nretire the r10 authorization (IRREVERSIBLE append to the lifecycle ledger)\r\n{\r\n  \"artifact_type\": \"AUTHORIZATION_LIFECYCLE_EVENT\",\r\n  \"attempt_created\": false,\r\n  \"attempt_id\": \"attempt-step9_63c_r5c6-3401b701486c4fdeb4019b461d024bd4\",\r\n  \"authorization_consumed\": false,\r\n  \"authorization_consumption_count\": 0,\r\n  \"authorization_id\": \"auth-step9_63c_r5c6-aff5c4b96bb74278a14d3fd08bf8a84e\",\r\n  \"authorization_manifest_sha256\": \"beac52d1ed3bc11efa02b1a924a8abc7b210171bf5cc1b7910011a6ef9741241\",\r\n  \"cases_completed\": 0,\r\n  \"cases_started\": 0,\r\n  \"evaluation_id\": \"heldout-v4-step9_55a-treatment-v3-20260930-01\",\r\n  \"event_type\": \"AUTHORIZATION_RETIRED_UNCONSUMED_NON_REUSABLE\",\r\n  \"final_status\": \"RETIRED_UNCONSUMED_NON_REUSABLE\",\r\n  \"historical_runner_freeze_path\": \"evaluation/v1_2_3/step9_63c_r5c5b_runner_freeze_r10.json\",\r\n  \"historical_runner_freeze_revision\": \"r10\",\r\n  \"historical_runner_freeze_sha256\": \"d24244235e51e7bf6c8567880c654fe3fd73b87fa1bfe1ab0f10dfdc94db2693\",\r\n  \"lifecycle_contract_path\": \"evaluation/v1_2_3/step9_61a_v3_authorization_lifecycle_contract.json\",\r\n  \"lifecycle_contract_sha256\": \"addb3880e7141ca14d7b3011cadb439ac83076fa6b7c2b9f28f3b024d3fd1174\",\r\n  \"lifecycle_event_id\": null,\r\n  \"namespace_created\": false,\r\n  \"original_status\": \"ISSUED_NOT_CONSUMED\",\r\n  \"reuse_determination\": \"evaluation/v1_2_3/step9_63c_r11_ar14_determination.json\",\r\n  \"reuse_determination_sha256\": \"486bb1e7a579a4f248129e5067a06f93055da912388f105fd5cfd1baf98b9d67\",\r\n  \"terminal\": true,\r\n  \"timestamp_utc\": null\r\n}\r\nType exactly RETIRE-R10-aff5c4b96bb7-7bee9b7802d9 to proceed: {\r\n  \"lifecycle_event_id\": \"retire-6448c768e9054fe8ad99df0aecf84284\",\r\n  \"result\": \"RETIRED\",\r\n  \"state\": \"RETIRED_AS_APPROVED\"\r\n}"
+  },
+  {
+   "step": "1 AR-14 verify after",
+   "command": "--verify-retire",
+   "exit_code": 0,
+   "output": "{\n  \"checks\": [\n    {\n      \"detail\": \"\",\n      \"name\": \"V1 the pre-retirement ledger bytes are unchanged\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"1628 bytes appended, 0 later line(s)\",\n      \"name\": \"V2 exactly one line was appended for the retirement (only the issuance event may follow it)\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"event equals the approved template; timestamp is later than every earlier event\",\n      \"name\": \"V3 the appended event equals the approved template (except the two generated fields)\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"reducer state RETIRED_UNCONSUMED_NON_REUSABLE\",\n      \"name\": \"V4 the reducer judges the r10 authorization retired and non-executable\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"\",\n      \"name\": \"V5 exactly one retirement event exists for the r10 authorization\",\n      \"ok\": true\n    }\n  ],\n  \"mode\": \"verify-retire-r10\",\n  \"ok\": true,\n  \"state\": \"RETIRED_AS_APPROVED\",\n  \"writes_nothing\": true\n}"
+  },
+  {
+   "step": "2 pointer plan",
+   "command": "--plan",
+   "exit_code": 0,
+   "output": "{\n  \"canonical_bytes\": \"{\\n  \\\"artifact_type\\\": \\\"V3_CURRENT_RUNNER_IDENTITY_POINTER\\\",\\n  \\\"execution_permission\\\": false,\\n  \\\"runner_freeze_path\\\": \\\"evaluation/v1_2_3/step9_63c_r11_runner_freeze.json\\\",\\n  \\\"runner_freeze_revision\\\": \\\"r11\\\",\\n  \\\"status\\\": \\\"FROZEN_IDENTITY_POINTER_NOT_AUTHORIZATION\\\",\\n  \\\"step\\\": \\\"9.63c-r11\\\",\\n  \\\"supersedes_for_new_authorization_only\\\": \\\"evaluation/v1_2_3/step9_63c_r5c5b_runner_freeze_r10.json\\\"\\n}\\n\",\n  \"canonical_sha256\": \"4e077781faeecee57da02f37d1d3ad8cdc9dfa895d3eb72b1b4ab1f1d3f696fe\",\n  \"canonical_size\": 389,\n  \"confirmation_token\": \"CREATE-R11-POINTER-4e077781faee\",\n  \"mode\": \"plan\",\n  \"preconditions\": [\n    {\n      \"detail\": \"pointer, freeze, registry, r11 authorization and creation record must all be absent\",\n      \"name\": \"PP1 no activation artifact exists\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"\",\n      \"name\": \"PP2 approval record signed and every pin matches the current bytes\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"reducer state RETIRED_UNCONSUMED_NON_REUSABLE\",\n      \"name\": \"PP4 AR-14 done: the r10 authorization is retired and non-executable\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"9 superseded authorizations checked\",\n      \"name\": \"PP5 every non-current V3 authorization is non-executable\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"\",\n      \"name\": \"PP6 the 55 historical pins verify\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"\",\n      \"name\": \"PP7 no r11 transaction journal exists\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"synthetic root (requires CBTI_ALLOW_SYNTHETIC_ROOT=1)\",\n      \"name\": \"PP9 environment\",\n      \"ok\": true\n    }\n  ],\n  \"ready\": true,\n  \"status\": {\n    \"creation_record_present\": false,\n    \"freeze_present\": false,\n    \"pointer_canonical\": false,\n    \"pointer_present\": false,\n    \"r11_authorization_present\": false,\n    \"registry_present\": false,\n    \"state\": \"S0_NOT_ACTIVATED\"\n  },\n  \"target\": \"evaluation/v1_2_3/step9_63c_r11_current_runner_identity.json\",\n  \"writes_nothing\": true\n}"
+  },
+  {
+   "step": "2 pointer write",
+   "command": "--create-pointer",
+   "exit_code": 0,
+   "output": "CREATE-R11-POINTER-4e077781faee\r\ncreate the r11 identity pointer\r\nType exactly CREATE-R11-POINTER-4e077781faee to proceed: {\r\n  \"pointer_sha256\": \"4e077781faeecee57da02f37d1d3ad8cdc9dfa895d3eb72b1b4ab1f1d3f696fe\",\r\n  \"result\": \"CREATED\",\r\n  \"state\": \"S1_POINTER_ONLY\"\r\n}"
+  },
+  {
+   "step": "2 pointer verify",
+   "command": "--verify",
+   "exit_code": 0,
+   "output": "{\n  \"checks\": [\n    {\n      \"detail\": \"\",\n      \"name\": \"V1 pointer is a regular file with the canonical bytes\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"creation record binds pointer and approval\",\n      \"name\": \"V2 creation record exists and binds the pointer and the approval\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"expected fail-closed result: current runner freeze is missing or unsafe\",\n      \"name\": \"V3 resolver accepts the pointer (a missing freeze is the expected refusal)\",\n      \"ok\": true\n    }\n  ],\n  \"mode\": \"verify\",\n  \"ok\": true,\n  \"status\": {\n    \"creation_record_present\": true,\n    \"freeze_present\": false,\n    \"pointer_canonical\": true,\n    \"pointer_present\": true,\n    \"r11_authorization_present\": false,\n    \"registry_present\": false,\n    \"state\": \"S1_POINTER_ONLY\"\n  },\n  \"writes_nothing\": true\n}"
+  },
+  {
+   "step": "3 Freeze plan",
+   "command": "--plan-freeze",
+   "exit_code": 0,
+   "output": "{\n  \"confirmation_token\": \"CREATE-R11-FREEZE-b0948c5863d2-7bee9b7802d9\",\n  \"mode\": \"plan-freeze\",\n  \"preconditions\": [\n    {\n      \"detail\": \"\",\n      \"name\": \"FZ1 approval record signed and every pin matches the current bytes\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"reducer state RETIRED_UNCONSUMED_NON_REUSABLE\",\n      \"name\": \"FZ2 AR-14 done: the reducer judges the r10 authorization retired\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"pointer canonical; creation record binds it to this approval\",\n      \"name\": \"FZ3 the identity pointer exists with the canonical bytes and its record binds this approval\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"\",\n      \"name\": \"FZ4 no Freeze, registry or r11 authorization exists\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"assembled Freeze b0948c5863d259ec2289531f1414b9aaf9c12470cc07b56c20166d163749d729, approved b0948c5863d259ec2289531f1414b9aaf9c12470cc07b56c20166d163749d729\",\n      \"name\": \"FZ5 the Freeze assembled from the current bytes equals the approved prediction\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"\",\n      \"name\": \"FZ6 the 55 historical pins verify\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"synthetic root (requires CBTI_ALLOW_SYNTHETIC_ROOT=1)\",\n      \"name\": \"FZ7 environment\",\n      \"ok\": true\n    }\n  ],\n  \"ready\": true,\n  \"target\": \"evaluation/v1_2_3/step9_63c_r11_runner_freeze.json\",\n  \"writes_nothing\": true\n}"
+  },
+  {
+   "step": "3 Freeze write",
+   "command": "--create-freeze",
+   "exit_code": 0,
+   "output": "CREATE-R11-FREEZE-b0948c5863d2-7bee9b7802d9\r\ncreate the r11 Freeze (9365 bytes, SHA-256 b0948c5863d259ec2289531f1414b9aaf9c12470cc07b56c20166d163749d729)\r\nType exactly CREATE-R11-FREEZE-b0948c5863d2-7bee9b7802d9 to proceed: {\r\n  \"freeze_sha256\": \"b0948c5863d259ec2289531f1414b9aaf9c12470cc07b56c20166d163749d729\",\r\n  \"result\": \"CREATED\",\r\n  \"state\": \"S2_FREEZE_PERSISTED\"\r\n}"
+  },
+  {
+   "step": "3 Freeze verify",
+   "command": "--verify-freeze",
+   "exit_code": 0,
+   "output": "{\n  \"ok\": true,\n  \"reason\": \"ok\",\n  \"sha256\": \"b0948c5863d259ec2289531f1414b9aaf9c12470cc07b56c20166d163749d729\"\n}"
+  },
+  {
+   "step": "4 issuance plan",
+   "command": "issuer --plan",
+   "exit_code": 0,
+   "output": "{\n  \"conditions\": [\n    {\n      \"detail\": \"\",\n      \"name\": \"I0 approval record signed and its pins match the current bytes\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"\",\n      \"name\": \"I1 pointer has the canonical bytes and a creation record binds it to this approval\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"pointer, freeze, 20 member files and aggregate resolve\",\n      \"name\": \"I2 resolve_current_freeze succeeds\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"\",\n      \"name\": \"I3 freeze SHA equals the value pinned in the approval record\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"ok\",\n      \"name\": \"I4 the persisted freeze reassembles byte for byte\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"scanner, resolver, consumer and issuer match their pins\",\n      \"name\": \"I5 changed members and the issuer equal the reviewed pins\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"9 superseded authorizations checked\",\n      \"name\": \"I6 every non-current V3 authorization is non-executable\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"active=[] (must be empty before issuance)\",\n      \"name\": \"I7 current-revision active authorizations are exactly the expected set\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"\",\n      \"name\": \"I8 the 55 historical pins verify\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"authorization, attempt and namespace identities are globally unique\",\n      \"name\": \"I9 identities are fresh and globally unique\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"\",\n      \"name\": \"I10 the manifest target does not exist\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"issued 2026-10-10T13:04:26.524554+00:00 vs freeze 2026-01-01T00:00:00+00:00 vs last ledger event 2026-10-10T13:04:26.021963+00:00\",\n      \"name\": \"I12 issuance time is later than the freeze and the last ledger event\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"\",\n      \"name\": \"I13 one authorization per revision: no issuance event and no r11 registry exists\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"synthetic root\",\n      \"name\": \"IX1 environment\",\n      \"ok\": true\n    }\n  ],\n  \"confirmation_token\": \"ISSUE-R11-AUTH-b7b99e667db1\",\n  \"manifest_preview\": {\n    \"agent_loop_max_steps\": 4,\n    \"artifact_type\": \"TREATMENT_V3_FRESH_R11_ONE_SHOT_V4_AUTHORIZATION\",\n    \"attempt_id\": \"attempt-step9_63c_r11-48863e7f9bcd4eaaa59bf9404c61c7d8\",\n    \"attempt_id_status\": \"PREBOUND_IDENTITY_ONLY_NOT_CREATED\",\n    \"authoritative_commit_point\": \"COMMITTED_FSYNCED_APPEND_ONLY_TRANSACTION_JOURNAL\",\n    \"authoritative_commit_point_contract_sha256\": \"4c63855bf08cb420436f5fce80d32e5ca4c6151d642571db9a9c9665194b66bd\",\n    \"authorization_boundary\": {\n      \"adjudication_aggregation_comparison\": false,\n      \"authorization_consumed\": false,\n      \"cases_started\": 0,\n      \"formal_attempt_created\": false,\n      \"formal_v4_case_executed\": 0,\n      \"model_agent_rag_case_execution\": false,\n      \"v5_created_or_accessed\": false\n    },\n    \"authorization_consumption_count\": 0,\n    \"authorization_id\": \"auth-step9_63c_r11-f1614d4cba3f45788fbc0326069d7cd9\",\n    \"authorization_lifecycle_contract_path\": \"evaluation/v1_2_3/step9_61a_v3_authorization_lifecycle_contract.json\",\n    \"authorization_lifecycle_contract_sha256\": \"addb3880e7141ca14d7b3011cadb439ac83076fa6b7c2b9f28f3b024d3fd1174\",\n    \"authorization_lifecycle_module_path\": \"scripts/authorization_lifecycle.py\",\n    \"authorization_lifecycle_module_sha256\": \"f0d8b7e04fa2710765b74f4f293436b051af005d11851bf9583da14ff66"
+  },
+  {
+   "step": "4 issuance write",
+   "command": "issuer --issue",
+   "exit_code": 0,
+   "output": "ISSUE-R11-AUTH-b7b99e667db1\r\nissue the r11 authorization\r\nmanifest SHA-256 3221fa23872f3edadf73bbcbd98d57d911898df6915b06bcf71a23ad2cc58d1e\r\n{\r\n  \"agent_loop_max_steps\": 4,\r\n  \"baseline_agent_sha256\": \"4e2bffea0d7eaa9299074a960df84a1806b3ae9d4930662929abc58ca5b2ae79\",\r\n  \"baseline_metric_lock_sha256\": \"63e33f8dd66109742fdbb2282be437a1af771f5aa1d600306f35916ed5d37203\",\r\n  \"benchmark_manifest_sha256\": \"b5feb7832b6267d8cff9d25fb2d8cf0043829feb5fd04ec1bea77dba932a13db\",\r\n  \"benchmark_path\": \"evaluation/benchmarks/benchmark_v4_cases.yaml\",\r\n  \"benchmark_sha256\": \"8b8c72092fcd7544e69d5d2ecd13610c7bb4c14210fca330698b3e5ab3f01d7f\",\r\n  \"case_count\": 40,\r\n  \"case_order_fingerprint_sha256\": \"d930455e417935337a6e3459defbdc3ee3829b71786fbd8438ef092b62429e68\",\r\n  \"claim_policy_sha256\": \"4c64896c141dc8feb3789939e1450bcb7bdeb878ed15b27558404c47421aea67\",\r\n  \"comparison_class\": \"POST_HOC_MATCHED_FROZEN_BASELINE\",\r\n  \"dependency_lock_sha256\": \"4e7ec8e873364b418536494b049d09e37e957a824a1989072cdc5a62f8af72b0\",\r\n  \"fresh_session_per_case\": true,\r\n  \"harness_sha256\": \"8bc271bebc1c5da5351d517e2bb4a0d1a99fda3de1b713a6197b12f81fad70c7\",\r\n  \"matched_protocol_sha256\": \"a71ba06090370b576fbba66bc4b005e519ddbabff3021a40c6546fc855f90265\",\r\n  \"max_runner_turns\": 6,\r\n  \"metric_registry_sha256\": \"de9f348cb1dff66410c03095abdaffcc256f53679718482870e4aa4d80c75056\",\r\n  \"model_configuration_fingerprint_sha256\": \"d0802478a59e6b2021b0476490149d7fec672fab5bda5cc45f55241268f1a7e0\",\r\n  \"one_shot_rules_sha256\": \"1c7ed4ef47865b117bc943f3e0ad9a859f4f74cfb4e8001f723ac5532af140d0\",\r\n  \"production_case_path_runner_sha256\": \"fddaa09803dd1df27da81f3793929d15a3f6d5d29c1060842ecbf138a76b1d06\",\r\n  \"rag_configuration_fingerprint_sha256\": \"58467abc2abafce62e8d71713684802f64a35946accf35c08007e67b0edd60a5\",\r\n  \"scoring_rubric_sha256\": \"a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899\",\r\n  \"scoring_sha256\": \"f742a8f8af7c8747818dadad81621c15d12d74f50538019913dfe18ab53bf59b\",\r\n  \"task_distribution\": {\r\n    \"CAUSE_ASSESSMENT\": 10,\r\n    \"DATA_ANALYSIS\": 10,\r\n    \"KNOWLEDGE_QA\": 10,\r\n    \"PERSONALIZED_DECISION\": 10\r\n  },\r\n  \"tool_adapter_sha256\": \"65223ad962417d68d16326c2431a205f1bdc953a0f64c5585ff38e4017a1c084\",\r\n  \"treatment_agent_sha256\": \"085d338ed95bbef7370c41cf97ca0d6653ffdfd2f1c924eef4b7123dfdea4607\",\r\n  \"attempt_id_status\": \"PREBOUND_IDENTITY_ONLY_NOT_CREATED\",\r\n  \"authoritative_commit_point\": \"COMMITTED_FSYNCED_APPEND_ONLY_TRANSACTION_JOURNAL\",\r\n  \"authorization_boundary\": {\r\n    \"formal_attempt_created\": false,\r\n    \"authorization_consumed\": false,\r\n    \"formal_v4_case_executed\": 0,\r\n    \"cases_started\": 0,\r\n    \"model_agent_rag_case_execution\": false,\r\n    \"adjudication_aggregation_comparison\": false,\r\n    \"v5_created_or_accessed\": false\r\n  },\r\n  \"authorization_type\": \"ONE_SHOT_MATCHED_TREATMENT\",\r\n  \"claim_scope\": \"FROZEN_MATCHED_DEVELOPMENT_REGRESSION_ONLY\",\r\n  \"connectivity_evidence\": {\r\n    \"status\": \"NOT_TESTED_AT_ISSUANCE\",\r\n    \"fresh_non_consuming_preflight_required_before_execution\": true\r\n  },\r\n  \"consumption_limit\": 1,\r\n  \"execution_environment\": \"USER_MAC_LOCAL_PROJECT_VENV\",\r\n  \"execution_limits\": {\r\n    \"max_runner_turns\": 6,\r\n    \"agent_loop_max_steps\": 4,\r\n    \"fresh_session_per_case\": true\r\n  },\r\n  \"execution_namespace\": {\r\n    \"namespace_id\": \"heldout-v4-treatment-v3-run-a7ca2715dac059dbdbcf\",\r\n    \"derivation\": \"SHA256(evaluation_id\\\\0authorization_id\\\\0attempt_id) first 20 hex characters\",\r\n    \"physical_layout\": \"evaluation/v4_runs/<namespace_id>/<eval"
+  },
+  {
+   "step": "4 issuance verify",
+   "command": "issuer --verify",
+   "exit_code": 0,
+   "output": "{\n  \"checks\": [\n    {\n      \"detail\": \"ISSUED_RECORDED\",\n      \"name\": \"V1 manifest and exactly one matching ledger event\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"ISSUED_EXECUTABLE\",\n      \"name\": \"V2 reducer state is ISSUED_EXECUTABLE\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"\",\n      \"name\": \"V3 exactly one active authorization, and it is this one\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"\",\n      \"name\": \"V4 manifest key set equals the template key set\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"\",\n      \"name\": \"V5 unconsumed, no attempt, no namespace\",\n      \"ok\": true\n    }\n  ],\n  \"mode\": \"verify\",\n  \"ok\": true,\n  \"status\": {\n    \"detail\": \"ok\",\n    \"events\": 1,\n    \"manifest_sha256\": \"3221fa23872f3edadf73bbcbd98d57d911898df6915b06bcf71a23ad2cc58d1e\",\n    \"state\": \"ISSUED_RECORDED\"\n  },\n  \"writes_nothing\": true\n}"
+  }
+ ],
+ "real_repository": {
+  "ledger_sha256_unchanged": true,
+  "r11_pointer_exists": false,
+  "r11_freeze_exists": false,
+  "r11_authorization_exists": false
+ }
+}

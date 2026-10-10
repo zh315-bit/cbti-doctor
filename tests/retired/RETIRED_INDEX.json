@@ -95,6 +95,169 @@
    ],
    "rewritten_methods": [],
    "coverage_mapping": "evaluation/v1_2_3/step9_63c_r5c10af_r5_coverage_mapping.json"
+  },
+  {
+   "step": "9.63c-r5c10ah standing rule (superseded pin/manifest/gate tests)",
+   "archive": "tests/retired/test_step9_63c_r5c10ad_test_boundary_manifest.py.retired",
+   "original_path": "tests/test_step9_63c_r5c10ad_test_boundary_manifest.py",
+   "origin_step": "9.63c-r5c10ad",
+   "archive_sha256": "eaa60942544f39ef9a77eba995a995033b0415a09a25a3e42c233d936b924dca",
+   "original_sha256_at_archive": "eaa60942544f39ef9a77eba995a995033b0415a09a25a3e42c233d936b924dca",
+   "live_sha256_after_removal": "30181d7f0cfe13c33d55535bed92f6c02963660141561776d08ec4f66be9ff81",
+   "disposition": "PARTIAL: the listed methods were removed from the active file; the archive holds the original bytes verbatim",
+   "retired_methods": [
+    "test_current_manifest_covers_inventory_and_passes_audit",
+    "test_manifest_is_reproducible_from_sources"
+   ],
+   "superseded_by": {
+    "test_current_manifest_covers_inventory_and_passes_audit": "tests/test_step9_63c_r5c10ah_test_boundary_manifest.py::Step963cR5c10ahManifestTests.test_manifest_covers_current_inventory_and_passes_audit (+ test_missing_or_extra_module_is_rejected)",
+    "test_manifest_is_reproducible_from_sources": "tests/test_step9_63c_r5c10ah_test_boundary_manifest.py::Step963cR5c10ahManifestTests.test_manifest_is_reproducible_from_sources"
+   },
+   "coverage_mapping": "evaluation/v1_2_3/step9_63c_r5c10ah_coverage_mapping.json"
+  },
+  {
+   "step": "9.63c-r5c10ah standing rule (superseded pin/manifest/gate tests)",
+   "archive": "tests/retired/test_step9_63c_r5c10ae_test_boundary_manifest.py.retired",
+   "original_path": "tests/test_step9_63c_r5c10ae_test_boundary_manifest.py",
+   "origin_step": "9.63c-r5c10ae",
+   "archive_sha256": "5b54de9b9534384cf756626a8034db11cf2b109ff89216d02acef08bbad5ac3e",
+   "original_sha256_at_archive": "5b54de9b9534384cf756626a8034db11cf2b109ff89216d02acef08bbad5ac3e",
+   "live_sha256_after_removal": "0438b2a13f31e772d477fc5bc4f0fa4a4a4e24a63937b816f4911156b205f3a3",
+   "disposition": "PARTIAL: the listed methods were removed from the active file; the archive holds the original bytes verbatim",
+   "retired_methods": [
+    "test_manifest_covers_current_inventory_and_passes_audit",
+    "test_manifest_is_reproducible_from_sources"
+   ],
+   "superseded_by": {
+    "test_manifest_covers_current_inventory_and_passes_audit": "tests/test_step9_63c_r5c10ah_test_boundary_manifest.py::Step963cR5c10ahManifestTests.test_manifest_covers_current_inventory_and_passes_audit (+ test_missing_or_extra_module_is_rejected)",
+    "test_manifest_is_reproducible_from_sources": "tests/test_step9_63c_r5c10ah_test_boundary_manifest.py::Step963cR5c10ahManifestTests.test_manifest_is_reproducible_from_sources"
+   },
+   "coverage_mapping": "evaluation/v1_2_3/step9_63c_r5c10ah_coverage_mapping.json"
+  },
+  {
+   "step": "9.63c-r5c10ah standing rule (superseded pin/manifest/gate tests)",
+   "archive": "tests/retired/test_step9_63c_r5c10ag_test_boundary_manifest.py.retired",
+   "original_path": "tests/test_step9_63c_r5c10ag_test_boundary_manifest.py",
+   "origin_step": "9.63c-r5c10ag",
+   "archive_sha256": "2dcc36187c6aae05edf8da1deb8ddad4fd72377c3086ecb7d6d308bfe84dc5cb",
+   "original_sha256_at_archive": "2dcc36187c6aae05edf8da1deb8ddad4fd72377c3086ecb7d6d308bfe84dc5cb",
+   "live_sha256_after_removal": "f0d99d25da7b26504358749349dba9b65a8e08c1bd31f7e98f7ffedba13a1a2c",
+   "disposition": "PARTIAL: the listed methods were removed from the active file; the archive holds the original bytes verbatim",
+   "retired_methods": [
+    "test_manifest_covers_current_inventory_and_passes_audit",
+    "test_manifest_is_reproducible_from_sources"
+   ],
+   "superseded_by": {
+    "test_manifest_covers_current_inventory_and_passes_audit": "tests/test_step9_63c_r5c10ah_test_boundary_manifest.py::Step963cR5c10ahManifestTests.test_manifest_covers_current_inventory_and_passes_audit (+ test_missing_or_extra_module_is_rejected)",
+    "test_manifest_is_reproducible_from_sources": "tests/test_step9_63c_r5c10ah_test_boundary_manifest.py::Step963cR5c10ahManifestTests.test_manifest_is_reproducible_from_sources"
+   },
+   "coverage_mapping": "evaluation/v1_2_3/step9_63c_r5c10ah_coverage_mapping.json"
+  },
+  {
+   "step": "9.63c-r5c10ah standing rule (superseded pin/manifest/gate tests)",
+   "archive": "tests/retired/test_step9_63c_r5c10ae_builder_pins.py.retired",
+   "original_path": "tests/test_step9_63c_r5c10ae_builder_pins.py",
+   "origin_step": "9.63c-r5c10ae",
+   "archive_sha256": "779a9f9505b9d6a26fcc7b505f398f558d69e2a0665bd4b594aa7e676245f4bf",
+   "original_sha256_at_archive": "779a9f9505b9d6a26fcc7b505f398f558d69e2a0665bd4b594aa7e676245f4bf",
+   "live_sha256_after_removal": "f3f2ef1d12e07cf5e1de7b08d5b4c251ad0c957a95f7196d0bb67e9e32a17766",
+   "disposition": "PARTIAL: the listed methods were removed from the active file; the archive holds the original bytes verbatim",
+   "retired_methods": [
+    "test_pins_equal_reviewed_constants_and_current_bytes"
+   ],
+   "superseded_by": {
+    "test_pins_equal_reviewed_constants_and_current_bytes": "tests/test_step9_63c_r5c10ah_superseding_tests.py::BuilderPinTests.test_pins_equal_reviewed_constants_and_current_bytes"
+   },
+   "coverage_mapping": "evaluation/v1_2_3/step9_63c_r5c10ah_coverage_mapping.json"
+  },
+  {
+   "step": "9.63c-r5c10ah standing rule (superseded pin/manifest/gate tests)",
+   "archive": "tests/retired/test_step9_63c_r5c10ae_consumer_precommit_gate.py.retired",
+   "original_path": "tests/test_step9_63c_r5c10ae_consumer_precommit_gate.py",
+   "origin_step": "9.63c-r5c10ae",
+   "archive_sha256": "afbc64f8919acca1b41de2497d39babe99c54ff669ce08d4480aa9dd2e1dc146",
+   "original_sha256_at_archive": "afbc64f8919acca1b41de2497d39babe99c54ff669ce08d4480aa9dd2e1dc146",
+   "live_sha256_after_removal": "809d4ba9c3f47be799259aad16e2a052adc6ff494776bfeeb3c49dee543e9146",
+   "disposition": "PARTIAL: the listed methods were removed from the active file; the archive holds the original bytes verbatim",
+   "retired_methods": [
+    "test_prepare_formal_gates_reports_real_precommit_failures"
+   ],
+   "superseded_by": {
+    "test_prepare_formal_gates_reports_real_precommit_failures": "tests/test_step9_63c_r5c10ah_superseding_tests.py::ConsumerGateTests (positive control, tampered historical pin, execute_formal stops, missing issuance event)"
+   },
+   "coverage_mapping": "evaluation/v1_2_3/step9_63c_r5c10ah_coverage_mapping.json"
+  },
+  {
+   "step": "9.63c-r5c10ah standing rule (superseded pin/manifest/gate tests)",
+   "archive": "tests/retired/test_step9_63c_r5c10ag_authorization_issuer.py.retired",
+   "original_path": "tests/test_step9_63c_r5c10ag_authorization_issuer.py",
+   "origin_step": "9.63c-r5c10ag",
+   "archive_sha256": "7263f9c9bdc7b2fac2ff81c2624c983b608106209ec91f2d46a42e5da0403da6",
+   "original_sha256_at_archive": "7263f9c9bdc7b2fac2ff81c2624c983b608106209ec91f2d46a42e5da0403da6",
+   "live_sha256_after_removal": "983ee6c9bc1f5c27d4f83cdf2d9363dcc6c5f7944fa3cd3381b76985b6bc2202",
+   "disposition": "PARTIAL: the listed methods were removed from the active file; the archive holds the original bytes verbatim",
+   "retired_methods": [
+    "test_a_manifest_that_reads_back_differently_stops_before_any_event"
+   ],
+   "superseded_by": {
+    "test_a_manifest_that_reads_back_differently_stops_before_any_event": "tests/test_step9_63c_r5c10ah_issuance_plan_proof.py::ProofTests.test_a_manifest_that_reads_back_differently_stops_before_any_event (+ the pre-write proof tests)"
+   },
+   "coverage_mapping": "evaluation/v1_2_3/step9_63c_r5c10ah_coverage_mapping.json"
+  },
+  {
+   "step": "9.63c-r5c10ai standing rule (superseded pin/manifest/gate tests)",
+   "archive": "tests/retired/test_step9_63c_r5c10ad_v2_archival_replay.py.retired",
+   "original_path": "tests/test_step9_63c_r5c10ad_v2_archival_replay.py",
+   "origin_step": "9.63c-r5c10ad",
+   "archive_sha256": "78f0a1966bba6cca714461a014cd3f2567fc7e82560ca76a8ac9be01b6857dcb",
+   "original_sha256_at_archive": "78f0a1966bba6cca714461a014cd3f2567fc7e82560ca76a8ac9be01b6857dcb",
+   "live_sha256_after_removal": null,
+   "disposition": "FULL: module moved out of the active test set; the archive holds the original bytes verbatim",
+   "retired_methods": [
+    "test_head_blobs_equal_v2_pins_and_differ_from_working_tree",
+    "test_01a_frozen_v2_identity_preflight_passes_on_archived_bytes"
+   ],
+   "superseded_by": {
+    "test_head_blobs_equal_v2_pins_and_differ_from_working_tree": "tests/test_step9_63c_r5c10ai_v2_archival_replay.py::V2ArchivalReplayTests.test_archival_blobs_equal_v2_pins_and_differ_from_working_tree",
+    "test_01a_frozen_v2_identity_preflight_passes_on_archived_bytes": "tests/test_step9_63c_r5c10ai_v2_archival_replay.py::V2ArchivalReplayTests.test_01a_frozen_v2_identity_preflight_passes_on_archived_bytes (+ ancestry tests)"
+   },
+   "coverage_mapping": "evaluation/v1_2_3/step9_63c_r5c10ai_coverage_mapping.json"
+  },
+  {
+   "step": "9.63c-r5c10ai standing rule (superseded pin/manifest/gate tests)",
+   "archive": "tests/retired/test_step9_63c_r5c10ah_retire_entry.py.retired",
+   "original_path": "tests/test_step9_63c_r5c10ah_retire_entry.py",
+   "origin_step": "9.63c-r5c10ah",
+   "archive_sha256": "8dce427610468d8e25a3585b5b1b8d9583360d7f8abff0f8a557930522b860d9",
+   "original_sha256_at_archive": "8dce427610468d8e25a3585b5b1b8d9583360d7f8abff0f8a557930522b860d9",
+   "live_sha256_after_removal": "30c43750d61d08c63f87f6f4d14ae1742f3527b1a01b8593a4377958bdb10f4b",
+   "disposition": "PARTIAL: the listed methods were removed from the active file; the archive holds the original bytes verbatim",
+   "retired_methods": [
+    "test_clean_s0_with_a_signed_approval_is_ready_and_writes_nothing"
+   ],
+   "superseded_by": {
+    "test_clean_s0_with_a_signed_approval_is_ready_and_writes_nothing": "tests/test_step9_63c_r5c10ai_final_form_and_tokens.py::TokenTests (the retirement token is now RETIRE-R10-<uuid part of the r10 id, 12 hex>-<approval content hash, 12 hex>)"
+   },
+   "coverage_mapping": "evaluation/v1_2_3/step9_63c_r5c10ai_coverage_mapping.json"
+  },
+  {
+   "step": "9.63c-r5c10ai standing rule (superseded pin/manifest/gate tests)",
+   "archive": "tests/retired/test_step9_63c_r5c10ah_test_boundary_manifest.py.retired",
+   "original_path": "tests/test_step9_63c_r5c10ah_test_boundary_manifest.py",
+   "origin_step": "9.63c-r5c10ah",
+   "archive_sha256": "cddeee0d3b1d2516ad680ad11c77ec5feb0ae16960d353a8f93e53360f441d3c",
+   "original_sha256_at_archive": "cddeee0d3b1d2516ad680ad11c77ec5feb0ae16960d353a8f93e53360f441d3c",
+   "live_sha256_after_removal": "b78aae58fc8ad8530fa5005ecb36f511c63b30d4219f2153a412b763e9e6ec3e",
+   "disposition": "PARTIAL: the listed methods were removed from the active file; the archive holds the original bytes verbatim",
+   "retired_methods": [
+    "test_manifest_covers_current_inventory_and_passes_audit",
+    "test_manifest_is_reproducible_from_sources"
+   ],
+   "superseded_by": {
+    "test_manifest_covers_current_inventory_and_passes_audit": "tests/test_step9_63c_r5c10ai_test_boundary_manifest.py::Step963cR5c10aiManifestTests.test_manifest_covers_current_inventory_and_passes_audit (+ test_missing_or_extra_module_is_rejected)",
+    "test_manifest_is_reproducible_from_sources": "tests/test_step9_63c_r5c10ai_test_boundary_manifest.py::Step963cR5c10aiManifestTests.test_manifest_is_reproducible_from_sources"
+   },
+   "coverage_mapping": "evaluation/v1_2_3/step9_63c_r5c10ai_coverage_mapping.json"
   }
  ]
 }

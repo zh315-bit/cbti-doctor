@@ -1,0 +1,737 @@
+{
+ "artifact_type": "R5C10AH_MUTATION_RESULTS",
+ "method": "in-memory replacement of one function's source (parent and CLI child processes) or of one module constant; no source-inspection tests in the r5c10ah modules",
+ "total": 77,
+ "killed": 63,
+ "survived": 14,
+ "survivors_unexplained": [],
+ "by_group": {
+  "retire": {
+   "total": 36,
+   "killed": 27
+  },
+  "freeze": {
+   "total": 20,
+   "killed": 16
+  },
+  "proof": {
+   "total": 8,
+   "killed": 7
+  },
+  "superseding": {
+   "total": 13,
+   "killed": 13
+  }
+ },
+ "coverage_note": "every survivor is part of a redundant pair/triple whose combined mutant is killed, or is unreachable; no check is untested",
+ "superseding_group_purpose": "proof that the tests which supersede the retired r5c10ae/ad/ag pin, manifest, gate and readback tests detect the property they replace",
+ "results": [
+  {
+   "group": "retire",
+   "mutant": "RT1_approval_not_verified",
+   "function": "build_step9_63c_r11_runner_freeze.plan_retirement",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_retire_entry.PlanTests.test_rt1_a_stray_file_after_signing_breaks_the_stable_aggregate",
+   "note": "",
+   "seconds": 1.6
+  },
+  {
+   "group": "retire",
+   "mutant": "RT2_existing_r11_artifacts_ignored",
+   "function": "build_step9_63c_r11_runner_freeze.plan_retirement",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_retire_entry.PlanTests.test_rt2_any_existing_r11_artifact_blocks (artifact='evaluation/v1_2_3/step9_63c_r11_current_runner_identity.json')",
+   "note": "",
+   "seconds": 1.8
+  },
+  {
+   "group": "retire",
+   "mutant": "RT3_ledger_pin_ignored",
+   "function": "build_step9_63c_r11_runner_freeze.plan_retirement",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_retire_entry.PlanTests.test_rt3_a_ledger_that_was_appended_to_beforehand_blocks",
+   "note": "",
+   "seconds": 1.9
+  },
+  {
+   "group": "retire",
+   "mutant": "RT3b_ledger_size_only",
+   "function": "build_step9_63c_r11_runner_freeze.plan_retirement",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_retire_entry.PlanTests.test_rt3_a_ledger_with_a_changed_byte_blocks",
+   "note": "",
+   "seconds": 1.9
+  },
+  {
+   "group": "retire",
+   "mutant": "RT3c_ledger_sha_only",
+   "function": "build_step9_63c_r11_runner_freeze.plan_retirement",
+   "result": "SURVIVED",
+   "killed_by": null,
+   "note": "redundant: any appended byte changes the SHA",
+   "seconds": 2.6,
+   "survivor_classification": "REDUNDANT: any appended byte changes the SHA, so the size comparison adds nothing a SHA comparison does not"
+  },
+  {
+   "group": "retire",
+   "mutant": "RT4a_existing_retirement_event_ignored",
+   "function": "build_step9_63c_r11_runner_freeze.plan_retirement",
+   "result": "SURVIVED",
+   "killed_by": null,
+   "note": "redundant with RT3 and RT4b",
+   "seconds": 2.6,
+   "survivor_classification": "REDUNDANT with RT4b and RT3; the combined mutant RT4ab_RT3 is killed"
+  },
+  {
+   "group": "retire",
+   "mutant": "RT4b_executable_state_ignored",
+   "function": "build_step9_63c_r11_runner_freeze.plan_retirement",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_retire_entry.PlanTests.test_rt4_a_non_executable_r10_blocks",
+   "note": "",
+   "seconds": 1.9
+  },
+  {
+   "group": "retire",
+   "mutant": "RT4ab_RT3_all_retirement_state_checks_removed",
+   "function": "build_step9_63c_r11_runner_freeze.plan_retirement",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_retire_entry.PlanTests.test_rt3_a_ledger_that_was_appended_to_beforehand_blocks",
+   "note": "",
+   "seconds": 1.9
+  },
+  {
+   "group": "retire",
+   "mutant": "RT5a_determination_bytes_not_compared",
+   "function": "build_step9_63c_r11_runner_freeze.plan_retirement",
+   "result": "SURVIVED",
+   "killed_by": null,
+   "note": "redundant: the pinned SHA and the approval id still bind the file",
+   "seconds": 2.6,
+   "survivor_classification": "REDUNDANT: the pinned SHA and the approval id still bind the file; RT5abc is killed"
+  },
+  {
+   "group": "retire",
+   "mutant": "RT5b_determination_sha_not_compared",
+   "function": "build_step9_63c_r11_runner_freeze.plan_retirement",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_retire_entry.PlanTests.test_rt1_unsigned_or_drifted_approval (case='determination pin')",
+   "note": "redundant: canonical bytes equality implies the SHA",
+   "seconds": 1.7
+  },
+  {
+   "group": "retire",
+   "mutant": "RT5c_approval_reference_not_checked",
+   "function": "build_step9_63c_r11_runner_freeze.plan_retirement",
+   "result": "SURVIVED",
+   "killed_by": null,
+   "note": "redundant: canonical bytes derive from the approval id",
+   "seconds": 2.5,
+   "survivor_classification": "REDUNDANT: the canonical bytes derive from the approval id; RT5abc is killed"
+  },
+  {
+   "group": "retire",
+   "mutant": "RT5abc_determination_not_bound_to_the_approval",
+   "function": "build_step9_63c_r11_runner_freeze.plan_retirement",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_retire_entry.PlanTests.test_rt1_unsigned_or_drifted_approval (case='determination pin')",
+   "note": "",
+   "seconds": 1.8
+  },
+  {
+   "group": "retire",
+   "mutant": "RT6_historical_pins_ignored",
+   "function": "build_step9_63c_r11_runner_freeze.plan_retirement",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_retire_entry.PlanTests.test_rt6_holds_on_its_own_when_the_aggregate_is_resigned",
+   "note": "",
+   "seconds": 1.9
+  },
+  {
+   "group": "retire",
+   "mutant": "RT7_environment_ignored",
+   "function": "build_step9_63c_r11_runner_freeze.plan_retirement",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_retire_entry.PlanTests.test_rt7_synthetic_root_needs_the_switch",
+   "note": "",
+   "seconds": 2.1
+  },
+  {
+   "group": "retire",
+   "mutant": "W1_write_gate_removed",
+   "function": "build_step9_63c_r11_runner_freeze.retire_r10",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_retire_entry.GateTests.test_environment_variables_do_not_replace_the_terminal",
+   "note": "",
+   "seconds": 0.4
+  },
+  {
+   "group": "retire",
+   "mutant": "W2_plan_check_removed",
+   "function": "build_step9_63c_r11_runner_freeze.retire_r10",
+   "result": "SURVIVED",
+   "killed_by": null,
+   "note": "redundant: the frozen function re-validates its own predicate; the ledger pin is rechecked next",
+   "seconds": 2.6,
+   "survivor_classification": "REDUNDANT: the frozen function re-validates its own predicate; W4b (plan check + ledger recheck removed) is killed"
+  },
+  {
+   "group": "retire",
+   "mutant": "W3_confirmation_removed",
+   "function": "build_step9_63c_r11_runner_freeze.retire_r10",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_retire_entry.GateTests.test_a_token_from_another_approval_is_refused",
+   "note": "",
+   "seconds": 0.3
+  },
+  {
+   "group": "retire",
+   "mutant": "W4_ledger_recheck_after_confirmation_removed",
+   "function": "build_step9_63c_r11_runner_freeze.retire_r10",
+   "result": "SURVIVED",
+   "killed_by": null,
+   "note": "redundant with the plan's RT3; only a change between confirmation and write can show it",
+   "seconds": 2.6,
+   "survivor_classification": "REDUNDANT with the plan's RT3 (only a change between confirmation and write can show it); W4b is killed"
+  },
+  {
+   "group": "retire",
+   "mutant": "W4b_plan_and_recheck_both_removed",
+   "function": "build_step9_63c_r11_runner_freeze.retire_r10",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_retire_entry.GateTests.test_a_ledger_appended_to_before_the_write_is_refused_and_nothing_is_written",
+   "note": "",
+   "seconds": 0.1
+  },
+  {
+   "group": "retire",
+   "mutant": "W5_refusal_of_frozen_function_not_distinguished",
+   "function": "build_step9_63c_r11_runner_freeze.retire_r10",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_retire_entry.WriteTests.test_a_raise_after_the_frozen_function_already_appended_is_reported_as_a_postcondition_failure",
+   "note": "",
+   "seconds": 2.3
+  },
+  {
+   "group": "retire",
+   "mutant": "W6_postcondition_checks_removed",
+   "function": "build_step9_63c_r11_runner_freeze.retire_r10",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_retire_entry.WriteTests.test_a_malformed_event_id_or_old_timestamp_is_a_postcondition_failure (field='lifecycle_event_id')",
+   "note": "",
+   "seconds": 2.3
+  },
+  {
+   "group": "retire",
+   "mutant": "W6b_verification_not_required",
+   "function": "build_step9_63c_r11_runner_freeze.retire_r10",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_retire_entry.WriteTests.test_a_malformed_event_id_or_old_timestamp_is_a_postcondition_failure (field='lifecycle_event_id')",
+   "note": "the one-line and prefix checks still catch most; the template and reducer checks are unique to verify",
+   "seconds": 2.3
+  },
+  {
+   "group": "retire",
+   "mutant": "W6c_one_line_check_removed",
+   "function": "build_step9_63c_r11_runner_freeze.retire_r10",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_retire_entry.WriteTests.test_an_extra_issuance_event_appended_right_after_is_a_postcondition_failure",
+   "note": "",
+   "seconds": 2.6
+  },
+  {
+   "group": "retire",
+   "mutant": "W6d_prefix_check_removed",
+   "function": "build_step9_63c_r11_runner_freeze.retire_r10",
+   "result": "SURVIVED",
+   "killed_by": null,
+   "note": "verify_retirement also checks the pinned prefix",
+   "seconds": 2.6,
+   "survivor_classification": "REDUNDANT: verify_retirement also checks the pinned prefix (VR1 is killed)"
+  },
+  {
+   "group": "retire",
+   "mutant": "VR1_prefix_pin_ignored",
+   "function": "build_step9_63c_r11_runner_freeze.verify_retirement",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_retire_entry.WriteTests.test_changed_prior_bytes_are_a_postcondition_failure",
+   "note": "",
+   "seconds": 2.5
+  },
+  {
+   "group": "retire",
+   "mutant": "VR2a_terminal_newline_not_required",
+   "function": "build_step9_63c_r11_runner_freeze.verify_retirement",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_retire_entry.VerifyTests.test_a_retirement_line_without_its_terminating_newline_is_an_anomaly",
+   "note": "no test appends an unterminated line",
+   "seconds": 2.1
+  },
+  {
+   "group": "retire",
+   "mutant": "VR2b_later_lines_unrestricted",
+   "function": "build_step9_63c_r11_runner_freeze.verify_retirement",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_retire_entry.VerifyTests.test_a_second_issuance_event_after_the_retirement_is_an_anomaly",
+   "note": "",
+   "seconds": 2.1
+  },
+  {
+   "group": "retire",
+   "mutant": "VR3a_template_fields_ignored",
+   "function": "build_step9_63c_r11_runner_freeze.verify_retirement",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_retire_entry.VerifyTests.test_tampering_after_retirement_is_reported",
+   "note": "",
+   "seconds": 2.2
+  },
+  {
+   "group": "retire",
+   "mutant": "VR3b_event_id_shape_ignored",
+   "function": "build_step9_63c_r11_runner_freeze.verify_retirement",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_retire_entry.WriteTests.test_a_malformed_event_id_or_old_timestamp_is_a_postcondition_failure (field='lifecycle_event_id')",
+   "note": "",
+   "seconds": 2.3
+  },
+  {
+   "group": "retire",
+   "mutant": "VR3c_timestamp_order_ignored",
+   "function": "build_step9_63c_r11_runner_freeze.verify_retirement",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_retire_entry.WriteTests.test_a_malformed_event_id_or_old_timestamp_is_a_postcondition_failure (field='timestamp_utc')",
+   "note": "",
+   "seconds": 2.3
+  },
+  {
+   "group": "retire",
+   "mutant": "VR3d_path_fields_ignored",
+   "function": "build_step9_63c_r11_runner_freeze.verify_retirement",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_retire_entry.WriteTests.test_an_event_that_names_another_determination_or_contract_path_is_a_postcondition_failure (field='reuse_determination')",
+   "note": "",
+   "seconds": 2.4
+  },
+  {
+   "group": "retire",
+   "mutant": "VR4_reducer_state_ignored",
+   "function": "build_step9_63c_r11_runner_freeze.verify_retirement",
+   "result": "SURVIVED",
+   "killed_by": null,
+   "note": "template and one-line checks catch the same anomalies in practice",
+   "seconds": 2.7,
+   "survivor_classification": "REDUNDANT: the template and one-line checks catch the same anomalies; the reducer is also used by RT4/FZ2"
+  },
+  {
+   "group": "retire",
+   "mutant": "VR5_single_retirement_event_ignored",
+   "function": "build_step9_63c_r11_runner_freeze.verify_retirement",
+   "result": "SURVIVED",
+   "killed_by": null,
+   "note": "implied by V3",
+   "seconds": 2.6,
+   "survivor_classification": "REDUNDANT: implied by V3 (the appended event equals the template)"
+  },
+  {
+   "group": "retire",
+   "mutant": "PM_path_match_always_true",
+   "function": "build_step9_63c_r11_runner_freeze._path_matches",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_retire_entry.WriteTests.test_an_event_that_names_another_determination_or_contract_path_is_a_postcondition_failure (field='reuse_determination')",
+   "note": "",
+   "seconds": 2.4
+  },
+  {
+   "group": "retire",
+   "mutant": "TK_retire_token_ignores_the_approval",
+   "function": "build_step9_63c_r11_runner_freeze.retire_token",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_retire_entry.GateTests.test_a_token_from_another_approval_is_refused",
+   "note": "",
+   "seconds": 0.3
+  },
+  {
+   "group": "retire",
+   "mutant": "AG_aggregate_not_stable",
+   "function": "build_step9_63c_r11_runner_freeze.stable_aggregate",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_end_to_end_gated_rehearsal.FullSequence.test_gated_sequence_ends_with_one_active_authorization_and_a_passing_gate",
+   "note": "",
+   "seconds": 0.4
+  },
+  {
+   "group": "freeze",
+   "mutant": "FZ1_approval_not_verified",
+   "function": "build_step9_63c_r11_runner_freeze.plan_freeze",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_freeze_entry.PlanTests.test_fz1_a_stray_file_after_signing_breaks_the_stable_aggregate",
+   "note": "",
+   "seconds": 1.5
+  },
+  {
+   "group": "freeze",
+   "mutant": "FZ2a_missing_retirement_event_ignored",
+   "function": "build_step9_63c_r11_runner_freeze.plan_freeze",
+   "result": "SURVIVED",
+   "killed_by": null,
+   "note": "redundant with FZ2b and FZ3",
+   "seconds": 2.7,
+   "survivor_classification": "REDUNDANT PAIR with FZ2b; FZ2ab (AR-14 not required) is killed"
+  },
+  {
+   "group": "freeze",
+   "mutant": "FZ2b_reducer_state_ignored",
+   "function": "build_step9_63c_r11_runner_freeze.plan_freeze",
+   "result": "SURVIVED",
+   "killed_by": null,
+   "note": "",
+   "seconds": 2.6,
+   "survivor_classification": "REDUNDANT PAIR with FZ2a; FZ2ab is killed"
+  },
+  {
+   "group": "freeze",
+   "mutant": "FZ2ab_ar14_not_required",
+   "function": "build_step9_63c_r11_runner_freeze.plan_freeze",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_freeze_entry.GateTests.test_skipping_ar14_via_the_cli_writes_nothing",
+   "note": "",
+   "seconds": 0.7
+  },
+  {
+   "group": "freeze",
+   "mutant": "FZ3a_pointer_bytes_ignored",
+   "function": "build_step9_63c_r11_runner_freeze.plan_freeze",
+   "result": "SURVIVED",
+   "killed_by": null,
+   "note": "",
+   "seconds": 2.5,
+   "survivor_classification": "REDUNDANT: a non-canonical pointer changes the assembled Freeze, which FZ5 refuses (and the resolver would refuse it)"
+  },
+  {
+   "group": "freeze",
+   "mutant": "FZ3b_record_binding_ignored",
+   "function": "build_step9_63c_r11_runner_freeze.plan_freeze",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_freeze_entry.PlanTests.test_fz3_pointer_variants (case='record for another approval')",
+   "note": "",
+   "seconds": 1.8
+  },
+  {
+   "group": "freeze",
+   "mutant": "FZ4_existing_freeze_ignored",
+   "function": "build_step9_63c_r11_runner_freeze.plan_freeze",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_freeze_entry.PlanTests.test_fz4_an_existing_freeze_blocks",
+   "note": "",
+   "seconds": 1.8
+  },
+  {
+   "group": "freeze",
+   "mutant": "FZ5a_prediction_sha_ignored",
+   "function": "build_step9_63c_r11_runner_freeze.plan_freeze",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_freeze_entry.PlanTests.test_fz5_a_wrong_predicted_sha_or_size_or_time_blocks (case='sha')",
+   "note": "",
+   "seconds": 1.9
+  },
+  {
+   "group": "freeze",
+   "mutant": "FZ5b_prediction_size_ignored",
+   "function": "build_step9_63c_r11_runner_freeze.plan_freeze",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_freeze_entry.PlanTests.test_fz5_a_wrong_predicted_sha_or_size_or_time_blocks (case='size')",
+   "note": "redundant: the SHA fixes the size",
+   "seconds": 1.8
+  },
+  {
+   "group": "freeze",
+   "mutant": "FZ6_historical_pins_ignored",
+   "function": "build_step9_63c_r11_runner_freeze.plan_freeze",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_freeze_entry.PlanTests.test_fz6_holds_on_its_own_when_the_aggregate_is_resigned",
+   "note": "",
+   "seconds": 1.6
+  },
+  {
+   "group": "freeze",
+   "mutant": "FZ7_environment_ignored",
+   "function": "build_step9_63c_r11_runner_freeze.plan_freeze",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_freeze_entry.PlanTests.test_fz7_synthetic_switch",
+   "note": "",
+   "seconds": 1.8
+  },
+  {
+   "group": "freeze",
+   "mutant": "CF1_write_gate_removed",
+   "function": "build_step9_63c_r11_runner_freeze.create_freeze",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_freeze_entry.GateTests.test_in_process_without_a_terminal_is_refused",
+   "note": "",
+   "seconds": 0.2
+  },
+  {
+   "group": "freeze",
+   "mutant": "CF2_plan_check_removed",
+   "function": "build_step9_63c_r11_runner_freeze.create_freeze",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_freeze_entry.GateTests.test_a_second_run_is_refused",
+   "note": "redundant with the in-lock re-check",
+   "seconds": 0.1
+  },
+  {
+   "group": "freeze",
+   "mutant": "CF3_confirmation_removed",
+   "function": "build_step9_63c_r11_runner_freeze.create_freeze",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_freeze_entry.GateTests.test_wrong_tokens_are_refused (token='')",
+   "note": "",
+   "seconds": 0.8
+  },
+  {
+   "group": "freeze",
+   "mutant": "CF4_inlock_recheck_removed",
+   "function": "build_step9_63c_r11_runner_freeze.create_freeze",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_freeze_entry.WriteTests.test_a_change_between_confirmation_and_write_is_caught_by_the_recheck",
+   "note": "",
+   "seconds": 2.2
+  },
+  {
+   "group": "freeze",
+   "mutant": "CF4b_both_ready_checks_removed",
+   "function": "build_step9_63c_r11_runner_freeze.create_freeze",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_freeze_entry.GateTests.test_a_second_run_is_refused",
+   "note": "",
+   "seconds": 0.1
+  },
+  {
+   "group": "freeze",
+   "mutant": "CF5_disk_sha_vs_prediction_ignored",
+   "function": "build_step9_63c_r11_runner_freeze.create_freeze",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_freeze_entry.WriteTests.test_a_disk_sha_that_differs_from_the_prediction_is_reported_and_nothing_is_deleted",
+   "note": "",
+   "seconds": 2.2
+  },
+  {
+   "group": "freeze",
+   "mutant": "CF6_reproducibility_check_ignored",
+   "function": "build_step9_63c_r11_runner_freeze.create_freeze",
+   "result": "SURVIVED",
+   "killed_by": null,
+   "note": "unreachable in tests: the SHA check fires first for any byte difference; reproducibility can only fail if the members change during the write",
+   "seconds": 2.3,
+   "survivor_classification": "UNREACHABLE in tests: the SHA check fires first for any byte difference; reproducibility could only fail if the members changed during the write"
+  },
+  {
+   "group": "freeze",
+   "mutant": "CF7_library_write_used_instead",
+   "function": "build_step9_63c_r11_runner_freeze.create_freeze",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_freeze_entry.WriteTests.test_a_disk_sha_that_differs_from_the_prediction_is_reported_and_nothing_is_deleted",
+   "note": "",
+   "seconds": 2.2
+  },
+  {
+   "group": "freeze",
+   "mutant": "TK_freeze_token_ignores_the_approval",
+   "function": "build_step9_63c_r11_runner_freeze.freeze_token",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_freeze_entry.GateTests.test_wrong_tokens_are_refused (token='CREATE-R11-FREEZE-8e470b58e9fd-000000000000')",
+   "note": "",
+   "seconds": 1.4
+  },
+  {
+   "group": "proof",
+   "mutant": "H1_hook_not_called",
+   "function": "build_step9_63c_r11_runner_freeze._write_exclusive",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_issuance_plan_proof.ProofTests.test_issue_is_refused_when_the_manifest_to_write_differs_from_the_plan",
+   "note": "",
+   "seconds": 0.6
+  },
+  {
+   "group": "proof",
+   "mutant": "H2_every_path_checked",
+   "function": "build_step9_63c_r11_runner_freeze._verify_manifest_matches_plan",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_issuance_plan_proof.ProofTests.test_other_targets_are_not_affected",
+   "note": "",
+   "seconds": 0.7
+  },
+  {
+   "group": "proof",
+   "mutant": "H3_shape_guard_removed",
+   "function": "build_step9_63c_r11_runner_freeze._verify_manifest_matches_plan",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_issuance_plan_proof.ProofTests.test_a_plan_that_cannot_be_made_refuses_the_write",
+   "note": "",
+   "seconds": 0.3
+  },
+  {
+   "group": "proof",
+   "mutant": "H4_key_comparison_removed",
+   "function": "build_step9_63c_r11_runner_freeze._verify_manifest_matches_plan",
+   "result": "SURVIVED",
+   "killed_by": null,
+   "note": "redundant with the byte comparison",
+   "seconds": 0.8,
+   "survivor_classification": "REDUNDANT with the byte comparison H5; H45 (both removed) is killed"
+  },
+  {
+   "group": "proof",
+   "mutant": "H5_byte_comparison_removed",
+   "function": "build_step9_63c_r11_runner_freeze._verify_manifest_matches_plan",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_issuance_plan_proof.ProofTests.test_a_byte_level_difference_in_the_serialization_is_refused (case='trailing space')",
+   "note": "",
+   "seconds": 0.0
+  },
+  {
+   "group": "proof",
+   "mutant": "H45_both_comparisons_removed",
+   "function": "build_step9_63c_r11_runner_freeze._verify_manifest_matches_plan",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_issuance_plan_proof.ProofTests.test_a_byte_level_difference_in_the_serialization_is_refused (case='trailing space')",
+   "note": "",
+   "seconds": 0.1
+  },
+  {
+   "group": "proof",
+   "mutant": "H6_issue_time_compared_too",
+   "function": "build_step9_63c_r11_runner_freeze._verify_manifest_matches_plan",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_issuance_plan_proof.ProofTests.test_a_manifest_that_differs_only_in_the_issue_time_is_accepted",
+   "note": "",
+   "seconds": 0.2
+  },
+  {
+   "group": "proof",
+   "mutant": "H7_readback_removed_in_issuer",
+   "function": "issue_step9_63c_r11_authorization.issue_authorization",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_issuance_plan_proof.ProofTests.test_a_manifest_that_reads_back_differently_stops_before_any_event",
+   "note": "",
+   "seconds": 0.2
+  },
+  {
+   "group": "superseding",
+   "mutant": "S1_consumer_pin_altered",
+   "function": "build_step9_63c_r11_runner_freeze.CHANGED_SHA256",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_superseding_tests.BuilderPinTests.test_pins_equal_reviewed_constants_and_current_bytes",
+   "note": "",
+   "seconds": 0.0
+  },
+  {
+   "group": "superseding",
+   "mutant": "S2_scanner_pin_altered",
+   "function": "build_step9_63c_r11_runner_freeze.CHANGED_SHA256",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_superseding_tests.BuilderPinTests.test_pins_equal_reviewed_constants_and_current_bytes",
+   "note": "",
+   "seconds": 0.0
+  },
+  {
+   "group": "superseding",
+   "mutant": "S3_issuer_pin_altered",
+   "function": "build_step9_63c_r11_runner_freeze.ISSUER_SHA256",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_superseding_tests.BuilderPinTests.test_the_issuer_pin_equals_the_reviewed_constant_and_the_current_bytes",
+   "note": "",
+   "seconds": 0.0
+  },
+  {
+   "group": "superseding",
+   "mutant": "S4_historical_pin_check_neutralized",
+   "function": "run_step9_63_v3_formal_execution.collect_r11_precommit_state",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_superseding_tests.ConsumerGateTests.test_a_tampered_historical_pin_fails_closed_and_execute_formal_stops_before_the_adapter",
+   "note": "",
+   "seconds": 0.1
+  },
+  {
+   "group": "superseding",
+   "mutant": "S5_execute_formal_ignores_the_gate",
+   "function": "run_step9_63_v3_formal_execution.execute_formal",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_superseding_tests.ConsumerGateTests.test_a_missing_issuance_event_fails_closed_through_the_same_path",
+   "note": "",
+   "seconds": 0.1
+  },
+  {
+   "group": "superseding",
+   "mutant": "S6_issuance_cross_check_not_wired",
+   "function": "run_step9_63_v3_formal_execution.prepare_formal_gates",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_superseding_tests.ConsumerGateTests.test_a_missing_issuance_event_fails_closed_through_the_same_path",
+   "note": "",
+   "seconds": 0.0
+  },
+  {
+   "group": "superseding",
+   "mutant": "S7_manifest_inventory_check_removed",
+   "function": "validate_step9_63c_test_boundary.audit_manifest",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_missing_or_extra_module_is_rejected",
+   "note": "",
+   "seconds": 3.1
+  },
+  {
+   "group": "superseding",
+   "mutant": "S8_manifest_version_check_removed",
+   "function": "validate_step9_63c_r5c10ah_test_boundary.audit_manifest",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_wrong_version_or_previous_reference_is_rejected",
+   "note": "",
+   "seconds": 3.6
+  },
+  {
+   "group": "superseding",
+   "mutant": "S9_previous_bytes_pin_removed",
+   "function": "validate_step9_63c_r5c10ah_test_boundary.audit_manifest",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_the_previous_manifest_byte_pin_is_enforced",
+   "note": "",
+   "seconds": 3.5
+  },
+  {
+   "group": "superseding",
+   "mutant": "S10_previous_reference_check_removed",
+   "function": "validate_step9_63c_r5c10ah_test_boundary.audit_manifest",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_wrong_version_or_previous_reference_is_rejected",
+   "note": "",
+   "seconds": 4.1
+  },
+  {
+   "group": "superseding",
+   "mutant": "S11_carried_decisions_check_removed",
+   "function": "validate_step9_63c_r5c10ah_test_boundary.audit_manifest",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_decision_of_a_row_carried_from_r5c10ag_cannot_change (field='allowed')",
+   "note": "",
+   "seconds": 0.7
+  },
+  {
+   "group": "superseding",
+   "mutant": "S12_added_since_previous_check_removed",
+   "function": "validate_step9_63c_r5c10ah_test_boundary.audit_manifest",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_added_since_previous_must_match_the_inventory_difference",
+   "note": "",
+   "seconds": 0.2
+  },
+  {
+   "group": "superseding",
+   "mutant": "S13_manifest_build_changed",
+   "function": "validate_step9_63c_r5c10ah_test_boundary.build_manifest",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_manifest_is_reproducible_from_sources",
+   "note": "",
+   "seconds": 2.0
+  }
+ ]
+}

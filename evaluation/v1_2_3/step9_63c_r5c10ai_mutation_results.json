@@ -1,0 +1,323 @@
+{
+ "artifact_type": "R5C10AI_MUTATION_RESULTS",
+ "method": "in-memory replacement of one function's source (parent and CLI child processes) or of one module constant; no source-inspection tests in the r5c10ah modules",
+ "total": 33,
+ "killed": 33,
+ "survived": 0,
+ "survivors_unexplained": [],
+ "by_group": {
+  "token": {
+   "total": 21,
+   "killed": 21
+  },
+  "replay": {
+   "total": 6,
+   "killed": 6
+  },
+  "manifest": {
+   "total": 6,
+   "killed": 6
+  }
+ },
+ "coverage_note": "every survivor is part of a redundant pair/triple whose combined mutant is killed, or is unreachable; no check is untested",
+ "superseding_group_purpose": "replay group: proof that the new archival-replay test detects tampered archived bytes and a non-existent archival commit; manifest group: the ai manifest tests; token group: the uuid-segment token, content hash, commit pin and accepted exception",
+ "results": [
+  {
+   "group": "token",
+   "mutant": "T1_token_first_segment_is_the_old_literal",
+   "function": "build_step9_63c_r11_runner_freeze.R10_UUID_PREFIX12",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ai_final_form_and_tokens.FinalFormSequence.test_the_complete_gated_sequence_with_the_final_form",
+   "note": "",
+   "seconds": 1.2
+  },
+  {
+   "group": "token",
+   "mutant": "T2_token_first_segment_is_the_whole_uuid",
+   "function": "build_step9_63c_r11_runner_freeze.R10_UUID_PREFIX12",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ai_final_form_and_tokens.FinalFormSequence.test_the_complete_gated_sequence_with_the_final_form",
+   "note": "",
+   "seconds": 1.1
+  },
+  {
+   "group": "token",
+   "mutant": "T3_retire_token_ignores_the_approval_part",
+   "function": "build_step9_63c_r11_runner_freeze.retire_token",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ai_final_form_and_tokens.TokenTests.test_the_previous_literal_prefix_and_other_malformed_tokens_are_refused (token='RETIRE-R10-aff5c4b96bb7-000000000000')",
+   "note": "",
+   "seconds": 2.0
+  },
+  {
+   "group": "token",
+   "mutant": "T4_token_part_is_always_the_file_hash",
+   "function": "build_step9_63c_r11_runner_freeze.approval_token_part",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ai_final_form_and_tokens.FinalFormSequence.test_the_complete_gated_sequence_with_the_final_form",
+   "note": "",
+   "seconds": 0.9
+  },
+  {
+   "group": "token",
+   "mutant": "T5_content_hash_keeps_the_signature_fields",
+   "function": "build_step9_63c_r11_runner_freeze.approval_content_sha256",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ai_final_form_and_tokens.ContentAndCommitTests.test_the_four_signature_fields_may_differ",
+   "note": "",
+   "seconds": 0.9
+  },
+  {
+   "group": "token",
+   "mutant": "T6_content_hash_keeps_the_token_values",
+   "function": "build_step9_63c_r11_runner_freeze.approval_content_sha256",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ai_final_form_and_tokens.ContentAndCommitTests.test_the_four_signature_fields_may_differ",
+   "note": "",
+   "seconds": 0.8
+  },
+  {
+   "group": "token",
+   "mutant": "T7_content_hash_includes_itself",
+   "function": "build_step9_63c_r11_runner_freeze.approval_content_sha256",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ai_final_form_and_tokens.ContentAndCommitTests.test_the_four_signature_fields_may_differ",
+   "note": "",
+   "seconds": 0.8
+  },
+  {
+   "group": "token",
+   "mutant": "T8_aggregate_is_part_of_the_content_hash",
+   "function": "build_step9_63c_r11_runner_freeze.approval_content_sha256",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ai_final_form_and_tokens.ContentAndCommitTests.test_the_four_signature_fields_may_differ",
+   "note": "",
+   "seconds": 0.8
+  },
+  {
+   "group": "token",
+   "mutant": "C1_content_check_removed",
+   "function": "build_step9_63c_r11_runner_freeze.verify_approval",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ai_final_form_and_tokens.ContentAndCommitTests.test_any_edit_beyond_the_four_signature_fields_is_detected (case='freeze time')",
+   "note": "",
+   "seconds": 0.2
+  },
+  {
+   "group": "token",
+   "mutant": "C2_commit_pin_not_enforced",
+   "function": "build_step9_63c_r11_runner_freeze.verify_approval",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ai_final_form_and_tokens.ContentAndCommitTests.test_signing_requires_a_commit_and_HEAD_must_equal_it (case='no commit')",
+   "note": "",
+   "seconds": 0.3
+  },
+  {
+   "group": "token",
+   "mutant": "C3_head_comparison_removed",
+   "function": "build_step9_63c_r11_runner_freeze.verify_approval",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ai_final_form_and_tokens.ContentAndCommitTests.test_signing_requires_a_commit_and_HEAD_must_equal_it (case='other commit')",
+   "note": "",
+   "seconds": 0.3
+  },
+  {
+   "group": "token",
+   "mutant": "C4_commit_shape_check_removed",
+   "function": "build_step9_63c_r11_runner_freeze.verify_approval",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ai_final_form_and_tokens.FinalFormSequence.test_the_complete_gated_sequence_with_the_final_form",
+   "note": "redundant: a missing or malformed commit never equals HEAD",
+   "seconds": 0.9
+  },
+  {
+   "group": "token",
+   "mutant": "C34_no_commit_check_at_all",
+   "function": "build_step9_63c_r11_runner_freeze.verify_approval",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ai_final_form_and_tokens.ContentAndCommitTests.test_signing_requires_a_commit_and_HEAD_must_equal_it (case='no commit')",
+   "note": "",
+   "seconds": 0.3
+  },
+  {
+   "group": "token",
+   "mutant": "H1_detached_head_not_validated",
+   "function": "build_step9_63c_r11_runner_freeze.head_commit",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ai_final_form_and_tokens.ContentAndCommitTests.test_head_commit_reads_detached_loose_and_packed_refs",
+   "note": "",
+   "seconds": 0.3
+  },
+  {
+   "group": "token",
+   "mutant": "H2_ref_value_not_validated",
+   "function": "build_step9_63c_r11_runner_freeze.head_commit",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ai_final_form_and_tokens.FinalFormSequence.test_the_complete_gated_sequence_with_the_final_form",
+   "note": "",
+   "seconds": 1.0
+  },
+  {
+   "group": "token",
+   "mutant": "H3_loose_ref_ignored",
+   "function": "build_step9_63c_r11_runner_freeze.head_commit",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ai_final_form_and_tokens.ContentAndCommitTests.test_head_commit_on_the_real_repository_is_a_full_sha",
+   "note": "",
+   "seconds": 0.3
+  },
+  {
+   "group": "token",
+   "mutant": "H4_packed_refs_wrong_field",
+   "function": "build_step9_63c_r11_runner_freeze.head_commit",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ai_final_form_and_tokens.ContentAndCommitTests.test_head_commit_reads_detached_loose_and_packed_refs",
+   "note": "",
+   "seconds": 0.3
+  },
+  {
+   "group": "token",
+   "mutant": "E1_exceptions_not_recorded",
+   "function": "build_step9_63c_r11_runner_freeze.build_approval",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ai_final_form_and_tokens.AcceptedExceptionTests.test_ar15_is_recorded_as_an_accepted_exception_in_every_draft",
+   "note": "",
+   "seconds": 0.0
+  },
+  {
+   "group": "token",
+   "mutant": "E2_commit_pin_not_in_final_form",
+   "function": "build_step9_63c_r11_runner_freeze.build_approval",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ai_final_form_and_tokens.FinalFormSequence.test_the_complete_gated_sequence_with_the_final_form",
+   "note": "",
+   "seconds": 0.8
+  },
+  {
+   "group": "token",
+   "mutant": "E3_final_form_has_no_content_hash",
+   "function": "build_step9_63c_r11_runner_freeze.build_approval",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ai_final_form_and_tokens.FinalFormSequence.test_the_complete_gated_sequence_with_the_final_form",
+   "note": "",
+   "seconds": 0.9
+  },
+  {
+   "group": "token",
+   "mutant": "E4_tokens_not_concrete",
+   "function": "build_step9_63c_r11_runner_freeze.build_approval",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ai_final_form_and_tokens.FinalFormSequence.test_the_complete_gated_sequence_with_the_final_form",
+   "note": "",
+   "seconds": 0.9
+  },
+  {
+   "group": "replay",
+   "mutant": "P1_archived_bytes_tampered",
+   "function": "test_step9_63c_r5c10ai_v2_archival_replay.head_blob",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ai_v2_archival_replay.V2ArchivalReplayTests.test_01a_frozen_v2_identity_preflight_passes_on_archived_bytes",
+   "note": "",
+   "seconds": 0.7
+  },
+  {
+   "group": "replay",
+   "mutant": "P2_git_object_tampered",
+   "function": "test_step9_63c_r5c10ai_v2_archival_replay.git_object",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ai_v2_archival_replay.V2ArchivalReplayTests.test_01a_frozen_v2_identity_preflight_passes_on_archived_bytes",
+   "note": "loose-object path; the packed fallback is not reachable in this checkout",
+   "seconds": 0.2
+  },
+  {
+   "group": "replay",
+   "mutant": "P3_archival_commit_does_not_exist",
+   "function": "test_step9_63c_r5c10ai_v2_archival_replay.V2_ARCHIVAL_COMMIT",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ai_v2_archival_replay.V2ArchivalReplayTests.test_01a_frozen_v2_identity_preflight_passes_on_archived_bytes",
+   "note": "",
+   "seconds": 0.2
+  },
+  {
+   "group": "replay",
+   "mutant": "P4_archival_commit_is_the_current_head",
+   "function": "test_step9_63c_r5c10ai_v2_archival_replay.V2_ARCHIVAL_COMMIT",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ai_v2_archival_replay.V2ArchivalReplayTests.test_01a_frozen_v2_identity_preflight_passes_on_archived_bytes",
+   "note": "",
+   "seconds": 0.4
+  },
+  {
+   "group": "replay",
+   "mutant": "P5_ancestry_not_walked",
+   "function": "test_step9_63c_r5c10ai_v2_archival_replay.parents_of",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ai_v2_archival_replay.V2ArchivalReplayTests.test_the_archival_commit_exists_and_is_an_ancestor_of_the_current_head",
+   "note": "",
+   "seconds": 0.6
+  },
+  {
+   "group": "replay",
+   "mutant": "P6_archival_commit_is_a_tree_not_a_commit",
+   "function": "test_step9_63c_r5c10ai_v2_archival_replay.V2_ARCHIVAL_COMMIT",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ai_v2_archival_replay.V2ArchivalReplayTests.test_01a_frozen_v2_identity_preflight_passes_on_archived_bytes",
+   "note": "a non-existent object id of another shape",
+   "seconds": 0.1
+  },
+  {
+   "group": "manifest",
+   "mutant": "S1_inventory_check_removed",
+   "function": "validate_step9_63c_test_boundary.audit_manifest",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ai_test_boundary_manifest.Step963cR5c10aiManifestTests.test_missing_or_extra_module_is_rejected",
+   "note": "",
+   "seconds": 2.3
+  },
+  {
+   "group": "manifest",
+   "mutant": "S2_version_check_removed",
+   "function": "validate_step9_63c_r5c10ai_test_boundary.audit_manifest",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ai_test_boundary_manifest.Step963cR5c10aiManifestTests.test_wrong_version_or_previous_reference_is_rejected",
+   "note": "",
+   "seconds": 3.4
+  },
+  {
+   "group": "manifest",
+   "mutant": "S3_previous_bytes_pin_removed",
+   "function": "validate_step9_63c_r5c10ai_test_boundary.audit_manifest",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ai_test_boundary_manifest.Step963cR5c10aiManifestTests.test_the_previous_manifest_byte_pin_is_enforced",
+   "note": "",
+   "seconds": 3.2
+  },
+  {
+   "group": "manifest",
+   "mutant": "S4_carried_decisions_check_removed",
+   "function": "validate_step9_63c_r5c10ai_test_boundary.audit_manifest",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ai_test_boundary_manifest.Step963cR5c10aiManifestTests.test_decision_of_a_row_carried_from_r5c10ah_cannot_change (field='allowed')",
+   "note": "",
+   "seconds": 0.6
+  },
+  {
+   "group": "manifest",
+   "mutant": "S5_added_since_previous_check_removed",
+   "function": "validate_step9_63c_r5c10ai_test_boundary.audit_manifest",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ai_test_boundary_manifest.Step963cR5c10aiManifestTests.test_added_since_previous_must_match_the_inventory_difference",
+   "note": "",
+   "seconds": 0.2
+  },
+  {
+   "group": "manifest",
+   "mutant": "S6_manifest_build_changed",
+   "function": "validate_step9_63c_r5c10ai_test_boundary.build_manifest",
+   "result": "KILLED",
+   "killed_by": "test_step9_63c_r5c10ai_test_boundary_manifest.Step963cR5c10aiManifestTests.test_manifest_is_reproducible_from_sources",
+   "note": "",
+   "seconds": 2.1
+  }
+ ]
+}

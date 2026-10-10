@@ -428,21 +428,6 @@ class IssuanceTests(unittest.TestCase):
         self.assertEqual(code, 2)
         self.assertEqual(fx.tree_digest(root), before)
 
-    def test_a_manifest_that_reads_back_differently_stops_before_any_event(self):
-        root = clone("s2")
-        real = builder._write_exclusive
-
-        def corrupt(path, data):
-            real(path, data[:-1] + b" ")
-        before = (root / builder.LEDGER_PATH).read_bytes()
-        with patch.object(builder, "interactive_terminal", return_value=True), \
-                patch.object(builder, "confirm_with_token", return_value=None), \
-                patch.object(builder, "_write_exclusive", side_effect=corrupt):
-            with self.assertRaisesRegex(RuntimeError, "MANIFEST_READBACK_MISMATCH"):
-                issuer.issue_authorization(root)
-        self.assertEqual((root / builder.LEDGER_PATH).read_bytes(), before)
-        self.assertTrue((root / issuer.MANIFEST_RELATIVE).exists())  # kept for a person to inspect
-
     def test_issuer_never_overwrites_an_existing_manifest(self):
         root = clone("s2")
         (root / issuer.MANIFEST_RELATIVE).write_text("sentinel")

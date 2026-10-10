@@ -1,0 +1,257 @@
+{
+ "step": "9.63c-r5c10ah",
+ "READY_FOR_R11_FREEZE_REVIEW": "NO",
+ "summary": {
+  "BLOCKED": 6,
+  "PASS": 26,
+  "FAIL": 2
+ },
+ "non_pass_by_category": {
+  "BLOCKED/WAITING_FOR_MANUAL_ACTIVATION": 5,
+  "BLOCKED/KNOWN_GAP_NOT_ACTIVATION": 1,
+  "FAIL/DECISION_NEEDED": 2
+ },
+ "answer": "BLOCKED items are all WAITING_FOR_MANUAL_ACTIVATION except R15 (AR-15, a separate known gap). FAIL items are not activation waits: R16 and R33 are the same cause (2 archival-replay tests broken by the checkpoint commit) and need your decision.",
+ "supersedes_view_of": "step9_63c_r5c10ag_r11_freeze_readiness_matrix.json (unchanged)",
+ "note": "PASS = implemented and verified by offline tests, mutation testing and temporary-root rehearsals; not activation readiness. No r11 pointer, Freeze, Registry, authorization or signed approval exists; AR-14 was not executed; the real ledger gained no byte.",
+ "conditions": [
+  {
+   "id": "R01",
+   "condition": "Formal r11 identity pointer exists",
+   "status": "BLOCKED",
+   "category": "WAITING_FOR_MANUAL_ACTIVATION",
+   "evidence": "Absent (correct). Created by `--create-pointer` after AR-14, in your terminal with the typed token."
+  },
+  {
+   "id": "R02",
+   "condition": "Reviewed r11 identity-pointer creation procedure",
+   "status": "PASS",
+   "category": "",
+   "evidence": "Gated builder entry, unchanged from r5c10ag except that the approval is now valid for the whole sequence (stable aggregate)."
+  },
+  {
+   "id": "R03",
+   "condition": "Resolver strict r11, no r10 fallback",
+   "status": "PASS",
+   "category": "",
+   "evidence": "scripts/v3_runner_identity.py unchanged: a0f5670d\u2026c6a5."
+  },
+  {
+   "id": "R04",
+   "condition": "r11 member inventory = 20 unique paths",
+   "status": "PASS",
+   "category": "",
+   "evidence": "13 identical to r10, 3 approved changes, 4 new/replaced; unchanged this step except the builder's own bytes."
+  },
+  {
+   "id": "R05",
+   "condition": "All 20 r11 members present",
+   "status": "BLOCKED",
+   "category": "WAITING_FOR_MANUAL_ACTIVATION",
+   "evidence": "19/20 present; the pointer (created by the gated entry) is the 20th."
+  },
+  {
+   "id": "R06",
+   "condition": "Changed members pinned to reviewed SHA-256",
+   "status": "PASS",
+   "category": "",
+   "evidence": "consumer 362eb446\u2026, resolver a0f5670d\u2026, scanner f0e74a49\u2026, issuer f41763f5\u2026 all unchanged; the new builder SHA is pinned in the approval draft."
+  },
+  {
+   "id": "R07",
+   "condition": "Builder dependency closure inside the freeze",
+   "status": "PASS",
+   "category": "",
+   "evidence": "Unchanged."
+  },
+  {
+   "id": "R08",
+   "condition": "Exclusive, no-overwrite publication of every activation artifact",
+   "status": "PASS",
+   "category": "",
+   "evidence": "Pointer, Freeze (new gated entry) and issuance manifest use O_EXCL + fsync + readback; the AR-14 append goes through the frozen function only."
+  },
+  {
+   "id": "R09",
+   "condition": "Preflight producer/consumer grammar and provenance",
+   "status": "PASS",
+   "category": "",
+   "evidence": "Unchanged."
+  },
+  {
+   "id": "R10",
+   "condition": "Registry claim uniqueness / non-replay",
+   "status": "PASS",
+   "category": "",
+   "evidence": "Unchanged."
+  },
+  {
+   "id": "R11",
+   "condition": "Formal r11 authorization issuer",
+   "status": "PASS",
+   "category": "",
+   "evidence": "Unchanged SHA f41763f5\u2026; now additionally protected by the builder-side proof that the manifest equals the plan before it is written."
+  },
+  {
+   "id": "R12",
+   "condition": "Authorization bound to the exact r11 freeze path+SHA",
+   "status": "PASS",
+   "category": "",
+   "evidence": "Gated rehearsal: the real consumer gate passes."
+  },
+  {
+   "id": "R13",
+   "condition": "Old r10 authorization retired (AR-14)",
+   "status": "BLOCKED",
+   "category": "WAITING_FOR_MANUAL_ACTIVATION",
+   "evidence": "Not executed (forbidden). The gated `--retire-r10` entry exists, is tested and rehearsed; r10 is still ISSUED_EXECUTABLE on the real ledger."
+  },
+  {
+   "id": "R14",
+   "condition": "r10 historical freeze and members preserved",
+   "status": "PASS",
+   "category": "",
+   "evidence": "Manifest d2424423\u20262693 unchanged."
+  },
+  {
+   "id": "R15",
+   "condition": "Historical trace original content integrity (AR-15)",
+   "status": "BLOCKED",
+   "category": "KNOWN_GAP_NOT_ACTIVATION",
+   "evidence": "CONTENT_INTEGRITY_UNPROVEN, unchanged; not part of the activation sequence."
+  },
+  {
+   "id": "R16",
+   "condition": "Full guarded regression green",
+   "status": "FAIL",
+   "category": "DECISION_NEEDED",
+   "evidence": "1043 collected / 1010 pass / 4 fail / 29 error / 4 import-blocked, identical in two runs. 33 RC1 items unchanged (they wait for the r11 identity); RC5 and RC6 accepted. The only other non-passing items are 2 archival-replay tests broken by the checkpoint commit moving HEAD (R33)."
+  },
+  {
+   "id": "R17",
+   "condition": "CI reports complete results",
+   "status": "PASS",
+   "category": "",
+   "evidence": "Unchanged. The new r5c10ah test modules are untracked until you commit them."
+  },
+  {
+   "id": "R18",
+   "condition": "Test runs cannot pollute protected evidence",
+   "status": "PASS",
+   "category": "",
+   "evidence": "Whole-repo snapshots before/between/after both runs: 0 added/removed/changed/mtime-only; guard log 181 allowed Popen events, 0 blocked (accident-prevention rail, not a security boundary)."
+  },
+  {
+   "id": "R19",
+   "condition": "55 historical pins enforced on the r11 path",
+   "status": "PASS",
+   "category": "",
+   "evidence": "Verified again on the real repository."
+  },
+  {
+   "id": "R20",
+   "condition": "Exactly-one-active-authorization enforced and tested",
+   "status": "PASS",
+   "category": "",
+   "evidence": "Gated rehearsal ends with active == [the issued id]."
+  },
+  {
+   "id": "R21",
+   "condition": "Consumer precommit gate wired into formal execution (incl. the D13-4 cross-check)",
+   "status": "PASS",
+   "category": "",
+   "evidence": "Consumer unchanged: 362eb446\u2026"
+  },
+  {
+   "id": "R22",
+   "condition": "Superseded authorizations non-executable before r11 execution",
+   "status": "BLOCKED",
+   "category": "WAITING_FOR_MANUAL_ACTIVATION",
+   "evidence": "Enforced by the gate and by the pointer/Freeze/issuer preconditions; true once AR-14 is executed."
+  },
+  {
+   "id": "R23",
+   "condition": "Test boundary manifest covers the inventory under a pinned version",
+   "status": "PASS",
+   "category": "",
+   "evidence": "step9_63c_r5c10ah_test_boundary_manifest.json (84 modules); the ag manifest stays byte-identical (af99b6e4\u2026)."
+  },
+  {
+   "id": "R24",
+   "condition": "Test side-effect guard approved",
+   "status": "PASS",
+   "category": "",
+   "evidence": "v3 approved as an accident-prevention rail."
+  },
+  {
+   "id": "R25",
+   "condition": "Builder supports activation",
+   "status": "PASS",
+   "category": "",
+   "evidence": "--plan/--status/--verify/--verify-freeze/--print-approval-draft/--create-pointer + the new entries."
+  },
+  {
+   "id": "R26",
+   "condition": "Gated entry for creating the r11 Freeze (D-B)",
+   "status": "PASS",
+   "category": "",
+   "evidence": "`--plan-freeze` / `--create-freeze`: terminal + token + signed approval; AR-14 and pointer prerequisites; O_EXCL+fsync+readback; SHA must equal the approved prediction; 26 tests, 20 mutants (16 killed, 4 redundant/unreachable)."
+  },
+  {
+   "id": "R27",
+   "condition": "Gated entry for AR-14 (D-A)",
+   "status": "PASS",
+   "category": "",
+   "evidence": "`--plan-retire` / `--verify-retire` / `--retire-r10`: only the frozen function writes; ledger pin, ISSUED_EXECUTABLE, determination bound to the approval; post-write verification; 41 tests, 36 mutants (27 killed, 9 redundant)."
+  },
+  {
+   "id": "R28",
+   "condition": "Consumer cross-checks ledger vs manifest (D13-4)",
+   "status": "PASS",
+   "category": "",
+   "evidence": "Unchanged."
+  },
+  {
+   "id": "R29",
+   "condition": "End-to-end rehearsal using only the gated entries",
+   "status": "PASS",
+   "category": "",
+   "evidence": "signed approval -> retire -> pointer -> Freeze -> issue -> consumer gate; exactly one active authorization; 31 negative rehearsals (unsigned approval, wrong token, ledger pre-appended, non-interactive, wrong Freeze prediction, skipping AR-14, replays) all refused with no write."
+  },
+  {
+   "id": "R30",
+   "condition": "Signed activation approval record",
+   "status": "BLOCKED",
+   "category": "WAITING_FOR_MANUAL_ACTIVATION",
+   "evidence": "Only the UNSIGNED draft exists; one signature (three fields) before AR-14 now covers the whole sequence."
+  },
+  {
+   "id": "R31",
+   "condition": "Historical pin/manifest/gate tests superseded by this or earlier steps",
+   "status": "PASS",
+   "category": "",
+   "evidence": "9 methods archived under the standing rule; superseding tests proven by mutation (13/13 killed)."
+  },
+  {
+   "id": "R32",
+   "condition": "Approval stays valid through every gated step",
+   "status": "PASS",
+   "category": "",
+   "evidence": "Stable aggregate excludes the activation outputs; each is pinned separately; rehearsal verifies the approval after every step."
+  },
+  {
+   "id": "R33",
+   "condition": "r5c10ad archival-replay tests (equivalent coverage for RC5) still pass",
+   "status": "FAIL",
+   "category": "DECISION_NEEDED",
+   "evidence": "They read the V2 bytes from Git HEAD; the checkpoint commit 23994b2 (made before this step) moved HEAD onto the current bytes. Proposal that pins them to 201ef5c is supplied and verified, NOT applied."
+  },
+  {
+   "id": "R34",
+   "condition": "Issuance manifest proven equal to the plan before it is written (H3 extension)",
+   "status": "PASS",
+   "category": "",
+   "evidence": "Builder-side proof inside the exclusive-write primitive; the issuer file (f41763f5\u2026) was not touched; 11 tests, 8 mutants (7 killed, 1 redundant)."
+  }
+ ]
+}

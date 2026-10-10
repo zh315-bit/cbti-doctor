@@ -1,0 +1,322 @@
+{
+ "step": "9.63c-r5c10ai",
+ "harness": "evaluation/v1_2_3/step9_63c_r5c10af_test_harness/run_all.sh (guard v3: an accident-prevention rail, not a security boundary; catalogue pre-step outside the guard, accepted)",
+ "baseline_r5c10ah": {
+  "collected": 1043,
+  "passed": 1010,
+  "failed": 4,
+  "errors": 29,
+  "import_blocked_modules": 4
+ },
+ "after_run_a": {
+  "collected": 1074,
+  "passed": 1043,
+  "failed": 2,
+  "errors": 29,
+  "skipped": 0,
+  "import_blocked_modules": 4,
+  "module_processes": 86,
+  "guard_events": 211,
+  "guard_blocked": 0
+ },
+ "after_run_b": {
+  "collected": 1074,
+  "passed": 1043,
+  "failed": 2,
+  "errors": 29,
+  "skipped": 0,
+  "import_blocked_modules": 4,
+  "module_processes": 86,
+  "guard_events": 211,
+  "guard_blocked": 0
+ },
+ "two_runs_identical_per_item": true,
+ "items_compared": 1078,
+ "reconciliation": {
+  "new_tests": 36,
+  "removed_tests": [
+   "test_step9_63c_r5c10ad_v2_archival_replay.V2ArchivalReplayTests.test_01a_frozen_v2_identity_preflight_passes_on_archived_bytes",
+   "test_step9_63c_r5c10ad_v2_archival_replay.V2ArchivalReplayTests.test_head_blobs_equal_v2_pins_and_differ_from_working_tree",
+   "test_step9_63c_r5c10ah_retire_entry.PlanTests.test_clean_s0_with_a_signed_approval_is_ready_and_writes_nothing",
+   "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_manifest_covers_current_inventory_and_passes_audit",
+   "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_manifest_is_reproducible_from_sources"
+  ],
+  "newly_non_passing_vs_r5c10ah": [],
+  "no_longer_non_passing_vs_r5c10ah": [],
+  "note": "the two archival-replay tests failing in r5c10ah are retired (FULL) and replaced by r5c10ai_v2_archival_replay, which reads commit 201ef5c and asserts it is an ancestor of HEAD"
+ },
+ "new_tests_all_pass": true,
+ "rc1": {
+  "previous": 33,
+  "current": 33,
+  "identical_set": true
+ },
+ "acceptance": {
+  "full_regression_twice_identical": true,
+  "rc1_count_unchanged": true,
+  "production_regressions": 0,
+  "unknown": 0,
+  "non_identity_failures_only_rc5_rc6": true
+ },
+ "remaining_by_root_cause": {
+  "RC5_ACCEPTED_KNOWN": 1,
+  "RC6_ACCEPTED_KNOWN": 1,
+  "RC1_R11_IDENTITY_ABSENT": 33
+ },
+ "guard_log_summary": "allowed subprocess.Popen records only; blocked count is in after_run_a/after_run_b",
+ "guard_negative_catalogue_live": {
+  "scenarios": 119,
+  "verdicts": {
+   "PASS": 118,
+   "LIMIT_BYPASSED": 1
+  },
+  "failures": []
+ },
+ "remaining_items": [
+  {
+   "id": "test_step9_43a_treatment_identity.TreatmentIdentityContractTests.test_01a_frozen_v2_identity_preflight_passes_without_case_execution",
+   "result": "ERROR",
+   "root_cause": "RC5_ACCEPTED_KNOWN",
+   "reason": "frozen V2 identity test pinned by the V2 runner freeze; not modified; its equivalent coverage (test_step9_63c_r5c10ai_v2_archival_replay) passes",
+   "last_line": "RuntimeError: parent Step 9.35a runner identity mismatch"
+  },
+  {
+   "id": "test_step9_51a_validation_boundary.ValidationBoundaryTests.test_current_manifest_passes_pinned_allowlist",
+   "result": "FAIL",
+   "root_cause": "RC6_ACCEPTED_KNOWN",
+   "reason": "pinned by the r10/r11 development freeze; not modified; equivalent coverage is the r5c10ai manifest tests",
+   "last_line": "AssertionError: ['manifest module inventory does not exactly match tests/test_*.py'] is not false"
+  },
+  {
+   "id": "test_step9_58a_r1_namespace_allocator.NamespaceAllocatorTests.test_reserved_fresh_namespace_requires_transaction_for_post_first_case_guard",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "reason": "fails closed because the formal r11 identity does not exist (unchanged set)",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63a_r1_production_integration.ProductionWiringTests.test_adapter_actual_dispatch_orders_commit_reserve_parent",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "reason": "fails closed because the formal r11 identity does not exist (unchanged set)",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63a_r1_production_integration.ProductionWiringTests.test_adapter_commits_before_namespace_and_parent",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "reason": "fails closed because the formal r11 identity does not exist (unchanged set)",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63a_r1_production_integration.ProductionWiringTests.test_old_r6_authorization_rejected_at_r7_namespace_gate",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "reason": "fails closed because the formal r11 identity does not exist (unchanged set)",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63a_r1_production_integration.ProductionWiringTests.test_real_parent_rejects_prepared_before_agent_boundary",
+   "result": "FAIL",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "reason": "fails closed because the formal r11 identity does not exist (unchanged set)",
+   "last_line": "AssertionError: \"requires committed\" does not match \"current runner identity pointer is missing or unsafe\""
+  },
+  {
+   "id": "test_step9_63a_r2_retirement_eligibility.SupersededRetirementTests.test_active_authorization_count_becomes_zero",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "reason": "fails closed because the formal r11 identity does not exist (unchanged set)",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63a_r2_retirement_eligibility.SupersededRetirementTests.test_current_r7_identity_rejects_old_r6_authorization",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "reason": "fails closed because the formal r11 identity does not exist (unchanged set)",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63a_r2_retirement_eligibility.SupersededRetirementTests.test_frozen_evaluation_identity_mismatch_fails_closed",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "reason": "fails closed because the formal r11 identity does not exist (unchanged set)",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63a_r2_retirement_eligibility.SupersededRetirementTests.test_retired_auth_cannot_enter_prepared_committing_or_committed",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "reason": "fails closed because the formal r11 identity does not exist (unchanged set)",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63a_r2_retirement_eligibility.SupersededRetirementTests.test_v3_agent_and_evaluation_hash_mismatches_fail_closed",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "reason": "fails closed because the formal r11 identity does not exist (unchanged set)",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63b_mac_local_preflight.MacLocalPreflightTests.test_attestation_exclusive_create",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "reason": "fails closed because the formal r11 identity does not exist (unchanged set)",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63b_mac_local_preflight.MacLocalPreflightTests.test_dns_parser_accepts_only_public_ip_addresses",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "reason": "fails closed because the formal r11 identity does not exist (unchanged set)",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63b_mac_local_preflight.MacLocalPreflightTests.test_existing_attestation_fails_before_network",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "reason": "fails closed because the formal r11 identity does not exist (unchanged set)",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63b_mac_local_preflight.MacLocalPreflightTests.test_failed_dns_never_opens_transport",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "reason": "fails closed because the formal r11 identity does not exist (unchanged set)",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63b_mac_local_preflight.MacLocalPreflightTests.test_failure_prints_no_exception_or_secret",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "reason": "fails closed because the formal r11 identity does not exist (unchanged set)",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63b_mac_local_preflight.MacLocalPreflightTests.test_preflight_rechecks_execution_state_after_transport",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "reason": "fails closed because the formal r11 identity does not exist (unchanged set)",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63b_mac_local_preflight.MacLocalPreflightTests.test_real_script_has_no_formal_execution_entrypoint",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "reason": "fails closed because the formal r11 identity does not exist (unchanged set)",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63b_mac_local_preflight.MacLocalPreflightTests.test_state_change_fails_closed",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "reason": "fails closed because the formal r11 identity does not exist (unchanged set)",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63c_r3_parent_namespace_repair.NamespaceBoundaryTests.test_t12_no_default_global_root_on_formal_path",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "reason": "fails closed because the formal r11 identity does not exist (unchanged set)",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63c_r5_mac_local_preflight.R8MacLocalPreflightTests.test_existing_artifact_blocks_network",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "reason": "fails closed because the formal r11 identity does not exist (unchanged set)",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63c_r5_mac_local_preflight.R8MacLocalPreflightTests.test_missing_api_key",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "reason": "fails closed because the formal r11 identity does not exist (unchanged set)",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63c_r5_mac_local_preflight.R8MacLocalPreflightTests.test_pre_post_state_change_fails_closed",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "reason": "fails closed because the formal r11 identity does not exist (unchanged set)",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63c_r5_mac_local_preflight.R8MacLocalPreflightTests.test_success_fixture_exclusively_writes_only_evidence",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "reason": "fails closed because the formal r11 identity does not exist (unchanged set)",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63c_r5_mac_local_preflight.R8MacLocalPreflightTests.test_wrong_deepseek_host",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "reason": "fails closed because the formal r11 identity does not exist (unchanged set)",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63c_r5_mac_local_preflight.R8MacLocalPreflightTests.test_wrong_model",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "reason": "fails closed because the formal r11 identity does not exist (unchanged set)",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63c_r5c7b_diagnostics.Step963cR5c7bDiagnosticsTests.test_certificate_validation_stage",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "reason": "fails closed because the formal r11 identity does not exist (unchanged set)",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63c_r5c7b_diagnostics.Step963cR5c7bDiagnosticsTests.test_dns_exception_reports_system_dns_stage",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "reason": "fails closed because the formal r11 identity does not exist (unchanged set)",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63c_r5c7b_diagnostics.Step963cR5c7bDiagnosticsTests.test_tcp_exception_reports_tcp_stage",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "reason": "fails closed because the formal r11 identity does not exist (unchanged set)",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63c_r5c7b_diagnostics.Step963cR5c7bDiagnosticsTests.test_tls_exception_reports_tls_stage",
+   "result": "ERROR",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "reason": "fails closed because the formal r11 identity does not exist (unchanged set)",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_53_v3_identity_adapter",
+   "result": "IMPORT",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "reason": "module import resolves the r11 identity at import time",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_55a_namespace_lifecycle",
+   "result": "IMPORT",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "reason": "module import resolves the r11 identity at import time",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_59a_auth_identity_binding",
+   "result": "IMPORT",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "reason": "module import resolves the r11 identity at import time",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63a_r3_authorization_issuance",
+   "result": "IMPORT",
+   "root_cause": "RC1_R11_IDENTITY_ABSENT",
+   "reason": "module import resolves the r11 identity at import time",
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  }
+ ]
+}

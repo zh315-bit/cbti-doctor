@@ -1,0 +1,214 @@
+{
+ "step": "9.63c-r5c10ai",
+ "decision": "standing rule: a pin, manifest or HEAD-dependent replay test superseded by a later step is archived (AR-2 flow), never kept as ACCEPTED_KNOWN",
+ "retired_methods": 5,
+ "all_mutation_evidence_killed": true,
+ "items": [
+  {
+   "original_file": "tests/test_step9_63c_r5c10ad_v2_archival_replay.py",
+   "retired_method": "test_head_blobs_equal_v2_pins_and_differ_from_working_tree",
+   "disposition": "FULL: module moved out of the active test set; the archive holds the original bytes verbatim",
+   "archive": "tests/retired/test_step9_63c_r5c10ad_v2_archival_replay.py.retired",
+   "archive_sha256": "78f0a1966bba6cca714461a014cd3f2567fc7e82560ca76a8ac9be01b6857dcb",
+   "original_sha256_at_archive": "78f0a1966bba6cca714461a014cd3f2567fc7e82560ca76a8ac9be01b6857dcb",
+   "superseded_by": "tests/test_step9_63c_r5c10ai_v2_archival_replay.py::V2ArchivalReplayTests.test_archival_blobs_equal_v2_pins_and_differ_from_working_tree",
+   "property": "the frozen V2 identity preflight passes when replayed from the archived V2 bytes; the archived blobs equal the V2 pins and differ from the working tree; (new) the archival commit exists and is an ancestor of HEAD; tampered archive bytes and a missing commit are detected",
+   "mutation_evidence": [
+    {
+     "mutant": "P1_archived_bytes_tampered",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ai_v2_archival_replay.V2ArchivalReplayTests.test_01a_frozen_v2_identity_preflight_passes_on_archived_bytes"
+    },
+    {
+     "mutant": "P2_git_object_tampered",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ai_v2_archival_replay.V2ArchivalReplayTests.test_01a_frozen_v2_identity_preflight_passes_on_archived_bytes"
+    },
+    {
+     "mutant": "P3_archival_commit_does_not_exist",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ai_v2_archival_replay.V2ArchivalReplayTests.test_01a_frozen_v2_identity_preflight_passes_on_archived_bytes"
+    },
+    {
+     "mutant": "P4_archival_commit_is_the_current_head",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ai_v2_archival_replay.V2ArchivalReplayTests.test_01a_frozen_v2_identity_preflight_passes_on_archived_bytes"
+    },
+    {
+     "mutant": "P5_ancestry_not_walked",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ai_v2_archival_replay.V2ArchivalReplayTests.test_the_archival_commit_exists_and_is_an_ancestor_of_the_current_head"
+    },
+    {
+     "mutant": "P6_archival_commit_is_a_tree_not_a_commit",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ai_v2_archival_replay.V2ArchivalReplayTests.test_01a_frozen_v2_identity_preflight_passes_on_archived_bytes"
+    }
+   ]
+  },
+  {
+   "original_file": "tests/test_step9_63c_r5c10ad_v2_archival_replay.py",
+   "retired_method": "test_01a_frozen_v2_identity_preflight_passes_on_archived_bytes",
+   "disposition": "FULL: module moved out of the active test set; the archive holds the original bytes verbatim",
+   "archive": "tests/retired/test_step9_63c_r5c10ad_v2_archival_replay.py.retired",
+   "archive_sha256": "78f0a1966bba6cca714461a014cd3f2567fc7e82560ca76a8ac9be01b6857dcb",
+   "original_sha256_at_archive": "78f0a1966bba6cca714461a014cd3f2567fc7e82560ca76a8ac9be01b6857dcb",
+   "superseded_by": "tests/test_step9_63c_r5c10ai_v2_archival_replay.py::V2ArchivalReplayTests.test_01a_frozen_v2_identity_preflight_passes_on_archived_bytes (+ ancestry tests)",
+   "property": "the frozen V2 identity preflight passes when replayed from the archived V2 bytes; the archived blobs equal the V2 pins and differ from the working tree; (new) the archival commit exists and is an ancestor of HEAD; tampered archive bytes and a missing commit are detected",
+   "mutation_evidence": [
+    {
+     "mutant": "P1_archived_bytes_tampered",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ai_v2_archival_replay.V2ArchivalReplayTests.test_01a_frozen_v2_identity_preflight_passes_on_archived_bytes"
+    },
+    {
+     "mutant": "P2_git_object_tampered",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ai_v2_archival_replay.V2ArchivalReplayTests.test_01a_frozen_v2_identity_preflight_passes_on_archived_bytes"
+    },
+    {
+     "mutant": "P3_archival_commit_does_not_exist",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ai_v2_archival_replay.V2ArchivalReplayTests.test_01a_frozen_v2_identity_preflight_passes_on_archived_bytes"
+    },
+    {
+     "mutant": "P4_archival_commit_is_the_current_head",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ai_v2_archival_replay.V2ArchivalReplayTests.test_01a_frozen_v2_identity_preflight_passes_on_archived_bytes"
+    },
+    {
+     "mutant": "P5_ancestry_not_walked",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ai_v2_archival_replay.V2ArchivalReplayTests.test_the_archival_commit_exists_and_is_an_ancestor_of_the_current_head"
+    },
+    {
+     "mutant": "P6_archival_commit_is_a_tree_not_a_commit",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ai_v2_archival_replay.V2ArchivalReplayTests.test_01a_frozen_v2_identity_preflight_passes_on_archived_bytes"
+    }
+   ]
+  },
+  {
+   "original_file": "tests/test_step9_63c_r5c10ah_retire_entry.py",
+   "retired_method": "test_clean_s0_with_a_signed_approval_is_ready_and_writes_nothing",
+   "disposition": "PARTIAL: the listed methods were removed from the active file; the archive holds the original bytes verbatim",
+   "archive": "tests/retired/test_step9_63c_r5c10ah_retire_entry.py.retired",
+   "archive_sha256": "8dce427610468d8e25a3585b5b1b8d9583360d7f8abff0f8a557930522b860d9",
+   "original_sha256_at_archive": "8dce427610468d8e25a3585b5b1b8d9583360d7f8abff0f8a557930522b860d9",
+   "superseded_by": "tests/test_step9_63c_r5c10ai_final_form_and_tokens.py::TokenTests (the retirement token is now RETIRE-R10-<uuid part of the r10 id, 12 hex>-<approval content hash, 12 hex>)",
+   "property": "the retirement entry demands its token; here the first segment is the first 12 hex of the uuid part of the r10 id and the second the approval content hash; a token from another step9_6x id is refused",
+   "mutation_evidence": [
+    {
+     "mutant": "T1_token_first_segment_is_the_old_literal",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ai_final_form_and_tokens.FinalFormSequence.test_the_complete_gated_sequence_with_the_final_form"
+    },
+    {
+     "mutant": "T2_token_first_segment_is_the_whole_uuid",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ai_final_form_and_tokens.FinalFormSequence.test_the_complete_gated_sequence_with_the_final_form"
+    },
+    {
+     "mutant": "T3_retire_token_ignores_the_approval_part",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ai_final_form_and_tokens.TokenTests.test_the_previous_literal_prefix_and_other_malformed_tokens_are_refused (token='RETIRE-R10-aff5c4b96bb7-000000000000')"
+    },
+    {
+     "mutant": "T4_token_part_is_always_the_file_hash",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ai_final_form_and_tokens.FinalFormSequence.test_the_complete_gated_sequence_with_the_final_form"
+    },
+    {
+     "mutant": "T5_content_hash_keeps_the_signature_fields",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ai_final_form_and_tokens.ContentAndCommitTests.test_the_four_signature_fields_may_differ"
+    }
+   ]
+  },
+  {
+   "original_file": "tests/test_step9_63c_r5c10ah_test_boundary_manifest.py",
+   "retired_method": "test_manifest_covers_current_inventory_and_passes_audit",
+   "disposition": "PARTIAL: the listed methods were removed from the active file; the archive holds the original bytes verbatim",
+   "archive": "tests/retired/test_step9_63c_r5c10ah_test_boundary_manifest.py.retired",
+   "archive_sha256": "cddeee0d3b1d2516ad680ad11c77ec5feb0ae16960d353a8f93e53360f441d3c",
+   "original_sha256_at_archive": "cddeee0d3b1d2516ad680ad11c77ec5feb0ae16960d353a8f93e53360f441d3c",
+   "superseded_by": "tests/test_step9_63c_r5c10ai_test_boundary_manifest.py::Step963cR5c10aiManifestTests.test_manifest_covers_current_inventory_and_passes_audit (+ test_missing_or_extra_module_is_rejected)",
+   "property": "the versioned manifest covers the current test inventory, passes the audit, and is reproducible from the sources",
+   "mutation_evidence": [
+    {
+     "mutant": "S1_inventory_check_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ai_test_boundary_manifest.Step963cR5c10aiManifestTests.test_missing_or_extra_module_is_rejected"
+    },
+    {
+     "mutant": "S2_version_check_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ai_test_boundary_manifest.Step963cR5c10aiManifestTests.test_wrong_version_or_previous_reference_is_rejected"
+    },
+    {
+     "mutant": "S3_previous_bytes_pin_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ai_test_boundary_manifest.Step963cR5c10aiManifestTests.test_the_previous_manifest_byte_pin_is_enforced"
+    },
+    {
+     "mutant": "S4_carried_decisions_check_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ai_test_boundary_manifest.Step963cR5c10aiManifestTests.test_decision_of_a_row_carried_from_r5c10ah_cannot_change (field='allowed')"
+    },
+    {
+     "mutant": "S5_added_since_previous_check_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ai_test_boundary_manifest.Step963cR5c10aiManifestTests.test_added_since_previous_must_match_the_inventory_difference"
+    },
+    {
+     "mutant": "S6_manifest_build_changed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ai_test_boundary_manifest.Step963cR5c10aiManifestTests.test_manifest_is_reproducible_from_sources"
+    }
+   ]
+  },
+  {
+   "original_file": "tests/test_step9_63c_r5c10ah_test_boundary_manifest.py",
+   "retired_method": "test_manifest_is_reproducible_from_sources",
+   "disposition": "PARTIAL: the listed methods were removed from the active file; the archive holds the original bytes verbatim",
+   "archive": "tests/retired/test_step9_63c_r5c10ah_test_boundary_manifest.py.retired",
+   "archive_sha256": "cddeee0d3b1d2516ad680ad11c77ec5feb0ae16960d353a8f93e53360f441d3c",
+   "original_sha256_at_archive": "cddeee0d3b1d2516ad680ad11c77ec5feb0ae16960d353a8f93e53360f441d3c",
+   "superseded_by": "tests/test_step9_63c_r5c10ai_test_boundary_manifest.py::Step963cR5c10aiManifestTests.test_manifest_is_reproducible_from_sources",
+   "property": "the versioned manifest covers the current test inventory, passes the audit, and is reproducible from the sources",
+   "mutation_evidence": [
+    {
+     "mutant": "S1_inventory_check_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ai_test_boundary_manifest.Step963cR5c10aiManifestTests.test_missing_or_extra_module_is_rejected"
+    },
+    {
+     "mutant": "S2_version_check_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ai_test_boundary_manifest.Step963cR5c10aiManifestTests.test_wrong_version_or_previous_reference_is_rejected"
+    },
+    {
+     "mutant": "S3_previous_bytes_pin_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ai_test_boundary_manifest.Step963cR5c10aiManifestTests.test_the_previous_manifest_byte_pin_is_enforced"
+    },
+    {
+     "mutant": "S4_carried_decisions_check_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ai_test_boundary_manifest.Step963cR5c10aiManifestTests.test_decision_of_a_row_carried_from_r5c10ah_cannot_change (field='allowed')"
+    },
+    {
+     "mutant": "S5_added_since_previous_check_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ai_test_boundary_manifest.Step963cR5c10aiManifestTests.test_added_since_previous_must_match_the_inventory_difference"
+    },
+    {
+     "mutant": "S6_manifest_build_changed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ai_test_boundary_manifest.Step963cR5c10aiManifestTests.test_manifest_is_reproducible_from_sources"
+    }
+   ]
+  }
+ ],
+ "note": "PROPOSED_ad_archival_replay_update.diff (r5c10ah) was NOT applied, as decided; the whole r5c10ad module test_step9_63c_r5c10ad_v2_archival_replay moved to tests/retired/ and the new r5c10ai module reads commit 201ef5c and asserts it is an ancestor of HEAD."
+}

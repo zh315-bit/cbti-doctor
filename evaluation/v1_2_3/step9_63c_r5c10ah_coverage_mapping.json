@@ -1,0 +1,369 @@
+{
+ "step": "9.63c-r5c10ah",
+ "decision": "standing rule: a pin or manifest test superseded by a later step is archived (AR-2 flow), never kept as ACCEPTED_KNOWN",
+ "procedure": "original bytes copied to tests/retired/*.retired (hash recorded in tests/retired/RETIRED_INDEX.json); the listed methods removed from the active file; the superseding tests are named here and shown to detect the property by in-memory mutation",
+ "retired_methods": 9,
+ "all_mutation_evidence_killed": true,
+ "items": [
+  {
+   "original_file": "tests/test_step9_63c_r5c10ad_test_boundary_manifest.py",
+   "retired_method": "test_current_manifest_covers_inventory_and_passes_audit",
+   "archive": "tests/retired/test_step9_63c_r5c10ad_test_boundary_manifest.py.retired",
+   "archive_sha256": "eaa60942544f39ef9a77eba995a995033b0415a09a25a3e42c233d936b924dca",
+   "original_sha256_at_archive": "eaa60942544f39ef9a77eba995a995033b0415a09a25a3e42c233d936b924dca",
+   "superseded_by": "tests/test_step9_63c_r5c10ah_test_boundary_manifest.py::Step963cR5c10ahManifestTests.test_manifest_covers_current_inventory_and_passes_audit (+ test_missing_or_extra_module_is_rejected)",
+   "property": "the versioned manifest covers the current test inventory, passes the audit, and is reproducible from the sources",
+   "mutation_evidence": [
+    {
+     "mutant": "S7_manifest_inventory_check_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_missing_or_extra_module_is_rejected"
+    },
+    {
+     "mutant": "S8_manifest_version_check_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_wrong_version_or_previous_reference_is_rejected"
+    },
+    {
+     "mutant": "S9_previous_bytes_pin_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_the_previous_manifest_byte_pin_is_enforced"
+    },
+    {
+     "mutant": "S10_previous_reference_check_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_wrong_version_or_previous_reference_is_rejected"
+    },
+    {
+     "mutant": "S11_carried_decisions_check_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_decision_of_a_row_carried_from_r5c10ag_cannot_change (field='allowed')"
+    },
+    {
+     "mutant": "S12_added_since_previous_check_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_added_since_previous_must_match_the_inventory_difference"
+    },
+    {
+     "mutant": "S13_manifest_build_changed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_manifest_is_reproducible_from_sources"
+    }
+   ]
+  },
+  {
+   "original_file": "tests/test_step9_63c_r5c10ad_test_boundary_manifest.py",
+   "retired_method": "test_manifest_is_reproducible_from_sources",
+   "archive": "tests/retired/test_step9_63c_r5c10ad_test_boundary_manifest.py.retired",
+   "archive_sha256": "eaa60942544f39ef9a77eba995a995033b0415a09a25a3e42c233d936b924dca",
+   "original_sha256_at_archive": "eaa60942544f39ef9a77eba995a995033b0415a09a25a3e42c233d936b924dca",
+   "superseded_by": "tests/test_step9_63c_r5c10ah_test_boundary_manifest.py::Step963cR5c10ahManifestTests.test_manifest_is_reproducible_from_sources",
+   "property": "the versioned manifest covers the current test inventory, passes the audit, and is reproducible from the sources",
+   "mutation_evidence": [
+    {
+     "mutant": "S7_manifest_inventory_check_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_missing_or_extra_module_is_rejected"
+    },
+    {
+     "mutant": "S8_manifest_version_check_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_wrong_version_or_previous_reference_is_rejected"
+    },
+    {
+     "mutant": "S9_previous_bytes_pin_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_the_previous_manifest_byte_pin_is_enforced"
+    },
+    {
+     "mutant": "S10_previous_reference_check_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_wrong_version_or_previous_reference_is_rejected"
+    },
+    {
+     "mutant": "S11_carried_decisions_check_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_decision_of_a_row_carried_from_r5c10ag_cannot_change (field='allowed')"
+    },
+    {
+     "mutant": "S12_added_since_previous_check_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_added_since_previous_must_match_the_inventory_difference"
+    },
+    {
+     "mutant": "S13_manifest_build_changed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_manifest_is_reproducible_from_sources"
+    }
+   ]
+  },
+  {
+   "original_file": "tests/test_step9_63c_r5c10ae_test_boundary_manifest.py",
+   "retired_method": "test_manifest_covers_current_inventory_and_passes_audit",
+   "archive": "tests/retired/test_step9_63c_r5c10ae_test_boundary_manifest.py.retired",
+   "archive_sha256": "5b54de9b9534384cf756626a8034db11cf2b109ff89216d02acef08bbad5ac3e",
+   "original_sha256_at_archive": "5b54de9b9534384cf756626a8034db11cf2b109ff89216d02acef08bbad5ac3e",
+   "superseded_by": "tests/test_step9_63c_r5c10ah_test_boundary_manifest.py::Step963cR5c10ahManifestTests.test_manifest_covers_current_inventory_and_passes_audit (+ test_missing_or_extra_module_is_rejected)",
+   "property": "the versioned manifest covers the current test inventory, passes the audit, and is reproducible from the sources",
+   "mutation_evidence": [
+    {
+     "mutant": "S7_manifest_inventory_check_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_missing_or_extra_module_is_rejected"
+    },
+    {
+     "mutant": "S8_manifest_version_check_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_wrong_version_or_previous_reference_is_rejected"
+    },
+    {
+     "mutant": "S9_previous_bytes_pin_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_the_previous_manifest_byte_pin_is_enforced"
+    },
+    {
+     "mutant": "S10_previous_reference_check_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_wrong_version_or_previous_reference_is_rejected"
+    },
+    {
+     "mutant": "S11_carried_decisions_check_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_decision_of_a_row_carried_from_r5c10ag_cannot_change (field='allowed')"
+    },
+    {
+     "mutant": "S12_added_since_previous_check_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_added_since_previous_must_match_the_inventory_difference"
+    },
+    {
+     "mutant": "S13_manifest_build_changed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_manifest_is_reproducible_from_sources"
+    }
+   ]
+  },
+  {
+   "original_file": "tests/test_step9_63c_r5c10ae_test_boundary_manifest.py",
+   "retired_method": "test_manifest_is_reproducible_from_sources",
+   "archive": "tests/retired/test_step9_63c_r5c10ae_test_boundary_manifest.py.retired",
+   "archive_sha256": "5b54de9b9534384cf756626a8034db11cf2b109ff89216d02acef08bbad5ac3e",
+   "original_sha256_at_archive": "5b54de9b9534384cf756626a8034db11cf2b109ff89216d02acef08bbad5ac3e",
+   "superseded_by": "tests/test_step9_63c_r5c10ah_test_boundary_manifest.py::Step963cR5c10ahManifestTests.test_manifest_is_reproducible_from_sources",
+   "property": "the versioned manifest covers the current test inventory, passes the audit, and is reproducible from the sources",
+   "mutation_evidence": [
+    {
+     "mutant": "S7_manifest_inventory_check_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_missing_or_extra_module_is_rejected"
+    },
+    {
+     "mutant": "S8_manifest_version_check_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_wrong_version_or_previous_reference_is_rejected"
+    },
+    {
+     "mutant": "S9_previous_bytes_pin_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_the_previous_manifest_byte_pin_is_enforced"
+    },
+    {
+     "mutant": "S10_previous_reference_check_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_wrong_version_or_previous_reference_is_rejected"
+    },
+    {
+     "mutant": "S11_carried_decisions_check_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_decision_of_a_row_carried_from_r5c10ag_cannot_change (field='allowed')"
+    },
+    {
+     "mutant": "S12_added_since_previous_check_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_added_since_previous_must_match_the_inventory_difference"
+    },
+    {
+     "mutant": "S13_manifest_build_changed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_manifest_is_reproducible_from_sources"
+    }
+   ]
+  },
+  {
+   "original_file": "tests/test_step9_63c_r5c10ag_test_boundary_manifest.py",
+   "retired_method": "test_manifest_covers_current_inventory_and_passes_audit",
+   "archive": "tests/retired/test_step9_63c_r5c10ag_test_boundary_manifest.py.retired",
+   "archive_sha256": "2dcc36187c6aae05edf8da1deb8ddad4fd72377c3086ecb7d6d308bfe84dc5cb",
+   "original_sha256_at_archive": "2dcc36187c6aae05edf8da1deb8ddad4fd72377c3086ecb7d6d308bfe84dc5cb",
+   "superseded_by": "tests/test_step9_63c_r5c10ah_test_boundary_manifest.py::Step963cR5c10ahManifestTests.test_manifest_covers_current_inventory_and_passes_audit (+ test_missing_or_extra_module_is_rejected)",
+   "property": "the versioned manifest covers the current test inventory, passes the audit, and is reproducible from the sources",
+   "mutation_evidence": [
+    {
+     "mutant": "S7_manifest_inventory_check_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_missing_or_extra_module_is_rejected"
+    },
+    {
+     "mutant": "S8_manifest_version_check_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_wrong_version_or_previous_reference_is_rejected"
+    },
+    {
+     "mutant": "S9_previous_bytes_pin_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_the_previous_manifest_byte_pin_is_enforced"
+    },
+    {
+     "mutant": "S10_previous_reference_check_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_wrong_version_or_previous_reference_is_rejected"
+    },
+    {
+     "mutant": "S11_carried_decisions_check_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_decision_of_a_row_carried_from_r5c10ag_cannot_change (field='allowed')"
+    },
+    {
+     "mutant": "S12_added_since_previous_check_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_added_since_previous_must_match_the_inventory_difference"
+    },
+    {
+     "mutant": "S13_manifest_build_changed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_manifest_is_reproducible_from_sources"
+    }
+   ]
+  },
+  {
+   "original_file": "tests/test_step9_63c_r5c10ag_test_boundary_manifest.py",
+   "retired_method": "test_manifest_is_reproducible_from_sources",
+   "archive": "tests/retired/test_step9_63c_r5c10ag_test_boundary_manifest.py.retired",
+   "archive_sha256": "2dcc36187c6aae05edf8da1deb8ddad4fd72377c3086ecb7d6d308bfe84dc5cb",
+   "original_sha256_at_archive": "2dcc36187c6aae05edf8da1deb8ddad4fd72377c3086ecb7d6d308bfe84dc5cb",
+   "superseded_by": "tests/test_step9_63c_r5c10ah_test_boundary_manifest.py::Step963cR5c10ahManifestTests.test_manifest_is_reproducible_from_sources",
+   "property": "the versioned manifest covers the current test inventory, passes the audit, and is reproducible from the sources",
+   "mutation_evidence": [
+    {
+     "mutant": "S7_manifest_inventory_check_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_missing_or_extra_module_is_rejected"
+    },
+    {
+     "mutant": "S8_manifest_version_check_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_wrong_version_or_previous_reference_is_rejected"
+    },
+    {
+     "mutant": "S9_previous_bytes_pin_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_the_previous_manifest_byte_pin_is_enforced"
+    },
+    {
+     "mutant": "S10_previous_reference_check_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_wrong_version_or_previous_reference_is_rejected"
+    },
+    {
+     "mutant": "S11_carried_decisions_check_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_decision_of_a_row_carried_from_r5c10ag_cannot_change (field='allowed')"
+    },
+    {
+     "mutant": "S12_added_since_previous_check_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_added_since_previous_must_match_the_inventory_difference"
+    },
+    {
+     "mutant": "S13_manifest_build_changed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_test_boundary_manifest.Step963cR5c10ahManifestTests.test_manifest_is_reproducible_from_sources"
+    }
+   ]
+  },
+  {
+   "original_file": "tests/test_step9_63c_r5c10ae_builder_pins.py",
+   "retired_method": "test_pins_equal_reviewed_constants_and_current_bytes",
+   "archive": "tests/retired/test_step9_63c_r5c10ae_builder_pins.py.retired",
+   "archive_sha256": "779a9f9505b9d6a26fcc7b505f398f558d69e2a0665bd4b594aa7e676245f4bf",
+   "original_sha256_at_archive": "779a9f9505b9d6a26fcc7b505f398f558d69e2a0665bd4b594aa7e676245f4bf",
+   "superseded_by": "tests/test_step9_63c_r5c10ah_superseding_tests.py::BuilderPinTests.test_pins_equal_reviewed_constants_and_current_bytes",
+   "property": "the builder's pins equal the reviewed constants and the files' current bytes",
+   "mutation_evidence": [
+    {
+     "mutant": "S1_consumer_pin_altered",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_superseding_tests.BuilderPinTests.test_pins_equal_reviewed_constants_and_current_bytes"
+    },
+    {
+     "mutant": "S2_scanner_pin_altered",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_superseding_tests.BuilderPinTests.test_pins_equal_reviewed_constants_and_current_bytes"
+    },
+    {
+     "mutant": "S3_issuer_pin_altered",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_superseding_tests.BuilderPinTests.test_the_issuer_pin_equals_the_reviewed_constant_and_the_current_bytes"
+    }
+   ]
+  },
+  {
+   "original_file": "tests/test_step9_63c_r5c10ae_consumer_precommit_gate.py",
+   "retired_method": "test_prepare_formal_gates_reports_real_precommit_failures",
+   "archive": "tests/retired/test_step9_63c_r5c10ae_consumer_precommit_gate.py.retired",
+   "archive_sha256": "afbc64f8919acca1b41de2497d39babe99c54ff669ce08d4480aa9dd2e1dc146",
+   "original_sha256_at_archive": "afbc64f8919acca1b41de2497d39babe99c54ff669ce08d4480aa9dd2e1dc146",
+   "superseded_by": "tests/test_step9_63c_r5c10ah_superseding_tests.py::ConsumerGateTests (positive control, tampered historical pin, execute_formal stops, missing issuance event)",
+   "property": "the consumer's real precommit gate passes on a correct root, fails closed on a tampered historical pin, and execute_formal stops before the adapter",
+   "mutation_evidence": [
+    {
+     "mutant": "S4_historical_pin_check_neutralized",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_superseding_tests.ConsumerGateTests.test_a_tampered_historical_pin_fails_closed_and_execute_formal_stops_before_the_adapter"
+    },
+    {
+     "mutant": "S5_execute_formal_ignores_the_gate",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_superseding_tests.ConsumerGateTests.test_a_missing_issuance_event_fails_closed_through_the_same_path"
+    },
+    {
+     "mutant": "S6_issuance_cross_check_not_wired",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_superseding_tests.ConsumerGateTests.test_a_missing_issuance_event_fails_closed_through_the_same_path"
+    }
+   ]
+  },
+  {
+   "original_file": "tests/test_step9_63c_r5c10ag_authorization_issuer.py",
+   "retired_method": "test_a_manifest_that_reads_back_differently_stops_before_any_event",
+   "archive": "tests/retired/test_step9_63c_r5c10ag_authorization_issuer.py.retired",
+   "archive_sha256": "7263f9c9bdc7b2fac2ff81c2624c983b608106209ec91f2d46a42e5da0403da6",
+   "original_sha256_at_archive": "7263f9c9bdc7b2fac2ff81c2624c983b608106209ec91f2d46a42e5da0403da6",
+   "superseded_by": "tests/test_step9_63c_r5c10ah_issuance_plan_proof.py::ProofTests.test_a_manifest_that_reads_back_differently_stops_before_any_event (+ the pre-write proof tests)",
+   "property": "a manifest that does not read back as written stops issuance before any ledger event",
+   "mutation_evidence": [
+    {
+     "mutant": "H1_hook_not_called",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_issuance_plan_proof.ProofTests.test_issue_is_refused_when_the_manifest_to_write_differs_from_the_plan"
+    },
+    {
+     "mutant": "H5_byte_comparison_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_issuance_plan_proof.ProofTests.test_a_byte_level_difference_in_the_serialization_is_refused (case='trailing space')"
+    },
+    {
+     "mutant": "H45_both_comparisons_removed",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_issuance_plan_proof.ProofTests.test_a_byte_level_difference_in_the_serialization_is_refused (case='trailing space')"
+    },
+    {
+     "mutant": "H7_readback_removed_in_issuer",
+     "result": "KILLED",
+     "killed_by": "test_step9_63c_r5c10ah_issuance_plan_proof.ProofTests.test_a_manifest_that_reads_back_differently_stops_before_any_event"
+    }
+   ]
+  }
+ ],
+ "note": "tests/test_step9_63c_r5c10ag_authorization_issuer.py::test_a_manifest_that_reads_back_differently_stops_before_any_event is an extension of the six named in the instruction: the new pre-write proof (H3) fires before the write, so the old test could no longer reach the readback it was written for; its property is covered by test_step9_63c_r5c10ah_issuance_plan_proof.py"
+}

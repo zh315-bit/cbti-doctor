@@ -1,0 +1,17 @@
+{
+  "approval_id": "approval-step9_63c_r11-6ec0ca3e42a641e8b7b92ed6c64e66f2",
+  "artifact_type": "V3_SUPERSEDED_AUTHORIZATION_NONREUSE_DETERMINATION",
+  "attempt_or_transaction_exists": false,
+  "authorization_consumed": false,
+  "authorization_consumption_count": 0,
+  "case_results_or_traces_exist": false,
+  "current_runner_equality_required": false,
+  "namespace_or_reservation_exists": false,
+  "old_authorization_id": "auth-step9_63c_r5c6-aff5c4b96bb74278a14d3fd08bf8a84e",
+  "old_authorization_manifest_path": "evaluation/v1_2_3/step9_63c_r5c6_r10_v3_authorization_manifest.json",
+  "old_authorization_manifest_sha256": "beac52d1ed3bc11efa02b1a924a8abc7b210171bf5cc1b7910011a6ef9741241",
+  "old_authorization_reuse_status": "PROVEN_NON_REUSABLE_BY_FROZEN_CONTRACT",
+  "references": "the r11 activation approval record that carries this approval_id",
+  "retirement_reason": "SUPERSEDED_BY_APPROVED_R11_ACTIVATION",
+  "step": "9.63c-r5c10ah"
+}

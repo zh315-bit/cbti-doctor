@@ -1,0 +1,195 @@
+"""Step 9.63c-r5c10ai (supersedes r5c10ad AR-6): replay the frozen V2 identity preflight from the
+V2-era Git commit 201ef5c, which must be an ancestor of the current HEAD.
+
+The r5c10ad version read the blobs from Git HEAD; the checkpoint commit 23994b2 moved HEAD onto the
+current bytes, so this version names the archival commit explicitly. Original description:
+
+``tests/test_step9_43a_treatment_identity.py::test_01a`` asserts that the *working
+tree* still satisfies the V2 identity. It cannot: the parent runner and three Agent
+files have since evolved (V3 / r10). That test file is itself pinned by the V2 runner
+freeze, so it is left untouched. Instead this module rebuilds the V2-era snapshot in a
+temporary root, taking every drifted file from the Git HEAD blob whose SHA-256 equals
+the V2 pin, and runs the unmodified V2 verifier there in a subprocess (so every
+``scripts`` module resolves its ROOT inside the temporary root). The repository
+working tree is only read, never written. CI keeps excluding test_step9_43a.
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+import shutil
+import subprocess
+import sys
+import tempfile
+import unittest
+import zlib
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+CONTRACT = "evaluation/v1_2_3/step9_43a_treatment_v2_identity_contract.json"
+V2_ARCHIVAL_COMMIT = "201ef5c2d406b0eaf2ebf5ce12db912b3caf5762"
+# Path -> V2 pin; all five equal the blob in the archival commit and differ from the working tree.
+REPLAY = {
+    "scripts/run_step9_35a_matched_treatment.py": "920486b1d7984fae6ee77b5ac51af0d0a98caf42e445d1abcf7ff75b46038505",
+    "tests/test_step9_43a_treatment_identity.py": "9936772aee53ae523a28669025a678d2cda58a30cea6a0561189d9afc0e891ef",
+    "adaptive_agent/answer_generation.py": "349221cd82a875990283f8958da5e2f22f7c10da0fe99391da3b043fbff9cbbb",
+    "adaptive_agent/runner.py": "e1dc32788f105b7ce4912853201e601a37c627b6df39493a49103ad7945a5781",
+    "evaluation/recorder.py": "ca0bc7488f5af7d117298f817ccfd7f3b814bb80f60b114d1f9750c939877d9d",
+}
+
+
+def sha256_bytes(data: bytes) -> str:
+    return hashlib.sha256(data).hexdigest()
+
+
+def git_object(sha: str) -> tuple[str, bytes]:
+    loose = ROOT / ".git/objects" / sha[:2] / sha[2:]
+    if loose.is_file():
+        raw = zlib.decompress(loose.read_bytes())
+        header, _, body = raw.partition(b"\0")
+        return header.split(b" ")[0].decode(), body
+    # Packed repositories (e.g. shallow CI checkouts): read-only plumbing fallback.
+    kind = subprocess.run(["git", "cat-file", "-t", sha], cwd=ROOT, check=True,
+                          capture_output=True, text=True).stdout.strip()
+    body = subprocess.run(["git", "cat-file", kind, sha], cwd=ROOT, check=True,
+                          capture_output=True).stdout
+    return kind, body
+
+
+def current_head() -> str:
+    ref = (ROOT / ".git/HEAD").read_text(encoding="utf-8").strip()
+    if not ref.startswith("ref:"):
+        return ref
+    name = ref.split(" ", 1)[1]
+    loose = ROOT / ".git" / name
+    if loose.exists():
+        return loose.read_text(encoding="utf-8").strip()
+    for line in (ROOT / ".git/packed-refs").read_text(encoding="utf-8").splitlines():
+        if line.endswith(" " + name):
+            return line.split(" ", 1)[0]
+    raise RuntimeError("cannot resolve HEAD")
+
+
+def parents_of(commit: str) -> list[str]:
+    kind, body = git_object(commit)
+    if kind != "commit":
+        raise RuntimeError("not a commit: " + commit)
+    return [line.split(" ", 1)[1] for line in body.split(b"\n\n", 1)[0].decode().splitlines() if line.startswith("parent ")]
+
+
+def head_blob(relpath: str) -> bytes:
+    """Blob of ``relpath`` in the archival commit (the name is kept from the r5c10ad version)."""
+    commit = V2_ARCHIVAL_COMMIT
+    kind, body = git_object(commit)
+    if kind != "commit":
+        raise RuntimeError("the archival commit is not a commit")
+    tree = body.split(b"\n", 1)[0].split(b" ")[1].decode()
+    for part in relpath.split("/"):
+        kind, body = git_object(tree)
+        if kind != "tree":
+            raise RuntimeError(f"not a tree on path {relpath}")
+        found, index = None, 0
+        while index < len(body):
+            space = body.index(b" ", index)
+            nul = body.index(b"\0", space)
+            if body[space + 1:nul].decode() == part:
+                found = body[nul + 1:nul + 21].hex()
+                break
+            index = nul + 21
+        if found is None:
+            raise RuntimeError(f"path absent from the archival commit: {relpath}")
+        tree = found
+    kind, body = git_object(tree)
+    if kind != "blob":
+        raise RuntimeError(f"not a blob: {relpath}")
+    return body
+
+
+def mirror(source: Path, target: Path, keep: set[str], copy_all: bool = False) -> None:
+    """Symlink everything except the paths in ``keep``; copy ``scripts`` so module
+    ROOTs (computed with Path(__file__).resolve()) stay inside the temporary root."""
+    target.mkdir()
+    for entry in source.iterdir():
+        rel = entry.relative_to(ROOT).as_posix()
+        if entry.name.startswith("._") or entry.name == "__pycache__" or rel in {".git", ".venv"}:
+            continue
+        nested = any(path.startswith(rel + "/") for path in keep)
+        if entry.is_dir() and not entry.is_symlink() and (copy_all or rel == "scripts" or nested):
+            mirror(entry, target / entry.name, keep, copy_all or rel == "scripts")
+        elif rel in keep:
+            continue
+        elif copy_all:
+            shutil.copyfile(entry, target / entry.name)
+        else:
+            (target / entry.name).symlink_to(entry)
+
+
+class V2ArchivalReplayTests(unittest.TestCase):
+    def test_the_archival_commit_exists_and_is_an_ancestor_of_the_current_head(self):
+        self.assertRegex(V2_ARCHIVAL_COMMIT, "^[0-9a-f]{40}$")
+        kind, _ = git_object(V2_ARCHIVAL_COMMIT)
+        self.assertEqual(kind, "commit")
+        head = current_head()
+        seen, queue = set(), [head]
+        while queue:
+            commit = queue.pop()
+            if commit == V2_ARCHIVAL_COMMIT:
+                break
+            if commit in seen:
+                continue
+            seen.add(commit)
+            queue.extend(parents_of(commit))
+            self.assertLess(len(seen), 5000)
+        else:
+            self.fail("the archival commit is not an ancestor of HEAD")
+
+    def test_the_archival_commit_is_not_the_current_head(self):
+        self.assertNotEqual(current_head(), V2_ARCHIVAL_COMMIT)
+
+    def test_archival_blobs_equal_v2_pins_and_differ_from_working_tree(self):
+        freeze = json.loads((ROOT / "evaluation/v1_2_3/step9_43a_treatment_v2_runner_freeze.json")
+                            .read_text(encoding="utf-8"))
+        self.assertEqual(sha256_bytes(head_blob(freeze["parent_runner_path"])), freeze["parent_runner_sha256"])
+        self.assertEqual(sha256_bytes(head_blob(freeze["runner_test_path"])), freeze["runner_test_sha256"])
+        agent = dict(json.loads((ROOT / "evaluation/v1_2_3/step9_42_treatment_v2_freeze.json")
+                                .read_text(encoding="utf-8"))["agent_behavior_files"])
+        for path, pin in REPLAY.items():
+            with self.subTest(path=path):
+                expected = agent.get(path) or freeze.get(
+                    {"scripts/run_step9_35a_matched_treatment.py": "parent_runner_sha256",
+                     "tests/test_step9_43a_treatment_identity.py": "runner_test_sha256"}[path])
+                self.assertEqual(expected, pin)
+                self.assertEqual(sha256_bytes(head_blob(path)), pin)
+                if path != "tests/test_step9_43a_treatment_identity.py":
+                    self.assertNotEqual(sha256_bytes((ROOT / path).read_bytes()), expected)
+
+    def test_01a_frozen_v2_identity_preflight_passes_on_archived_bytes(self):
+        before = {path: sha256_bytes((ROOT / path).read_bytes()) for path in REPLAY}
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve() / "root"
+            mirror(ROOT, root, set(REPLAY) | {CONTRACT})
+            for path in REPLAY:
+                (root / path).write_bytes(head_blob(path))
+            shutil.copyfile(ROOT / CONTRACT, root / CONTRACT)
+            code = (
+                "import json, sys\nsys.path.insert(0, '.')\n"
+                "from pathlib import Path\n"
+                "import scripts.run_step9_43a_treatment_v2 as v2\n"
+                "import scripts.run_step9_35a_matched_treatment as legacy\n"
+                f"contract, freeze, runtime = v2.load_verified_identity(Path({CONTRACT!r}).resolve())\n"
+                "print(json.dumps({'agent': contract['treatment_agent_sha256'],"
+                " 'repair_class': freeze['repair_class'], 'case_count': runtime['pins']['case_count'],"
+                " 'v2_root': str(v2.ROOT), 'legacy_root': str(legacy.ROOT)}))\n")
+            result = subprocess.run([sys.executable, "-c", code], cwd=root,
+                                    capture_output=True, text=True, check=False)
+            self.assertEqual(result.returncode, 0, result.stderr[-2000:])
+            outcome = json.loads(result.stdout)
+            self.assertEqual((outcome["v2_root"], outcome["legacy_root"]), (str(root), str(root)))
+        self.assertEqual(outcome["agent"], "b9e891e7cd077dd5b3c6fa72b71faad978a24226c2b5e89e0b06aabde93b51d6")
+        self.assertEqual(outcome["repair_class"], "INFRASTRUCTURE_IDENTITY_COMPATIBILITY_ONLY")
+        self.assertEqual(outcome["case_count"], 40)
+        self.assertEqual({path: sha256_bytes((ROOT / path).read_bytes()) for path in REPLAY}, before)
+
+
+if __name__ == "__main__":
+    unittest.main()

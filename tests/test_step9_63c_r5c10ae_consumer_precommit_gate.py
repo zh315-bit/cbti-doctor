@@ -315,40 +315,6 @@ class ExecuteFormalOrderingTests(unittest.TestCase):
                 formal.execute_formal(argparse.Namespace())
             self.assertNotIn("scripts.run_step9_53_v3_identity_adapter", set(sys.modules) - before)
 
-    def test_prepare_formal_gates_reports_real_precommit_failures(self):
-        with tempfile.TemporaryDirectory() as directory:
-            fx = R11PrecommitFixture(Path(directory).resolve())
-            preflight_file = fx.root / "preflight.json"
-            preflight = {"authorization_id": AUTH_ID, "attempt_id": ATTEMPT_ID,
-                         "runner_freeze_sha256": sha256(fx.freeze_path),
-                         "status": "PASS_NON_CONSUMING_PREFLIGHT", "authorization_consumed": False,
-                         "attempt_created": False, "namespace_created": False,
-                         "dns_ready": True, "tcp_ready": True, "tls_ready": True}
-            preflight_file.write_text(json.dumps(preflight))
-            from scripts.run_step9_35a_matched_treatment import supplied_hash_keys
-            args = argparse.Namespace(authorization_id=AUTH_ID, attempt_id=ATTEMPT_ID,
-                                      evaluation_id=EVALUATION_ID, authorization_file=fx.auth_path,
-                                      preflight_file=preflight_file, preflight_id="p", preflight_sha256="0" * 64,
-                                      **{key: "a" * 64 for key in supplied_hash_keys()})
-            real_collect = formal.collect_r11_precommit_state
-
-            def collect(**kwargs):  # same real checks, rooted in the fixture
-                return real_collect(**kwargs, root=fx.root, adapter_module=fx.adapter)
-
-            # Only identity resolution and the separately tested preflight-evidence check
-            # are stood in; every precommit check runs for real against the fixture.
-            with patch.object(formal, "resolve_current_freeze", return_value=(fx.freeze, fx.freeze_path, fx.identity)), \
-                 patch.object(formal, "validate_preflight_evidence", return_value=None), \
-                 patch.object(formal, "collect_r11_precommit_state", side_effect=collect), \
-                 patch.object(formal, "EXPECTED_PROJECT_ROOT", fx.root), \
-                 patch.object(formal, "EXPECTED_PYTHON", Path(formal.sys.executable)):
-                self.assertEqual(formal.prepare_formal_gates(args)["precommit_failures"], [])
-                pin = fx.root / "evaluation/v1_2_3/step9_61a_v3_runner_freeze_r6.json"
-                pin.write_bytes(pin.read_bytes() + b" ")
-                self.assertIn("historical_integrity_match", formal.prepare_formal_gates(args)["precommit_failures"])
-                with self.assertRaisesRegex(RuntimeError, "precommit gate failed closed: historical_integrity_match"):
-                    formal.execute_formal(args)
-
     def test_gate_runs_before_adapter_import_and_run(self):
         import inspect
         source = inspect.getsource(formal.execute_formal)

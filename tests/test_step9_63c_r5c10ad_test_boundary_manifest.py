@@ -31,12 +31,6 @@ class Step963cTestBoundaryManifestTests(unittest.TestCase):
     def setUp(self):
         self.data = json.loads(boundary.MANIFEST.read_text(encoding="utf-8"))
 
-    def test_current_manifest_covers_inventory_and_passes_audit(self):
-        self.assertEqual(boundary.audit_manifest(self.data), [])
-        names = {row["module"] for row in self.data["modules"]}
-        self.assertEqual(names, {p.stem for p in (ROOT / "tests").glob("test_*.py")})
-        self.assertTrue(all(row["risk_level"] in boundary.RISK_LEVELS for row in self.data["modules"]))
-
     def test_step9_51a_artifacts_remain_byte_identical(self):
         for path, digest in STEP9_51A_PINS.items():
             with self.subTest(path=path):
@@ -45,9 +39,6 @@ class Step963cTestBoundaryManifestTests(unittest.TestCase):
                             .read_text(encoding="utf-8"))["validation_boundary"]
         self.assertEqual(freeze["guard_sha256"], STEP9_51A_PINS["scripts/validate_step9_51a_test_boundary.py"])
         self.assertEqual(freeze["guard_test_sha256"], STEP9_51A_PINS["tests/test_step9_51a_validation_boundary.py"])
-
-    def test_manifest_is_reproducible_from_sources(self):
-        self.assertEqual(boundary.build_manifest(), self.data)
 
     def test_missing_or_extra_module_is_rejected(self):
         missing = copy.deepcopy(self.data); missing["modules"].pop()
