@@ -1,0 +1,352 @@
+{
+ "artifact_type": "R5C10AK_MUTATION_RESULTS",
+ "session_guard": {
+  "artifact_type": "R5C10AK_SESSION_GUARD_MUTATION_RESULTS",
+  "total": 24,
+  "killed": 19,
+  "survived": [
+   "M2_append_mode_not_a_write",
+   "M3_plus_mode_not_a_write",
+   "M9_replace_target_unchecked",
+   "M10_copy_target_unchecked",
+   "M19_shutil_move_unchecked"
+  ],
+  "results": [
+   {
+    "mutant": "M1_os_open_flags_ignored",
+    "result": "KILLED",
+    "killed_by": "test_000_session_guard.BlockedWrites.test_every_write_capable_access_stops_the_session_and_changes_nothing (case='os.open the lock with O_RDWR|O_CREAT')",
+    "note": ""
+   },
+   {
+    "mutant": "M2_append_mode_not_a_write",
+    "result": "SURVIVED",
+    "killed_by": null,
+    "note": "EQUIVALENT: builtin open() reports the computed os flags in its audit event, and O_APPEND is caught by the flags check"
+   },
+   {
+    "mutant": "M3_plus_mode_not_a_write",
+    "result": "SURVIVED",
+    "killed_by": null,
+    "note": "EQUIVALENT: same reason (O_RDWR in the flags)"
+   },
+   {
+    "mutant": "M4_symlinks_not_resolved",
+    "result": "KILLED",
+    "killed_by": "test_000_session_guard.BlockedWrites.test_every_write_capable_access_stops_the_session_and_changes_nothing (case='write through a symlink alias')",
+    "note": ""
+   },
+   {
+    "mutant": "M5_protected_dirs_ignored",
+    "result": "KILLED",
+    "killed_by": "test_000_session_guard.BlockedWrites.test_every_write_capable_access_stops_the_session_and_changes_nothing (case='os.open the lock with O_RDWR|O_CREAT')",
+    "note": ""
+   },
+   {
+    "mutant": "M6_protected_files_ignored",
+    "result": "KILLED",
+    "killed_by": "test_000_session_guard.BlockedWrites.test_a_relative_path_from_another_working_directory_is_resolved",
+    "note": ""
+   },
+   {
+    "mutant": "M7_ancestors_not_protected",
+    "result": "KILLED",
+    "killed_by": "test_000_session_guard.BlockedWrites.test_every_write_capable_access_stops_the_session_and_changes_nothing (case='rename an ancestor')",
+    "note": ""
+   },
+   {
+    "mutant": "M8_violation_does_not_stop_the_session",
+    "result": "KILLED",
+    "killed_by": "test_000_session_guard.BlockedWrites.test_a_relative_path_from_another_working_directory_is_resolved",
+    "note": ""
+   },
+   {
+    "mutant": "M9_replace_target_unchecked",
+    "result": "SURVIVED",
+    "killed_by": null,
+    "note": "EQUIVALENT: CPython's os.replace raises the audit event os.rename, whose two paths are both checked"
+   },
+   {
+    "mutant": "M10_copy_target_unchecked",
+    "result": "SURVIVED",
+    "killed_by": null,
+    "note": "EQUIVALENT: shutil.copyfile opens the destination for writing, which the open check stops"
+   },
+   {
+    "mutant": "M11_hook_never_installed",
+    "result": "KILLED",
+    "killed_by": "test_000_session_guard.BlockedWrites.test_a_relative_path_from_another_working_directory_is_resolved",
+    "note": ""
+   },
+   {
+    "mutant": "M12_utime_unchecked",
+    "result": "KILLED",
+    "killed_by": "test_000_session_guard.BlockedWrites.test_every_write_capable_access_stops_the_session_and_changes_nothing (case='touch the lock (utime)')",
+    "note": ""
+   },
+   {
+    "mutant": "M13_open_event_ignored",
+    "result": "KILLED",
+    "killed_by": "test_000_session_guard.BlockedWrites.test_a_relative_path_from_another_working_directory_is_resolved",
+    "note": ""
+   },
+   {
+    "mutant": "M14_r11_manifest_not_protected",
+    "result": "KILLED",
+    "killed_by": "test_000_session_guard.BlockedWrites.test_every_write_capable_access_stops_the_session_and_changes_nothing (case='overwrite the r11 manifest')",
+    "note": ""
+   },
+   {
+    "mutant": "M15_ledger_not_protected",
+    "result": "KILLED",
+    "killed_by": "test_000_session_guard.BlockedWrites.test_a_relative_path_from_another_working_directory_is_resolved",
+    "note": ""
+   },
+   {
+    "mutant": "M16_everything_blocked",
+    "result": "KILLED",
+    "killed_by": "test_000_session_guard.AllowedAccess.test_a_temporary_root_with_the_same_layout_is_not_protected",
+    "note": ""
+   },
+   {
+    "mutant": "M17_rename_source_unchecked",
+    "result": "KILLED",
+    "killed_by": "test_000_session_guard.BlockedWrites.test_every_write_capable_access_stops_the_session_and_changes_nothing (case='rename the ledger away')",
+    "note": ""
+   },
+   {
+    "mutant": "M18_rmdir_unchecked",
+    "result": "KILLED",
+    "killed_by": "test_000_session_guard.BlockedWrites.test_every_write_capable_access_stops_the_session_and_changes_nothing (case='remove an empty namespace directory')",
+    "note": ""
+   },
+   {
+    "mutant": "M19_shutil_move_unchecked",
+    "result": "SURVIVED",
+    "killed_by": null,
+    "note": "EQUIVALENT: shutil.move raises os.rename (or opens the destination for writing), both checked"
+   },
+   {
+    "mutant": "M21_entry_events_follow_symlinks",
+    "result": "KILLED",
+    "killed_by": "test_000_session_guard.AllowedAccess.test_removing_a_temporary_symlink_that_points_at_a_protected_file_is_allowed",
+    "note": ""
+   },
+   {
+    "mutant": "M22_entry_parent_not_resolved",
+    "result": "KILLED",
+    "killed_by": "test_000_session_guard.BlockedWrites.test_every_write_capable_access_stops_the_session_and_changes_nothing (case='unlink the real ledger even when reached through a symlinked directory')",
+    "note": ""
+   },
+   {
+    "mutant": "M23_dir_fd_ignored",
+    "result": "KILLED",
+    "killed_by": "test_000_session_guard.BlockedWrites.test_every_write_capable_access_stops_the_session_and_changes_nothing (case='remove the ledger relative to a directory file descriptor')",
+    "note": ""
+   },
+   {
+    "mutant": "M24_dir_fd_relative_paths_not_checked",
+    "result": "KILLED",
+    "killed_by": "test_000_session_guard.BlockedWrites.test_every_write_capable_access_stops_the_session_and_changes_nothing (case='remove the ledger relative to a directory file descriptor')",
+    "note": ""
+   },
+   {
+    "mutant": "M20_mkdir_unchecked",
+    "result": "KILLED",
+    "killed_by": "test_000_session_guard.BlockedWrites.test_every_write_capable_access_stops_the_session_and_changes_nothing (case='create a namespace directory')",
+    "note": ""
+   }
+  ]
+ },
+ "coverage_mapping": {
+  "artifact_type": "R5C10AK_COVERAGE_MUTATION_RESULTS",
+  "total": 16,
+  "killed": 16,
+  "survived": [],
+  "results": [
+   {
+    "retired_test": "59a.test_parent_validator_accepts_authoritative_r7_pins",
+    "mutant": "current_runner_pins_rejected",
+    "module": "scripts.run_step9_63_v3_formal_execution",
+    "superseding_tests": [
+     "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_00_consistent_fixture_passes_every_r11_precommit_check"
+    ],
+    "result": "KILLED",
+    "killed_by": "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_00_consistent_fixture_passes_every_r11_precommit_check",
+    "tests_run": 1
+   },
+   {
+    "retired_test": "59a.test_preflight_runner_binding_mismatch_fails_closed / test_preflight_rejects_freeze_hash_not_equal_to_current_runner",
+    "mutant": "runner_freeze_binding_unchecked",
+    "module": "scripts.run_step9_63_v3_formal_execution",
+    "superseding_tests": [
+     "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_formal_entry_or_freeze_binding_mismatch_rejected"
+    ],
+    "result": "KILLED",
+    "killed_by": "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_formal_entry_or_freeze_binding_mismatch_rejected",
+    "tests_run": 1
+   },
+   {
+    "retired_test": "59a.test_actual_preflight_fails_closed_on_stale_validator_runner_pin",
+    "mutant": "frozen_identities_unchecked",
+    "module": "scripts.run_step9_63_v3_formal_execution",
+    "superseding_tests": [
+     "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_frozen_identity_mismatch_rejected"
+    ],
+    "result": "KILLED",
+    "killed_by": "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_frozen_identity_mismatch_rejected",
+    "tests_run": 1
+   },
+   {
+    "retired_test": "59a.test_parent_validator_rejects_retired_authorization",
+    "mutant": "retired_bound_authorization_accepted",
+    "module": "scripts.run_step9_63_v3_formal_execution",
+    "superseding_tests": [
+     "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_retired_bound_authorization_rejected"
+    ],
+    "result": "KILLED",
+    "killed_by": "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_retired_bound_authorization_rejected",
+    "tests_run": 1
+   },
+   {
+    "retired_test": "59a.test_parent_validator_rejects_retired_authorization (parent path)",
+    "mutant": "retirement_ignored_by_reducer",
+    "module": "scripts.authorization_lifecycle",
+    "superseding_tests": [
+     "test_step9_63a_r2_retirement_eligibility.SupersededRetirementTests.test_retired_auth_cannot_create_parent_attempt",
+     "test_step9_63a_r2_retirement_eligibility.SupersededRetirementTests.test_retired_auth_cannot_enter_new_transaction"
+    ],
+    "result": "KILLED",
+    "killed_by": "test_step9_63a_r2_retirement_eligibility.SupersededRetirementTests.test_retired_auth_cannot_enter_new_transaction",
+    "tests_run": 2
+   },
+   {
+    "retired_test": "63a_r1.test_old_r6_authorization_rejected_at_r7_namespace_gate / ae.test_real_r10_authorization_blocks_r11_until_retired",
+    "mutant": "executable_superseded_authorization_ignored",
+    "module": "scripts.run_step9_63_v3_formal_execution",
+    "superseding_tests": [
+     "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_executable_superseded_authorization_rejected"
+    ],
+    "result": "KILLED",
+    "killed_by": "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_executable_superseded_authorization_rejected",
+    "tests_run": 1
+   },
+   {
+    "retired_test": "63a_r2.test_retired_auth_cannot_enter_prepared_committing_or_committed",
+    "mutant": "retirement_transaction_conflict_ignored",
+    "module": "scripts.authorization_lifecycle",
+    "superseding_tests": [
+     "test_step9_63c_r5c5b_lifecycle_reducer.LifecycleReducerTests.test_10_retirement_and_transaction_conflict_fail_closed"
+    ],
+    "result": "KILLED",
+    "killed_by": "test_step9_63c_r5c5b_lifecycle_reducer.LifecycleReducerTests.test_10_retirement_and_transaction_conflict_fail_closed",
+    "tests_run": 1
+   },
+   {
+    "retired_test": "63a_r2.test_active_authorization_count_becomes_zero",
+    "mutant": "active_set_not_computed",
+    "module": "scripts.authorization_lifecycle",
+    "superseding_tests": [
+     "test_step9_63c_r5c10ai_final_form_and_tokens.FinalFormSequence"
+    ],
+    "result": "KILLED",
+    "killed_by": "test_step9_63c_r5c10ai_final_form_and_tokens.FinalFormSequence.test_the_complete_gated_sequence_with_the_final_form",
+    "tests_run": 1
+   },
+   {
+    "retired_test": "ae.test_unavailable_identity_adapter_fails_closed",
+    "mutant": "unexecuted_check_not_a_failure",
+    "module": "scripts.run_step9_63_v3_formal_execution",
+    "superseding_tests": [
+     "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_missing_key_or_unexecuted_check_fails"
+    ],
+    "result": "KILLED",
+    "killed_by": "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_missing_key_or_unexecuted_check_fails",
+    "tests_run": 1
+   },
+   {
+    "retired_test": "63c_r5.test_existing_artifact_blocks_network",
+    "mutant": "existing_target_overwritten",
+    "module": "scripts.preflight_step9_63c_r11_mac_local",
+    "superseding_tests": [
+     "test_step9_63c_r5c10ad_r5_producer_equivalence.R11ProducerArtifactLifecycle.test_T11_duplicate_preflight_id_exclusive_create_fails"
+    ],
+    "result": "KILLED",
+    "killed_by": "test_step9_63c_r5c10ad_r5_producer_equivalence.R11ProducerArtifactLifecycle.test_T11_duplicate_preflight_id_exclusive_create_fails",
+    "tests_run": 1
+   },
+   {
+    "retired_test": "63c_r5.test_success_fixture_exclusively_writes_only_evidence",
+    "mutant": "digest_not_of_the_written_bytes",
+    "module": "scripts.preflight_step9_63c_r11_mac_local",
+    "superseding_tests": [
+     "test_step9_63c_r5c10ad_r5_producer_equivalence.R11ProducerArtifactLifecycle.test_T12_different_ids_do_not_collide"
+    ],
+    "result": "KILLED",
+    "killed_by": "test_step9_63c_r5c10ad_r5_producer_equivalence.R11ProducerArtifactLifecycle.test_T12_different_ids_do_not_collide",
+    "tests_run": 1
+   },
+   {
+    "retired_test": "63c_r5.test_pre_post_state_change_fails_closed",
+    "mutant": "binding_recheck_removed",
+    "module": "scripts.preflight_step9_63c_r11_mac_local",
+    "superseding_tests": [
+     "test_step9_63c_r5c10ak_r11_producer_recheck"
+    ],
+    "result": "KILLED",
+    "killed_by": "test_step9_63c_r5c10ak_r11_producer_recheck.ProducerRecheckTests.test_a_changed_authorization_state_is_refused",
+    "tests_run": 5
+   },
+   {
+    "retired_test": "55a.test_consumed_step954_authorization_cannot_be_reused / test_failed_step955_attempt_cannot_be_resumed (REWRITTEN)",
+    "mutant": "reuse_guard_removed",
+    "module": "scripts.run_step9_53_v3_identity_adapter",
+    "superseding_tests": [
+     "test_step9_63c_r5c10ak_legacy_rewrites.Rewritten55a.test_consumed_step954_authorization_cannot_be_reused",
+     "test_step9_63c_r5c10ak_legacy_rewrites.Rewritten55a.test_failed_step955_attempt_cannot_be_resumed"
+    ],
+    "result": "KILLED",
+    "killed_by": "test_step9_63c_r5c10ak_legacy_rewrites.Rewritten55a.test_consumed_step954_authorization_cannot_be_reused",
+    "tests_run": 2
+   },
+   {
+    "retired_test": "55a.test_missing_authorization_semantic_state_fails_closed (REWRITTEN)",
+    "mutant": "manifest_requirement_removed",
+    "module": "scripts.run_step9_53_v3_identity_adapter",
+    "superseding_tests": [
+     "test_step9_63c_r5c10ak_legacy_rewrites.Rewritten55a.test_missing_authorization_semantic_state_fails_closed"
+    ],
+    "result": "KILLED",
+    "killed_by": "test_step9_63c_r5c10ak_legacy_rewrites.Rewritten55a.test_missing_authorization_semantic_state_fails_closed",
+    "tests_run": 1
+   },
+   {
+    "retired_test": "55a.test_new_future_authorization_and_attempt_pass_preflight (REWRITTEN, positive control)",
+    "mutant": "lifecycle_always_rejects",
+    "module": "scripts.authorization_lifecycle",
+    "superseding_tests": [
+     "test_step9_63c_r5c10ak_legacy_rewrites.Rewritten55a.test_new_future_authorization_and_attempt_pass_preflight"
+    ],
+    "result": "KILLED",
+    "killed_by": "test_step9_63c_r5c10ak_legacy_rewrites.Rewritten55a.test_new_future_authorization_and_attempt_pass_preflight",
+    "tests_run": 1
+   },
+   {
+    "retired_test": "58a.test_reserved_fresh_namespace_requires_transaction_for_post_first_case_guard (REWRITTEN)",
+    "mutant": "post_first_case_transaction_requirement_removed",
+    "module": "scripts.run_step9_53_v3_identity_adapter",
+    "superseding_tests": [
+     "test_step9_63c_r5c10ak_legacy_rewrites.Rewritten58a.test_reserved_fresh_namespace_requires_transaction_for_post_first_case_guard"
+    ],
+    "result": "KILLED",
+    "killed_by": "test_step9_63c_r5c10ak_legacy_rewrites.Rewritten58a.test_reserved_fresh_namespace_requires_transaction_for_post_first_case_guard",
+    "tests_run": 1
+   }
+  ]
+ },
+ "summary": {
+  "session_guard": "19/24 killed; survivors are equivalent: M2_append_mode_not_a_write, M3_plus_mode_not_a_write, M9_replace_target_unchecked, M10_copy_target_unchecked, M19_shutil_move_unchecked",
+  "coverage_mapping": "16/16 killed",
+  "r11_producer_recheck": "removing the re-check makes 4 of the 5 new tests fail (included as binding_recheck_removed in coverage_mapping)"
+ }
+}

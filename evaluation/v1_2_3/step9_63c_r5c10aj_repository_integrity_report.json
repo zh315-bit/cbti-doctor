@@ -1,0 +1,14 @@
+{
+ "artifact_type": "R5C10AJ_REPOSITORY_INTEGRITY_REPORT",
+ "step": "9.63c-r5c10aj",
+ "baseline": "aj2_snap_start (before any command of this step) -> ak_snap_end (after both guarded regressions); the read-only entries, the independent checks and the gate ran in between",
+ "files_compared": 2733,
+ "added": [],
+ "removed": [],
+ "content_changed": [],
+ "mtime_only": [],
+ "git_head": "ef3753435c4ab095f1753122ab720eb0ce041dfa",
+ "git_status_short_before_the_reports_were_written": [],
+ "all_ok": true,
+ "statement": "this step wrote nothing in the repository except its own reports (written after this check); no write entry, preflight, formal execution or commit was run"
+}

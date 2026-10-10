@@ -1,0 +1,183 @@
+{
+ "artifact_type": "R5C10AJ_POST_ACTIVATION_VERIFICATION",
+ "git_head": "ef3753435c4ab095f1753122ab720eb0ce041dfa",
+ "readonly_entries_raw_output": {
+  "builder_status": "{\n  \"creation_record_present\": true,\n  \"freeze_present\": true,\n  \"pointer_canonical\": true,\n  \"pointer_present\": true,\n  \"r11_authorization_present\": true,\n  \"registry_present\": false,\n  \"state\": \"S2_FREEZE_PERSISTED\"\n}\nexit=0\n",
+  "builder_verify": "{\n  \"checks\": [\n    {\n      \"detail\": \"\",\n      \"name\": \"V1 pointer is a regular file with the canonical bytes\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"creation record binds pointer and approval\",\n      \"name\": \"V2 creation record exists and binds the pointer and the approval\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"pointer and freeze resolve\",\n      \"name\": \"V3 resolver accepts the pointer (a missing freeze is the expected refusal)\",\n      \"ok\": true\n    }\n  ],\n  \"mode\": \"verify\",\n  \"ok\": true,\n  \"status\": {\n    \"creation_record_present\": true,\n    \"freeze_present\": true,\n    \"pointer_canonical\": true,\n    \"pointer_present\": true,\n    \"r11_authorization_present\": true,\n    \"registry_present\": false,\n    \"state\": \"S2_FREEZE_PERSISTED\"\n  },\n  \"writes_nothing\": true\n}\nexit=0\n",
+  "builder_verify_retire": "{\n  \"checks\": [\n    {\n      \"detail\": \"\",\n      \"name\": \"V1 the pre-retirement ledger bytes are unchanged\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"2887 bytes appended, 1 later line(s)\",\n      \"name\": \"V2 exactly one line was appended for the retirement (only the issuance event may follow it)\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"event equals the approved template; timestamp is later than every earlier event\",\n      \"name\": \"V3 the appended event equals the approved template (except the two generated fields)\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"reducer state RETIRED_UNCONSUMED_NON_REUSABLE\",\n      \"name\": \"V4 the reducer judges the r10 authorization retired and non-executable\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"\",\n      \"name\": \"V5 exactly one retirement event exists for the r10 authorization\",\n      \"ok\": true\n    }\n  ],\n  \"mode\": \"verify-retire-r10\",\n  \"ok\": true,\n  \"state\": \"RETIRED_AS_APPROVED\",\n  \"writes_nothing\": true\n}\nexit=0\n",
+  "builder_verify_freeze": "{\n  \"ok\": true,\n  \"reason\": \"ok\",\n  \"sha256\": \"bafcec8d2ae0bad6c3cb43e89bd49171b85374957ec6ce173071fef5248357b3\"\n}\nexit=0\n",
+  "issuer_status": "{\n  \"detail\": \"ok\",\n  \"events\": 1,\n  \"manifest_sha256\": \"33bd99b9f7fba0bde0fc6a40d0c6a3b570b9f59d1e4c0158c1d4b5e8d82f5ea1\",\n  \"state\": \"ISSUED_RECORDED\"\n}\nexit=0\n",
+  "issuer_verify": "{\n  \"checks\": [\n    {\n      \"detail\": \"ISSUED_RECORDED\",\n      \"name\": \"V1 manifest and exactly one matching ledger event\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"ISSUED_EXECUTABLE\",\n      \"name\": \"V2 reducer state is ISSUED_EXECUTABLE\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"\",\n      \"name\": \"V3 exactly one active authorization, and it is this one\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"\",\n      \"name\": \"V4 manifest key set equals the template key set\",\n      \"ok\": true\n    },\n    {\n      \"detail\": \"\",\n      \"name\": \"V5 unconsumed, no attempt, no namespace\",\n      \"ok\": true\n    }\n  ],\n  \"mode\": \"verify\",\n  \"ok\": true,\n  \"status\": {\n    \"detail\": \"ok\",\n    \"events\": 1,\n    \"manifest_sha256\": \"33bd99b9f7fba0bde0fc6a40d0c6a3b570b9f59d1e4c0158c1d4b5e8d82f5ea1\",\n    \"state\": \"ISSUED_RECORDED\"\n  },\n  \"writes_nothing\": true\n}\nexit=0\n"
+ },
+ "independent_checks": {
+  "A1 signed approval SHA starts 46cd40f4": {
+   "ok": true,
+   "detail": "46cd40f4c780d45bd2d108c531f4da7815dfe20c5df7dd398a21cecad52e31fb"
+  },
+  "A2 signed_at_commit starts dcaa98d7": {
+   "ok": true,
+   "detail": "dcaa98d78a9a61e998ac4b5affa61f44edc21997"
+  },
+  "A3 status SIGNED + approver + time": {
+   "ok": true,
+   "detail": "huzhuoyang 2026-10-10T21:03:26+00:00"
+  },
+  "A4 signed_at_commit is HEAD~1 (the package commit; HEAD is the activation commit)": {
+   "ok": true,
+   "detail": ""
+  },
+  "A5 signed record differs from the draft only in the four signature fields": {
+   "ok": true,
+   "detail": [
+    "approver",
+    "signed_at_commit",
+    "signed_at_utc",
+    "status"
+   ]
+  },
+  "L1 ledger first 3856 bytes == aaa2e989\u2026": {
+   "ok": true,
+   "detail": "aaa2e9898a8869db052a1248a0ca2b0574d9c36093aee608db59457f24c2a60e"
+  },
+  "L2 frozen 1161-byte prefix pin": {
+   "ok": true,
+   "detail": ""
+  },
+  "L3 exactly 2 lines after the prefix, newline-terminated": {
+   "ok": true,
+   "detail": 2
+  },
+  "L4 types RETIRED then AUTHORIZATION_ISSUED": {
+   "ok": true,
+   "detail": [
+    "AUTHORIZATION_RETIRED_UNCONSUMED_NON_REUSABLE",
+    "AUTHORIZATION_ISSUED"
+   ]
+  },
+  "L5 retirement event equals the approved template (except 2 generated fields, paths absolute)": {
+   "ok": true,
+   "detail": "retire-1622d321963b422ca52ca6acf510b47f"
+  },
+  "L6 retire id starts retire-1622d321": {
+   "ok": true,
+   "detail": "retire-1622d321963b422ca52ca6acf510b47f"
+  },
+  "L7 retirement timestamp later than every earlier event": {
+   "ok": true,
+   "detail": "2026-10-10T21:06:06.500750+00:00"
+  },
+  "M1 manifest SHA starts 33bd99b9": {
+   "ok": true,
+   "detail": "33bd99b9f7fba0bde0fc6a40d0c6a3b570b9f59d1e4c0158c1d4b5e8d82f5ea1"
+  },
+  "M2 manifest ids equal the approved issuance": {
+   "ok": true,
+   "detail": ""
+  },
+  "M3 issuance event binds the manifest": {
+   "ok": true,
+   "detail": ""
+  },
+  "M4 manifest unconsumed": {
+   "ok": true,
+   "detail": ""
+  },
+  "F1 Freeze SHA == predicted bafcec8d\u2026": {
+   "ok": true,
+   "detail": "bafcec8d2ae0bad6c3cb43e89bd49171b85374957ec6ce173071fef5248357b3"
+  },
+  "F2 manifest bound to the Freeze": {
+   "ok": true,
+   "detail": ""
+  },
+  "P1 pointer == 4e077781\u2026 (389 bytes)": {
+   "ok": true,
+   "detail": ""
+  },
+  "S1 active authorizations == exactly [the r11 authorization]": {
+   "ok": true,
+   "detail": [
+    "auth-step9_63c_r11-1a399434ec0e4494b0045734846b2042"
+   ]
+  },
+  "S2 r10 authorization retired and not executable": {
+   "ok": true,
+   "detail": "RETIRED_UNCONSUMED_NON_REUSABLE"
+  },
+  "S3 r11 authorization ISSUED_EXECUTABLE (unconsumed)": {
+   "ok": true,
+   "detail": "ISSUED_EXECUTABLE"
+  },
+  "S4 execution directory does not exist": {
+   "ok": true,
+   "detail": "evaluation/v4_runs/heldout-v4-treatment-v3-run-9ec9c305cc4de01e6538"
+  },
+  "S5 no attempt/transaction/reservation artifact names the r11 identities": {
+   "ok": true,
+   "detail": []
+  },
+  "S6 no attempts.jsonl or allocation file mentions the r11 attempt id": {
+   "ok": true,
+   "detail": []
+  },
+  "S7 no preflight registry exists": {
+   "ok": true,
+   "detail": ""
+  },
+  "S8 no transaction journal for r11": {
+   "ok": true,
+   "detail": ""
+  },
+  "H1 55 historical pins verify": {
+   "ok": true,
+   "detail": ""
+  },
+  "R1 creation record binds the pointer and the signed approval": {
+   "ok": true,
+   "detail": "huzhuoyang"
+  },
+  "G1 working tree clean": {
+   "ok": true,
+   "detail": []
+  },
+  "G2 resolver/consumer/issuer/builder SHAs as approved": {
+   "ok": true,
+   "detail": ""
+  }
+ },
+ "independent_checks_all_ok": true,
+ "consumer_precommit_gate": {
+  "precommit_failures": [],
+  "checks_not_executed": [],
+  "keys": {
+   "project_root_match": true,
+   "python_runtime_match": true,
+   "runner_freeze_match": true,
+   "agent_match": true,
+   "frozen_identities_match": true,
+   "evaluation_identity_match": true,
+   "lifecycle_contract_match": true,
+   "authorization_id_match": true,
+   "authorization_status_issued_unconsumed": true,
+   "authorization_consumption_count_zero": true,
+   "authorization_lifecycle_executable": true,
+   "exactly_one_active_authorization": true,
+   "active_authorization_is_bound_id": true,
+   "old_authorization_retired": true,
+   "old_authorization_non_executable": true,
+   "attempt_id_match": true,
+   "attempt_absent": true,
+   "namespace_id_match": true,
+   "namespace_absent": true,
+   "case_set_match": true,
+   "case_order_match": true,
+   "task_distribution_match": true,
+   "historical_integrity_match": true,
+   "provenance_gap_preserved": true,
+   "fresh_connectivity_pass": true,
+   "authorization_issuance_event_recorded": true
+  },
+  "adapter": "the REAL frozen adapter module (now importable)"
+ },
+ "gate_note": "prepare_formal_gates on the real root with the real frozen adapter. Only the preflight-evidence check is stood in (no preflight was run: forbidden in this step); execute_formal was not entered."
+}

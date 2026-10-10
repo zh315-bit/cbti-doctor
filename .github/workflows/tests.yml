@@ -43,15 +43,22 @@ jobs:
               "test_step9_10a_harness_fix",
               "test_step9_13a_authorization_infrastructure",
               "test_step9_20a_v3_runner",
-              "test_step9_28_v4_runner",
               "test_step9_30a2_lineage_sidecar",
-              "test_step9_30a_v4_adjudication",
-              "test_step9_30c_v4_aggregation",
               "test_step9_43a_treatment_identity",
+              # r5c10ak: these three legacy modules now run on a temporary mirror through wrappers
+              # (originals archived under tests/retired/); they still need the local run outputs.
+              "test_step9_63c_r5c10ak_isolated_28_v4_runner",
+              "test_step9_63c_r5c10ak_isolated_30a_v4_adjudication",
+              "test_step9_63c_r5c10ak_isolated_30c_v4_aggregation",
           }
           test_files = sorted(Path("tests").glob("test_*.py"))
           assert artifact_bound <= {path.stem for path in test_files}
           sys.path.insert(0, str(Path("tests").resolve()))
+          # r5c10ak: session-level hard guard. Any write-capable access to the activation state
+          # (evaluation/v4_runs, the lifecycle ledger, the r11 manifest/Freeze/pointer/records)
+          # stops the whole run with exit code 86. Installed before any test module is imported.
+          import session_safety
+          session_safety.install()
           loader = unittest.TestLoader()
           suite = unittest.TestSuite()
           for path in test_files:

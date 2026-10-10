@@ -1,0 +1,35 @@
+--- a/tests/r11_activation_fixtures.py
++++ b/tests/r11_activation_fixtures.py
+@@ -31,6 +31,8 @@
+ from scripts.preflight_step9_62b_mac_local import SUPPLEMENTAL_HISTORICAL_PINS  # noqa: E402
+ 
+ CREATED_AT = "2026-01-01T00:00:00+00:00"
++PRE_RETIREMENT_LEDGER_SIZE = 3856
++PRE_RETIREMENT_LEDGER_SHA256 = "aaa2e9898a8869db052a1248a0ca2b0574d9c36093aee608db59457f24c2a60e"
+ AGENT = "085d338ed95bbef7370c41cf97ca0d6653ffdfd2f1c924eef4b7123dfdea4607"
+ 
+ 
+@@ -45,7 +47,7 @@
+     paths |= {builder.PARENT_PATH, builder.R10_AUTHORIZATION_PATH, builder.LEDGER_PATH, inventory_path}
+     paths |= {pin["path"] for pin in inventory["historical_pins"].values()} | set(SUPPLEMENTAL_HISTORICAL_PINS)
+     paths |= {p.relative_to(REPO).as_posix() for p in (REPO / "evaluation/v1_2_3").glob("step*authorization_manifest.json")
+-              if not p.name.startswith("._")}
++              if not p.name.startswith("._") and "_r11_" not in p.name}  # the issued r11 manifest is an ACTIVATION OUTPUT
+     runs = REPO / "evaluation/v4_runs"
+     for pattern in ("attempts.jsonl", ".namespace_allocation.json"):
+         paths |= {p.relative_to(REPO).as_posix() for p in runs.rglob(pattern) if not p.name.startswith("._")}
+@@ -61,6 +63,14 @@
+     for relative in material_paths():
+         (root / relative).parent.mkdir(parents=True, exist_ok=True)
+         shutil.copyfile(REPO / relative, root / relative)
++    # State S0 means the PRE-activation ledger: after the real activation the live ledger has two more events
++    # (the r10 retirement and the r11 issuance). Cut it back to the pinned pre-retirement prefix.
++    ledger = root / builder.LEDGER_PATH
++    raw = ledger.read_bytes()
++    if len(raw) > PRE_RETIREMENT_LEDGER_SIZE:
++        if hashlib.sha256(raw[:PRE_RETIREMENT_LEDGER_SIZE]).hexdigest() != PRE_RETIREMENT_LEDGER_SHA256:
++            raise RuntimeError("the live ledger does not start with the pinned pre-retirement bytes")
++        ledger.write_bytes(raw[:PRE_RETIREMENT_LEDGER_SIZE])
+     return root
+ 
+ 

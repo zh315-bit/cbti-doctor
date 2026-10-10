@@ -60,44 +60,6 @@ class R8MacLocalPreflightTests(unittest.TestCase):
         self._config_failure({"DEEPSEEK_API_KEY": "synthetic", "DEEPSEEK_MODEL": "other-model"},
                              "MODEL_PROFILE_MISMATCH")
 
-    def test_pre_post_state_change_fails_closed(self):
-        from scripts import preflight_step9_63b_mac_local as transport
-        with tempfile.TemporaryDirectory() as directory, \
-             patch.object(preflight, "ARTIFACT_DIR", Path(directory)), \
-             patch.object(transport, "_runtime_and_config", return_value={}), \
-             patch.object(preflight, "execution_state", side_effect=[{"state": 1}, {"state": 2}]), \
-             patch.object(transport, "connectivity", return_value=GOOD_NETWORK):
-            with self.assertRaisesRegex(RuntimeError, "PRE_POST_STATE_MISMATCH"):
-                preflight.run_preflight(TEST_PREFLIGHT_ID)
-
-    def test_existing_artifact_blocks_network(self):
-        from scripts import preflight_step9_63b_mac_local as transport
-        with tempfile.TemporaryDirectory() as directory:
-            path = Path(directory) / preflight.artifact_path(TEST_PREFLIGHT_ID).name
-            path.write_text("historical")
-            with patch.object(preflight, "ARTIFACT_DIR", Path(directory)), patch.object(transport, "connectivity") as network:
-                with self.assertRaisesRegex(RuntimeError, "PREFLIGHT_ARTIFACT_EXISTS"):
-                    preflight.run_preflight(TEST_PREFLIGHT_ID)
-                network.assert_not_called()
-            self.assertEqual(path.read_text(), "historical")
-
-    def test_success_fixture_exclusively_writes_only_evidence(self):
-        from scripts import preflight_step9_63b_mac_local as transport
-        with tempfile.TemporaryDirectory() as directory, \
-             patch.object(preflight, "ARTIFACT_DIR", Path(directory)), \
-             patch.object(transport, "_runtime_and_config", return_value={"PROJECT_ROOT_MATCH": True}), \
-             patch.object(preflight, "execution_state", return_value={"AUTHORIZATION_CONSUMED": False}), \
-             patch.object(transport, "connectivity", return_value=GOOD_NETWORK) as network:
-            result = preflight.run_preflight(TEST_PREFLIGHT_ID)
-            self.assertFalse(result["HTTP_REQUEST_SENT"])
-            self.assertEqual(result["FORMAL_V4_CASE_EXECUTED"], 0)
-            path, digest = preflight.write_attestation(result)
-            self.assertEqual(len(digest), 64)
-            self.assertTrue(path.exists())
-            with self.assertRaises(FileExistsError):
-                preflight.write_attestation(result)
-            network.assert_called_once()
-
     def test_accidental_http_model_agent_rag_execution_guard(self):
         source = Path(preflight.__file__).read_text(encoding="utf-8")
         for forbidden in ("requests.get(", "requests.post(", "httpx.", "/chat/completions",

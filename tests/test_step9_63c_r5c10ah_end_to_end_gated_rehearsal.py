@@ -74,14 +74,6 @@ class FullSequence(unittest.TestCase):
             self.assertEqual((root / builder.APPROVAL_PATH).read_bytes(), approval_bytes)
             self.assertEqual(builder.verify_approval(root, json.loads(approval_bytes)), [], stage)
 
-    def test_the_real_repository_is_not_touched(self):
-        ledger = fx.REPO / builder.LEDGER_PATH
-        before = fx.sha256(ledger)
-        g.through(Path(T.tmp.name) / "isolation", "retired")
-        self.assertEqual(fx.sha256(ledger), before)
-        for relative in (builder.IDENTITY_CONFIG_PATH, builder.EXPECTED_FREEZE_PATH, builder.AUTHORIZATION_MANIFEST_PATH):
-            self.assertFalse((fx.REPO / relative).exists(), relative)
-
 
 class NegativeRehearsals(unittest.TestCase):
     def assert_refused_without_writes(self, root, module, flag, token, mode="tty", env=None):

@@ -1,0 +1,395 @@
+{
+ "step": "9.63c-r5c10aj",
+ "state": "AFTER the user's activation (HEAD ef37534); read-only; guard v3 (accident-prevention rail, not a security boundary)",
+ "baseline_before_activation_r5c10ai": {
+  "collected": 1074,
+  "passed": 1043,
+  "failed": 2,
+  "errors": 29,
+  "import_blocked_modules": 4,
+  "module_processes": 86,
+  "guard_events": 211,
+  "guard_blocked": 0
+ },
+ "after_run_a": {
+  "collected": 892,
+  "passed": 857,
+  "failed": 12,
+  "errors": 23,
+  "import_blocked_modules": 0,
+  "module_processes": 86,
+  "guard_events": 14,
+  "guard_blocked": 2
+ },
+ "after_run_b": {
+  "collected": 892,
+  "passed": 857,
+  "failed": 12,
+  "errors": 23,
+  "import_blocked_modules": 0,
+  "module_processes": 86,
+  "guard_events": 14,
+  "guard_blocked": 2
+ },
+ "two_runs_identical_per_item": true,
+ "items_compared": 892,
+ "rc1_before_activation": {
+  "count": 33,
+  "test_level": 29,
+  "import_blocked_modules": 4
+ },
+ "rc1_after_activation": {
+  "import_blocked_modules_now": 0,
+  "test_level_now_passing": 21,
+  "test_level_still_failing": [
+   "test_step9_58a_r1_namespace_allocator.NamespaceAllocatorTests.test_reserved_fresh_namespace_requires_transaction_for_post_first_case_guard",
+   "test_step9_63a_r1_production_integration.ProductionWiringTests.test_old_r6_authorization_rejected_at_r7_namespace_gate",
+   "test_step9_63a_r1_production_integration.ProductionWiringTests.test_real_parent_rejects_prepared_before_agent_boundary",
+   "test_step9_63a_r2_retirement_eligibility.SupersededRetirementTests.test_active_authorization_count_becomes_zero",
+   "test_step9_63a_r2_retirement_eligibility.SupersededRetirementTests.test_retired_auth_cannot_enter_prepared_committing_or_committed",
+   "test_step9_63c_r5_mac_local_preflight.R8MacLocalPreflightTests.test_existing_artifact_blocks_network",
+   "test_step9_63c_r5_mac_local_preflight.R8MacLocalPreflightTests.test_pre_post_state_change_fails_closed",
+   "test_step9_63c_r5_mac_local_preflight.R8MacLocalPreflightTests.test_success_fixture_exclusively_writes_only_evidence"
+  ]
+ },
+ "coverage_note": {
+  "tests_not_executed_because_a_setUpModule_failed": 236,
+  "modules": [
+   "test_step9_63c_r5c10ag_authorization_issuer",
+   "test_step9_63c_r5c10ag_consumer_issuance_crosscheck",
+   "test_step9_63c_r5c10ag_identity_pointer_creation",
+   "test_step9_63c_r5c10ah_end_to_end_gated_rehearsal",
+   "test_step9_63c_r5c10ah_freeze_entry",
+   "test_step9_63c_r5c10ah_issuance_plan_proof",
+   "test_step9_63c_r5c10ah_retire_entry",
+   "test_step9_63c_r5c10ah_superseding_tests",
+   "test_step9_63c_r5c10ai_final_form_and_tokens"
+  ],
+  "explanation": "collected fell from 1074 to 892 because 9 test modules (the pointer/issuer/consumer/rehearsal suites of r5c10ag-ai) cannot build their temporary roots from the post-activation live repository"
+ },
+ "classification_counts": {
+  "FIXTURE_COPIES_LIVE_POST_ACTIVATION_STATE": 14,
+  "RC5_ACCEPTED_KNOWN": 1,
+  "RC6_ACCEPTED_KNOWN": 1,
+  "LEGACY_TEST_STALE_EXPECTATION": 13,
+  "LEGACY_TEST_WRITES_TO_THE_REAL_RUN_ROOT": 1,
+  "LEGACY_TEST_OF_AN_OBSOLETE_MODULE": 3,
+  "ASSUMES_PRE_ACTIVATION_REAL_STATE": 2
+ },
+ "unclassified": [],
+ "production_regressions": 0,
+ "production_regression_basis": "no failing item exercises a changed production path; the consumer, issuer, resolver and builder are byte-identical to the approved SHAs and the 25 pre-activation precommit checks pass on the real root (post_activation_verification.json)",
+ "acceptance_against_the_r5c10ai_criteria": {
+  "full_regression_twice_identical": true,
+  "non_identity_failures_only_rc5_rc6": false,
+  "met": false,
+  "why": "post-activation the suite has 12 further failures and 9 modules that cannot start; see classification; none is a production regression"
+ },
+ "proposals_not_applied": [
+  "step9_63c_r5c10aj_PROPOSED_fixture_update.diff: with it 239 of the 241 tests of the nine modules pass (the other two assert that no r11 pointer exists in the real repository, which is true only before activation)"
+ ],
+ "guard_blocked_events": [
+  {
+   "pid": 59487,
+   "event": "os.mkdir",
+   "detail": [
+    "/Volumes/Elements/cbti-doctor-main/evaluation/v4_runs"
+   ],
+   "blocked": true,
+   "test": "test_step9_63a_r1_production_integration.ProductionWiringTests.test_real_parent_rejects_prepared_before_agent_boundary"
+  },
+  {
+   "pid": 59487,
+   "event": "open",
+   "detail": [
+    "/Volumes/Elements/cbti-doctor-main/evaluation/v4_runs/.namespace-allocation.lock",
+    null,
+    16777986
+   ],
+   "blocked": true,
+   "test": "test_step9_63a_r1_production_integration.ProductionWiringTests.test_real_parent_rejects_prepared_before_agent_boundary"
+  }
+ ],
+ "remaining_items": [
+  {
+   "id": "setUpModule (test_step9_63c_r5c10ag_authorization_issuer)",
+   "result": "ERROR",
+   "root_cause": "FIXTURE_COPIES_LIVE_POST_ACTIVATION_STATE",
+   "reason": "the module's setUpModule builds its temporary roots from a copy of the live repository; after activation the live ledger already holds the r10 retirement and the r11 issuance, so the pre-activation rehearsal state cannot be built (\"authorization already has a terminal retirement event\"); NONE of the module's tests ran",
+   "was_non_passing_before_activation": false,
+   "last_line": "RuntimeError: authorization already has a terminal retirement event"
+  },
+  {
+   "id": "setUpModule (test_step9_63c_r5c10ag_consumer_issuance_crosscheck)",
+   "result": "ERROR",
+   "root_cause": "FIXTURE_COPIES_LIVE_POST_ACTIVATION_STATE",
+   "reason": "the module's setUpModule builds its temporary roots from a copy of the live repository; after activation the live ledger already holds the r10 retirement and the r11 issuance, so the pre-activation rehearsal state cannot be built (\"authorization already has a terminal retirement event\"); NONE of the module's tests ran",
+   "was_non_passing_before_activation": false,
+   "last_line": "RuntimeError: authorization already has a terminal retirement event"
+  },
+  {
+   "id": "setUpModule (test_step9_63c_r5c10ag_identity_pointer_creation)",
+   "result": "ERROR",
+   "root_cause": "FIXTURE_COPIES_LIVE_POST_ACTIVATION_STATE",
+   "reason": "the module's setUpModule builds its temporary roots from a copy of the live repository; after activation the live ledger already holds the r10 retirement and the r11 issuance, so the pre-activation rehearsal state cannot be built (\"authorization already has a terminal retirement event\"); NONE of the module's tests ran",
+   "was_non_passing_before_activation": false,
+   "last_line": "RuntimeError: authorization already has a terminal retirement event"
+  },
+  {
+   "id": "setUpModule (test_step9_63c_r5c10ah_end_to_end_gated_rehearsal)",
+   "result": "ERROR",
+   "root_cause": "FIXTURE_COPIES_LIVE_POST_ACTIVATION_STATE",
+   "reason": "the module's setUpModule builds its temporary roots from a copy of the live repository; after activation the live ledger already holds the r10 retirement and the r11 issuance, so the pre-activation rehearsal state cannot be built (\"authorization already has a terminal retirement event\"); NONE of the module's tests ran",
+   "was_non_passing_before_activation": false,
+   "last_line": "}"
+  },
+  {
+   "id": "setUpModule (test_step9_63c_r5c10ah_freeze_entry)",
+   "result": "ERROR",
+   "root_cause": "FIXTURE_COPIES_LIVE_POST_ACTIVATION_STATE",
+   "reason": "the module's setUpModule builds its temporary roots from a copy of the live repository; after activation the live ledger already holds the r10 retirement and the r11 issuance, so the pre-activation rehearsal state cannot be built (\"authorization already has a terminal retirement event\"); NONE of the module's tests ran",
+   "was_non_passing_before_activation": false,
+   "last_line": "}"
+  },
+  {
+   "id": "setUpModule (test_step9_63c_r5c10ah_issuance_plan_proof)",
+   "result": "ERROR",
+   "root_cause": "FIXTURE_COPIES_LIVE_POST_ACTIVATION_STATE",
+   "reason": "the module's setUpModule builds its temporary roots from a copy of the live repository; after activation the live ledger already holds the r10 retirement and the r11 issuance, so the pre-activation rehearsal state cannot be built (\"authorization already has a terminal retirement event\"); NONE of the module's tests ran",
+   "was_non_passing_before_activation": false,
+   "last_line": "}"
+  },
+  {
+   "id": "setUpModule (test_step9_63c_r5c10ah_retire_entry)",
+   "result": "ERROR",
+   "root_cause": "FIXTURE_COPIES_LIVE_POST_ACTIVATION_STATE",
+   "reason": "the module's setUpModule builds its temporary roots from a copy of the live repository; after activation the live ledger already holds the r10 retirement and the r11 issuance, so the pre-activation rehearsal state cannot be built (\"authorization already has a terminal retirement event\"); NONE of the module's tests ran",
+   "was_non_passing_before_activation": false,
+   "last_line": "}"
+  },
+  {
+   "id": "setUpModule (test_step9_63c_r5c10ah_superseding_tests)",
+   "result": "ERROR",
+   "root_cause": "FIXTURE_COPIES_LIVE_POST_ACTIVATION_STATE",
+   "reason": "the module's setUpModule builds its temporary roots from a copy of the live repository; after activation the live ledger already holds the r10 retirement and the r11 issuance, so the pre-activation rehearsal state cannot be built (\"authorization already has a terminal retirement event\"); NONE of the module's tests ran",
+   "was_non_passing_before_activation": false,
+   "last_line": "}"
+  },
+  {
+   "id": "setUpModule (test_step9_63c_r5c10ai_final_form_and_tokens)",
+   "result": "ERROR",
+   "root_cause": "FIXTURE_COPIES_LIVE_POST_ACTIVATION_STATE",
+   "reason": "the module's setUpModule builds its temporary roots from a copy of the live repository; after activation the live ledger already holds the r10 retirement and the r11 issuance, so the pre-activation rehearsal state cannot be built (\"authorization already has a terminal retirement event\"); NONE of the module's tests ran",
+   "was_non_passing_before_activation": false,
+   "last_line": "}"
+  },
+  {
+   "id": "test_step9_43a_treatment_identity.TreatmentIdentityContractTests.test_01a_frozen_v2_identity_preflight_passes_without_case_execution",
+   "result": "ERROR",
+   "root_cause": "RC5_ACCEPTED_KNOWN",
+   "reason": "frozen V2 identity test pinned by the V2 runner freeze; not modified",
+   "was_non_passing_before_activation": true,
+   "last_line": "RuntimeError: parent Step 9.35a runner identity mismatch"
+  },
+  {
+   "id": "test_step9_51a_validation_boundary.ValidationBoundaryTests.test_current_manifest_passes_pinned_allowlist",
+   "result": "FAIL",
+   "root_cause": "RC6_ACCEPTED_KNOWN",
+   "reason": "pinned by the r10/r11 development freeze; not modified",
+   "was_non_passing_before_activation": true,
+   "last_line": "AssertionError: ['manifest module inventory does not exactly match tests/test_*.py'] is not false"
+  },
+  {
+   "id": "test_step9_55a_namespace_lifecycle.NamespaceLifecycleTests.test_consumed_step954_authorization_cannot_be_reused",
+   "result": "FAIL",
+   "root_cause": "LEGACY_TEST_STALE_EXPECTATION",
+   "reason": "legacy r6/r7-era test now actually executes (its module was import-blocked or failed at the identity): it calls the lifecycle reducer with default (real) paths for a synthetic authorization id, or expects an older error wording; the production code fails closed in every case",
+   "was_non_passing_before_activation": false,
+   "last_line": "AssertionError: \"cannot be reused\" does not match \"authorization lifecycle is not executable: INCONSISTENT_FAIL_CLOSED\""
+  },
+  {
+   "id": "test_step9_55a_namespace_lifecycle.NamespaceLifecycleTests.test_failed_step955_attempt_cannot_be_resumed",
+   "result": "FAIL",
+   "root_cause": "LEGACY_TEST_STALE_EXPECTATION",
+   "reason": "legacy r6/r7-era test now actually executes (its module was import-blocked or failed at the identity): it calls the lifecycle reducer with default (real) paths for a synthetic authorization id, or expects an older error wording; the production code fails closed in every case",
+   "was_non_passing_before_activation": false,
+   "last_line": "AssertionError: \"cannot be reused\" does not match \"authorization lifecycle is not executable: INCONSISTENT_FAIL_CLOSED\""
+  },
+  {
+   "id": "test_step9_55a_namespace_lifecycle.NamespaceLifecycleTests.test_missing_authorization_semantic_state_fails_closed",
+   "result": "FAIL",
+   "root_cause": "LEGACY_TEST_STALE_EXPECTATION",
+   "reason": "legacy r6/r7-era test now actually executes (its module was import-blocked or failed at the identity): it calls the lifecycle reducer with default (real) paths for a synthetic authorization id, or expects an older error wording; the production code fails closed in every case",
+   "was_non_passing_before_activation": false,
+   "last_line": "AssertionError: \"manifest is required\" does not match \"authorization lifecycle is not executable: INCONSISTENT_FAIL_CLOSED\""
+  },
+  {
+   "id": "test_step9_55a_namespace_lifecycle.NamespaceLifecycleTests.test_new_future_authorization_and_attempt_pass_preflight",
+   "result": "ERROR",
+   "root_cause": "LEGACY_TEST_STALE_EXPECTATION",
+   "reason": "legacy r6/r7-era test now actually executes (its module was import-blocked or failed at the identity): it calls the lifecycle reducer with default (real) paths for a synthetic authorization id, or expects an older error wording; the production code fails closed in every case",
+   "was_non_passing_before_activation": false,
+   "last_line": "RuntimeError: authorization lifecycle is not executable: INCONSISTENT_FAIL_CLOSED"
+  },
+  {
+   "id": "test_step9_58a_r1_namespace_allocator.NamespaceAllocatorTests.test_reserved_fresh_namespace_requires_transaction_for_post_first_case_guard",
+   "result": "ERROR",
+   "root_cause": "LEGACY_TEST_STALE_EXPECTATION",
+   "reason": "legacy r6/r7-era test now actually executes (its module was import-blocked or failed at the identity): it calls the lifecycle reducer with default (real) paths for a synthetic authorization id, or expects an older error wording; the production code fails closed in every case",
+   "was_non_passing_before_activation": true,
+   "last_line": "RuntimeError: authorization lifecycle is not executable: INCONSISTENT_FAIL_CLOSED"
+  },
+  {
+   "id": "test_step9_59a_auth_identity_binding.AuthorizationIdentityBindingTests.test_actual_preflight_fails_closed_on_stale_validator_runner_pin",
+   "result": "FAIL",
+   "root_cause": "LEGACY_TEST_STALE_EXPECTATION",
+   "reason": "legacy r6/r7-era test now actually executes (its module was import-blocked or failed at the identity): it calls the lifecycle reducer with default (real) paths for a synthetic authorization id, or expects an older error wording; the production code fails closed in every case",
+   "was_non_passing_before_activation": false,
+   "last_line": "AssertionError: \"differs from current r7 freeze\" does not match \"authorization validator identity differs from current runner freeze\""
+  },
+  {
+   "id": "test_step9_59a_auth_identity_binding.AuthorizationIdentityBindingTests.test_parent_validator_accepts_authoritative_r7_pins",
+   "result": "ERROR",
+   "root_cause": "LEGACY_TEST_STALE_EXPECTATION",
+   "reason": "legacy r6/r7-era test now actually executes (its module was import-blocked or failed at the identity): it calls the lifecycle reducer with default (real) paths for a synthetic authorization id, or expects an older error wording; the production code fails closed in every case",
+   "was_non_passing_before_activation": false,
+   "last_line": "RuntimeError: authorization lifecycle is not executable: INCONSISTENT_FAIL_CLOSED"
+  },
+  {
+   "id": "test_step9_59a_auth_identity_binding.AuthorizationIdentityBindingTests.test_parent_validator_rejects_retired_authorization",
+   "result": "FAIL",
+   "root_cause": "LEGACY_TEST_STALE_EXPECTATION",
+   "reason": "legacy r6/r7-era test now actually executes (its module was import-blocked or failed at the identity): it calls the lifecycle reducer with default (real) paths for a synthetic authorization id, or expects an older error wording; the production code fails closed in every case",
+   "was_non_passing_before_activation": false,
+   "last_line": "AssertionError: \"retired\" does not match \"authorization lifecycle is not executable: INCONSISTENT_FAIL_CLOSED\""
+  },
+  {
+   "id": "test_step9_59a_auth_identity_binding.AuthorizationIdentityBindingTests.test_preflight_rejects_freeze_hash_not_equal_to_current_runner",
+   "result": "FAIL",
+   "root_cause": "LEGACY_TEST_STALE_EXPECTATION",
+   "reason": "legacy r6/r7-era test now actually executes (its module was import-blocked or failed at the identity): it calls the lifecycle reducer with default (real) paths for a synthetic authorization id, or expects an older error wording; the production code fails closed in every case",
+   "was_non_passing_before_activation": false,
+   "last_line": "AssertionError: \"differs from current r7 freeze\" does not match \"authorization validator identity differs from current runner freeze\""
+  },
+  {
+   "id": "test_step9_59a_auth_identity_binding.AuthorizationIdentityBindingTests.test_preflight_runner_binding_mismatch_fails_closed",
+   "result": "FAIL",
+   "root_cause": "LEGACY_TEST_STALE_EXPECTATION",
+   "reason": "legacy r6/r7-era test now actually executes (its module was import-blocked or failed at the identity): it calls the lifecycle reducer with default (real) paths for a synthetic authorization id, or expects an older error wording; the production code fails closed in every case",
+   "was_non_passing_before_activation": false,
+   "last_line": "AssertionError: \"differs from current r7 freeze\" does not match \"authorization validator identity differs from current runner freeze\""
+  },
+  {
+   "id": "test_step9_63a_r1_production_integration.ProductionWiringTests.test_old_r6_authorization_rejected_at_r7_namespace_gate",
+   "result": "FAIL",
+   "root_cause": "LEGACY_TEST_STALE_EXPECTATION",
+   "reason": "legacy r6/r7-era test now actually executes (its module was import-blocked or failed at the identity): it calls the lifecycle reducer with default (real) paths for a synthetic authorization id, or expects an older error wording; the production code fails closed in every case",
+   "was_non_passing_before_activation": true,
+   "last_line": "AssertionError: \"retired|future attempt\" does not match \"authorization lifecycle is not executable: RETIRED_UNCONSUMED_NON_REUSABLE\""
+  },
+  {
+   "id": "test_step9_63a_r1_production_integration.ProductionWiringTests.test_real_parent_rejects_prepared_before_agent_boundary",
+   "result": "ERROR",
+   "root_cause": "LEGACY_TEST_WRITES_TO_THE_REAL_RUN_ROOT",
+   "reason": "now that the identity resolves, the test reaches the real parent runner, which tries to create/open evaluation/v4_runs/.namespace-allocation.lock; the guard BLOCKED it (2 blocked events). Never run this test without the guard",
+   "was_non_passing_before_activation": true,
+   "last_line": "PermissionError: CBTI guard blocked repository mutation (protected path): open ['/Volumes/Elements/cbti-doctor-main/evaluation/v4_runs/.namespace-allocation.lock', None, 16777986]"
+  },
+  {
+   "id": "test_step9_63a_r2_retirement_eligibility.SupersededRetirementTests.test_active_authorization_count_becomes_zero",
+   "result": "ERROR",
+   "root_cause": "LEGACY_TEST_STALE_EXPECTATION",
+   "reason": "legacy r6/r7-era test now actually executes (its module was import-blocked or failed at the identity): it calls the lifecycle reducer with default (real) paths for a synthetic authorization id, or expects an older error wording; the production code fails closed in every case",
+   "was_non_passing_before_activation": true,
+   "last_line": "RuntimeError: current runner identity pointer is missing or unsafe"
+  },
+  {
+   "id": "test_step9_63a_r2_retirement_eligibility.SupersededRetirementTests.test_retired_auth_cannot_enter_prepared_committing_or_committed",
+   "result": "FAIL",
+   "root_cause": "LEGACY_TEST_STALE_EXPECTATION",
+   "reason": "legacy r6/r7-era test now actually executes (its module was import-blocked or failed at the identity): it calls the lifecycle reducer with default (real) paths for a synthetic authorization id, or expects an older error wording; the production code fails closed in every case",
+   "was_non_passing_before_activation": true,
+   "last_line": "AssertionError: \"retired\" does not match \"authorization lifecycle is not executable: INCONSISTENT_FAIL_CLOSED\""
+  },
+  {
+   "id": "test_step9_63c_r5_mac_local_preflight.R8MacLocalPreflightTests.test_existing_artifact_blocks_network",
+   "result": "ERROR",
+   "root_cause": "LEGACY_TEST_OF_AN_OBSOLETE_MODULE",
+   "reason": "the test patches attributes (artifact_path / ARTIFACT_DIR) that the r5 preflight module no longer has; the r5 producer is not an r11 member; candidate for AR-2 retirement",
+   "was_non_passing_before_activation": true,
+   "last_line": "AttributeError: module 'scripts.preflight_step9_63c_r5_mac_local' has no attribute 'artifact_path'"
+  },
+  {
+   "id": "test_step9_63c_r5_mac_local_preflight.R8MacLocalPreflightTests.test_pre_post_state_change_fails_closed",
+   "result": "ERROR",
+   "root_cause": "LEGACY_TEST_OF_AN_OBSOLETE_MODULE",
+   "reason": "the test patches attributes (artifact_path / ARTIFACT_DIR) that the r5 preflight module no longer has; the r5 producer is not an r11 member; candidate for AR-2 retirement",
+   "was_non_passing_before_activation": true,
+   "last_line": "AttributeError: <module 'scripts.preflight_step9_63c_r5_mac_local' from '/Volumes/Elements/cbti-doctor-main/scripts/preflight_step9_63c_r5_mac_local.py'> does not have the attribute 'ARTIFACT_DIR'"
+  },
+  {
+   "id": "test_step9_63c_r5_mac_local_preflight.R8MacLocalPreflightTests.test_success_fixture_exclusively_writes_only_evidence",
+   "result": "ERROR",
+   "root_cause": "LEGACY_TEST_OF_AN_OBSOLETE_MODULE",
+   "reason": "the test patches attributes (artifact_path / ARTIFACT_DIR) that the r5 preflight module no longer has; the r5 producer is not an r11 member; candidate for AR-2 retirement",
+   "was_non_passing_before_activation": true,
+   "last_line": "AttributeError: <module 'scripts.preflight_step9_63c_r5_mac_local' from '/Volumes/Elements/cbti-doctor-main/scripts/preflight_step9_63c_r5_mac_local.py'> does not have the attribute 'ARTIFACT_DIR'"
+  },
+  {
+   "id": "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_real_r10_authorization_blocks_r11_until_retired",
+   "result": "FAIL",
+   "root_cause": "ASSUMES_PRE_ACTIVATION_REAL_STATE",
+   "reason": "the test expects the real r10 authorization to be still executable / the real adapter unavailable; both changed with the activation (the consumer itself is unchanged)",
+   "was_non_passing_before_activation": false,
+   "last_line": "AssertionError: False is not true : []"
+  },
+  {
+   "id": "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_unavailable_identity_adapter_fails_closed",
+   "result": "FAIL",
+   "root_cause": "ASSUMES_PRE_ACTIVATION_REAL_STATE",
+   "reason": "the test expects the real r10 authorization to be still executable / the real adapter unavailable; both changed with the activation (the consumer itself is unchanged)",
+   "was_non_passing_before_activation": false,
+   "last_line": "AssertionError: False is not true : ['agent_match']"
+  },
+  {
+   "id": "test_step9_63c_r5c10ag_end_to_end_rehearsal.FullRehearsal.test_full_flow_ends_with_exactly_one_active_authorization_and_a_passing_gate",
+   "result": "ERROR",
+   "root_cause": "FIXTURE_COPIES_LIVE_POST_ACTIVATION_STATE",
+   "reason": "same cause as the setUpModule errors; this module builds its roots inside the tests",
+   "was_non_passing_before_activation": false,
+   "last_line": "RuntimeError: authorization already has a terminal retirement event"
+  },
+  {
+   "id": "test_step9_63c_r5c10ag_end_to_end_rehearsal.FullRehearsal.test_the_rehearsal_never_touches_the_real_repository",
+   "result": "ERROR",
+   "root_cause": "FIXTURE_COPIES_LIVE_POST_ACTIVATION_STATE",
+   "reason": "same cause as the setUpModule errors; this module builds its roots inside the tests",
+   "was_non_passing_before_activation": false,
+   "last_line": "RuntimeError: authorization already has a terminal retirement event"
+  },
+  {
+   "id": "test_step9_63c_r5c10ag_end_to_end_rehearsal.NegativeRehearsals.test_a_duplicate_issuance_makes_the_consumer_reject",
+   "result": "ERROR",
+   "root_cause": "FIXTURE_COPIES_LIVE_POST_ACTIVATION_STATE",
+   "reason": "same cause as the setUpModule errors; this module builds its roots inside the tests",
+   "was_non_passing_before_activation": false,
+   "last_line": "RuntimeError: authorization already has a terminal retirement event"
+  },
+  {
+   "id": "test_step9_63c_r5c10ag_end_to_end_rehearsal.NegativeRehearsals.test_a_hand_written_manifest_is_rejected",
+   "result": "ERROR",
+   "root_cause": "FIXTURE_COPIES_LIVE_POST_ACTIVATION_STATE",
+   "reason": "same cause as the setUpModule errors; this module builds its roots inside the tests",
+   "was_non_passing_before_activation": false,
+   "last_line": "RuntimeError: authorization already has a terminal retirement event"
+  },
+  {
+   "id": "test_step9_63c_r5c10ag_end_to_end_rehearsal.NegativeRehearsals.test_removing_the_issuance_event_makes_the_consumer_reject",
+   "result": "ERROR",
+   "root_cause": "FIXTURE_COPIES_LIVE_POST_ACTIVATION_STATE",
+   "reason": "same cause as the setUpModule errors; this module builds its roots inside the tests",
+   "was_non_passing_before_activation": false,
+   "last_line": "RuntimeError: authorization already has a terminal retirement event"
+  }
+ ]
+}

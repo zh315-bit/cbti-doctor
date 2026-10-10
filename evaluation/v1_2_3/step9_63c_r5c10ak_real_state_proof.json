@@ -1,0 +1,74 @@
+{
+ "step": "9.63c-r5c10ak",
+ "purpose": "真实激活状态在本步开始前与结束后完全不变",
+ "checked": [
+  "ledger (sha, size, lines, equality with git show ef37534:evaluation/v1_2_3/authorization_lifecycle_events.jsonl)",
+  "r11 manifest",
+  "Freeze",
+  "pointer",
+  "evaluation/v4_runs tree (paths, types, file SHA-256)"
+ ],
+ "tool": "evaluation/v1_2_3/step9_63c_r5c10ak_tools/real_state_check.py",
+ "baseline_at_step_start": {
+  "freeze": {
+   "sha256": "bafcec8d2ae0bad6c3cb43e89bd49171b85374957ec6ce173071fef5248357b3",
+   "size": 9365
+  },
+  "ledger": {
+   "equals_activation_commit_blob": true,
+   "lines": 5,
+   "sha256": "aa7c21819a182c3b35aa32ab0c06995734185c9a89eb239bfd0ee44e4c392b31",
+   "size": 6743
+  },
+  "pointer": {
+   "sha256": "4e077781faeecee57da02f37d1d3ad8cdc9dfa895d3eb72b1b4ab1f1d3f696fe",
+   "size": 389
+  },
+  "r11_manifest": {
+   "sha256": "33bd99b9f7fba0bde0fc6a40d0c6a3b570b9f59d1e4c0158c1d4b5e8d82f5ea1",
+   "size": 7312
+  },
+  "v4_runs_tree": {
+   "entries": 47,
+   "sha256": "0b4c5582082acc1428b32ced098a8c310f7b0894fcc223acc06bc4c480eb1e7d"
+  }
+ },
+ "final": {
+  "identical": true,
+  "now": {
+   "freeze": {
+    "sha256": "bafcec8d2ae0bad6c3cb43e89bd49171b85374957ec6ce173071fef5248357b3",
+    "size": 9365
+   },
+   "ledger": {
+    "equals_activation_commit_blob": true,
+    "lines": 5,
+    "sha256": "aa7c21819a182c3b35aa32ab0c06995734185c9a89eb239bfd0ee44e4c392b31",
+    "size": 6743
+   },
+   "pointer": {
+    "sha256": "4e077781faeecee57da02f37d1d3ad8cdc9dfa895d3eb72b1b4ab1f1d3f696fe",
+    "size": 389
+   },
+   "r11_manifest": {
+    "sha256": "33bd99b9f7fba0bde0fc6a40d0c6a3b570b9f59d1e4c0158c1d4b5e8d82f5ea1",
+    "size": 7312
+   },
+   "v4_runs_tree": {
+    "entries": 47,
+    "sha256": "0b4c5582082acc1428b32ced098a8c310f7b0894fcc223acc06bc4c480eb1e7d"
+   }
+  }
+ },
+ "intermediate_compares": "每次回归前、两次回归之间、追踪审计与 CI 等价运行之后均执行 compare，全部 identical=true",
+ "identical": true,
+ "frozen_member_sha256": {
+  "builder": "99031a9156da87164c16b71eff9e2a9961428c52bbf7bc2590741e51e55f950e",
+  "consumer": "362eb4467fdadd29edc056ecf7b446f2cab99a2d3c407d350b4e91494c5b9528",
+  "issuer": "f41763f5c82e04360b3d9bcf694e6d05a6fcfa42ae8d71ada29be4ab204e32ab",
+  "resolver": "a0f5670d3834d5f91391b41a33fbac669d6162587bc620e9bd3acf202aa3c6a5"
+ },
+ "production_code_changed": false,
+ "commit": false,
+ "push": false
+}

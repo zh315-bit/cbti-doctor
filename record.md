@@ -3524,3 +3524,31 @@ The version inventory contains r3–r10 and no r11; `r11` is proposed only. `eva
 **产物**（`evaluation/v1_2_3/step9_63c_r5c10ai_*`）：`change_report.md`、`regression_results.json`、`mutation_results.json`、`final_form_rehearsal_report.json`、`repository_integrity_report.json`、`r11_freeze_readiness_matrix.json`、`remaining_blockers.md`、`coverage_mapping.json`、`activation_approval_checklist.md`、`activation_runbook.md`、`test_boundary_manifest.json`、`builder.diff`、`tests.diff`、`retirement.diff`、`manifest.diff`、`mutation_tools/`；`step9_63c_r11_activation_approval.DRAFT.json`（最终待签署，未签署）。
 
 **r5c10ai-fix**：只修正激活核对清单（第 8、9 节有 3 条期望输出是在 builder 最后一次修改之前对旧草案生成的，含 KeyError 和旧内容哈希）。未改任何代码、未 commit、未执行写入入口。在最终仓库上重新生成清单，新增生成器和自检（重跑全部 44 条命令并逐字比对，44/44 一致）；因清单变化重新生成了草案的 `repository_aggregate`，内容哈希和三个令牌不变。见 `step9_63c_r5c10ai_fix_report.md`。
+
+## Step 9.63c-r5c10aj — r11 激活后只读复核，Freeze 审查申请材料
+
+`PASS_ACTIVATION_VERIFIED_READ_ONLY_REGRESSION_NOT_GREEN_TEST_SIDE`。只读：没有运行写入入口、preflight、正式执行，没有 commit；整仓哈希前后零变化。
+
+**激活状态**（HEAD ef37534，签署 commit dcaa98d7…）：6 个只读入口全部通过；31 项独立校验全部通过（账本前 3856 字节 = aaa2e989…，其后恰好 2 行 = 退役 + 签发且符合模板；活动授权恰好 1 个；r10 不可执行；r11 授权未消费、执行目录不存在；55 个历史钉）；consumer 预提交门在真实根上 `precommit_failures = []`（仅 preflight 证据检查用替身）。
+
+**回归**（激活后，两次逐项一致）：892 项 = 857 通过 / 12 失败 / 23 错误 / 0 导入阻断。原 33 个 RC1 项中 25 项转为通过（4 个模块可导入），8 个测试仍失败；新增的失败全在测试侧：9 个模块（236 个测试）因夹具复制激活后的真实账本而无法启动（提案 PROPOSED_fixture_update.diff，未应用）；13 个遗留测试第一次真正运行而暴露过时期望；3 个过时的 r5 预检测试；2 个 ae gate 测试假设激活前状态；1 个遗留测试试图写真实 run root，被 guard 拦截（2 次）。生产回归 0。
+
+**产物**：`step9_63c_r5c10aj_post_activation_verification.json`、`_readonly_entry_outputs.txt`、`_regression_results.json`、`_repository_integrity_report.json`、`_r11_freeze_readiness_matrix.json`、`_r11_freeze_review_request.md`、`_PROPOSED_fixture_update.diff`（未应用）。
+
+## Step 9.63c-r5c10ak — 激活后测试修复：隔离危险测试、会话级硬防护、回归只剩 RC5/RC6
+
+`PASS_WITH_ONE_DECISION_PENDING`。全程开启 guard；没有运行任何写入入口、preflight 或 execute_formal；未修改 20 个冻结成员和生产代码；没有 commit、没有 push。真实激活状态（账本 5 行 `aa7c2181…`、r11 清单 `33bd99b9…`、Freeze `bafcec8d…`、指针 `4e077781…`、`evaluation/v4_runs/` 目录树）在本步开始前、每次回归之间与结束后完全相同。
+
+**危险测试**：1 个测试试图写真实根（`test_real_parent_rejects_prepared_before_agent_boundary`，2 次写入尝试，均被 guard 拦截）；另有 12 个遗留模块通过生产代码默认路径读取真实激活状态。12 个模块全部按常设规则归档到 `tests/retired/`，由 `test_step9_63c_r5c10ak_isolated_*` 把原文件原样放到临时镜像根上运行（179 个测试通过）。隔离后追踪：23 个模块对真实状态只有读取（2359 次），写模式打开 0 次。
+
+**会话级硬防护**：`tests/session_safety.py`（审计钩子，写入类访问真实激活状态即 `os._exit(86)`），由 `tests/test_000_session_guard.py`、CI 加载器和 r5c10ak harness 安装；8 个负向测试（25 种写入场景）；变异 24 个，19 杀，5 个等价。
+
+**按决定处理**：应用夹具提案；退役 2 个“无 r11 指针”断言、3 个 r5 预检测试、2 个 ae gate 测试、r5c10ai 清单 2 个库存测试；13 个遗留测试中 5 个在合成临时根上改写（函数与期望文本不变）、8 个退役；新增 r11 producer 复核测试。覆盖映射的变异证明 16/16。
+
+**回归**（两次逐项一致）：1131 项 = 1129 通过，失败只有 RC5、RC6；导入阻断 0；生产回归 0；未知 0。readiness matrix：42 PASS / 2 ACCEPTED_EXCEPTION / 1 BLOCKED（R41）。
+
+**CI**：82 个模块，无任何读写真实激活状态的遗留模块；本地 CI 等价运行除 RC6 外的 12 个失败来自 af guard 负向模块拒绝在 guard 下直接运行（真实 CI 无 guard），harness 中全部通过。
+
+**待决**：RC6 失败信息多了 3 条 `missing module file`（28/30a/30c 已归档，历史 51a 清单仍登记）；未修改，请决定接受或退役 51a 测试。
+
+**产物**（`evaluation/v1_2_3/`）：`step9_63c_r5c10ak_change_report.md`、`_dangerous_test_audit.json`、`_coverage_mapping.json`、`_ci_test_set.json`、`_regression_results.json`、`_mutation_results.json`、`_real_state_proof.json`、`_r11_freeze_readiness_matrix.json`、`_r11_freeze_review_request.md`、`_test_boundary_manifest.json`、`_test_harness/`、`_tools/`。

@@ -1,0 +1,144 @@
+##### builder_status
+{
+  "creation_record_present": true,
+  "freeze_present": true,
+  "pointer_canonical": true,
+  "pointer_present": true,
+  "r11_authorization_present": true,
+  "registry_present": false,
+  "state": "S2_FREEZE_PERSISTED"
+}
+exit=0
+
+
+##### builder_verify
+{
+  "checks": [
+    {
+      "detail": "",
+      "name": "V1 pointer is a regular file with the canonical bytes",
+      "ok": true
+    },
+    {
+      "detail": "creation record binds pointer and approval",
+      "name": "V2 creation record exists and binds the pointer and the approval",
+      "ok": true
+    },
+    {
+      "detail": "pointer and freeze resolve",
+      "name": "V3 resolver accepts the pointer (a missing freeze is the expected refusal)",
+      "ok": true
+    }
+  ],
+  "mode": "verify",
+  "ok": true,
+  "status": {
+    "creation_record_present": true,
+    "freeze_present": true,
+    "pointer_canonical": true,
+    "pointer_present": true,
+    "r11_authorization_present": true,
+    "registry_present": false,
+    "state": "S2_FREEZE_PERSISTED"
+  },
+  "writes_nothing": true
+}
+exit=0
+
+
+##### builder_verify_retire
+{
+  "checks": [
+    {
+      "detail": "",
+      "name": "V1 the pre-retirement ledger bytes are unchanged",
+      "ok": true
+    },
+    {
+      "detail": "2887 bytes appended, 1 later line(s)",
+      "name": "V2 exactly one line was appended for the retirement (only the issuance event may follow it)",
+      "ok": true
+    },
+    {
+      "detail": "event equals the approved template; timestamp is later than every earlier event",
+      "name": "V3 the appended event equals the approved template (except the two generated fields)",
+      "ok": true
+    },
+    {
+      "detail": "reducer state RETIRED_UNCONSUMED_NON_REUSABLE",
+      "name": "V4 the reducer judges the r10 authorization retired and non-executable",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "V5 exactly one retirement event exists for the r10 authorization",
+      "ok": true
+    }
+  ],
+  "mode": "verify-retire-r10",
+  "ok": true,
+  "state": "RETIRED_AS_APPROVED",
+  "writes_nothing": true
+}
+exit=0
+
+
+##### builder_verify_freeze
+{
+  "ok": true,
+  "reason": "ok",
+  "sha256": "bafcec8d2ae0bad6c3cb43e89bd49171b85374957ec6ce173071fef5248357b3"
+}
+exit=0
+
+
+##### issuer_status
+{
+  "detail": "ok",
+  "events": 1,
+  "manifest_sha256": "33bd99b9f7fba0bde0fc6a40d0c6a3b570b9f59d1e4c0158c1d4b5e8d82f5ea1",
+  "state": "ISSUED_RECORDED"
+}
+exit=0
+
+
+##### issuer_verify
+{
+  "checks": [
+    {
+      "detail": "ISSUED_RECORDED",
+      "name": "V1 manifest and exactly one matching ledger event",
+      "ok": true
+    },
+    {
+      "detail": "ISSUED_EXECUTABLE",
+      "name": "V2 reducer state is ISSUED_EXECUTABLE",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "V3 exactly one active authorization, and it is this one",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "V4 manifest key set equals the template key set",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "V5 unconsumed, no attempt, no namespace",
+      "ok": true
+    }
+  ],
+  "mode": "verify",
+  "ok": true,
+  "status": {
+    "detail": "ok",
+    "events": 1,
+    "manifest_sha256": "33bd99b9f7fba0bde0fc6a40d0c6a3b570b9f59d1e4c0158c1d4b5e8d82f5ea1",
+    "state": "ISSUED_RECORDED"
+  },
+  "writes_nothing": true
+}
+exit=0

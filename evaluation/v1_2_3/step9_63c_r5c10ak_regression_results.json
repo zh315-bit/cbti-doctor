@@ -1,0 +1,79 @@
+{
+ "step": "9.63c-r5c10ak",
+ "harness": "evaluation/v1_2_3/step9_63c_r5c10ak_test_harness/run_all.sh: guard v3 (PYTHONPATH) + the session-level hard guard installed by run_module.py before any test module",
+ "before_this_step_r5c10aj": {
+  "collected": 892,
+  "passed": 857,
+  "failed": 12,
+  "errors": 23,
+  "import_blocked_modules": 0,
+  "setUpModule_failures": 9,
+  "tests_not_executed": 236
+ },
+ "after_run_a": {
+  "collected": 1131,
+  "passed": 1129,
+  "failed": 1,
+  "errors": 1,
+  "skipped": 0,
+  "import_blocked_modules": 0,
+  "module_processes": 90,
+  "exit_codes": {
+   "0": 91
+  },
+  "session_guard_stops_exit_86": 0,
+  "guard_events": 253,
+  "guard_blocked": 0
+ },
+ "after_run_b": {
+  "collected": 1131,
+  "passed": 1129,
+  "failed": 1,
+  "errors": 1,
+  "skipped": 0,
+  "import_blocked_modules": 0,
+  "module_processes": 90,
+  "exit_codes": {
+   "0": 91
+  },
+  "session_guard_stops_exit_86": 0,
+  "guard_events": 253,
+  "guard_blocked": 0
+ },
+ "two_runs_identical_per_item": true,
+ "items_compared": 1131,
+ "acceptance": {
+  "full_regression_twice_identical": true,
+  "only_failures_are_rc5_rc6": true,
+  "import_blocked_modules": 0,
+  "production_regressions": 0,
+  "unknown": 0,
+  "real_activation_state_unchanged_before_between_after": [
+   "state0=0",
+   "state1=0",
+   "state2=0"
+  ]
+ },
+ "remaining_items": [
+  {
+   "id": "test_step9_43a_treatment_identity.TreatmentIdentityContractTests.test_01a_frozen_v2_identity_preflight_passes_without_case_execution",
+   "result": "ERROR",
+   "root_cause": "RC5_ACCEPTED_EXCEPTION",
+   "last_line": "RuntimeError: parent Step 9.35a runner identity mismatch"
+  },
+  {
+   "id": "test_step9_51a_validation_boundary.ValidationBoundaryTests.test_current_manifest_passes_pinned_allowlist",
+   "result": "FAIL",
+   "root_cause": "RC6_ACCEPTED_EXCEPTION",
+   "last_line": "AssertionError: ['manifest module inventory does not exactly match tests/test_*.py', 'missing module file: test_step9_28_v4_runner', 'missing module file: test_step9_30a_v4_adjudication', 'missing mod"
+  }
+ ],
+ "note": "collected counts each unittest test once (subTests are not counted separately).",
+ "rc6_content_change": {
+  "test": "test_step9_51a_validation_boundary.ValidationBoundaryTests.test_current_manifest_passes_pinned_allowlist",
+  "before": "只有 'manifest module inventory does not exactly match tests/test_*.py'",
+  "after": "另加 3 条 'missing module file: test_step9_28_v4_runner / test_step9_30a_v4_adjudication / test_step9_30c_v4_aggregation'",
+  "cause": "本步把这 3 个模块归档到 tests/retired/，而历史 51a 清单 evaluation/v1_2_3/step9_51a_safe_test_manifest.json 仍登记着它们",
+  "handling": "未修改历史清单、未修改测试、未修改期望文本；作为 RC6 的内容扩展如实报告，等你决定是否接受"
+ }
+}

@@ -1,0 +1,493 @@
+{
+ "artifact_type": "R5C10AK_DANGEROUS_TEST_AUDIT",
+ "method": "every tests/test_*.py module ran in its own process under guard v3 with an audit-only tracer that recorded every access (read or write) to evaluation/v4_runs, the lifecycle ledger and the r11 authorization manifest of the REAL repository, attributed to the running test; guard-blocked write attempts come from the guard log. Child processes are not traced (static scan below covers them).",
+ "trace_run": "pre-change suite at the start of r5c10ak (86 modules), real state unchanged afterwards",
+ "summary": {
+  "modules_touching_protected_real_paths": 23,
+  "tests_touching_protected_real_paths": 95,
+  "tests_attempting_writes_on_the_real_root": [
+   "test_step9_63a_r1_production_integration.ProductionWiringTests.test_real_parent_rejects_prepared_before_agent_boundary"
+  ],
+  "write_attempts": 2
+ },
+ "static_scan_candidates": [
+  "tests/test_step9_28_v4_runner.py",
+  "tests/test_step9_35a_treatment_runner.py",
+  "tests/test_step9_59a_auth_identity_binding.py",
+  "tests/test_step9_61a_authorization_retirement.py",
+  "tests/test_step9_63_v3_formal_execution.py",
+  "tests/test_step9_63a_r1_production_integration.py",
+  "tests/test_step9_63a_r2_retirement_eligibility.py",
+  "tests/test_step9_63a_r3_authorization_issuance.py",
+  "tests/test_step9_63c_r3_parent_namespace_repair.py",
+  "tests/test_step9_63c_r5c10ae_consumer_precommit_gate.py",
+  "tests/test_step9_63c_r5c10ag_authorization_issuer.py",
+  "tests/test_step9_63c_r5c10ag_end_to_end_rehearsal.py",
+  "tests/test_step9_63c_r5c10ag_identity_pointer_creation.py",
+  "tests/test_step9_63c_r5c10ah_end_to_end_gated_rehearsal.py",
+  "tests/test_step9_63c_r5c10ai_final_form_and_tokens.py",
+  "tests/test_step9_63c_r5c10c_transaction_scanner.py",
+  "tests/test_step9_63c_r5c5b_lifecycle_reducer.py",
+  "tests/test_step9_63c_r5c8f_invocation_registry.py"
+ ],
+ "modules": [
+  {
+   "module": "test_step9_28_v4_runner",
+   "tests_touching_protected_real_paths": [
+    "test_step9_28_v4_runner.V4RunnerPreparationTests.test_local_preflight_never_calls_case_execution_path"
+   ],
+   "access_summary": {
+    "v4_runs:open": 1
+   },
+   "write_attempts_on_the_real_root": [],
+   "dangerous": false,
+   "disposition": "FULL archive; mirror wrapper (all tests kept; CI-excluded, needs local run outputs)"
+  },
+  {
+   "module": "test_step9_30a_v4_adjudication",
+   "tests_touching_protected_real_paths": [
+    "test_step9_30a_v4_adjudication (module import / setUpModule)",
+    "test_step9_30a_v4_adjudication.V4AdjudicationTests.test_ask_category_sum_mismatch_fails_completed_validation",
+    "test_step9_30a_v4_adjudication.V4AdjudicationTests.test_ask_denominator_mismatch_fails_completed_validation",
+    "test_step9_30a_v4_adjudication.V4AdjudicationTests.test_clean_template_passes_and_all_reviewer_fields_are_unset",
+    "test_step9_30a_v4_adjudication.V4AdjudicationTests.test_completed_template_aggregates_descriptively_without_threshold",
+    "test_step9_30a_v4_adjudication.V4AdjudicationTests.test_duplicate_case_fails",
+    "test_step9_30a_v4_adjudication.V4AdjudicationTests.test_incomplete_completed_review_fails",
+    "test_step9_30a_v4_adjudication.V4AdjudicationTests.test_invalid_dimension_score_fails_completed_validation",
+    "test_step9_30a_v4_adjudication.V4AdjudicationTests.test_missing_case_fails",
+    "test_step9_30a_v4_adjudication.V4AdjudicationTests.test_modified_execution_fact_fails",
+    "test_step9_30a_v4_adjudication.V4AdjudicationTests.test_null_template_fails_completed_mode",
+    "test_step9_30a_v4_adjudication.V4AdjudicationTests.test_unknown_case_fails",
+    "test_step9_30a_v4_adjudication.V4AdjudicationTests.test_wrong_metric_registry_hash_fails",
+    "test_step9_30a_v4_adjudication.V4AdjudicationTests.test_wrong_rubric_hash_fails"
+   ],
+   "access_summary": {
+    "v4_runs:open": 82
+   },
+   "write_attempts_on_the_real_root": [],
+   "dangerous": false,
+   "disposition": "FULL archive; mirror wrapper (all tests kept; CI-excluded, needs local run outputs)"
+  },
+  {
+   "module": "test_step9_30c_v4_aggregation",
+   "tests_touching_protected_real_paths": [
+    "test_step9_30c_v4_aggregation.Step930cAggregationTests.test_case_projection_excludes_case_content_and_rationales",
+    "test_step9_30c_v4_aggregation.Step930cAggregationTests.test_final_answer_status_does_not_define_completion",
+    "test_step9_30c_v4_aggregation.Step930cAggregationTests.test_frozen_adjudication_aggregates_deterministically",
+    "test_step9_30c_v4_aggregation.Step930cAggregationTests.test_strata_and_lineage_are_reported_without_reclassification"
+   ],
+   "access_summary": {
+    "v4_runs:open": 30
+   },
+   "write_attempts_on_the_real_root": [],
+   "dangerous": false,
+   "disposition": "FULL archive; mirror wrapper (all tests kept; CI-excluded, needs local run outputs)"
+  },
+  {
+   "module": "test_step9_55a_namespace_lifecycle",
+   "tests_touching_protected_real_paths": [
+    "test_step9_55a_namespace_lifecycle.NamespaceLifecycleTests.test_consumed_step954_authorization_cannot_be_reused",
+    "test_step9_55a_namespace_lifecycle.NamespaceLifecycleTests.test_failed_step955_attempt_cannot_be_resumed",
+    "test_step9_55a_namespace_lifecycle.NamespaceLifecycleTests.test_missing_authorization_semantic_state_fails_closed",
+    "test_step9_55a_namespace_lifecycle.NamespaceLifecycleTests.test_new_future_authorization_and_attempt_pass_preflight"
+   ],
+   "access_summary": {
+    "r11_manifest:open": 4
+   },
+   "write_attempts_on_the_real_root": [],
+   "dangerous": false,
+   "disposition": "FULL archive; mirror wrapper; 4 methods REWRITTEN on a synthetic temporary root (test_step9_63c_r5c10ak_legacy_rewrites)"
+  },
+  {
+   "module": "test_step9_58a_r1_namespace_allocator",
+   "tests_touching_protected_real_paths": [
+    "test_step9_58a_r1_namespace_allocator.NamespaceAllocatorTests.test_allocation_marker_corruption_fails_closed",
+    "test_step9_58a_r1_namespace_allocator.NamespaceAllocatorTests.test_authorization_cannot_be_rebound_to_another_attempt",
+    "test_step9_58a_r1_namespace_allocator.NamespaceAllocatorTests.test_historical_ledger_identity_cannot_be_reallocated",
+    "test_step9_58a_r1_namespace_allocator.NamespaceAllocatorTests.test_identity_cannot_reserve_a_second_namespace",
+    "test_step9_58a_r1_namespace_allocator.NamespaceAllocatorTests.test_nested_historical_ledger_without_marker_cannot_be_reallocated",
+    "test_step9_58a_r1_namespace_allocator.NamespaceAllocatorTests.test_parallel_duplicate_allocation_has_one_winner",
+    "test_step9_58a_r1_namespace_allocator.NamespaceAllocatorTests.test_reserved_fresh_namespace_requires_transaction_for_post_first_case_guard"
+   ],
+   "access_summary": {
+    "ledger:open": 9,
+    "r11_manifest:open": 1
+   },
+   "write_attempts_on_the_real_root": [],
+   "dangerous": false,
+   "disposition": "FULL archive; mirror wrapper; 1 method REWRITTEN on a synthetic temporary root"
+  },
+  {
+   "module": "test_step9_59a_auth_identity_binding",
+   "tests_touching_protected_real_paths": [
+    "test_step9_59a_auth_identity_binding.AuthorizationIdentityBindingTests.test_parent_validator_accepts_authoritative_r7_pins",
+    "test_step9_59a_auth_identity_binding.AuthorizationIdentityBindingTests.test_parent_validator_rejects_r4_incompatible_authorization",
+    "test_step9_59a_auth_identity_binding.AuthorizationIdentityBindingTests.test_parent_validator_rejects_retired_authorization"
+   ],
+   "access_summary": {
+    "r11_manifest:open": 4
+   },
+   "write_attempts_on_the_real_root": [],
+   "dangerous": false,
+   "disposition": "FULL archive; mirror wrapper; 5 methods retired (covered)"
+  },
+  {
+   "module": "test_step9_63_v3_formal_execution",
+   "tests_touching_protected_real_paths": [
+    "test_step9_63_v3_formal_execution.Step963PrecommitTests.test_20_build_import_has_no_execution_or_network_calls"
+   ],
+   "access_summary": {
+    "v4_runs:os.scandir": 1
+   },
+   "write_attempts_on_the_real_root": [],
+   "dangerous": false,
+   "disposition": "FULL archive; mirror wrapper (all tests kept)"
+  },
+  {
+   "module": "test_step9_63a_r1_production_integration",
+   "tests_touching_protected_real_paths": [
+    "test_step9_63a_r1_production_integration.ProductionWiringTests.test_lifecycle_rejects_committed_authorization",
+    "test_step9_63a_r1_production_integration.ProductionWiringTests.test_lifecycle_rejects_prepared_authorization",
+    "test_step9_63a_r1_production_integration.ProductionWiringTests.test_old_r6_authorization_rejected_at_r7_namespace_gate",
+    "test_step9_63a_r1_production_integration.ProductionWiringTests.test_parent_mandates_transaction",
+    "test_step9_63a_r1_production_integration.ProductionWiringTests.test_real_parent_rejects_prepared_before_agent_boundary",
+    "test_step9_63a_r1_production_integration.ProductionWiringTests.test_retired_authorization_rejected"
+   ],
+   "access_summary": {
+    "r11_manifest:open": 4,
+    "ledger:open": 2,
+    "v4_runs:os.scandir": 4,
+    "v4_runs:open": 1
+   },
+   "write_attempts_on_the_real_root": [
+    {
+     "test": "test_step9_63a_r1_production_integration.ProductionWiringTests.test_real_parent_rejects_prepared_before_agent_boundary",
+     "event": "os.mkdir",
+     "detail": [
+      "/Volumes/Elements/cbti-doctor-main/evaluation/v4_runs"
+     ],
+     "blocked_by": "guard v3"
+    },
+    {
+     "test": "test_step9_63a_r1_production_integration.ProductionWiringTests.test_real_parent_rejects_prepared_before_agent_boundary",
+     "event": "open",
+     "detail": [
+      "/Volumes/Elements/cbti-doctor-main/evaluation/v4_runs/.namespace-allocation.lock",
+      null,
+      16777986
+     ],
+     "blocked_by": "guard v3"
+    }
+   ],
+   "dangerous": true,
+   "disposition": "FULL archive; runs UNCHANGED on a temporary mirror (test_step9_63c_r5c10ak_isolated_63a_r1_production_integration); 1 method retired (old_r6, covered)"
+  },
+  {
+   "module": "test_step9_63a_r2_retirement_eligibility",
+   "tests_touching_protected_real_paths": [
+    "test_step9_63a_r2_retirement_eligibility.SupersededRetirementTests.test_retired_auth_cannot_enter_new_transaction",
+    "test_step9_63a_r2_retirement_eligibility.SupersededRetirementTests.test_retired_auth_cannot_enter_prepared_committing_or_committed"
+   ],
+   "access_summary": {
+    "r11_manifest:open": 2
+   },
+   "write_attempts_on_the_real_root": [],
+   "dangerous": false,
+   "disposition": "FULL archive; mirror wrapper; 2 methods retired (covered)"
+  },
+  {
+   "module": "test_step9_63c_r3_parent_namespace_repair",
+   "tests_touching_protected_real_paths": [
+    "test_step9_63c_r3_parent_namespace_repair.NamespaceBoundaryTests.test_original_failure_parent_validator_reaches_pre_case_sentinel",
+    "test_step9_63c_r3_parent_namespace_repair.NamespaceBoundaryTests.test_t11_parent_and_transaction_roots_must_match",
+    "test_step9_63c_r3_parent_namespace_repair.NamespaceBoundaryTests.test_t1_historical_global_root_is_not_false_collision",
+    "test_step9_63c_r3_parent_namespace_repair.NamespaceBoundaryTests.test_t2_same_attempt_reuse_fails_closed",
+    "test_step9_63c_r3_parent_namespace_repair.NamespaceBoundaryTests.test_t6_distinct_attempts_get_distinct_roots",
+    "test_step9_63c_r3_parent_namespace_repair.NamespaceBoundaryTests.test_t8_existing_current_case_directory_no_overwrite",
+    "test_step9_63c_r3_parent_namespace_repair.NamespaceBoundaryTests.test_t9_crash_after_reservation_preserves_identity"
+   ],
+   "access_summary": {
+    "ledger:open": 9
+   },
+   "write_attempts_on_the_real_root": [],
+   "dangerous": false,
+   "disposition": "FULL archive; mirror wrapper (all tests kept)"
+  },
+  {
+   "module": "test_step9_63c_r5c10ae_consumer_precommit_gate",
+   "tests_touching_protected_real_paths": [
+    "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_00_consistent_fixture_passes_every_r11_precommit_check",
+    "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_agent_mismatch_rejected",
+    "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_atomic_commit_contract_tamper_rejected",
+    "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_case_and_evaluation_identity_mismatch_rejected",
+    "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_consumed_or_counted_authorization_rejected",
+    "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_executable_superseded_authorization_rejected",
+    "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_existing_attempt_rejected",
+    "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_existing_namespace_rejected",
+    "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_formal_entry_or_freeze_binding_mismatch_rejected",
+    "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_frozen_identity_mismatch_rejected",
+    "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_historical_pin_count_54_rejected",
+    "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_historical_pin_mismatch_rejected",
+    "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_inventory_pin_mismatch_rejected",
+    "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_ledger_prefix_tamper_rejected",
+    "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_legacy_default_keys_unchanged",
+    "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_lifecycle_contract_tamper_rejected",
+    "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_missing_historical_inventory_is_not_executed_and_rejected",
+    "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_missing_key_or_unexecuted_check_fails",
+    "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_namespace_binding_mismatch_rejected",
+    "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_real_r10_authorization_blocks_r11_until_retired",
+    "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_real_repository_historical_pins_verify_55",
+    "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_retired_bound_authorization_rejected",
+    "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_second_active_authorization_rejected",
+    "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_unavailable_identity_adapter_fails_closed",
+    "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_unvalidated_preflight_rejected",
+    "test_step9_63c_r5c10ae_consumer_precommit_gate.ConsumerPrecommitGateTests.test_wrong_project_root_or_runtime_rejected"
+   ],
+   "access_summary": {
+    "v4_runs:os.scandir": 104,
+    "ledger:copy-source / temp-symlink": 26,
+    "ledger:open": 98,
+    "v4_runs:copy-source / temp-symlink": 26,
+    "v4_runs:open": 26,
+    "r11_manifest:open": 45
+   },
+   "write_attempts_on_the_real_root": [],
+   "dangerous": false,
+   "disposition": "FULL archive; mirror wrapper; 2 methods retired (covered). Its fixture already built temporary roots; it read the real ledger and historical pins directly"
+  },
+  {
+   "module": "test_step9_63c_r5c10ag_authorization_issuer",
+   "tests_touching_protected_real_paths": [
+    "test_step9_63c_r5c10ag_authorization_issuer (module import / setUpModule)"
+   ],
+   "access_summary": {
+    "v4_runs:os.scandir": 4,
+    "ledger:copy-source / temp-symlink": 1,
+    "ledger:open": 1,
+    "r11_manifest:copy-source / temp-symlink": 1,
+    "r11_manifest:open": 1,
+    "v4_runs:copy-source / temp-symlink": 1,
+    "v4_runs:open": 1
+   },
+   "write_attempts_on_the_real_root": [],
+   "dangerous": false,
+   "disposition": "already on temporary roots; reads the real files only as COPY SOURCES; the shared fixture now cuts the ledger to the pinned 3856-byte prefix and leaves the r11 manifest out"
+  },
+  {
+   "module": "test_step9_63c_r5c10ag_consumer_issuance_crosscheck",
+   "tests_touching_protected_real_paths": [
+    "test_step9_63c_r5c10ag_consumer_issuance_crosscheck (module import / setUpModule)"
+   ],
+   "access_summary": {
+    "v4_runs:os.scandir": 4,
+    "ledger:copy-source / temp-symlink": 1,
+    "ledger:open": 1,
+    "r11_manifest:copy-source / temp-symlink": 1,
+    "r11_manifest:open": 1,
+    "v4_runs:copy-source / temp-symlink": 1,
+    "v4_runs:open": 1
+   },
+   "write_attempts_on_the_real_root": [],
+   "dangerous": false,
+   "disposition": "already on temporary roots; reads the real files only as COPY SOURCES; the shared fixture now cuts the ledger to the pinned 3856-byte prefix and leaves the r11 manifest out"
+  },
+  {
+   "module": "test_step9_63c_r5c10ag_end_to_end_rehearsal",
+   "tests_touching_protected_real_paths": [
+    "test_step9_63c_r5c10ag_end_to_end_rehearsal.FullRehearsal.test_full_flow_ends_with_exactly_one_active_authorization_and_a_passing_gate",
+    "test_step9_63c_r5c10ag_end_to_end_rehearsal.FullRehearsal.test_the_rehearsal_never_touches_the_real_repository",
+    "test_step9_63c_r5c10ag_end_to_end_rehearsal.NegativeRehearsals.test_a_duplicate_issuance_makes_the_consumer_reject",
+    "test_step9_63c_r5c10ag_end_to_end_rehearsal.NegativeRehearsals.test_a_hand_written_manifest_is_rejected",
+    "test_step9_63c_r5c10ag_end_to_end_rehearsal.NegativeRehearsals.test_removing_the_issuance_event_makes_the_consumer_reject"
+   ],
+   "access_summary": {
+    "v4_runs:os.scandir": 20,
+    "ledger:copy-source / temp-symlink": 5,
+    "ledger:open": 6,
+    "r11_manifest:copy-source / temp-symlink": 5,
+    "r11_manifest:open": 5,
+    "v4_runs:copy-source / temp-symlink": 5,
+    "v4_runs:open": 5
+   },
+   "write_attempts_on_the_real_root": [],
+   "dangerous": false,
+   "disposition": "already on temporary roots; reads the real files only as COPY SOURCES; the shared fixture now cuts the ledger to the pinned 3856-byte prefix and leaves the r11 manifest out"
+  },
+  {
+   "module": "test_step9_63c_r5c10ag_identity_pointer_creation",
+   "tests_touching_protected_real_paths": [
+    "test_step9_63c_r5c10ag_identity_pointer_creation (module import / setUpModule)"
+   ],
+   "access_summary": {
+    "v4_runs:os.scandir": 4,
+    "ledger:copy-source / temp-symlink": 1,
+    "ledger:open": 1,
+    "r11_manifest:copy-source / temp-symlink": 1,
+    "r11_manifest:open": 1,
+    "v4_runs:copy-source / temp-symlink": 1,
+    "v4_runs:open": 1
+   },
+   "write_attempts_on_the_real_root": [],
+   "dangerous": false,
+   "disposition": "already on temporary roots; reads the real files only as COPY SOURCES; the shared fixture now cuts the ledger to the pinned 3856-byte prefix and leaves the r11 manifest out"
+  },
+  {
+   "module": "test_step9_63c_r5c10ah_end_to_end_gated_rehearsal",
+   "tests_touching_protected_real_paths": [
+    "test_step9_63c_r5c10ah_end_to_end_gated_rehearsal (module import / setUpModule)"
+   ],
+   "access_summary": {
+    "v4_runs:os.scandir": 8,
+    "ledger:copy-source / temp-symlink": 2,
+    "ledger:open": 2,
+    "r11_manifest:copy-source / temp-symlink": 2,
+    "r11_manifest:open": 2,
+    "v4_runs:copy-source / temp-symlink": 2,
+    "v4_runs:open": 2
+   },
+   "write_attempts_on_the_real_root": [],
+   "dangerous": false,
+   "disposition": "same as r5c10ag"
+  },
+  {
+   "module": "test_step9_63c_r5c10ah_freeze_entry",
+   "tests_touching_protected_real_paths": [
+    "test_step9_63c_r5c10ah_freeze_entry (module import / setUpModule)"
+   ],
+   "access_summary": {
+    "v4_runs:os.scandir": 8,
+    "ledger:copy-source / temp-symlink": 2,
+    "ledger:open": 2,
+    "r11_manifest:copy-source / temp-symlink": 2,
+    "r11_manifest:open": 2,
+    "v4_runs:copy-source / temp-symlink": 2,
+    "v4_runs:open": 2
+   },
+   "write_attempts_on_the_real_root": [],
+   "dangerous": false,
+   "disposition": "same as r5c10ag"
+  },
+  {
+   "module": "test_step9_63c_r5c10ah_issuance_plan_proof",
+   "tests_touching_protected_real_paths": [
+    "test_step9_63c_r5c10ah_issuance_plan_proof (module import / setUpModule)"
+   ],
+   "access_summary": {
+    "v4_runs:os.scandir": 8,
+    "ledger:copy-source / temp-symlink": 2,
+    "ledger:open": 2,
+    "r11_manifest:copy-source / temp-symlink": 2,
+    "r11_manifest:open": 2,
+    "v4_runs:copy-source / temp-symlink": 2,
+    "v4_runs:open": 2
+   },
+   "write_attempts_on_the_real_root": [],
+   "dangerous": false,
+   "disposition": "same as r5c10ag"
+  },
+  {
+   "module": "test_step9_63c_r5c10ah_retire_entry",
+   "tests_touching_protected_real_paths": [
+    "test_step9_63c_r5c10ah_retire_entry (module import / setUpModule)"
+   ],
+   "access_summary": {
+    "v4_runs:os.scandir": 8,
+    "ledger:copy-source / temp-symlink": 2,
+    "ledger:open": 2,
+    "r11_manifest:copy-source / temp-symlink": 2,
+    "r11_manifest:open": 2,
+    "v4_runs:copy-source / temp-symlink": 2,
+    "v4_runs:open": 2
+   },
+   "write_attempts_on_the_real_root": [],
+   "dangerous": false,
+   "disposition": "same as r5c10ag"
+  },
+  {
+   "module": "test_step9_63c_r5c10ah_superseding_tests",
+   "tests_touching_protected_real_paths": [
+    "test_step9_63c_r5c10ah_superseding_tests (module import / setUpModule)"
+   ],
+   "access_summary": {
+    "v4_runs:os.scandir": 4,
+    "ledger:copy-source / temp-symlink": 1,
+    "ledger:open": 1,
+    "r11_manifest:copy-source / temp-symlink": 1,
+    "r11_manifest:open": 1,
+    "v4_runs:copy-source / temp-symlink": 1,
+    "v4_runs:open": 1
+   },
+   "write_attempts_on_the_real_root": [],
+   "dangerous": false,
+   "disposition": "same as r5c10ag"
+  },
+  {
+   "module": "test_step9_63c_r5c10ai_final_form_and_tokens",
+   "tests_touching_protected_real_paths": [
+    "test_step9_63c_r5c10ai_final_form_and_tokens (module import / setUpModule)"
+   ],
+   "access_summary": {
+    "v4_runs:os.scandir": 8,
+    "ledger:copy-source / temp-symlink": 2,
+    "ledger:open": 2,
+    "r11_manifest:copy-source / temp-symlink": 2,
+    "r11_manifest:open": 2,
+    "v4_runs:copy-source / temp-symlink": 2,
+    "v4_runs:open": 2
+   },
+   "write_attempts_on_the_real_root": [],
+   "dangerous": false,
+   "disposition": "same as r5c10ag"
+  },
+  {
+   "module": "test_step9_63c_r5c10ai_v2_archival_replay",
+   "tests_touching_protected_real_paths": [
+    "test_step9_63c_r5c10ai_v2_archival_replay.V2ArchivalReplayTests.test_01a_frozen_v2_identity_preflight_passes_on_archived_bytes"
+   ],
+   "access_summary": {
+    "ledger:copy-source / temp-symlink": 2,
+    "r11_manifest:copy-source / temp-symlink": 2,
+    "v4_runs:copy-source / temp-symlink": 2
+   },
+   "write_attempts_on_the_real_root": [],
+   "dangerous": false,
+   "disposition": "already on a temporary mirror built from symlinks; the 'remove' events are the cleanup of its OWN temporary symlinks (entry semantics), not of the real files"
+  },
+  {
+   "module": "test_step9_63c_r5c5b_lifecycle_reducer",
+   "tests_touching_protected_real_paths": [
+    "test_step9_63c_r5c5b_lifecycle_reducer.LifecycleReducerTests.test_15_old_r7_historical_regression",
+    "test_step9_63c_r5c5b_lifecycle_reducer.LifecycleReducerTests.test_16_old_r8_historical_regression",
+    "test_step9_63c_r5c5b_lifecycle_reducer.LifecycleReducerTests.test_19_assert_executable_rejects_r7",
+    "test_step9_63c_r5c5b_lifecycle_reducer.LifecycleReducerTests.test_20_manifest_and_transaction_bytes_unchanged",
+    "test_step9_63c_r5c5b_lifecycle_reducer.LifecycleReducerTests.test_21_historical_pin_inventory_still_passes"
+   ],
+   "access_summary": {
+    "ledger:open": 5,
+    "v4_runs:open": 5,
+    "v4_runs:os.scandir": 16,
+    "r11_manifest:open": 1
+   },
+   "write_attempts_on_the_real_root": [],
+   "dangerous": false,
+   "disposition": "FULL archive; mirror wrapper (all tests kept)"
+  }
+ ],
+ "after_isolation_trace": {
+  "modules_with_access": 23,
+  "records": 2359,
+  "by_event": {
+   "os.scandir": 1284,
+   "shutil.copyfile": 504,
+   "open": 565,
+   "os.symlink": 3,
+   "os.remove": 3
+  },
+  "write_mode_opens": 0,
+  "symlink_remove_note": "3 次 os.symlink + 3 次 os.remove 来自 r5c10ai v2 归档重放 test_01a：在临时目录创建并删除指向真实文件的符号链接；追踪器按 realpath 记录，真实文件未被触碰（会话级硬防护按目录项判断，未停止）",
+  "guard_events": 253,
+  "guard_blocked": 0,
+  "all_exit_codes_zero": true,
+  "interpretation": "隔离后，对真实激活状态的访问只剩复制源读取与只读扫描；无任何写入"
+ }
+}
