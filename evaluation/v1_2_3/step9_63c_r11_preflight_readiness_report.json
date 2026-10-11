@@ -1,0 +1,183 @@
+{
+ "step": "9.63c-r11 preflight (stage 1: read-only, stopped before any write)",
+ "status": "STOPPED_AWAITING_WRITE_APPROVAL",
+ "producer": {
+  "path": "scripts/preflight_step9_63c_r11_mac_local.py",
+  "sha256": "460ede115b319baf35f434915cce1c4a89e4d7ba912e02e1bc3919ef2fbcc05f"
+ },
+ "readonly_checks": {
+  "freeze_file": "evaluation/v1_2_3/step9_63c_r11_runner_freeze.json",
+  "freeze_sha256": "bafcec8d2ae0bad6c3cb43e89bd49171b85374957ec6ce173071fef5248357b3",
+  "identity": {
+   "runner_freeze_revision": "r11",
+   "runner_freeze_path": "evaluation/v1_2_3/step9_63c_r11_runner_freeze.json",
+   "identity_config_sha256": "4e077781faeecee57da02f37d1d3ad8cdc9dfa895d3eb72b1b4ab1f1d3f696fe"
+  },
+  "producer_sha256": "460ede115b319baf35f434915cce1c4a89e4d7ba912e02e1bc3919ef2fbcc05f",
+  "PRODUCER_FREEZE_MATCH": true,
+  "validate_authorization_state": "PASS",
+  "lifecycle": {
+   "derived_state": "ISSUED_EXECUTABLE",
+   "executable": true
+  },
+  "active_authorizations": [
+   "auth-step9_63c_r11-1a399434ec0e4494b0045734846b2042"
+  ],
+  "auth": {
+   "authorization_id": "auth-step9_63c_r11-1a399434ec0e4494b0045734846b2042",
+   "attempt_id": "attempt-step9_63c_r11-2312daefa1364bfd83ff3948d101c765",
+   "evaluation_id": "heldout-v4-step9_55a-treatment-v3-20260930-01",
+   "status": "ISSUED_NOT_EXECUTED",
+   "authorization_status": "ISSUED_NOT_CONSUMED",
+   "consumed": false,
+   "authorization_consumption_count": 0,
+   "case_count": 40,
+   "model_configuration_fingerprint_sha256": "d0802478a59e6b2021b0476490149d7fec672fab5bda5cc45f55241268f1a7e0",
+   "rag_configuration_fingerprint_sha256": "58467abc2abafce62e8d71713684802f64a35946accf35c08007e67b0edd60a5",
+   "benchmark_sha256": "8b8c72092fcd7544e69d5d2ecd13610c7bb4c14210fca330698b3e5ab3f01d7f"
+  },
+  "namespace_id": "heldout-v4-treatment-v3-run-9ec9c305cc4de01e6538",
+  "namespace_exists": false,
+  "registry_path": "evaluation/v1_2_3/step9_63c_r11_preflight_invocations.jsonl",
+  "registry_exists": false,
+  "runtime": {
+   "platform": "darwin",
+   "root_ok": true,
+   "cwd_ok": true,
+   "python_ok": true
+  },
+  "credential_present_in_env_or_dotenv": true,
+  "deepseek_base_url_set": true
+ },
+ "frozen_bindings_and_dependency_lock": {
+  "adapter_bindings": {
+   "baseline_agent_sha256": "4e2bffea0d7eaa9299074a960df84a1806b3ae9d4930662929abc58ca5b2ae79",
+   "benchmark_path": "evaluation/benchmarks/benchmark_v4_cases.yaml",
+   "benchmark_sha256": "8b8c72092fcd7544e69d5d2ecd13610c7bb4c14210fca330698b3e5ab3f01d7f",
+   "benchmark_manifest_sha256": "b5feb7832b6267d8cff9d25fb2d8cf0043829feb5fd04ec1bea77dba932a13db",
+   "harness_sha256": "8bc271bebc1c5da5351d517e2bb4a0d1a99fda3de1b713a6197b12f81fad70c7",
+   "scoring_sha256": "f742a8f8af7c8747818dadad81621c15d12d74f50538019913dfe18ab53bf59b",
+   "scoring_rubric_sha256": "a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899",
+   "metric_registry_sha256": "de9f348cb1dff66410c03095abdaffcc256f53679718482870e4aa4d80c75056",
+   "one_shot_rules_sha256": "1c7ed4ef47865b117bc943f3e0ad9a859f4f74cfb4e8001f723ac5532af140d0",
+   "matched_protocol_sha256": "a71ba06090370b576fbba66bc4b005e519ddbabff3021a40c6546fc855f90265",
+   "baseline_metric_lock_sha256": "63e33f8dd66109742fdbb2282be437a1af771f5aa1d600306f35916ed5d37203",
+   "claim_policy_sha256": "4c64896c141dc8feb3789939e1450bcb7bdeb878ed15b27558404c47421aea67",
+   "model_configuration_fingerprint_sha256": "d0802478a59e6b2021b0476490149d7fec672fab5bda5cc45f55241268f1a7e0",
+   "rag_configuration_fingerprint_sha256": "58467abc2abafce62e8d71713684802f64a35946accf35c08007e67b0edd60a5",
+   "tool_adapter_sha256": "65223ad962417d68d16326c2431a205f1bdc953a0f64c5585ff38e4017a1c084",
+   "dependency_lock_sha256": "4e7ec8e873364b418536494b049d09e37e957a824a1989072cdc5a62f8af72b0",
+   "case_count": 40,
+   "task_distribution": {
+    "KNOWLEDGE_QA": 10,
+    "CAUSE_ASSESSMENT": 10,
+    "PERSONALIZED_DECISION": 10,
+    "DATA_ANALYSIS": 10
+   },
+   "case_order_fingerprint_sha256": "d930455e417935337a6e3459defbdc3ee3829b71786fbd8438ef092b62429e68",
+   "max_runner_turns": 6,
+   "agent_loop_max_steps": 4,
+   "fresh_session_per_case": true,
+   "comparison_class": "POST_HOC_MATCHED_FROZEN_BASELINE",
+   "production_case_path_runner_sha256": "fddaa09803dd1df27da81f3793929d15a3f6d5d29c1060842ecbf138a76b1d06",
+   "treatment_agent_sha256": "085d338ed95bbef7370c41cf97ca0d6653ffdfd2f1c924eef4b7123dfdea4607",
+   "evaluation_id": "heldout-v4-step9_55a-treatment-v3-20260930-01",
+   "treatment_runner_sha256": "3a4ec3e526bde19e318e271a24569223087c8a6aadc77fd144b061825c0da282",
+   "all_frozen_hashes_match": true,
+   "checks": "..."
+  },
+  "requirements_lock": {
+   "pinned": 74,
+   "version_mismatch": [],
+   "missing": []
+  },
+  "base_url": {
+   "scheme": "https",
+   "host": "api.deepseek.com"
+  }
+ },
+ "connectivity": {
+  "SYSTEM_DNS_STATUS": "PASS",
+  "PYTHON_GETADDRINFO_STATUS": "PASS",
+  "DEFAULT_DIG_STATUS": "PASS",
+  "GOOGLE_DNS_STATUS": "PASS",
+  "CLOUDFLARE_DNS_STATUS": "PASS",
+  "DNS_ADDRESSES": {
+   "system": [
+    "3.173.21.63"
+   ],
+   "python": [
+    "3.173.21.63"
+   ],
+   "default_dig": [
+    "3.173.21.63"
+   ],
+   "google": [
+    "3.173.21.63"
+   ],
+   "cloudflare": [
+    "3.173.21.63"
+   ]
+  },
+  "TCP_CONNECTION": "PASS",
+  "TLS_CONNECTION": "PASS",
+  "TLS_VERSION": "TLSv1.3",
+  "TLS_CERTIFICATE_PRESENT": true,
+  "TLS_CERTIFICATE_VERIFIED": true
+ },
+ "connectivity_note": "Run with the session-level hard guard only. Under guard v3 the probe fails with PermissionError because guard v3 blocks the dscacheutil/dig child processes (guard log: subprocess.Popen dscacheutil blocked).",
+ "writes_required_by_producer": [
+  {
+   "path": "evaluation/v1_2_3/step9_63c_r11_preflight_invocations.jsonl",
+   "currently_exists": false,
+   "operations": [
+    "O_CREAT|O_EXCL create with one PREFLIGHT_INVOCATION_REGISTRY_INITIALIZED line (mode 0600)",
+    "append PREFLIGHT_INVOCATION_CLAIMED (before any network probe)",
+    "append PREFLIGHT_ARTIFACT_PERSISTED on success, or PREFLIGHT_INVOCATION_FAILED on failure"
+   ],
+   "reason": "durable invocation provenance; the consumer calls verify_registry_evidence on it before formal execution"
+  },
+  {
+   "path": "evaluation/v1_2_3/step9_63c_r5_auth-step9_63c_r11-1a399434ec0e4494b0045734846b2042_preflight-step9_63c_r5-r11-<32 hex>_mac_local_preclearance.json",
+   "currently_exists": false,
+   "operations": [
+    "O_CREAT|O_EXCL create (mode 0600), fsync file and directory"
+   ],
+   "reason": "the preflight evidence the consumer binds by --preflight-file/--preflight-id/--preflight-sha256"
+  }
+ ],
+ "not_written": [
+  "authorization lifecycle ledger",
+  "r11 authorization manifest",
+  "Freeze",
+  "pointer",
+  "evaluation/v4_runs (no namespace, attempt, transaction)"
+ ],
+ "real_state_before_and_after": {
+  "identical": true,
+  "now": {
+   "freeze": {
+    "sha256": "bafcec8d2ae0bad6c3cb43e89bd49171b85374957ec6ce173071fef5248357b3",
+    "size": 9365
+   },
+   "ledger": {
+    "equals_activation_commit_blob": true,
+    "lines": 5,
+    "sha256": "aa7c21819a182c3b35aa32ab0c06995734185c9a89eb239bfd0ee44e4c392b31",
+    "size": 6743
+   },
+   "pointer": {
+    "sha256": "4e077781faeecee57da02f37d1d3ad8cdc9dfa895d3eb72b1b4ab1f1d3f696fe",
+    "size": 389
+   },
+   "r11_manifest": {
+    "sha256": "33bd99b9f7fba0bde0fc6a40d0c6a3b570b9f59d1e4c0158c1d4b5e8d82f5ea1",
+    "size": 7312
+   },
+   "v4_runs_tree": {
+    "entries": 47,
+    "sha256": "0b4c5582082acc1428b32ced098a8c310f7b0894fcc223acc06bc4c480eb1e7d"
+   }
+  }
+ }
+}
