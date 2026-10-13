@@ -3595,3 +3595,7 @@ The version inventory contains r3–r10 and no r11; `r11` is proposed only. `eva
 **lineage 分类（D3）**：28 个 COMPLETE_FORMAL、8 个 COMPLETE_DERIVED（CA-02/04/07、PD-01/03/04/09/10，runner 标记有误，链接可从已落盘的 ID 重建）、4 个 INCOMPLETE_FORMAL（DA-01/06/09/10，缺少语义根）；40 个案例都可完整评审。输出 `step9_63c_r11_v3_lineage_sidecar.jsonl`、`_forensics.json`。
 
 **评审者提示词**：`evaluation/v1_2_3/step9_63c_r11_blind_review_prompt.md`（含复制到仓库外工作目录的命令、粘贴用的提示词、评审结束后交回的命令）。
+
+## Step 9.63c-r11 — 评审冻结（汇总之前）
+
+评审者：`Claude opus5.5, fresh session`（单一 AI 评审者；不是 Codex，按预注册 D1 必须披露）。评审记录 `evaluation/v1_2_3/step9_63c_r11_blind_review_output/v3_adjudication.jsonl`：40 行，SHA `46d5e84d60b104448dd411b7f5bd08369c67dc60934e80954d524c80b771af22`，盲审包校验器结果 `OK 40/40`，与评审工作目录中的原件逐字节相同，案例顺序与模板一致；没有格式修正。冻结前盲审包两处副本 9/9 OK（`SHA256SUMS` `5d951349…`），评审工作目录中除 `output/` 外没有新增或删除的文件。冻结文件 `step9_63c_r11_adjudication_freeze.json` 绑定 FINAL 预注册 `ead55a09…`，并记录评审者自述的披露事项：评审者类型与基线不同；harmful 与 validity 的判定口径、primary_cause 标签由评审者自拟，没有使用统一枚举；回读过已写入的 CA-02、CA-04（未修改）；评审工具在包外写了会话缓存。primary_cause 标签按原样保留，不做事后统一。冻结前没有查看任何分数。

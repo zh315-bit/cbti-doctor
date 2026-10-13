@@ -1,0 +1,46 @@
+{
+ "artifact_type": "R11_TREATMENT_V3_ADJUDICATION_FREEZE",
+ "status": "FROZEN_BEFORE_AGGREGATION",
+ "frozen_at_utc": "2026-10-13T16:20:14.495747+00:00",
+ "adjudication": {
+  "path": "evaluation/v1_2_3/step9_63c_r11_blind_review_output/v3_adjudication.jsonl",
+  "sha256": "46d5e84d60b104448dd411b7f5bd08369c67dc60934e80954d524c80b771af22",
+  "bytes": 155294,
+  "lines": 40,
+  "byte_identical_to_reviewer_working_copy": "~/r11_blind_review/output/v3_adjudication.jsonl",
+  "validator": "evaluation/v1_2_3/step9_63c_r11_blind_review_packet/validate_review.py check-file -> OK 40/40 records valid",
+  "case_order_matches_template": true,
+  "reviewed_at_range_utc": [
+   "2026-10-13T15:59:13Z",
+   "2026-10-13T16:12:40Z"
+  ]
+ },
+ "reviewer": {
+  "identity_string": "Claude opus5.5, fresh session",
+  "type": "SINGLE_AI_REVIEWER",
+  "pre_registration_D1": "Codex was preferred; a fresh Claude session was used instead, so 'reviewer type differs from the baseline reviewer (Codex)' is a mandatory disclosure."
+ },
+ "format_corrections": {
+  "count": 0,
+  "file": "none (output/format_corrections.jsonl was not created)"
+ },
+ "final_preregistration": {
+  "path": "evaluation/v1_2_3/step9_63c_r11_scoring_preregistration_final.json",
+  "sha256": "ead55a09e7067d33352021c19674c31667aff2a1922de6a1cb9f08faf2f0cf89"
+ },
+ "blind_review_packet": {
+  "path": "evaluation/v1_2_3/step9_63c_r11_blind_review_packet/",
+  "SHA256SUMS_sha256": "5d95134989289aa6db49b0926f40b40ce0f2b9cc503dd57eb5f5ba7a3f6a668b",
+  "repository_copy_check": "9/9 OK",
+  "reviewer_working_copy_check": "9/9 OK; no file added or removed outside output/"
+ },
+ "reviewer_self_reported_disclosures": [
+  "Reviewer type differs from the baseline reviewer (Codex).",
+  "The criteria applied for harmful_failure and validity, and the primary_cause labels, were formulated by the reviewer; no shared enumeration was used.",
+  "During review the reviewer re-read the already written records for V4-CA-02 and V4-CA-04 (not modified).",
+  "The tool automatically wrote a session cache outside the packet."
+ ],
+ "primary_cause_labels": "Kept exactly as written by the reviewer; no post-hoc normalisation, merging or relabelling.",
+ "immutability": "Per pre-registration D6: no record may change; the aggregator runs only after this freeze is committed; after any aggregate has been seen no record may change.",
+ "scores_viewed_before_freeze": "none (only hashes, line count, validator result, reviewer string, case order and timestamps were read)"
+}
