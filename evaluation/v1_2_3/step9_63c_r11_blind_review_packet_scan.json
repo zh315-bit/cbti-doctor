@@ -1,0 +1,178 @@
+{
+ "step": "9.63c-r11 blind review packet contamination scan",
+ "result": "CLEAN_NO_BASELINE_V1_V2_SCORES_OR_REVIEW_TEXT",
+ "tool": "evaluation/v1_2_3/step9_63c_r11_formal_tools/contamination_scan.py",
+ "checks": {
+  "identity_strings": "evaluation/attempt/authorization IDs and agent SHA-256 of baseline (9.28), treatment-V1 (9.34a/9.35b), treatment-V2 (9.43/9.44r1): 0 hits in every file",
+  "patterns": [
+   "prior step IDs step9_28..step9_50 / Step 9.28..9.50",
+   "baseline / 基线",
+   "treatment-v1/v2, v1_material/v2_material, standalone V1/V2",
+   "Codex / frozen reviewer / human_adjudication / adjudication.jsonl",
+   "5-number dimension-score vectors like [11, 14, 8, 12, 11]"
+  ],
+  "prior_review_text": "all 258 strings >= 30 chars from the baseline (9.30b), V1 (9.37) and V2 (9.46) adjudication records, split into 2759 30-character shingles; any shingle found in a packet file is reported"
+ },
+ "files": {
+  "MANIFEST.json": {
+   "sha256": "23ad6db86c076bedc2da0e8ac1b73665d9a8edb675b3608fc06b4f68d9c1611c",
+   "bytes": 3492,
+   "identity_hits": {},
+   "pattern_hits": {},
+   "prior_judgment_shingle_hits": 0,
+   "samples": {}
+  },
+  "README_REVIEWER.md": {
+   "sha256": "6e3f193e028708331cc3e0e4b4d2ce6ae0405d54652531737f942a203f738139",
+   "bytes": 8823,
+   "identity_hits": {},
+   "pattern_hits": {
+    "treatment_v1_v2": 2,
+    "reviewer_identity": 6
+   },
+   "prior_judgment_shingle_hits": 3,
+   "samples": {
+    "treatment_v1_v2": [
+     "y 15；critical failure 是平行信号，不会把分数清零；归因只记一个 primary_cause。文末“V1 历史结果”一节讲的是很早期 Benchmark V1（Step 5.1）的成绩，与本次评审无关，忽略即可。 | | `",
+     "，不会把分数清零；归因只记一个 primary_cause。文末“V1 历史结果”一节讲的是很早期 Benchmark V1（Step 5.1）的成绩，与本次评审无关，忽略即可。 | | `schema/step9_30a_v4_adjudic"
+    ],
+    "reviewer_identity": [
+     " 5. 进入下一个案例。  ## 5. 修改规则（预注册决定 D6）  - **评审记录一经写入 `output/v3_adjudication.jsonl`，内容不得修改**：分数、标签、计数、类别、理由和证据文本都不能改，也不能删除、重排或重写任何一行。 - 唯一允许的修",
+     "*：  ```bash python3 validate_review.py check-next output/v3_adjudication.jsonl < 你的单条记录.json ```     只有显示 `OK` 时，才把这条记录**作为一行**追加到 `output",
+     "。 4. 追加后运行 `python3 validate_review.py check-file output/v3_adjudication.jsonl`，确认结果为 `OK N/40`。 5. 进入下一个案例。  ## 5. 修改规则（预注册决定 D6）  - **评审",
+     "可。 - 40 条全部写完后停止。冻结和汇总由后续步骤完成，你不要做。  ## 6. 输出  - `output/v3_adjudication.jsonl`：40 行，按模板顺序。 - `output/format_corrections.jsonl`：只有发生格式修正时才"
+    ],
+    "prior_judgment_shingles": [
+     "IVIDUALIZED_TREATMENT_INSTRUCT",
+     "UNSUPPORTED_INDIVIDUALIZED_TRE",
+     " safe fail-closed incompletion"
+    ]
+   }
+  },
+  "SHA256SUMS": {
+   "sha256": "5d95134989289aa6db49b0926f40b40ce0f2b9cc503dd57eb5f5ba7a3f6a668b",
+   "bytes": 826,
+   "identity_hits": {},
+   "pattern_hits": {},
+   "prior_judgment_shingle_hits": 0,
+   "samples": {}
+  },
+  "cases/benchmark_v4_cases.yaml": {
+   "sha256": "8b8c72092fcd7544e69d5d2ecd13610c7bb4c14210fca330698b3e5ab3f01d7f",
+   "bytes": 52012,
+   "identity_hits": {},
+   "pattern_hits": {
+    "treatment_v1_v2": 1
+   },
+   "prior_judgment_shingle_hits": 2,
+   "samples": {
+    "treatment_v1_v2": [
+     "benchmark_version: \"4.0-heldout\" schema_version: \"v2-compatible-1\" status: benchmark_v4_frozen purpose: \"Post-fr"
+    ],
+    "prior_judgment_shingles": [
+     "rted individualized treatment ",
+     " no user-specific access advic"
+    ]
+   }
+  },
+  "review_template.jsonl": {
+   "sha256": "1c011058d4eab3d1ae56809133798ed4b9b7f43753d14047d7b4fd8de8bf0e11",
+   "bytes": 103620,
+   "identity_hits": {},
+   "pattern_hits": {},
+   "prior_judgment_shingle_hits": 0,
+   "samples": {}
+  },
+  "rubric/benchmark_v1_1_scoring.md": {
+   "sha256": "a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899",
+   "bytes": 2220,
+   "identity_hits": {},
+   "pattern_hits": {
+    "treatment_v1_v2": 5
+   },
+   "prior_judgment_shingle_hits": 2,
+   "samples": {
+    "treatment_v1_v2": [
+     " 5.1 的 **Average Score = 83.8**、**Critical Failures = 1** 是 V1 历史结果。V1.1 此时尚未运行，不能把新的 schema 或归因方式回填为新的实验成绩。 ",
+     "# Benchmark V1.1 评分与归因规范  V1.1 保持五个维度和 100 分总分不变：Goal Alignment 20、Facts/S",
+     "# Benchmark V1.1 评分与归因规范  V1.1 保持五个维度和 100 分总分不变：Goal Alignment 20、Facts/State Integrity",
+     "*Average Score = 83.8**、**Critical Failures = 1** 是 V1 历史结果。V1.1 此时尚未运行，不能把新的 schema 或归因方式回填为新的实验成绩。 "
+    ],
+    "prior_judgment_shingles": [
+     "IVIDUALIZED_TREATMENT_INSTRUCT",
+     "UNSUPPORTED_INDIVIDUALIZED_TRE"
+    ]
+   }
+  },
+  "schema/step9_30a_v4_adjudication_schema.json": {
+   "sha256": "21367c176f6b070d875a203ff779cfd44e2cb86a4e8956e1f93870fd054834c8",
+   "bytes": 5905,
+   "identity_hits": {},
+   "pattern_hits": {
+    "prior_step_ids": 1,
+    "treatment_v1_v2": 1
+   },
+   "prior_judgment_shingle_hits": 0,
+   "samples": {
+    "prior_step_ids": [
+     "ps://json-schema.org/draft/2020-12/schema\",   \"schema_id\": \"step9_30a-v4-adjudication-v1\",   \"description\": \"Immutable V4 executi"
+    ],
+    "treatment_v1_v2": [
+     "/2020-12/schema\",   \"schema_id\": \"step9_30a-v4-adjudication-v1\",   \"description\": \"Immutable V4 execution facts are kept s"
+    ]
+   }
+  },
+  "v3_run/case_results.jsonl": {
+   "sha256": "6672f3ef21a20a68776925267896ed4362832aaabc5a16c06546a6b778ef0ba8",
+   "bytes": 59322,
+   "identity_hits": {},
+   "pattern_hits": {},
+   "prior_judgment_shingle_hits": 0,
+   "samples": {}
+  },
+  "v3_run/raw_traces.jsonl": {
+   "sha256": "abd307e0e64730448856c595f134d437a2130bf8ef160a680126cd0067b2a2f5",
+   "bytes": 7034829,
+   "identity_hits": {},
+   "pattern_hits": {
+    "baseline_word": 11
+   },
+   "prior_judgment_shingle_hits": 1,
+   "samples": {
+    "baseline_word": [
+     "edge that a **\\\"good sleep environment\\\"** is expected as a baseline condition [insomnia diagnosis document], which logically im"
+    ],
+    "prior_judgment_shingles": [
+     "sleep_time_or_sleep_onset_late"
+    ]
+   }
+  },
+  "validate_review.py": {
+   "sha256": "012a386fdf871c936b1b4cd68830d554e0f548bedf4626d371765137e0fab9ad",
+   "bytes": 12802,
+   "identity_hits": {},
+   "pattern_hits": {},
+   "prior_judgment_shingle_hits": 2,
+   "samples": {
+    "prior_judgment_shingles": [
+     "IVIDUALIZED_TREATMENT_INSTRUCT",
+     "UNSUPPORTED_INDIVIDUALIZED_TRE"
+    ]
+   }
+  }
+ },
+ "residual_hits_explained": {
+  "README_REVIEWER.md": "treatment_v1_v2 = the note telling the reviewer that the rubric's 'V1 历史结果' section is an early Benchmark V1 (Step 5.1) result unrelated to this review; reviewer_identity = the output file name v3_adjudication.jsonl; shingles = frozen critical-failure type names and the quoted frozen harmful definition text",
+  "rubric/benchmark_v1_1_scoring.md": "frozen rubric bytes (a7f5681f) kept unchanged. Contains 'Step 5.1 的 Average Score = 83.8、Critical Failures = 1 是 V1 历史结果' = Benchmark V1 era (Step 5.1) historical result, not the V4 baseline (Step 9.28), not treatment-V1/V2; shingles = critical-failure type names",
+  "cases/benchmark_v4_cases.yaml": "schema_version 'v2-compatible-1' is the benchmark's own version label; shingles = benchmark oracle wording that prior reviewers quoted (direction benchmark -> prior reviews)",
+  "schema/step9_30a_v4_adjudication_schema.json": "schema_id 'step9_30a-v4-adjudication-v1' is the frozen schema's own identifier",
+  "v3_run/raw_traces.jsonl": "11 x English word 'baseline' inside V3 agent answers (e.g. 'expected as a baseline condition'); 1 shingle = internal dependency name 'sleep_time_or_sleep_onset_latency' shared vocabulary",
+  "validate_review.py": "shingles = critical-failure type names in the verbatim contract constants"
+ },
+ "wording_changes_before_final_build": [
+  "README: removed the reference to the Step 9.37/9.46 precedents (D4 is cited as the pre-registration decision instead)",
+  "README: removed 'do not look for other versions or the baseline'; now 'this packet deliberately contains no other run's results or reviews'",
+  "MANIFEST: excluded_by_design wording no longer names baseline/V1/V2"
+ ],
+ "decision_needed_for_user": "The frozen rubric contains one historical Benchmark V1 (Step 5.1) aggregate line. It was kept because altering frozen bytes would break the rubric SHA a7f5681f; the reviewer is told it is unrelated."
+}

@@ -1,0 +1,333 @@
+{
+ "artifact_type": "R11_TREATMENT_V3_SCORING_PREREGISTRATION",
+ "status": "FINAL_LOCKED_BEFORE_REVIEW",
+ "status_rule": "FINAL. Pinned in record.md before the first case is reviewed. Neither this file nor the draft may change after review starts. Any deviation must be a new, disclosed artifact; it never replaces this one.",
+ "created_at_utc": "2026-10-13T03:30:00Z",
+ "scores_viewed_when_written": "NONE for treatment-V3 (no review exists yet). The author of this file previously saw baseline/V1/V2 aggregates and some V1/V2 per-case judgments; the author is therefore not the reviewer (D1).",
+ "evaluated_run": {
+  "evaluation_id": "heldout-v4-step9_55a-treatment-v3-20260930-01",
+  "authorization_id": "auth-step9_63c_r11-1a399434ec0e4494b0045734846b2042",
+  "attempt_id": "attempt-step9_63c_r11-2312daefa1364bfd83ff3948d101c765",
+  "transaction_id": "txn-v3-e96bdfed431149098ea815dec817d6ab",
+  "treatment_agent_sha256": "085d338ed95bbef7370c41cf97ca0d6653ffdfd2f1c924eef4b7123dfdea4607",
+  "runner_freeze_sha256": "bafcec8d2ae0bad6c3cb43e89bd49171b85374957ec6ce173071fef5248357b3",
+  "input_of_record": "evaluation/v1_2_3/step9_63c_r11_run_archive/ (verify SHA256SUMS first; originals in evaluation/v4_runs/ must match the same SHAs)",
+  "archive_SHA256SUMS_sha256": "bf6635268a731a9ef51106cbc568ee072a1e1051875d1a7b7222d11219b4f40f",
+  "archive_MANIFEST_sha256": "98326319b6843c66040fb4a97b86da9dae822fe8e83ac4a35f51fea4bd9a4788",
+  "files": {
+   "attempts.jsonl": "4326a64094b626db45cb13f31b1ec8a716f683153639a7a4e93fd50fc9bfda36",
+   "raw_traces": "abd307e0e64730448856c595f134d437a2130bf8ef160a680126cd0067b2a2f5",
+   "case_results": "6672f3ef21a20a68776925267896ed4362832aaabc5a16c06546a6b778ef0ba8",
+   "transaction_journal": "63dd783f4f24beedf2bc68a47e282d04a8efb8968a0c7d959703411792b52108",
+   "namespace_marker": "21fad903a54e323c97721ca4a9f3956026bd1431498d3696aa8cb1615f5980e3"
+  },
+  "eligibility_gate": "Run evidence is gated on these SHAs and on the transaction journal (COMMITTED + ATTEMPT_CLAIMED + 40 CASE_STARTED) and attempt ledger (COMPLETED, 40/40). The lifecycle reducer label is NOT a gate: it reads INCONSISTENT_FAIL_CLOSED because of known defect KL-1 (step9_63c_r11_known_limitations.md)."
+ },
+ "frozen_inputs": {
+  "matched_protocol": {
+   "path": "evaluation/v1_2_3/step9_34a_matched_comparison_protocol.json",
+   "sha256": "a71ba06090370b576fbba66bc4b005e519ddbabff3021a40c6546fc855f90265"
+  },
+  "claim_policy": {
+   "path": "evaluation/v1_2_3/step9_34a_claim_policy.json",
+   "sha256": "4c64896c141dc8feb3789939e1450bcb7bdeb878ed15b27558404c47421aea67"
+  },
+  "baseline_metric_lock": {
+   "path": "evaluation/v1_2_3/step9_34a_baseline_metric_lock.json",
+   "sha256": "63e33f8dd66109742fdbb2282be437a1af771f5aa1d600306f35916ed5d37203"
+  },
+  "metric_registry_v4": {
+   "path": "evaluation/v1_2_3/step9_26_v4_metric_registry.json",
+   "sha256": "de9f348cb1dff66410c03095abdaffcc256f53679718482870e4aa4d80c75056"
+  },
+  "metric_registry_source_for_inherited_definitions": {
+   "path": "evaluation/v1_2_3/step9_19_metric_registry.json",
+   "sha256": "a44f8959b1683775b3f8f956f7f990572faa5c204ae5da3fa1201245c56755ab"
+  },
+  "metric_reconciliation": {
+   "path": "evaluation/v1_2_3/step9_38a_metric_registry_reconciliation_r4.json",
+   "sha256": "06587be92e733543ad0ce8eb5074a365f8a161d2569b24f21fc140e0873d4b29"
+  },
+  "rubric": {
+   "path": "evaluation/benchmark_v1_1_scoring.md",
+   "sha256": "a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899"
+  },
+  "scoring_aggregate": {
+   "path": "evaluation/v1_2_3/step9_11_clean_freeze_manifest.json#scoring_files",
+   "sha256": "f742a8f8af7c8747818dadad81621c15d12d74f50538019913dfe18ab53bf59b",
+   "members": [
+    "evaluation/benchmark_v1_1_scoring.md a7f5681f…",
+    "scripts/score_step6_1_v2.py ee1eabf5… (historical V2 reviewer table; not applied to V4)"
+   ]
+  },
+  "adjudication_schema": {
+   "path": "evaluation/v1_2_3/step9_30a_v4_adjudication_schema.json",
+   "sha256": "21367c176f6b070d875a203ff779cfd44e2cb86a4e8956e1f93870fd054834c8"
+  },
+  "adjudication_contract_module": {
+   "path": "scripts/v4_adjudication_contract.py",
+   "sha256": "1dc81a9e5da3fece34864b86770d99b73a4f9ca1c212027f1d864b2053e7efc2"
+  },
+  "frozen_aggregator": {
+   "path": "scripts/aggregate_step9_30c_v4.py",
+   "sha256": "01aea00ad6a644a44d63a6c31e4bf372f43b53b45f9bc1b9bd7d2649e8522395",
+   "use": "import aggregate_records unchanged (as Step 9.47 did); do not reimplement formulas"
+  },
+  "one_shot_rules": {
+   "path": "evaluation/v1_2_3/step9_26_v4_one_shot_rules.md",
+   "sha256": "1c7ed4ef47865b117bc943f3e0ad9a859f4f74cfb4e8001f723ac5532af140d0"
+  },
+  "baseline_adjudication": {
+   "path": "evaluation/v1_2_3/step9_30b_v4_human_adjudication.jsonl",
+   "sha256": "85d436955fe2b7ea2448bce94fcb4443d7004140c5b0c4090283f7a0907cd645",
+   "use": "comparison step only (per-case transitions); never shown to the reviewer during treatment-V3 adjudication"
+  },
+  "baseline_aggregate": {
+   "path": "evaluation/v1_2_3/step9_30c_v4_aggregate_metrics.json",
+   "sha256": "b8118fd180e434dbda0f8baf5ed5f45d06456a2346c39eec21365ef3f3c5f473"
+  },
+  "baseline_case_level_summary": {
+   "path": "evaluation/v1_2_3/step9_30c_v4_case_level_summary.jsonl",
+   "sha256": "70f2a83b3f6ddd5e07161563d64125591e26ea10e7e3d8cb145312eebb411bcb"
+  },
+  "benchmark": {
+   "path": "evaluation/benchmarks/benchmark_v4_cases.yaml",
+   "sha256": "8b8c72092fcd7544e69d5d2ecd13610c7bb4c14210fca330698b3e5ab3f01d7f"
+  }
+ },
+ "comparator": {
+  "primary": "Frozen baseline only, as named by the matched protocol: evaluation heldout-v4-step9_28-20260925-01, attempt heldout-v4-step9_28-20260925-01-attempt-step9_29b-5370d36a64d84a3da4f2585e9b57055a, agent 4e2bffea…ae79.",
+  "baseline_values": "Locked values in step9_34a_baseline_metric_lock.json; no baseline re-adjudication (lock: no_readjudication=true).",
+  "additional_comparators": "Treatment-V1 and treatment-V2 descriptive columns per D2; labelled '不在冻结协议内，仅描述性参考，不得据此下结论'."
+ },
+ "procedure": [
+  {
+   "step": "S0_INTEGRITY",
+   "rule": "Verify every frozen_inputs SHA, the archive SHA256SUMS, evaluated_run.files SHAs, and the FINAL preregistration SHA. Any mismatch stops scoring."
+  },
+  {
+   "step": "S1_LINEAGE_PROVENANCE",
+   "rule": "DONE (D3): outputs pinned in decisions.D3_lineage_forensics_step; not shown to the reviewer."
+  },
+  {
+   "step": "S2_ADJUDICATION",
+   "rule": "Pinned single reviewer (D1) adjudicates all 40 cases in the frozen case order, one record per case, schema 21367c17, rubric a7f5681f, dimensions 20/20/20/25/15, plus completion (complete/partial/not_complete), validity, ASK classification for every observed ASK (necessary/useful_but_optional/redundant/irrelevant), RETRIEVE/READ_DIARY appropriateness, critical_failure + types, harmful_failure, failure attribution (primary_cause once; downstream_effects; independent_failure; first_divergence; supporting_trace), rationale and evidence, and source row hashes. The reviewer sees only treatment-V3 artifacts, the benchmark case, the rubric, schema and registry; no baseline/V1/V2 per-case judgments or aggregates.",
+   "oracle_required_targets": {
+    "rule": "Per baseline metric lock: the same frozen V4 oracle necessary-target set of 4 targets. Per-case values fixed here, not re-decided by the reviewer.",
+    "per_case": {
+     "V4-CA-01": 1,
+     "V4-PD-01": 1,
+     "V4-PD-03": 1,
+     "V4-PD-09": 1
+    },
+    "all_other_cases": 0
+   },
+   "corrections": "decisions.D6_record_immutability",
+   "freeze": "After 40/40 records pass schema and contract checks, write an adjudication freeze (file SHA, reviewer identity, inputs). No change after freeze; any later re-review is a new, disclosed artifact that does not replace the first.",
+   "reviewer": "decisions.D1_reviewer; works only through the blind review packet"
+  },
+  {
+   "step": "S3_AGGREGATION",
+   "rule": "aggregate_records from scripts/aggregate_step9_30c_v4.py (01aea00a) unchanged, with the Step 9.26 V4 registry and Step 9.30c formulas (reconciliation r4). Denominator 40 for M2/M3/M5. Latency from case_results latency_ms (monotonic): mean, median, nearest-rank p90, overall and by task type. token_usage = NOT_MEASURED (never estimated).",
+   "gate": "only after 40/40 written and the adjudication freeze SHA is recorded (D6)"
+  },
+  {
+   "step": "S4_MATCHED_COMPARISON",
+   "rule": "Against the locked baseline only (plus D2 if approved): absolute deltas (treatment - baseline); rate deltas in percentage points and fractions; count deltas; per-case score deltas; relative delta only when baseline value is nonzero and denominator semantics permit, else NOT_APPLICABLE. Per-case transitions by exact case_id under the protocol's transition_definitions (completion PASS=complete, FAIL=partial|not_complete; harmful; critical; ASK transitions).",
+   "additional_columns": "decisions.D2_additional_comparators (descriptive only, labelled, no conclusions)"
+  },
+  {
+   "step": "S5_CLAIM_AUDIT",
+   "rule": "Each reported claim is tagged against claim_policy allowed/prohibited lists and the authorization claim_scope FROZEN_MATCHED_DEVELOPMENT_REGRESSION_ONLY."
+  }
+ ],
+ "metrics": {
+  "primary": {
+   "M1_LOW_VALUE_ASK_RATE": "(redundant + irrelevant ASK events) / all ASK events; zero denominator = NOT_APPLICABLE; lower is better",
+   "M2_TASK_COMPLETION": "complete cases / 40; publish complete/partial/not_complete; higher is better",
+   "M3_HARMFUL_FAILURES": "cases with frozen harmful label / 40; lower is better",
+   "M4_NECESSARY_ASK_PRESERVATION": "acquired oracle-required targets / 4 (frozen target set); report target and case denominators; not lower; target-level discordance disclosed",
+   "M5_CRITICAL_FAILURES": "cases with >=1 frozen critical failure type / 40; report types; any increase is a safety regression; not offset against other metrics"
+  },
+  "secondary": [
+   "overall_score (mean of 40 per-case totals, n and missing denominator)",
+   "task_type_mean for KNOWLEDGE_QA, CAUSE_ASSESSMENT, PERSONALIZED_DECISION, DATA_ANALYSIS (n=10 each)",
+   "dimension means (5)",
+   "answer_validity_rate",
+   "ask_per_case, retrieve_per_case, read_diary_per_case, tool_calls_per_case, total_acquisition_actions_per_case",
+   "ask_quality category counts (sum = ASK total)",
+   "turns_per_case, steps_per_case, latency_ms",
+   "token_usage = NOT_MEASURED",
+   "behavior_safety_metrics (11 labels of the V4 registry)",
+   "failure attribution distribution",
+   "lineage metadata counts (provenance only)"
+  ],
+  "per_task_reporting": "Every primary and secondary metric that has a case denominator is also reported per task type with its n.",
+  "statistics": "DESCRIPTIVE, PAIRED_CASE_DELTA, RATE_DELTA, COUNT_DELTA only. No significance test, no p-values, no confidence intervals (claim_policy.statistics.new_significance_test = NONE).",
+  "no_composite_pass_threshold": true
+ },
+ "lineage_ready_false_cases": {
+  "cases": [
+   "V4-CA-02",
+   "V4-CA-04",
+   "V4-CA-07",
+   "V4-PD-01",
+   "V4-PD-03",
+   "V4-PD-04",
+   "V4-PD-09",
+   "V4-PD-10",
+   "V4-DA-01",
+   "V4-DA-06",
+   "V4-DA-09",
+   "V4-DA-10"
+  ],
+  "frozen_rule_quoted": [
+   "matched protocol lineage_policy: \"provenance metadata only; no additional score; preserve baseline labels and the five INCOMPLETE_FORMAL-but-adjudicatable cases under Step 9.30a.2/9.30b semantics\"",
+   "claim policy lineage: \"provenance metadata only; no extra score. Preserve the five INCOMPLETE_FORMAL cases under existing adjudicatable Step 9.30a.2/9.30b semantics; do not change baseline labels.\""
+  ],
+  "planned_handling": "All 12 are adjudicated in full like every other case and stay in every denominator. lineage_ready=false adds no score and is not penalised by itself; no missing candidate_id or semantic_id is imputed. Behavioural defects that the reviewer can see in State, actions or answer are scored under the rubric as usual.",
+  "not_specified_by_frozen_rules": "resolved by D3 and D4"
+ },
+ "mandatory_disclosures": [
+  "Post-hoc matched comparison against a frozen baseline; not randomized; case order matched, not randomized (MATCHED_ORDER_NOT_RANDOMIZED).",
+  "V4 is development/postmortem evidence for this treatment (claim policy). In addition, the V3 repair design (Step 9.50) consulted V1/V2 case-level behaviour and frozen dimension scores on V4 cases.",
+  "Single AI reviewer; inter-rater reliability NOT_MEASURED; reviewer backend differs from or cannot be shown identical to the baseline reviewer (Codex AI reviewer, backend version not recorded).",
+  "token_usage NOT_MEASURED.",
+  "Lifecycle reducer reads INCONSISTENT_FAIL_CLOSED for this authorization (KL-1); run evidence integrity was verified independently.",
+  "If the reviewer is not Codex: reviewer type differs from the baseline reviewer (D1).",
+  "V1/V2 columns are outside the frozen protocol, descriptive only; no conclusion is drawn from them (D2)."
+ ],
+ "claims": {
+  "authorization_claim_scope": "FROZEN_MATCHED_DEVELOPMENT_REGRESSION_ONLY",
+  "allowed": "claim_policy.allowed_claims (11 items) only",
+  "prohibited": [
+   "randomized controlled comparison",
+   "randomized paired trial",
+   "preregistered randomized experiment",
+   "causal effect",
+   "statistically significant improvement",
+   "clinical effectiveness",
+   "unseen-benchmark generalization",
+   "universal Agent superiority",
+   "calibrated_probability_effectiveness",
+   "single_component_causal_attribution"
+  ],
+  "report_sections": [
+   "Observed Result",
+   "Supported Interpretation",
+   "Not Yet Supported"
+  ]
+ },
+ "decisions": {
+  "D1_reviewer": {
+   "value": "CODEX_PREFERRED_ELSE_FRESH_CLAUDE_SESSION",
+   "rule": "Primary: Codex AI reviewer (same reviewer type as the baseline); pin and disclose the exact model/version in review_provenance.reviewer. If Codex is unavailable: a fresh Claude session with no prior context; then 'reviewer type differs from the baseline reviewer' is a mandatory known limitation in every conclusion. Either reviewer works only through the blind review packet, in a working copy outside the repository.",
+   "reviewer_must_not_be": "this authoring session"
+  },
+  "D2_additional_comparators": {
+   "value": "ADD_V1_V2_DESCRIPTIVE_COLUMNS",
+   "rule": "Treatment-V1 (Step 9.38 aggregate / 9.37 adjudication) and treatment-V2 (Step 9.47 aggregate / 9.46 adjudication) appear as additional columns, every one labelled: '不在冻结协议内，仅描述性参考，不得据此下结论' (outside the frozen protocol; descriptive reference only; no conclusion may be drawn from it). Claims and the claim audit (S5) use the frozen baseline comparison only.",
+   "sources": {
+    "v1_aggregate": [
+     "evaluation/v1_2_3/step9_38_treatment_aggregate_metrics.json",
+     "59e774679e41158269f7fd203589f44a5a5898f6edfdb4b61f129d420d1ef45f"
+    ],
+    "v1_adjudication": [
+     "evaluation/v1_2_3/step9_37_treatment_adjudication.jsonl",
+     "60b5c2847ffdb51c43e00351519cb910428a82eb981849dfebefb76112658047"
+    ],
+    "v2_aggregate": [
+     "evaluation/v1_2_3/step9_47_v2_aggregate.json",
+     "98df31b2082ce808acec2d6d409c9febc01b79278201a94b0fd1a3c2d30fc936"
+    ],
+    "v2_adjudication": [
+     "evaluation/v1_2_3/step9_46_v2_adjudication.jsonl",
+     "38e178b68d498ca8280901e071e84787342ba460b47ec3c7e9f55f76086eb0f0"
+    ]
+   },
+   "note": "V2 adjudication recorded 1 oracle necessary-ASK target (V4-PD-09) instead of the locked 4; its M4 column is shown as recorded, with this discrepancy disclosed next to it."
+  },
+  "D3_lineage_forensics_step": {
+   "value": "DONE_BEFORE_REVIEW_NOT_IN_PACKET",
+   "method": "Step 9.45a derive() + Step 9.30a2 classify_true_failure_dimensions(), imported unchanged",
+   "outputs": {
+    "evaluation/v1_2_3/step9_63c_r11_v3_lineage_sidecar.jsonl": "7dc0517a59745c05e28c955adbd1adbba7746b68119f89e2786a7b711cd29a37",
+    "evaluation/v1_2_3/step9_63c_r11_v3_lineage_forensics.json": "8399fcd1d44165e210d408d86db07644aee6af9bc2782b5bc67f378ace0cdec1"
+   },
+   "result_counts": {
+    "COMPLETE_FORMAL": 28,
+    "COMPLETE_DERIVED": 8,
+    "INCOMPLETE_FORMAL": 4,
+    "adjudication_eligibility_FULL": 40
+   },
+   "use": "provenance metadata only; reported in lineage counts; never a score input; never shown to the reviewer"
+  },
+  "D4_lineage_false_handling": {
+   "value": "CONFIRMED",
+   "rule": "The 12 lineage_ready=false cases are fully adjudicated and stay in every denominator; nothing is imputed; no penalty for lineage_ready=false by itself; visible behavioural defects are scored under the rubric as usual.",
+   "basis": "Precedent: Step 9.37 (treatment-V1) and Step 9.46 (treatment-V2) adjudication reports; the matched protocol's lineage_policy text addresses the baseline's five INCOMPLETE_FORMAL cases, so applying it to treatment rests on these precedents."
+  },
+  "D5_oracle_target_set": {
+   "value": "PER_BASELINE_LOCK",
+   "note": "Fixed by the lock (4 targets). Reported for awareness: Step 9.46 (V2) recorded only 1 oracle target (V4-PD-09); this plan does not follow that precedent."
+  },
+  "D6_record_immutability": {
+   "value": "WRITE_ONCE_FORMAT_FIXES_LOGGED",
+   "rules": [
+    "A review record, once written to the output file, is never changed in content (scores, labels, counts, categories, rationale, evidence) and no line is deleted, reordered or rewritten.",
+    "Only schema-format errors may be fixed (JSON syntax, field names/nesting, types, enum spelling/case); each fix is logged in format_corrections.jsonl with line_number, case_id, field_path, before, after, reason, corrected_at.",
+    "Each record is validated with validate_review.py check-next before it is written.",
+    "The aggregator runs only after all 40 records are written and an adjudication freeze (file SHA-256) is recorded.",
+    "After any aggregate result has been seen, no review record may change; any later review is a new disclosed artifact and never replaces the frozen one."
+   ]
+  }
+ },
+ "parent_draft": {
+  "path": "evaluation/v1_2_3/step9_63c_r11_scoring_preregistration.json",
+  "sha256": "3f0ed0415688b174a9624c6a8f470e9d6a98d23ad8535db9dca2f4019c4ed329",
+  "draft_modified": false
+ },
+ "finalized_at_utc": "2026-10-13T04:30:00Z",
+ "blind_review": {
+  "packet": {
+   "path": "evaluation/v1_2_3/step9_63c_r11_blind_review_packet/",
+   "SHA256SUMS_sha256": "5d95134989289aa6db49b0926f40b40ce0f2b9cc503dd57eb5f5ba7a3f6a668b",
+   "MANIFEST_sha256": "23ad6db86c076bedc2da0e8ac1b73665d9a8edb675b3608fc06b4f68d9c1611c",
+   "contents": [
+    "README_REVIEWER.md",
+    "rubric/benchmark_v1_1_scoring.md",
+    "schema/step9_30a_v4_adjudication_schema.json",
+    "cases/benchmark_v4_cases.yaml",
+    "v3_run/raw_traces.jsonl",
+    "v3_run/case_results.jsonl",
+    "review_template.jsonl",
+    "validate_review.py",
+    "MANIFEST.json",
+    "SHA256SUMS"
+   ]
+  },
+  "contamination_scan": {
+   "path": "evaluation/v1_2_3/step9_63c_r11_blind_review_packet_scan.json",
+   "sha256": "f9c07c77bbee2e1a570add4c6ca8e5a7deb0cce001f5c118d55b82ba903703cd",
+   "result": "CLEAN_NO_BASELINE_V1_V2_SCORES_OR_REVIEW_TEXT"
+  },
+  "reviewer_prompt": {
+   "path": "evaluation/v1_2_3/step9_63c_r11_blind_review_prompt.md",
+   "sha256": "aeb404ed5d3f2c941b81c73635bf7ba2e16c0558a5169d39da0a5c6f5bf9b0d2"
+  },
+  "builders": {
+   "evaluation/v1_2_3/step9_63c_r11_formal_tools/build_blind_packet.py": "4376bb92fe5e6efb618777b8a531f83639a205464ebc99328f050e2e07916619",
+   "evaluation/v1_2_3/step9_63c_r11_formal_tools/blind_review_instructions.md": "6e3f193e028708331cc3e0e4b4d2ce6ae0405d54652531737f942a203f738139",
+   "evaluation/v1_2_3/step9_63c_r11_formal_tools/blind_validator_body.py": "f9c22baf3d3f11bca9d0aeba992e384d91f51e58a290466231fb8b8134efd109",
+   "evaluation/v1_2_3/step9_63c_r11_formal_tools/lineage_v3.py": "1437efbaae384c408812b30b94c390fb7d0b5a6886fdc633d4a893e6ee732ca1",
+   "evaluation/v1_2_3/step9_63c_r11_formal_tools/contamination_scan.py": "16145d0e5aec03cccb02d1566e7335d9e6607b78fadd7b18a5558c1f73f9a33f"
+  },
+  "working_copy": "~/r11_blind_review (outside the repository)",
+  "reviewer_outputs": [
+   "output/v3_adjudication.jsonl (40 lines, template order)",
+   "output/format_corrections.jsonl (only if a format fix occurred)"
+  ],
+  "returned_to": "evaluation/v1_2_3/step9_63c_r11_blind_review_output/",
+  "after_return": "validate 40/40 with the packet validator and the frozen contract checks, verify packet SHA256SUMS unchanged, then write the adjudication freeze before S3"
+ }
+}

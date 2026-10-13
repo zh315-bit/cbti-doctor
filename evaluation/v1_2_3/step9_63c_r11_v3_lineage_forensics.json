@@ -1,0 +1,99 @@
+{
+ "artifact_type": "R11_TREATMENT_V3_LINEAGE_FORENSICS",
+ "by_case": {
+  "V4-CA-02": [
+   "COMPLETE_DERIVED",
+   []
+  ],
+  "V4-CA-04": [
+   "COMPLETE_DERIVED",
+   []
+  ],
+  "V4-CA-07": [
+   "COMPLETE_DERIVED",
+   []
+  ],
+  "V4-DA-01": [
+   "INCOMPLETE_FORMAL",
+   [
+    "MISSING_SEMANTIC_ROOT"
+   ]
+  ],
+  "V4-DA-06": [
+   "INCOMPLETE_FORMAL",
+   [
+    "MISSING_SEMANTIC_ROOT"
+   ]
+  ],
+  "V4-DA-09": [
+   "INCOMPLETE_FORMAL",
+   [
+    "MISSING_SEMANTIC_ROOT"
+   ]
+  ],
+  "V4-DA-10": [
+   "INCOMPLETE_FORMAL",
+   [
+    "MISSING_SEMANTIC_ROOT"
+   ]
+  ],
+  "V4-PD-01": [
+   "COMPLETE_DERIVED",
+   []
+  ],
+  "V4-PD-03": [
+   "COMPLETE_DERIVED",
+   []
+  ],
+  "V4-PD-04": [
+   "COMPLETE_DERIVED",
+   []
+  ],
+  "V4-PD-09": [
+   "COMPLETE_DERIVED",
+   []
+  ],
+  "V4-PD-10": [
+   "COMPLETE_DERIVED",
+   []
+  ]
+ },
+ "counts": {
+  "adjudication_eligibility": {
+   "FULL": 40
+  },
+  "formal_lineage_ready": {
+   "False": 12,
+   "True": 28
+  },
+  "reason_codes": {
+   "MISSING_SEMANTIC_ROOT": 4
+  },
+  "root_cause_class": {
+   "NO_FAILURE": 28,
+   "RUNNER_DERIVATION_BUG": 8,
+   "TRUE_LINEAGE_FAILURE": 4
+  },
+  "sidecar_lineage_status": {
+   "COMPLETE_DERIVED": 8,
+   "COMPLETE_FORMAL": 28,
+   "INCOMPLETE_FORMAL": 4
+  }
+ },
+ "created_at_utc": "2026-10-13T03:43:02.453030+00:00",
+ "inputs": {
+  "evaluation/v1_2_3/step9_63c_r11_run_archive/run_root/heldout-v4-treatment-v3-run-9ec9c305cc4de01e6538/heldout-v4-step9_55a-treatment-v3-20260930-01/attempt-step9_63c_r11-2312daefa1364bfd83ff3948d101c765_case_results.jsonl": "6672f3ef21a20a68776925267896ed4362832aaabc5a16c06546a6b778ef0ba8",
+  "evaluation/v1_2_3/step9_63c_r11_run_archive/run_root/heldout-v4-treatment-v3-run-9ec9c305cc4de01e6538/heldout-v4-step9_55a-treatment-v3-20260930-01/attempt-step9_63c_r11-2312daefa1364bfd83ff3948d101c765_raw_traces.jsonl": "abd307e0e64730448856c595f134d437a2130bf8ef160a680126cd0067b2a2f5"
+ },
+ "method": "Step 9.45a derive() + Step 9.30a2 classify_true_failure_dimensions(), imported unchanged",
+ "method_sources": {
+  "scripts/forensics_step9_45a_treatment_v2_lineage.py": "4e53adde9a3e55a84c6663fc4a9b5de6a91b5012a39ba87d75f37b543594f3da",
+  "scripts/step9_30a2_lineage_sidecar.py": "e427f1a69848af8a19147c79b1cf951439c29e2393a9f13d1e62de214aafb947"
+ },
+ "not_in_blind_packet": true,
+ "scores_assigned": false,
+ "sidecar": {
+  "path": "evaluation/v1_2_3/step9_63c_r11_v3_lineage_sidecar.jsonl",
+  "sha256": "7dc0517a59745c05e28c955adbd1adbba7746b68119f89e2786a7b711cd29a37"
+ }
+}

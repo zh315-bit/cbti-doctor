@@ -1,0 +1,87 @@
+{
+ "artifact_type": "R11_TREATMENT_V3_BLIND_REVIEW_PACKET",
+ "attempt_id": "attempt-step9_63c_r11-2312daefa1364bfd83ff3948d101c765",
+ "built_at_utc": "2026-10-13T03:42:17.892215+00:00",
+ "evaluation_id": "heldout-v4-step9_55a-treatment-v3-20260930-01",
+ "excluded_by_design": [
+  "any output, review, aggregate or comparison of any other run",
+  "V3 lineage classification (pre-registration D3)",
+  "metric registry files (definitions quoted in README_REVIEWER.md)",
+  "attempt ledger, transaction journal, namespace marker"
+ ],
+ "files": {
+  "README_REVIEWER.md": {
+   "bytes": 8823,
+   "sha256": "6e3f193e028708331cc3e0e4b4d2ce6ae0405d54652531737f942a203f738139",
+   "source": "generated for this packet"
+  },
+  "cases/benchmark_v4_cases.yaml": {
+   "bytes": 52012,
+   "sha256": "8b8c72092fcd7544e69d5d2ecd13610c7bb4c14210fca330698b3e5ab3f01d7f",
+   "source": {
+    "copy": "byte-identical",
+    "path": "evaluation/benchmarks/benchmark_v4_cases.yaml",
+    "sha256": "8b8c72092fcd7544e69d5d2ecd13610c7bb4c14210fca330698b3e5ab3f01d7f"
+   }
+  },
+  "review_template.jsonl": {
+   "bytes": 103620,
+   "sha256": "1c011058d4eab3d1ae56809133798ed4b9b7f43753d14047d7b4fd8de8bf0e11",
+   "source": "generated for this packet"
+  },
+  "rubric/benchmark_v1_1_scoring.md": {
+   "bytes": 2220,
+   "sha256": "a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899",
+   "source": {
+    "copy": "byte-identical",
+    "path": "evaluation/benchmark_v1_1_scoring.md",
+    "sha256": "a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899"
+   }
+  },
+  "schema/step9_30a_v4_adjudication_schema.json": {
+   "bytes": 5905,
+   "sha256": "21367c176f6b070d875a203ff779cfd44e2cb86a4e8956e1f93870fd054834c8",
+   "source": {
+    "copy": "byte-identical",
+    "path": "evaluation/v1_2_3/step9_30a_v4_adjudication_schema.json",
+    "sha256": "21367c176f6b070d875a203ff779cfd44e2cb86a4e8956e1f93870fd054834c8"
+   }
+  },
+  "v3_run/case_results.jsonl": {
+   "bytes": 59322,
+   "sha256": "6672f3ef21a20a68776925267896ed4362832aaabc5a16c06546a6b778ef0ba8",
+   "source": {
+    "copy": "byte-identical",
+    "path": "evaluation/v1_2_3/step9_63c_r11_run_archive/run_root/heldout-v4-treatment-v3-run-9ec9c305cc4de01e6538/heldout-v4-step9_55a-treatment-v3-20260930-01/attempt-step9_63c_r11-2312daefa1364bfd83ff3948d101c765_case_results.jsonl",
+    "sha256": "6672f3ef21a20a68776925267896ed4362832aaabc5a16c06546a6b778ef0ba8"
+   }
+  },
+  "v3_run/raw_traces.jsonl": {
+   "bytes": 7034829,
+   "sha256": "abd307e0e64730448856c595f134d437a2130bf8ef160a680126cd0067b2a2f5",
+   "source": {
+    "copy": "byte-identical",
+    "path": "evaluation/v1_2_3/step9_63c_r11_run_archive/run_root/heldout-v4-treatment-v3-run-9ec9c305cc4de01e6538/heldout-v4-step9_55a-treatment-v3-20260930-01/attempt-step9_63c_r11-2312daefa1364bfd83ff3948d101c765_raw_traces.jsonl",
+    "sha256": "abd307e0e64730448856c595f134d437a2130bf8ef160a680126cd0067b2a2f5"
+   }
+  },
+  "validate_review.py": {
+   "bytes": 12802,
+   "sha256": "012a386fdf871c936b1b4cd68830d554e0f548bedf4626d371765137e0fab9ad",
+   "source": "generated for this packet"
+  }
+ },
+ "repository_head_at_build": "bccc911448a82244706ca91826035552bc4d02a3",
+ "validator_contract_source": {
+  "copied_verbatim": [
+   "DIMENSIONS",
+   "ASK_CATEGORIES",
+   "TOOL_CATEGORIES",
+   "CRITICAL_TYPES",
+   "_validate_completed_record",
+   "_nonempty_list"
+  ],
+  "path": "scripts/v4_adjudication_contract.py",
+  "sha256": "1dc81a9e5da3fece34864b86770d99b73a4f9ca1c212027f1d864b2053e7efc2"
+ }
+}

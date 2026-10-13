@@ -3575,3 +3575,23 @@ The version inventory contains r3–r10 and no r11; `r11` is proposed only. `eva
 **评分计划（未评分、未看分数）**：`step9_63c_r11_scoring_plan.md`。评分方式：单一 AI 评审者按冻结 rubric 与 schema 逐案评审（以往的 9.30b、9.37、9.46 都由 Codex 完成，不是通过 API 调用 LLM 当裁判），然后用冻结的 9.30c 汇总器（`01aea00a…`）计算，再与 matched protocol 点名的 9.28 baseline 锁定值做描述性对比；不做显著性检验，也不算置信区间；结论范围是 `FROZEN_MATCHED_DEVELOPMENT_REGRESSION_ONLY`。不调用 DeepSeek API。
 
 **预注册草案**：`step9_63c_r11_scoring_preregistration.json`，SHA `3f0ed0415688b174a9624c6a8f470e9d6a98d23ad8535db9dca2f4019c4ed329`（`DRAFT_PENDING_USER_DECISIONS`）。待决：D1 评审者（建议用一个没有接触过以往评审结果的新会话；本会话已看到基线、V1、V2 的部分评审结果，不推荐）、D2 是否加入 V1/V2 对比列、D3 是否先做 lineage 溯源分类、D4 确认 12 个 lineage 不完整案例的处理方式、D6 冻结前能否修正。D5：M4 按基线锁使用 4 个 oracle 目标（v2 的 9.46 只记了 1 个，不沿用）。决定后另写 FINAL 文件并在评审前钉住其 SHA，草案不改。
+
+## Step 9.63c-r11 — 预注册定稿与盲审包（未评分，未查看任何 v3 分数）
+
+**FINAL 预注册**：`evaluation/v1_2_3/step9_63c_r11_scoring_preregistration_final.json`，SHA-256 **`ead55a09e7067d33352021c19674c31667aff2a1922de6a1cb9f08faf2f0cf89`**（`FINAL_LOCKED_BEFORE_REVIEW`）。父版本为草案 `3f0ed041…c4ed329`，草案未改。评审开始后，两份文件都不得修改。
+
+**决定**：
+- D1：评审者首选 Codex，钉住并披露模型版本；不可用时改用新开的 Claude 会话，并在结论中披露“评审者类型与基线不同”。评审者只能通过盲审包工作，本会话不担任评审者。
+- D2：加入 V1、V2 描述性列，标注“不在冻结协议内，仅描述性参考，不得据此下结论”。
+- D3：lineage 分类已完成，不放进盲审包。
+- D4：12 个 lineage_ready=false 的案例照常完整评审，依据 9.37、9.46 的先例。
+- D5：M4 按基线锁使用 4 个目标。
+- D6：记录写入后不得修改内容，只允许修正格式并逐处记录；40 条写完并冻结后才能运行汇总器；看到汇总结果后不得修改任何记录。
+
+**盲审包**：`evaluation/v1_2_3/step9_63c_r11_blind_review_packet/`，`SHA256SUMS` = `5d951349…668b`。共 10 个文件：rubric、schema、benchmark、v3 的 raw traces 和 case_results（与归档逐字节相同）、v3 评审模板、校验器（单条记录校验逐字拷贝自冻结合约 `1dc81a9e…`）、评审说明、MANIFEST、SHA256SUMS。
+
+**污染扫描**：未发现基线、V1、V2 的身份标识、分数或评审文本（检查了 258 条以往评审文本切成的 2759 个片段）。剩余命中均已解释，见 `step9_63c_r11_blind_review_packet_scan.json`。冻结 rubric 里有一行早期 Benchmark V1（Step 5.1）的历史成绩，为保持 rubric SHA 不变而保留，评审说明中已告知评审者与本次无关。
+
+**lineage 分类（D3）**：28 个 COMPLETE_FORMAL、8 个 COMPLETE_DERIVED（CA-02/04/07、PD-01/03/04/09/10，runner 标记有误，链接可从已落盘的 ID 重建）、4 个 INCOMPLETE_FORMAL（DA-01/06/09/10，缺少语义根）；40 个案例都可完整评审。输出 `step9_63c_r11_v3_lineage_sidecar.jsonl`、`_forensics.json`。
+
+**评审者提示词**：`evaluation/v1_2_3/step9_63c_r11_blind_review_prompt.md`（含复制到仓库外工作目录的命令、粘贴用的提示词、评审结束后交回的命令）。
