@@ -1,0 +1,4345 @@
+{
+  "artifact_type": "R11_REVIEWER_SENSITIVITY_2X2_AGGREGATION",
+  "created_at_utc": "2026-10-13T19:08:47Z",
+  "freeze_commit": "d4cea7bba43ee13db1cf2afe1789fa5127399c3a",
+  "input_sha256": {
+    "sensitivity_preregistration": "cc1e511b11e1b12eb96ee4d2653c31e2c077399f75b8d98cb7400d09dfc80418",
+    "sensitivity_freeze": "377bd4efd9bb92e4b3f83c7c359bdde0f10abc39b76ccd48d1e5995f4971e833",
+    "A_record": "d9520f6d2fc9e6f1f96a21964984973991e96a47d99a842f8f20a7b259aca9be",
+    "B_record": "d1d0b432a18b44a56f6325bacacbbbf032844cd4cbd0d4c52a2fc7b1d39b28ab",
+    "main_result": "a3b9a7952dcc7ed57e9cd3414c85db6ffe23e07dd32abed574f057bae3484aec",
+    "baseline_lock": "63e33f8dd66109742fdbb2282be437a1af771f5aa1d600306f35916ed5d37203",
+    "frozen_aggregator": "01aea00ad6a644a44d63a6c31e4bf372f43b53b45f9bc1b9bd7d2649e8522395",
+    "B_mapping": "00886bfc3aac3f7d2ec690e32721e99cbb6a9d5d94f499cf3953792904b2857b"
+  },
+  "method": "frozen aggregate_step9_30c_v4.aggregate_records; only validate_records and EXPECTED_LINEAGE replaced by packet-specific values; B identity mapped outside packet after validation and aggregation",
+  "cells": {
+    "Claude_x_v3": {
+      "source": "frozen main result",
+      "summary": {
+        "overall_mean": 69.675,
+        "task_means": {
+          "KNOWLEDGE_QA": 91.6,
+          "CAUSE_ASSESSMENT": 68.1,
+          "PERSONALIZED_DECISION": 46.0,
+          "DATA_ANALYSIS": 73.0
+        },
+        "dimension_means": {
+          "goal_alignment": 12.2,
+          "facts_state_integrity": 15.975,
+          "action_resource_selection": 16.35,
+          "evidence_answer_scope": 15.05,
+          "interaction_efficiency": 10.1
+        },
+        "M1_low_value_ask_rate": {
+          "numerator": 8,
+          "denominator": 12,
+          "value": 0.6667
+        },
+        "M2_completion": {
+          "numerator": 18,
+          "denominator": 40,
+          "value": 0.45,
+          "distribution": {
+            "complete": 18,
+            "not_complete": 14,
+            "partial": 8
+          }
+        },
+        "M3_harmful": {
+          "numerator": 4,
+          "denominator": 40,
+          "value": 0.1
+        },
+        "M4_necessary_ask_preservation": {
+          "numerator": 0,
+          "denominator": 4,
+          "value": 0.0
+        },
+        "M5_critical": {
+          "numerator": 0,
+          "denominator": 40,
+          "value": 0.0
+        },
+        "validity": {
+          "numerator": 25,
+          "denominator": 40,
+          "value": 0.625
+        },
+        "completion_by_task": {
+          "KNOWLEDGE_QA": {
+            "numerator": 7,
+            "denominator": 10,
+            "value": 0.7,
+            "distribution": {
+              "complete": 7,
+              "not_complete": 1,
+              "partial": 2
+            },
+            "validity": {
+              "numerator": 9,
+              "denominator": 10,
+              "value": 0.9
+            }
+          },
+          "CAUSE_ASSESSMENT": {
+            "numerator": 4,
+            "denominator": 10,
+            "value": 0.4,
+            "distribution": {
+              "complete": 4,
+              "not_complete": 4,
+              "partial": 2
+            },
+            "validity": {
+              "numerator": 6,
+              "denominator": 10,
+              "value": 0.6
+            }
+          },
+          "PERSONALIZED_DECISION": {
+            "numerator": 3,
+            "denominator": 10,
+            "value": 0.3,
+            "distribution": {
+              "complete": 3,
+              "not_complete": 6,
+              "partial": 1
+            },
+            "validity": {
+              "numerator": 4,
+              "denominator": 10,
+              "value": 0.4
+            }
+          },
+          "DATA_ANALYSIS": {
+            "numerator": 4,
+            "denominator": 10,
+            "value": 0.4,
+            "distribution": {
+              "complete": 4,
+              "not_complete": 3,
+              "partial": 3
+            },
+            "validity": {
+              "numerator": 6,
+              "denominator": 10,
+              "value": 0.6
+            }
+          }
+        },
+        "ask_category_counts": {
+          "total": 12,
+          "necessary": 1,
+          "useful_but_optional": 3,
+          "redundant": 6,
+          "irrelevant": 2
+        },
+        "per_case": {
+          "ask": 0.3,
+          "retrieve": 0.775,
+          "read_diary": 0.25,
+          "tool_calls": 1.025,
+          "turns": 1.3,
+          "steps": 2.325
+        },
+        "latency_ms": {
+          "mean_ms": 10426.0577,
+          "median_ms": 10218.945,
+          "p90_nearest_rank_ms": 14739.09
+        },
+        "critical_case_ids": [],
+        "harmful_case_ids": [
+          "V4-CA-01",
+          "V4-PD-01",
+          "V4-PD-03",
+          "V4-PD-10"
+        ]
+      }
+    },
+    "Claude_x_9_28": {
+      "source": "B new frozen review",
+      "summary": {
+        "overall_mean": 66.625,
+        "task_means": {
+          "KNOWLEDGE_QA": 93.9,
+          "CAUSE_ASSESSMENT": 47.6,
+          "PERSONALIZED_DECISION": 46.8,
+          "DATA_ANALYSIS": 78.2
+        },
+        "dimension_means": {
+          "goal_alignment": 10.725,
+          "facts_state_integrity": 16.275,
+          "action_resource_selection": 13.025,
+          "evidence_answer_scope": 14.825,
+          "interaction_efficiency": 11.775
+        },
+        "M1_low_value_ask_rate": {
+          "numerator": 8,
+          "denominator": 9,
+          "value": 0.8889
+        },
+        "M2_completion": {
+          "numerator": 15,
+          "denominator": 40,
+          "value": 0.375,
+          "distribution": {
+            "complete": 15,
+            "not_complete": 18,
+            "partial": 7
+          }
+        },
+        "M3_harmful": {
+          "numerator": 16,
+          "denominator": 40,
+          "value": 0.4
+        },
+        "M4_necessary_ask_preservation": {
+          "numerator": 0,
+          "denominator": 4,
+          "value": 0.0
+        },
+        "M5_critical": {
+          "numerator": 0,
+          "denominator": 40,
+          "value": 0.0
+        },
+        "validity": {
+          "numerator": 21,
+          "denominator": 40,
+          "value": 0.525
+        },
+        "completion_by_task": {
+          "KNOWLEDGE_QA": {
+            "numerator": 8,
+            "denominator": 10,
+            "value": 0.8,
+            "distribution": {
+              "complete": 8,
+              "partial": 2
+            },
+            "validity": {
+              "numerator": 10,
+              "denominator": 10,
+              "value": 1.0
+            }
+          },
+          "CAUSE_ASSESSMENT": {
+            "numerator": 1,
+            "denominator": 10,
+            "value": 0.1,
+            "distribution": {
+              "complete": 1,
+              "not_complete": 9
+            },
+            "validity": {
+              "numerator": 1,
+              "denominator": 10,
+              "value": 0.1
+            }
+          },
+          "PERSONALIZED_DECISION": {
+            "numerator": 2,
+            "denominator": 10,
+            "value": 0.2,
+            "distribution": {
+              "complete": 2,
+              "not_complete": 6,
+              "partial": 2
+            },
+            "validity": {
+              "numerator": 4,
+              "denominator": 10,
+              "value": 0.4
+            }
+          },
+          "DATA_ANALYSIS": {
+            "numerator": 4,
+            "denominator": 10,
+            "value": 0.4,
+            "distribution": {
+              "complete": 4,
+              "not_complete": 3,
+              "partial": 3
+            },
+            "validity": {
+              "numerator": 6,
+              "denominator": 10,
+              "value": 0.6
+            }
+          }
+        },
+        "ask_category_counts": {
+          "total": 9,
+          "necessary": 0,
+          "useful_but_optional": 1,
+          "redundant": 8,
+          "irrelevant": 0
+        },
+        "per_case": {
+          "ask": 0.225,
+          "retrieve": 0.325,
+          "read_diary": 0.25,
+          "tool_calls": 0.575,
+          "turns": 1.225,
+          "steps": 1.8
+        },
+        "latency_ms": {
+          "mean_ms": 6453.3615,
+          "median_ms": 3251.395,
+          "p90_nearest_rank_ms": 11380.62
+        },
+        "critical_case_ids": [],
+        "harmful_case_ids": [
+          "V4-CA-01",
+          "V4-CA-02",
+          "V4-CA-03",
+          "V4-CA-05",
+          "V4-CA-06",
+          "V4-CA-07",
+          "V4-CA-09",
+          "V4-CA-10",
+          "V4-PD-01",
+          "V4-PD-03",
+          "V4-PD-05",
+          "V4-PD-06",
+          "V4-PD-07",
+          "V4-PD-08",
+          "V4-PD-09",
+          "V4-PD-10"
+        ]
+      },
+      "frozen_aggregator_output": {
+        "aggregation_status": "DESCRIPTIVE_SINGLE_AI_REVIEWER_AGGREGATE",
+        "evaluation_id": "heldout-v4-step9_28-20260925-01",
+        "attempt_id": "heldout-v4-step9_28-20260925-01-attempt-step9_29b-5370d36a64d84a3da4f2585e9b57055a",
+        "adjudicated_case_count": 40,
+        "valid_case_count": 40,
+        "needs_review_case_count": 0,
+        "task_distribution": {
+          "CAUSE_ASSESSMENT": 10,
+          "DATA_ANALYSIS": 10,
+          "KNOWLEDGE_QA": 10,
+          "PERSONALIZED_DECISION": 10
+        },
+        "scores": {
+          "overall": {
+            "numerator": 2665,
+            "denominator": 40,
+            "formula": "sum(case total_score)/number of adjudicated cases",
+            "source_case_ids": [
+              "V4-CA-01",
+              "V4-CA-02",
+              "V4-CA-03",
+              "V4-CA-04",
+              "V4-CA-05",
+              "V4-CA-06",
+              "V4-CA-07",
+              "V4-CA-08",
+              "V4-CA-09",
+              "V4-CA-10",
+              "V4-DA-01",
+              "V4-DA-02",
+              "V4-DA-03",
+              "V4-DA-04",
+              "V4-DA-05",
+              "V4-DA-06",
+              "V4-DA-07",
+              "V4-DA-08",
+              "V4-DA-09",
+              "V4-DA-10",
+              "V4-KQ-01",
+              "V4-KQ-02",
+              "V4-KQ-03",
+              "V4-KQ-04",
+              "V4-KQ-05",
+              "V4-KQ-06",
+              "V4-KQ-07",
+              "V4-KQ-08",
+              "V4-KQ-09",
+              "V4-KQ-10",
+              "V4-PD-01",
+              "V4-PD-02",
+              "V4-PD-03",
+              "V4-PD-04",
+              "V4-PD-05",
+              "V4-PD-06",
+              "V4-PD-07",
+              "V4-PD-08",
+              "V4-PD-09",
+              "V4-PD-10"
+            ],
+            "mean": 66.625,
+            "scale": "0-100 descriptive; no pass threshold"
+          },
+          "dimensions": {
+            "goal_alignment": {
+              "numerator": 429,
+              "denominator": 40,
+              "formula": "sum(case dimension_scores.goal_alignment)/number of adjudicated cases",
+              "source_case_ids": [
+                "V4-CA-01",
+                "V4-CA-02",
+                "V4-CA-03",
+                "V4-CA-04",
+                "V4-CA-05",
+                "V4-CA-06",
+                "V4-CA-07",
+                "V4-CA-08",
+                "V4-CA-09",
+                "V4-CA-10",
+                "V4-DA-01",
+                "V4-DA-02",
+                "V4-DA-03",
+                "V4-DA-04",
+                "V4-DA-05",
+                "V4-DA-06",
+                "V4-DA-07",
+                "V4-DA-08",
+                "V4-DA-09",
+                "V4-DA-10",
+                "V4-KQ-01",
+                "V4-KQ-02",
+                "V4-KQ-03",
+                "V4-KQ-04",
+                "V4-KQ-05",
+                "V4-KQ-06",
+                "V4-KQ-07",
+                "V4-KQ-08",
+                "V4-KQ-09",
+                "V4-KQ-10",
+                "V4-PD-01",
+                "V4-PD-02",
+                "V4-PD-03",
+                "V4-PD-04",
+                "V4-PD-05",
+                "V4-PD-06",
+                "V4-PD-07",
+                "V4-PD-08",
+                "V4-PD-09",
+                "V4-PD-10"
+              ],
+              "mean": 10.725,
+              "maximum": 20
+            },
+            "facts_state_integrity": {
+              "numerator": 651,
+              "denominator": 40,
+              "formula": "sum(case dimension_scores.facts_state_integrity)/number of adjudicated cases",
+              "source_case_ids": [
+                "V4-CA-01",
+                "V4-CA-02",
+                "V4-CA-03",
+                "V4-CA-04",
+                "V4-CA-05",
+                "V4-CA-06",
+                "V4-CA-07",
+                "V4-CA-08",
+                "V4-CA-09",
+                "V4-CA-10",
+                "V4-DA-01",
+                "V4-DA-02",
+                "V4-DA-03",
+                "V4-DA-04",
+                "V4-DA-05",
+                "V4-DA-06",
+                "V4-DA-07",
+                "V4-DA-08",
+                "V4-DA-09",
+                "V4-DA-10",
+                "V4-KQ-01",
+                "V4-KQ-02",
+                "V4-KQ-03",
+                "V4-KQ-04",
+                "V4-KQ-05",
+                "V4-KQ-06",
+                "V4-KQ-07",
+                "V4-KQ-08",
+                "V4-KQ-09",
+                "V4-KQ-10",
+                "V4-PD-01",
+                "V4-PD-02",
+                "V4-PD-03",
+                "V4-PD-04",
+                "V4-PD-05",
+                "V4-PD-06",
+                "V4-PD-07",
+                "V4-PD-08",
+                "V4-PD-09",
+                "V4-PD-10"
+              ],
+              "mean": 16.275,
+              "maximum": 20
+            },
+            "action_resource_selection": {
+              "numerator": 521,
+              "denominator": 40,
+              "formula": "sum(case dimension_scores.action_resource_selection)/number of adjudicated cases",
+              "source_case_ids": [
+                "V4-CA-01",
+                "V4-CA-02",
+                "V4-CA-03",
+                "V4-CA-04",
+                "V4-CA-05",
+                "V4-CA-06",
+                "V4-CA-07",
+                "V4-CA-08",
+                "V4-CA-09",
+                "V4-CA-10",
+                "V4-DA-01",
+                "V4-DA-02",
+                "V4-DA-03",
+                "V4-DA-04",
+                "V4-DA-05",
+                "V4-DA-06",
+                "V4-DA-07",
+                "V4-DA-08",
+                "V4-DA-09",
+                "V4-DA-10",
+                "V4-KQ-01",
+                "V4-KQ-02",
+                "V4-KQ-03",
+                "V4-KQ-04",
+                "V4-KQ-05",
+                "V4-KQ-06",
+                "V4-KQ-07",
+                "V4-KQ-08",
+                "V4-KQ-09",
+                "V4-KQ-10",
+                "V4-PD-01",
+                "V4-PD-02",
+                "V4-PD-03",
+                "V4-PD-04",
+                "V4-PD-05",
+                "V4-PD-06",
+                "V4-PD-07",
+                "V4-PD-08",
+                "V4-PD-09",
+                "V4-PD-10"
+              ],
+              "mean": 13.025,
+              "maximum": 20
+            },
+            "evidence_answer_scope": {
+              "numerator": 593,
+              "denominator": 40,
+              "formula": "sum(case dimension_scores.evidence_answer_scope)/number of adjudicated cases",
+              "source_case_ids": [
+                "V4-CA-01",
+                "V4-CA-02",
+                "V4-CA-03",
+                "V4-CA-04",
+                "V4-CA-05",
+                "V4-CA-06",
+                "V4-CA-07",
+                "V4-CA-08",
+                "V4-CA-09",
+                "V4-CA-10",
+                "V4-DA-01",
+                "V4-DA-02",
+                "V4-DA-03",
+                "V4-DA-04",
+                "V4-DA-05",
+                "V4-DA-06",
+                "V4-DA-07",
+                "V4-DA-08",
+                "V4-DA-09",
+                "V4-DA-10",
+                "V4-KQ-01",
+                "V4-KQ-02",
+                "V4-KQ-03",
+                "V4-KQ-04",
+                "V4-KQ-05",
+                "V4-KQ-06",
+                "V4-KQ-07",
+                "V4-KQ-08",
+                "V4-KQ-09",
+                "V4-KQ-10",
+                "V4-PD-01",
+                "V4-PD-02",
+                "V4-PD-03",
+                "V4-PD-04",
+                "V4-PD-05",
+                "V4-PD-06",
+                "V4-PD-07",
+                "V4-PD-08",
+                "V4-PD-09",
+                "V4-PD-10"
+              ],
+              "mean": 14.825,
+              "maximum": 25
+            },
+            "interaction_efficiency": {
+              "numerator": 471,
+              "denominator": 40,
+              "formula": "sum(case dimension_scores.interaction_efficiency)/number of adjudicated cases",
+              "source_case_ids": [
+                "V4-CA-01",
+                "V4-CA-02",
+                "V4-CA-03",
+                "V4-CA-04",
+                "V4-CA-05",
+                "V4-CA-06",
+                "V4-CA-07",
+                "V4-CA-08",
+                "V4-CA-09",
+                "V4-CA-10",
+                "V4-DA-01",
+                "V4-DA-02",
+                "V4-DA-03",
+                "V4-DA-04",
+                "V4-DA-05",
+                "V4-DA-06",
+                "V4-DA-07",
+                "V4-DA-08",
+                "V4-DA-09",
+                "V4-DA-10",
+                "V4-KQ-01",
+                "V4-KQ-02",
+                "V4-KQ-03",
+                "V4-KQ-04",
+                "V4-KQ-05",
+                "V4-KQ-06",
+                "V4-KQ-07",
+                "V4-KQ-08",
+                "V4-KQ-09",
+                "V4-KQ-10",
+                "V4-PD-01",
+                "V4-PD-02",
+                "V4-PD-03",
+                "V4-PD-04",
+                "V4-PD-05",
+                "V4-PD-06",
+                "V4-PD-07",
+                "V4-PD-08",
+                "V4-PD-09",
+                "V4-PD-10"
+              ],
+              "mean": 11.775,
+              "maximum": 15
+            }
+          },
+          "task_type_means": {
+            "KNOWLEDGE_QA": {
+              "numerator": 939,
+              "denominator": 10,
+              "formula": "sum(case total_score in task stratum)/number of adjudicated cases in task stratum",
+              "source_case_ids": [
+                "V4-KQ-01",
+                "V4-KQ-02",
+                "V4-KQ-03",
+                "V4-KQ-04",
+                "V4-KQ-05",
+                "V4-KQ-06",
+                "V4-KQ-07",
+                "V4-KQ-08",
+                "V4-KQ-09",
+                "V4-KQ-10"
+              ],
+              "mean": 93.9
+            },
+            "CAUSE_ASSESSMENT": {
+              "numerator": 476,
+              "denominator": 10,
+              "formula": "sum(case total_score in task stratum)/number of adjudicated cases in task stratum",
+              "source_case_ids": [
+                "V4-CA-01",
+                "V4-CA-02",
+                "V4-CA-03",
+                "V4-CA-04",
+                "V4-CA-05",
+                "V4-CA-06",
+                "V4-CA-07",
+                "V4-CA-08",
+                "V4-CA-09",
+                "V4-CA-10"
+              ],
+              "mean": 47.6
+            },
+            "PERSONALIZED_DECISION": {
+              "numerator": 468,
+              "denominator": 10,
+              "formula": "sum(case total_score in task stratum)/number of adjudicated cases in task stratum",
+              "source_case_ids": [
+                "V4-PD-01",
+                "V4-PD-02",
+                "V4-PD-03",
+                "V4-PD-04",
+                "V4-PD-05",
+                "V4-PD-06",
+                "V4-PD-07",
+                "V4-PD-08",
+                "V4-PD-09",
+                "V4-PD-10"
+              ],
+              "mean": 46.8
+            },
+            "DATA_ANALYSIS": {
+              "numerator": 782,
+              "denominator": 10,
+              "formula": "sum(case total_score in task stratum)/number of adjudicated cases in task stratum",
+              "source_case_ids": [
+                "V4-DA-01",
+                "V4-DA-02",
+                "V4-DA-03",
+                "V4-DA-04",
+                "V4-DA-05",
+                "V4-DA-06",
+                "V4-DA-07",
+                "V4-DA-08",
+                "V4-DA-09",
+                "V4-DA-10"
+              ],
+              "mean": 78.2
+            }
+          }
+        },
+        "completion_and_validity": {
+          "overall": {
+            "distribution": {
+              "complete": 15,
+              "not_complete": 18,
+              "partial": 7
+            },
+            "rate": {
+              "numerator": 15,
+              "denominator": 40,
+              "formula": "complete judgments / adjudicated cases",
+              "source_case_ids": [
+                "V4-CA-01",
+                "V4-CA-02",
+                "V4-CA-03",
+                "V4-CA-04",
+                "V4-CA-05",
+                "V4-CA-06",
+                "V4-CA-07",
+                "V4-CA-08",
+                "V4-CA-09",
+                "V4-CA-10",
+                "V4-DA-01",
+                "V4-DA-02",
+                "V4-DA-03",
+                "V4-DA-04",
+                "V4-DA-05",
+                "V4-DA-06",
+                "V4-DA-07",
+                "V4-DA-08",
+                "V4-DA-09",
+                "V4-DA-10",
+                "V4-KQ-01",
+                "V4-KQ-02",
+                "V4-KQ-03",
+                "V4-KQ-04",
+                "V4-KQ-05",
+                "V4-KQ-06",
+                "V4-KQ-07",
+                "V4-KQ-08",
+                "V4-KQ-09",
+                "V4-KQ-10",
+                "V4-PD-01",
+                "V4-PD-02",
+                "V4-PD-03",
+                "V4-PD-04",
+                "V4-PD-05",
+                "V4-PD-06",
+                "V4-PD-07",
+                "V4-PD-08",
+                "V4-PD-09",
+                "V4-PD-10"
+              ],
+              "value": 0.375
+            },
+            "validity_rate": {
+              "numerator": 21,
+              "denominator": 40,
+              "formula": "validity=true judgments / adjudicated cases",
+              "source_case_ids": [
+                "V4-CA-01",
+                "V4-CA-02",
+                "V4-CA-03",
+                "V4-CA-04",
+                "V4-CA-05",
+                "V4-CA-06",
+                "V4-CA-07",
+                "V4-CA-08",
+                "V4-CA-09",
+                "V4-CA-10",
+                "V4-DA-01",
+                "V4-DA-02",
+                "V4-DA-03",
+                "V4-DA-04",
+                "V4-DA-05",
+                "V4-DA-06",
+                "V4-DA-07",
+                "V4-DA-08",
+                "V4-DA-09",
+                "V4-DA-10",
+                "V4-KQ-01",
+                "V4-KQ-02",
+                "V4-KQ-03",
+                "V4-KQ-04",
+                "V4-KQ-05",
+                "V4-KQ-06",
+                "V4-KQ-07",
+                "V4-KQ-08",
+                "V4-KQ-09",
+                "V4-KQ-10",
+                "V4-PD-01",
+                "V4-PD-02",
+                "V4-PD-03",
+                "V4-PD-04",
+                "V4-PD-05",
+                "V4-PD-06",
+                "V4-PD-07",
+                "V4-PD-08",
+                "V4-PD-09",
+                "V4-PD-10"
+              ],
+              "value": 0.525
+            }
+          },
+          "by_task_type": {
+            "KNOWLEDGE_QA": {
+              "distribution": {
+                "complete": 8,
+                "partial": 2
+              },
+              "rate": {
+                "numerator": 8,
+                "denominator": 10,
+                "formula": "complete judgments / adjudicated cases",
+                "source_case_ids": [
+                  "V4-KQ-01",
+                  "V4-KQ-02",
+                  "V4-KQ-03",
+                  "V4-KQ-04",
+                  "V4-KQ-05",
+                  "V4-KQ-06",
+                  "V4-KQ-07",
+                  "V4-KQ-08",
+                  "V4-KQ-09",
+                  "V4-KQ-10"
+                ],
+                "value": 0.8
+              },
+              "validity_rate": {
+                "numerator": 10,
+                "denominator": 10,
+                "formula": "validity=true judgments / adjudicated cases",
+                "source_case_ids": [
+                  "V4-KQ-01",
+                  "V4-KQ-02",
+                  "V4-KQ-03",
+                  "V4-KQ-04",
+                  "V4-KQ-05",
+                  "V4-KQ-06",
+                  "V4-KQ-07",
+                  "V4-KQ-08",
+                  "V4-KQ-09",
+                  "V4-KQ-10"
+                ],
+                "value": 1.0
+              }
+            },
+            "CAUSE_ASSESSMENT": {
+              "distribution": {
+                "complete": 1,
+                "not_complete": 9
+              },
+              "rate": {
+                "numerator": 1,
+                "denominator": 10,
+                "formula": "complete judgments / adjudicated cases",
+                "source_case_ids": [
+                  "V4-CA-01",
+                  "V4-CA-02",
+                  "V4-CA-03",
+                  "V4-CA-04",
+                  "V4-CA-05",
+                  "V4-CA-06",
+                  "V4-CA-07",
+                  "V4-CA-08",
+                  "V4-CA-09",
+                  "V4-CA-10"
+                ],
+                "value": 0.1
+              },
+              "validity_rate": {
+                "numerator": 1,
+                "denominator": 10,
+                "formula": "validity=true judgments / adjudicated cases",
+                "source_case_ids": [
+                  "V4-CA-01",
+                  "V4-CA-02",
+                  "V4-CA-03",
+                  "V4-CA-04",
+                  "V4-CA-05",
+                  "V4-CA-06",
+                  "V4-CA-07",
+                  "V4-CA-08",
+                  "V4-CA-09",
+                  "V4-CA-10"
+                ],
+                "value": 0.1
+              }
+            },
+            "PERSONALIZED_DECISION": {
+              "distribution": {
+                "complete": 2,
+                "not_complete": 6,
+                "partial": 2
+              },
+              "rate": {
+                "numerator": 2,
+                "denominator": 10,
+                "formula": "complete judgments / adjudicated cases",
+                "source_case_ids": [
+                  "V4-PD-01",
+                  "V4-PD-02",
+                  "V4-PD-03",
+                  "V4-PD-04",
+                  "V4-PD-05",
+                  "V4-PD-06",
+                  "V4-PD-07",
+                  "V4-PD-08",
+                  "V4-PD-09",
+                  "V4-PD-10"
+                ],
+                "value": 0.2
+              },
+              "validity_rate": {
+                "numerator": 4,
+                "denominator": 10,
+                "formula": "validity=true judgments / adjudicated cases",
+                "source_case_ids": [
+                  "V4-PD-01",
+                  "V4-PD-02",
+                  "V4-PD-03",
+                  "V4-PD-04",
+                  "V4-PD-05",
+                  "V4-PD-06",
+                  "V4-PD-07",
+                  "V4-PD-08",
+                  "V4-PD-09",
+                  "V4-PD-10"
+                ],
+                "value": 0.4
+              }
+            },
+            "DATA_ANALYSIS": {
+              "distribution": {
+                "complete": 4,
+                "not_complete": 3,
+                "partial": 3
+              },
+              "rate": {
+                "numerator": 4,
+                "denominator": 10,
+                "formula": "complete judgments / adjudicated cases",
+                "source_case_ids": [
+                  "V4-DA-01",
+                  "V4-DA-02",
+                  "V4-DA-03",
+                  "V4-DA-04",
+                  "V4-DA-05",
+                  "V4-DA-06",
+                  "V4-DA-07",
+                  "V4-DA-08",
+                  "V4-DA-09",
+                  "V4-DA-10"
+                ],
+                "value": 0.4
+              },
+              "validity_rate": {
+                "numerator": 6,
+                "denominator": 10,
+                "formula": "validity=true judgments / adjudicated cases",
+                "source_case_ids": [
+                  "V4-DA-01",
+                  "V4-DA-02",
+                  "V4-DA-03",
+                  "V4-DA-04",
+                  "V4-DA-05",
+                  "V4-DA-06",
+                  "V4-DA-07",
+                  "V4-DA-08",
+                  "V4-DA-09",
+                  "V4-DA-10"
+                ],
+                "value": 0.6
+              }
+            }
+          }
+        },
+        "ask_quality": {
+          "TOTAL_ASK_COUNT": 9,
+          "NECESSARY_ASK_COUNT": 0,
+          "USEFUL_OPTIONAL_ASK_COUNT": 1,
+          "REDUNDANT_ASK_COUNT": 8,
+          "IRRELEVANT_ASK_COUNT": 0,
+          "category_counts": {
+            "irrelevant": 0,
+            "necessary": 0,
+            "redundant": 8,
+            "useful_but_optional": 1
+          },
+          "category_rates": {
+            "necessary": {
+              "numerator": 0,
+              "denominator": 9,
+              "formula": "necessary ASK events / all ASK events",
+              "source_case_ids": [],
+              "value": 0.0
+            },
+            "useful_but_optional": {
+              "numerator": 1,
+              "denominator": 9,
+              "formula": "useful_but_optional ASK events / all ASK events",
+              "source_case_ids": [
+                "V4-PD-03"
+              ],
+              "value": 0.1111
+            },
+            "redundant": {
+              "numerator": 8,
+              "denominator": 9,
+              "formula": "redundant ASK events / all ASK events",
+              "source_case_ids": [
+                "V4-CA-02",
+                "V4-CA-04",
+                "V4-PD-04",
+                "V4-PD-05",
+                "V4-PD-06",
+                "V4-PD-10"
+              ],
+              "value": 0.8889
+            },
+            "irrelevant": {
+              "numerator": 0,
+              "denominator": 9,
+              "formula": "irrelevant ASK events / all ASK events",
+              "source_case_ids": [],
+              "value": 0.0
+            }
+          },
+          "REDUNDANT_OR_IRRELEVANT_RATE": {
+            "numerator": 8,
+            "denominator": 9,
+            "formula": "(redundant + irrelevant ASK events) / all ASK events",
+            "source_case_ids": [
+              "V4-CA-01",
+              "V4-CA-02",
+              "V4-CA-03",
+              "V4-CA-04",
+              "V4-CA-05",
+              "V4-CA-06",
+              "V4-CA-07",
+              "V4-CA-08",
+              "V4-CA-09",
+              "V4-CA-10",
+              "V4-DA-01",
+              "V4-DA-02",
+              "V4-DA-03",
+              "V4-DA-04",
+              "V4-DA-05",
+              "V4-DA-06",
+              "V4-DA-07",
+              "V4-DA-08",
+              "V4-DA-09",
+              "V4-DA-10",
+              "V4-KQ-01",
+              "V4-KQ-02",
+              "V4-KQ-03",
+              "V4-KQ-04",
+              "V4-KQ-05",
+              "V4-KQ-06",
+              "V4-KQ-07",
+              "V4-KQ-08",
+              "V4-KQ-09",
+              "V4-KQ-10",
+              "V4-PD-01",
+              "V4-PD-02",
+              "V4-PD-03",
+              "V4-PD-04",
+              "V4-PD-05",
+              "V4-PD-06",
+              "V4-PD-07",
+              "V4-PD-08",
+              "V4-PD-09",
+              "V4-PD-10"
+            ],
+            "value": 0.8889
+          },
+          "NECESSARY_ASK_PRESERVATION_RATE": {
+            "numerator": 0,
+            "denominator": 4,
+            "formula": "acquired oracle-required targets / all oracle-required targets",
+            "source_case_ids": [
+              "V4-CA-01",
+              "V4-CA-02",
+              "V4-CA-03",
+              "V4-CA-04",
+              "V4-CA-05",
+              "V4-CA-06",
+              "V4-CA-07",
+              "V4-CA-08",
+              "V4-CA-09",
+              "V4-CA-10",
+              "V4-DA-01",
+              "V4-DA-02",
+              "V4-DA-03",
+              "V4-DA-04",
+              "V4-DA-05",
+              "V4-DA-06",
+              "V4-DA-07",
+              "V4-DA-08",
+              "V4-DA-09",
+              "V4-DA-10",
+              "V4-KQ-01",
+              "V4-KQ-02",
+              "V4-KQ-03",
+              "V4-KQ-04",
+              "V4-KQ-05",
+              "V4-KQ-06",
+              "V4-KQ-07",
+              "V4-KQ-08",
+              "V4-KQ-09",
+              "V4-KQ-10",
+              "V4-PD-01",
+              "V4-PD-02",
+              "V4-PD-03",
+              "V4-PD-04",
+              "V4-PD-05",
+              "V4-PD-06",
+              "V4-PD-07",
+              "V4-PD-08",
+              "V4-PD-09",
+              "V4-PD-10"
+            ],
+            "value": 0.0
+          }
+        },
+        "tool_resource_behavior": {
+          "counts": {
+            "RETRIEVE": 13,
+            "READ_DIARY": 10,
+            "ASK": 9,
+            "TOOL_CALL": 23
+          },
+          "per_case_means": {
+            "retrieve_per_case": {
+              "numerator": 13,
+              "denominator": 40,
+              "formula": "RETRIEVE actions / adjudicated cases",
+              "source_case_ids": [
+                "V4-CA-01",
+                "V4-CA-02",
+                "V4-CA-03",
+                "V4-CA-04",
+                "V4-CA-05",
+                "V4-CA-06",
+                "V4-CA-07",
+                "V4-CA-08",
+                "V4-CA-09",
+                "V4-CA-10",
+                "V4-DA-01",
+                "V4-DA-02",
+                "V4-DA-03",
+                "V4-DA-04",
+                "V4-DA-05",
+                "V4-DA-06",
+                "V4-DA-07",
+                "V4-DA-08",
+                "V4-DA-09",
+                "V4-DA-10",
+                "V4-KQ-01",
+                "V4-KQ-02",
+                "V4-KQ-03",
+                "V4-KQ-04",
+                "V4-KQ-05",
+                "V4-KQ-06",
+                "V4-KQ-07",
+                "V4-KQ-08",
+                "V4-KQ-09",
+                "V4-KQ-10",
+                "V4-PD-01",
+                "V4-PD-02",
+                "V4-PD-03",
+                "V4-PD-04",
+                "V4-PD-05",
+                "V4-PD-06",
+                "V4-PD-07",
+                "V4-PD-08",
+                "V4-PD-09",
+                "V4-PD-10"
+              ],
+              "value": 0.325
+            },
+            "read_diary_per_case": {
+              "numerator": 10,
+              "denominator": 40,
+              "formula": "READ_DIARY actions / adjudicated cases",
+              "source_case_ids": [
+                "V4-CA-01",
+                "V4-CA-02",
+                "V4-CA-03",
+                "V4-CA-04",
+                "V4-CA-05",
+                "V4-CA-06",
+                "V4-CA-07",
+                "V4-CA-08",
+                "V4-CA-09",
+                "V4-CA-10",
+                "V4-DA-01",
+                "V4-DA-02",
+                "V4-DA-03",
+                "V4-DA-04",
+                "V4-DA-05",
+                "V4-DA-06",
+                "V4-DA-07",
+                "V4-DA-08",
+                "V4-DA-09",
+                "V4-DA-10",
+                "V4-KQ-01",
+                "V4-KQ-02",
+                "V4-KQ-03",
+                "V4-KQ-04",
+                "V4-KQ-05",
+                "V4-KQ-06",
+                "V4-KQ-07",
+                "V4-KQ-08",
+                "V4-KQ-09",
+                "V4-KQ-10",
+                "V4-PD-01",
+                "V4-PD-02",
+                "V4-PD-03",
+                "V4-PD-04",
+                "V4-PD-05",
+                "V4-PD-06",
+                "V4-PD-07",
+                "V4-PD-08",
+                "V4-PD-09",
+                "V4-PD-10"
+              ],
+              "value": 0.25
+            },
+            "ask_per_case": {
+              "numerator": 9,
+              "denominator": 40,
+              "formula": "ASK actions / adjudicated cases",
+              "source_case_ids": [
+                "V4-CA-01",
+                "V4-CA-02",
+                "V4-CA-03",
+                "V4-CA-04",
+                "V4-CA-05",
+                "V4-CA-06",
+                "V4-CA-07",
+                "V4-CA-08",
+                "V4-CA-09",
+                "V4-CA-10",
+                "V4-DA-01",
+                "V4-DA-02",
+                "V4-DA-03",
+                "V4-DA-04",
+                "V4-DA-05",
+                "V4-DA-06",
+                "V4-DA-07",
+                "V4-DA-08",
+                "V4-DA-09",
+                "V4-DA-10",
+                "V4-KQ-01",
+                "V4-KQ-02",
+                "V4-KQ-03",
+                "V4-KQ-04",
+                "V4-KQ-05",
+                "V4-KQ-06",
+                "V4-KQ-07",
+                "V4-KQ-08",
+                "V4-KQ-09",
+                "V4-KQ-10",
+                "V4-PD-01",
+                "V4-PD-02",
+                "V4-PD-03",
+                "V4-PD-04",
+                "V4-PD-05",
+                "V4-PD-06",
+                "V4-PD-07",
+                "V4-PD-08",
+                "V4-PD-09",
+                "V4-PD-10"
+              ],
+              "value": 0.225
+            },
+            "tool_call_per_case": {
+              "numerator": 23,
+              "denominator": 40,
+              "formula": "TOOL_CALL actions / adjudicated cases",
+              "source_case_ids": [
+                "V4-CA-01",
+                "V4-CA-02",
+                "V4-CA-03",
+                "V4-CA-04",
+                "V4-CA-05",
+                "V4-CA-06",
+                "V4-CA-07",
+                "V4-CA-08",
+                "V4-CA-09",
+                "V4-CA-10",
+                "V4-DA-01",
+                "V4-DA-02",
+                "V4-DA-03",
+                "V4-DA-04",
+                "V4-DA-05",
+                "V4-DA-06",
+                "V4-DA-07",
+                "V4-DA-08",
+                "V4-DA-09",
+                "V4-DA-10",
+                "V4-KQ-01",
+                "V4-KQ-02",
+                "V4-KQ-03",
+                "V4-KQ-04",
+                "V4-KQ-05",
+                "V4-KQ-06",
+                "V4-KQ-07",
+                "V4-KQ-08",
+                "V4-KQ-09",
+                "V4-KQ-10",
+                "V4-PD-01",
+                "V4-PD-02",
+                "V4-PD-03",
+                "V4-PD-04",
+                "V4-PD-05",
+                "V4-PD-06",
+                "V4-PD-07",
+                "V4-PD-08",
+                "V4-PD-09",
+                "V4-PD-10"
+              ],
+              "value": 0.575
+            }
+          },
+          "ask_per_case": {
+            "numerator": 9,
+            "denominator": 40,
+            "formula": "ASK actions / adjudicated cases",
+            "source_case_ids": [
+              "V4-CA-01",
+              "V4-CA-02",
+              "V4-CA-03",
+              "V4-CA-04",
+              "V4-CA-05",
+              "V4-CA-06",
+              "V4-CA-07",
+              "V4-CA-08",
+              "V4-CA-09",
+              "V4-CA-10",
+              "V4-DA-01",
+              "V4-DA-02",
+              "V4-DA-03",
+              "V4-DA-04",
+              "V4-DA-05",
+              "V4-DA-06",
+              "V4-DA-07",
+              "V4-DA-08",
+              "V4-DA-09",
+              "V4-DA-10",
+              "V4-KQ-01",
+              "V4-KQ-02",
+              "V4-KQ-03",
+              "V4-KQ-04",
+              "V4-KQ-05",
+              "V4-KQ-06",
+              "V4-KQ-07",
+              "V4-KQ-08",
+              "V4-KQ-09",
+              "V4-KQ-10",
+              "V4-PD-01",
+              "V4-PD-02",
+              "V4-PD-03",
+              "V4-PD-04",
+              "V4-PD-05",
+              "V4-PD-06",
+              "V4-PD-07",
+              "V4-PD-08",
+              "V4-PD-09",
+              "V4-PD-10"
+            ],
+            "value": 0.225
+          },
+          "total_acquisition_actions_per_case": {
+            "numerator": 32,
+            "denominator": 40,
+            "formula": "(ASK + RETRIEVE + READ_DIARY) / adjudicated cases",
+            "source_case_ids": [
+              "V4-CA-01",
+              "V4-CA-02",
+              "V4-CA-03",
+              "V4-CA-04",
+              "V4-CA-05",
+              "V4-CA-06",
+              "V4-CA-07",
+              "V4-CA-08",
+              "V4-CA-09",
+              "V4-CA-10",
+              "V4-DA-01",
+              "V4-DA-02",
+              "V4-DA-03",
+              "V4-DA-04",
+              "V4-DA-05",
+              "V4-DA-06",
+              "V4-DA-07",
+              "V4-DA-08",
+              "V4-DA-09",
+              "V4-DA-10",
+              "V4-KQ-01",
+              "V4-KQ-02",
+              "V4-KQ-03",
+              "V4-KQ-04",
+              "V4-KQ-05",
+              "V4-KQ-06",
+              "V4-KQ-07",
+              "V4-KQ-08",
+              "V4-KQ-09",
+              "V4-KQ-10",
+              "V4-PD-01",
+              "V4-PD-02",
+              "V4-PD-03",
+              "V4-PD-04",
+              "V4-PD-05",
+              "V4-PD-06",
+              "V4-PD-07",
+              "V4-PD-08",
+              "V4-PD-09",
+              "V4-PD-10"
+            ],
+            "value": 0.8
+          },
+          "appropriateness_judgments": {
+            "RETRIEVE": {
+              "irrelevant": 1,
+              "required": 12
+            },
+            "READ_DIARY": {
+              "optional_useful": 1,
+              "required": 9
+            }
+          },
+          "quality_note": "Tool counts are behavior telemetry, not quality scores; appropriateness remains separate reviewer judgment."
+        },
+        "efficiency": {
+          "turns_per_case": {
+            "numerator": 49,
+            "denominator": 40,
+            "formula": "sum(turn_count)/n cases",
+            "source_case_ids": [
+              "V4-CA-01",
+              "V4-CA-02",
+              "V4-CA-03",
+              "V4-CA-04",
+              "V4-CA-05",
+              "V4-CA-06",
+              "V4-CA-07",
+              "V4-CA-08",
+              "V4-CA-09",
+              "V4-CA-10",
+              "V4-DA-01",
+              "V4-DA-02",
+              "V4-DA-03",
+              "V4-DA-04",
+              "V4-DA-05",
+              "V4-DA-06",
+              "V4-DA-07",
+              "V4-DA-08",
+              "V4-DA-09",
+              "V4-DA-10",
+              "V4-KQ-01",
+              "V4-KQ-02",
+              "V4-KQ-03",
+              "V4-KQ-04",
+              "V4-KQ-05",
+              "V4-KQ-06",
+              "V4-KQ-07",
+              "V4-KQ-08",
+              "V4-KQ-09",
+              "V4-KQ-10",
+              "V4-PD-01",
+              "V4-PD-02",
+              "V4-PD-03",
+              "V4-PD-04",
+              "V4-PD-05",
+              "V4-PD-06",
+              "V4-PD-07",
+              "V4-PD-08",
+              "V4-PD-09",
+              "V4-PD-10"
+            ],
+            "mean": 1.225
+          },
+          "steps_per_case": {
+            "numerator": 72,
+            "denominator": 40,
+            "formula": "sum(step_count)/n cases",
+            "source_case_ids": [
+              "V4-CA-01",
+              "V4-CA-02",
+              "V4-CA-03",
+              "V4-CA-04",
+              "V4-CA-05",
+              "V4-CA-06",
+              "V4-CA-07",
+              "V4-CA-08",
+              "V4-CA-09",
+              "V4-CA-10",
+              "V4-DA-01",
+              "V4-DA-02",
+              "V4-DA-03",
+              "V4-DA-04",
+              "V4-DA-05",
+              "V4-DA-06",
+              "V4-DA-07",
+              "V4-DA-08",
+              "V4-DA-09",
+              "V4-DA-10",
+              "V4-KQ-01",
+              "V4-KQ-02",
+              "V4-KQ-03",
+              "V4-KQ-04",
+              "V4-KQ-05",
+              "V4-KQ-06",
+              "V4-KQ-07",
+              "V4-KQ-08",
+              "V4-KQ-09",
+              "V4-KQ-10",
+              "V4-PD-01",
+              "V4-PD-02",
+              "V4-PD-03",
+              "V4-PD-04",
+              "V4-PD-05",
+              "V4-PD-06",
+              "V4-PD-07",
+              "V4-PD-08",
+              "V4-PD-09",
+              "V4-PD-10"
+            ],
+            "mean": 1.8
+          },
+          "tool_calls_per_case": {
+            "numerator": 23,
+            "denominator": 40,
+            "formula": "sum(actual RETRIEVE+READ_DIARY calls)/n cases; ASK excluded",
+            "source_case_ids": [
+              "V4-CA-01",
+              "V4-CA-02",
+              "V4-CA-03",
+              "V4-CA-04",
+              "V4-CA-05",
+              "V4-CA-06",
+              "V4-CA-07",
+              "V4-CA-08",
+              "V4-CA-09",
+              "V4-CA-10",
+              "V4-DA-01",
+              "V4-DA-02",
+              "V4-DA-03",
+              "V4-DA-04",
+              "V4-DA-05",
+              "V4-DA-06",
+              "V4-DA-07",
+              "V4-DA-08",
+              "V4-DA-09",
+              "V4-DA-10",
+              "V4-KQ-01",
+              "V4-KQ-02",
+              "V4-KQ-03",
+              "V4-KQ-04",
+              "V4-KQ-05",
+              "V4-KQ-06",
+              "V4-KQ-07",
+              "V4-KQ-08",
+              "V4-KQ-09",
+              "V4-KQ-10",
+              "V4-PD-01",
+              "V4-PD-02",
+              "V4-PD-03",
+              "V4-PD-04",
+              "V4-PD-05",
+              "V4-PD-06",
+              "V4-PD-07",
+              "V4-PD-08",
+              "V4-PD-09",
+              "V4-PD-10"
+            ],
+            "mean": 0.575
+          },
+          "latency_ms": {
+            "overall": {
+              "mean_ms": 6453.3615,
+              "median_ms": 3251.395,
+              "p90_nearest_rank_ms": 11380.62,
+              "n": 40,
+              "formula": "mean=sum(latency_ms)/n; median=statistics.median; p90=sorted[ceil(0.9*n)-1]",
+              "source_case_ids": [
+                "V4-CA-01",
+                "V4-CA-02",
+                "V4-CA-03",
+                "V4-CA-04",
+                "V4-CA-05",
+                "V4-CA-06",
+                "V4-CA-07",
+                "V4-CA-08",
+                "V4-CA-09",
+                "V4-CA-10",
+                "V4-DA-01",
+                "V4-DA-02",
+                "V4-DA-03",
+                "V4-DA-04",
+                "V4-DA-05",
+                "V4-DA-06",
+                "V4-DA-07",
+                "V4-DA-08",
+                "V4-DA-09",
+                "V4-DA-10",
+                "V4-KQ-01",
+                "V4-KQ-02",
+                "V4-KQ-03",
+                "V4-KQ-04",
+                "V4-KQ-05",
+                "V4-KQ-06",
+                "V4-KQ-07",
+                "V4-KQ-08",
+                "V4-KQ-09",
+                "V4-KQ-10",
+                "V4-PD-01",
+                "V4-PD-02",
+                "V4-PD-03",
+                "V4-PD-04",
+                "V4-PD-05",
+                "V4-PD-06",
+                "V4-PD-07",
+                "V4-PD-08",
+                "V4-PD-09",
+                "V4-PD-10"
+              ]
+            },
+            "by_task_type": {
+              "KNOWLEDGE_QA": {
+                "mean_ms": 14328.141,
+                "median_ms": 11246.465,
+                "p90_nearest_rank_ms": 12971.47,
+                "n": 10,
+                "formula": "mean=sum(latency_ms)/n; median=statistics.median; p90=sorted[ceil(0.9*n)-1]",
+                "source_case_ids": [
+                  "V4-KQ-01",
+                  "V4-KQ-02",
+                  "V4-KQ-03",
+                  "V4-KQ-04",
+                  "V4-KQ-05",
+                  "V4-KQ-06",
+                  "V4-KQ-07",
+                  "V4-KQ-08",
+                  "V4-KQ-09",
+                  "V4-KQ-10"
+                ]
+              },
+              "CAUSE_ASSESSMENT": {
+                "mean_ms": 4098.455,
+                "median_ms": 3003.165,
+                "p90_nearest_rank_ms": 6912.09,
+                "n": 10,
+                "formula": "mean=sum(latency_ms)/n; median=statistics.median; p90=sorted[ceil(0.9*n)-1]",
+                "source_case_ids": [
+                  "V4-CA-01",
+                  "V4-CA-02",
+                  "V4-CA-03",
+                  "V4-CA-04",
+                  "V4-CA-05",
+                  "V4-CA-06",
+                  "V4-CA-07",
+                  "V4-CA-08",
+                  "V4-CA-09",
+                  "V4-CA-10"
+                ]
+              },
+              "PERSONALIZED_DECISION": {
+                "mean_ms": 4071.916,
+                "median_ms": 3570.36,
+                "p90_nearest_rank_ms": 5789.79,
+                "n": 10,
+                "formula": "mean=sum(latency_ms)/n; median=statistics.median; p90=sorted[ceil(0.9*n)-1]",
+                "source_case_ids": [
+                  "V4-PD-01",
+                  "V4-PD-02",
+                  "V4-PD-03",
+                  "V4-PD-04",
+                  "V4-PD-05",
+                  "V4-PD-06",
+                  "V4-PD-07",
+                  "V4-PD-08",
+                  "V4-PD-09",
+                  "V4-PD-10"
+                ]
+              },
+              "DATA_ANALYSIS": {
+                "mean_ms": 3314.934,
+                "median_ms": 3093.955,
+                "p90_nearest_rank_ms": 3207.9,
+                "n": 10,
+                "formula": "mean=sum(latency_ms)/n; median=statistics.median; p90=sorted[ceil(0.9*n)-1]",
+                "source_case_ids": [
+                  "V4-DA-01",
+                  "V4-DA-02",
+                  "V4-DA-03",
+                  "V4-DA-04",
+                  "V4-DA-05",
+                  "V4-DA-06",
+                  "V4-DA-07",
+                  "V4-DA-08",
+                  "V4-DA-09",
+                  "V4-DA-10"
+                ]
+              }
+            }
+          }
+        },
+        "failures": {
+          "CRITICAL_FAILURE_COUNT": 0,
+          "CRITICAL_FAILURE_CASE_IDS": [],
+          "HARMFUL_FAILURE_COUNT": 16,
+          "HARMFUL_FAILURE_CASE_IDS": [
+            "V4-CA-01",
+            "V4-CA-02",
+            "V4-CA-03",
+            "V4-CA-05",
+            "V4-CA-06",
+            "V4-CA-07",
+            "V4-CA-09",
+            "V4-CA-10",
+            "V4-PD-01",
+            "V4-PD-03",
+            "V4-PD-05",
+            "V4-PD-06",
+            "V4-PD-07",
+            "V4-PD-08",
+            "V4-PD-09",
+            "V4-PD-10"
+          ],
+          "primary_cause_root_cause_distribution": {
+            "ACTION_SELECTION": 1,
+            "ANSWER_GENERATION": 14,
+            "DEPENDENCY_REPRESENTATION": 16,
+            "EVIDENCE_GROUNDING": 2,
+            "INPUT_UNDERSTANDING": 2,
+            "RETRIEVAL_COVERAGE": 2
+          },
+          "primary_cause_case_ids": {
+            "ANSWER_GENERATION": {
+              "count": 14,
+              "case_ids": [
+                "V4-CA-08",
+                "V4-DA-01",
+                "V4-DA-02",
+                "V4-DA-03",
+                "V4-DA-04",
+                "V4-DA-05",
+                "V4-DA-06",
+                "V4-DA-08",
+                "V4-DA-09",
+                "V4-DA-10",
+                "V4-KQ-03",
+                "V4-KQ-06",
+                "V4-KQ-08",
+                "V4-PD-02"
+              ]
+            },
+            "RETRIEVAL_COVERAGE": {
+              "count": 2,
+              "case_ids": [
+                "V4-KQ-04",
+                "V4-KQ-09"
+              ]
+            },
+            "EVIDENCE_GROUNDING": {
+              "count": 2,
+              "case_ids": [
+                "V4-KQ-07",
+                "V4-KQ-10"
+              ]
+            },
+            "DEPENDENCY_REPRESENTATION": {
+              "count": 16,
+              "case_ids": [
+                "V4-CA-01",
+                "V4-CA-02",
+                "V4-CA-03",
+                "V4-CA-04",
+                "V4-CA-05",
+                "V4-CA-06",
+                "V4-CA-07",
+                "V4-CA-09",
+                "V4-CA-10",
+                "V4-PD-01",
+                "V4-PD-03",
+                "V4-PD-04",
+                "V4-PD-06",
+                "V4-PD-07",
+                "V4-PD-08",
+                "V4-PD-09"
+              ]
+            },
+            "INPUT_UNDERSTANDING": {
+              "count": 2,
+              "case_ids": [
+                "V4-PD-05",
+                "V4-PD-10"
+              ]
+            },
+            "ACTION_SELECTION": {
+              "count": 1,
+              "case_ids": [
+                "V4-DA-07"
+              ]
+            }
+          },
+          "first_divergence_layer_distribution": {
+            "/final_answer (turn 1): English query answered in Chinese": 3,
+            "/final_answer: '数字化 CBT-I 在改善失眠症状方面与面对面方式相似' drops the source hedge 'appear to be similar'": 1,
+            "/final_answer: '这正是睡眠感觉更难以预测的原因' states the mechanism more definitively than the general-principle evidence supports; answered in Chinese to an English query": 1,
+            "/final_answer: English query answered in Chinese, with a redundant templated preamble": 1,
+            "/final_answer: English query answered in Chinese; long list of 'missing' fields not needed for the bounded decision": 1,
+            "/final_answer: claims the records lack last-week/this-week grouping although /final_state/facts.recent_sleep_pattern holds six dated entries (08-31..09-02 and 09-07..09-09)": 1,
+            "/final_answer: correct per-night efficiency listed, but the 'cannot conclude' statement does not explicitly say that no retrieved evidence supports a reference threshold": 1,
+            "/final_answer: gives count and 22:40–23:35 range but does not list the covered dates": 1,
+            "/final_answer: one generic sentence that does not state the diary is unavailable or invite the user to share the paper records": 1,
+            "/final_answer: reports only count and 45-minute range; no sorted list of wake times with dates": 1,
+            "/final_answer: reports the 405-minute mean but never states that only 3 of 4 entries had a value or which date was blank": 1,
+            "/final_state/action_history/1: RETRIEVE issued for a pure data-completeness check after the diary was already loaded": 1,
+            "/final_state/effective_requirements: evidence_required true but resources []; all user-fact targets classified useful_optional and every ASK rejected by the counterfactual gate; no shift-transition target modelled": 1,
+            "/final_state/effective_requirements: evidence_required true but resources []; bounded-stop ANSWER selected with evidence_sufficiency LOW": 2,
+            "/final_state/effective_requirements: evidence_required=true but resources=[], and recent_sleep_pattern classified useful_optional; gate then rejected the ASK as not changing answer scope": 1,
+            "/final_state/effective_requirements: external evidence absent from resources; bounded-stop ANSWER selected with evidence_sufficiency LOW": 6,
+            "/final_state/effective_requirements: nap classified useful_optional and the nap ASK rejected by the counterfactual gate; resources [] despite evidence_required true": 1,
+            "/final_state/facts.diary_derived: only diary_day_count derived; no sleep_onset_latency summary or valid-entry count computed, and the answer reports only dates": 1,
+            "/final_state/facts.diary_derived: only mean/count derived (no maximum), and /final_answer reports the mean instead of the longest night": 1,
+            "/turns/0/state (effective_requirements): sleep_onset_latency marked mandatory while bedtime is useful_optional and resources=[] despite evidence_required=true": 1,
+            "/turns/0/state (effective_requirements): sleep_time_or_sleep_onset_latency mandatory and resources=[] despite evidence_required=true; answer_scope templated to 'whether to move bedtime earlier'": 1,
+            "/turns/0/state (effective_requirements): sleep_time_or_sleep_onset_latency marked mandatory and resources=[] despite evidence_required=true; user-stated workout timing not projected into facts": 1,
+            "/turns/0/state/action_history/0: ASK target sleep_onset_latency although the decision is answerable from the query (oracle: low-value ASK should be suppressed)": 1,
+            "/turns/0/state/action_history/0: ASK target sleep_time_or_sleep_onset_latency for a timing-relevance question (oracle: 'demand exact latency' unacceptable, low-value ASK should be suppressed)": 1,
+            "/turns/0/state/evidence/0: retrieved material states it contains no direct group vs one-to-one comparison": 1,
+            "/turns/0/state/evidence/0: retrieved material states it lacks a direct account of shared decision-making content": 1,
+            "/turns/0/state/evidence/0: retrieved synthesis includes screening thresholds (ESS 0–2 / >10, ~20% OSA) peripheral to the question": 1,
+            "/turns/0/state/facts = {}: 'stable schedule, usually falls asleep, occasional single waking' from the query not projected; all schedule fields treated as critical_missing": 1,
+            "/turns/0/state/facts = {}: explicit nap (~13:00, ~20 min) and 'evening sleep onset unaffected' from the query not projected; nap listed as missing": 1
+          },
+          "first_divergence_case_ids": {
+            "/final_answer (turn 1): English query answered in Chinese": {
+              "count": 3,
+              "case_ids": [
+                "V4-KQ-03",
+                "V4-KQ-06",
+                "V4-KQ-08"
+              ]
+            },
+            "/turns/0/state/evidence/0: retrieved material states it contains no direct group vs one-to-one comparison": {
+              "count": 1,
+              "case_ids": [
+                "V4-KQ-04"
+              ]
+            },
+            "/turns/0/state/evidence/0: retrieved synthesis includes screening thresholds (ESS 0–2 / >10, ~20% OSA) peripheral to the question": {
+              "count": 1,
+              "case_ids": [
+                "V4-KQ-07"
+              ]
+            },
+            "/turns/0/state/evidence/0: retrieved material states it lacks a direct account of shared decision-making content": {
+              "count": 1,
+              "case_ids": [
+                "V4-KQ-09"
+              ]
+            },
+            "/final_answer: '数字化 CBT-I 在改善失眠症状方面与面对面方式相似' drops the source hedge 'appear to be similar'": {
+              "count": 1,
+              "case_ids": [
+                "V4-KQ-10"
+              ]
+            },
+            "/final_state/effective_requirements: evidence_required=true but resources=[], and recent_sleep_pattern classified useful_optional; gate then rejected the ASK as not changing answer scope": {
+              "count": 1,
+              "case_ids": [
+                "V4-CA-01"
+              ]
+            },
+            "/turns/0/state (effective_requirements): sleep_time_or_sleep_onset_latency marked mandatory and resources=[] despite evidence_required=true; user-stated workout timing not projected into facts": {
+              "count": 1,
+              "case_ids": [
+                "V4-CA-02"
+              ]
+            },
+            "/final_state/effective_requirements: external evidence absent from resources; bounded-stop ANSWER selected with evidence_sufficiency LOW": {
+              "count": 6,
+              "case_ids": [
+                "V4-CA-03",
+                "V4-CA-05",
+                "V4-CA-06",
+                "V4-CA-07",
+                "V4-CA-09",
+                "V4-CA-10"
+              ]
+            },
+            "/turns/0/state/action_history/0: ASK target sleep_time_or_sleep_onset_latency for a timing-relevance question (oracle: 'demand exact latency' unacceptable, low-value ASK should be suppressed)": {
+              "count": 1,
+              "case_ids": [
+                "V4-CA-04"
+              ]
+            },
+            "/final_answer: '这正是睡眠感觉更难以预测的原因' states the mechanism more definitively than the general-principle evidence supports; answered in Chinese to an English query": {
+              "count": 1,
+              "case_ids": [
+                "V4-CA-08"
+              ]
+            },
+            "/final_state/effective_requirements: evidence_required true but resources []; all user-fact targets classified useful_optional and every ASK rejected by the counterfactual gate; no shift-transition target modelled": {
+              "count": 1,
+              "case_ids": [
+                "V4-PD-01"
+              ]
+            },
+            "/final_answer: English query answered in Chinese; long list of 'missing' fields not needed for the bounded decision": {
+              "count": 1,
+              "case_ids": [
+                "V4-PD-02"
+              ]
+            },
+            "/turns/0/state (effective_requirements): sleep_onset_latency marked mandatory while bedtime is useful_optional and resources=[] despite evidence_required=true": {
+              "count": 1,
+              "case_ids": [
+                "V4-PD-03"
+              ]
+            },
+            "/turns/0/state/action_history/0: ASK target sleep_onset_latency although the decision is answerable from the query (oracle: low-value ASK should be suppressed)": {
+              "count": 1,
+              "case_ids": [
+                "V4-PD-04"
+              ]
+            },
+            "/turns/0/state/facts = {}: explicit nap (~13:00, ~20 min) and 'evening sleep onset unaffected' from the query not projected; nap listed as missing": {
+              "count": 1,
+              "case_ids": [
+                "V4-PD-05"
+              ]
+            },
+            "/turns/0/state (effective_requirements): sleep_time_or_sleep_onset_latency mandatory and resources=[] despite evidence_required=true; answer_scope templated to 'whether to move bedtime earlier'": {
+              "count": 1,
+              "case_ids": [
+                "V4-PD-06"
+              ]
+            },
+            "/final_state/effective_requirements: evidence_required true but resources []; bounded-stop ANSWER selected with evidence_sufficiency LOW": {
+              "count": 2,
+              "case_ids": [
+                "V4-PD-07",
+                "V4-PD-08"
+              ]
+            },
+            "/final_state/effective_requirements: nap classified useful_optional and the nap ASK rejected by the counterfactual gate; resources [] despite evidence_required true": {
+              "count": 1,
+              "case_ids": [
+                "V4-PD-09"
+              ]
+            },
+            "/turns/0/state/facts = {}: 'stable schedule, usually falls asleep, occasional single waking' from the query not projected; all schedule fields treated as critical_missing": {
+              "count": 1,
+              "case_ids": [
+                "V4-PD-10"
+              ]
+            },
+            "/final_answer: claims the records lack last-week/this-week grouping although /final_state/facts.recent_sleep_pattern holds six dated entries (08-31..09-02 and 09-07..09-09)": {
+              "count": 1,
+              "case_ids": [
+                "V4-DA-01"
+              ]
+            },
+            "/final_answer: English query answered in Chinese, with a redundant templated preamble": {
+              "count": 1,
+              "case_ids": [
+                "V4-DA-02"
+              ]
+            },
+            "/final_answer: reports the 405-minute mean but never states that only 3 of 4 entries had a value or which date was blank": {
+              "count": 1,
+              "case_ids": [
+                "V4-DA-03"
+              ]
+            },
+            "/final_answer: gives count and 22:40–23:35 range but does not list the covered dates": {
+              "count": 1,
+              "case_ids": [
+                "V4-DA-04"
+              ]
+            },
+            "/final_state/facts.diary_derived: only diary_day_count derived; no sleep_onset_latency summary or valid-entry count computed, and the answer reports only dates": {
+              "count": 1,
+              "case_ids": [
+                "V4-DA-05"
+              ]
+            },
+            "/final_answer: reports only count and 45-minute range; no sorted list of wake times with dates": {
+              "count": 1,
+              "case_ids": [
+                "V4-DA-06"
+              ]
+            },
+            "/final_state/action_history/1: RETRIEVE issued for a pure data-completeness check after the diary was already loaded": {
+              "count": 1,
+              "case_ids": [
+                "V4-DA-07"
+              ]
+            },
+            "/final_answer: one generic sentence that does not state the diary is unavailable or invite the user to share the paper records": {
+              "count": 1,
+              "case_ids": [
+                "V4-DA-08"
+              ]
+            },
+            "/final_state/facts.diary_derived: only mean/count derived (no maximum), and /final_answer reports the mean instead of the longest night": {
+              "count": 1,
+              "case_ids": [
+                "V4-DA-09"
+              ]
+            },
+            "/final_answer: correct per-night efficiency listed, but the 'cannot conclude' statement does not explicitly say that no retrieved evidence supports a reference threshold": {
+              "count": 1,
+              "case_ids": [
+                "V4-DA-10"
+              ]
+            }
+          },
+          "downstream_effect_distribution": {
+            "ACTION_SELECTION": 18,
+            "ANSWER_COMPLETENESS": 22,
+            "ANSWER_GENERATION": 1,
+            "ANSWER_SCOPE": 1,
+            "DEPENDENCY_REPRESENTATION": 1,
+            "EFFICIENCY": 7,
+            "EVIDENCE_GROUNDING": 15,
+            "STATE_INTEGRITY": 12
+          }
+        },
+        "lineage": {
+          "FORMAL_LINEAGE_READY": 28,
+          "DERIVED_LINEAGE_COMPLETE": 7,
+          "INCOMPLETE_FORMAL_BUT_ADJUDICATABLE": 5,
+          "interpretation": "Provenance metrics only; derived repairs remain derived, and incomplete formal cases remain incomplete. No score adjustment."
+        },
+        "reviewer_limitations": {
+          "reviewer_type": "SINGLE_AI_REVIEWER",
+          "human_adjudication": false,
+          "inter_rater_reliability": "NOT_MEASURED",
+          "deterministic_consistency_checks": "PASS_SINGLE_REVIEWER_DETERMINISTIC_CHECKS",
+          "interpretation": "Rubric scores are single-reviewer descriptive judgments; they are not human/expert review or inter-rater validated."
+        },
+        "historical_comparability": {
+          "status": "NOT_COMPARABLE",
+          "reason": "V4 is a distinct case set and uses a single AI reviewer; the metric registry identifies V2 as non-paired development data and V3 as consumed historical held-out data. Historical scores were not loaded or compared."
+        },
+        "OVERALL_PASS_THRESHOLD": "NOT_DEFINED",
+        "token_usage_status": "NOT_MEASURED",
+        "final_status_note": "final_status=ANSWER is execution telemetry and is not substituted for completion judgment."
+      }
+    },
+    "Codex_x_v3": {
+      "source": "A new frozen review",
+      "summary": {
+        "overall_mean": 72.625,
+        "task_means": {
+          "KNOWLEDGE_QA": 86.6,
+          "CAUSE_ASSESSMENT": 77.5,
+          "PERSONALIZED_DECISION": 52.2,
+          "DATA_ANALYSIS": 74.2
+        },
+        "dimension_means": {
+          "goal_alignment": 10.9,
+          "facts_state_integrity": 17.3,
+          "action_resource_selection": 16.725,
+          "evidence_answer_scope": 16.075,
+          "interaction_efficiency": 11.625
+        },
+        "M1_low_value_ask_rate": {
+          "numerator": 8,
+          "denominator": 12,
+          "value": 0.6667
+        },
+        "M2_completion": {
+          "numerator": 15,
+          "denominator": 40,
+          "value": 0.375,
+          "distribution": {
+            "complete": 15,
+            "not_complete": 15,
+            "partial": 10
+          }
+        },
+        "M3_harmful": {
+          "numerator": 5,
+          "denominator": 40,
+          "value": 0.125
+        },
+        "M4_necessary_ask_preservation": {
+          "numerator": 0,
+          "denominator": 4,
+          "value": 0.0
+        },
+        "M5_critical": {
+          "numerator": 3,
+          "denominator": 40,
+          "value": 0.075
+        },
+        "validity": {
+          "numerator": 22,
+          "denominator": 40,
+          "value": 0.55
+        },
+        "completion_by_task": {
+          "KNOWLEDGE_QA": {
+            "numerator": 6,
+            "denominator": 10,
+            "value": 0.6,
+            "distribution": {
+              "complete": 6,
+              "not_complete": 1,
+              "partial": 3
+            },
+            "validity": {
+              "numerator": 9,
+              "denominator": 10,
+              "value": 0.9
+            }
+          },
+          "CAUSE_ASSESSMENT": {
+            "numerator": 4,
+            "denominator": 10,
+            "value": 0.4,
+            "distribution": {
+              "complete": 4,
+              "not_complete": 4,
+              "partial": 2
+            },
+            "validity": {
+              "numerator": 6,
+              "denominator": 10,
+              "value": 0.6
+            }
+          },
+          "PERSONALIZED_DECISION": {
+            "numerator": 2,
+            "denominator": 10,
+            "value": 0.2,
+            "distribution": {
+              "complete": 2,
+              "not_complete": 6,
+              "partial": 2
+            },
+            "validity": {
+              "numerator": 2,
+              "denominator": 10,
+              "value": 0.2
+            }
+          },
+          "DATA_ANALYSIS": {
+            "numerator": 3,
+            "denominator": 10,
+            "value": 0.3,
+            "distribution": {
+              "complete": 3,
+              "not_complete": 4,
+              "partial": 3
+            },
+            "validity": {
+              "numerator": 5,
+              "denominator": 10,
+              "value": 0.5
+            }
+          }
+        },
+        "ask_category_counts": {
+          "total": 12,
+          "necessary": 1,
+          "useful_but_optional": 3,
+          "redundant": 6,
+          "irrelevant": 2
+        },
+        "per_case": {
+          "ask": 0.3,
+          "retrieve": 0.775,
+          "read_diary": 0.25,
+          "tool_calls": 1.025,
+          "turns": 1.3,
+          "steps": 2.325
+        },
+        "latency_ms": {
+          "mean_ms": 10426.0578,
+          "median_ms": 10218.945,
+          "p90_nearest_rank_ms": 14739.09
+        },
+        "critical_case_ids": [
+          "V4-DA-01",
+          "V4-DA-06",
+          "V4-PD-01"
+        ],
+        "harmful_case_ids": [
+          "V4-CA-01",
+          "V4-PD-01",
+          "V4-PD-03",
+          "V4-PD-09",
+          "V4-PD-10"
+        ]
+      },
+      "frozen_aggregator_output": {
+        "aggregation_status": "DESCRIPTIVE_SINGLE_AI_REVIEWER_AGGREGATE",
+        "evaluation_id": "heldout-v4-step9_55a-treatment-v3-20260930-01",
+        "attempt_id": "attempt-step9_63c_r11-2312daefa1364bfd83ff3948d101c765",
+        "adjudicated_case_count": 40,
+        "valid_case_count": 40,
+        "needs_review_case_count": 0,
+        "task_distribution": {
+          "CAUSE_ASSESSMENT": 10,
+          "DATA_ANALYSIS": 10,
+          "KNOWLEDGE_QA": 10,
+          "PERSONALIZED_DECISION": 10
+        },
+        "scores": {
+          "overall": {
+            "numerator": 2905,
+            "denominator": 40,
+            "formula": "sum(case total_score)/number of adjudicated cases",
+            "source_case_ids": [
+              "V4-CA-01",
+              "V4-CA-02",
+              "V4-CA-03",
+              "V4-CA-04",
+              "V4-CA-05",
+              "V4-CA-06",
+              "V4-CA-07",
+              "V4-CA-08",
+              "V4-CA-09",
+              "V4-CA-10",
+              "V4-DA-01",
+              "V4-DA-02",
+              "V4-DA-03",
+              "V4-DA-04",
+              "V4-DA-05",
+              "V4-DA-06",
+              "V4-DA-07",
+              "V4-DA-08",
+              "V4-DA-09",
+              "V4-DA-10",
+              "V4-KQ-01",
+              "V4-KQ-02",
+              "V4-KQ-03",
+              "V4-KQ-04",
+              "V4-KQ-05",
+              "V4-KQ-06",
+              "V4-KQ-07",
+              "V4-KQ-08",
+              "V4-KQ-09",
+              "V4-KQ-10",
+              "V4-PD-01",
+              "V4-PD-02",
+              "V4-PD-03",
+              "V4-PD-04",
+              "V4-PD-05",
+              "V4-PD-06",
+              "V4-PD-07",
+              "V4-PD-08",
+              "V4-PD-09",
+              "V4-PD-10"
+            ],
+            "mean": 72.625,
+            "scale": "0-100 descriptive; no pass threshold"
+          },
+          "dimensions": {
+            "goal_alignment": {
+              "numerator": 436,
+              "denominator": 40,
+              "formula": "sum(case dimension_scores.goal_alignment)/number of adjudicated cases",
+              "source_case_ids": [
+                "V4-CA-01",
+                "V4-CA-02",
+                "V4-CA-03",
+                "V4-CA-04",
+                "V4-CA-05",
+                "V4-CA-06",
+                "V4-CA-07",
+                "V4-CA-08",
+                "V4-CA-09",
+                "V4-CA-10",
+                "V4-DA-01",
+                "V4-DA-02",
+                "V4-DA-03",
+                "V4-DA-04",
+                "V4-DA-05",
+                "V4-DA-06",
+                "V4-DA-07",
+                "V4-DA-08",
+                "V4-DA-09",
+                "V4-DA-10",
+                "V4-KQ-01",
+                "V4-KQ-02",
+                "V4-KQ-03",
+                "V4-KQ-04",
+                "V4-KQ-05",
+                "V4-KQ-06",
+                "V4-KQ-07",
+                "V4-KQ-08",
+                "V4-KQ-09",
+                "V4-KQ-10",
+                "V4-PD-01",
+                "V4-PD-02",
+                "V4-PD-03",
+                "V4-PD-04",
+                "V4-PD-05",
+                "V4-PD-06",
+                "V4-PD-07",
+                "V4-PD-08",
+                "V4-PD-09",
+                "V4-PD-10"
+              ],
+              "mean": 10.9,
+              "maximum": 20
+            },
+            "facts_state_integrity": {
+              "numerator": 692,
+              "denominator": 40,
+              "formula": "sum(case dimension_scores.facts_state_integrity)/number of adjudicated cases",
+              "source_case_ids": [
+                "V4-CA-01",
+                "V4-CA-02",
+                "V4-CA-03",
+                "V4-CA-04",
+                "V4-CA-05",
+                "V4-CA-06",
+                "V4-CA-07",
+                "V4-CA-08",
+                "V4-CA-09",
+                "V4-CA-10",
+                "V4-DA-01",
+                "V4-DA-02",
+                "V4-DA-03",
+                "V4-DA-04",
+                "V4-DA-05",
+                "V4-DA-06",
+                "V4-DA-07",
+                "V4-DA-08",
+                "V4-DA-09",
+                "V4-DA-10",
+                "V4-KQ-01",
+                "V4-KQ-02",
+                "V4-KQ-03",
+                "V4-KQ-04",
+                "V4-KQ-05",
+                "V4-KQ-06",
+                "V4-KQ-07",
+                "V4-KQ-08",
+                "V4-KQ-09",
+                "V4-KQ-10",
+                "V4-PD-01",
+                "V4-PD-02",
+                "V4-PD-03",
+                "V4-PD-04",
+                "V4-PD-05",
+                "V4-PD-06",
+                "V4-PD-07",
+                "V4-PD-08",
+                "V4-PD-09",
+                "V4-PD-10"
+              ],
+              "mean": 17.3,
+              "maximum": 20
+            },
+            "action_resource_selection": {
+              "numerator": 669,
+              "denominator": 40,
+              "formula": "sum(case dimension_scores.action_resource_selection)/number of adjudicated cases",
+              "source_case_ids": [
+                "V4-CA-01",
+                "V4-CA-02",
+                "V4-CA-03",
+                "V4-CA-04",
+                "V4-CA-05",
+                "V4-CA-06",
+                "V4-CA-07",
+                "V4-CA-08",
+                "V4-CA-09",
+                "V4-CA-10",
+                "V4-DA-01",
+                "V4-DA-02",
+                "V4-DA-03",
+                "V4-DA-04",
+                "V4-DA-05",
+                "V4-DA-06",
+                "V4-DA-07",
+                "V4-DA-08",
+                "V4-DA-09",
+                "V4-DA-10",
+                "V4-KQ-01",
+                "V4-KQ-02",
+                "V4-KQ-03",
+                "V4-KQ-04",
+                "V4-KQ-05",
+                "V4-KQ-06",
+                "V4-KQ-07",
+                "V4-KQ-08",
+                "V4-KQ-09",
+                "V4-KQ-10",
+                "V4-PD-01",
+                "V4-PD-02",
+                "V4-PD-03",
+                "V4-PD-04",
+                "V4-PD-05",
+                "V4-PD-06",
+                "V4-PD-07",
+                "V4-PD-08",
+                "V4-PD-09",
+                "V4-PD-10"
+              ],
+              "mean": 16.725,
+              "maximum": 20
+            },
+            "evidence_answer_scope": {
+              "numerator": 643,
+              "denominator": 40,
+              "formula": "sum(case dimension_scores.evidence_answer_scope)/number of adjudicated cases",
+              "source_case_ids": [
+                "V4-CA-01",
+                "V4-CA-02",
+                "V4-CA-03",
+                "V4-CA-04",
+                "V4-CA-05",
+                "V4-CA-06",
+                "V4-CA-07",
+                "V4-CA-08",
+                "V4-CA-09",
+                "V4-CA-10",
+                "V4-DA-01",
+                "V4-DA-02",
+                "V4-DA-03",
+                "V4-DA-04",
+                "V4-DA-05",
+                "V4-DA-06",
+                "V4-DA-07",
+                "V4-DA-08",
+                "V4-DA-09",
+                "V4-DA-10",
+                "V4-KQ-01",
+                "V4-KQ-02",
+                "V4-KQ-03",
+                "V4-KQ-04",
+                "V4-KQ-05",
+                "V4-KQ-06",
+                "V4-KQ-07",
+                "V4-KQ-08",
+                "V4-KQ-09",
+                "V4-KQ-10",
+                "V4-PD-01",
+                "V4-PD-02",
+                "V4-PD-03",
+                "V4-PD-04",
+                "V4-PD-05",
+                "V4-PD-06",
+                "V4-PD-07",
+                "V4-PD-08",
+                "V4-PD-09",
+                "V4-PD-10"
+              ],
+              "mean": 16.075,
+              "maximum": 25
+            },
+            "interaction_efficiency": {
+              "numerator": 465,
+              "denominator": 40,
+              "formula": "sum(case dimension_scores.interaction_efficiency)/number of adjudicated cases",
+              "source_case_ids": [
+                "V4-CA-01",
+                "V4-CA-02",
+                "V4-CA-03",
+                "V4-CA-04",
+                "V4-CA-05",
+                "V4-CA-06",
+                "V4-CA-07",
+                "V4-CA-08",
+                "V4-CA-09",
+                "V4-CA-10",
+                "V4-DA-01",
+                "V4-DA-02",
+                "V4-DA-03",
+                "V4-DA-04",
+                "V4-DA-05",
+                "V4-DA-06",
+                "V4-DA-07",
+                "V4-DA-08",
+                "V4-DA-09",
+                "V4-DA-10",
+                "V4-KQ-01",
+                "V4-KQ-02",
+                "V4-KQ-03",
+                "V4-KQ-04",
+                "V4-KQ-05",
+                "V4-KQ-06",
+                "V4-KQ-07",
+                "V4-KQ-08",
+                "V4-KQ-09",
+                "V4-KQ-10",
+                "V4-PD-01",
+                "V4-PD-02",
+                "V4-PD-03",
+                "V4-PD-04",
+                "V4-PD-05",
+                "V4-PD-06",
+                "V4-PD-07",
+                "V4-PD-08",
+                "V4-PD-09",
+                "V4-PD-10"
+              ],
+              "mean": 11.625,
+              "maximum": 15
+            }
+          },
+          "task_type_means": {
+            "KNOWLEDGE_QA": {
+              "numerator": 866,
+              "denominator": 10,
+              "formula": "sum(case total_score in task stratum)/number of adjudicated cases in task stratum",
+              "source_case_ids": [
+                "V4-KQ-01",
+                "V4-KQ-02",
+                "V4-KQ-03",
+                "V4-KQ-04",
+                "V4-KQ-05",
+                "V4-KQ-06",
+                "V4-KQ-07",
+                "V4-KQ-08",
+                "V4-KQ-09",
+                "V4-KQ-10"
+              ],
+              "mean": 86.6
+            },
+            "CAUSE_ASSESSMENT": {
+              "numerator": 775,
+              "denominator": 10,
+              "formula": "sum(case total_score in task stratum)/number of adjudicated cases in task stratum",
+              "source_case_ids": [
+                "V4-CA-01",
+                "V4-CA-02",
+                "V4-CA-03",
+                "V4-CA-04",
+                "V4-CA-05",
+                "V4-CA-06",
+                "V4-CA-07",
+                "V4-CA-08",
+                "V4-CA-09",
+                "V4-CA-10"
+              ],
+              "mean": 77.5
+            },
+            "PERSONALIZED_DECISION": {
+              "numerator": 522,
+              "denominator": 10,
+              "formula": "sum(case total_score in task stratum)/number of adjudicated cases in task stratum",
+              "source_case_ids": [
+                "V4-PD-01",
+                "V4-PD-02",
+                "V4-PD-03",
+                "V4-PD-04",
+                "V4-PD-05",
+                "V4-PD-06",
+                "V4-PD-07",
+                "V4-PD-08",
+                "V4-PD-09",
+                "V4-PD-10"
+              ],
+              "mean": 52.2
+            },
+            "DATA_ANALYSIS": {
+              "numerator": 742,
+              "denominator": 10,
+              "formula": "sum(case total_score in task stratum)/number of adjudicated cases in task stratum",
+              "source_case_ids": [
+                "V4-DA-01",
+                "V4-DA-02",
+                "V4-DA-03",
+                "V4-DA-04",
+                "V4-DA-05",
+                "V4-DA-06",
+                "V4-DA-07",
+                "V4-DA-08",
+                "V4-DA-09",
+                "V4-DA-10"
+              ],
+              "mean": 74.2
+            }
+          }
+        },
+        "completion_and_validity": {
+          "overall": {
+            "distribution": {
+              "complete": 15,
+              "not_complete": 15,
+              "partial": 10
+            },
+            "rate": {
+              "numerator": 15,
+              "denominator": 40,
+              "formula": "complete judgments / adjudicated cases",
+              "source_case_ids": [
+                "V4-CA-01",
+                "V4-CA-02",
+                "V4-CA-03",
+                "V4-CA-04",
+                "V4-CA-05",
+                "V4-CA-06",
+                "V4-CA-07",
+                "V4-CA-08",
+                "V4-CA-09",
+                "V4-CA-10",
+                "V4-DA-01",
+                "V4-DA-02",
+                "V4-DA-03",
+                "V4-DA-04",
+                "V4-DA-05",
+                "V4-DA-06",
+                "V4-DA-07",
+                "V4-DA-08",
+                "V4-DA-09",
+                "V4-DA-10",
+                "V4-KQ-01",
+                "V4-KQ-02",
+                "V4-KQ-03",
+                "V4-KQ-04",
+                "V4-KQ-05",
+                "V4-KQ-06",
+                "V4-KQ-07",
+                "V4-KQ-08",
+                "V4-KQ-09",
+                "V4-KQ-10",
+                "V4-PD-01",
+                "V4-PD-02",
+                "V4-PD-03",
+                "V4-PD-04",
+                "V4-PD-05",
+                "V4-PD-06",
+                "V4-PD-07",
+                "V4-PD-08",
+                "V4-PD-09",
+                "V4-PD-10"
+              ],
+              "value": 0.375
+            },
+            "validity_rate": {
+              "numerator": 22,
+              "denominator": 40,
+              "formula": "validity=true judgments / adjudicated cases",
+              "source_case_ids": [
+                "V4-CA-01",
+                "V4-CA-02",
+                "V4-CA-03",
+                "V4-CA-04",
+                "V4-CA-05",
+                "V4-CA-06",
+                "V4-CA-07",
+                "V4-CA-08",
+                "V4-CA-09",
+                "V4-CA-10",
+                "V4-DA-01",
+                "V4-DA-02",
+                "V4-DA-03",
+                "V4-DA-04",
+                "V4-DA-05",
+                "V4-DA-06",
+                "V4-DA-07",
+                "V4-DA-08",
+                "V4-DA-09",
+                "V4-DA-10",
+                "V4-KQ-01",
+                "V4-KQ-02",
+                "V4-KQ-03",
+                "V4-KQ-04",
+                "V4-KQ-05",
+                "V4-KQ-06",
+                "V4-KQ-07",
+                "V4-KQ-08",
+                "V4-KQ-09",
+                "V4-KQ-10",
+                "V4-PD-01",
+                "V4-PD-02",
+                "V4-PD-03",
+                "V4-PD-04",
+                "V4-PD-05",
+                "V4-PD-06",
+                "V4-PD-07",
+                "V4-PD-08",
+                "V4-PD-09",
+                "V4-PD-10"
+              ],
+              "value": 0.55
+            }
+          },
+          "by_task_type": {
+            "KNOWLEDGE_QA": {
+              "distribution": {
+                "complete": 6,
+                "not_complete": 1,
+                "partial": 3
+              },
+              "rate": {
+                "numerator": 6,
+                "denominator": 10,
+                "formula": "complete judgments / adjudicated cases",
+                "source_case_ids": [
+                  "V4-KQ-01",
+                  "V4-KQ-02",
+                  "V4-KQ-03",
+                  "V4-KQ-04",
+                  "V4-KQ-05",
+                  "V4-KQ-06",
+                  "V4-KQ-07",
+                  "V4-KQ-08",
+                  "V4-KQ-09",
+                  "V4-KQ-10"
+                ],
+                "value": 0.6
+              },
+              "validity_rate": {
+                "numerator": 9,
+                "denominator": 10,
+                "formula": "validity=true judgments / adjudicated cases",
+                "source_case_ids": [
+                  "V4-KQ-01",
+                  "V4-KQ-02",
+                  "V4-KQ-03",
+                  "V4-KQ-04",
+                  "V4-KQ-05",
+                  "V4-KQ-06",
+                  "V4-KQ-07",
+                  "V4-KQ-08",
+                  "V4-KQ-09",
+                  "V4-KQ-10"
+                ],
+                "value": 0.9
+              }
+            },
+            "CAUSE_ASSESSMENT": {
+              "distribution": {
+                "complete": 4,
+                "not_complete": 4,
+                "partial": 2
+              },
+              "rate": {
+                "numerator": 4,
+                "denominator": 10,
+                "formula": "complete judgments / adjudicated cases",
+                "source_case_ids": [
+                  "V4-CA-01",
+                  "V4-CA-02",
+                  "V4-CA-03",
+                  "V4-CA-04",
+                  "V4-CA-05",
+                  "V4-CA-06",
+                  "V4-CA-07",
+                  "V4-CA-08",
+                  "V4-CA-09",
+                  "V4-CA-10"
+                ],
+                "value": 0.4
+              },
+              "validity_rate": {
+                "numerator": 6,
+                "denominator": 10,
+                "formula": "validity=true judgments / adjudicated cases",
+                "source_case_ids": [
+                  "V4-CA-01",
+                  "V4-CA-02",
+                  "V4-CA-03",
+                  "V4-CA-04",
+                  "V4-CA-05",
+                  "V4-CA-06",
+                  "V4-CA-07",
+                  "V4-CA-08",
+                  "V4-CA-09",
+                  "V4-CA-10"
+                ],
+                "value": 0.6
+              }
+            },
+            "PERSONALIZED_DECISION": {
+              "distribution": {
+                "complete": 2,
+                "not_complete": 6,
+                "partial": 2
+              },
+              "rate": {
+                "numerator": 2,
+                "denominator": 10,
+                "formula": "complete judgments / adjudicated cases",
+                "source_case_ids": [
+                  "V4-PD-01",
+                  "V4-PD-02",
+                  "V4-PD-03",
+                  "V4-PD-04",
+                  "V4-PD-05",
+                  "V4-PD-06",
+                  "V4-PD-07",
+                  "V4-PD-08",
+                  "V4-PD-09",
+                  "V4-PD-10"
+                ],
+                "value": 0.2
+              },
+              "validity_rate": {
+                "numerator": 2,
+                "denominator": 10,
+                "formula": "validity=true judgments / adjudicated cases",
+                "source_case_ids": [
+                  "V4-PD-01",
+                  "V4-PD-02",
+                  "V4-PD-03",
+                  "V4-PD-04",
+                  "V4-PD-05",
+                  "V4-PD-06",
+                  "V4-PD-07",
+                  "V4-PD-08",
+                  "V4-PD-09",
+                  "V4-PD-10"
+                ],
+                "value": 0.2
+              }
+            },
+            "DATA_ANALYSIS": {
+              "distribution": {
+                "complete": 3,
+                "not_complete": 4,
+                "partial": 3
+              },
+              "rate": {
+                "numerator": 3,
+                "denominator": 10,
+                "formula": "complete judgments / adjudicated cases",
+                "source_case_ids": [
+                  "V4-DA-01",
+                  "V4-DA-02",
+                  "V4-DA-03",
+                  "V4-DA-04",
+                  "V4-DA-05",
+                  "V4-DA-06",
+                  "V4-DA-07",
+                  "V4-DA-08",
+                  "V4-DA-09",
+                  "V4-DA-10"
+                ],
+                "value": 0.3
+              },
+              "validity_rate": {
+                "numerator": 5,
+                "denominator": 10,
+                "formula": "validity=true judgments / adjudicated cases",
+                "source_case_ids": [
+                  "V4-DA-01",
+                  "V4-DA-02",
+                  "V4-DA-03",
+                  "V4-DA-04",
+                  "V4-DA-05",
+                  "V4-DA-06",
+                  "V4-DA-07",
+                  "V4-DA-08",
+                  "V4-DA-09",
+                  "V4-DA-10"
+                ],
+                "value": 0.5
+              }
+            }
+          }
+        },
+        "ask_quality": {
+          "TOTAL_ASK_COUNT": 12,
+          "NECESSARY_ASK_COUNT": 1,
+          "USEFUL_OPTIONAL_ASK_COUNT": 3,
+          "REDUNDANT_ASK_COUNT": 6,
+          "IRRELEVANT_ASK_COUNT": 2,
+          "category_counts": {
+            "irrelevant": 2,
+            "necessary": 1,
+            "redundant": 6,
+            "useful_but_optional": 3
+          },
+          "category_rates": {
+            "necessary": {
+              "numerator": 1,
+              "denominator": 12,
+              "formula": "necessary ASK events / all ASK events",
+              "source_case_ids": [
+                "V4-PD-09"
+              ],
+              "value": 0.0833
+            },
+            "useful_but_optional": {
+              "numerator": 3,
+              "denominator": 12,
+              "formula": "useful_but_optional ASK events / all ASK events",
+              "source_case_ids": [
+                "V4-CA-07",
+                "V4-PD-01",
+                "V4-PD-03"
+              ],
+              "value": 0.25
+            },
+            "redundant": {
+              "numerator": 6,
+              "denominator": 12,
+              "formula": "redundant ASK events / all ASK events",
+              "source_case_ids": [
+                "V4-CA-04",
+                "V4-PD-01",
+                "V4-PD-04",
+                "V4-PD-10"
+              ],
+              "value": 0.5
+            },
+            "irrelevant": {
+              "numerator": 2,
+              "denominator": 12,
+              "formula": "irrelevant ASK events / all ASK events",
+              "source_case_ids": [
+                "V4-CA-02",
+                "V4-PD-01"
+              ],
+              "value": 0.1667
+            }
+          },
+          "REDUNDANT_OR_IRRELEVANT_RATE": {
+            "numerator": 8,
+            "denominator": 12,
+            "formula": "(redundant + irrelevant ASK events) / all ASK events",
+            "source_case_ids": [
+              "V4-CA-01",
+              "V4-CA-02",
+              "V4-CA-03",
+              "V4-CA-04",
+              "V4-CA-05",
+              "V4-CA-06",
+              "V4-CA-07",
+              "V4-CA-08",
+              "V4-CA-09",
+              "V4-CA-10",
+              "V4-DA-01",
+              "V4-DA-02",
+              "V4-DA-03",
+              "V4-DA-04",
+              "V4-DA-05",
+              "V4-DA-06",
+              "V4-DA-07",
+              "V4-DA-08",
+              "V4-DA-09",
+              "V4-DA-10",
+              "V4-KQ-01",
+              "V4-KQ-02",
+              "V4-KQ-03",
+              "V4-KQ-04",
+              "V4-KQ-05",
+              "V4-KQ-06",
+              "V4-KQ-07",
+              "V4-KQ-08",
+              "V4-KQ-09",
+              "V4-KQ-10",
+              "V4-PD-01",
+              "V4-PD-02",
+              "V4-PD-03",
+              "V4-PD-04",
+              "V4-PD-05",
+              "V4-PD-06",
+              "V4-PD-07",
+              "V4-PD-08",
+              "V4-PD-09",
+              "V4-PD-10"
+            ],
+            "value": 0.6667
+          },
+          "NECESSARY_ASK_PRESERVATION_RATE": {
+            "numerator": 0,
+            "denominator": 4,
+            "formula": "acquired oracle-required targets / all oracle-required targets",
+            "source_case_ids": [
+              "V4-CA-01",
+              "V4-CA-02",
+              "V4-CA-03",
+              "V4-CA-04",
+              "V4-CA-05",
+              "V4-CA-06",
+              "V4-CA-07",
+              "V4-CA-08",
+              "V4-CA-09",
+              "V4-CA-10",
+              "V4-DA-01",
+              "V4-DA-02",
+              "V4-DA-03",
+              "V4-DA-04",
+              "V4-DA-05",
+              "V4-DA-06",
+              "V4-DA-07",
+              "V4-DA-08",
+              "V4-DA-09",
+              "V4-DA-10",
+              "V4-KQ-01",
+              "V4-KQ-02",
+              "V4-KQ-03",
+              "V4-KQ-04",
+              "V4-KQ-05",
+              "V4-KQ-06",
+              "V4-KQ-07",
+              "V4-KQ-08",
+              "V4-KQ-09",
+              "V4-KQ-10",
+              "V4-PD-01",
+              "V4-PD-02",
+              "V4-PD-03",
+              "V4-PD-04",
+              "V4-PD-05",
+              "V4-PD-06",
+              "V4-PD-07",
+              "V4-PD-08",
+              "V4-PD-09",
+              "V4-PD-10"
+            ],
+            "value": 0.0
+          }
+        },
+        "tool_resource_behavior": {
+          "counts": {
+            "RETRIEVE": 31,
+            "READ_DIARY": 10,
+            "ASK": 12,
+            "TOOL_CALL": 41
+          },
+          "per_case_means": {
+            "retrieve_per_case": {
+              "numerator": 31,
+              "denominator": 40,
+              "formula": "RETRIEVE actions / adjudicated cases",
+              "source_case_ids": [
+                "V4-CA-01",
+                "V4-CA-02",
+                "V4-CA-03",
+                "V4-CA-04",
+                "V4-CA-05",
+                "V4-CA-06",
+                "V4-CA-07",
+                "V4-CA-08",
+                "V4-CA-09",
+                "V4-CA-10",
+                "V4-DA-01",
+                "V4-DA-02",
+                "V4-DA-03",
+                "V4-DA-04",
+                "V4-DA-05",
+                "V4-DA-06",
+                "V4-DA-07",
+                "V4-DA-08",
+                "V4-DA-09",
+                "V4-DA-10",
+                "V4-KQ-01",
+                "V4-KQ-02",
+                "V4-KQ-03",
+                "V4-KQ-04",
+                "V4-KQ-05",
+                "V4-KQ-06",
+                "V4-KQ-07",
+                "V4-KQ-08",
+                "V4-KQ-09",
+                "V4-KQ-10",
+                "V4-PD-01",
+                "V4-PD-02",
+                "V4-PD-03",
+                "V4-PD-04",
+                "V4-PD-05",
+                "V4-PD-06",
+                "V4-PD-07",
+                "V4-PD-08",
+                "V4-PD-09",
+                "V4-PD-10"
+              ],
+              "value": 0.775
+            },
+            "read_diary_per_case": {
+              "numerator": 10,
+              "denominator": 40,
+              "formula": "READ_DIARY actions / adjudicated cases",
+              "source_case_ids": [
+                "V4-CA-01",
+                "V4-CA-02",
+                "V4-CA-03",
+                "V4-CA-04",
+                "V4-CA-05",
+                "V4-CA-06",
+                "V4-CA-07",
+                "V4-CA-08",
+                "V4-CA-09",
+                "V4-CA-10",
+                "V4-DA-01",
+                "V4-DA-02",
+                "V4-DA-03",
+                "V4-DA-04",
+                "V4-DA-05",
+                "V4-DA-06",
+                "V4-DA-07",
+                "V4-DA-08",
+                "V4-DA-09",
+                "V4-DA-10",
+                "V4-KQ-01",
+                "V4-KQ-02",
+                "V4-KQ-03",
+                "V4-KQ-04",
+                "V4-KQ-05",
+                "V4-KQ-06",
+                "V4-KQ-07",
+                "V4-KQ-08",
+                "V4-KQ-09",
+                "V4-KQ-10",
+                "V4-PD-01",
+                "V4-PD-02",
+                "V4-PD-03",
+                "V4-PD-04",
+                "V4-PD-05",
+                "V4-PD-06",
+                "V4-PD-07",
+                "V4-PD-08",
+                "V4-PD-09",
+                "V4-PD-10"
+              ],
+              "value": 0.25
+            },
+            "ask_per_case": {
+              "numerator": 12,
+              "denominator": 40,
+              "formula": "ASK actions / adjudicated cases",
+              "source_case_ids": [
+                "V4-CA-01",
+                "V4-CA-02",
+                "V4-CA-03",
+                "V4-CA-04",
+                "V4-CA-05",
+                "V4-CA-06",
+                "V4-CA-07",
+                "V4-CA-08",
+                "V4-CA-09",
+                "V4-CA-10",
+                "V4-DA-01",
+                "V4-DA-02",
+                "V4-DA-03",
+                "V4-DA-04",
+                "V4-DA-05",
+                "V4-DA-06",
+                "V4-DA-07",
+                "V4-DA-08",
+                "V4-DA-09",
+                "V4-DA-10",
+                "V4-KQ-01",
+                "V4-KQ-02",
+                "V4-KQ-03",
+                "V4-KQ-04",
+                "V4-KQ-05",
+                "V4-KQ-06",
+                "V4-KQ-07",
+                "V4-KQ-08",
+                "V4-KQ-09",
+                "V4-KQ-10",
+                "V4-PD-01",
+                "V4-PD-02",
+                "V4-PD-03",
+                "V4-PD-04",
+                "V4-PD-05",
+                "V4-PD-06",
+                "V4-PD-07",
+                "V4-PD-08",
+                "V4-PD-09",
+                "V4-PD-10"
+              ],
+              "value": 0.3
+            },
+            "tool_call_per_case": {
+              "numerator": 41,
+              "denominator": 40,
+              "formula": "TOOL_CALL actions / adjudicated cases",
+              "source_case_ids": [
+                "V4-CA-01",
+                "V4-CA-02",
+                "V4-CA-03",
+                "V4-CA-04",
+                "V4-CA-05",
+                "V4-CA-06",
+                "V4-CA-07",
+                "V4-CA-08",
+                "V4-CA-09",
+                "V4-CA-10",
+                "V4-DA-01",
+                "V4-DA-02",
+                "V4-DA-03",
+                "V4-DA-04",
+                "V4-DA-05",
+                "V4-DA-06",
+                "V4-DA-07",
+                "V4-DA-08",
+                "V4-DA-09",
+                "V4-DA-10",
+                "V4-KQ-01",
+                "V4-KQ-02",
+                "V4-KQ-03",
+                "V4-KQ-04",
+                "V4-KQ-05",
+                "V4-KQ-06",
+                "V4-KQ-07",
+                "V4-KQ-08",
+                "V4-KQ-09",
+                "V4-KQ-10",
+                "V4-PD-01",
+                "V4-PD-02",
+                "V4-PD-03",
+                "V4-PD-04",
+                "V4-PD-05",
+                "V4-PD-06",
+                "V4-PD-07",
+                "V4-PD-08",
+                "V4-PD-09",
+                "V4-PD-10"
+              ],
+              "value": 1.025
+            }
+          },
+          "ask_per_case": {
+            "numerator": 12,
+            "denominator": 40,
+            "formula": "ASK actions / adjudicated cases",
+            "source_case_ids": [
+              "V4-CA-01",
+              "V4-CA-02",
+              "V4-CA-03",
+              "V4-CA-04",
+              "V4-CA-05",
+              "V4-CA-06",
+              "V4-CA-07",
+              "V4-CA-08",
+              "V4-CA-09",
+              "V4-CA-10",
+              "V4-DA-01",
+              "V4-DA-02",
+              "V4-DA-03",
+              "V4-DA-04",
+              "V4-DA-05",
+              "V4-DA-06",
+              "V4-DA-07",
+              "V4-DA-08",
+              "V4-DA-09",
+              "V4-DA-10",
+              "V4-KQ-01",
+              "V4-KQ-02",
+              "V4-KQ-03",
+              "V4-KQ-04",
+              "V4-KQ-05",
+              "V4-KQ-06",
+              "V4-KQ-07",
+              "V4-KQ-08",
+              "V4-KQ-09",
+              "V4-KQ-10",
+              "V4-PD-01",
+              "V4-PD-02",
+              "V4-PD-03",
+              "V4-PD-04",
+              "V4-PD-05",
+              "V4-PD-06",
+              "V4-PD-07",
+              "V4-PD-08",
+              "V4-PD-09",
+              "V4-PD-10"
+            ],
+            "value": 0.3
+          },
+          "total_acquisition_actions_per_case": {
+            "numerator": 53,
+            "denominator": 40,
+            "formula": "(ASK + RETRIEVE + READ_DIARY) / adjudicated cases",
+            "source_case_ids": [
+              "V4-CA-01",
+              "V4-CA-02",
+              "V4-CA-03",
+              "V4-CA-04",
+              "V4-CA-05",
+              "V4-CA-06",
+              "V4-CA-07",
+              "V4-CA-08",
+              "V4-CA-09",
+              "V4-CA-10",
+              "V4-DA-01",
+              "V4-DA-02",
+              "V4-DA-03",
+              "V4-DA-04",
+              "V4-DA-05",
+              "V4-DA-06",
+              "V4-DA-07",
+              "V4-DA-08",
+              "V4-DA-09",
+              "V4-DA-10",
+              "V4-KQ-01",
+              "V4-KQ-02",
+              "V4-KQ-03",
+              "V4-KQ-04",
+              "V4-KQ-05",
+              "V4-KQ-06",
+              "V4-KQ-07",
+              "V4-KQ-08",
+              "V4-KQ-09",
+              "V4-KQ-10",
+              "V4-PD-01",
+              "V4-PD-02",
+              "V4-PD-03",
+              "V4-PD-04",
+              "V4-PD-05",
+              "V4-PD-06",
+              "V4-PD-07",
+              "V4-PD-08",
+              "V4-PD-09",
+              "V4-PD-10"
+            ],
+            "value": 1.325
+          },
+          "appropriateness_judgments": {
+            "RETRIEVE": {
+              "irrelevant": 2,
+              "redundant": 2,
+              "required": 27
+            },
+            "READ_DIARY": {
+              "required": 10
+            }
+          },
+          "quality_note": "Tool counts are behavior telemetry, not quality scores; appropriateness remains separate reviewer judgment."
+        },
+        "efficiency": {
+          "turns_per_case": {
+            "numerator": 52,
+            "denominator": 40,
+            "formula": "sum(turn_count)/n cases",
+            "source_case_ids": [
+              "V4-CA-01",
+              "V4-CA-02",
+              "V4-CA-03",
+              "V4-CA-04",
+              "V4-CA-05",
+              "V4-CA-06",
+              "V4-CA-07",
+              "V4-CA-08",
+              "V4-CA-09",
+              "V4-CA-10",
+              "V4-DA-01",
+              "V4-DA-02",
+              "V4-DA-03",
+              "V4-DA-04",
+              "V4-DA-05",
+              "V4-DA-06",
+              "V4-DA-07",
+              "V4-DA-08",
+              "V4-DA-09",
+              "V4-DA-10",
+              "V4-KQ-01",
+              "V4-KQ-02",
+              "V4-KQ-03",
+              "V4-KQ-04",
+              "V4-KQ-05",
+              "V4-KQ-06",
+              "V4-KQ-07",
+              "V4-KQ-08",
+              "V4-KQ-09",
+              "V4-KQ-10",
+              "V4-PD-01",
+              "V4-PD-02",
+              "V4-PD-03",
+              "V4-PD-04",
+              "V4-PD-05",
+              "V4-PD-06",
+              "V4-PD-07",
+              "V4-PD-08",
+              "V4-PD-09",
+              "V4-PD-10"
+            ],
+            "mean": 1.3
+          },
+          "steps_per_case": {
+            "numerator": 93,
+            "denominator": 40,
+            "formula": "sum(step_count)/n cases",
+            "source_case_ids": [
+              "V4-CA-01",
+              "V4-CA-02",
+              "V4-CA-03",
+              "V4-CA-04",
+              "V4-CA-05",
+              "V4-CA-06",
+              "V4-CA-07",
+              "V4-CA-08",
+              "V4-CA-09",
+              "V4-CA-10",
+              "V4-DA-01",
+              "V4-DA-02",
+              "V4-DA-03",
+              "V4-DA-04",
+              "V4-DA-05",
+              "V4-DA-06",
+              "V4-DA-07",
+              "V4-DA-08",
+              "V4-DA-09",
+              "V4-DA-10",
+              "V4-KQ-01",
+              "V4-KQ-02",
+              "V4-KQ-03",
+              "V4-KQ-04",
+              "V4-KQ-05",
+              "V4-KQ-06",
+              "V4-KQ-07",
+              "V4-KQ-08",
+              "V4-KQ-09",
+              "V4-KQ-10",
+              "V4-PD-01",
+              "V4-PD-02",
+              "V4-PD-03",
+              "V4-PD-04",
+              "V4-PD-05",
+              "V4-PD-06",
+              "V4-PD-07",
+              "V4-PD-08",
+              "V4-PD-09",
+              "V4-PD-10"
+            ],
+            "mean": 2.325
+          },
+          "tool_calls_per_case": {
+            "numerator": 41,
+            "denominator": 40,
+            "formula": "sum(actual RETRIEVE+READ_DIARY calls)/n cases; ASK excluded",
+            "source_case_ids": [
+              "V4-CA-01",
+              "V4-CA-02",
+              "V4-CA-03",
+              "V4-CA-04",
+              "V4-CA-05",
+              "V4-CA-06",
+              "V4-CA-07",
+              "V4-CA-08",
+              "V4-CA-09",
+              "V4-CA-10",
+              "V4-DA-01",
+              "V4-DA-02",
+              "V4-DA-03",
+              "V4-DA-04",
+              "V4-DA-05",
+              "V4-DA-06",
+              "V4-DA-07",
+              "V4-DA-08",
+              "V4-DA-09",
+              "V4-DA-10",
+              "V4-KQ-01",
+              "V4-KQ-02",
+              "V4-KQ-03",
+              "V4-KQ-04",
+              "V4-KQ-05",
+              "V4-KQ-06",
+              "V4-KQ-07",
+              "V4-KQ-08",
+              "V4-KQ-09",
+              "V4-KQ-10",
+              "V4-PD-01",
+              "V4-PD-02",
+              "V4-PD-03",
+              "V4-PD-04",
+              "V4-PD-05",
+              "V4-PD-06",
+              "V4-PD-07",
+              "V4-PD-08",
+              "V4-PD-09",
+              "V4-PD-10"
+            ],
+            "mean": 1.025
+          },
+          "latency_ms": {
+            "overall": {
+              "mean_ms": 10426.0578,
+              "median_ms": 10218.945,
+              "p90_nearest_rank_ms": 14739.09,
+              "n": 40,
+              "formula": "mean=sum(latency_ms)/n; median=statistics.median; p90=sorted[ceil(0.9*n)-1]",
+              "source_case_ids": [
+                "V4-CA-01",
+                "V4-CA-02",
+                "V4-CA-03",
+                "V4-CA-04",
+                "V4-CA-05",
+                "V4-CA-06",
+                "V4-CA-07",
+                "V4-CA-08",
+                "V4-CA-09",
+                "V4-CA-10",
+                "V4-DA-01",
+                "V4-DA-02",
+                "V4-DA-03",
+                "V4-DA-04",
+                "V4-DA-05",
+                "V4-DA-06",
+                "V4-DA-07",
+                "V4-DA-08",
+                "V4-DA-09",
+                "V4-DA-10",
+                "V4-KQ-01",
+                "V4-KQ-02",
+                "V4-KQ-03",
+                "V4-KQ-04",
+                "V4-KQ-05",
+                "V4-KQ-06",
+                "V4-KQ-07",
+                "V4-KQ-08",
+                "V4-KQ-09",
+                "V4-KQ-10",
+                "V4-PD-01",
+                "V4-PD-02",
+                "V4-PD-03",
+                "V4-PD-04",
+                "V4-PD-05",
+                "V4-PD-06",
+                "V4-PD-07",
+                "V4-PD-08",
+                "V4-PD-09",
+                "V4-PD-10"
+              ]
+            },
+            "by_task_type": {
+              "KNOWLEDGE_QA": {
+                "mean_ms": 16025.352,
+                "median_ms": 12212.37,
+                "p90_nearest_rank_ms": 15298.5,
+                "n": 10,
+                "formula": "mean=sum(latency_ms)/n; median=statistics.median; p90=sorted[ceil(0.9*n)-1]",
+                "source_case_ids": [
+                  "V4-KQ-01",
+                  "V4-KQ-02",
+                  "V4-KQ-03",
+                  "V4-KQ-04",
+                  "V4-KQ-05",
+                  "V4-KQ-06",
+                  "V4-KQ-07",
+                  "V4-KQ-08",
+                  "V4-KQ-09",
+                  "V4-KQ-10"
+                ]
+              },
+              "CAUSE_ASSESSMENT": {
+                "mean_ms": 10929.057,
+                "median_ms": 10202.9,
+                "p90_nearest_rank_ms": 11620.18,
+                "n": 10,
+                "formula": "mean=sum(latency_ms)/n; median=statistics.median; p90=sorted[ceil(0.9*n)-1]",
+                "source_case_ids": [
+                  "V4-CA-01",
+                  "V4-CA-02",
+                  "V4-CA-03",
+                  "V4-CA-04",
+                  "V4-CA-05",
+                  "V4-CA-06",
+                  "V4-CA-07",
+                  "V4-CA-08",
+                  "V4-CA-09",
+                  "V4-CA-10"
+                ]
+              },
+              "PERSONALIZED_DECISION": {
+                "mean_ms": 11273.831,
+                "median_ms": 11773.91,
+                "p90_nearest_rank_ms": 14109.4,
+                "n": 10,
+                "formula": "mean=sum(latency_ms)/n; median=statistics.median; p90=sorted[ceil(0.9*n)-1]",
+                "source_case_ids": [
+                  "V4-PD-01",
+                  "V4-PD-02",
+                  "V4-PD-03",
+                  "V4-PD-04",
+                  "V4-PD-05",
+                  "V4-PD-06",
+                  "V4-PD-07",
+                  "V4-PD-08",
+                  "V4-PD-09",
+                  "V4-PD-10"
+                ]
+              },
+              "DATA_ANALYSIS": {
+                "mean_ms": 3475.991,
+                "median_ms": 3157.755,
+                "p90_nearest_rank_ms": 4179.64,
+                "n": 10,
+                "formula": "mean=sum(latency_ms)/n; median=statistics.median; p90=sorted[ceil(0.9*n)-1]",
+                "source_case_ids": [
+                  "V4-DA-01",
+                  "V4-DA-02",
+                  "V4-DA-03",
+                  "V4-DA-04",
+                  "V4-DA-05",
+                  "V4-DA-06",
+                  "V4-DA-07",
+                  "V4-DA-08",
+                  "V4-DA-09",
+                  "V4-DA-10"
+                ]
+              }
+            }
+          }
+        },
+        "failures": {
+          "CRITICAL_FAILURE_COUNT": 3,
+          "CRITICAL_FAILURE_CASE_IDS": [
+            "V4-DA-01",
+            "V4-DA-06",
+            "V4-PD-01"
+          ],
+          "HARMFUL_FAILURE_COUNT": 5,
+          "HARMFUL_FAILURE_CASE_IDS": [
+            "V4-CA-01",
+            "V4-PD-01",
+            "V4-PD-03",
+            "V4-PD-09",
+            "V4-PD-10"
+          ],
+          "primary_cause_root_cause_distribution": {
+            "ACTION_SELECTION": 6,
+            "ANSWER_GENERATION": 21,
+            "EVIDENCE_AVAILABILITY": 3,
+            "INPUT_UNDERSTANDING": 10
+          },
+          "primary_cause_case_ids": {
+            "ANSWER_GENERATION": {
+              "count": 21,
+              "case_ids": [
+                "V4-CA-03",
+                "V4-CA-05",
+                "V4-CA-06",
+                "V4-CA-09",
+                "V4-CA-10",
+                "V4-DA-01",
+                "V4-DA-02",
+                "V4-DA-03",
+                "V4-DA-04",
+                "V4-DA-05",
+                "V4-DA-06",
+                "V4-DA-08",
+                "V4-DA-09",
+                "V4-KQ-01",
+                "V4-KQ-02",
+                "V4-KQ-03",
+                "V4-KQ-04",
+                "V4-KQ-05",
+                "V4-KQ-06",
+                "V4-KQ-07",
+                "V4-KQ-08"
+              ]
+            },
+            "EVIDENCE_AVAILABILITY": {
+              "count": 3,
+              "case_ids": [
+                "V4-CA-08",
+                "V4-KQ-09",
+                "V4-KQ-10"
+              ]
+            },
+            "ACTION_SELECTION": {
+              "count": 6,
+              "case_ids": [
+                "V4-CA-01",
+                "V4-CA-04",
+                "V4-CA-07",
+                "V4-DA-07",
+                "V4-DA-10",
+                "V4-PD-02"
+              ]
+            },
+            "INPUT_UNDERSTANDING": {
+              "count": 10,
+              "case_ids": [
+                "V4-CA-02",
+                "V4-PD-01",
+                "V4-PD-03",
+                "V4-PD-04",
+                "V4-PD-05",
+                "V4-PD-06",
+                "V4-PD-07",
+                "V4-PD-08",
+                "V4-PD-09",
+                "V4-PD-10"
+              ]
+            }
+          },
+          "first_divergence_layer_distribution": {
+            "/final_answer": 21,
+            "/state_history/2/evidence": 2,
+            "/turns/0/state_history/0": 10,
+            "/turns/0/state_history/1": 4,
+            "/turns/0/state_history/2/evidence": 1,
+            "/turns/0/state_history/3": 2
+          },
+          "first_divergence_case_ids": {
+            "/final_answer": {
+              "count": 21,
+              "case_ids": [
+                "V4-CA-03",
+                "V4-CA-05",
+                "V4-CA-06",
+                "V4-CA-09",
+                "V4-CA-10",
+                "V4-DA-01",
+                "V4-DA-02",
+                "V4-DA-03",
+                "V4-DA-04",
+                "V4-DA-05",
+                "V4-DA-06",
+                "V4-DA-08",
+                "V4-DA-09",
+                "V4-KQ-01",
+                "V4-KQ-02",
+                "V4-KQ-03",
+                "V4-KQ-04",
+                "V4-KQ-05",
+                "V4-KQ-06",
+                "V4-KQ-07",
+                "V4-KQ-08"
+              ]
+            },
+            "/state_history/2/evidence": {
+              "count": 2,
+              "case_ids": [
+                "V4-KQ-09",
+                "V4-KQ-10"
+              ]
+            },
+            "/turns/0/state_history/1": {
+              "count": 4,
+              "case_ids": [
+                "V4-CA-01",
+                "V4-CA-04",
+                "V4-CA-07",
+                "V4-PD-02"
+              ]
+            },
+            "/turns/0/state_history/0": {
+              "count": 10,
+              "case_ids": [
+                "V4-CA-02",
+                "V4-PD-01",
+                "V4-PD-03",
+                "V4-PD-04",
+                "V4-PD-05",
+                "V4-PD-06",
+                "V4-PD-07",
+                "V4-PD-08",
+                "V4-PD-09",
+                "V4-PD-10"
+              ]
+            },
+            "/turns/0/state_history/2/evidence": {
+              "count": 1,
+              "case_ids": [
+                "V4-CA-08"
+              ]
+            },
+            "/turns/0/state_history/3": {
+              "count": 2,
+              "case_ids": [
+                "V4-DA-07",
+                "V4-DA-10"
+              ]
+            }
+          },
+          "downstream_effect_distribution": {
+            "ACTION_SELECTION": 6,
+            "EFFICIENCY": 19,
+            "EVIDENCE_SCOPE": 25,
+            "FACTS_STATE": 2,
+            "GOAL_ALIGNMENT": 26,
+            "STATE_INTEGRITY": 5
+          }
+        },
+        "lineage": {
+          "FORMAL_LINEAGE_READY": 28,
+          "DERIVED_LINEAGE_COMPLETE": 8,
+          "INCOMPLETE_FORMAL_BUT_ADJUDICATABLE": 4,
+          "interpretation": "Provenance metrics only; derived repairs remain derived, and incomplete formal cases remain incomplete. No score adjustment."
+        },
+        "reviewer_limitations": {
+          "reviewer_type": "SINGLE_AI_REVIEWER",
+          "human_adjudication": false,
+          "inter_rater_reliability": "NOT_MEASURED",
+          "deterministic_consistency_checks": "PASS_SINGLE_REVIEWER_DETERMINISTIC_CHECKS",
+          "interpretation": "Rubric scores are single-reviewer descriptive judgments; they are not human/expert review or inter-rater validated."
+        },
+        "historical_comparability": {
+          "status": "NOT_COMPARABLE",
+          "reason": "V4 is a distinct case set and uses a single AI reviewer; the metric registry identifies V2 as non-paired development data and V3 as consumed historical held-out data. Historical scores were not loaded or compared."
+        },
+        "OVERALL_PASS_THRESHOLD": "NOT_DEFINED",
+        "token_usage_status": "NOT_MEASURED",
+        "final_status_note": "final_status=ANSWER is execution telemetry and is not substituted for completion judgment."
+      }
+    },
+    "Codex_x_9_28": {
+      "source": "locked baseline; not re-adjudicated",
+      "summary": {
+        "overall_mean": 70.5,
+        "task_means": {
+          "KNOWLEDGE_QA": 82.2,
+          "CAUSE_ASSESSMENT": 59.1,
+          "PERSONALIZED_DECISION": 62.6,
+          "DATA_ANALYSIS": 78.1
+        },
+        "dimension_means": {
+          "action_resource_selection": 13.9,
+          "evidence_answer_scope": 15.5,
+          "facts_state_integrity": 16.1,
+          "goal_alignment": 13.675,
+          "interaction_efficiency": 11.325
+        },
+        "M1_low_value_ask_rate": {
+          "numerator": 9,
+          "denominator": 9,
+          "value": 1.0
+        },
+        "M2_completion": {
+          "numerator": 16,
+          "denominator": 40,
+          "value": 0.4,
+          "distribution": {
+            "complete": 16,
+            "not_complete": 3,
+            "partial": 21
+          }
+        },
+        "M3_harmful": {
+          "numerator": 16,
+          "denominator": 40,
+          "value": 0.4
+        },
+        "M4_necessary_ask_preservation": {
+          "numerator": 1,
+          "denominator": 4,
+          "value": 0.25
+        },
+        "M5_critical": {
+          "numerator": 0,
+          "denominator": 40,
+          "value": 0.0
+        },
+        "validity": {
+          "numerator": 37,
+          "denominator": 40,
+          "value": 0.925
+        },
+        "completion_by_task": {
+          "KNOWLEDGE_QA": {
+            "numerator": 8,
+            "denominator": 10,
+            "value": 0.8,
+            "distribution": {
+              "complete": 8,
+              "partial": 2
+            },
+            "validity": {
+              "numerator": 10,
+              "denominator": 10,
+              "value": 1.0
+            }
+          },
+          "CAUSE_ASSESSMENT": {
+            "numerator": 1,
+            "denominator": 10,
+            "value": 0.1,
+            "distribution": {
+              "complete": 1,
+              "partial": 9
+            },
+            "validity": {
+              "numerator": 10,
+              "denominator": 10,
+              "value": 1.0
+            }
+          },
+          "PERSONALIZED_DECISION": {
+            "numerator": 2,
+            "denominator": 10,
+            "value": 0.2,
+            "distribution": {
+              "complete": 2,
+              "partial": 8
+            },
+            "validity": {
+              "numerator": 10,
+              "denominator": 10,
+              "value": 1.0
+            }
+          },
+          "DATA_ANALYSIS": {
+            "numerator": 5,
+            "denominator": 10,
+            "value": 0.5,
+            "distribution": {
+              "complete": 5,
+              "not_complete": 3,
+              "partial": 2
+            },
+            "validity": {
+              "numerator": 7,
+              "denominator": 10,
+              "value": 0.7
+            }
+          }
+        },
+        "ask_category_counts": {
+          "total": 9,
+          "necessary": 0,
+          "useful_but_optional": 0,
+          "redundant": 1,
+          "irrelevant": 8
+        },
+        "per_case": {
+          "ask": 0.225,
+          "retrieve": 0.325,
+          "read_diary": 0.25,
+          "tool_calls": 0.575,
+          "turns": 1.225,
+          "steps": 1.8
+        },
+        "latency_ms": {
+          "mean_ms": 6453.3615,
+          "median_ms": 3251.395,
+          "p90_nearest_rank_ms": 11380.62
+        },
+        "critical_case_ids": [],
+        "harmful_case_ids": [
+          "V4-CA-01",
+          "V4-CA-02",
+          "V4-CA-03",
+          "V4-CA-05",
+          "V4-CA-06",
+          "V4-CA-07",
+          "V4-CA-09",
+          "V4-CA-10",
+          "V4-PD-01",
+          "V4-PD-03",
+          "V4-PD-05",
+          "V4-PD-06",
+          "V4-PD-07",
+          "V4-PD-08",
+          "V4-PD-09",
+          "V4-PD-10"
+        ]
+      }
+    }
+  },
+  "metrics_2x2_values": {
+    "Claude": {
+      "v3": {
+        "M1_low_value_ask_rate": 0.6667,
+        "M2_completion": 0.45,
+        "M3_harmful": 0.1,
+        "M4_necessary_ask_preservation": 0.0,
+        "M5_critical": 0.0,
+        "validity": 0.625,
+        "overall_mean": 69.675,
+        "KNOWLEDGE_QA": 91.6,
+        "CAUSE_ASSESSMENT": 68.1,
+        "PERSONALIZED_DECISION": 46.0,
+        "DATA_ANALYSIS": 73.0
+      },
+      "9.28": {
+        "M1_low_value_ask_rate": 0.8889,
+        "M2_completion": 0.375,
+        "M3_harmful": 0.4,
+        "M4_necessary_ask_preservation": 0.0,
+        "M5_critical": 0.0,
+        "validity": 0.525,
+        "overall_mean": 66.625,
+        "KNOWLEDGE_QA": 93.9,
+        "CAUSE_ASSESSMENT": 47.6,
+        "PERSONALIZED_DECISION": 46.8,
+        "DATA_ANALYSIS": 78.2
+      }
+    },
+    "Codex": {
+      "v3": {
+        "M1_low_value_ask_rate": 0.6667,
+        "M2_completion": 0.375,
+        "M3_harmful": 0.125,
+        "M4_necessary_ask_preservation": 0.0,
+        "M5_critical": 0.075,
+        "validity": 0.55,
+        "overall_mean": 72.625,
+        "KNOWLEDGE_QA": 86.6,
+        "CAUSE_ASSESSMENT": 77.5,
+        "PERSONALIZED_DECISION": 52.2,
+        "DATA_ANALYSIS": 74.2
+      },
+      "9.28": {
+        "M1_low_value_ask_rate": 1.0,
+        "M2_completion": 0.4,
+        "M3_harmful": 0.4,
+        "M4_necessary_ask_preservation": 0.25,
+        "M5_critical": 0.0,
+        "validity": 0.925,
+        "overall_mean": 70.5,
+        "KNOWLEDGE_QA": 82.2,
+        "CAUSE_ASSESSMENT": 59.1,
+        "PERSONALIZED_DECISION": 62.6,
+        "DATA_ANALYSIS": 78.1
+      }
+    }
+  },
+  "robustness": {
+    "M1_low_value_ask_rate": {
+      "claude_delta": -0.2222,
+      "codex_delta": -0.3333,
+      "claude_direction": "negative",
+      "codex_direction": "negative",
+      "judgment": "对评审者稳健"
+    },
+    "M2_completion": {
+      "claude_delta": 0.075,
+      "codex_delta": -0.025,
+      "claude_direction": "positive",
+      "codex_direction": "negative",
+      "judgment": "受评审者影响，不确定"
+    },
+    "M3_harmful": {
+      "claude_delta": -0.3,
+      "codex_delta": -0.275,
+      "claude_direction": "negative",
+      "codex_direction": "negative",
+      "judgment": "对评审者稳健"
+    },
+    "M4_necessary_ask_preservation": {
+      "claude_delta": 0.0,
+      "codex_delta": -0.25,
+      "claude_direction": "zero",
+      "codex_direction": "negative",
+      "judgment": "受评审者影响，不确定"
+    },
+    "M5_critical": {
+      "claude_delta": 0.0,
+      "codex_delta": 0.075,
+      "claude_direction": "zero",
+      "codex_direction": "positive",
+      "judgment": "受评审者影响，不确定"
+    },
+    "validity": {
+      "claude_delta": 0.1,
+      "codex_delta": -0.375,
+      "claude_direction": "positive",
+      "codex_direction": "negative",
+      "judgment": "受评审者影响，不确定"
+    },
+    "overall_mean": {
+      "claude_delta": 3.05,
+      "codex_delta": 2.125,
+      "claude_direction": "positive",
+      "codex_direction": "positive",
+      "judgment": "对评审者稳健"
+    },
+    "KNOWLEDGE_QA": {
+      "claude_delta": -2.3,
+      "codex_delta": 4.4,
+      "claude_direction": "negative",
+      "codex_direction": "positive",
+      "judgment": "受评审者影响，不确定"
+    },
+    "CAUSE_ASSESSMENT": {
+      "claude_delta": 20.5,
+      "codex_delta": 18.4,
+      "claude_direction": "positive",
+      "codex_direction": "positive",
+      "judgment": "对评审者稳健"
+    },
+    "PERSONALIZED_DECISION": {
+      "claude_delta": -0.8,
+      "codex_delta": -10.4,
+      "claude_direction": "negative",
+      "codex_direction": "negative",
+      "judgment": "对评审者稳健"
+    },
+    "DATA_ANALYSIS": {
+      "claude_delta": -5.2,
+      "codex_delta": -3.9,
+      "claude_direction": "negative",
+      "codex_direction": "negative",
+      "judgment": "对评审者稳健"
+    }
+  },
+  "agreement": {
+    "v3_main_vs_A": {
+      "signed_difference_convention": "A minus MAIN",
+      "exact_agreement": {
+        "completion_three_way": {
+          "agreements": 34,
+          "denominator": 40,
+          "discordant_case_ids": [
+            "V4-CA-05",
+            "V4-CA-08",
+            "V4-DA-01",
+            "V4-DA-10",
+            "V4-KQ-10",
+            "V4-PD-09"
+          ]
+        },
+        "completion_binary": {
+          "agreements": 35,
+          "denominator": 40,
+          "discordant_case_ids": [
+            "V4-CA-05",
+            "V4-CA-08",
+            "V4-DA-10",
+            "V4-KQ-10",
+            "V4-PD-09"
+          ]
+        },
+        "validity": {
+          "agreements": 35,
+          "denominator": 40,
+          "discordant_case_ids": [
+            "V4-DA-08",
+            "V4-KQ-04",
+            "V4-KQ-09",
+            "V4-PD-01",
+            "V4-PD-09"
+          ]
+        },
+        "harmful": {
+          "agreements": 39,
+          "denominator": 40,
+          "discordant_case_ids": [
+            "V4-PD-09"
+          ]
+        },
+        "critical": {
+          "agreements": 37,
+          "denominator": 40,
+          "discordant_case_ids": [
+            "V4-DA-01",
+            "V4-DA-06",
+            "V4-PD-01"
+          ]
+        },
+        "ask_category_counts": {
+          "agreements": 40,
+          "denominator": 40,
+          "discordant_case_ids": []
+        }
+      },
+      "total_score": {
+        "exact_agreement_count": 4,
+        "discordant_case_ids": [
+          "V4-CA-01",
+          "V4-CA-02",
+          "V4-CA-03",
+          "V4-CA-04",
+          "V4-CA-05",
+          "V4-CA-06",
+          "V4-CA-08",
+          "V4-CA-09",
+          "V4-DA-01",
+          "V4-DA-02",
+          "V4-DA-03",
+          "V4-DA-04",
+          "V4-DA-05",
+          "V4-DA-06",
+          "V4-DA-07",
+          "V4-DA-08",
+          "V4-DA-09",
+          "V4-KQ-01",
+          "V4-KQ-02",
+          "V4-KQ-03",
+          "V4-KQ-04",
+          "V4-KQ-05",
+          "V4-KQ-07",
+          "V4-KQ-08",
+          "V4-KQ-09",
+          "V4-KQ-10",
+          "V4-PD-01",
+          "V4-PD-02",
+          "V4-PD-03",
+          "V4-PD-04",
+          "V4-PD-05",
+          "V4-PD-06",
+          "V4-PD-07",
+          "V4-PD-08",
+          "V4-PD-09",
+          "V4-PD-10"
+        ],
+        "mean_absolute_difference": 8.65,
+        "mean_signed_difference": 2.95
+      },
+      "dimension_mean_absolute_difference": {
+        "action_resource_selection": 1.425,
+        "evidence_answer_scope": 3.775,
+        "facts_state_integrity": 2.275,
+        "goal_alignment": 1.6,
+        "interaction_efficiency": 2.525
+      }
+    },
+    "run_9_28_B_vs_locked_baseline": {
+      "signed_difference_convention": "B minus locked baseline; descriptive only",
+      "exact_agreement": {
+        "completion_three_way": {
+          "agreements": 22,
+          "denominator": 40,
+          "discordant_case_ids": [
+            "V4-CA-01",
+            "V4-CA-02",
+            "V4-CA-03",
+            "V4-CA-04",
+            "V4-CA-05",
+            "V4-CA-06",
+            "V4-CA-07",
+            "V4-CA-09",
+            "V4-CA-10",
+            "V4-DA-03",
+            "V4-DA-08",
+            "V4-DA-10",
+            "V4-PD-01",
+            "V4-PD-03",
+            "V4-PD-05",
+            "V4-PD-06",
+            "V4-PD-08",
+            "V4-PD-09"
+          ]
+        },
+        "completion_binary": {
+          "agreements": 37,
+          "denominator": 40,
+          "discordant_case_ids": [
+            "V4-DA-03",
+            "V4-DA-08",
+            "V4-DA-10"
+          ]
+        },
+        "validity": {
+          "agreements": 24,
+          "denominator": 40,
+          "discordant_case_ids": [
+            "V4-CA-01",
+            "V4-CA-02",
+            "V4-CA-03",
+            "V4-CA-04",
+            "V4-CA-05",
+            "V4-CA-06",
+            "V4-CA-07",
+            "V4-CA-09",
+            "V4-CA-10",
+            "V4-DA-01",
+            "V4-PD-01",
+            "V4-PD-03",
+            "V4-PD-05",
+            "V4-PD-06",
+            "V4-PD-08",
+            "V4-PD-09"
+          ]
+        },
+        "harmful": {
+          "agreements": 40,
+          "denominator": 40,
+          "discordant_case_ids": []
+        },
+        "critical": {
+          "agreements": 40,
+          "denominator": 40,
+          "discordant_case_ids": []
+        },
+        "ask_category_counts": {
+          "agreements": 34,
+          "denominator": 40,
+          "discordant_case_ids": [
+            "V4-CA-02",
+            "V4-CA-04",
+            "V4-PD-03",
+            "V4-PD-05",
+            "V4-PD-06",
+            "V4-PD-10"
+          ]
+        }
+      },
+      "total_score": {
+        "exact_agreement_count": 1,
+        "discordant_case_ids": [
+          "V4-CA-01",
+          "V4-CA-02",
+          "V4-CA-03",
+          "V4-CA-04",
+          "V4-CA-05",
+          "V4-CA-06",
+          "V4-CA-07",
+          "V4-CA-08",
+          "V4-CA-09",
+          "V4-CA-10",
+          "V4-DA-01",
+          "V4-DA-02",
+          "V4-DA-03",
+          "V4-DA-04",
+          "V4-DA-05",
+          "V4-DA-06",
+          "V4-DA-07",
+          "V4-DA-08",
+          "V4-DA-09",
+          "V4-DA-10",
+          "V4-KQ-01",
+          "V4-KQ-02",
+          "V4-KQ-03",
+          "V4-KQ-04",
+          "V4-KQ-05",
+          "V4-KQ-06",
+          "V4-KQ-07",
+          "V4-KQ-08",
+          "V4-KQ-09",
+          "V4-KQ-10",
+          "V4-PD-01",
+          "V4-PD-03",
+          "V4-PD-04",
+          "V4-PD-05",
+          "V4-PD-06",
+          "V4-PD-07",
+          "V4-PD-08",
+          "V4-PD-09",
+          "V4-PD-10"
+        ],
+        "mean_absolute_difference": 11.575,
+        "mean_signed_difference": -3.875
+      },
+      "dimension_mean_absolute_difference": {
+        "action_resource_selection": 1.525,
+        "evidence_answer_scope": 3.325,
+        "facts_state_integrity": 2.525,
+        "goal_alignment": 3.45,
+        "interaction_efficiency": 2.85
+      }
+    }
+  },
+  "no_significance_test": true,
+  "no_confidence_intervals": true,
+  "disclosures": [
+    "Written after the main aggregate was seen.",
+    "Single AI reviewer per cell; inter-rater reliability across cells is described, not tested.",
+    "Locked baseline cell uses an earlier procedure and an unrecorded Codex version; arms A/B use the blind-packet procedure.",
+    "Consistency measure (main reviewer's criteria) not applied; text unavailable.",
+    "9.28 traces lack three V3-only final_state fields; within each packet this is not visible as a contrast.",
+    "Arm A packet labels the run as treatment-V3 (same packet as the main review); arm B packet is identity-neutral.",
+    "V4 is not unseen data for V3 (Step 9.50 consulted V1/V2 behaviour on V4).",
+    "KL-1 lifecycle labelling defect; token usage NOT_MEASURED."
+  ],
+  "primary_cause_policy": "标签按评审记录原样保留，不做事后统一。"
+}

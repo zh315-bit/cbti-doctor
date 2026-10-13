@@ -3623,3 +3623,9 @@ The version inventory contains r3–r10 and no r11; `r11` is proposed only. `eva
 ## Step 9.63c-r11 — 敏感性评审 A/B 冻结（汇总之前）
 
 两份独立评审各 40 条，仓库内外的盲审包均通过 `SHA256SUMS` 9/9，工作目录中除 `output/` 外没有实质文件新增或改动。两份记录与工作目录原件逐字节相同，各自包内 `validate_review.py check-file` 均为 `OK 40/40 records valid`，无格式修正。`evaluation/v1_2_3/step9_63c_r11_sensitivity_freeze.json` 钉住记录、包、预注册的 SHA 与评审者口径原文，并披露 B 的包外临时文件及提前查看全部执行事实、A 的辅助脚本与未知模型版本。A 的 `review_helper.py` 不是评审记录，不参与汇总。`primary_cause` 标签保留原文，不做事后统一。此节点尚未计算敏感性分数；冻结提交完成后才能执行汇总。请阅读预注册、冻结文件和两个盲审包的 `README_REVIEWER.md` 以理解四格比较的证据边界。待核问题：两位评审者对同一运行的逐案一致性有多高？不同评审者路径的指标方向是否一致？
+
+## Step 9.63c-r11 — 敏感性评审 2×2 汇总（冻结提交之后）
+
+冻结提交 `d4cea7bba43ee13db1cf2afe1789fa5127399c3a` 已先推送，之后才运行冻结的 `scripts/aggregate_step9_30c_v4.py`（SHA `01aea00a…`）。汇总时只替换各盲审包的校验器与已预注册的 lineage 计数：A 为 28/8/4，B 为 28/7/5；B 先用中性身份校验并汇总，随后通过包外映射还原为 9.28 身份。主结果和锁定基线直接引用现有冻结值。请阅读 `step9_63c_r11_reviewer_sensitivity_preregistration.json`、`step9_63c_r11_sensitivity_freeze.json`、`step9_63c_r11_sensitivity_results.json` 与 `step9_63c_r11_sensitivity_report.md`，了解输入边界、四格数据与逐案不一致名单。
+
+两条评审者路径都显示 M1 低价值 ASK 与 M3 harmful 下降，总分和 CAUSE_ASSESSMENT 上升，PERSONALIZED_DECISION 与 DATA_ANALYSIS 下降；M2 完成率、M4 必要 ASK、M5 critical、有效率和 KNOWLEDGE_QA 的方向不一致或仅一条路径变化。v3 同运行主评审与 A 的 harmful 一致 39/40、critical 一致 37/40；9.28 同运行 B 与锁定基线的有效性仅一致 24/40。判定仅按预注册方向，不作显著性检验。主结果的 M4 对锁定基线仍下降，不能升级为整体优越性结论。已知限制：每格仅一位 AI 评审者；锁定基线采用较早流程，Codex 版本未知；敏感性预注册在主结果公布后完成。供开发者继续思考：为何相同运行的有效性与 critical 标注会出现这些不一致？哪些后续评审设计能把流程差异与评审者差异分离？
