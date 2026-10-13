@@ -1,0 +1,168 @@
+{
+ "artifact_type": "R11_REVIEWER_SENSITIVITY_2x2_PREREGISTRATION",
+ "status": "LOCKED_BEFORE_SENSITIVITY_REVIEWS",
+ "created_at_utc": "2026-10-13T19:00:00Z",
+ "timing_statement": "This pre-registration was written AFTER the main result (treatment-V3 reviewed by 'Claude opus5.5, fresh session') was frozen (commit 1068d97) and aggregated (commit 21161e7), and after its aggregate was seen by the user and by the author. The main result is not replaced, re-weighted or superseded. All results (main, A, B and the locked baseline) are reported side by side; no result may be selected in preference to another.",
+ "unchanged_frozen_artifacts": {
+  "main_adjudication": [
+   "evaluation/v1_2_3/step9_63c_r11_blind_review_output/v3_adjudication.jsonl",
+   "46d5e84d60b104448dd411b7f5bd08369c67dc60934e80954d524c80b771af22"
+  ],
+  "main_freeze": [
+   "evaluation/v1_2_3/step9_63c_r11_adjudication_freeze.json",
+   "640d9321f0b993dac93ffc3a95051d6393f473f799b43e6118c0def43d170003"
+  ],
+  "main_results": [
+   "evaluation/v1_2_3/step9_63c_r11_scoring_results.json",
+   "a3b9a7952dcc7ed57e9cd3414c85db6ffe23e07dd32abed574f057bae3484aec"
+  ],
+  "main_report": [
+   "evaluation/v1_2_3/step9_63c_r11_scoring_report.md",
+   "8f695850c0208a546d9bfa5059cfa08c23227bc36ce2a055e4ddf64cdb2b7ef4"
+  ],
+  "final_preregistration": [
+   "evaluation/v1_2_3/step9_63c_r11_scoring_preregistration_final.json",
+   "ead55a09e7067d33352021c19674c31667aff2a1922de6a1cb9f08faf2f0cf89"
+  ],
+  "v3_blind_packet_SHA256SUMS": [
+   "evaluation/v1_2_3/step9_63c_r11_blind_review_packet/SHA256SUMS",
+   "5d95134989289aa6db49b0926f40b40ce0f2b9cc503dd57eb5f5ba7a3f6a668b"
+  ],
+  "locked_baseline": [
+   "evaluation/v1_2_3/step9_34a_baseline_metric_lock.json",
+   "63e33f8dd66109742fdbb2282be437a1af771f5aa1d600306f35916ed5d37203"
+  ]
+ },
+ "design_2x2": {
+  "rows_reviewer": [
+   "Claude (fresh session)",
+   "Codex"
+  ],
+  "columns_run": [
+   "Step 9.28 run",
+   "treatment-V3 run"
+  ],
+  "cells": {
+   "Claude x V3": "MAIN result (existing, frozen)",
+   "Codex x 9.28": "locked baseline (existing; earlier procedure, backend version not recorded)",
+   "Claude x 9.28": "arm B (new): fresh Claude session, neutral blind packet",
+   "Codex x V3": "arm A (new): Codex, existing V3 blind packet"
+  }
+ },
+ "arm_B": {
+  "reviewer": "a fresh Claude session (model id pinned in review_provenance.reviewer); not the main-review session; not the authoring session",
+  "packet": {
+   "path": "evaluation/v1_2_3/step9_63c_r11_baseline_blind_packet/",
+   "SHA256SUMS_sha256": "f3cf70d8043592e77887cfae2a964489e4e40720629eaca91e60a83d73dc92d8",
+   "MANIFEST_sha256": "8274d21b6a41b43b9b193404033c78958063b6c4fbdb90aafc02dfa3df0320b2"
+  },
+  "identity_mapping_outside_packet": [
+   "evaluation/v1_2_3/step9_63c_r11_baseline_blind_mapping.json",
+   "00886bfc3aac3f7d2ec690e32721e99cbb6a9d5d94f499cf3953792904b2857b"
+  ],
+  "contamination_scan": [
+   "evaluation/v1_2_3/step9_63c_r11_baseline_blind_packet_scan.json",
+   "c4bf6bc013aebcc736f66487e99823ccd9ba855b536d2f360fda6cb2a8b9c6dc"
+  ],
+  "working_directory": "~/blind_review_run_01 (new, empty, no output/). Changed by user decision from ~/r11_blind_review_baseline because a directory name containing 'baseline' is visible to the reviewer.",
+  "prompt": [
+   "evaluation/v1_2_3/step9_63c_r11_sensitivity_prompt_B.md",
+   "5d5d68f899c7c410320113d14a7c20e0ecdd92e1cc80268c666becf114c275c7"
+  ],
+  "output": "output/adjudication.jsonl -> returned to evaluation/v1_2_3/step9_63c_r11_sensitivity_B_output/"
+ },
+ "arm_A": {
+  "reviewer": "Codex AI reviewer (exact model/version pinned in review_provenance.reviewer)",
+  "packet": {
+   "path": "evaluation/v1_2_3/step9_63c_r11_blind_review_packet/ (existing, unchanged)",
+   "SHA256SUMS_sha256": "5d95134989289aa6db49b0926f40b40ce0f2b9cc503dd57eb5f5ba7a3f6a668b"
+  },
+  "working_directory": "~/r11_blind_review_codex (new, empty, no output/); never copied from ~/r11_blind_review, which holds the main output",
+  "prompt": [
+   "evaluation/v1_2_3/step9_63c_r11_sensitivity_prompt_A.md",
+   "0fdea0394ea233430884d97ccb69c378e6f69cae228c2930d0c00b337a941382"
+  ],
+  "output": "output/v3_adjudication.jsonl -> returned to evaluation/v1_2_3/step9_63c_r11_sensitivity_A_output/"
+ },
+ "consistency_measure": {
+  "status": "NOT_APPLIED",
+  "reason": "The main reviewer's disclosed harmful_failure / validity criteria text is not available in the repository (the freeze records only that the criteria were self-formulated). By user decision the measure is omitted rather than reconstructed from review text. Arm B's instructions therefore contain only the frozen definitions, the same instructions the main V3 review had (only paths, titles and the reviewer-string example were neutralised).",
+  "effect": "Instruction conditions of arm B and the main review are symmetric. Arm A uses the identical V3 packet the main review used. Both new reviewers are asked to report, at the end, the harmful_failure / validity criteria they actually applied (rules only)."
+ },
+ "procedure": [
+  "Each arm: 40 records in template order; packet validator check-next before each write; D6 rules of the FINAL pre-registration apply unchanged (write-once; only logged schema-format fixes).",
+  "On return: verify packet SHA256SUMS unchanged in the working copy and the repository, validator OK 40/40, byte-identical copy, then write a per-arm freeze file and COMMIT it before any aggregation.",
+  "Aggregation starts only after BOTH arms are frozen and committed; one combined report.",
+  "If an arm is interrupted or invalid: keep the partial output, report it; any rerun is a new, disclosed attempt and never replaces the first.",
+  "Aggregation: scripts/aggregate_step9_30c_v4.aggregate_records (01aea00a…) unchanged, replacing only run-bound validate_records (that arm's packet validator) and EXPECTED_LINEAGE (B: 9.28 sidecar step9_30a2_v4_lineage_sidecar.jsonl, 28/7/5; A: V3 sidecar, 28/8/4). B records are mapped back to the 9.28 identity through the mapping file only after freezing."
+ ],
+ "comparisons": {
+  "primary": {
+   "name": "Claude path: same reviewer type and procedure",
+   "contrast": "MAIN (Claude x V3) minus B (Claude x 9.28)"
+  },
+  "secondary": [
+   {
+    "name": "Codex path",
+    "contrast": "A (Codex x V3) minus locked baseline (Codex x 9.28)",
+    "caveat": "the locked baseline used an earlier review procedure and an unrecorded Codex version"
+   },
+   {
+    "name": "Reviewer agreement on the same V3 run",
+    "contrast": "MAIN vs A, per case",
+    "measures": [
+     "exact agreement on completion_judgment (3-way) and on complete vs not (binary)",
+     "agreement on validity, harmful_failure, critical_failure",
+     "agreement on per-case ASK category counts",
+     "mean absolute and mean signed difference of total_score (A minus MAIN); per-dimension mean absolute difference",
+     "lists of discordant cases"
+    ]
+   }
+  ],
+  "supplementary_descriptive": {
+   "name": "Reviewer agreement on the same 9.28 run",
+   "contrast": "B vs locked baseline per case (same measures)",
+   "use": "descriptive only; not used in the robustness rule"
+  },
+  "metrics_for_paths": [
+   "M1 low-value ASK rate",
+   "M2 completion rate",
+   "M3 harmful rate",
+   "M4 necessary-ASK preservation",
+   "M5 critical rate",
+   "validity rate",
+   "overall mean",
+   "KNOWLEDGE_QA mean",
+   "CAUSE_ASSESSMENT mean",
+   "PERSONALIZED_DECISION mean",
+   "DATA_ANALYSIS mean"
+  ]
+ },
+ "interpretation_rule": {
+  "definition": "For each metric, direction = sign(V3 value - 9.28 value) on the Claude path (MAIN - B) and on the Codex path (A - locked baseline).",
+  "labels": {
+   "same non-zero sign on both paths": "对评审者稳健 (robust to reviewer)",
+   "opposite signs, or zero on one path and non-zero on the other": "受评审者影响，不确定 (reviewer-dependent, uncertain)",
+   "zero on both paths": "两条路径均无变化 (no change on either path)",
+   "undefined on either path (zero denominator)": "无法判定 (not determinable)"
+  },
+  "no_significance_test": true,
+  "no_confidence_intervals": true,
+  "magnitudes": "reported as observed on each path; not averaged across paths",
+  "claim_scope": "FROZEN_MATCHED_DEVELOPMENT_REGRESSION_ONLY; claim policy prohibitions unchanged"
+ },
+ "mandatory_disclosures": [
+  "Written after the main aggregate was seen.",
+  "Single AI reviewer per cell; inter-rater reliability across cells is described, not tested.",
+  "Locked baseline cell uses an earlier procedure and an unrecorded Codex version; arms A/B use the blind-packet procedure.",
+  "Consistency measure (main reviewer's criteria) not applied; text unavailable.",
+  "9.28 traces lack three V3-only final_state fields; within each packet this is not visible as a contrast.",
+  "Arm A packet labels the run as treatment-V3 (same packet as the main review); arm B packet is identity-neutral.",
+  "V4 is not unseen data for V3 (Step 9.50 consulted V1/V2 behaviour on V4).",
+  "KL-1 lifecycle labelling defect; token usage NOT_MEASURED."
+ ],
+ "builders": {
+  "evaluation/v1_2_3/step9_63c_r11_formal_tools/build_baseline_blind_packet.py": "9e18a1e9b099439b22a3c6d6dca1d1ea9ba7c7785289b4a3ee3b20e57acad7b1",
+  "evaluation/v1_2_3/step9_63c_r11_formal_tools/baseline_packet_scan.py": "f51578d5c9d43718e30066d24a424abc4cbe807396ca057d2b2fb7c036418126"
+ }
+}

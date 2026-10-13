@@ -1,0 +1,172 @@
+{
+ "step": "9.63c-r11 reviewer sensitivity B packet contamination scan",
+ "result": "CLEAN_NO_PRIOR_REVIEW_TEXT_SCORES_OR_V3_CONTENT_AND_NO_RUN_IDENTITY",
+ "tool": "evaluation/v1_2_3/step9_63c_r11_formal_tools/baseline_packet_scan.py",
+ "checked": {
+  "run_identity_strings": "9.28 evaluation/attempt/authorization/agent IDs; V1, V2, V3 agent SHA and run IDs: 0 hits in every file",
+  "version_words": "baseline / 基线 / 9.28 / step9_29b / Codex / v3 / treatment / r11 (except the frozen enum UNSUPPORTED_INDIVIDUALIZED_TREATMENT_INSTRUCTION)",
+  "prior_review_text": "499 strings >= 30 chars from 9.30b, 9.37, 9.46 and the V3 main review (46d5e84d), as 4136 30-char shingles",
+  "v3_content": "942 30-char shingles of V3 final answers; V3-only trace fields answer_authorization / answer_generation_audit / trace_schema_version"
+ },
+ "result_by_file": {
+  "MANIFEST.json": {
+   "sha256": "8274d21b6a41b43b9b193404033c78958063b6c4fbdb90aafc02dfa3df0320b2",
+   "identity_hits": {},
+   "version_word_hits": {},
+   "prior_review_shingle_hits": [],
+   "v3_answer_shingle_hits": 0,
+   "v3_only_field_hits": {}
+  },
+  "README_REVIEWER.md": {
+   "sha256": "efa126874b109a8bc2040e23415d9170e38cd0e9d561ee25f55b033c76dd27df",
+   "identity_hits": {},
+   "version_word_hits": {},
+   "prior_review_shingle_hits": [
+    " safe fail-closed incompletion",
+    "IVIDUALIZED_TREATMENT_INSTRUCT",
+    "UNSUPPORTED_INDIVIDUALIZED_TRE"
+   ],
+   "v3_answer_shingle_hits": 0,
+   "v3_only_field_hits": {}
+  },
+  "SHA256SUMS": {
+   "sha256": "f3cf70d8043592e77887cfae2a964489e4e40720629eaca91e60a83d73dc92d8",
+   "identity_hits": {},
+   "version_word_hits": {},
+   "prior_review_shingle_hits": [],
+   "v3_answer_shingle_hits": 0,
+   "v3_only_field_hits": {}
+  },
+  "cases/benchmark_v4_cases.yaml": {
+   "sha256": "8b8c72092fcd7544e69d5d2ecd13610c7bb4c14210fca330698b3e5ab3f01d7f",
+   "identity_hits": {},
+   "version_word_hits": {
+    "treatment": {
+     "count": 14,
+     "samples": [
+      " evidence: [], expected_actions: [\"RETRIEVE(CBT-I treatment adaptation and components)\", \"ANSWER(ev",
+      ", goal_drift_criteria: [\"Create an individualized treatment plan\"], fabrication_criteria: [\"Assume ",
+      "], goal_drift_criteria: [\"Recommend a provider or treatment to this user\"], fabrication_criteria: [",
+      "_actions: [\"RETRIEVE(daytime functioning in sleep treatment outcomes)\", \"ANSWER(general framework)\""
+     ]
+    }
+   },
+   "prior_review_shingle_hits": [
+    " feel sleepy well before then.",
+    " no user-specific access advic",
+    "-I, what does cognitive restru",
+    ":45 for caregiving and usually",
+    "VE(schedule variability and sl",
+    "iability and sleep regularity)",
+    "ing and usually feel sleepy we",
+    "rted individualized treatment "
+   ],
+   "v3_answer_shingle_hits": 0,
+   "v3_only_field_hits": {}
+  },
+  "review_template.jsonl": {
+   "sha256": "c6ebf88564f91081fe16f3c27fc1b519a8e17e9a8877164c71e6b50c993b3e38",
+   "identity_hits": {},
+   "version_word_hits": {},
+   "prior_review_shingle_hits": [],
+   "v3_answer_shingle_hits": 0,
+   "v3_only_field_hits": {}
+  },
+  "rubric/benchmark_v1_1_scoring.md": {
+   "sha256": "a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899",
+   "identity_hits": {},
+   "version_word_hits": {},
+   "prior_review_shingle_hits": [
+    "IVIDUALIZED_TREATMENT_INSTRUCT",
+    "UNSUPPORTED_INDIVIDUALIZED_TRE"
+   ],
+   "v3_answer_shingle_hits": 0,
+   "v3_only_field_hits": {}
+  },
+  "run/case_results.jsonl": {
+   "sha256": "94542989da6f78a5b15d610351cfea8c50ab806d2d2cacb2de7c35c3477156a1",
+   "identity_hits": {},
+   "version_word_hits": {
+    "基线": {
+     "count": 2,
+     "samples": [
+      "在上述流程描述中，睡眠日记的记录方法是**在目标设定之后**才讲解的，因此目标设定时可能还没有完整的基线日记数据。\\n\\n**四、现有证据未覆盖的部分**\\n以下内容在本次检索资料中均",
+      "被作为独立结局指标测量。例如有研究将“嗜睡程度”列为次要指标，使用Epworth嗜睡量表（ESS）在基线、干预结束及干预结束后3个月随访时测量。ESS是评估白天嗜睡程度的常用工具，资料"
+     ]
+    },
+    "treatment": {
+     "count": 1,
+     "samples": [
+      "quire practice. Homework is a common component of treatment.”（CBT-I 是一个协作过程，会谈中所学的技能需要练习，家庭作业是治疗的常见"
+     ]
+    }
+   },
+   "prior_review_shingle_hits": [],
+   "v3_answer_shingle_hits": 2,
+   "v3_only_field_hits": {}
+  },
+  "run/raw_traces.jsonl": {
+   "sha256": "31f2ec51609c17e1cd7fff7440212039d33153687af882f078a1b62dddc01091",
+   "identity_hits": {},
+   "version_word_hits": {
+    "基线": {
+     "count": 26,
+     "samples": [
+      "到的流程描述中，睡眠日记的记录方法是**在目标设定之后**才讲解的，因此目标设定时可能尚未获得完整的基线日记数据。\\n\\n---\\n\\n## 资料不足的说明\\n\\n需要如实说明的是，*",
+      "在上述流程描述中，睡眠日记的记录方法是**在目标设定之后**才讲解的，因此目标设定时可能还没有完整的基线日记数据。\\n\\n**四、现有证据未覆盖的部分**\\n以下内容在本次检索资料中均",
+      "的结局指标进行测量。例如有研究将\\\"嗜睡程度\\\"列为次要指标，使用Epworth嗜睡量表（ESS）在基线、干预结束及干预结束后3个月随访时进行测量[Epworth 嗜睡量表相关研究]。",
+      "被作为独立结局指标测量。例如有研究将“嗜睡程度”列为次要指标，使用Epworth嗜睡量表（ESS）在基线、干预结束及干预结束后3个月随访时测量。ESS是评估白天嗜睡程度的常用工具，资料"
+     ]
+    },
+    "treatment": {
+     "count": 208,
+     "samples": [
+      " related topics (e.g., \\\"readiness to change,\\\" \\\"treatment engagement,\\\" or \\\"simplifying sleep di",
+      " 对多种失眠类型有效，但在高风险人群中也被证明有效（如孕期、PTSD、癌症治疗后失眠者）[This treatment has also been shown to be effective in ",
+      "always require the same set of components, or can treatment be adapted while remaining CBT-I?\"]} {\"",
+      "always require the same set of components, or can treatment be adapted while remaining CBT-I?\"}], \""
+     ]
+    }
+   },
+   "prior_review_shingle_hits": [
+    " feel sleepy well before then.",
+    " whether to force a later wake",
+    "-I, what does cognitive restru",
+    ":45 for caregiving and usually",
+    "_worthwhile_information_after_",
+    "and tested to see if they're a",
+    "eep_time_or_sleep_onset_latenc",
+    "ge_sleep_duration_source_entry",
+    "ing and usually feel sleepy we",
+    "leep_time_or_sleep_onset_laten"
+   ],
+   "v3_answer_shingle_hits": 2,
+   "v3_only_field_hits": {}
+  },
+  "schema/step9_30a_v4_adjudication_schema.json": {
+   "sha256": "21367c176f6b070d875a203ff779cfd44e2cb86a4e8956e1f93870fd054834c8",
+   "identity_hits": {},
+   "version_word_hits": {},
+   "prior_review_shingle_hits": [],
+   "v3_answer_shingle_hits": 0,
+   "v3_only_field_hits": {}
+  },
+  "validate_review.py": {
+   "sha256": "8cac6703fbbafdc7ea8a44a8ea0d0915737bfe057804f4cbdefeed003b06e480",
+   "identity_hits": {},
+   "version_word_hits": {},
+   "prior_review_shingle_hits": [
+    "IVIDUALIZED_TREATMENT_INSTRUCT",
+    "UNSUPPORTED_INDIVIDUALIZED_TRE"
+   ],
+   "v3_answer_shingle_hits": 0,
+   "v3_only_field_hits": {}
+  }
+ },
+ "interpretation": {
+  "README_REVIEWER.md, review_template.jsonl, validate_review.py, MANIFEST.json, SHA256SUMS, schema": "0 identity hits, 0 version words. Shingle hits in README/validator/rubric are the frozen critical-failure enum names and the quoted frozen harmful definition.",
+  "cases/benchmark_v4_cases.yaml": "14 x 'treatment' are benchmark wording (e.g. 'CBT-I treatment adaptation', 'individualized treatment plan'); frozen file identical to the V3 packet copy. Shingle hits = benchmark text that earlier reviewers quoted.",
+  "run/raw_traces.jsonl, run/case_results.jsonl": "Every byte except the 40 replaced evaluation_id values is the original Step 9.28 output (verified line by line). 基线 (28) and treatment (209) occur only inside agent answers and retrieved CBT-I material (e.g. '基线日记数据', 'insomnia treatment') - medical content, not run identifiers; left unchanged because they are part of the evidence being judged. Prior-review shingle hits are trace/benchmark text that earlier reviewers quoted (direction trace -> review). The 2 V3-answer shingles are one CBT-I model sentence ('…可能导致让睡眠更困难的行为，而这些行为又会反过来强化那些功能…') that both runs paraphrased from the same retrieved source; present in the original 9.28 bytes, so not V3 content."
+ },
+ "known_version_signal": "The 9.28 traces lack the three V3-only final_state fields; the B reviewer never sees a V3 trace, so this is not visible as a contrast inside the B packet."
+}

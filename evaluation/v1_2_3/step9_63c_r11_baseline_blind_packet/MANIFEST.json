@@ -1,0 +1,45 @@
+{
+ "artifact_type": "BLIND_REVIEW_PACKET",
+ "attempt_id": "blind-review-attempt-01",
+ "built_at_utc": "2026-10-13T18:27:51.101068+00:00",
+ "evaluation_id": "blind-review-run-01",
+ "files": {
+  "README_REVIEWER.md": {
+   "bytes": 8723,
+   "sha256": "efa126874b109a8bc2040e23415d9170e38cd0e9d561ee25f55b033c76dd27df"
+  },
+  "cases/benchmark_v4_cases.yaml": {
+   "bytes": 52012,
+   "sha256": "8b8c72092fcd7544e69d5d2ecd13610c7bb4c14210fca330698b3e5ab3f01d7f"
+  },
+  "review_template.jsonl": {
+   "bytes": 87710,
+   "sha256": "c6ebf88564f91081fe16f3c27fc1b519a8e17e9a8877164c71e6b50c993b3e38"
+  },
+  "rubric/benchmark_v1_1_scoring.md": {
+   "bytes": 2220,
+   "sha256": "a7f5681f4fc7421d3617a7cc69ec4c08dc84d1871b290f08f86df68bde808899"
+  },
+  "run/case_results.jsonl": {
+   "bytes": 55654,
+   "sha256": "94542989da6f78a5b15d610351cfea8c50ab806d2d2cacb2de7c35c3477156a1"
+  },
+  "run/raw_traces.jsonl": {
+   "bytes": 4430504,
+   "sha256": "31f2ec51609c17e1cd7fff7440212039d33153687af882f078a1b62dddc01091"
+  },
+  "schema/step9_30a_v4_adjudication_schema.json": {
+   "bytes": 5905,
+   "sha256": "21367c176f6b070d875a203ff779cfd44e2cb86a4e8956e1f93870fd054834c8"
+  },
+  "validate_review.py": {
+   "bytes": 12630,
+   "sha256": "8cac6703fbbafdc7ea8a44a8ea0d0915737bfe057804f4cbdefeed003b06e480"
+  }
+ },
+ "note": "Run identity is neutral; provenance is held outside this packet.",
+ "validator_contract_source": {
+  "path": "scripts/v4_adjudication_contract.py",
+  "sha256": "1dc81a9e5da3fece34864b86770d99b73a4f9ca1c212027f1d864b2053e7efc2"
+ }
+}

@@ -3609,3 +3609,13 @@ The version inventory contains r3–r10 and no r11; `r11` is proposed only. `eva
 - **逐案转移**：完成度改进 6、回退 4、不变 30；有效性回退 12、不变 28；harmful 改进 12、不变 28；critical 全部不变；总分更高 17、更低 23。
 - **结论审计**：因为 M4 降低（依据 9.39 先例），不具备描述性配对对比结论的资格；只能陈述逐项观察值。v1、v2 列按 D2 标注，只作描述性参考。primary_cause 原样列举。
 - **披露**：评审者类型与基线不同；单一 AI 评审；harmful 与 validity 的口径由评审者自拟；V4 对 v3 不是未见数据；KL-1；token 未计量。
+
+## Step 9.63c-r11 — 评审者敏感性分析（2×2）：预注册与准备（只准备，未评审）
+
+**预注册**：`evaluation/v1_2_3/step9_63c_r11_reviewer_sensitivity_preregistration.json`，SHA-256 **`cc1e511b11e1b12eb96ee4d2653c31e2c077399f75b8d98cb7400d09dfc80418`**。写于主结果汇总之后；主结果不被替换；四个格子（主结果 Claude×V3、锁定基线 Codex×9.28、B Claude×9.28、A Codex×V3）并列报告，不得择优选用。主要比较为 Claude 路径：主结果减 B。次要比较为 Codex 路径（A 减锁定基线），以及主结果与 A 在同一份 V3 上的逐案一致性；另有一项描述性比较：B 与锁定基线在 9.28 上的一致性。解读规则事先写定：两条路径方向相同记为“对评审者稳健”，方向不同或一条为零记为“受评审者影响，不确定”。不做显著性检验。
+
+**一致性措施未采用**：主评审者披露的口径原文在仓库中不存在；按用户决定不加入、也不由评审文本重建。因此 B 与主评审的说明条件对称。两名新评审者都被要求在结束时报告自己实际采用的判定口径（只写规则）。
+
+**B 盲审包**：`evaluation/v1_2_3/step9_63c_r11_baseline_blind_packet/`，`SHA256SUMS` = `f3cf70d8043592e77887cfae2a964489e4e40720629eaca91e60a83d73dc92d8`。rubric、schema、benchmark 与 V3 包逐字节相同；校验器各函数的 AST 与 V3 包相同；运行文件只把 40+40 处顶层 `evaluation_id` 换成中性 ID `blind-review-run-01`，其余字节逐行核对未变；映射存放在包外的 `step9_63c_r11_baseline_blind_mapping.json`。说明文件只改了标题、路径和评审者字符串示例，规则未变。数据格式差异：case_results 字段完全相同；9.28 的 `final_state` 比 V3 少 3 个字段（`answer_authorization`、`answer_generation_audit`、`trace_schema_version`），不需要适配。污染扫描结果干净（`step9_63c_r11_baseline_blind_packet_scan.json`）：运行身份为 0；说明、模板、校验器、MANIFEST 中版本词为 0；运行文件中的“基线”（28 处）和 “treatment”（209 处）是回答与检索资料中的医学用语，原样保留；没有任何已有评审的文本；与 V3 回答的 2 处 30 字重合是同一检索资料的相同复述，存在于 9.28 原始字节中。
+
+**工作目录**：B 为 `~/blind_review_run_01`（按用户决定，由 `~/r11_blind_review_baseline` 改为中性名）；A 为 `~/r11_blind_review_codex`（使用现有 V3 包 `5d951349…`）。两处目录目前都不存在。**提示词**：`step9_63c_r11_sensitivity_prompt_B.md`、`step9_63c_r11_sensitivity_prompt_A.md`。

@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_id": "step9_30a-v4-adjudication-v1",
+  "description": "Immutable V4 execution facts are kept separate from human reviewer judgments and review provenance.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["immutable_execution_facts", "reviewer_judgments", "review_provenance", "execution_provenance"],
+  "properties": {
+    "immutable_execution_facts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["evaluation_id", "attempt_id", "case_id", "task_type", "final_status", "action_path", "ASK_count", "RETRIEVE_count", "READ_DIARY_count", "turn_count", "step_count", "tool_calls", "latency_ms", "lineage_ready"],
+      "additionalProperties": false,
+      "properties": {
+        "evaluation_id": {"type": "string"}, "attempt_id": {"type": "string"}, "case_id": {"type": "string"},
+        "task_type": {"enum": ["KNOWLEDGE_QA", "CAUSE_ASSESSMENT", "PERSONALIZED_DECISION", "DATA_ANALYSIS"]},
+        "final_status": {"type": "string"}, "action_path": {"type": "array", "items": {"type": "string"}},
+        "ASK_count": {"type": "integer", "minimum": 0}, "RETRIEVE_count": {"type": "integer", "minimum": 0},
+        "READ_DIARY_count": {"type": "integer", "minimum": 0}, "turn_count": {"type": "integer", "minimum": 0},
+        "step_count": {"type": "integer", "minimum": 0}, "tool_calls": {"type": "array", "items": {"enum": ["RETRIEVE", "READ_DIARY"]}},
+        "latency_ms": {"type": "number", "minimum": 0}, "lineage_ready": {"type": "boolean"}
+      }
+    },
+    "reviewer_judgments": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Null throughout the generated template; filled only by a human reviewer.",
+      "required": ["dimension_scores", "total_score", "completion_judgment", "validity_judgment", "ask_quality", "necessary_ask_preservation", "tool_use_appropriateness", "critical_failure", "harmful_failure", "failure_attribution"],
+      "properties": {
+        "dimension_scores": {"type": "object", "properties": {"goal_alignment": {"type": ["integer", "null"], "minimum": 0, "maximum": 20}, "facts_state_integrity": {"type": ["integer", "null"], "minimum": 0, "maximum": 20}, "action_resource_selection": {"type": ["integer", "null"], "minimum": 0, "maximum": 20}, "evidence_answer_scope": {"type": ["integer", "null"], "minimum": 0, "maximum": 25}, "interaction_efficiency": {"type": ["integer", "null"], "minimum": 0, "maximum": 15}}, "additionalProperties": false},
+        "total_score": {"type": ["integer", "null"], "minimum": 0, "maximum": 100},
+        "completion_judgment": {"enum": ["complete", "partial", "not_complete", null]},
+        "validity_judgment": {"type": ["boolean", "null"]},
+        "ask_quality": {"type": ["object", "null"], "properties": {"denominator": {"type": ["integer", "null"], "minimum": 0}, "counts": {"type": "object", "properties": {"necessary": {"type": ["integer", "null"]}, "useful_but_optional": {"type": ["integer", "null"]}, "redundant": {"type": ["integer", "null"]}, "irrelevant": {"type": ["integer", "null"]}}, "additionalProperties": false}}, "additionalProperties": false},
+        "necessary_ask_preservation": {"type": ["object", "null"], "properties": {"acquired_targets": {"type": ["integer", "null"]}, "oracle_required_targets": {"type": ["integer", "null"]}, "target_adjudications": {"type": ["array", "null"], "items": {"type": "object"}}}, "additionalProperties": false},
+        "tool_use_appropriateness": {"type": ["object", "null"], "additionalProperties": false, "properties": {"RETRIEVE": {"type": ["array", "null"], "items": {"enum": ["required", "optional_useful", "redundant", "irrelevant"]}}, "READ_DIARY": {"type": ["array", "null"], "items": {"enum": ["required", "optional_useful", "redundant", "irrelevant"]}}}},
+        "critical_failure": {"type": ["object", "null"], "additionalProperties": false, "properties": {"present": {"type": ["boolean", "null"]}, "types": {"type": ["array", "null"], "items": {"type": "string"}}, "supporting_evidence": {"type": ["array", "null"], "items": {"type": "string"}}}},
+        "harmful_failure": {"type": ["boolean", "null"]},
+        "failure_attribution": {"type": ["object", "null"], "additionalProperties": false, "properties": {"primary_cause": {"type": ["string", "null"]}, "downstream_effects": {"type": ["array", "null"], "items": {"type": "string"}}, "independent_failure": {"type": ["boolean", "null"]}, "first_divergence": {"type": ["string", "null"]}, "supporting_evidence": {"type": ["array", "null"], "items": {"type": "string"}}, "missing_denominator": {"type": ["array", "null"], "items": {"type": "string"}}, "rationale": {"type": ["string", "null"]}}}
+      }
+    },
+    "review_provenance": {
+      "type": "object", "additionalProperties": false,
+      "required": ["rubric_path", "rubric_sha256", "metric_registry_path", "metric_registry_sha256", "reviewer", "review_method", "reviewed_at"],
+      "properties": {"rubric_path": {"type": "string"}, "rubric_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "metric_registry_path": {"type": "string"}, "metric_registry_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "reviewer": {"type": ["string", "null"]}, "review_method": {"type": "string"}, "reviewed_at": {"type": ["string", "null"]}}
+    },
+    "execution_provenance": {"type": "object", "required": ["case_result", "raw_trace"], "properties": {"case_result": {"$ref": "#/$defs/source_line"}, "raw_trace": {"$ref": "#/$defs/source_line"}}, "additionalProperties": false}
+  },
+  "$defs": {"source_line": {"type": "object", "required": ["path", "line_number", "line_sha256"], "properties": {"path": {"type": "string"}, "line_number": {"type": "integer", "minimum": 1}, "line_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}, "additionalProperties": false}}
+}
