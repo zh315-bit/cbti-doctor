@@ -1,0 +1,289 @@
+{
+ "step": "9.63c-r11 post-run review (read-only)",
+ "reducer_experiment_on_temporary_copies": {
+  "journal_3_COMMITTED_only": {
+   "frozen": {
+    "derived_state": "COMMITTED_BURNED_PRE_CASE_NON_REUSABLE",
+    "executable": false,
+    "error": null
+   },
+   "fixed_draft": {
+    "derived_state": "COMMITTED_BURNED_PRE_CASE_NON_REUSABLE",
+    "executable": false,
+    "error": null
+   }
+  },
+  "journal_4_ATTEMPT_CLAIMED": {
+   "frozen": {
+    "derived_state": "INCONSISTENT_FAIL_CLOSED",
+    "executable": false,
+    "error": "transaction exists without a valid irreversible committed burn"
+   },
+   "fixed_draft": {
+    "derived_state": "INCONSISTENT_FAIL_CLOSED",
+    "executable": false,
+    "error": "committed pre-case evidence conflicts with attempt state"
+   }
+  },
+  "journal_5_first_CASE_STARTED": {
+   "frozen": {
+    "derived_state": "INCONSISTENT_FAIL_CLOSED",
+    "executable": false,
+    "error": "transaction exists without a valid irreversible committed burn"
+   },
+   "fixed_draft": {
+    "derived_state": "CONSUMED_NON_REUSABLE",
+    "executable": false,
+    "error": null
+   }
+  },
+  "journal_44_complete": {
+   "frozen": {
+    "derived_state": "INCONSISTENT_FAIL_CLOSED",
+    "executable": false,
+    "error": "transaction exists without a valid irreversible committed burn"
+   },
+   "fixed_draft": {
+    "derived_state": "CONSUMED_NON_REUSABLE",
+    "executable": false,
+    "error": null
+   }
+  }
+ },
+ "reducer_experiment_note": "Journal truncated to N lines plus the real namespace marker (and the real attempt ledger for N>=4), copied to a temporary root; 'frozen' = scripts/authorization_lifecycle.py as frozen (f0d8b7e0...), 'fixed_draft' = same function with only the burned predicate changed in memory to read the COMMITTED event instead of events[-1]. Nothing in the repository was modified.",
+ "run_summary": {
+  "integrity": {
+   "transaction_id": "txn-v3-e96bdfed431149098ea815dec817d6ab",
+   "transaction_id_consistent": true,
+   "journal_sequence": [
+    "PREPARED",
+    "COMMITTING",
+    "COMMITTED",
+    "ATTEMPT_CLAIMED",
+    "CASE_STARTED x40"
+   ],
+   "case_started_ordinals_1_to_40": true,
+   "case_started_ids_match_results_order": true,
+   "raw_and_result_ids_identical": true,
+   "case_order_matches_authorization_fingerprint": true,
+   "case_count_unique": true,
+   "attempt_status_counts": {
+    "PREPARED": 1,
+    "AUTHORIZATION_CONSUMED": 1,
+    "FIRST_EVALUATION_ACCESS": 1,
+    "CASE_SET_AND_ORDER_VERIFIED": 1,
+    "STARTED": 41,
+    "CASE_COMPLETED": 40,
+    "COMPLETED": 1
+   },
+   "attempt_failure_events": [],
+   "all_http_200": true,
+   "final_status_counts": {
+    "ANSWER": 40
+   },
+   "lineage_ready_all": false,
+   "empty_answers": 0,
+   "score_status": {
+    "PENDING_FROZEN_RUBRIC_REVIEW": 40
+   },
+   "identity_in_attempts": {
+    "treatment_agent_sha256": [
+     "085d338ed95bbef7370c41cf97ca0d6653ffdfd2f1c924eef4b7123dfdea4607"
+    ],
+    "runner_sha256": [
+     "3a4ec3e526bde19e318e271a24569223087c8a6aadc77fd144b061825c0da282"
+    ],
+    "authorization_id": [
+     "auth-step9_63c_r11-1a399434ec0e4494b0045734846b2042"
+    ],
+    "attempt_id": [
+     "attempt-step9_63c_r11-2312daefa1364bfd83ff3948d101c765"
+    ]
+   }
+  },
+  "timing": {
+   "attempt_first_event_utc": "2026-10-13T02:36:42.616655+00:00",
+   "attempt_last_event_utc": "2026-10-13T02:45:07.252930+00:00",
+   "attempt_wall_seconds": 504.6,
+   "journal_prepared_utc": "2026-10-13T02:36:42.101663+00:00",
+   "first_case_start_utc": "2026-10-13T02:38:06.275769+00:00",
+   "last_case_done_utc": "2026-10-13T02:45:07.252069+00:00",
+   "per_case_wall_seconds": {
+    "n": 40,
+    "min": 1.6,
+    "p25": 7.5,
+    "median": 10.3,
+    "p75": 12.5,
+    "max": 47.2,
+    "total": 420.8
+   },
+   "per_case_latency_ms_reported_s": {
+    "n": 40,
+    "min": 1.6,
+    "p25": 7.5,
+    "median": 10.2,
+    "p75": 12.1,
+    "max": 46.9,
+    "total": 417.0
+   },
+   "slowest_5": [
+    [
+     47.2,
+     "V4-KQ-01"
+    ],
+    [
+     18.5,
+     "V4-CA-07"
+    ],
+    [
+     15.6,
+     "V4-KQ-02"
+    ],
+    [
+     15.1,
+     "V4-KQ-05"
+    ],
+    [
+     15.0,
+     "V4-KQ-08"
+    ]
+   ]
+  },
+  "per_task": {
+   "CAUSE_ASSESSMENT": {
+    "cases": 10,
+    "final_status": {
+     "ANSWER": 10
+    },
+    "turns": 13,
+    "steps": 23,
+    "ASK": 3,
+    "RETRIEVE": 10,
+    "READ_DIARY": 0,
+    "cases_with_ASK": 3,
+    "wall_seconds": {
+     "n": 10,
+     "min": 8.2,
+     "p25": 9.6,
+     "median": 10.3,
+     "p75": 11.3,
+     "max": 18.5,
+     "total": 110.1
+    }
+   },
+   "DATA_ANALYSIS": {
+    "cases": 10,
+    "final_status": {
+     "ANSWER": 10
+    },
+    "turns": 10,
+    "steps": 21,
+    "ASK": 0,
+    "RETRIEVE": 1,
+    "READ_DIARY": 10,
+    "cases_with_ASK": 0,
+    "wall_seconds": {
+     "n": 10,
+     "min": 1.6,
+     "p25": 2.8,
+     "median": 3.2,
+     "p75": 3.4,
+     "max": 7.5,
+     "total": 34.8
+    }
+   },
+   "KNOWLEDGE_QA": {
+    "cases": 10,
+    "final_status": {
+     "ANSWER": 10
+    },
+    "turns": 10,
+    "steps": 20,
+    "ASK": 0,
+    "RETRIEVE": 10,
+    "READ_DIARY": 0,
+    "cases_with_ASK": 0,
+    "wall_seconds": {
+     "n": 10,
+     "min": 10.2,
+     "p25": 11.2,
+     "median": 12.7,
+     "p75": 15.1,
+     "max": 47.2,
+     "total": 162.5
+    }
+   },
+   "PERSONALIZED_DECISION": {
+    "cases": 10,
+    "final_status": {
+     "ANSWER": 10
+    },
+    "turns": 19,
+    "steps": 29,
+    "ASK": 9,
+    "RETRIEVE": 10,
+    "READ_DIARY": 0,
+    "cases_with_ASK": 5,
+    "wall_seconds": {
+     "n": 10,
+     "min": 5.3,
+     "p25": 10.0,
+     "median": 11.8,
+     "p75": 14.0,
+     "max": 14.9,
+     "total": 113.4
+    }
+   }
+  },
+  "totals": {
+   "cases": 40,
+   "turns": 52,
+   "steps": 93,
+   "ASK": 12,
+   "RETRIEVE": 31,
+   "READ_DIARY": 10,
+   "cases_with_ASK": 8
+  },
+  "token_usage": {
+   "token_usage_values": {
+    "NOT_MEASURED": 40
+   },
+   "raw_trace_token_usage_values": {
+    "NOT_MEASURED": 40
+   }
+  },
+  "files": {
+   "evaluation/v4_runs/.execution_transactions/auth-step9_63c_r11-1a399434ec0e4494b0045734846b2042.jsonl": {
+    "bytes": 36421,
+    "sha256": "63dd783f4f24beedf2bc68a47e282d04a8efb8968a0c7d959703411792b52108"
+   },
+   "evaluation/v4_runs/heldout-v4-treatment-v3-run-9ec9c305cc4de01e6538/.namespace_allocation.json": {
+    "bytes": 449,
+    "sha256": "21fad903a54e323c97721ca4a9f3956026bd1431498d3696aa8cb1615f5980e3"
+   },
+   "evaluation/v4_runs/heldout-v4-treatment-v3-run-9ec9c305cc4de01e6538/heldout-v4-step9_55a-treatment-v3-20260930-01/attempts.jsonl": {
+    "bytes": 57189,
+    "sha256": "4326a64094b626db45cb13f31b1ec8a716f683153639a7a4e93fd50fc9bfda36"
+   },
+   "evaluation/v4_runs/heldout-v4-treatment-v3-run-9ec9c305cc4de01e6538/heldout-v4-step9_55a-treatment-v3-20260930-01/attempt-step9_63c_r11-2312daefa1364bfd83ff3948d101c765_raw_traces.jsonl": {
+    "bytes": 7034829,
+    "sha256": "abd307e0e64730448856c595f134d437a2130bf8ef160a680126cd0067b2a2f5"
+   },
+   "evaluation/v4_runs/heldout-v4-treatment-v3-run-9ec9c305cc4de01e6538/heldout-v4-step9_55a-treatment-v3-20260930-01/attempt-step9_63c_r11-2312daefa1364bfd83ff3948d101c765_case_results.jsonl": {
+    "bytes": 59322,
+    "sha256": "6672f3ef21a20a68776925267896ed4362832aaabc5a16c06546a6b778ef0ba8"
+   }
+  }
+ },
+ "consumer_audit_after_run": [
+  "authorization_lifecycle_executable",
+  "exactly_one_active_authorization",
+  "active_authorization_is_bound_id",
+  "attempt_absent",
+  "namespace_absent",
+  "check_not_executed:active_authorizations",
+  "active_authorization_count"
+ ],
+ "builder_status_state": "S2_FREEZE_PERSISTED",
+ "issuer_status_state": "ISSUED_RECORDED"
+}

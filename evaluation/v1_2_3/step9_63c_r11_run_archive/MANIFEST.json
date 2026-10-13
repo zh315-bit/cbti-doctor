@@ -1,0 +1,49 @@
+{
+ "artifact_type": "R11_FORMAL_EXECUTION_EVIDENCE_ARCHIVE",
+ "attempt_id": "attempt-step9_63c_r11-2312daefa1364bfd83ff3948d101c765",
+ "authorization_id": "auth-step9_63c_r11-1a399434ec0e4494b0045734846b2042",
+ "copied_at_utc": "2026-10-13T03:07:08.217999+00:00",
+ "evaluation_id": "heldout-v4-step9_55a-treatment-v3-20260930-01",
+ "files": [
+  {
+   "archive_path": "evaluation/v1_2_3/step9_63c_r11_run_archive/run_root/.execution_transactions/auth-step9_63c_r11-1a399434ec0e4494b0045734846b2042.jsonl",
+   "bytes": 36421,
+   "sha256": "63dd783f4f24beedf2bc68a47e282d04a8efb8968a0c7d959703411792b52108",
+   "source_mtime_utc": "2026-10-13T02:45:03.800000+00:00",
+   "source_path": "evaluation/v4_runs/.execution_transactions/auth-step9_63c_r11-1a399434ec0e4494b0045734846b2042.jsonl"
+  },
+  {
+   "archive_path": "evaluation/v1_2_3/step9_63c_r11_run_archive/run_root/heldout-v4-treatment-v3-run-9ec9c305cc4de01e6538/.namespace_allocation.json",
+   "bytes": 449,
+   "sha256": "21fad903a54e323c97721ca4a9f3956026bd1431498d3696aa8cb1615f5980e3",
+   "source_mtime_utc": "2026-10-13T02:36:42.210000+00:00",
+   "source_path": "evaluation/v4_runs/heldout-v4-treatment-v3-run-9ec9c305cc4de01e6538/.namespace_allocation.json"
+  },
+  {
+   "archive_path": "evaluation/v1_2_3/step9_63c_r11_run_archive/run_root/heldout-v4-treatment-v3-run-9ec9c305cc4de01e6538/heldout-v4-step9_55a-treatment-v3-20260930-01/attempts.jsonl",
+   "bytes": 57189,
+   "sha256": "4326a64094b626db45cb13f31b1ec8a716f683153639a7a4e93fd50fc9bfda36",
+   "source_mtime_utc": "2026-10-13T02:45:07.260000+00:00",
+   "source_path": "evaluation/v4_runs/heldout-v4-treatment-v3-run-9ec9c305cc4de01e6538/heldout-v4-step9_55a-treatment-v3-20260930-01/attempts.jsonl"
+  },
+  {
+   "archive_path": "evaluation/v1_2_3/step9_63c_r11_run_archive/run_root/heldout-v4-treatment-v3-run-9ec9c305cc4de01e6538/heldout-v4-step9_55a-treatment-v3-20260930-01/attempt-step9_63c_r11-2312daefa1364bfd83ff3948d101c765_raw_traces.jsonl",
+   "bytes": 7034829,
+   "sha256": "abd307e0e64730448856c595f134d437a2130bf8ef160a680126cd0067b2a2f5",
+   "source_mtime_utc": "2026-10-13T02:45:07.250000+00:00",
+   "source_path": "evaluation/v4_runs/heldout-v4-treatment-v3-run-9ec9c305cc4de01e6538/heldout-v4-step9_55a-treatment-v3-20260930-01/attempt-step9_63c_r11-2312daefa1364bfd83ff3948d101c765_raw_traces.jsonl"
+  },
+  {
+   "archive_path": "evaluation/v1_2_3/step9_63c_r11_run_archive/run_root/heldout-v4-treatment-v3-run-9ec9c305cc4de01e6538/heldout-v4-step9_55a-treatment-v3-20260930-01/attempt-step9_63c_r11-2312daefa1364bfd83ff3948d101c765_case_results.jsonl",
+   "bytes": 59322,
+   "sha256": "6672f3ef21a20a68776925267896ed4362832aaabc5a16c06546a6b778ef0ba8",
+   "source_mtime_utc": "2026-10-13T02:45:07.250000+00:00",
+   "source_path": "evaluation/v4_runs/heldout-v4-treatment-v3-run-9ec9c305cc4de01e6538/heldout-v4-step9_55a-treatment-v3-20260930-01/attempt-step9_63c_r11-2312daefa1364bfd83ff3948d101c765_case_results.jsonl"
+  }
+ ],
+ "originals_remain_at": "evaluation/v4_runs/ (git-ignored, unchanged)",
+ "repository_head_at_copy": "4127a632a489d694aa79652dee6282aeb58af868",
+ "runner_freeze_sha256": "bafcec8d2ae0bad6c3cb43e89bd49171b85374957ec6ce173071fef5248357b3",
+ "status": "READ_ONLY_EVIDENCE_COPY",
+ "transaction_id": "txn-v3-e96bdfed431149098ea815dec817d6ab"
+}

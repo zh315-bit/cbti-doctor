@@ -3552,3 +3552,26 @@ The version inventory contains r3–r10 and no r11; `r11` is proposed only. `eva
 **待决**：RC6 失败信息多了 3 条 `missing module file`（28/30a/30c 已归档，历史 51a 清单仍登记）；未修改，请决定接受或退役 51a 测试。
 
 **产物**（`evaluation/v1_2_3/`）：`step9_63c_r5c10ak_change_report.md`、`_dangerous_test_audit.json`、`_coverage_mapping.json`、`_ci_test_set.json`、`_regression_results.json`、`_mutation_results.json`、`_real_state_proof.json`、`_r11_freeze_readiness_matrix.json`、`_r11_freeze_review_request.md`、`_test_boundary_manifest.json`、`_test_harness/`、`_tools/`。
+
+## Step 9.63c-r11 — preflight、正式执行与运行后复核
+
+**preflight**（`c944ed4`）：非消费 preflight 通过，`preflight-step9_63c_r5-r11-b0b5945a808f4b57a74f3c34d2e293fe`，证据 SHA `042760d1…cca`；调用记录 3 行。**执行计划**（`4127a63`）：`step9_63c_r11_formal_execution_plan.md` 与只读工具 `step9_63c_r11_formal_tools/`。
+
+**正式执行**（由用户在终端运行）：exit=0；事务 `txn-v3-e96bdfed431149098ea815dec817d6ab`，2026-10-13 02:36:42 → 02:45:07 UTC（504.6 秒）；40/40 `ANSWER`，attempt 账本 86 行以 `COMPLETED` 结束；事务日志 44 行（`PREPARED, COMMITTING, COMMITTED, ATTEMPT_CLAIMED`, 40 × `CASE_STARTED`）；写入白名单 `ok: true`；账本（5 行 `aa7c2181…`）、清单 `33bd99b9…`、Freeze `bafcec8d…`、指针 `4e077781…` 不变。合计 52 轮、93 步、ASK 12、RETRIEVE 31、READ_DIARY 10；`token_usage` 全部 `NOT_MEASURED`。
+
+**运行后复核**（只读；无代码改动，未写 v4_runs，未运行 `--reconcile-transaction`，未 commit）：
+
+- **已知缺陷 KL-1（不修复）**：`authorization_lifecycle.reduce_authorization_lifecycle` 第 229–231 行用 `events[-1]` 判断 burn，而 `COMMITTED` 之后的 `ATTEMPT_CLAIMED`/`CASE_STARTED` 是合法追加，所以“正常跑完”被判为 `INCONSISTENT_FAIL_CLOSED`，`CONSUMED` 分支不可达，`active_authorizations()` 在 r11 指针下抛异常。已在临时副本上实验确认：只修判定后完整日志得 `CONSUMED_NON_REUSABLE`，但“已认领、未开始案例”仍需新定义一个状态。漏网原因：reducer 测试只覆盖止于 `COMMITTED` 的日志，crash 测试只断言事务模块的 `reconcile()`，ag/ah/ai 演练止于预提交门，真实历史中从未出现过越过 `COMMITTED` 的日志。**修复必须进入下一个冻结修订版本**（该文件是 r11 第 9 号成员）。
+- **影响**：运行有效（执行路径在事务存在后用 `require_committed`，不经过 reducer；完整性交叉核对全部通过）；授权不可再执行（consumer 审计 7 项失败，事务、命名空间与 attempt 碰撞也各自阻断）；评分与聚合脚本不依赖生命周期状态。
+- **观察**：12/40 个案例 `lineage_ready=false`（v1/v2 运行均为 13/40），留给评分步骤。
+- **归档**：方案已写（复制到 `evaluation/v1_2_3/step9_63c_r11_run_archive/`，附 MANIFEST 与 SHA256SUMS；其中 3 个文件需要 `git add -f`，并注意与“运行产物不进 git”的既有做法相反），**等待批准**。
+
+**产物**：`step9_63c_r11_post_run_review.md`、`step9_63c_r11_post_run_review_evidence.json`、`step9_63c_r11_known_limitations.md`（新建，汇总 KL-1 至 KL-10 与已接受例外）。
+
+## Step 9.63c-r11 — 运行证据归档与评分计划
+
+**归档（已批准）**：提交前对 5 个运行产物做敏感信息扫描，结果干净（`.env` 真实取值与 API key 片段命中 0 次；密钥、令牌、邮箱、家目录、IP、用户名、主机名等模式命中 0 次；长字符串全部归类为 SHA、运行 ID 或内部规则名），见 `step9_63c_r11_archive_secret_scan.json`。用 `step9_63c_r11_formal_tools/archive_run.py`（在会话级硬防护下运行）复制到 `evaluation/v1_2_3/step9_63c_r11_run_archive/run_root/`：复制前后都核对了 SHA，`shasum -c` 5/5 通过，`SHA256SUMS` 为 `bf663526…`，`MANIFEST.json` 为 `98326319…`；`evaluation/v4_runs/` 不变。exFAT 不支持只读权限位，只读靠约定和 SHA 校验保证。其中 3 个 jsonl 被 `.gitignore` 忽略，需要 `git add -f`（命令见评分计划 A.3）。
+
+**评分计划（未评分、未看分数）**：`step9_63c_r11_scoring_plan.md`。评分方式：单一 AI 评审者按冻结 rubric 与 schema 逐案评审（以往的 9.30b、9.37、9.46 都由 Codex 完成，不是通过 API 调用 LLM 当裁判），然后用冻结的 9.30c 汇总器（`01aea00a…`）计算，再与 matched protocol 点名的 9.28 baseline 锁定值做描述性对比；不做显著性检验，也不算置信区间；结论范围是 `FROZEN_MATCHED_DEVELOPMENT_REGRESSION_ONLY`。不调用 DeepSeek API。
+
+**预注册草案**：`step9_63c_r11_scoring_preregistration.json`，SHA `3f0ed0415688b174a9624c6a8f470e9d6a98d23ad8535db9dca2f4019c4ed329`（`DRAFT_PENDING_USER_DECISIONS`）。待决：D1 评审者（建议用一个没有接触过以往评审结果的新会话；本会话已看到基线、V1、V2 的部分评审结果，不推荐）、D2 是否加入 V1/V2 对比列、D3 是否先做 lineage 溯源分类、D4 确认 12 个 lineage 不完整案例的处理方式、D6 冻结前能否修正。D5：M4 按基线锁使用 4 个 oracle 目标（v2 的 9.46 只记了 1 个，不沿用）。决定后另写 FINAL 文件并在评审前钉住其 SHA，草案不改。
