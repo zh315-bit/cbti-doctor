@@ -3599,3 +3599,13 @@ The version inventory contains r3–r10 and no r11; `r11` is proposed only. `eva
 ## Step 9.63c-r11 — 评审冻结（汇总之前）
 
 评审者：`Claude opus5.5, fresh session`（单一 AI 评审者；不是 Codex，按预注册 D1 必须披露）。评审记录 `evaluation/v1_2_3/step9_63c_r11_blind_review_output/v3_adjudication.jsonl`：40 行，SHA `46d5e84d60b104448dd411b7f5bd08369c67dc60934e80954d524c80b771af22`，盲审包校验器结果 `OK 40/40`，与评审工作目录中的原件逐字节相同，案例顺序与模板一致；没有格式修正。冻结前盲审包两处副本 9/9 OK（`SHA256SUMS` `5d951349…`），评审工作目录中除 `output/` 外没有新增或删除的文件。冻结文件 `step9_63c_r11_adjudication_freeze.json` 绑定 FINAL 预注册 `ead55a09…`，并记录评审者自述的披露事项：评审者类型与基线不同；harmful 与 validity 的判定口径、primary_cause 标签由评审者自拟，没有使用统一枚举；回读过已写入的 CA-02、CA-04（未修改）；评审工具在包外写了会话缓存。primary_cause 标签按原样保留，不做事后统一。冻结前没有查看任何分数。
+
+## Step 9.63c-r11 — 汇总与冻结基线对比（冻结提交 1068d97 之后）
+
+按 FINAL 预注册 `ead55a09…` 执行：使用冻结的 9.30c 汇总器 `01aea00a…`，公式未改，只按 9.47 的先例替换了 `validate_records` 和 `EXPECTED_LINEAGE`；与锁定的 9.28 基线值比较，不重新评审基线；不做显著性检验。汇总前后评审记录 SHA 不变。报告 `step9_63c_r11_scoring_report.md`，结果 `step9_63c_r11_scoring_results.json`。
+
+- **主要指标（基线 → v3）**：M1 低价值 ASK 9/9 → 8/12（−33.3 个百分点）；M2 完成 16/40 → 18/40（+5 个百分点）；M3 harmful 16/40 → 4/40（−30 个百分点）；**M4 必要 ASK 保留 1/4 → 0/4（下降，不满足“不能更低”）**；M5 critical 0 → 0。有效率 37/40 → 25/40（采用评审者自拟口径）。
+- **总分**：70.5 → 69.675（−0.825）。KQ 82.2 → 91.6；CA 59.1 → 68.1；PD 62.6 → 46.0；DA 78.1 → 73.0。
+- **逐案转移**：完成度改进 6、回退 4、不变 30；有效性回退 12、不变 28；harmful 改进 12、不变 28；critical 全部不变；总分更高 17、更低 23。
+- **结论审计**：因为 M4 降低（依据 9.39 先例），不具备描述性配对对比结论的资格；只能陈述逐项观察值。v1、v2 列按 D2 标注，只作描述性参考。primary_cause 原样列举。
+- **披露**：评审者类型与基线不同；单一 AI 评审；harmful 与 validity 的口径由评审者自拟；V4 对 v3 不是未见数据；KL-1；token 未计量。

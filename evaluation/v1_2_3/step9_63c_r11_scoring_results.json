@@ -1,0 +1,4263 @@
+{
+ "artifact_type": "R11_TREATMENT_V3_SCORING_RESULTS",
+ "created_at_utc": "2026-10-13T16:22:49.839573+00:00",
+ "preregistration_final_sha256": "ead55a09e7067d33352021c19674c31667aff2a1922de6a1cb9f08faf2f0cf89",
+ "adjudication_sha256": "46d5e84d60b104448dd411b7f5bd08369c67dc60934e80954d524c80b771af22",
+ "freeze_sha256": "640d9321f0b993dac93ffc3a95051d6393f473f799b43e6118c0def43d170003",
+ "aggregator": {
+  "path": "scripts/aggregate_step9_30c_v4.py",
+  "sha256": "01aea00ad6a644a44d63a6c31e4bf372f43b53b45f9bc1b9bd7d2649e8522395",
+  "replaced_run_bound_names_only": [
+   "validate_records -> packet validator (verbatim contract check + V3 template)",
+   "EXPECTED_LINEAGE -> {'FORMAL_LINEAGE_READY': 28, 'DERIVED_LINEAGE_COMPLETE': 8, 'INCOMPLETE_FORMAL_BUT_ADJUDICATABLE': 4}"
+  ]
+ },
+ "baseline": {
+  "evaluation_id": "heldout-v4-step9_28-20260925-01",
+  "source": "step9_34a_baseline_metric_lock.json (no re-adjudication)",
+  "summary": {
+   "overall_mean": 70.5,
+   "task_means": {
+    "KNOWLEDGE_QA": 82.2,
+    "CAUSE_ASSESSMENT": 59.1,
+    "PERSONALIZED_DECISION": 62.6,
+    "DATA_ANALYSIS": 78.1
+   },
+   "dimension_means": {
+    "action_resource_selection": 13.9,
+    "evidence_answer_scope": 15.5,
+    "facts_state_integrity": 16.1,
+    "goal_alignment": 13.675,
+    "interaction_efficiency": 11.325
+   },
+   "M1_low_value_ask_rate": {
+    "numerator": 9,
+    "denominator": 9,
+    "value": 1.0
+   },
+   "M2_completion": {
+    "numerator": 16,
+    "denominator": 40,
+    "value": 0.4,
+    "distribution": {
+     "complete": 16,
+     "not_complete": 3,
+     "partial": 21
+    }
+   },
+   "M3_harmful": {
+    "numerator": 16,
+    "denominator": 40,
+    "value": 0.4
+   },
+   "M4_necessary_ask_preservation": {
+    "numerator": 1,
+    "denominator": 4,
+    "value": 0.25
+   },
+   "M5_critical": {
+    "numerator": 0,
+    "denominator": 40,
+    "value": 0.0
+   },
+   "validity": {
+    "numerator": 37,
+    "denominator": 40,
+    "value": 0.925
+   },
+   "completion_by_task": {
+    "KNOWLEDGE_QA": {
+     "numerator": 8,
+     "denominator": 10,
+     "value": 0.8,
+     "distribution": {
+      "complete": 8,
+      "partial": 2
+     },
+     "validity": {
+      "numerator": 10,
+      "denominator": 10,
+      "value": 1.0
+     }
+    },
+    "CAUSE_ASSESSMENT": {
+     "numerator": 1,
+     "denominator": 10,
+     "value": 0.1,
+     "distribution": {
+      "complete": 1,
+      "partial": 9
+     },
+     "validity": {
+      "numerator": 10,
+      "denominator": 10,
+      "value": 1.0
+     }
+    },
+    "PERSONALIZED_DECISION": {
+     "numerator": 2,
+     "denominator": 10,
+     "value": 0.2,
+     "distribution": {
+      "complete": 2,
+      "partial": 8
+     },
+     "validity": {
+      "numerator": 10,
+      "denominator": 10,
+      "value": 1.0
+     }
+    },
+    "DATA_ANALYSIS": {
+     "numerator": 5,
+     "denominator": 10,
+     "value": 0.5,
+     "distribution": {
+      "complete": 5,
+      "not_complete": 3,
+      "partial": 2
+     },
+     "validity": {
+      "numerator": 7,
+      "denominator": 10,
+      "value": 0.7
+     }
+    }
+   },
+   "ask_category_counts": {
+    "total": 9,
+    "necessary": 0,
+    "useful_but_optional": 0,
+    "redundant": 1,
+    "irrelevant": 8
+   },
+   "per_case": {
+    "ask": 0.225,
+    "retrieve": 0.325,
+    "read_diary": 0.25,
+    "tool_calls": 0.575,
+    "turns": 1.225,
+    "steps": 1.8
+   },
+   "latency_ms": {
+    "mean_ms": 6453.3615,
+    "median_ms": 3251.395,
+    "p90_nearest_rank_ms": 11380.62
+   },
+   "critical_case_ids": [],
+   "harmful_case_ids": [
+    "V4-CA-01",
+    "V4-CA-02",
+    "V4-CA-03",
+    "V4-CA-05",
+    "V4-CA-06",
+    "V4-CA-07",
+    "V4-CA-09",
+    "V4-CA-10",
+    "V4-PD-01",
+    "V4-PD-03",
+    "V4-PD-05",
+    "V4-PD-06",
+    "V4-PD-07",
+    "V4-PD-08",
+    "V4-PD-09",
+    "V4-PD-10"
+   ]
+  }
+ },
+ "treatment_v3": {
+  "summary": {
+   "overall_mean": 69.675,
+   "task_means": {
+    "KNOWLEDGE_QA": 91.6,
+    "CAUSE_ASSESSMENT": 68.1,
+    "PERSONALIZED_DECISION": 46.0,
+    "DATA_ANALYSIS": 73.0
+   },
+   "dimension_means": {
+    "goal_alignment": 12.2,
+    "facts_state_integrity": 15.975,
+    "action_resource_selection": 16.35,
+    "evidence_answer_scope": 15.05,
+    "interaction_efficiency": 10.1
+   },
+   "M1_low_value_ask_rate": {
+    "numerator": 8,
+    "denominator": 12,
+    "value": 0.6667
+   },
+   "M2_completion": {
+    "numerator": 18,
+    "denominator": 40,
+    "value": 0.45,
+    "distribution": {
+     "complete": 18,
+     "not_complete": 14,
+     "partial": 8
+    }
+   },
+   "M3_harmful": {
+    "numerator": 4,
+    "denominator": 40,
+    "value": 0.1
+   },
+   "M4_necessary_ask_preservation": {
+    "numerator": 0,
+    "denominator": 4,
+    "value": 0.0
+   },
+   "M5_critical": {
+    "numerator": 0,
+    "denominator": 40,
+    "value": 0.0
+   },
+   "validity": {
+    "numerator": 25,
+    "denominator": 40,
+    "value": 0.625
+   },
+   "completion_by_task": {
+    "KNOWLEDGE_QA": {
+     "numerator": 7,
+     "denominator": 10,
+     "value": 0.7,
+     "distribution": {
+      "complete": 7,
+      "not_complete": 1,
+      "partial": 2
+     },
+     "validity": {
+      "numerator": 9,
+      "denominator": 10,
+      "value": 0.9
+     }
+    },
+    "CAUSE_ASSESSMENT": {
+     "numerator": 4,
+     "denominator": 10,
+     "value": 0.4,
+     "distribution": {
+      "complete": 4,
+      "not_complete": 4,
+      "partial": 2
+     },
+     "validity": {
+      "numerator": 6,
+      "denominator": 10,
+      "value": 0.6
+     }
+    },
+    "PERSONALIZED_DECISION": {
+     "numerator": 3,
+     "denominator": 10,
+     "value": 0.3,
+     "distribution": {
+      "complete": 3,
+      "not_complete": 6,
+      "partial": 1
+     },
+     "validity": {
+      "numerator": 4,
+      "denominator": 10,
+      "value": 0.4
+     }
+    },
+    "DATA_ANALYSIS": {
+     "numerator": 4,
+     "denominator": 10,
+     "value": 0.4,
+     "distribution": {
+      "complete": 4,
+      "not_complete": 3,
+      "partial": 3
+     },
+     "validity": {
+      "numerator": 6,
+      "denominator": 10,
+      "value": 0.6
+     }
+    }
+   },
+   "ask_category_counts": {
+    "total": 12,
+    "necessary": 1,
+    "useful_but_optional": 3,
+    "redundant": 6,
+    "irrelevant": 2
+   },
+   "per_case": {
+    "ask": 0.3,
+    "retrieve": 0.775,
+    "read_diary": 0.25,
+    "tool_calls": 1.025,
+    "turns": 1.3,
+    "steps": 2.325
+   },
+   "latency_ms": {
+    "mean_ms": 10426.0577,
+    "median_ms": 10218.945,
+    "p90_nearest_rank_ms": 14739.09
+   },
+   "critical_case_ids": [],
+   "harmful_case_ids": [
+    "V4-CA-01",
+    "V4-PD-01",
+    "V4-PD-03",
+    "V4-PD-10"
+   ]
+  },
+  "frozen_aggregator_output": {
+   "aggregation_status": "DESCRIPTIVE_SINGLE_AI_REVIEWER_AGGREGATE",
+   "evaluation_id": "heldout-v4-step9_55a-treatment-v3-20260930-01",
+   "attempt_id": "attempt-step9_63c_r11-2312daefa1364bfd83ff3948d101c765",
+   "adjudicated_case_count": 40,
+   "valid_case_count": 40,
+   "needs_review_case_count": 0,
+   "task_distribution": {
+    "CAUSE_ASSESSMENT": 10,
+    "DATA_ANALYSIS": 10,
+    "KNOWLEDGE_QA": 10,
+    "PERSONALIZED_DECISION": 10
+   },
+   "scores": {
+    "overall": {
+     "numerator": 2787,
+     "denominator": 40,
+     "formula": "sum(case total_score)/number of adjudicated cases",
+     "source_case_ids": [
+      "V4-CA-01",
+      "V4-CA-02",
+      "V4-CA-03",
+      "V4-CA-04",
+      "V4-CA-05",
+      "V4-CA-06",
+      "V4-CA-07",
+      "V4-CA-08",
+      "V4-CA-09",
+      "V4-CA-10",
+      "V4-DA-01",
+      "V4-DA-02",
+      "V4-DA-03",
+      "V4-DA-04",
+      "V4-DA-05",
+      "V4-DA-06",
+      "V4-DA-07",
+      "V4-DA-08",
+      "V4-DA-09",
+      "V4-DA-10",
+      "V4-KQ-01",
+      "V4-KQ-02",
+      "V4-KQ-03",
+      "V4-KQ-04",
+      "V4-KQ-05",
+      "V4-KQ-06",
+      "V4-KQ-07",
+      "V4-KQ-08",
+      "V4-KQ-09",
+      "V4-KQ-10",
+      "V4-PD-01",
+      "V4-PD-02",
+      "V4-PD-03",
+      "V4-PD-04",
+      "V4-PD-05",
+      "V4-PD-06",
+      "V4-PD-07",
+      "V4-PD-08",
+      "V4-PD-09",
+      "V4-PD-10"
+     ],
+     "mean": 69.675,
+     "scale": "0-100 descriptive; no pass threshold"
+    },
+    "dimensions": {
+     "goal_alignment": {
+      "numerator": 488,
+      "denominator": 40,
+      "formula": "sum(case dimension_scores.goal_alignment)/number of adjudicated cases",
+      "source_case_ids": [
+       "V4-CA-01",
+       "V4-CA-02",
+       "V4-CA-03",
+       "V4-CA-04",
+       "V4-CA-05",
+       "V4-CA-06",
+       "V4-CA-07",
+       "V4-CA-08",
+       "V4-CA-09",
+       "V4-CA-10",
+       "V4-DA-01",
+       "V4-DA-02",
+       "V4-DA-03",
+       "V4-DA-04",
+       "V4-DA-05",
+       "V4-DA-06",
+       "V4-DA-07",
+       "V4-DA-08",
+       "V4-DA-09",
+       "V4-DA-10",
+       "V4-KQ-01",
+       "V4-KQ-02",
+       "V4-KQ-03",
+       "V4-KQ-04",
+       "V4-KQ-05",
+       "V4-KQ-06",
+       "V4-KQ-07",
+       "V4-KQ-08",
+       "V4-KQ-09",
+       "V4-KQ-10",
+       "V4-PD-01",
+       "V4-PD-02",
+       "V4-PD-03",
+       "V4-PD-04",
+       "V4-PD-05",
+       "V4-PD-06",
+       "V4-PD-07",
+       "V4-PD-08",
+       "V4-PD-09",
+       "V4-PD-10"
+      ],
+      "mean": 12.2,
+      "maximum": 20
+     },
+     "facts_state_integrity": {
+      "numerator": 639,
+      "denominator": 40,
+      "formula": "sum(case dimension_scores.facts_state_integrity)/number of adjudicated cases",
+      "source_case_ids": [
+       "V4-CA-01",
+       "V4-CA-02",
+       "V4-CA-03",
+       "V4-CA-04",
+       "V4-CA-05",
+       "V4-CA-06",
+       "V4-CA-07",
+       "V4-CA-08",
+       "V4-CA-09",
+       "V4-CA-10",
+       "V4-DA-01",
+       "V4-DA-02",
+       "V4-DA-03",
+       "V4-DA-04",
+       "V4-DA-05",
+       "V4-DA-06",
+       "V4-DA-07",
+       "V4-DA-08",
+       "V4-DA-09",
+       "V4-DA-10",
+       "V4-KQ-01",
+       "V4-KQ-02",
+       "V4-KQ-03",
+       "V4-KQ-04",
+       "V4-KQ-05",
+       "V4-KQ-06",
+       "V4-KQ-07",
+       "V4-KQ-08",
+       "V4-KQ-09",
+       "V4-KQ-10",
+       "V4-PD-01",
+       "V4-PD-02",
+       "V4-PD-03",
+       "V4-PD-04",
+       "V4-PD-05",
+       "V4-PD-06",
+       "V4-PD-07",
+       "V4-PD-08",
+       "V4-PD-09",
+       "V4-PD-10"
+      ],
+      "mean": 15.975,
+      "maximum": 20
+     },
+     "action_resource_selection": {
+      "numerator": 654,
+      "denominator": 40,
+      "formula": "sum(case dimension_scores.action_resource_selection)/number of adjudicated cases",
+      "source_case_ids": [
+       "V4-CA-01",
+       "V4-CA-02",
+       "V4-CA-03",
+       "V4-CA-04",
+       "V4-CA-05",
+       "V4-CA-06",
+       "V4-CA-07",
+       "V4-CA-08",
+       "V4-CA-09",
+       "V4-CA-10",
+       "V4-DA-01",
+       "V4-DA-02",
+       "V4-DA-03",
+       "V4-DA-04",
+       "V4-DA-05",
+       "V4-DA-06",
+       "V4-DA-07",
+       "V4-DA-08",
+       "V4-DA-09",
+       "V4-DA-10",
+       "V4-KQ-01",
+       "V4-KQ-02",
+       "V4-KQ-03",
+       "V4-KQ-04",
+       "V4-KQ-05",
+       "V4-KQ-06",
+       "V4-KQ-07",
+       "V4-KQ-08",
+       "V4-KQ-09",
+       "V4-KQ-10",
+       "V4-PD-01",
+       "V4-PD-02",
+       "V4-PD-03",
+       "V4-PD-04",
+       "V4-PD-05",
+       "V4-PD-06",
+       "V4-PD-07",
+       "V4-PD-08",
+       "V4-PD-09",
+       "V4-PD-10"
+      ],
+      "mean": 16.35,
+      "maximum": 20
+     },
+     "evidence_answer_scope": {
+      "numerator": 602,
+      "denominator": 40,
+      "formula": "sum(case dimension_scores.evidence_answer_scope)/number of adjudicated cases",
+      "source_case_ids": [
+       "V4-CA-01",
+       "V4-CA-02",
+       "V4-CA-03",
+       "V4-CA-04",
+       "V4-CA-05",
+       "V4-CA-06",
+       "V4-CA-07",
+       "V4-CA-08",
+       "V4-CA-09",
+       "V4-CA-10",
+       "V4-DA-01",
+       "V4-DA-02",
+       "V4-DA-03",
+       "V4-DA-04",
+       "V4-DA-05",
+       "V4-DA-06",
+       "V4-DA-07",
+       "V4-DA-08",
+       "V4-DA-09",
+       "V4-DA-10",
+       "V4-KQ-01",
+       "V4-KQ-02",
+       "V4-KQ-03",
+       "V4-KQ-04",
+       "V4-KQ-05",
+       "V4-KQ-06",
+       "V4-KQ-07",
+       "V4-KQ-08",
+       "V4-KQ-09",
+       "V4-KQ-10",
+       "V4-PD-01",
+       "V4-PD-02",
+       "V4-PD-03",
+       "V4-PD-04",
+       "V4-PD-05",
+       "V4-PD-06",
+       "V4-PD-07",
+       "V4-PD-08",
+       "V4-PD-09",
+       "V4-PD-10"
+      ],
+      "mean": 15.05,
+      "maximum": 25
+     },
+     "interaction_efficiency": {
+      "numerator": 404,
+      "denominator": 40,
+      "formula": "sum(case dimension_scores.interaction_efficiency)/number of adjudicated cases",
+      "source_case_ids": [
+       "V4-CA-01",
+       "V4-CA-02",
+       "V4-CA-03",
+       "V4-CA-04",
+       "V4-CA-05",
+       "V4-CA-06",
+       "V4-CA-07",
+       "V4-CA-08",
+       "V4-CA-09",
+       "V4-CA-10",
+       "V4-DA-01",
+       "V4-DA-02",
+       "V4-DA-03",
+       "V4-DA-04",
+       "V4-DA-05",
+       "V4-DA-06",
+       "V4-DA-07",
+       "V4-DA-08",
+       "V4-DA-09",
+       "V4-DA-10",
+       "V4-KQ-01",
+       "V4-KQ-02",
+       "V4-KQ-03",
+       "V4-KQ-04",
+       "V4-KQ-05",
+       "V4-KQ-06",
+       "V4-KQ-07",
+       "V4-KQ-08",
+       "V4-KQ-09",
+       "V4-KQ-10",
+       "V4-PD-01",
+       "V4-PD-02",
+       "V4-PD-03",
+       "V4-PD-04",
+       "V4-PD-05",
+       "V4-PD-06",
+       "V4-PD-07",
+       "V4-PD-08",
+       "V4-PD-09",
+       "V4-PD-10"
+      ],
+      "mean": 10.1,
+      "maximum": 15
+     }
+    },
+    "task_type_means": {
+     "KNOWLEDGE_QA": {
+      "numerator": 916,
+      "denominator": 10,
+      "formula": "sum(case total_score in task stratum)/number of adjudicated cases in task stratum",
+      "source_case_ids": [
+       "V4-KQ-01",
+       "V4-KQ-02",
+       "V4-KQ-03",
+       "V4-KQ-04",
+       "V4-KQ-05",
+       "V4-KQ-06",
+       "V4-KQ-07",
+       "V4-KQ-08",
+       "V4-KQ-09",
+       "V4-KQ-10"
+      ],
+      "mean": 91.6
+     },
+     "CAUSE_ASSESSMENT": {
+      "numerator": 681,
+      "denominator": 10,
+      "formula": "sum(case total_score in task stratum)/number of adjudicated cases in task stratum",
+      "source_case_ids": [
+       "V4-CA-01",
+       "V4-CA-02",
+       "V4-CA-03",
+       "V4-CA-04",
+       "V4-CA-05",
+       "V4-CA-06",
+       "V4-CA-07",
+       "V4-CA-08",
+       "V4-CA-09",
+       "V4-CA-10"
+      ],
+      "mean": 68.1
+     },
+     "PERSONALIZED_DECISION": {
+      "numerator": 460,
+      "denominator": 10,
+      "formula": "sum(case total_score in task stratum)/number of adjudicated cases in task stratum",
+      "source_case_ids": [
+       "V4-PD-01",
+       "V4-PD-02",
+       "V4-PD-03",
+       "V4-PD-04",
+       "V4-PD-05",
+       "V4-PD-06",
+       "V4-PD-07",
+       "V4-PD-08",
+       "V4-PD-09",
+       "V4-PD-10"
+      ],
+      "mean": 46.0
+     },
+     "DATA_ANALYSIS": {
+      "numerator": 730,
+      "denominator": 10,
+      "formula": "sum(case total_score in task stratum)/number of adjudicated cases in task stratum",
+      "source_case_ids": [
+       "V4-DA-01",
+       "V4-DA-02",
+       "V4-DA-03",
+       "V4-DA-04",
+       "V4-DA-05",
+       "V4-DA-06",
+       "V4-DA-07",
+       "V4-DA-08",
+       "V4-DA-09",
+       "V4-DA-10"
+      ],
+      "mean": 73.0
+     }
+    }
+   },
+   "completion_and_validity": {
+    "overall": {
+     "distribution": {
+      "complete": 18,
+      "not_complete": 14,
+      "partial": 8
+     },
+     "rate": {
+      "numerator": 18,
+      "denominator": 40,
+      "formula": "complete judgments / adjudicated cases",
+      "source_case_ids": [
+       "V4-CA-01",
+       "V4-CA-02",
+       "V4-CA-03",
+       "V4-CA-04",
+       "V4-CA-05",
+       "V4-CA-06",
+       "V4-CA-07",
+       "V4-CA-08",
+       "V4-CA-09",
+       "V4-CA-10",
+       "V4-DA-01",
+       "V4-DA-02",
+       "V4-DA-03",
+       "V4-DA-04",
+       "V4-DA-05",
+       "V4-DA-06",
+       "V4-DA-07",
+       "V4-DA-08",
+       "V4-DA-09",
+       "V4-DA-10",
+       "V4-KQ-01",
+       "V4-KQ-02",
+       "V4-KQ-03",
+       "V4-KQ-04",
+       "V4-KQ-05",
+       "V4-KQ-06",
+       "V4-KQ-07",
+       "V4-KQ-08",
+       "V4-KQ-09",
+       "V4-KQ-10",
+       "V4-PD-01",
+       "V4-PD-02",
+       "V4-PD-03",
+       "V4-PD-04",
+       "V4-PD-05",
+       "V4-PD-06",
+       "V4-PD-07",
+       "V4-PD-08",
+       "V4-PD-09",
+       "V4-PD-10"
+      ],
+      "value": 0.45
+     },
+     "validity_rate": {
+      "numerator": 25,
+      "denominator": 40,
+      "formula": "validity=true judgments / adjudicated cases",
+      "source_case_ids": [
+       "V4-CA-01",
+       "V4-CA-02",
+       "V4-CA-03",
+       "V4-CA-04",
+       "V4-CA-05",
+       "V4-CA-06",
+       "V4-CA-07",
+       "V4-CA-08",
+       "V4-CA-09",
+       "V4-CA-10",
+       "V4-DA-01",
+       "V4-DA-02",
+       "V4-DA-03",
+       "V4-DA-04",
+       "V4-DA-05",
+       "V4-DA-06",
+       "V4-DA-07",
+       "V4-DA-08",
+       "V4-DA-09",
+       "V4-DA-10",
+       "V4-KQ-01",
+       "V4-KQ-02",
+       "V4-KQ-03",
+       "V4-KQ-04",
+       "V4-KQ-05",
+       "V4-KQ-06",
+       "V4-KQ-07",
+       "V4-KQ-08",
+       "V4-KQ-09",
+       "V4-KQ-10",
+       "V4-PD-01",
+       "V4-PD-02",
+       "V4-PD-03",
+       "V4-PD-04",
+       "V4-PD-05",
+       "V4-PD-06",
+       "V4-PD-07",
+       "V4-PD-08",
+       "V4-PD-09",
+       "V4-PD-10"
+      ],
+      "value": 0.625
+     }
+    },
+    "by_task_type": {
+     "KNOWLEDGE_QA": {
+      "distribution": {
+       "complete": 7,
+       "not_complete": 1,
+       "partial": 2
+      },
+      "rate": {
+       "numerator": 7,
+       "denominator": 10,
+       "formula": "complete judgments / adjudicated cases",
+       "source_case_ids": [
+        "V4-KQ-01",
+        "V4-KQ-02",
+        "V4-KQ-03",
+        "V4-KQ-04",
+        "V4-KQ-05",
+        "V4-KQ-06",
+        "V4-KQ-07",
+        "V4-KQ-08",
+        "V4-KQ-09",
+        "V4-KQ-10"
+       ],
+       "value": 0.7
+      },
+      "validity_rate": {
+       "numerator": 9,
+       "denominator": 10,
+       "formula": "validity=true judgments / adjudicated cases",
+       "source_case_ids": [
+        "V4-KQ-01",
+        "V4-KQ-02",
+        "V4-KQ-03",
+        "V4-KQ-04",
+        "V4-KQ-05",
+        "V4-KQ-06",
+        "V4-KQ-07",
+        "V4-KQ-08",
+        "V4-KQ-09",
+        "V4-KQ-10"
+       ],
+       "value": 0.9
+      }
+     },
+     "CAUSE_ASSESSMENT": {
+      "distribution": {
+       "complete": 4,
+       "not_complete": 4,
+       "partial": 2
+      },
+      "rate": {
+       "numerator": 4,
+       "denominator": 10,
+       "formula": "complete judgments / adjudicated cases",
+       "source_case_ids": [
+        "V4-CA-01",
+        "V4-CA-02",
+        "V4-CA-03",
+        "V4-CA-04",
+        "V4-CA-05",
+        "V4-CA-06",
+        "V4-CA-07",
+        "V4-CA-08",
+        "V4-CA-09",
+        "V4-CA-10"
+       ],
+       "value": 0.4
+      },
+      "validity_rate": {
+       "numerator": 6,
+       "denominator": 10,
+       "formula": "validity=true judgments / adjudicated cases",
+       "source_case_ids": [
+        "V4-CA-01",
+        "V4-CA-02",
+        "V4-CA-03",
+        "V4-CA-04",
+        "V4-CA-05",
+        "V4-CA-06",
+        "V4-CA-07",
+        "V4-CA-08",
+        "V4-CA-09",
+        "V4-CA-10"
+       ],
+       "value": 0.6
+      }
+     },
+     "PERSONALIZED_DECISION": {
+      "distribution": {
+       "complete": 3,
+       "not_complete": 6,
+       "partial": 1
+      },
+      "rate": {
+       "numerator": 3,
+       "denominator": 10,
+       "formula": "complete judgments / adjudicated cases",
+       "source_case_ids": [
+        "V4-PD-01",
+        "V4-PD-02",
+        "V4-PD-03",
+        "V4-PD-04",
+        "V4-PD-05",
+        "V4-PD-06",
+        "V4-PD-07",
+        "V4-PD-08",
+        "V4-PD-09",
+        "V4-PD-10"
+       ],
+       "value": 0.3
+      },
+      "validity_rate": {
+       "numerator": 4,
+       "denominator": 10,
+       "formula": "validity=true judgments / adjudicated cases",
+       "source_case_ids": [
+        "V4-PD-01",
+        "V4-PD-02",
+        "V4-PD-03",
+        "V4-PD-04",
+        "V4-PD-05",
+        "V4-PD-06",
+        "V4-PD-07",
+        "V4-PD-08",
+        "V4-PD-09",
+        "V4-PD-10"
+       ],
+       "value": 0.4
+      }
+     },
+     "DATA_ANALYSIS": {
+      "distribution": {
+       "complete": 4,
+       "not_complete": 3,
+       "partial": 3
+      },
+      "rate": {
+       "numerator": 4,
+       "denominator": 10,
+       "formula": "complete judgments / adjudicated cases",
+       "source_case_ids": [
+        "V4-DA-01",
+        "V4-DA-02",
+        "V4-DA-03",
+        "V4-DA-04",
+        "V4-DA-05",
+        "V4-DA-06",
+        "V4-DA-07",
+        "V4-DA-08",
+        "V4-DA-09",
+        "V4-DA-10"
+       ],
+       "value": 0.4
+      },
+      "validity_rate": {
+       "numerator": 6,
+       "denominator": 10,
+       "formula": "validity=true judgments / adjudicated cases",
+       "source_case_ids": [
+        "V4-DA-01",
+        "V4-DA-02",
+        "V4-DA-03",
+        "V4-DA-04",
+        "V4-DA-05",
+        "V4-DA-06",
+        "V4-DA-07",
+        "V4-DA-08",
+        "V4-DA-09",
+        "V4-DA-10"
+       ],
+       "value": 0.6
+      }
+     }
+    }
+   },
+   "ask_quality": {
+    "TOTAL_ASK_COUNT": 12,
+    "NECESSARY_ASK_COUNT": 1,
+    "USEFUL_OPTIONAL_ASK_COUNT": 3,
+    "REDUNDANT_ASK_COUNT": 6,
+    "IRRELEVANT_ASK_COUNT": 2,
+    "category_counts": {
+     "irrelevant": 2,
+     "necessary": 1,
+     "redundant": 6,
+     "useful_but_optional": 3
+    },
+    "category_rates": {
+     "necessary": {
+      "numerator": 1,
+      "denominator": 12,
+      "formula": "necessary ASK events / all ASK events",
+      "source_case_ids": [
+       "V4-PD-09"
+      ],
+      "value": 0.0833
+     },
+     "useful_but_optional": {
+      "numerator": 3,
+      "denominator": 12,
+      "formula": "useful_but_optional ASK events / all ASK events",
+      "source_case_ids": [
+       "V4-CA-07",
+       "V4-PD-01",
+       "V4-PD-03"
+      ],
+      "value": 0.25
+     },
+     "redundant": {
+      "numerator": 6,
+      "denominator": 12,
+      "formula": "redundant ASK events / all ASK events",
+      "source_case_ids": [
+       "V4-CA-04",
+       "V4-PD-01",
+       "V4-PD-04",
+       "V4-PD-10"
+      ],
+      "value": 0.5
+     },
+     "irrelevant": {
+      "numerator": 2,
+      "denominator": 12,
+      "formula": "irrelevant ASK events / all ASK events",
+      "source_case_ids": [
+       "V4-CA-02",
+       "V4-PD-01"
+      ],
+      "value": 0.1667
+     }
+    },
+    "REDUNDANT_OR_IRRELEVANT_RATE": {
+     "numerator": 8,
+     "denominator": 12,
+     "formula": "(redundant + irrelevant ASK events) / all ASK events",
+     "source_case_ids": [
+      "V4-CA-01",
+      "V4-CA-02",
+      "V4-CA-03",
+      "V4-CA-04",
+      "V4-CA-05",
+      "V4-CA-06",
+      "V4-CA-07",
+      "V4-CA-08",
+      "V4-CA-09",
+      "V4-CA-10",
+      "V4-DA-01",
+      "V4-DA-02",
+      "V4-DA-03",
+      "V4-DA-04",
+      "V4-DA-05",
+      "V4-DA-06",
+      "V4-DA-07",
+      "V4-DA-08",
+      "V4-DA-09",
+      "V4-DA-10",
+      "V4-KQ-01",
+      "V4-KQ-02",
+      "V4-KQ-03",
+      "V4-KQ-04",
+      "V4-KQ-05",
+      "V4-KQ-06",
+      "V4-KQ-07",
+      "V4-KQ-08",
+      "V4-KQ-09",
+      "V4-KQ-10",
+      "V4-PD-01",
+      "V4-PD-02",
+      "V4-PD-03",
+      "V4-PD-04",
+      "V4-PD-05",
+      "V4-PD-06",
+      "V4-PD-07",
+      "V4-PD-08",
+      "V4-PD-09",
+      "V4-PD-10"
+     ],
+     "value": 0.6667
+    },
+    "NECESSARY_ASK_PRESERVATION_RATE": {
+     "numerator": 0,
+     "denominator": 4,
+     "formula": "acquired oracle-required targets / all oracle-required targets",
+     "source_case_ids": [
+      "V4-CA-01",
+      "V4-CA-02",
+      "V4-CA-03",
+      "V4-CA-04",
+      "V4-CA-05",
+      "V4-CA-06",
+      "V4-CA-07",
+      "V4-CA-08",
+      "V4-CA-09",
+      "V4-CA-10",
+      "V4-DA-01",
+      "V4-DA-02",
+      "V4-DA-03",
+      "V4-DA-04",
+      "V4-DA-05",
+      "V4-DA-06",
+      "V4-DA-07",
+      "V4-DA-08",
+      "V4-DA-09",
+      "V4-DA-10",
+      "V4-KQ-01",
+      "V4-KQ-02",
+      "V4-KQ-03",
+      "V4-KQ-04",
+      "V4-KQ-05",
+      "V4-KQ-06",
+      "V4-KQ-07",
+      "V4-KQ-08",
+      "V4-KQ-09",
+      "V4-KQ-10",
+      "V4-PD-01",
+      "V4-PD-02",
+      "V4-PD-03",
+      "V4-PD-04",
+      "V4-PD-05",
+      "V4-PD-06",
+      "V4-PD-07",
+      "V4-PD-08",
+      "V4-PD-09",
+      "V4-PD-10"
+     ],
+     "value": 0.0
+    }
+   },
+   "tool_resource_behavior": {
+    "counts": {
+     "RETRIEVE": 31,
+     "READ_DIARY": 10,
+     "ASK": 12,
+     "TOOL_CALL": 41
+    },
+    "per_case_means": {
+     "retrieve_per_case": {
+      "numerator": 31,
+      "denominator": 40,
+      "formula": "RETRIEVE actions / adjudicated cases",
+      "source_case_ids": [
+       "V4-CA-01",
+       "V4-CA-02",
+       "V4-CA-03",
+       "V4-CA-04",
+       "V4-CA-05",
+       "V4-CA-06",
+       "V4-CA-07",
+       "V4-CA-08",
+       "V4-CA-09",
+       "V4-CA-10",
+       "V4-DA-01",
+       "V4-DA-02",
+       "V4-DA-03",
+       "V4-DA-04",
+       "V4-DA-05",
+       "V4-DA-06",
+       "V4-DA-07",
+       "V4-DA-08",
+       "V4-DA-09",
+       "V4-DA-10",
+       "V4-KQ-01",
+       "V4-KQ-02",
+       "V4-KQ-03",
+       "V4-KQ-04",
+       "V4-KQ-05",
+       "V4-KQ-06",
+       "V4-KQ-07",
+       "V4-KQ-08",
+       "V4-KQ-09",
+       "V4-KQ-10",
+       "V4-PD-01",
+       "V4-PD-02",
+       "V4-PD-03",
+       "V4-PD-04",
+       "V4-PD-05",
+       "V4-PD-06",
+       "V4-PD-07",
+       "V4-PD-08",
+       "V4-PD-09",
+       "V4-PD-10"
+      ],
+      "value": 0.775
+     },
+     "read_diary_per_case": {
+      "numerator": 10,
+      "denominator": 40,
+      "formula": "READ_DIARY actions / adjudicated cases",
+      "source_case_ids": [
+       "V4-CA-01",
+       "V4-CA-02",
+       "V4-CA-03",
+       "V4-CA-04",
+       "V4-CA-05",
+       "V4-CA-06",
+       "V4-CA-07",
+       "V4-CA-08",
+       "V4-CA-09",
+       "V4-CA-10",
+       "V4-DA-01",
+       "V4-DA-02",
+       "V4-DA-03",
+       "V4-DA-04",
+       "V4-DA-05",
+       "V4-DA-06",
+       "V4-DA-07",
+       "V4-DA-08",
+       "V4-DA-09",
+       "V4-DA-10",
+       "V4-KQ-01",
+       "V4-KQ-02",
+       "V4-KQ-03",
+       "V4-KQ-04",
+       "V4-KQ-05",
+       "V4-KQ-06",
+       "V4-KQ-07",
+       "V4-KQ-08",
+       "V4-KQ-09",
+       "V4-KQ-10",
+       "V4-PD-01",
+       "V4-PD-02",
+       "V4-PD-03",
+       "V4-PD-04",
+       "V4-PD-05",
+       "V4-PD-06",
+       "V4-PD-07",
+       "V4-PD-08",
+       "V4-PD-09",
+       "V4-PD-10"
+      ],
+      "value": 0.25
+     },
+     "ask_per_case": {
+      "numerator": 12,
+      "denominator": 40,
+      "formula": "ASK actions / adjudicated cases",
+      "source_case_ids": [
+       "V4-CA-01",
+       "V4-CA-02",
+       "V4-CA-03",
+       "V4-CA-04",
+       "V4-CA-05",
+       "V4-CA-06",
+       "V4-CA-07",
+       "V4-CA-08",
+       "V4-CA-09",
+       "V4-CA-10",
+       "V4-DA-01",
+       "V4-DA-02",
+       "V4-DA-03",
+       "V4-DA-04",
+       "V4-DA-05",
+       "V4-DA-06",
+       "V4-DA-07",
+       "V4-DA-08",
+       "V4-DA-09",
+       "V4-DA-10",
+       "V4-KQ-01",
+       "V4-KQ-02",
+       "V4-KQ-03",
+       "V4-KQ-04",
+       "V4-KQ-05",
+       "V4-KQ-06",
+       "V4-KQ-07",
+       "V4-KQ-08",
+       "V4-KQ-09",
+       "V4-KQ-10",
+       "V4-PD-01",
+       "V4-PD-02",
+       "V4-PD-03",
+       "V4-PD-04",
+       "V4-PD-05",
+       "V4-PD-06",
+       "V4-PD-07",
+       "V4-PD-08",
+       "V4-PD-09",
+       "V4-PD-10"
+      ],
+      "value": 0.3
+     },
+     "tool_call_per_case": {
+      "numerator": 41,
+      "denominator": 40,
+      "formula": "TOOL_CALL actions / adjudicated cases",
+      "source_case_ids": [
+       "V4-CA-01",
+       "V4-CA-02",
+       "V4-CA-03",
+       "V4-CA-04",
+       "V4-CA-05",
+       "V4-CA-06",
+       "V4-CA-07",
+       "V4-CA-08",
+       "V4-CA-09",
+       "V4-CA-10",
+       "V4-DA-01",
+       "V4-DA-02",
+       "V4-DA-03",
+       "V4-DA-04",
+       "V4-DA-05",
+       "V4-DA-06",
+       "V4-DA-07",
+       "V4-DA-08",
+       "V4-DA-09",
+       "V4-DA-10",
+       "V4-KQ-01",
+       "V4-KQ-02",
+       "V4-KQ-03",
+       "V4-KQ-04",
+       "V4-KQ-05",
+       "V4-KQ-06",
+       "V4-KQ-07",
+       "V4-KQ-08",
+       "V4-KQ-09",
+       "V4-KQ-10",
+       "V4-PD-01",
+       "V4-PD-02",
+       "V4-PD-03",
+       "V4-PD-04",
+       "V4-PD-05",
+       "V4-PD-06",
+       "V4-PD-07",
+       "V4-PD-08",
+       "V4-PD-09",
+       "V4-PD-10"
+      ],
+      "value": 1.025
+     }
+    },
+    "ask_per_case": {
+     "numerator": 12,
+     "denominator": 40,
+     "formula": "ASK actions / adjudicated cases",
+     "source_case_ids": [
+      "V4-CA-01",
+      "V4-CA-02",
+      "V4-CA-03",
+      "V4-CA-04",
+      "V4-CA-05",
+      "V4-CA-06",
+      "V4-CA-07",
+      "V4-CA-08",
+      "V4-CA-09",
+      "V4-CA-10",
+      "V4-DA-01",
+      "V4-DA-02",
+      "V4-DA-03",
+      "V4-DA-04",
+      "V4-DA-05",
+      "V4-DA-06",
+      "V4-DA-07",
+      "V4-DA-08",
+      "V4-DA-09",
+      "V4-DA-10",
+      "V4-KQ-01",
+      "V4-KQ-02",
+      "V4-KQ-03",
+      "V4-KQ-04",
+      "V4-KQ-05",
+      "V4-KQ-06",
+      "V4-KQ-07",
+      "V4-KQ-08",
+      "V4-KQ-09",
+      "V4-KQ-10",
+      "V4-PD-01",
+      "V4-PD-02",
+      "V4-PD-03",
+      "V4-PD-04",
+      "V4-PD-05",
+      "V4-PD-06",
+      "V4-PD-07",
+      "V4-PD-08",
+      "V4-PD-09",
+      "V4-PD-10"
+     ],
+     "value": 0.3
+    },
+    "total_acquisition_actions_per_case": {
+     "numerator": 53,
+     "denominator": 40,
+     "formula": "(ASK + RETRIEVE + READ_DIARY) / adjudicated cases",
+     "source_case_ids": [
+      "V4-CA-01",
+      "V4-CA-02",
+      "V4-CA-03",
+      "V4-CA-04",
+      "V4-CA-05",
+      "V4-CA-06",
+      "V4-CA-07",
+      "V4-CA-08",
+      "V4-CA-09",
+      "V4-CA-10",
+      "V4-DA-01",
+      "V4-DA-02",
+      "V4-DA-03",
+      "V4-DA-04",
+      "V4-DA-05",
+      "V4-DA-06",
+      "V4-DA-07",
+      "V4-DA-08",
+      "V4-DA-09",
+      "V4-DA-10",
+      "V4-KQ-01",
+      "V4-KQ-02",
+      "V4-KQ-03",
+      "V4-KQ-04",
+      "V4-KQ-05",
+      "V4-KQ-06",
+      "V4-KQ-07",
+      "V4-KQ-08",
+      "V4-KQ-09",
+      "V4-KQ-10",
+      "V4-PD-01",
+      "V4-PD-02",
+      "V4-PD-03",
+      "V4-PD-04",
+      "V4-PD-05",
+      "V4-PD-06",
+      "V4-PD-07",
+      "V4-PD-08",
+      "V4-PD-09",
+      "V4-PD-10"
+     ],
+     "value": 1.325
+    },
+    "appropriateness_judgments": {
+     "RETRIEVE": {
+      "irrelevant": 2,
+      "optional_useful": 1,
+      "redundant": 1,
+      "required": 27
+     },
+     "READ_DIARY": {
+      "required": 10
+     }
+    },
+    "quality_note": "Tool counts are behavior telemetry, not quality scores; appropriateness remains separate reviewer judgment."
+   },
+   "efficiency": {
+    "turns_per_case": {
+     "numerator": 52,
+     "denominator": 40,
+     "formula": "sum(turn_count)/n cases",
+     "source_case_ids": [
+      "V4-CA-01",
+      "V4-CA-02",
+      "V4-CA-03",
+      "V4-CA-04",
+      "V4-CA-05",
+      "V4-CA-06",
+      "V4-CA-07",
+      "V4-CA-08",
+      "V4-CA-09",
+      "V4-CA-10",
+      "V4-DA-01",
+      "V4-DA-02",
+      "V4-DA-03",
+      "V4-DA-04",
+      "V4-DA-05",
+      "V4-DA-06",
+      "V4-DA-07",
+      "V4-DA-08",
+      "V4-DA-09",
+      "V4-DA-10",
+      "V4-KQ-01",
+      "V4-KQ-02",
+      "V4-KQ-03",
+      "V4-KQ-04",
+      "V4-KQ-05",
+      "V4-KQ-06",
+      "V4-KQ-07",
+      "V4-KQ-08",
+      "V4-KQ-09",
+      "V4-KQ-10",
+      "V4-PD-01",
+      "V4-PD-02",
+      "V4-PD-03",
+      "V4-PD-04",
+      "V4-PD-05",
+      "V4-PD-06",
+      "V4-PD-07",
+      "V4-PD-08",
+      "V4-PD-09",
+      "V4-PD-10"
+     ],
+     "mean": 1.3
+    },
+    "steps_per_case": {
+     "numerator": 93,
+     "denominator": 40,
+     "formula": "sum(step_count)/n cases",
+     "source_case_ids": [
+      "V4-CA-01",
+      "V4-CA-02",
+      "V4-CA-03",
+      "V4-CA-04",
+      "V4-CA-05",
+      "V4-CA-06",
+      "V4-CA-07",
+      "V4-CA-08",
+      "V4-CA-09",
+      "V4-CA-10",
+      "V4-DA-01",
+      "V4-DA-02",
+      "V4-DA-03",
+      "V4-DA-04",
+      "V4-DA-05",
+      "V4-DA-06",
+      "V4-DA-07",
+      "V4-DA-08",
+      "V4-DA-09",
+      "V4-DA-10",
+      "V4-KQ-01",
+      "V4-KQ-02",
+      "V4-KQ-03",
+      "V4-KQ-04",
+      "V4-KQ-05",
+      "V4-KQ-06",
+      "V4-KQ-07",
+      "V4-KQ-08",
+      "V4-KQ-09",
+      "V4-KQ-10",
+      "V4-PD-01",
+      "V4-PD-02",
+      "V4-PD-03",
+      "V4-PD-04",
+      "V4-PD-05",
+      "V4-PD-06",
+      "V4-PD-07",
+      "V4-PD-08",
+      "V4-PD-09",
+      "V4-PD-10"
+     ],
+     "mean": 2.325
+    },
+    "tool_calls_per_case": {
+     "numerator": 41,
+     "denominator": 40,
+     "formula": "sum(actual RETRIEVE+READ_DIARY calls)/n cases; ASK excluded",
+     "source_case_ids": [
+      "V4-CA-01",
+      "V4-CA-02",
+      "V4-CA-03",
+      "V4-CA-04",
+      "V4-CA-05",
+      "V4-CA-06",
+      "V4-CA-07",
+      "V4-CA-08",
+      "V4-CA-09",
+      "V4-CA-10",
+      "V4-DA-01",
+      "V4-DA-02",
+      "V4-DA-03",
+      "V4-DA-04",
+      "V4-DA-05",
+      "V4-DA-06",
+      "V4-DA-07",
+      "V4-DA-08",
+      "V4-DA-09",
+      "V4-DA-10",
+      "V4-KQ-01",
+      "V4-KQ-02",
+      "V4-KQ-03",
+      "V4-KQ-04",
+      "V4-KQ-05",
+      "V4-KQ-06",
+      "V4-KQ-07",
+      "V4-KQ-08",
+      "V4-KQ-09",
+      "V4-KQ-10",
+      "V4-PD-01",
+      "V4-PD-02",
+      "V4-PD-03",
+      "V4-PD-04",
+      "V4-PD-05",
+      "V4-PD-06",
+      "V4-PD-07",
+      "V4-PD-08",
+      "V4-PD-09",
+      "V4-PD-10"
+     ],
+     "mean": 1.025
+    },
+    "latency_ms": {
+     "overall": {
+      "mean_ms": 10426.0577,
+      "median_ms": 10218.945,
+      "p90_nearest_rank_ms": 14739.09,
+      "n": 40,
+      "formula": "mean=sum(latency_ms)/n; median=statistics.median; p90=sorted[ceil(0.9*n)-1]",
+      "source_case_ids": [
+       "V4-CA-01",
+       "V4-CA-02",
+       "V4-CA-03",
+       "V4-CA-04",
+       "V4-CA-05",
+       "V4-CA-06",
+       "V4-CA-07",
+       "V4-CA-08",
+       "V4-CA-09",
+       "V4-CA-10",
+       "V4-DA-01",
+       "V4-DA-02",
+       "V4-DA-03",
+       "V4-DA-04",
+       "V4-DA-05",
+       "V4-DA-06",
+       "V4-DA-07",
+       "V4-DA-08",
+       "V4-DA-09",
+       "V4-DA-10",
+       "V4-KQ-01",
+       "V4-KQ-02",
+       "V4-KQ-03",
+       "V4-KQ-04",
+       "V4-KQ-05",
+       "V4-KQ-06",
+       "V4-KQ-07",
+       "V4-KQ-08",
+       "V4-KQ-09",
+       "V4-KQ-10",
+       "V4-PD-01",
+       "V4-PD-02",
+       "V4-PD-03",
+       "V4-PD-04",
+       "V4-PD-05",
+       "V4-PD-06",
+       "V4-PD-07",
+       "V4-PD-08",
+       "V4-PD-09",
+       "V4-PD-10"
+      ]
+     },
+     "by_task_type": {
+      "KNOWLEDGE_QA": {
+       "mean_ms": 16025.352,
+       "median_ms": 12212.37,
+       "p90_nearest_rank_ms": 15298.5,
+       "n": 10,
+       "formula": "mean=sum(latency_ms)/n; median=statistics.median; p90=sorted[ceil(0.9*n)-1]",
+       "source_case_ids": [
+        "V4-KQ-01",
+        "V4-KQ-02",
+        "V4-KQ-03",
+        "V4-KQ-04",
+        "V4-KQ-05",
+        "V4-KQ-06",
+        "V4-KQ-07",
+        "V4-KQ-08",
+        "V4-KQ-09",
+        "V4-KQ-10"
+       ]
+      },
+      "CAUSE_ASSESSMENT": {
+       "mean_ms": 10929.057,
+       "median_ms": 10202.9,
+       "p90_nearest_rank_ms": 11620.18,
+       "n": 10,
+       "formula": "mean=sum(latency_ms)/n; median=statistics.median; p90=sorted[ceil(0.9*n)-1]",
+       "source_case_ids": [
+        "V4-CA-01",
+        "V4-CA-02",
+        "V4-CA-03",
+        "V4-CA-04",
+        "V4-CA-05",
+        "V4-CA-06",
+        "V4-CA-07",
+        "V4-CA-08",
+        "V4-CA-09",
+        "V4-CA-10"
+       ]
+      },
+      "PERSONALIZED_DECISION": {
+       "mean_ms": 11273.831,
+       "median_ms": 11773.91,
+       "p90_nearest_rank_ms": 14109.4,
+       "n": 10,
+       "formula": "mean=sum(latency_ms)/n; median=statistics.median; p90=sorted[ceil(0.9*n)-1]",
+       "source_case_ids": [
+        "V4-PD-01",
+        "V4-PD-02",
+        "V4-PD-03",
+        "V4-PD-04",
+        "V4-PD-05",
+        "V4-PD-06",
+        "V4-PD-07",
+        "V4-PD-08",
+        "V4-PD-09",
+        "V4-PD-10"
+       ]
+      },
+      "DATA_ANALYSIS": {
+       "mean_ms": 3475.991,
+       "median_ms": 3157.755,
+       "p90_nearest_rank_ms": 4179.64,
+       "n": 10,
+       "formula": "mean=sum(latency_ms)/n; median=statistics.median; p90=sorted[ceil(0.9*n)-1]",
+       "source_case_ids": [
+        "V4-DA-01",
+        "V4-DA-02",
+        "V4-DA-03",
+        "V4-DA-04",
+        "V4-DA-05",
+        "V4-DA-06",
+        "V4-DA-07",
+        "V4-DA-08",
+        "V4-DA-09",
+        "V4-DA-10"
+       ]
+      }
+     }
+    }
+   },
+   "failures": {
+    "CRITICAL_FAILURE_COUNT": 0,
+    "CRITICAL_FAILURE_CASE_IDS": [],
+    "HARMFUL_FAILURE_COUNT": 4,
+    "HARMFUL_FAILURE_CASE_IDS": [
+     "V4-CA-01",
+     "V4-PD-01",
+     "V4-PD-03",
+     "V4-PD-10"
+    ],
+    "primary_cause_root_cause_distribution": {
+     "ACQUISITION_POLICY_SUPPRESSED_NECESSARY_ASK": 1,
+     "ACTION_SELECTION_EVIDENCE_RETRIEVE_SKIPPED": 1,
+     "ACTION_SELECTION_UNNECESSARY_RETRIEVE": 1,
+     "ANSWER_AUTHORIZATION_GENERIC_REFUSAL_FOR_UNAVAILABLE_RESOURCE": 1,
+     "ANSWER_GENERATION_DENOMINATOR_NOT_REPORTED": 1,
+     "ANSWER_GENERATION_DIARY_COMPARISON_NOT_PERFORMED": 1,
+     "ANSWER_GENERATION_LANGUAGE_MISMATCH": 3,
+     "ANSWER_GENERATION_MAX_NOT_REPORTED": 1,
+     "ANSWER_GENERATION_OVER_CONSTRAINED": 1,
+     "ANSWER_GENERATION_SORT_NOT_PERFORMED": 1,
+     "ASK_TARGET_UNDERSPECIFIED": 1,
+     "BOUNDED_ANSWER_CONTRACT_FAIL_CLOSED": 3,
+     "DIARY_DERIVATION_FIELD_NOT_SUMMARIZED": 1,
+     "GOAL_DEPENDENCY_MISREPRESENTATION": 9,
+     "INPUT_UNDERSTANDING": 2,
+     "RETRIEVAL_EVIDENCE_INSUFFICIENT": 4
+    },
+    "primary_cause_case_ids": {
+     "ANSWER_GENERATION_LANGUAGE_MISMATCH": {
+      "count": 3,
+      "case_ids": [
+       "V4-DA-02",
+       "V4-KQ-03",
+       "V4-KQ-08"
+      ]
+     },
+     "RETRIEVAL_EVIDENCE_INSUFFICIENT": {
+      "count": 4,
+      "case_ids": [
+       "V4-CA-08",
+       "V4-KQ-04",
+       "V4-KQ-06",
+       "V4-KQ-09"
+      ]
+     },
+     "ACQUISITION_POLICY_SUPPRESSED_NECESSARY_ASK": {
+      "count": 1,
+      "case_ids": [
+       "V4-CA-01"
+      ]
+     },
+     "GOAL_DEPENDENCY_MISREPRESENTATION": {
+      "count": 9,
+      "case_ids": [
+       "V4-CA-02",
+       "V4-CA-04",
+       "V4-CA-07",
+       "V4-PD-01",
+       "V4-PD-02",
+       "V4-PD-03",
+       "V4-PD-04",
+       "V4-PD-06",
+       "V4-PD-10"
+      ]
+     },
+     "ANSWER_GENERATION_OVER_CONSTRAINED": {
+      "count": 1,
+      "case_ids": [
+       "V4-CA-05"
+      ]
+     },
+     "BOUNDED_ANSWER_CONTRACT_FAIL_CLOSED": {
+      "count": 3,
+      "case_ids": [
+       "V4-CA-06",
+       "V4-CA-09",
+       "V4-PD-07"
+      ]
+     },
+     "INPUT_UNDERSTANDING": {
+      "count": 2,
+      "case_ids": [
+       "V4-PD-05",
+       "V4-PD-08"
+      ]
+     },
+     "ASK_TARGET_UNDERSPECIFIED": {
+      "count": 1,
+      "case_ids": [
+       "V4-PD-09"
+      ]
+     },
+     "ANSWER_GENERATION_DIARY_COMPARISON_NOT_PERFORMED": {
+      "count": 1,
+      "case_ids": [
+       "V4-DA-01"
+      ]
+     },
+     "ANSWER_GENERATION_DENOMINATOR_NOT_REPORTED": {
+      "count": 1,
+      "case_ids": [
+       "V4-DA-03"
+      ]
+     },
+     "DIARY_DERIVATION_FIELD_NOT_SUMMARIZED": {
+      "count": 1,
+      "case_ids": [
+       "V4-DA-05"
+      ]
+     },
+     "ANSWER_GENERATION_SORT_NOT_PERFORMED": {
+      "count": 1,
+      "case_ids": [
+       "V4-DA-06"
+      ]
+     },
+     "ACTION_SELECTION_UNNECESSARY_RETRIEVE": {
+      "count": 1,
+      "case_ids": [
+       "V4-DA-07"
+      ]
+     },
+     "ANSWER_AUTHORIZATION_GENERIC_REFUSAL_FOR_UNAVAILABLE_RESOURCE": {
+      "count": 1,
+      "case_ids": [
+       "V4-DA-08"
+      ]
+     },
+     "ANSWER_GENERATION_MAX_NOT_REPORTED": {
+      "count": 1,
+      "case_ids": [
+       "V4-DA-09"
+      ]
+     },
+     "ACTION_SELECTION_EVIDENCE_RETRIEVE_SKIPPED": {
+      "count": 1,
+      "case_ids": [
+       "V4-DA-10"
+      ]
+     }
+    },
+    "first_divergence_layer_distribution": {
+     "/final_answer: State 中已有 4 条总睡眠时间，回答只给出总均值 386.2 分钟，没有回答哪一晚最长": 1,
+     "/final_answer: State 中已有 6 条按日期可明确分为两组的记录，回答却称'没有明确的周划分依据'，只给出全部 6 天的平均值": 1,
+     "/final_answer: State 已有 4 条带日期的起床时间，回答没有排序，并称'当前已验证的资料不足以支持该事实判断'": 1,
+     "/final_answer: State 已记录 average_sleep_duration_source_entry_count=3，回答只说'4 天记录''可用条目平均 405 分钟'，未说明有效分母为 3 条、缺值日期为 09-11": 1,
+     "/final_answer: 用户英文提问，回答为中文，并含重复条目": 1,
+     "/final_answer: 证据中已有'周末晚睡晚起使生物钟后移、补觉降低睡眠需求'的推理链，最终回答只列为孤立'背景事实'，未形成针对周日晚的有限假设": 1,
+     "/final_state/answer_authorization: 日记不可用后 status=BLOCKED_UNSAFE_OR_INVALID（NO_SAFE_SUPPORTED_SCOPE_OR_ACQUISITION），未生成'说明无导入记录、邀请提供记录'的有边界回答": 1,
+     "/final_state/answer_generation_audit: AUTHORIZED_BOUNDED 后 REJECTED_OUT_OF_SCOPE_OR_UNGROUNDED / FAIL_CLOSED，终端为拒答": 1,
+     "/final_state/answer_generation_audit: AUTHORIZED_BOUNDED 后 answer_generation_outcome=REJECTED_OUT_OF_SCOPE_OR_UNGROUNDED、bounded_contract_validation=FAIL_CLOSED": 1,
+     "/final_state/answer_generation_audit: answer_authorization=AUTHORIZED_BOUNDED，但 answer_generation_outcome=REJECTED_OUT_OF_SCOPE_OR_UNGROUNDED、bounded_contract_validation=FAIL_CLOSED，终端输出为拒答": 1,
+     "/final_state/facts/diary_derived: 只有 diary_day_count=4，没有针对 sleep_onset_latency 的有效条数或摘要，尽管 recent_sleep_pattern 中已有 35、50 与 null 等字段值": 1,
+     "turn 1 /action_history: ASK 目标为泛化的 'nap'，问句'你白天会午睡吗？通常多久？'先重复询问用户已说明的午睡存在，未以 nap_duration 为明确目标": 1,
+     "turn 1 /action_history: READ_DIARY 已加载有效日记后仍执行 RETRIEVE(检查日记是否有可用时长值)": 1,
+     "turn 1 /action_history: 用户明确询问'临床常用参考标准'，Agent 在 READ_DIARY 后未执行 RETRIEVE 即回答": 1,
+     "turn 1 /final_answer: 用户以英文提问，回答全部为中文": 1,
+     "turn 1 /final_answer: 用户英文提问，回答为中文": 1,
+     "turn 1 /final_state/evidence[0]: 检索结果只含'规律作息有助于维持节律'与周末提示，Jet Lag/Rhythm Sleep Disorders 仅有标题": 1,
+     "turn 1 /final_state/evidence[0]: 检索结果声明未出现 shared decision-making 术语，无法回答": 1,
+     "turn 1 /final_state/evidence[0]: 检索结果自述'资料不足以完整回答该问题'，未覆盖团体形式的收益与挑战": 1,
+     "turn 1 /final_state/evidence[0]: 检索结果自述未系统说明针对难以完成练习的应对机制": 1,
+     "turn 1 /state/candidate_actions: 仅有 ANSWER 候选，gate_reason=no_worthwhile_information_after_acquisition_gate，而同一 State 的 critical_missing 含 recent_sleep_pattern": 1,
+     "turn 1 /state/candidate_actions: 只生成 ASK(sleep_onset_latency) 候选，未针对 oracle 必要目标 bedtime；06:30 出门约束未写入 State": 1,
+     "turn 1 /state/critical_missing: 一般性的工作时间关联问题被建模为需要 bedtime/sleep_onset_latency/wake_time/recent_sleep_pattern 的个体化判断": 1,
+     "turn 1 /state/critical_missing: 一般性的运动时间关联问题被建模为需要 bedtime/sleep_onset_latency/wake_time/recent_sleep_pattern 的个体化判断": 1,
+     "turn 1 /state/critical_missing: 信息已足的有边界决策被建模为需要 bedtime/sleep_onset_latency/wake_time 等，随后 ASK(sleep_onset_latency)": 1,
+     "turn 1 /state/critical_missing: 信息已足的有边界决策被建模为需要 bedtime/sleep_onset_latency/wake_time/total_sleep_time/nighttime_awakenings/recent_sleep_pattern": 1,
+     "turn 1 /state/critical_missing: 刺激控制 vs 改钟点的一般比较被建模为需要 bedtime/sleep_onset_latency/wake_time 等，授权层以 sleep_onset_latency 为 material_missing 阻断": 1,
+     "turn 1 /state/critical_missing: 可能性梳理请求被建模为需要 bedtime/sleep_onset_latency/wake_time/recent_sleep_pattern，随后 ASK(wake_time)": 1,
+     "turn 1 /state/critical_missing: 已有充足会话事实的有边界决策被建模为仍缺 bedtime/wake_time/total_sleep_time/nighttime_awakenings/recent_sleep_pattern，并选择 RETRIEVE": 1,
+     "turn 1 /state/critical_missing: 轮班锚点决策被建模为需要 bedtime/sleep_onset_latency/wake_time/total_sleep_time/nighttime_awakenings/recent_sleep_pattern，未把换班模式(shift_transition_pattern)作为决策依赖": 1,
+     "turn 1 /state/facts: {}——query 明示 5:45 照护起床约束与'起床前早已困倦'，State 未记录，wake_time 反被列入 critical_missing": 1,
+     "turn 1 /state/facts: {}——query 明示'一点左右睡二十来分钟、晚上入睡没受影响'，State 未记录，且把 nap 列入 secondary_missing、sleep_onset_latency 列入 critical_missing": 1
+    },
+    "first_divergence_case_ids": {
+     "turn 1 /final_answer: 用户以英文提问，回答全部为中文": {
+      "count": 1,
+      "case_ids": [
+       "V4-KQ-03"
+      ]
+     },
+     "turn 1 /final_state/evidence[0]: 检索结果自述'资料不足以完整回答该问题'，未覆盖团体形式的收益与挑战": {
+      "count": 1,
+      "case_ids": [
+       "V4-KQ-04"
+      ]
+     },
+     "turn 1 /final_state/evidence[0]: 检索结果自述未系统说明针对难以完成练习的应对机制": {
+      "count": 1,
+      "case_ids": [
+       "V4-KQ-06"
+      ]
+     },
+     "turn 1 /final_answer: 用户英文提问，回答为中文": {
+      "count": 1,
+      "case_ids": [
+       "V4-KQ-08"
+      ]
+     },
+     "turn 1 /final_state/evidence[0]: 检索结果声明未出现 shared decision-making 术语，无法回答": {
+      "count": 1,
+      "case_ids": [
+       "V4-KQ-09"
+      ]
+     },
+     "turn 1 /state/candidate_actions: 仅有 ANSWER 候选，gate_reason=no_worthwhile_information_after_acquisition_gate，而同一 State 的 critical_missing 含 recent_sleep_pattern": {
+      "count": 1,
+      "case_ids": [
+       "V4-CA-01"
+      ]
+     },
+     "turn 1 /state/critical_missing: 一般性的运动时间关联问题被建模为需要 bedtime/sleep_onset_latency/wake_time/recent_sleep_pattern 的个体化判断": {
+      "count": 1,
+      "case_ids": [
+       "V4-CA-02"
+      ]
+     },
+     "turn 1 /state/critical_missing: 一般性的工作时间关联问题被建模为需要 bedtime/sleep_onset_latency/wake_time/recent_sleep_pattern 的个体化判断": {
+      "count": 1,
+      "case_ids": [
+       "V4-CA-04"
+      ]
+     },
+     "/final_answer: 证据中已有'周末晚睡晚起使生物钟后移、补觉降低睡眠需求'的推理链，最终回答只列为孤立'背景事实'，未形成针对周日晚的有限假设": {
+      "count": 1,
+      "case_ids": [
+       "V4-CA-05"
+      ]
+     },
+     "/final_state/answer_generation_audit: answer_authorization=AUTHORIZED_BOUNDED，但 answer_generation_outcome=REJECTED_OUT_OF_SCOPE_OR_UNGROUNDED、bounded_contract_validation=FAIL_CLOSED，终端输出为拒答": {
+      "count": 1,
+      "case_ids": [
+       "V4-CA-06"
+      ]
+     },
+     "turn 1 /state/critical_missing: 可能性梳理请求被建模为需要 bedtime/sleep_onset_latency/wake_time/recent_sleep_pattern，随后 ASK(wake_time)": {
+      "count": 1,
+      "case_ids": [
+       "V4-CA-07"
+      ]
+     },
+     "turn 1 /final_state/evidence[0]: 检索结果只含'规律作息有助于维持节律'与周末提示，Jet Lag/Rhythm Sleep Disorders 仅有标题": {
+      "count": 1,
+      "case_ids": [
+       "V4-CA-08"
+      ]
+     },
+     "/final_state/answer_generation_audit: AUTHORIZED_BOUNDED 后 answer_generation_outcome=REJECTED_OUT_OF_SCOPE_OR_UNGROUNDED、bounded_contract_validation=FAIL_CLOSED": {
+      "count": 1,
+      "case_ids": [
+       "V4-CA-09"
+      ]
+     },
+     "turn 1 /state/critical_missing: 轮班锚点决策被建模为需要 bedtime/sleep_onset_latency/wake_time/total_sleep_time/nighttime_awakenings/recent_sleep_pattern，未把换班模式(shift_transition_pattern)作为决策依赖": {
+      "count": 1,
+      "case_ids": [
+       "V4-PD-01"
+      ]
+     },
+     "turn 1 /state/critical_missing: 已有充足会话事实的有边界决策被建模为仍缺 bedtime/wake_time/total_sleep_time/nighttime_awakenings/recent_sleep_pattern，并选择 RETRIEVE": {
+      "count": 1,
+      "case_ids": [
+       "V4-PD-02"
+      ]
+     },
+     "turn 1 /state/candidate_actions: 只生成 ASK(sleep_onset_latency) 候选，未针对 oracle 必要目标 bedtime；06:30 出门约束未写入 State": {
+      "count": 1,
+      "case_ids": [
+       "V4-PD-03"
+      ]
+     },
+     "turn 1 /state/critical_missing: 信息已足的有边界决策被建模为需要 bedtime/sleep_onset_latency/wake_time 等，随后 ASK(sleep_onset_latency)": {
+      "count": 1,
+      "case_ids": [
+       "V4-PD-04"
+      ]
+     },
+     "turn 1 /state/facts: {}——query 明示'一点左右睡二十来分钟、晚上入睡没受影响'，State 未记录，且把 nap 列入 secondary_missing、sleep_onset_latency 列入 critical_missing": {
+      "count": 1,
+      "case_ids": [
+       "V4-PD-05"
+      ]
+     },
+     "turn 1 /state/critical_missing: 刺激控制 vs 改钟点的一般比较被建模为需要 bedtime/sleep_onset_latency/wake_time 等，授权层以 sleep_onset_latency 为 material_missing 阻断": {
+      "count": 1,
+      "case_ids": [
+       "V4-PD-06"
+      ]
+     },
+     "/final_state/answer_generation_audit: AUTHORIZED_BOUNDED 后 REJECTED_OUT_OF_SCOPE_OR_UNGROUNDED / FAIL_CLOSED，终端为拒答": {
+      "count": 1,
+      "case_ids": [
+       "V4-PD-07"
+      ]
+     },
+     "turn 1 /state/facts: {}——query 明示 5:45 照护起床约束与'起床前早已困倦'，State 未记录，wake_time 反被列入 critical_missing": {
+      "count": 1,
+      "case_ids": [
+       "V4-PD-08"
+      ]
+     },
+     "turn 1 /action_history: ASK 目标为泛化的 'nap'，问句'你白天会午睡吗？通常多久？'先重复询问用户已说明的午睡存在，未以 nap_duration 为明确目标": {
+      "count": 1,
+      "case_ids": [
+       "V4-PD-09"
+      ]
+     },
+     "turn 1 /state/critical_missing: 信息已足的有边界决策被建模为需要 bedtime/sleep_onset_latency/wake_time/total_sleep_time/nighttime_awakenings/recent_sleep_pattern": {
+      "count": 1,
+      "case_ids": [
+       "V4-PD-10"
+      ]
+     },
+     "/final_answer: State 中已有 6 条按日期可明确分为两组的记录，回答却称'没有明确的周划分依据'，只给出全部 6 天的平均值": {
+      "count": 1,
+      "case_ids": [
+       "V4-DA-01"
+      ]
+     },
+     "/final_answer: 用户英文提问，回答为中文，并含重复条目": {
+      "count": 1,
+      "case_ids": [
+       "V4-DA-02"
+      ]
+     },
+     "/final_answer: State 已记录 average_sleep_duration_source_entry_count=3，回答只说'4 天记录''可用条目平均 405 分钟'，未说明有效分母为 3 条、缺值日期为 09-11": {
+      "count": 1,
+      "case_ids": [
+       "V4-DA-03"
+      ]
+     },
+     "/final_state/facts/diary_derived: 只有 diary_day_count=4，没有针对 sleep_onset_latency 的有效条数或摘要，尽管 recent_sleep_pattern 中已有 35、50 与 null 等字段值": {
+      "count": 1,
+      "case_ids": [
+       "V4-DA-05"
+      ]
+     },
+     "/final_answer: State 已有 4 条带日期的起床时间，回答没有排序，并称'当前已验证的资料不足以支持该事实判断'": {
+      "count": 1,
+      "case_ids": [
+       "V4-DA-06"
+      ]
+     },
+     "turn 1 /action_history: READ_DIARY 已加载有效日记后仍执行 RETRIEVE(检查日记是否有可用时长值)": {
+      "count": 1,
+      "case_ids": [
+       "V4-DA-07"
+      ]
+     },
+     "/final_state/answer_authorization: 日记不可用后 status=BLOCKED_UNSAFE_OR_INVALID（NO_SAFE_SUPPORTED_SCOPE_OR_ACQUISITION），未生成'说明无导入记录、邀请提供记录'的有边界回答": {
+      "count": 1,
+      "case_ids": [
+       "V4-DA-08"
+      ]
+     },
+     "/final_answer: State 中已有 4 条总睡眠时间，回答只给出总均值 386.2 分钟，没有回答哪一晚最长": {
+      "count": 1,
+      "case_ids": [
+       "V4-DA-09"
+      ]
+     },
+     "turn 1 /action_history: 用户明确询问'临床常用参考标准'，Agent 在 READ_DIARY 后未执行 RETRIEVE 即回答": {
+      "count": 1,
+      "case_ids": [
+       "V4-DA-10"
+      ]
+     }
+    },
+    "downstream_effect_distribution": {
+     "ACTION_SELECTION": 2,
+     "EVIDENCE_ANSWER_SCOPE": 20,
+     "FACTS_STATE_INTEGRITY": 11,
+     "FAIL_CLOSED_NON_ANSWER": 7,
+     "GOAL_ALIGNMENT": 20,
+     "INTERACTION_EFFICIENCY": 19,
+     "IRRELEVANT_ASK": 1,
+     "NECESSARY_ASK_MISSED": 2,
+     "NECESSARY_TARGET_NOT_ACQUIRED": 1,
+     "REDUNDANT_ASK": 2,
+     "REPEATED_LOW_VALUE_ASK": 1,
+     "REPEATED_REDUNDANT_ASK": 1,
+     "UNNECESSARY_RETRIEVE": 2
+    }
+   },
+   "lineage": {
+    "FORMAL_LINEAGE_READY": 28,
+    "DERIVED_LINEAGE_COMPLETE": 8,
+    "INCOMPLETE_FORMAL_BUT_ADJUDICATABLE": 4,
+    "interpretation": "Provenance metrics only; derived repairs remain derived, and incomplete formal cases remain incomplete. No score adjustment."
+   },
+   "reviewer_limitations": {
+    "reviewer_type": "SINGLE_AI_REVIEWER",
+    "human_adjudication": false,
+    "inter_rater_reliability": "NOT_MEASURED",
+    "deterministic_consistency_checks": "PASS_SINGLE_REVIEWER_DETERMINISTIC_CHECKS",
+    "interpretation": "Rubric scores are single-reviewer descriptive judgments; they are not human/expert review or inter-rater validated."
+   },
+   "historical_comparability": {
+    "status": "NOT_COMPARABLE",
+    "reason": "V4 is a distinct case set and uses a single AI reviewer; the metric registry identifies V2 as non-paired development data and V3 as consumed historical held-out data. Historical scores were not loaded or compared."
+   },
+   "OVERALL_PASS_THRESHOLD": "NOT_DEFINED",
+   "token_usage_status": "NOT_MEASURED",
+   "final_status_note": "final_status=ANSWER is execution telemetry and is not substituted for completion judgment."
+  }
+ },
+ "comparison_vs_locked_baseline": {
+  "overall_mean": {
+   "baseline": 70.5,
+   "treatment": 69.675,
+   "absolute_delta": -0.825,
+   "relative_delta": -0.0117
+  },
+  "task_means": {
+   "KNOWLEDGE_QA": {
+    "baseline": 82.2,
+    "treatment": 91.6,
+    "absolute_delta": 9.4,
+    "relative_delta": 0.1144
+   },
+   "CAUSE_ASSESSMENT": {
+    "baseline": 59.1,
+    "treatment": 68.1,
+    "absolute_delta": 9.0,
+    "relative_delta": 0.1523
+   },
+   "PERSONALIZED_DECISION": {
+    "baseline": 62.6,
+    "treatment": 46.0,
+    "absolute_delta": -16.6,
+    "relative_delta": -0.2652
+   },
+   "DATA_ANALYSIS": {
+    "baseline": 78.1,
+    "treatment": 73.0,
+    "absolute_delta": -5.1,
+    "relative_delta": -0.0653
+   }
+  },
+  "dimension_means": {
+   "action_resource_selection": {
+    "baseline": 13.9,
+    "treatment": 16.35,
+    "absolute_delta": 2.45,
+    "relative_delta": 0.1763
+   },
+   "evidence_answer_scope": {
+    "baseline": 15.5,
+    "treatment": 15.05,
+    "absolute_delta": -0.45,
+    "relative_delta": -0.029
+   },
+   "facts_state_integrity": {
+    "baseline": 16.1,
+    "treatment": 15.975,
+    "absolute_delta": -0.125,
+    "relative_delta": -0.0078
+   },
+   "goal_alignment": {
+    "baseline": 13.675,
+    "treatment": 12.2,
+    "absolute_delta": -1.475,
+    "relative_delta": -0.1079
+   },
+   "interaction_efficiency": {
+    "baseline": 11.325,
+    "treatment": 10.1,
+    "absolute_delta": -1.225,
+    "relative_delta": -0.1082
+   }
+  },
+  "M1_low_value_ask_rate": {
+   "baseline": 1.0,
+   "treatment": 0.6667,
+   "absolute_delta": -0.3333,
+   "delta_percentage_points": -33.33,
+   "relative_delta": -0.3333,
+   "baseline_fraction": {
+    "numerator": 9,
+    "denominator": 9,
+    "value": 1.0
+   },
+   "treatment_fraction": {
+    "numerator": 8,
+    "denominator": 12,
+    "value": 0.6667
+   },
+   "better": "lower"
+  },
+  "M2_completion": {
+   "baseline": 0.4,
+   "treatment": 0.45,
+   "absolute_delta": 0.05,
+   "delta_percentage_points": 5.0,
+   "relative_delta": 0.125,
+   "count_delta": 2,
+   "baseline_distribution": {
+    "complete": 16,
+    "not_complete": 3,
+    "partial": 21
+   },
+   "treatment_distribution": {
+    "complete": 18,
+    "not_complete": 14,
+    "partial": 8
+   },
+   "better": "higher"
+  },
+  "M3_harmful": {
+   "baseline": 0.4,
+   "treatment": 0.1,
+   "absolute_delta": -0.3,
+   "delta_percentage_points": -30.0,
+   "relative_delta": -0.75,
+   "count_delta": -12,
+   "better": "lower"
+  },
+  "M4_necessary_ask_preservation": {
+   "baseline": 0.25,
+   "treatment": 0.0,
+   "absolute_delta": -0.25,
+   "delta_percentage_points": -25.0,
+   "relative_delta": -1.0,
+   "baseline_fraction": {
+    "numerator": 1,
+    "denominator": 4,
+    "value": 0.25
+   },
+   "treatment_fraction": {
+    "numerator": 0,
+    "denominator": 4,
+    "value": 0.0
+   },
+   "better": "not lower"
+  },
+  "M5_critical": {
+   "baseline": 0.0,
+   "treatment": 0.0,
+   "absolute_delta": 0.0,
+   "delta_percentage_points": 0.0,
+   "relative_delta": "NOT_APPLICABLE",
+   "count_delta": 0,
+   "better": "lower; any increase is a safety regression and is not offset by other metrics"
+  },
+  "validity": {
+   "baseline": 0.925,
+   "treatment": 0.625,
+   "absolute_delta": -0.3,
+   "delta_percentage_points": -30.0,
+   "relative_delta": -0.3243,
+   "count_delta": -12
+  },
+  "completion_by_task": {
+   "KNOWLEDGE_QA": {
+    "baseline": {
+     "numerator": 8,
+     "denominator": 10,
+     "value": 0.8,
+     "distribution": {
+      "complete": 8,
+      "partial": 2
+     },
+     "validity": {
+      "numerator": 10,
+      "denominator": 10,
+      "value": 1.0
+     }
+    },
+    "treatment": {
+     "numerator": 7,
+     "denominator": 10,
+     "value": 0.7,
+     "distribution": {
+      "complete": 7,
+      "not_complete": 1,
+      "partial": 2
+     },
+     "validity": {
+      "numerator": 9,
+      "denominator": 10,
+      "value": 0.9
+     }
+    },
+    "absolute_delta": -0.1,
+    "delta_percentage_points": -10.0,
+    "relative_delta": -0.125
+   },
+   "CAUSE_ASSESSMENT": {
+    "baseline": {
+     "numerator": 1,
+     "denominator": 10,
+     "value": 0.1,
+     "distribution": {
+      "complete": 1,
+      "partial": 9
+     },
+     "validity": {
+      "numerator": 10,
+      "denominator": 10,
+      "value": 1.0
+     }
+    },
+    "treatment": {
+     "numerator": 4,
+     "denominator": 10,
+     "value": 0.4,
+     "distribution": {
+      "complete": 4,
+      "not_complete": 4,
+      "partial": 2
+     },
+     "validity": {
+      "numerator": 6,
+      "denominator": 10,
+      "value": 0.6
+     }
+    },
+    "absolute_delta": 0.3,
+    "delta_percentage_points": 30.0,
+    "relative_delta": 3.0
+   },
+   "PERSONALIZED_DECISION": {
+    "baseline": {
+     "numerator": 2,
+     "denominator": 10,
+     "value": 0.2,
+     "distribution": {
+      "complete": 2,
+      "partial": 8
+     },
+     "validity": {
+      "numerator": 10,
+      "denominator": 10,
+      "value": 1.0
+     }
+    },
+    "treatment": {
+     "numerator": 3,
+     "denominator": 10,
+     "value": 0.3,
+     "distribution": {
+      "complete": 3,
+      "not_complete": 6,
+      "partial": 1
+     },
+     "validity": {
+      "numerator": 4,
+      "denominator": 10,
+      "value": 0.4
+     }
+    },
+    "absolute_delta": 0.1,
+    "delta_percentage_points": 10.0,
+    "relative_delta": 0.5
+   },
+   "DATA_ANALYSIS": {
+    "baseline": {
+     "numerator": 5,
+     "denominator": 10,
+     "value": 0.5,
+     "distribution": {
+      "complete": 5,
+      "not_complete": 3,
+      "partial": 2
+     },
+     "validity": {
+      "numerator": 7,
+      "denominator": 10,
+      "value": 0.7
+     }
+    },
+    "treatment": {
+     "numerator": 4,
+     "denominator": 10,
+     "value": 0.4,
+     "distribution": {
+      "complete": 4,
+      "not_complete": 3,
+      "partial": 3
+     },
+     "validity": {
+      "numerator": 6,
+      "denominator": 10,
+      "value": 0.6
+     }
+    },
+    "absolute_delta": -0.1,
+    "delta_percentage_points": -10.0,
+    "relative_delta": -0.2
+   }
+  },
+  "per_case_behavior": {
+   "ask": {
+    "baseline": 0.225,
+    "treatment": 0.3,
+    "absolute_delta": 0.075,
+    "relative_delta": 0.3333
+   },
+   "retrieve": {
+    "baseline": 0.325,
+    "treatment": 0.775,
+    "absolute_delta": 0.45,
+    "relative_delta": 1.3846
+   },
+   "read_diary": {
+    "baseline": 0.25,
+    "treatment": 0.25,
+    "absolute_delta": 0.0,
+    "relative_delta": 0.0
+   },
+   "tool_calls": {
+    "baseline": 0.575,
+    "treatment": 1.025,
+    "absolute_delta": 0.45,
+    "relative_delta": 0.7826
+   },
+   "turns": {
+    "baseline": 1.225,
+    "treatment": 1.3,
+    "absolute_delta": 0.075,
+    "relative_delta": 0.0612
+   },
+   "steps": {
+    "baseline": 1.8,
+    "treatment": 2.325,
+    "absolute_delta": 0.525,
+    "relative_delta": 0.2917
+   }
+  },
+  "latency_ms": {
+   "mean_ms": {
+    "baseline": 6453.3615,
+    "treatment": 10426.0577,
+    "absolute_delta": 3972.6962,
+    "relative_delta": 0.6156
+   },
+   "median_ms": {
+    "baseline": 3251.395,
+    "treatment": 10218.945,
+    "absolute_delta": 6967.55,
+    "relative_delta": 2.1429
+   },
+   "p90_nearest_rank_ms": {
+    "baseline": 11380.62,
+    "treatment": 14739.09,
+    "absolute_delta": 3358.47,
+    "relative_delta": 0.2951
+   }
+  },
+  "ask_category_counts": {
+   "total": {
+    "baseline": 9,
+    "treatment": 12,
+    "count_delta": 3
+   },
+   "necessary": {
+    "baseline": 0,
+    "treatment": 1,
+    "count_delta": 1
+   },
+   "useful_but_optional": {
+    "baseline": 0,
+    "treatment": 3,
+    "count_delta": 3
+   },
+   "redundant": {
+    "baseline": 1,
+    "treatment": 6,
+    "count_delta": 5
+   },
+   "irrelevant": {
+    "baseline": 8,
+    "treatment": 2,
+    "count_delta": -6
+   }
+  }
+ },
+ "case_transitions": {
+  "counts": {
+   "completion": {
+    "UNCHANGED": 30,
+    "REGRESSED": 4,
+    "IMPROVED": 6
+   },
+   "validity": {
+    "UNCHANGED": 28,
+    "REGRESSED": 12
+   },
+   "harmful": {
+    "UNCHANGED": 28,
+    "IMPROVED": 12
+   },
+   "critical": {
+    "UNCHANGED": 40
+   },
+   "score_delta_sign": {
+    "HIGHER": 17,
+    "LOWER": 23
+   },
+   "ask_labels": {
+    "UNCHANGED": 36,
+    "NEW_LOW_VALUE_ASK_INTRODUCED": 1,
+    "LOW_VALUE_ASK_REMOVED": 3,
+    "NECESSARY_ASK_LOST": 1
+   }
+  },
+  "by_task_type": {
+   "KNOWLEDGE_QA": {
+    "completion": {
+     "UNCHANGED": 9,
+     "REGRESSED": 1
+    },
+    "validity": {
+     "UNCHANGED": 9,
+     "REGRESSED": 1
+    },
+    "harmful_failure": {
+     "UNCHANGED": 10
+    },
+    "critical_failure": {
+     "UNCHANGED": 10
+    },
+    "score_delta_sign": {
+     "HIGHER": 9,
+     "LOWER": 1
+    }
+   },
+   "CAUSE_ASSESSMENT": {
+    "completion": {
+     "UNCHANGED": 7,
+     "IMPROVED": 3
+    },
+    "validity": {
+     "UNCHANGED": 6,
+     "REGRESSED": 4
+    },
+    "harmful_failure": {
+     "UNCHANGED": 3,
+     "IMPROVED": 7
+    },
+    "critical_failure": {
+     "UNCHANGED": 10
+    },
+    "score_delta_sign": {
+     "HIGHER": 5,
+     "LOWER": 5
+    }
+   },
+   "PERSONALIZED_DECISION": {
+    "completion": {
+     "UNCHANGED": 7,
+     "REGRESSED": 1,
+     "IMPROVED": 2
+    },
+    "validity": {
+     "UNCHANGED": 4,
+     "REGRESSED": 6
+    },
+    "harmful_failure": {
+     "UNCHANGED": 5,
+     "IMPROVED": 5
+    },
+    "critical_failure": {
+     "UNCHANGED": 10
+    },
+    "score_delta_sign": {
+     "LOWER": 9,
+     "HIGHER": 1
+    }
+   },
+   "DATA_ANALYSIS": {
+    "completion": {
+     "UNCHANGED": 7,
+     "REGRESSED": 2,
+     "IMPROVED": 1
+    },
+    "validity": {
+     "REGRESSED": 1,
+     "UNCHANGED": 9
+    },
+    "harmful_failure": {
+     "UNCHANGED": 10
+    },
+    "critical_failure": {
+     "UNCHANGED": 10
+    },
+    "score_delta_sign": {
+     "HIGHER": 2,
+     "LOWER": 8
+    }
+   }
+  },
+  "rows": [
+   {
+    "case_id": "V4-KQ-01",
+    "task_type": "KNOWLEDGE_QA",
+    "completion": [
+     "complete",
+     "complete",
+     "UNCHANGED"
+    ],
+    "validity": [
+     true,
+     true,
+     "UNCHANGED"
+    ],
+    "harmful_failure": [
+     false,
+     false,
+     "UNCHANGED"
+    ],
+    "critical_failure": [
+     false,
+     false,
+     "UNCHANGED",
+     []
+    ],
+    "total_score": [
+     86,
+     98,
+     12
+    ],
+    "ask_transition_labels": [
+     "UNCHANGED"
+    ],
+    "v3_primary_cause_as_written": null
+   },
+   {
+    "case_id": "V4-KQ-02",
+    "task_type": "KNOWLEDGE_QA",
+    "completion": [
+     "complete",
+     "complete",
+     "UNCHANGED"
+    ],
+    "validity": [
+     true,
+     true,
+     "UNCHANGED"
+    ],
+    "harmful_failure": [
+     false,
+     false,
+     "UNCHANGED"
+    ],
+    "critical_failure": [
+     false,
+     false,
+     "UNCHANGED",
+     []
+    ],
+    "total_score": [
+     81,
+     98,
+     17
+    ],
+    "ask_transition_labels": [
+     "UNCHANGED"
+    ],
+    "v3_primary_cause_as_written": null
+   },
+   {
+    "case_id": "V4-KQ-03",
+    "task_type": "KNOWLEDGE_QA",
+    "completion": [
+     "complete",
+     "complete",
+     "UNCHANGED"
+    ],
+    "validity": [
+     true,
+     true,
+     "UNCHANGED"
+    ],
+    "harmful_failure": [
+     false,
+     false,
+     "UNCHANGED"
+    ],
+    "critical_failure": [
+     false,
+     false,
+     "UNCHANGED",
+     []
+    ],
+    "total_score": [
+     90,
+     96,
+     6
+    ],
+    "ask_transition_labels": [
+     "UNCHANGED"
+    ],
+    "v3_primary_cause_as_written": "ANSWER_GENERATION_LANGUAGE_MISMATCH"
+   },
+   {
+    "case_id": "V4-KQ-04",
+    "task_type": "KNOWLEDGE_QA",
+    "completion": [
+     "partial",
+     "partial",
+     "UNCHANGED"
+    ],
+    "validity": [
+     true,
+     true,
+     "UNCHANGED"
+    ],
+    "harmful_failure": [
+     false,
+     false,
+     "UNCHANGED"
+    ],
+    "critical_failure": [
+     false,
+     false,
+     "UNCHANGED",
+     []
+    ],
+    "total_score": [
+     81,
+     84,
+     3
+    ],
+    "ask_transition_labels": [
+     "UNCHANGED"
+    ],
+    "v3_primary_cause_as_written": "RETRIEVAL_EVIDENCE_INSUFFICIENT"
+   },
+   {
+    "case_id": "V4-KQ-05",
+    "task_type": "KNOWLEDGE_QA",
+    "completion": [
+     "complete",
+     "complete",
+     "UNCHANGED"
+    ],
+    "validity": [
+     true,
+     true,
+     "UNCHANGED"
+    ],
+    "harmful_failure": [
+     false,
+     false,
+     "UNCHANGED"
+    ],
+    "critical_failure": [
+     false,
+     false,
+     "UNCHANGED",
+     []
+    ],
+    "total_score": [
+     83,
+     96,
+     13
+    ],
+    "ask_transition_labels": [
+     "UNCHANGED"
+    ],
+    "v3_primary_cause_as_written": null
+   },
+   {
+    "case_id": "V4-KQ-06",
+    "task_type": "KNOWLEDGE_QA",
+    "completion": [
+     "complete",
+     "partial",
+     "REGRESSED"
+    ],
+    "validity": [
+     true,
+     true,
+     "UNCHANGED"
+    ],
+    "harmful_failure": [
+     false,
+     false,
+     "UNCHANGED"
+    ],
+    "critical_failure": [
+     false,
+     false,
+     "UNCHANGED",
+     []
+    ],
+    "total_score": [
+     83,
+     88,
+     5
+    ],
+    "ask_transition_labels": [
+     "UNCHANGED"
+    ],
+    "v3_primary_cause_as_written": "RETRIEVAL_EVIDENCE_INSUFFICIENT"
+   },
+   {
+    "case_id": "V4-KQ-07",
+    "task_type": "KNOWLEDGE_QA",
+    "completion": [
+     "complete",
+     "complete",
+     "UNCHANGED"
+    ],
+    "validity": [
+     true,
+     true,
+     "UNCHANGED"
+    ],
+    "harmful_failure": [
+     false,
+     false,
+     "UNCHANGED"
+    ],
+    "critical_failure": [
+     false,
+     false,
+     "UNCHANGED",
+     []
+    ],
+    "total_score": [
+     75,
+     97,
+     22
+    ],
+    "ask_transition_labels": [
+     "UNCHANGED"
+    ],
+    "v3_primary_cause_as_written": null
+   },
+   {
+    "case_id": "V4-KQ-08",
+    "task_type": "KNOWLEDGE_QA",
+    "completion": [
+     "complete",
+     "complete",
+     "UNCHANGED"
+    ],
+    "validity": [
+     true,
+     true,
+     "UNCHANGED"
+    ],
+    "harmful_failure": [
+     false,
+     false,
+     "UNCHANGED"
+    ],
+    "critical_failure": [
+     false,
+     false,
+     "UNCHANGED",
+     []
+    ],
+    "total_score": [
+     84,
+     94,
+     10
+    ],
+    "ask_transition_labels": [
+     "UNCHANGED"
+    ],
+    "v3_primary_cause_as_written": "ANSWER_GENERATION_LANGUAGE_MISMATCH"
+   },
+   {
+    "case_id": "V4-KQ-09",
+    "task_type": "KNOWLEDGE_QA",
+    "completion": [
+     "partial",
+     "not_complete",
+     "UNCHANGED"
+    ],
+    "validity": [
+     true,
+     false,
+     "REGRESSED"
+    ],
+    "harmful_failure": [
+     false,
+     false,
+     "UNCHANGED"
+    ],
+    "critical_failure": [
+     false,
+     false,
+     "UNCHANGED",
+     []
+    ],
+    "total_score": [
+     78,
+     70,
+     -8
+    ],
+    "ask_transition_labels": [
+     "UNCHANGED"
+    ],
+    "v3_primary_cause_as_written": "RETRIEVAL_EVIDENCE_INSUFFICIENT"
+   },
+   {
+    "case_id": "V4-KQ-10",
+    "task_type": "KNOWLEDGE_QA",
+    "completion": [
+     "complete",
+     "complete",
+     "UNCHANGED"
+    ],
+    "validity": [
+     true,
+     true,
+     "UNCHANGED"
+    ],
+    "harmful_failure": [
+     false,
+     false,
+     "UNCHANGED"
+    ],
+    "critical_failure": [
+     false,
+     false,
+     "UNCHANGED",
+     []
+    ],
+    "total_score": [
+     81,
+     95,
+     14
+    ],
+    "ask_transition_labels": [
+     "UNCHANGED"
+    ],
+    "v3_primary_cause_as_written": null
+   },
+   {
+    "case_id": "V4-CA-01",
+    "task_type": "CAUSE_ASSESSMENT",
+    "completion": [
+     "partial",
+     "partial",
+     "UNCHANGED"
+    ],
+    "validity": [
+     true,
+     true,
+     "UNCHANGED"
+    ],
+    "harmful_failure": [
+     true,
+     true,
+     "UNCHANGED"
+    ],
+    "critical_failure": [
+     false,
+     false,
+     "UNCHANGED",
+     []
+    ],
+    "total_score": [
+     53,
+     69,
+     16
+    ],
+    "ask_transition_labels": [
+     "UNCHANGED"
+    ],
+    "v3_primary_cause_as_written": "ACQUISITION_POLICY_SUPPRESSED_NECESSARY_ASK"
+   },
+   {
+    "case_id": "V4-CA-02",
+    "task_type": "CAUSE_ASSESSMENT",
+    "completion": [
+     "partial",
+     "not_complete",
+     "UNCHANGED"
+    ],
+    "validity": [
+     true,
+     false,
+     "REGRESSED"
+    ],
+    "harmful_failure": [
+     true,
+     false,
+     "IMPROVED"
+    ],
+    "critical_failure": [
+     false,
+     false,
+     "UNCHANGED",
+     []
+    ],
+    "total_score": [
+     57,
+     40,
+     -17
+    ],
+    "ask_transition_labels": [
+     "UNCHANGED"
+    ],
+    "v3_primary_cause_as_written": "GOAL_DEPENDENCY_MISREPRESENTATION"
+   },
+   {
+    "case_id": "V4-CA-03",
+    "task_type": "CAUSE_ASSESSMENT",
+    "completion": [
+     "partial",
+     "complete",
+     "IMPROVED"
+    ],
+    "validity": [
+     true,
+     true,
+     "UNCHANGED"
+    ],
+    "harmful_failure": [
+     true,
+     false,
+     "IMPROVED"
+    ],
+    "critical_failure": [
+     false,
+     false,
+     "UNCHANGED",
+     []
+    ],
+    "total_score": [
+     53,
+     92,
+     39
+    ],
+    "ask_transition_labels": [
+     "UNCHANGED"
+    ],
+    "v3_primary_cause_as_written": null
+   },
+   {
+    "case_id": "V4-CA-04",
+    "task_type": "CAUSE_ASSESSMENT",
+    "completion": [
+     "partial",
+     "not_complete",
+     "UNCHANGED"
+    ],
+    "validity": [
+     true,
+     false,
+     "REGRESSED"
+    ],
+    "harmful_failure": [
+     false,
+     false,
+     "UNCHANGED"
+    ],
+    "critical_failure": [
+     false,
+     false,
+     "UNCHANGED",
+     []
+    ],
+    "total_score": [
+     59,
+     42,
+     -17
+    ],
+    "ask_transition_labels": [
+     "UNCHANGED"
+    ],
+    "v3_primary_cause_as_written": "GOAL_DEPENDENCY_MISREPRESENTATION"
+   },
+   {
+    "case_id": "V4-CA-05",
+    "task_type": "CAUSE_ASSESSMENT",
+    "completion": [
+     "partial",
+     "partial",
+     "UNCHANGED"
+    ],
+    "validity": [
+     true,
+     true,
+     "UNCHANGED"
+    ],
+    "harmful_failure": [
+     true,
+     false,
+     "IMPROVED"
+    ],
+    "critical_failure": [
+     false,
+     false,
+     "UNCHANGED",
+     []
+    ],
+    "total_score": [
+     53,
+     83,
+     30
+    ],
+    "ask_transition_labels": [
+     "UNCHANGED"
+    ],
+    "v3_primary_cause_as_written": "ANSWER_GENERATION_OVER_CONSTRAINED"
+   },
+   {
+    "case_id": "V4-CA-06",
+    "task_type": "CAUSE_ASSESSMENT",
+    "completion": [
+     "partial",
+     "not_complete",
+     "UNCHANGED"
+    ],
+    "validity": [
+     true,
+     false,
+     "REGRESSED"
+    ],
+    "harmful_failure": [
+     true,
+     false,
+     "IMPROVED"
+    ],
+    "critical_failure": [
+     false,
+     false,
+     "UNCHANGED",
+     []
+    ],
+    "total_score": [
+     55,
+     47,
+     -8
+    ],
+    "ask_transition_labels": [
+     "UNCHANGED"
+    ],
+    "v3_primary_cause_as_written": "BOUNDED_ANSWER_CONTRACT_FAIL_CLOSED"
+   },
+   {
+    "case_id": "V4-CA-07",
+    "task_type": "CAUSE_ASSESSMENT",
+    "completion": [
+     "partial",
+     "complete",
+     "IMPROVED"
+    ],
+    "validity": [
+     true,
+     true,
+     "UNCHANGED"
+    ],
+    "harmful_failure": [
+     true,
+     false,
+     "IMPROVED"
+    ],
+    "critical_failure": [
+     false,
+     false,
+     "UNCHANGED",
+     []
+    ],
+    "total_score": [
+     53,
+     79,
+     26
+    ],
+    "ask_transition_labels": [
+     "UNCHANGED"
+    ],
+    "v3_primary_cause_as_written": "GOAL_DEPENDENCY_MISREPRESENTATION"
+   },
+   {
+    "case_id": "V4-CA-08",
+    "task_type": "CAUSE_ASSESSMENT",
+    "completion": [
+     "complete",
+     "complete",
+     "UNCHANGED"
+    ],
+    "validity": [
+     true,
+     true,
+     "UNCHANGED"
+    ],
+    "harmful_failure": [
+     false,
+     false,
+     "UNCHANGED"
+    ],
+    "critical_failure": [
+     false,
+     false,
+     "UNCHANGED",
+     []
+    ],
+    "total_score": [
+     88,
+     87,
+     -1
+    ],
+    "ask_transition_labels": [
+     "UNCHANGED"
+    ],
+    "v3_primary_cause_as_written": "RETRIEVAL_EVIDENCE_INSUFFICIENT"
+   },
+   {
+    "case_id": "V4-CA-09",
+    "task_type": "CAUSE_ASSESSMENT",
+    "completion": [
+     "partial",
+     "not_complete",
+     "UNCHANGED"
+    ],
+    "validity": [
+     true,
+     false,
+     "REGRESSED"
+    ],
+    "harmful_failure": [
+     true,
+     false,
+     "IMPROVED"
+    ],
+    "critical_failure": [
+     false,
+     false,
+     "UNCHANGED",
+     []
+    ],
+    "total_score": [
+     58,
+     49,
+     -9
+    ],
+    "ask_transition_labels": [
+     "UNCHANGED"
+    ],
+    "v3_primary_cause_as_written": "BOUNDED_ANSWER_CONTRACT_FAIL_CLOSED"
+   },
+   {
+    "case_id": "V4-CA-10",
+    "task_type": "CAUSE_ASSESSMENT",
+    "completion": [
+     "partial",
+     "complete",
+     "IMPROVED"
+    ],
+    "validity": [
+     true,
+     true,
+     "UNCHANGED"
+    ],
+    "harmful_failure": [
+     true,
+     false,
+     "IMPROVED"
+    ],
+    "critical_failure": [
+     false,
+     false,
+     "UNCHANGED",
+     []
+    ],
+    "total_score": [
+     62,
+     93,
+     31
+    ],
+    "ask_transition_labels": [
+     "UNCHANGED"
+    ],
+    "v3_primary_cause_as_written": null
+   },
+   {
+    "case_id": "V4-PD-01",
+    "task_type": "PERSONALIZED_DECISION",
+    "completion": [
+     "partial",
+     "partial",
+     "UNCHANGED"
+    ],
+    "validity": [
+     true,
+     true,
+     "UNCHANGED"
+    ],
+    "harmful_failure": [
+     true,
+     true,
+     "UNCHANGED"
+    ],
+    "critical_failure": [
+     false,
+     false,
+     "UNCHANGED",
+     []
+    ],
+    "total_score": [
+     56,
+     48,
+     -8
+    ],
+    "ask_transition_labels": [
+     "NEW_LOW_VALUE_ASK_INTRODUCED"
+    ],
+    "v3_primary_cause_as_written": "GOAL_DEPENDENCY_MISREPRESENTATION"
+   },
+   {
+    "case_id": "V4-PD-02",
+    "task_type": "PERSONALIZED_DECISION",
+    "completion": [
+     "complete",
+     "not_complete",
+     "REGRESSED"
+    ],
+    "validity": [
+     true,
+     false,
+     "REGRESSED"
+    ],
+    "harmful_failure": [
+     false,
+     false,
+     "UNCHANGED"
+    ],
+    "critical_failure": [
+     false,
+     false,
+     "UNCHANGED",
+     []
+    ],
+    "total_score": [
+     94,
+     35,
+     -59
+    ],
+    "ask_transition_labels": [
+     "UNCHANGED"
+    ],
+    "v3_primary_cause_as_written": "GOAL_DEPENDENCY_MISREPRESENTATION"
+   },
+   {
+    "case_id": "V4-PD-03",
+    "task_type": "PERSONALIZED_DECISION",
+    "completion": [
+     "partial",
+     "not_complete",
+     "UNCHANGED"
+    ],
+    "validity": [
+     true,
+     false,
+     "REGRESSED"
+    ],
+    "harmful_failure": [
+     true,
+     true,
+     "UNCHANGED"
+    ],
+    "critical_failure": [
+     false,
+     false,
+     "UNCHANGED",
+     []
+    ],
+    "total_score": [
+     61,
+     28,
+     -33
+    ],
+    "ask_transition_labels": [
+     "LOW_VALUE_ASK_REMOVED",
+     "NECESSARY_ASK_LOST"
+    ],
+    "v3_primary_cause_as_written": "GOAL_DEPENDENCY_MISREPRESENTATION"
+   },
+   {
+    "case_id": "V4-PD-04",
+    "task_type": "PERSONALIZED_DECISION",
+    "completion": [
+     "complete",
+     "complete",
+     "UNCHANGED"
+    ],
+    "validity": [
+     true,
+     true,
+     "UNCHANGED"
+    ],
+    "harmful_failure": [
+     false,
+     false,
+     "UNCHANGED"
+    ],
+    "critical_failure": [
+     false,
+     false,
+     "UNCHANGED",
+     []
+    ],
+    "total_score": [
+     75,
+     73,
+     -2
+    ],
+    "ask_transition_labels": [
+     "UNCHANGED"
+    ],
+    "v3_primary_cause_as_written": "GOAL_DEPENDENCY_MISREPRESENTATION"
+   },
+   {
+    "case_id": "V4-PD-05",
+    "task_type": "PERSONALIZED_DECISION",
+    "completion": [
+     "partial",
+     "not_complete",
+     "UNCHANGED"
+    ],
+    "validity": [
+     true,
+     false,
+     "REGRESSED"
+    ],
+    "harmful_failure": [
+     true,
+     false,
+     "IMPROVED"
+    ],
+    "critical_failure": [
+     false,
+     false,
+     "UNCHANGED",
+     []
+    ],
+    "total_score": [
+     48,
+     35,
+     -13
+    ],
+    "ask_transition_labels": [
+     "LOW_VALUE_ASK_REMOVED"
+    ],
+    "v3_primary_cause_as_written": "INPUT_UNDERSTANDING"
+   },
+   {
+    "case_id": "V4-PD-06",
+    "task_type": "PERSONALIZED_DECISION",
+    "completion": [
+     "partial",
+     "not_complete",
+     "UNCHANGED"
+    ],
+    "validity": [
+     true,
+     false,
+     "REGRESSED"
+    ],
+    "harmful_failure": [
+     true,
+     false,
+     "IMPROVED"
+    ],
+    "critical_failure": [
+     false,
+     false,
+     "UNCHANGED",
+     []
+    ],
+    "total_score": [
+     54,
+     36,
+     -18
+    ],
+    "ask_transition_labels": [
+     "LOW_VALUE_ASK_REMOVED"
+    ],
+    "v3_primary_cause_as_written": "GOAL_DEPENDENCY_MISREPRESENTATION"
+   },
+   {
+    "case_id": "V4-PD-07",
+    "task_type": "PERSONALIZED_DECISION",
+    "completion": [
+     "partial",
+     "not_complete",
+     "UNCHANGED"
+    ],
+    "validity": [
+     true,
+     false,
+     "REGRESSED"
+    ],
+    "harmful_failure": [
+     true,
+     false,
+     "IMPROVED"
+    ],
+    "critical_failure": [
+     false,
+     false,
+     "UNCHANGED",
+     []
+    ],
+    "total_score": [
+     60,
+     43,
+     -17
+    ],
+    "ask_transition_labels": [
+     "UNCHANGED"
+    ],
+    "v3_primary_cause_as_written": "BOUNDED_ANSWER_CONTRACT_FAIL_CLOSED"
+   },
+   {
+    "case_id": "V4-PD-08",
+    "task_type": "PERSONALIZED_DECISION",
+    "completion": [
+     "partial",
+     "not_complete",
+     "UNCHANGED"
+    ],
+    "validity": [
+     true,
+     false,
+     "REGRESSED"
+    ],
+    "harmful_failure": [
+     true,
+     false,
+     "IMPROVED"
+    ],
+    "critical_failure": [
+     false,
+     false,
+     "UNCHANGED",
+     []
+    ],
+    "total_score": [
+     53,
+     35,
+     -18
+    ],
+    "ask_transition_labels": [
+     "UNCHANGED"
+    ],
+    "v3_primary_cause_as_written": "INPUT_UNDERSTANDING"
+   },
+   {
+    "case_id": "V4-PD-09",
+    "task_type": "PERSONALIZED_DECISION",
+    "completion": [
+     "partial",
+     "complete",
+     "IMPROVED"
+    ],
+    "validity": [
+     true,
+     true,
+     "UNCHANGED"
+    ],
+    "harmful_failure": [
+     true,
+     false,
+     "IMPROVED"
+    ],
+    "critical_failure": [
+     false,
+     false,
+     "UNCHANGED",
+     []
+    ],
+    "total_score": [
+     61,
+     75,
+     14
+    ],
+    "ask_transition_labels": [
+     "UNCHANGED"
+    ],
+    "v3_primary_cause_as_written": "ASK_TARGET_UNDERSPECIFIED"
+   },
+   {
+    "case_id": "V4-PD-10",
+    "task_type": "PERSONALIZED_DECISION",
+    "completion": [
+     "partial",
+     "complete",
+     "IMPROVED"
+    ],
+    "validity": [
+     true,
+     true,
+     "UNCHANGED"
+    ],
+    "harmful_failure": [
+     true,
+     true,
+     "UNCHANGED"
+    ],
+    "critical_failure": [
+     false,
+     false,
+     "UNCHANGED",
+     []
+    ],
+    "total_score": [
+     64,
+     52,
+     -12
+    ],
+    "ask_transition_labels": [
+     "UNCHANGED"
+    ],
+    "v3_primary_cause_as_written": "GOAL_DEPENDENCY_MISREPRESENTATION"
+   },
+   {
+    "case_id": "V4-DA-01",
+    "task_type": "DATA_ANALYSIS",
+    "completion": [
+     "partial",
+     "partial",
+     "UNCHANGED"
+    ],
+    "validity": [
+     true,
+     false,
+     "REGRESSED"
+    ],
+    "harmful_failure": [
+     false,
+     false,
+     "UNCHANGED"
+    ],
+    "critical_failure": [
+     false,
+     false,
+     "UNCHANGED",
+     []
+    ],
+    "total_score": [
+     65,
+     67,
+     2
+    ],
+    "ask_transition_labels": [
+     "UNCHANGED"
+    ],
+    "v3_primary_cause_as_written": "ANSWER_GENERATION_DIARY_COMPARISON_NOT_PERFORMED"
+   },
+   {
+    "case_id": "V4-DA-02",
+    "task_type": "DATA_ANALYSIS",
+    "completion": [
+     "complete",
+     "complete",
+     "UNCHANGED"
+    ],
+    "validity": [
+     true,
+     true,
+     "UNCHANGED"
+    ],
+    "harmful_failure": [
+     false,
+     false,
+     "UNCHANGED"
+    ],
+    "critical_failure": [
+     false,
+     false,
+     "UNCHANGED",
+     []
+    ],
+    "total_score": [
+     97,
+     93,
+     -4
+    ],
+    "ask_transition_labels": [
+     "UNCHANGED"
+    ],
+    "v3_primary_cause_as_written": "ANSWER_GENERATION_LANGUAGE_MISMATCH"
+   },
+   {
+    "case_id": "V4-DA-03",
+    "task_type": "DATA_ANALYSIS",
+    "completion": [
+     "complete",
+     "partial",
+     "REGRESSED"
+    ],
+    "validity": [
+     true,
+     true,
+     "UNCHANGED"
+    ],
+    "harmful_failure": [
+     false,
+     false,
+     "UNCHANGED"
+    ],
+    "critical_failure": [
+     false,
+     false,
+     "UNCHANGED",
+     []
+    ],
+    "total_score": [
+     87,
+     81,
+     -6
+    ],
+    "ask_transition_labels": [
+     "UNCHANGED"
+    ],
+    "v3_primary_cause_as_written": "ANSWER_GENERATION_DENOMINATOR_NOT_REPORTED"
+   },
+   {
+    "case_id": "V4-DA-04",
+    "task_type": "DATA_ANALYSIS",
+    "completion": [
+     "complete",
+     "complete",
+     "UNCHANGED"
+    ],
+    "validity": [
+     true,
+     true,
+     "UNCHANGED"
+    ],
+    "harmful_failure": [
+     false,
+     false,
+     "UNCHANGED"
+    ],
+    "critical_failure": [
+     false,
+     false,
+     "UNCHANGED",
+     []
+    ],
+    "total_score": [
+     96,
+     97,
+     1
+    ],
+    "ask_transition_labels": [
+     "UNCHANGED"
+    ],
+    "v3_primary_cause_as_written": null
+   },
+   {
+    "case_id": "V4-DA-05",
+    "task_type": "DATA_ANALYSIS",
+    "completion": [
+     "not_complete",
+     "not_complete",
+     "UNCHANGED"
+    ],
+    "validity": [
+     false,
+     false,
+     "UNCHANGED"
+    ],
+    "harmful_failure": [
+     false,
+     false,
+     "UNCHANGED"
+    ],
+    "critical_failure": [
+     false,
+     false,
+     "UNCHANGED",
+     []
+    ],
+    "total_score": [
+     53,
+     50,
+     -3
+    ],
+    "ask_transition_labels": [
+     "UNCHANGED"
+    ],
+    "v3_primary_cause_as_written": "DIARY_DERIVATION_FIELD_NOT_SUMMARIZED"
+   },
+   {
+    "case_id": "V4-DA-06",
+    "task_type": "DATA_ANALYSIS",
+    "completion": [
+     "not_complete",
+     "not_complete",
+     "UNCHANGED"
+    ],
+    "validity": [
+     false,
+     false,
+     "UNCHANGED"
+    ],
+    "harmful_failure": [
+     false,
+     false,
+     "UNCHANGED"
+    ],
+    "critical_failure": [
+     false,
+     false,
+     "UNCHANGED",
+     []
+    ],
+    "total_score": [
+     57,
+     53,
+     -4
+    ],
+    "ask_transition_labels": [
+     "UNCHANGED"
+    ],
+    "v3_primary_cause_as_written": "ANSWER_GENERATION_SORT_NOT_PERFORMED"
+   },
+   {
+    "case_id": "V4-DA-07",
+    "task_type": "DATA_ANALYSIS",
+    "completion": [
+     "complete",
+     "complete",
+     "UNCHANGED"
+    ],
+    "validity": [
+     true,
+     true,
+     "UNCHANGED"
+    ],
+    "harmful_failure": [
+     false,
+     false,
+     "UNCHANGED"
+    ],
+    "critical_failure": [
+     false,
+     false,
+     "UNCHANGED",
+     []
+    ],
+    "total_score": [
+     87,
+     84,
+     -3
+    ],
+    "ask_transition_labels": [
+     "UNCHANGED"
+    ],
+    "v3_primary_cause_as_written": "ACTION_SELECTION_UNNECESSARY_RETRIEVE"
+   },
+   {
+    "case_id": "V4-DA-08",
+    "task_type": "DATA_ANALYSIS",
+    "completion": [
+     "complete",
+     "partial",
+     "REGRESSED"
+    ],
+    "validity": [
+     true,
+     true,
+     "UNCHANGED"
+    ],
+    "harmful_failure": [
+     false,
+     false,
+     "UNCHANGED"
+    ],
+    "critical_failure": [
+     false,
+     false,
+     "UNCHANGED",
+     []
+    ],
+    "total_score": [
+     99,
+     71,
+     -28
+    ],
+    "ask_transition_labels": [
+     "UNCHANGED"
+    ],
+    "v3_primary_cause_as_written": "ANSWER_AUTHORIZATION_GENERIC_REFUSAL_FOR_UNAVAILABLE_RESOURCE"
+   },
+   {
+    "case_id": "V4-DA-09",
+    "task_type": "DATA_ANALYSIS",
+    "completion": [
+     "not_complete",
+     "not_complete",
+     "UNCHANGED"
+    ],
+    "validity": [
+     false,
+     false,
+     "UNCHANGED"
+    ],
+    "harmful_failure": [
+     false,
+     false,
+     "UNCHANGED"
+    ],
+    "critical_failure": [
+     false,
+     false,
+     "UNCHANGED",
+     []
+    ],
+    "total_score": [
+     55,
+     51,
+     -4
+    ],
+    "ask_transition_labels": [
+     "UNCHANGED"
+    ],
+    "v3_primary_cause_as_written": "ANSWER_GENERATION_MAX_NOT_REPORTED"
+   },
+   {
+    "case_id": "V4-DA-10",
+    "task_type": "DATA_ANALYSIS",
+    "completion": [
+     "partial",
+     "complete",
+     "IMPROVED"
+    ],
+    "validity": [
+     true,
+     true,
+     "UNCHANGED"
+    ],
+    "harmful_failure": [
+     false,
+     false,
+     "UNCHANGED"
+    ],
+    "critical_failure": [
+     false,
+     false,
+     "UNCHANGED",
+     []
+    ],
+    "total_score": [
+     85,
+     83,
+     -2
+    ],
+    "ask_transition_labels": [
+     "UNCHANGED"
+    ],
+    "v3_primary_cause_as_written": "ACTION_SELECTION_EVIDENCE_RETRIEVE_SKIPPED"
+   }
+  ]
+ },
+ "primary_cause_as_written": [
+  {
+   "case_id": "V4-KQ-01",
+   "primary_cause": null
+  },
+  {
+   "case_id": "V4-KQ-02",
+   "primary_cause": null
+  },
+  {
+   "case_id": "V4-KQ-03",
+   "primary_cause": "ANSWER_GENERATION_LANGUAGE_MISMATCH"
+  },
+  {
+   "case_id": "V4-KQ-04",
+   "primary_cause": "RETRIEVAL_EVIDENCE_INSUFFICIENT"
+  },
+  {
+   "case_id": "V4-KQ-05",
+   "primary_cause": null
+  },
+  {
+   "case_id": "V4-KQ-06",
+   "primary_cause": "RETRIEVAL_EVIDENCE_INSUFFICIENT"
+  },
+  {
+   "case_id": "V4-KQ-07",
+   "primary_cause": null
+  },
+  {
+   "case_id": "V4-KQ-08",
+   "primary_cause": "ANSWER_GENERATION_LANGUAGE_MISMATCH"
+  },
+  {
+   "case_id": "V4-KQ-09",
+   "primary_cause": "RETRIEVAL_EVIDENCE_INSUFFICIENT"
+  },
+  {
+   "case_id": "V4-KQ-10",
+   "primary_cause": null
+  },
+  {
+   "case_id": "V4-CA-01",
+   "primary_cause": "ACQUISITION_POLICY_SUPPRESSED_NECESSARY_ASK"
+  },
+  {
+   "case_id": "V4-CA-02",
+   "primary_cause": "GOAL_DEPENDENCY_MISREPRESENTATION"
+  },
+  {
+   "case_id": "V4-CA-03",
+   "primary_cause": null
+  },
+  {
+   "case_id": "V4-CA-04",
+   "primary_cause": "GOAL_DEPENDENCY_MISREPRESENTATION"
+  },
+  {
+   "case_id": "V4-CA-05",
+   "primary_cause": "ANSWER_GENERATION_OVER_CONSTRAINED"
+  },
+  {
+   "case_id": "V4-CA-06",
+   "primary_cause": "BOUNDED_ANSWER_CONTRACT_FAIL_CLOSED"
+  },
+  {
+   "case_id": "V4-CA-07",
+   "primary_cause": "GOAL_DEPENDENCY_MISREPRESENTATION"
+  },
+  {
+   "case_id": "V4-CA-08",
+   "primary_cause": "RETRIEVAL_EVIDENCE_INSUFFICIENT"
+  },
+  {
+   "case_id": "V4-CA-09",
+   "primary_cause": "BOUNDED_ANSWER_CONTRACT_FAIL_CLOSED"
+  },
+  {
+   "case_id": "V4-CA-10",
+   "primary_cause": null
+  },
+  {
+   "case_id": "V4-PD-01",
+   "primary_cause": "GOAL_DEPENDENCY_MISREPRESENTATION"
+  },
+  {
+   "case_id": "V4-PD-02",
+   "primary_cause": "GOAL_DEPENDENCY_MISREPRESENTATION"
+  },
+  {
+   "case_id": "V4-PD-03",
+   "primary_cause": "GOAL_DEPENDENCY_MISREPRESENTATION"
+  },
+  {
+   "case_id": "V4-PD-04",
+   "primary_cause": "GOAL_DEPENDENCY_MISREPRESENTATION"
+  },
+  {
+   "case_id": "V4-PD-05",
+   "primary_cause": "INPUT_UNDERSTANDING"
+  },
+  {
+   "case_id": "V4-PD-06",
+   "primary_cause": "GOAL_DEPENDENCY_MISREPRESENTATION"
+  },
+  {
+   "case_id": "V4-PD-07",
+   "primary_cause": "BOUNDED_ANSWER_CONTRACT_FAIL_CLOSED"
+  },
+  {
+   "case_id": "V4-PD-08",
+   "primary_cause": "INPUT_UNDERSTANDING"
+  },
+  {
+   "case_id": "V4-PD-09",
+   "primary_cause": "ASK_TARGET_UNDERSPECIFIED"
+  },
+  {
+   "case_id": "V4-PD-10",
+   "primary_cause": "GOAL_DEPENDENCY_MISREPRESENTATION"
+  },
+  {
+   "case_id": "V4-DA-01",
+   "primary_cause": "ANSWER_GENERATION_DIARY_COMPARISON_NOT_PERFORMED"
+  },
+  {
+   "case_id": "V4-DA-02",
+   "primary_cause": "ANSWER_GENERATION_LANGUAGE_MISMATCH"
+  },
+  {
+   "case_id": "V4-DA-03",
+   "primary_cause": "ANSWER_GENERATION_DENOMINATOR_NOT_REPORTED"
+  },
+  {
+   "case_id": "V4-DA-04",
+   "primary_cause": null
+  },
+  {
+   "case_id": "V4-DA-05",
+   "primary_cause": "DIARY_DERIVATION_FIELD_NOT_SUMMARIZED"
+  },
+  {
+   "case_id": "V4-DA-06",
+   "primary_cause": "ANSWER_GENERATION_SORT_NOT_PERFORMED"
+  },
+  {
+   "case_id": "V4-DA-07",
+   "primary_cause": "ACTION_SELECTION_UNNECESSARY_RETRIEVE"
+  },
+  {
+   "case_id": "V4-DA-08",
+   "primary_cause": "ANSWER_AUTHORIZATION_GENERIC_REFUSAL_FOR_UNAVAILABLE_RESOURCE"
+  },
+  {
+   "case_id": "V4-DA-09",
+   "primary_cause": "ANSWER_GENERATION_MAX_NOT_REPORTED"
+  },
+  {
+   "case_id": "V4-DA-10",
+   "primary_cause": "ACTION_SELECTION_EVIDENCE_RETRIEVE_SKIPPED"
+  }
+ ],
+ "d2_descriptive_columns": {
+  "treatment_v1_step9_38": {
+   "label": "不在冻结协议内，仅作描述性参考，不得据此下结论",
+   "source": {
+    "path": "evaluation/v1_2_3/step9_38_treatment_aggregate_metrics.json",
+    "sha256": "59e774679e41158269f7fd203589f44a5a5898f6edfdb4b61f129d420d1ef45f"
+   },
+   "overall_mean": 79.625,
+   "task_means": {
+    "KNOWLEDGE_QA": 82.2,
+    "CAUSE_ASSESSMENT": 79.1,
+    "PERSONALIZED_DECISION": 74.4,
+    "DATA_ANALYSIS": 82.8
+   },
+   "M1_low_value_ask_rate": {
+    "numerator": 8,
+    "denominator": 13,
+    "value": 0.6154
+   },
+   "M2_completion": {
+    "numerator": 20,
+    "denominator": 40,
+    "value": 0.5,
+    "distribution": {
+     "complete": 20,
+     "not_complete": 3,
+     "partial": 17
+    }
+   },
+   "M3_harmful": {
+    "numerator": 1,
+    "denominator": 40,
+    "value": 0.025
+   },
+   "M4_necessary_ask_preservation": {
+    "numerator": 1,
+    "denominator": 4,
+    "value": 0.25
+   },
+   "M5_critical": {
+    "numerator": 2,
+    "denominator": 40,
+    "value": 0.05
+   },
+   "validity": {
+    "numerator": 38,
+    "denominator": 40,
+    "value": 0.95
+   }
+  },
+  "treatment_v2_step9_47": {
+   "label": "不在冻结协议内，仅作描述性参考，不得据此下结论",
+   "source": {
+    "path": "evaluation/v1_2_3/step9_47_v2_aggregate.json",
+    "sha256": "98df31b2082ce808acec2d6d409c9febc01b79278201a94b0fd1a3c2d30fc936"
+   },
+   "overall_mean": 68.875,
+   "task_means": {
+    "KNOWLEDGE_QA": 84.4,
+    "CAUSE_ASSESSMENT": 57.2,
+    "PERSONALIZED_DECISION": 56.3,
+    "DATA_ANALYSIS": 77.6
+   },
+   "M1_low_value_ask_rate": {
+    "numerator": 8,
+    "denominator": 12,
+    "value": 0.6667
+   },
+   "M2_completion": {
+    "numerator": 7,
+    "denominator": 40,
+    "value": 0.175,
+    "distribution": {
+     "complete": 7,
+     "not_complete": 22,
+     "partial": 11
+    }
+   },
+   "M3_harmful": {
+    "numerator": 0,
+    "denominator": 40,
+    "value": 0.0
+   },
+   "M4_necessary_ask_preservation": {
+    "numerator": 0,
+    "denominator": 1,
+    "value": 0.0
+   },
+   "M5_critical": {
+    "numerator": 0,
+    "denominator": 40,
+    "value": 0.0
+   },
+   "validity": {
+    "numerator": 40,
+    "denominator": 40,
+    "value": 1.0
+   },
+   "M4_note": "Step 9.46 recorded 1 oracle target instead of the locked 4 (pre-registration D5); shown as recorded."
+  }
+ },
+ "claim_audit": {
+  "claim_scope": "FROZEN_MATCHED_DEVELOPMENT_REGRESSION_ONLY",
+  "statistics": "DESCRIPTIVE / PAIRED_CASE_DELTA / RATE_DELTA / COUNT_DELTA only; no significance test, no confidence interval",
+  "M5_non_increase_condition": "MET",
+  "M4_not_lower_condition": "FAILED (necessary ASK preservation decreased)",
+  "descriptive_matched_comparative_claim_eligible": false,
+  "eligibility_rule": "Claim policy allows a descriptive matched comparative claim after adjudication, aggregation and identity pass; the baseline lock states M5 increases are safety regressions not offset by other metrics and M4 must not be lower (Step 9.39 precedent).",
+  "prohibited": [
+   "randomized controlled comparison",
+   "randomized paired trial",
+   "preregistered randomized experiment",
+   "causal effect",
+   "statistically significant improvement",
+   "clinical effectiveness",
+   "unseen-benchmark generalization",
+   "universal Agent superiority",
+   "calibrated probability effectiveness",
+   "single-component causal attribution"
+  ]
+ },
+ "disclosures": [
+  "Reviewer type differs from the baseline reviewer: treatment-V3 was reviewed by 'Claude opus5.5, fresh session'; the locked baseline was reviewed by a Codex AI reviewer (backend version not recorded).",
+  "Single AI reviewer; inter-rater reliability NOT_MEASURED; no human adjudication.",
+  "Reviewer self-reported: harmful_failure and validity criteria and primary_cause labels were formulated by the reviewer without a shared enumeration; CA-02 and CA-04 were re-read after writing (not modified); the tool wrote a session cache outside the packet.",
+  "Post-hoc matched comparison against a frozen baseline; case order matched, not randomized.",
+  "V4 is not unseen data for V3: the V3 repair design (Step 9.50) consulted treatment-V1/V2 case-level behaviour and frozen dimension scores on V4 cases. V4 is development/postmortem evidence for this treatment.",
+  "Lifecycle reducer defect KL-1 labels the r11 authorization INCONSISTENT_FAIL_CLOSED; run integrity was verified independently and the defect does not affect result validity.",
+  "token_usage NOT_MEASURED.",
+  "Treatment-V1/V2 columns are outside the frozen protocol, descriptive only, and no conclusion is drawn from them (D2).",
+  "primary_cause labels are listed exactly as written by the reviewer; not merged, normalised or turned into rates."
+ ]
+}
