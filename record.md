@@ -3619,3 +3619,7 @@ The version inventory contains r3–r10 and no r11; `r11` is proposed only. `eva
 **B 盲审包**：`evaluation/v1_2_3/step9_63c_r11_baseline_blind_packet/`，`SHA256SUMS` = `f3cf70d8043592e77887cfae2a964489e4e40720629eaca91e60a83d73dc92d8`。rubric、schema、benchmark 与 V3 包逐字节相同；校验器各函数的 AST 与 V3 包相同；运行文件只把 40+40 处顶层 `evaluation_id` 换成中性 ID `blind-review-run-01`，其余字节逐行核对未变；映射存放在包外的 `step9_63c_r11_baseline_blind_mapping.json`。说明文件只改了标题、路径和评审者字符串示例，规则未变。数据格式差异：case_results 字段完全相同；9.28 的 `final_state` 比 V3 少 3 个字段（`answer_authorization`、`answer_generation_audit`、`trace_schema_version`），不需要适配。污染扫描结果干净（`step9_63c_r11_baseline_blind_packet_scan.json`）：运行身份为 0；说明、模板、校验器、MANIFEST 中版本词为 0；运行文件中的“基线”（28 处）和 “treatment”（209 处）是回答与检索资料中的医学用语，原样保留；没有任何已有评审的文本；与 V3 回答的 2 处 30 字重合是同一检索资料的相同复述，存在于 9.28 原始字节中。
 
 **工作目录**：B 为 `~/blind_review_run_01`（按用户决定，由 `~/r11_blind_review_baseline` 改为中性名）；A 为 `~/r11_blind_review_codex`（使用现有 V3 包 `5d951349…`）。两处目录目前都不存在。**提示词**：`step9_63c_r11_sensitivity_prompt_B.md`、`step9_63c_r11_sensitivity_prompt_A.md`。
+
+## Step 9.63c-r11 — 敏感性评审 A/B 冻结（汇总之前）
+
+两份独立评审各 40 条，仓库内外的盲审包均通过 `SHA256SUMS` 9/9，工作目录中除 `output/` 外没有实质文件新增或改动。两份记录与工作目录原件逐字节相同，各自包内 `validate_review.py check-file` 均为 `OK 40/40 records valid`，无格式修正。`evaluation/v1_2_3/step9_63c_r11_sensitivity_freeze.json` 钉住记录、包、预注册的 SHA 与评审者口径原文，并披露 B 的包外临时文件及提前查看全部执行事实、A 的辅助脚本与未知模型版本。A 的 `review_helper.py` 不是评审记录，不参与汇总。`primary_cause` 标签保留原文，不做事后统一。此节点尚未计算敏感性分数；冻结提交完成后才能执行汇总。请阅读预注册、冻结文件和两个盲审包的 `README_REVIEWER.md` 以理解四格比较的证据边界。待核问题：两位评审者对同一运行的逐案一致性有多高？不同评审者路径的指标方向是否一致？

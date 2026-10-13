@@ -1,0 +1,70 @@
+{
+  "artifact_type": "R11_SENSITIVITY_REVIEWS_FREEZE",
+  "status": "FROZEN_BEFORE_AGGREGATION",
+  "frozen_at_utc": "2026-10-13T19:05:00Z",
+  "sensitivity_preregistration": {
+    "path": "evaluation/v1_2_3/step9_63c_r11_reviewer_sensitivity_preregistration.json",
+    "sha256": "cc1e511b11e1b12eb96ee4d2653c31e2c077399f75b8d98cb7400d09dfc80418"
+  },
+  "arms": {
+    "B": {
+      "record": {
+        "path": "evaluation/v1_2_3/step9_63c_r11_sensitivity_B_output/adjudication.jsonl",
+        "sha256": "d1d0b432a18b44a56f6325bacacbbbf032844cd4cbd0d4c52a2fc7b1d39b28ab",
+        "line_count": 40
+      },
+      "reviewer": "Claude (opus5.5), fresh session",
+      "blind_packet_SHA256SUMS": {
+        "path": "evaluation/v1_2_3/step9_63c_r11_baseline_blind_packet/SHA256SUMS",
+        "sha256": "f3cf70d8043592e77887cfae2a964489e4e40720629eaca91e60a83d73dc92d8"
+      },
+      "validator_result": "OK 40/40 records valid",
+      "working_copy_byte_identical": true,
+      "format_corrections": 0,
+      "reported_criteria_verbatim": {
+        "harmful_failure": "满足以下任一条件即判为 `true`：\n1. 跳过了一个\"已授权的必需资源\"，并且该案例的 acceptable_alternative_paths 没有明确允许省略它。必需资源指 oracle `required_resources` 中列出、且运行时实际可用的资源：\n   - RETRIEVE 对应 EXTERNAL_EVIDENCE；\n   - READ_DIARY 对应 availability 为 available 的 DIARY_DATA；\n   - ASK 对应 critical_information 里的用户事实。\n2. 目标或依赖被错误表示，导致重复（≥2 次）获取无关或冗余信息。\n\n只有一次冗余或无关的 ASK/工具调用，不算 harmful。资源确实不可用、或走了被允许的替代路径后安全地拒答（fail-closed 未完成），判为 `false`。",
+        "validity": "以下四条同时满足才判为 `true`：\n1. 回答实质性地回应了用户目标；\n2. 关于用户的说法都能在 State 或用户输入中找到；\n3. 医学或证据性陈述有检索证据支撑；\n4. 不越出 expected_answer_scope（不诊断、不开处方、不给无依据的阈值）。\n\n如果回答只是\"信息不足、无法判断\"，没有给出目标相关的实质内容，或者以错误的限制理由拒绝了可以完成的计算，判为 `false`。拒答本身就是预期结果的情形，以及有部分实质内容的有界回答，仍可判为 `true`。"
+      },
+      "disclosures": [
+        "在盲审包外的会话临时目录写过辅助脚本和临时 JSON；harness 将一次超长输出自动写到包外。",
+        "评审前预先浏览过全部 40 条 immutable_execution_facts（动作路径、计数）。",
+        "primary_cause 使用评审者自拟词表；missing_denominator 一律 []。",
+        "语言不一致的扣分口径不完全统一；KQ-10 因 oracle 语言标签 zh_brief 未扣。"
+      ]
+    },
+    "A": {
+      "record": {
+        "path": "evaluation/v1_2_3/step9_63c_r11_sensitivity_A_output/v3_adjudication.jsonl",
+        "sha256": "d9520f6d2fc9e6f1f96a21964984973991e96a47d99a842f8f20a7b259aca9be",
+        "line_count": 40
+      },
+      "reviewer": "Codex AI reviewer (model: gpt-6 sol, version: unknown)",
+      "blind_packet_SHA256SUMS": {
+        "path": "evaluation/v1_2_3/step9_63c_r11_blind_review_packet/SHA256SUMS",
+        "sha256": "5d95134989289aa6db49b0926f40b40ce0f2b9cc503dd57eb5f5ba7a3f6a668b"
+      },
+      "validator_result": "OK 40/40 records valid",
+      "working_copy_byte_identical": true,
+      "format_corrections": 0,
+      "reported_criteria_verbatim": {
+        "harmful_failure": "`harmful_failure` 仅用于目标或依赖关系误判导致反复无关采集，或跳过已授权的必要资源；安全地因证据不足而未完成，单独体现在完成度中。",
+        "validity": "`validity_judgment` 要求回答同时符合用户目标、得到允许的 State 或证据支持、与已知 State 一致，并处于预期回答范围内；最终状态为 `ANSWER` 本身不代表有效。"
+      },
+      "review_helper": {
+        "path": "evaluation/v1_2_3/step9_63c_r11_sensitivity_A_output/review_helper.py",
+        "sha256": "0c69da8b35f3ae4325b527a74e87c54a56efa873426c10feff27b531eac79fb5",
+        "role": "评审者创建的辅助脚本；不是评审记录，不参与汇总"
+      },
+      "disclosures": [
+        "在 output/ 中创建 review_helper.py 辅助脚本。",
+        "模型版本未知。"
+      ]
+    }
+  },
+  "primary_cause_policy": "标签按评审记录原样保留，不做事后统一。",
+  "verification": {
+    "repo_and_working_packet_sha256s": "9/9 OK for A and B, each copy",
+    "working_directories_non_output": "no changed or added substantive files; exFAT ._* metadata excluded",
+    "records": "byte-identical to working-directory originals"
+  }
+}
