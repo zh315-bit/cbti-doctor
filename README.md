@@ -145,7 +145,9 @@ M4 is the number of oracle-marked necessary information targets acquired through
 | AI reviewer | v3: M4 necessary-`ASK` preservation | 9.28: M4 necessary-`ASK` preservation |
 | --- | ---: | ---: |
 | Claude | 0/4 (primary review) | 0/4 (B) |
-| Codex | 0/4 (A) | 1/4 (locked baseline) |
+| Codex | 0/4 (A) | 1/4 (locked baseline)¹ |
+
+¹ Disclosure only; no value in this table is changed. The locked baseline's `1/4` comes from a single label (V4-PD-03, `bedtime` acquired). The 9.28 trace shows a different `ASK` target and an "unknown" reply for that case, and the other three cells record `0` for it. See the [erratum](evaluation/v1_2_3/step9_63c_r11_erratum_M4_baseline.md).
 
 The primary comparison therefore fails its preregistered requirement that M4 not fall below the locked baseline. The [sensitivity report](evaluation/v1_2_3/step9_63c_r11_sensitivity_report.md) finds lower M1 and M3 on both reviewer paths, while the directions for completion, validity, M4, and critical failures are reviewer-dependent or uncertain.
 

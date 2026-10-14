@@ -3629,3 +3629,9 @@ The version inventory contains r3–r10 and no r11; `r11` is proposed only. `eva
 冻结提交 `d4cea7bba43ee13db1cf2afe1789fa5127399c3a` 已先推送，之后才运行冻结的 `scripts/aggregate_step9_30c_v4.py`（SHA `01aea00a…`）。汇总时只替换各盲审包的校验器与已预注册的 lineage 计数：A 为 28/8/4，B 为 28/7/5；B 先用中性身份校验并汇总，随后通过包外映射还原为 9.28 身份。主结果和锁定基线直接引用现有冻结值。请阅读 `step9_63c_r11_reviewer_sensitivity_preregistration.json`、`step9_63c_r11_sensitivity_freeze.json`、`step9_63c_r11_sensitivity_results.json` 与 `step9_63c_r11_sensitivity_report.md`，了解输入边界、四格数据与逐案不一致名单。
 
 两条评审者路径都显示 M1 低价值 ASK 与 M3 harmful 下降，总分和 CAUSE_ASSESSMENT 上升，PERSONALIZED_DECISION 与 DATA_ANALYSIS 下降；M2 完成率、M4 必要 ASK、M5 critical、有效率和 KNOWLEDGE_QA 的方向不一致或仅一条路径变化。v3 同运行主评审与 A 的 harmful 一致 39/40、critical 一致 37/40；9.28 同运行 B 与锁定基线的有效性仅一致 24/40。判定仅按预注册方向，不作显著性检验。主结果的 M4 对锁定基线仍下降，不能升级为整体优越性结论。已知限制：每格仅一位 AI 评审者；锁定基线采用较早流程，Codex 版本未知；敏感性预注册在主结果公布后完成。供开发者继续思考：为何相同运行的有效性与 critical 标注会出现这些不一致？哪些后续评审设计能把流程差异与评审者差异分离？
+
+## Step 9.63c-r11 — 结案：勘误附录、README 脚注、结案总结
+
+- **勘误附录** `step9_63c_r11_erratum_M4_baseline.md`：锁定基线 V4-PD-03 的 `bedtime acquired=true` 与 9.28 的 trace 不一致（追问的是入睡耗时，用户回复“不清楚”，oracle 追问事实未被释放；其余三个评审格子都判 false；两次运行共 21 次 ASK 没有任何 oracle 事实被释放）。主结果“M4 由 1/4 降到 0/4”依赖该标签，按 trace 是 0/4 对 0/4。**只做披露**：按 `no_readjudication`，锁定基线、主评审记录、冻结文件、FINAL 与敏感性预注册、主结果与敏感性报告均未修改，也未重算主报告的资格检验；主结论“不能宣称整体优越”保持不变。
+- **README.md**：M4 表格中 Codex × 9.28 的 `1/4` 加脚注指向勘误附录，数值未改。
+- **结案总结** `step9_63c_r11_closeout.md`：做了什么；稳健发现（harmful 约 −30 个百分点、低价值追问下降、总分小幅上升、CAUSE_ASSESSMENT 上升，两位评审者方向一致）；不确定的发现（有效率、完成度、M4、critical；评审者效应与锁定基线评审较宽松）；修正后的认识（PD 退步集中在 PD-02/07/08，机制为有界回答被整段作废；critical 案例不涉及虚构数据或处方）；已知缺陷（KL-1、基线 M4 标签疑点、单一 AI 评审、V4 对 v3 非未见数据、token 未计量）；V4 优先方向（探索性依据）；方法教训。
