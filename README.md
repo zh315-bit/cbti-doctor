@@ -8,6 +8,12 @@ CBTI Doctor is a research prototype for a **cost-aware adaptive CBT-I agent** (c
 
 This project turns CBT-I counseling steps into an interactive workflow for insomnia-related scenarios. Flask provides the chat API, and a lightweight web page provides the frontend. LangGraph manages the stage-based conversation, while `adaptive_agent/` contains the adaptive decision loop. The repository is an engineering and evaluation prototype, not a clinical service.
 
+## Research Focus
+
+- **Adaptive agent decision-making:** When information is incomplete, how should an agent choose among answering, asking a question, retrieving evidence, and reading a diary, given the cost of each action?
+- **Agent reliability and evidence-grounded behavior:** Can explicit requirements, dependency checks, and state updates help the agent avoid unsupported answers and unnecessary information gathering?
+- **Reliability of LLM-based evaluation:** How much do case-level judgments and aggregate conclusions change when the AI reviewer changes?
+
 ## Architecture
 
 The adaptive loop processes each user turn in this order:
@@ -122,7 +128,41 @@ The repository contains offline regression tests in `tests/`, evaluation harness
 
 Use Python 3.12 and the dependency files above to reproduce the software environment. `requirements-lock.txt` pins the core application dependencies used by the offline tests. `requirements-bge-lock.txt` includes the optional local BGE inference stack. The offline unit tests use mocks and do not require downloaded model weights, a real API key, or paid model calls. Actual RAG and model-backed conversations require their separate local model and API configuration.
 
-`.gitignore` excludes designated evaluation run directories, raw traces, case results, local logs, model weights, and the vector database. Other generated analysis files are not part of the published project unless deliberately selected for version control. Reproducing a historical report may require regenerating local outputs; the committed benchmark definitions and harness scripts do not include every prior run artifact.
+`.gitignore` excludes designated evaluation run directories, raw traces, case results, local logs, model weights, and the vector database. Selected r11 run evidence was archived on the `r11-activation-prep` development branch (not on `main`); it was [archived](https://github.com/zh315-bit/cbti-doctor/blob/5637128f9a9d8ed406c2bd3331687ff9b01ff16f/evaluation/v1_2_3/step9_63c_r11_run_archive/MANIFEST.json) with [SHA-256 checksums](https://github.com/zh315-bit/cbti-doctor/blob/5637128f9a9d8ed406c2bd3331687ff9b01ff16f/evaluation/v1_2_3/step9_63c_r11_run_archive/SHA256SUMS), but some historical raw traces and evaluation artifacts are absent from the public repository. The committed benchmark and scripts alone cannot reproduce every historical result; artifact-bound tests may require the original local outputs.
+
+## Evaluation Methodology
+
+The r11 research results and linked evidence below are from the `r11-activation-prep` development branch, pinned to commit `5637128f9a9d8ed406c2bd3331687ff9b01ff16f`. This README publication does not release that branch's code or evaluation artifacts to `main`.
+
+**Frozen benchmark and artifacts.** The V4 benchmark contains 40 fixed cases: 10 each in `KNOWLEDGE_QA`, `CAUSE_ASSESSMENT`, `PERSONALIZED_DECISION`, and `DATA_ANALYSIS`. It was originally sealed for the [Step 9.28 held-out run](evaluation/v1_2_3/step9_28_v4_execution_protocol.md). Subsequent v3 repairs consulted V1/V2 case-level behavior and frozen scores on these same V4 cases, so the later v3 comparison is development and postmortem evidence, not an unseen test of generalization. A [frozen rubric](https://github.com/zh315-bit/cbti-doctor/blob/5637128f9a9d8ed406c2bd3331687ff9b01ff16f/evaluation/v1_2_3/step9_63c_r11_blind_review_packet/rubric/benchmark_v1_1_scoring.md) guides case-level review. Execution traces and case results record action paths, tool use, and final states; the [run archive](https://github.com/zh315-bit/cbti-doctor/blob/5637128f9a9d8ed406c2bd3331687ff9b01ff16f/evaluation/v1_2_3/step9_63c_r11_run_archive/MANIFEST.json), [adjudication freeze](https://github.com/zh315-bit/cbti-doctor/blob/5637128f9a9d8ed406c2bd3331687ff9b01ff16f/evaluation/v1_2_3/step9_63c_r11_adjudication_freeze.json), and SHA-256 manifests identify the reviewed bytes.
+
+**Preregistered primary evaluation.** The [FINAL scoring plan](https://github.com/zh315-bit/cbti-doctor/blob/5637128f9a9d8ed406c2bd3331687ff9b01ff16f/evaluation/v1_2_3/step9_63c_r11_scoring_preregistration_final.json) was locked before the main v3 review. It specifies five primary measures: low-value `ASK` rate (M1), completion (M2), harmful-failure rate (M3), necessary-`ASK` preservation (M4), and critical-failure rate (M5). Total and task-category scores are descriptive. One Claude AI reviewer assessed v3; the 9.28 comparator retained its earlier, locked Codex AI review. Records were frozen before the unchanged aggregation formula was applied. The [primary report](https://github.com/zh315-bit/cbti-doctor/blob/5637128f9a9d8ed406c2bd3331687ff9b01ff16f/evaluation/v1_2_3/step9_63c_r11_scoring_report.md) presents a matched development comparison, not a causal estimate of an architecture change.
+
+**Cross-reviewer sensitivity analysis.** A separate [2×2 plan](https://github.com/zh315-bit/cbti-doctor/blob/5637128f9a9d8ed406c2bd3331687ff9b01ff16f/evaluation/v1_2_3/step9_63c_r11_reviewer_sensitivity_preregistration.json) was registered after the primary result was available but before two new reviews. It adds a fresh Claude AI review of 9.28 (B) and a Codex AI review of v3 (A) to the unchanged primary v3 result and locked 9.28 baseline. The new records were [frozen before aggregation](https://github.com/zh315-bit/cbti-doctor/blob/5637128f9a9d8ed406c2bd3331687ff9b01ff16f/evaluation/v1_2_3/step9_63c_r11_sensitivity_freeze.json). This design probes reviewer dependence; it does not isolate the causal effect of agent design changes.
+
+## Reviewer Sensitivity
+
+M4 is the number of oracle-marked necessary information targets acquired through a semantically equivalent `ASK`, divided by the four oracle-marked targets. The cells below are separate reviews of the indicated run, not interchangeable scores.
+
+| AI reviewer | v3: M4 necessary-`ASK` preservation | 9.28: M4 necessary-`ASK` preservation |
+| --- | ---: | ---: |
+| Claude | 0/4 (primary review) | 0/4 (B) |
+| Codex | 0/4 (A) | 1/4 (locked baseline) |
+
+The primary comparison therefore fails its preregistered requirement that M4 not fall below the locked baseline. The [sensitivity report](https://github.com/zh315-bit/cbti-doctor/blob/5637128f9a9d8ed406c2bd3331687ff9b01ff16f/evaluation/v1_2_3/step9_63c_r11_sensitivity_report.md) finds lower M1 and M3 on both reviewer paths, while the directions for completion, validity, M4, and critical failures are reviewer-dependent or uncertain.
+
+The following counts are exact per-case agreement on the recorded boolean `validity_judgment` and `critical_failure.present` fields; they do not establish agreement on clinical correctness.
+
+| Same run | AI reviews compared | Validity agreement | Critical-failure agreement |
+| --- | --- | ---: | ---: |
+| v3 | Claude primary vs Codex A | 35/40 | 37/40 |
+| 9.28 | Codex locked baseline vs Claude B | 24/40 | 40/40 |
+
+The 9.28 agreement is descriptive: its locked baseline used an earlier review procedure, and the Codex model version was not recorded. No cell is selected in preference to another.
+
+## Research Limitations
+
+V4 was initially a sealed held-out evaluation, but prior exposure to its results makes later v3 analyses development evidence. Each cell has one LLM-based evaluator, not a human clinical expert, and reviewer disagreement limits the interpretation of scores. The locked 9.28 baseline also used an earlier review procedure. Some raw evaluation artifacts are not publicly available, so a clean checkout cannot reproduce every historical result. No statistical significance, clinical efficacy, or overall superiority is claimed; the evidence also does not identify the causal effect of an agent architecture change.
 
 ## Optional local BGE model
 
